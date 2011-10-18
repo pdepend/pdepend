@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -113,12 +111,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      * 
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMemberPrimaryPrefixGraphForObjectPropertyAccess()
     {
@@ -141,12 +133,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMemberPrimaryPrefixGraphForObjectMethodAccess()
     {
@@ -170,12 +156,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess()
     {
@@ -202,12 +182,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectMemberPrimaryPrefixHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedStartLine()
     {
@@ -219,12 +193,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectMemberPrimaryPrefixHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedStartColumn()
     {
@@ -236,12 +204,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectMemberPrimaryPrefixHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedEndLine()
     {
@@ -253,12 +215,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectMemberPrimaryPrefixHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectMemberPrimaryPrefixHasExpectedEndColumn()
     {
@@ -270,12 +226,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse()
     {
@@ -287,12 +237,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse()
     {
@@ -304,12 +248,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue()
     {
@@ -321,12 +259,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue()
     {
