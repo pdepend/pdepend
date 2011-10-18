@@ -3279,6 +3279,15 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($node);
     }
 
+    private function _parseOptionalFunctionPostfix(PHP_Depend_Code_ASTNode $node)
+    {
+        $this->consumeComments();
+        if (self::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
+            return $this->_parseFunctionPostfix($node);
+        }
+        return $node;
+    }
+
     /**
      * This method parses a function postfix expression. An object of type
      * {@link PHP_Depend_Code_ASTFunctionPostfix} represents any valid php
@@ -3369,6 +3378,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_STRING:
             $child = $this->_parseIdentifier();
+            $child = $this->_parseOptionalIndexExpression($child);
+            if ($child instanceof PHP_Depend_Code_ASTIndexExpression) {
+                $prefix->addChild($this->_parsePropertyPostfix($child));
+                return $this->_parseOptionalFunctionPostfix($prefix);
+            }
             break;
 
         case self::T_CURLY_BRACE_OPEN:
@@ -3385,7 +3399,18 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_parseOptionalIndexExpression($child)
             )
         );
+
         return $prefix;
+    }
+
+    /**
+     * This method decides language construct the currently parsed code
+     * represents. We
+     * @return void
+     */
+    private function _parseMethodOrPropertyOrFunctionPostfix()
+    {
+
     }
 
     /**
@@ -3443,8 +3468,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             );
             break;
         }
-
-
 
         $prefix->addChild($postfix);
 
@@ -3525,7 +3548,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parsePropertyPostfix(PHP_Depend_Code_ASTNode $node)
     {
-        $postfix = $this->_builder->buildASTPropertyPostfix($node->getImage());
+        $image = $this->_extractPostfixImage($node);
+
+        $postfix = $this->_builder->buildASTPropertyPostfix($image);
         $postfix->addChild($node);
 
         $postfix->setEndLine($node->getEndLine());
@@ -3534,6 +3559,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $postfix->setStartColumn($node->getStartColumn());
 
         return $postfix;
+    }
+
+    private function _extractPostfixImage(PHP_Depend_Code_ASTNode $node)
+    {
+        while ($node instanceof PHP_Depend_Code_ASTIndexExpression) {
+            $node = $node->getChild(0);
+        }
+        return $node->getImage();
     }
 
     /**
@@ -3624,7 +3657,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * parenthesis.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @throws PHP_Depend_Parser_Exception When an error occur during the
      *         parsing process.
      * @since 0.9.6
      */
