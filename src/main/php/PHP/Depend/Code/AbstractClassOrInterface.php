@@ -311,6 +311,10 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
 
         $parentClass = $this->parentClassReference->getType();
 
+        if ($parentClass === $this) {
+            throw new PHP_Depend_Code_Exceptions_RecursiveInheritanceException($this);
+        }
+
         // Check parent against global filter
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
         if ($collection->accept($parentClass) === false) {
@@ -318,6 +322,22 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
 
         return $parentClass;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParentClasses()
+    {
+        $parents = array();
+        $parent  = $this;
+        while (is_object($parent = $parent->getParentClass())) {
+            if (in_array($parent, $parents, true)) {
+                throw new PHP_Depend_Code_Exceptions_RecursiveInheritanceException($parent);
+            }
+            $parents[] = $parent;
+        }
+        return $parents;
     }
 
     /**
@@ -355,13 +375,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getInterfaces()
     {
-        $stack = array($this);
+        $stack = $this->getParentClasses();
+        array_unshift($stack, $this);
 
-        if ($this->parentClassReference !== null) {
-            array_unshift($stack, $this->parentClassReference->getType());
-        }
-
-        $parents = array();
         $interfaces = array();
 
         while (($top = array_pop($stack)) !== null) {
@@ -373,14 +389,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
                 }
                 $interfaces[] = $interface;
                 $stack[] = $interface;
-            }
-
-            if ($top->parentClassReference !== null) {
-                $class = $top->parentClassReference->getType();
-                if (!in_array($class, $parents, true)) {
-                    $stack[] = $class;
-                    $parents[] = $class;
-                }
             }
         }
 
@@ -477,9 +485,8 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
             }
         }
 
-        $parentClass = $this->getParentClass();
-        if (is_object($parentClass)) {
-            foreach ($parentClass->getAllMethods() as $method) {
+        foreach ($this->getParentClasses() as $parentClass) {
+            foreach ($parentClass->getMethods() as $method) {
                 $methods[$method->getName()] = $method;
             }
         }

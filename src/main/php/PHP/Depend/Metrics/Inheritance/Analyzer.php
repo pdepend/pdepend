@@ -281,12 +281,12 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
         $uuid = $class->getUUID();
         $root = $class->getUUID();
 
-        while (($class = $class->getParentClass()) !== null) {
-            if (!$class->isUserDefined()) {
+        foreach ($class->getParentClasses() as $parent) {
+            if (!$parent->isUserDefined()) {
                 ++$dit;
             }
             ++$dit;
-            $root = $class->getUUID();
+            $root = $parent->getUUID();
         }
         
         // Collect max dit value
@@ -355,22 +355,22 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      */
     private function _initNodeMetricsForClass(PHP_Depend_Code_Class $class)
     {
-        if (is_object($class->getParentClass())) {
-            $this->_initNodeMetricsForClass($class->getParentClass());
-        }
-
         $uuid = $class->getUUID();
         if (isset($this->_nodeMetrics[$uuid])) {
             return;
         }
 
         ++$this->_numberOfClasses;
-        
+
         $this->_nodeMetrics[$uuid] = array(
             self::M_DEPTH_OF_INHERITANCE_TREE     => 0,
             self::M_NUMBER_OF_ADDED_METHODS       => 0,
             self::M_NUMBER_OF_DERIVED_CLASSES     => 0,
             self::M_NUMBER_OF_OVERWRITTEN_METHODS => 0
         );
+
+        foreach ($class->getParentClasses() as $parent) {
+            $this->_initNodeMetricsForClass($parent);
+        }
     }
 }

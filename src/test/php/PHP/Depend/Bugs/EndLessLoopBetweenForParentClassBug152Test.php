@@ -86,6 +86,7 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
      *
      * @return void
+     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
     {

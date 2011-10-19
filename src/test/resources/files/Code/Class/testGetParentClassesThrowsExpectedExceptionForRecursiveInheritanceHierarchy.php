@@ -1,0 +1,25 @@
+<?php
+class testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
+    extends testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy_parentA
+{
+
+}
+
+class testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy_parentA
+    extends testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy_parentB
+{
+
+}
+
+class testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy_parentB
+    extends testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy_parentC
+{
+    
+}
+
+class testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy_parentC
+    extends testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
+{
+
+}
+

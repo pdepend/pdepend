@@ -323,18 +323,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             $properties[$prop->getName()] = true;
         }
 
-        // Get parent class and collect all non private properties
-        $parent = $class->getParentClass();
-
-        while ($parent !== null) {
-            // Get all parent properties
+        foreach ($class->getParentClasses() as $parent) {
             foreach ($parent->getProperties() as $prop) {
                 if (!$prop->isPrivate() && !isset($properties[$prop->getName()])) {
                     $properties[$prop->getName()] = true;
                 }
             }
-            // Get next parent
-            $parent = $parent->getParentClass();
         }
         return count($properties);
     }
@@ -357,18 +351,12 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
             $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
         }
 
-        // Get parent class and collect all non private methods.
-        $parent = $class->getParentClass();
-
-        while ($parent !== null) {
-            // Count all methods
+        foreach ($class->getParentClasses() as $parent) {
             foreach ($parent->getMethods() as $m) {
                 if (!$m->isPrivate() && !isset($ccn[$m->getName()])) {
                     $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
                 }
             }
-            // Fetch parent class
-            $parent = $parent->getParentClass();
         }
         return array_sum($ccn);
     }

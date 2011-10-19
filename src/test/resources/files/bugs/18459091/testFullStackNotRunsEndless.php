@@ -1,0 +1,150 @@
+<?php
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
+{
+    
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy
+    implements testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentA,
+            testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentB
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentA
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentC
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentB
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent {
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentC
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface {}
+
+class testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
+    extends testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
+{
+    
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy
+    implements testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+    extends testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+{
+    
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
+{
+    
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy
+    implements testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentA,
+            testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentB
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentA
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentC
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentB
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent {
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentC
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface {}
+
+class testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
+    extends testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
+{
+    
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy
+    implements testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+    extends testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+{
+    
+}

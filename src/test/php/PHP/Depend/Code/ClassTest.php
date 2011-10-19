@@ -1105,6 +1105,81 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetParentClassReturnsExpectedClassInstance
+     *
+     * @return void
+     */
+    public function testGetParentClassReturnsExpectedClassInstance()
+    {
+        $parent = $this->parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getParentClass();
+
+        $this->assertNotNull($parent);
+    }
+
+    /**
+     * testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     */
+    public function testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame()
+    {
+        $this->parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getParentClass();
+    }
+
+    /**
+     * testGetParentClassesReturnsExpectedListClasses
+     * 
+     * @return void
+     */
+    public function testGetParentClassesReturnsExpectedListClasses()
+    {
+        $classes = $this->parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getParentClasses();
+
+        foreach ($classes as $i => $class) {
+            $classes[$i] = $class->getName();
+        }
+
+        $this->assertEquals(
+            array(
+                'testGetParentClassesReturnsExpectedListClasses_parentA',
+                'testGetParentClassesReturnsExpectedListClasses_parentB',
+                'testGetParentClassesReturnsExpectedListClasses_parentC'
+            ),
+            $classes
+        );
+    }
+
+    /**
+     * testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     */
+    public function testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy()
+    {
+        $this->parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getParentClasses();
+    }
+
+    /**
      * testGetInterfaceReferencesReturnsEmptyArrayByDefault
      *
      * @return void

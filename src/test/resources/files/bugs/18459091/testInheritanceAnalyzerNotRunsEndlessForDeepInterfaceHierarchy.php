@@ -1,0 +1,33 @@
+<?php
+class testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy
+    implements testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentA,
+            testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentB
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentA
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentC
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentB
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parent {
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_parentC
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy_interface {}

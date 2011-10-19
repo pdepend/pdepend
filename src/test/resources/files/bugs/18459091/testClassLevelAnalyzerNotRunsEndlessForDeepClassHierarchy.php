@@ -1,0 +1,24 @@
+<?php
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent_parent
+{
+
+}
+
+class testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy_parent_parent_parent
+    extends testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
+{
+    
+}

@@ -1,0 +1,12 @@
+<?php
+class testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy
+    implements testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+{
+
+}
+
+interface testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+    extends testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy_interface
+{
+    
+}
