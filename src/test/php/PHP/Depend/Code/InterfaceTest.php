@@ -726,6 +726,32 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetParentClassesReturnsEmptyArrayByDefault
+     * 
+     * @return void
+     */
+    public function testGetParentClassesReturnsEmptyArrayByDefault()
+    {
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $this->assertSame(array(), $interface->getParentClasses());
+    }
+
+    /**
+     * testGetParentClassesReturnsEmptyArray
+     * 
+     * @return void
+     */
+    public function testGetParentClassesReturnsEmptyArray()
+    {
+        $interface = $this->parseCodeResourceForTest()
+            ->current()
+            ->getInterfaces()
+            ->current();
+
+        $this->assertSame(array(), $interface->getParentClasses());
+    }
+
+    /**
      * testGetInterfaceReferencesReturnsEmptyArrayByDefault
      *
      * @return void

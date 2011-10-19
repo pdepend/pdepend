@@ -1137,6 +1137,17 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetParentClassesReturnsEmptyArrayByDefault
+     * 
+     * @return void
+     */
+    public function testGetParentClassesReturnsEmptyArrayByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $this->assertSame(array(), $class->getParentClasses());
+    }
+
+    /**
      * testGetParentClassesReturnsExpectedListClasses
      * 
      * @return void

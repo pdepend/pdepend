@@ -12,8 +12,14 @@
 		<release version="0.11.0"
                  date="2011/10/04"
                  description="This release closes a critical bug that let PHP_Depend die with a E_FATAL when the used PHP version was 5.4 or greater.">
+            <action date="6dba831" dev="mapi" issue="19817309" system="pivotaltracker" type="add">
+                Implement PHP 5.4 array dereferencing
+            </action>
             <action date="06ce51a" dev="mapi" issue="18976391" system="pivotaltracker" type="fix">
                 PHP_Depend's file cache implementation does not work with PHP 5.4.
+            </action>
+            <action date="13b5d12" dev="mapi" issue="18459091" system="pivotaltracker" type="fix">
+                PDepend task never ends, if there is an incorrect inheritance
             </action>
         </release>
 
