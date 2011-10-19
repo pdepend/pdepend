@@ -312,7 +312,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         $parentClass = $this->parentClassReference->getType();
 
         if ($parentClass === $this) {
-            throw new PHP_Depend_Code_Exceptions_RecursiveInheritanceException($this);
+            throw new PHP_Depend_Code_Exceptions_RecursiveInheritanceException(
+                $this
+            );
         }
 
         // Check parent against global filter
@@ -325,7 +327,15 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
+     * Returns an array with all parents for the current class.
+     *
+     * The returned array contains class instances for each parent of this class.
+     * They are ordered in the reverse inheritance order. This means that the
+     * direct parent of this class is the first element in the returned array
+     * and parent of this parent the second element and so on.
+     *
      * @return array
+     * @since 0.11.0
      */
     public function getParentClasses()
     {
@@ -333,7 +343,9 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         $parent  = $this;
         while (is_object($parent = $parent->getParentClass())) {
             if (in_array($parent, $parents, true)) {
-                throw new PHP_Depend_Code_Exceptions_RecursiveInheritanceException($parent);
+                throw new PHP_Depend_Code_Exceptions_RecursiveInheritanceException(
+                    $parent
+                );
             }
             $parents[] = $parent;
         }
