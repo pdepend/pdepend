@@ -47,7 +47,8 @@
  */
 
 /**
- * 
+ * This analyzer implements several metrics that describe cohesion of classes
+ * and packages.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -118,22 +119,26 @@ class PHP_Depend_Metrics_Cohesion_Analyzer
         }
     }
 
+    /*
     public function visitProperty(PHP_Depend_Code_Property $property)
     {
         $this->fireStartProperty($property);
-echo ltrim($property->getName(), '$'), PHP_EOL;
+        echo ltrim($property->getName(), '$'), PHP_EOL;
         $this->fireEndProperty($property);
     }
-
 
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
 
-        $prefixes = $method->findChildrenOfType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ);
+        $prefixes = $method->findChildrenOfType(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+        );
         foreach ($prefixes as $prefix) {
             $variable = $prefix->getChild(0);
-            if ($variable instanceof PHP_Depend_Code_ASTVariable && $variable->isThis()) {
+            if ($variable instanceof PHP_Depend_Code_ASTVariable
+                && $variable->isThis()
+            ) {
                 echo "\$this->";
             } else if ($variable instanceof PHP_Depend_Code_ASTSelfReference) {
                 echo "self::";
@@ -155,6 +160,6 @@ echo ltrim($property->getName(), '$'), PHP_EOL;
 
         $this->fireEndMethod($method);
     }
-
+    */
 
 }
