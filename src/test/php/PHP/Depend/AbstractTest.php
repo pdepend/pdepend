@@ -259,6 +259,40 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Collects all children from a given node.
+     *
+     * @param PHP_Depend_Code_ASTNode $node The current root node.
+     *
+     * @return array
+     */
+    protected static function collectGraph(PHP_Depend_Code_ASTNode $node)
+    {
+        $graph = array();
+        foreach ($node->getChildren() as $child) {
+            $graph[] = get_class($child) . ' (' . $child->getImage() . ')';
+            if (0 < count($child->getChildren())) {
+                $graph[] = self::collectGraph($child);
+            }
+        }
+        return $graph;
+    }
+
+    /**
+     * Tests that the given node and its children represent the expected ast
+     * object graph.
+     *
+     * @param PHP_Depend_Code_ASTNode $node  The root node.
+     * @param array                   $graph Expected class structure.
+     *
+     * @return void
+     */
+    protected static function assertGraph(PHP_Depend_Code_ASTNode $node, $graph)
+    {
+        $actual = self::collectGraph($node);
+        self::assertEquals($graph, $actual);
+    }
+
+    /**
      * Helper method to allow PHPUnit versions < 3.5.x
      *
      * @param string $expected The expected class or interface.
