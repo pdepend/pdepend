@@ -83,7 +83,9 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         case self::T_TRUE:
         case self::T_CLONE:
         case self::T_FALSE:
+        case self::T_TRAIT:
         case self::T_STRING:
+        case self::T_TRAIT_C:
         case self::T_NAMESPACE:
             return true;
         }
@@ -132,21 +134,23 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         $type = $this->tokenizer->peek();
         switch ($type) {
 
-        case PHP_Depend_TokenizerI::T_CLONE:
-        case PHP_Depend_TokenizerI::T_STRING:
-        case PHP_Depend_TokenizerI::T_USE:
-        case PHP_Depend_TokenizerI::T_GOTO:
-        case PHP_Depend_TokenizerI::T_NULL:
-        case PHP_Depend_TokenizerI::T_SELF:
-        case PHP_Depend_TokenizerI::T_TRUE:
-        case PHP_Depend_TokenizerI::T_FALSE:
-        case PHP_Depend_TokenizerI::T_NAMESPACE:
-        case PHP_Depend_TokenizerI::T_DIR:
-        case PHP_Depend_TokenizerI::T_NS_C:
-        case PHP_Depend_TokenizerI::T_PARENT:
+        case self::T_CLONE:
+        case self::T_STRING:
+        case self::T_USE:
+        case self::T_GOTO:
+        case self::T_NULL:
+        case self::T_SELF:
+        case self::T_TRUE:
+        case self::T_FALSE:
+        case self::T_TRAIT:
+        case self::T_NAMESPACE:
+        case self::T_DIR:
+        case self::T_NS_C:
+        case self::T_PARENT:
+        case self::T_TRAIT_C:
             return $this->consumeToken($type)->image;
 
-        case PHP_Depend_TokenizerI::T_EOF:
+        case self::T_EOF:
             throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
         throw new PHP_Depend_Parser_UnexpectedTokenException(

@@ -50,49 +50,49 @@
  * Define PHP 5.4 __TRAIT__ token constant.
  */
 if (!defined('T_TRAIT_C')) {
-    define('T_TRAIT_C', 365);
+    define('T_TRAIT_C', 42000);
 }
 
 /**
  * Define PHP 5.4 'trait' token constant.
  */
 if (!defined('T_TRAIT')) {
-    define('T_TRAIT', 355);
+    define('T_TRAIT', 42001);
 }
 
 /**
  * Define PHP 5.3 __NAMESPACE__ token constant.
  */
 if (!defined('T_NS_C')) {
-    define('T_NS_C', 378);
+    define('T_NS_C', 42002);
 }
 
 /**
  * Define PHP 5.3 'use' token constant
  */
 if (!defined('T_USE')) {
-    define('T_USE', 340);
+    define('T_USE', 42003);
 }
 
 /**
  * Define PHP 5.3 'namespace' token constant.
  */
 if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 377);
+    define('T_NAMESPACE', 42004);
 }
 
 /**
  * Define PHP 5.3's '__DIR__' token constant.
  */
 if (!defined('T_DIR')) {
-    define('T_DIR', 379);
+    define('T_DIR', 42005);
 }
 
 /**
  * Define PHP 5.3's 'T_GOTO' token constant.
  */
 if (!defined('T_GOTO')) {
-    define('T_GOTO', 333);
+    define('T_GOTO', 42006);
 }
 
 /**

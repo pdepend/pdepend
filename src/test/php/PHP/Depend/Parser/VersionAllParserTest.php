@@ -202,6 +202,54 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserAcceptsTraitAsClassName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitAsClassName()
+    {
+        $class = $this->getFirstTypeForTestCase();
+        self::assertSame('Trait', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsTraitAsInterfaceName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitAsInterfaceName()
+    {
+        $interface = $this->getFirstTypeForTestCase();
+        self::assertSame('Trait', $interface->getName());
+    }
+
+    /**
+     * testParserAcceptsTraitConstantAsClassName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitConstantAsClassName()
+    {
+        $class = $this->getFirstTypeForTestCase();
+        self::assertSame('__TRAIT__', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsTraitConstantAsInterfaceName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitConstantAsInterfaceName()
+    {
+        $interface = $this->getFirstTypeForTestCase();
+        self::assertSame('__TRAIT__', $interface->getName());
+    }
+
+    /**
      * testParserThrowsExpectedExceptionOnTokenStreamEnd
      *
      * @return void
@@ -347,6 +395,30 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserAcceptsTraitAsMethodName
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        self::assertEquals('trait', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsTraitConstantAsMethodName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitConstantAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        self::assertEquals('__trait__', $method->getName());
+    }
+
+    /**
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void
@@ -366,6 +438,30 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
         self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserAcceptsTraitAsFunctionName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitAsFunctionName()
+    {
+        $function = $this->getFirstFunctionForTestCase();
+        self::assertEquals('trait', $function->getName());
+    }
+
+    /**
+     * testParserAcceptsTraitConstantAsFunctionName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitConstantAsFunctionName()
+    {
+        $function = $this->getFirstFunctionForTestCase();
+        self::assertEquals('__TRAIT__', $function->getName());
     }
 
     /**

@@ -154,11 +154,9 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first function found in a test file associated with the
      * given test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_Function
      */
-    protected function getFirstFunctionForTestCase($testCase)
+    protected function getFirstFunctionForTestCase()
     {
         return self::parseCodeResourceForTest()
             ->current()
