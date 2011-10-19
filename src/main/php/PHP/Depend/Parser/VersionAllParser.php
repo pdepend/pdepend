@@ -78,8 +78,11 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     {
         switch ($tokenType) {
 
+        case self::T_DIR:
         case self::T_USE:
+        case self::T_GOTO:
         case self::T_NULL:
+        case self::T_NS_C:
         case self::T_TRUE:
         case self::T_CLONE:
         case self::T_FALSE:

@@ -183,6 +183,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceAsClassName
      *
      * @return void
+     * @since 0.11.0
      */
     public function testParserAcceptsNamespaceAsClassName()
     {
@@ -194,11 +195,36 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceAsInterfaceName
      *
      * @return void
+     * @since 0.11.0
      */
     public function testParserAcceptsNamespaceAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
         self::assertSame('Namespace', $interface->getName());
+    }
+
+    /**
+     * testParserAcceptsNamespaceConstantAsClassName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsNamespaceConstantAsClassName()
+    {
+        $class = $this->getFirstTypeForTestCase();
+        self::assertSame('__NAMESPACE__', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsNamespaceConstantAsInterfaceName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsNamespaceConstantAsInterfaceName()
+    {
+        $interface = $this->getFirstTypeForTestCase();
+        self::assertSame('__NAMESPACE__', $interface->getName());
     }
 
     /**
@@ -247,6 +273,52 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     {
         $interface = $this->getFirstTypeForTestCase();
         self::assertSame('__TRAIT__', $interface->getName());
+    }
+
+    /**
+     * testParserAcceptsGotoKeywordAsClassName
+     *
+     * @return void
+     */
+    public function testParserAcceptsGotoKeywordAsClassName()
+    {
+        $class = $this->getFirstClassForTestCase();
+        self::assertEquals('Goto', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsGotoKeywordAsInterfaceName
+     *
+     * @return void
+     */
+    public function testParserAcceptsGotoKeywordAsInterfaceName()
+    {
+        $class = $this->getFirstInterfaceForTestCase();
+        self::assertEquals('Goto', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsDirConstantAsClassName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsDirConstantAsClassName()
+    {
+        $class = $this->getFirstClassForTestCase();
+        self::assertEquals('__DIR__', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsDirConstantAsInterfaceName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsDirConstantAsInterfaceName()
+    {
+        $class = $this->getFirstInterfaceForTestCase();
+        self::assertEquals('__DIR__', $class->getName());
     }
 
     /**
@@ -365,6 +437,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceKeywordAsMethodName
      *
      * @return void
+     * @since 0.11.0
      */
     public function testParserAcceptsNamespaceKeywordAsMethodName()
     {
@@ -376,6 +449,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceConstantAsMethodName
      *
      * @return void
+     * @since 0.11.0
      */
     public function testParserAcceptsNamespaceConstantAsMethodName()
     {
@@ -438,6 +512,54 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
         self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserAcceptsGotoAsFunctionName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsGotoAsFunctionName()
+    {
+        $function = $this->getFirstFunctionForTestCase();
+        self::assertEquals('goto', $function->getName());
+    }
+
+    /**
+     * testParserAcceptsDirConstantAsFunctionName
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsDirConstantAsFunctionName()
+    {
+        $function = $this->getFirstFunctionForTestCase();
+        self::assertEquals('__DIR__', $function->getName());
+    }
+
+    /**
+     * testParserAcceptsNamespaceKeywordAsFunctionName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsNamespaceKeywordAsFunctionName()
+    {
+        $method = $this->getFirstFunctionForTestCase();
+        self::assertEquals('namespace', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsNamespaceConstantAsFunctionName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsNamespaceConstantAsFunctionName()
+    {
+        $method = $this->getFirstFunctionForTestCase();
+        self::assertEquals('__NAMESPACE__', $method->getName());
     }
 
     /**
