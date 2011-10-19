@@ -322,8 +322,50 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     }
 
     /**
+     * testGraphDereferencedArrayFromFunctionCallAndMethodInvocation
+     *
+     * Source:
+     * <code>
+     * foo()[42]->bar()
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTIndexExpression      ->  [ ]
+     *     - ASTFunctionPostfix
+     *       - ASTIdentifier       ->  foo
+     *       - ASTArguments        ->  ( )
+     *     - ASTLiteral            ->  42
+     *   - ASTMethodPostfix        ->  ->
+     *     - ASTIdentifier         ->  bar
+     *     - ASTArguments          ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGraphDereferencedArrayFromFunctionCallAndMethodInvocation()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
+            array(
+                PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
+                PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
      * testMemberPrimaryPrefixGraphForChainedObjectMemberAccess
      *
+     * Source:
      * <code>
      * $obj->foo->bar()->baz();
      * </code>
@@ -332,21 +374,126 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
-        $this->assertGraphEquals(
-            $prefix,
+        $this->assertGraph(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ
+                PHP_Depend_Code_ASTVariable::CLAZZ                    . ' ($obj)',
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ         . ' (->)',     array(
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ         . ' (foo)',  array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ          . ' (foo)'),
+                        PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ . ' (->)', array(
+                            PHP_Depend_Code_ASTMethodPostfix::CLAZZ   . ' (bar)', array(
+                                PHP_Depend_Code_ASTIdentifier::CLAZZ  . ' (bar)',
+                                PHP_Depend_Code_ASTArguments::CLAZZ   . ' ()'),
+                            PHP_Depend_Code_ASTMethodPostfix::CLAZZ   . ' (baz)', array(
+                                PHP_Depend_Code_ASTIdentifier::CLAZZ  . ' (baz)',
+                                PHP_Depend_Code_ASTArguments::CLAZZ   . ' ()')))
+            )
+        );
+    }
+
+    /**
+     * testGraphDereferencedArrayFromFunctionCallAndMultipleMethodInvocations
+     *
+     * Source:
+     * <code>
+     * foo(23)[42]->bar()[17]->baz()[0]
+     * </code>
+     * 
+     * @return void
+     */
+    public function testGraphDereferencedArrayFromFunctionCallAndMultipleMethodInvocations()
+    {
+        $this->assertGraph(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
+            array(
+                PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ         . ' ()',    array(
+                    PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ      . ' (->)',  array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ . ' ()',    array(
+                            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ  . ' (foo)', array(
+                                PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (foo)',
+                                PHP_Depend_Code_ASTArguments::CLAZZ    . ' ()',    array(
+                                    PHP_Depend_Code_ASTLiteral::CLAZZ  . ' (23)')),
+                            PHP_Depend_Code_ASTLiteral::CLAZZ          . ' (42)'),
+                        PHP_Depend_Code_ASTMethodPostfix::CLAZZ        . ' (bar)', array(
+                            PHP_Depend_Code_ASTIdentifier::CLAZZ       . ' (bar)',
+                            PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()')),
+                    PHP_Depend_Code_ASTLiteral::CLAZZ                  . ' (17)'),
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ                . ' (baz)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ               . ' (baz)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ                . ' ()')
+            )
+        );
+    }
+
+    /**
+     * testGraphDereferencedArrayFromStaticMethodCallAndMultipleMethodInvocations
+     *
+     * Source:
+     * <code>
+     * Clazz::foo(23)[42]->bar()[17]->baz()[0]
+     * </code>
+     *
+     * @return void
+     */
+    public function testGraphDereferencedArrayFromStaticMethodCallAndMultipleMethodInvocations()
+    {
+        $this->assertGraph(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
+            array(
+                PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ                      . ' ()',    array(
+                    PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ                   . ' (->)',  array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ              . ' ()',    array(
+                            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ           . ' (::)', array(
+                                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ . ' (Clazz)',
+                                PHP_Depend_Code_ASTMethodPostfix::CLAZZ             . ' (foo)', array(
+                                    PHP_Depend_Code_ASTIdentifier::CLAZZ            . ' (foo)',
+                                    PHP_Depend_Code_ASTArguments::CLAZZ             . ' ()',    array(
+                                        PHP_Depend_Code_ASTLiteral::CLAZZ           . ' (23)'))),
+                            PHP_Depend_Code_ASTLiteral::CLAZZ                       . ' (42)'),
+                        PHP_Depend_Code_ASTMethodPostfix::CLAZZ                     . ' (bar)', array(
+                            PHP_Depend_Code_ASTIdentifier::CLAZZ                    . ' (bar)',
+                            PHP_Depend_Code_ASTArguments::CLAZZ                     . ' ()')),
+                    PHP_Depend_Code_ASTLiteral::CLAZZ                               . ' (17)'),
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ                             . ' (baz)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ                            . ' (baz)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ                             . ' ()')
+            )
+        );
+    }
+
+    /**
+     * testGraphDereferencedArrayFromVariableClassStaticMethodCallAndMultipleMethodInvocations
+     *
+     * Source:
+     * <code>
+     * $class::foo(23)[42]->bar()[17]->baz()[0]
+     * </code>
+     *
+     * @return void
+     */
+    public function testGraphDereferencedArrayFromVariableClassStaticMethodCallAndMultipleMethodInvocations()
+    {
+        $this->assertGraph(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
+            array(
+                PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ                      . ' ()',    array(
+                    PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ                   . ' (->)',  array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ              . ' ()',    array(
+                            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ           . ' (::)', array(
+                                PHP_Depend_Code_ASTVariable::CLAZZ                  . ' ($class)',
+                                PHP_Depend_Code_ASTMethodPostfix::CLAZZ             . ' (foo)', array(
+                                    PHP_Depend_Code_ASTIdentifier::CLAZZ            . ' (foo)',
+                                    PHP_Depend_Code_ASTArguments::CLAZZ             . ' ()',    array(
+                                        PHP_Depend_Code_ASTLiteral::CLAZZ           . ' (23)'))),
+                            PHP_Depend_Code_ASTLiteral::CLAZZ                       . ' (42)'),
+                        PHP_Depend_Code_ASTMethodPostfix::CLAZZ                     . ' (bar)', array(
+                            PHP_Depend_Code_ASTIdentifier::CLAZZ                    . ' (bar)',
+                            PHP_Depend_Code_ASTArguments::CLAZZ                     . ' ()')),
+                    PHP_Depend_Code_ASTLiteral::CLAZZ                               . ' (17)'),
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ                             . ' (baz)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ                            . ' (baz)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ                             . ' ()')
             )
         );
     }

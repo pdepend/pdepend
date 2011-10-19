@@ -69,6 +69,220 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testArrayIndexGraphDereferencedFromFunctionCall
+     *
+     * Source:
+     * <code>
+     * foo()[42]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTIndexExpression
+     *   - ASTFunctionPostfix
+     *     - ASTIdentifier
+     *     - ASTArguments
+     *   - ASTLiteral
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayIndexGraphDereferencedFromFunctionCall()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testArrayIndexGraphDereferencedFromVariableFunctionCall
+     *
+     * Source:
+     * <code>
+     * $function()[23]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTIndexExpression
+     *   - ASTFunctionPostfix
+     *     - ASTVariable
+     *     - ASTArguments
+     *   - ASTLiteral
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayIndexGraphDereferencedFromVariableFunctionCall()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testArrayIndexGraphDereferencedFromMethodCall
+     *
+     * Source:
+     * <code>
+     * $object->method()[42]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTIndexExpression
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTVariable
+     *     - ASTMethodPostfix
+     *       - ASTIdentifier
+     *       - ASTArguments
+     *   - ASTLiteral
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayIndexGraphDereferencedFromMethodCall()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testArrayIndexGraphDereferencedFromVariableMethodCall
+     *
+     * Source:
+     * <code>
+     * $object->$method()[23]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTIndexExpression
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTVariable
+     *     - ASTMethodPostfix
+     *       - ASTVariable
+     *       - ASTArguments
+     *   - ASTLiteral
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayIndexGraphDereferencedFromVariableMethodCall()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testArrayIndexGraphDereferencedFromStaticMethodCall
+     *
+     * Source:
+     * <code>
+     * Clazz::method()[42]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTIndexExpression
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTClassOrInterfaceReference
+     *     - ASTMethodPostfix
+     *       - ASTIdentifier
+     *       - ASTArguments
+     *   - ASTLiteral
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayIndexGraphDereferencedFromStaticMethodCall()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testArrayIndexGraphDereferencedFromVariableStaticMethodCall
+     *
+     * Source:
+     * <code>
+     * Clazz::$method()[23]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTIndexExpression
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTClassOrInterfaceReference
+     *     - ASTMethodPostfix
+     *       - ASTVariable
+     *       - ASTArguments
+     *   - ASTLiteral
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayIndexGraphDereferencedFromVariableStaticMethodCall()
+    {
+        $this->assertGraphEquals(
+            $this->_getFirstArrayIndexExpressionInFunction(),
+            array(
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ,
+                PHP_Depend_Code_ASTArguments::CLAZZ,
+                PHP_Depend_Code_ASTLiteral::CLAZZ
+            )
+        );
+    }
+
+    /**
      * testAcceptInvokesVisitOnGivenVisitor
      *
      * @return void

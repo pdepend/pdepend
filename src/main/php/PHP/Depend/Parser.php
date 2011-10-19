@@ -3417,7 +3417,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             )
         );
 
-        return $prefix;
+        return $this->_parseOptionalMemberPrimaryPrefix(
+            $this->_parseOptionalIndexExpression($prefix)
+        );
     }
 
     /**
@@ -3478,7 +3480,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $prefix->addChild($postfix);
 
-        return $prefix;
+        return $this->_parseOptionalMemberPrimaryPrefix(
+            $this->_parseOptionalIndexExpression($prefix)
+        );
     }
 
     /**
