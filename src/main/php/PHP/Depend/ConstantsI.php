@@ -874,6 +874,16 @@ interface PHP_Depend_ConstantsI
     const T_ENDDECLARE = 153;
 
     /**
+     * Marks a 'trait' keyword token.
+     */
+    const T_TRAIT = 154;
+
+    /**
+     * Marks a '__TRAIT__' magic constant token.
+     */
+    const T_TRAIT_C = 155;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

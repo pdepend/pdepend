@@ -102,6 +102,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
         T_ISSET                     =>  self::T_ISSET,
         T_PRINT                     =>  self::T_PRINT,
         T_THROW                     =>  self::T_THROW,
+        T_TRAIT                     =>  self::T_TRAIT,
         T_UNSET                     =>  self::T_UNSET,
         T_WHILE                     =>  self::T_WHILE,
         T_ENDFOR                    =>  self::T_ENDFOR,
@@ -124,6 +125,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
         T_LNUMBER                   =>  self::T_LNUMBER,
         T_PRIVATE                   =>  self::T_PRIVATE,
         T_REQUIRE                   =>  self::T_REQUIRE,
+        T_TRAIT_C                   =>  self::T_TRAIT_C,
         T_ABSTRACT                  =>  self::T_ABSTRACT,
         T_ENDWHILE                  =>  self::T_ENDWHILE,
         T_FUNCTION                  =>  self::T_FUNCTION,
@@ -233,10 +235,12 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
         'true'           =>  self::T_TRUE,
         'array'          =>  self::T_ARRAY,
         'false'          =>  self::T_FALSE,
+        'trait'          =>  self::T_TRAIT,
         'parent'         =>  self::T_PARENT,
         'namespace'      =>  self::T_NAMESPACE,
         '__dir__'        =>  self::T_DIR,
-        '__namespace__'  =>  self::T_NS_C,
+        '__trait__'      =>  self::T_TRAIT_C,
+        '__namespace__'  =>  self::T_NS_C
     );
 
     /**

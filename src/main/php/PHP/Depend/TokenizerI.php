@@ -47,6 +47,20 @@
  */
 
 /**
+ * Define PHP 5.4 __TRAIT__ token constant.
+ */
+if (!defined('T_TRAIT_C')) {
+    define('T_TRAIT_C', 365);
+}
+
+/**
+ * Define PHP 5.4 'trait' token constant.
+ */
+if (!defined('T_TRAIT')) {
+    define('T_TRAIT', 355);
+}
+
+/**
  * Define PHP 5.3 __NAMESPACE__ token constant.
  */
 if (!defined('T_NS_C')) {

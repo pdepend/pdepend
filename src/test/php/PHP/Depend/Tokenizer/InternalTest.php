@@ -68,15 +68,72 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testTokenizerReturnsExpectedConstantForTraitKeyword
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testTokenizerReturnsExpectedConstantForTraitKeyword()
+    {
+        $this->assertEquals(
+            array(
+                PHP_Depend_ConstantsI::T_OPEN_TAG,
+                PHP_Depend_ConstantsI::T_TRAIT,
+                PHP_Depend_ConstantsI::T_STRING,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN,
+                PHP_Depend_ConstantsI::T_PUBLIC,
+                PHP_Depend_ConstantsI::T_FUNCTION,
+                PHP_Depend_ConstantsI::T_STRING,
+                PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN,
+                PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN,
+                PHP_Depend_ConstantsI::T_RETURN,
+                PHP_Depend_ConstantsI::T_LNUMBER,
+                PHP_Depend_ConstantsI::T_SEMICOLON,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE,
+            ),
+            $this->_getTokenTypesForTest()
+        );
+    }
+
+    /**
+     * testTokenizerReturnsExpectedConstantForTraitMagicConstant
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testTokenizerReturnsExpectedConstantForTraitMagicConstant()
+    {
+        $this->assertEquals(
+            array(
+                PHP_Depend_ConstantsI::T_OPEN_TAG,
+                PHP_Depend_ConstantsI::T_TRAIT,
+                PHP_Depend_ConstantsI::T_STRING,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN,
+                PHP_Depend_ConstantsI::T_PUBLIC,
+                PHP_Depend_ConstantsI::T_FUNCTION,
+                PHP_Depend_ConstantsI::T_STRING,
+                PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN,
+                PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN,
+                PHP_Depend_ConstantsI::T_RETURN,
+                PHP_Depend_ConstantsI::T_TRAIT_C,
+                PHP_Depend_ConstantsI::T_SEMICOLON,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE,
+                PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE,
+            ),
+            $this->_getTokenTypesForTest()
+        );
+    }
+
+    /**
      * Tests the tokenizer with a source file that contains only classes.
      *
      * @return void
      */
     public function testInternalWithClasses()
     {
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
-
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
@@ -114,12 +171,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE
         );
 
-        $actual = array();
-        while (is_object($token = $tokenizer->next())) {
-            $actual[] = $token->type;
-        }
-
-        self::assertEquals($expected, $actual);
+        self::assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -191,9 +243,6 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testInternalWithProceduralCodeAndFunction()
     {
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
-
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_FUNCTION,
@@ -230,12 +279,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CLOSE_TAG
         );
 
-        $actual = array();
-        while (is_object($token = $tokenizer->next())) {
-            $actual[] = $token->type;
-        }
-
-        self::assertEquals($expected, $actual);
+        self::assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -245,9 +289,6 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testInternalStaticCallBug01()
     {
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
-
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
@@ -270,12 +311,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
         );
 
-        $actual = array();
-        while (is_object($token = $tokenizer->next())) {
-            $actual[] = $token->type;
-        }
-
-        self::assertEquals($expected, $actual);
+        self::assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -295,9 +331,6 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      */
     public function testInternalDollarSyntaxBug09()
     {
-        $tokenizer  = new PHP_Depend_Tokenizer_Internal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
-
         $expected = array(
             PHP_Depend_TokenizerI::T_OPEN_TAG,
             PHP_Depend_TokenizerI::T_DOC_COMMENT,
@@ -322,12 +355,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
             PHP_Depend_TokenizerI::T_CURLY_BRACE_CLOSE,
         );
 
-        $actual = array();
-        while (is_object($token = $tokenizer->next())) {
-            $actual[] = $token->type;
-        }
-
-        self::assertEquals($expected, $actual);
+        self::assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -572,24 +600,34 @@ Manuel', 3, 5, 61, 6),
      */
     public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString()
     {
+        $expected = array(
+            PHP_Depend_ConstantsI::T_OPEN_TAG,
+            PHP_Depend_ConstantsI::T_BACKTICK,
+            PHP_Depend_ConstantsI::T_ENCAPSED_AND_WHITESPACE,
+            PHP_Depend_ConstantsI::T_VARIABLE,
+            PHP_Depend_ConstantsI::T_DOUBLE_QUOTE,
+            PHP_Depend_ConstantsI::T_BACKTICK,
+            PHP_Depend_ConstantsI::T_SEMICOLON,
+        );
+
+        self::assertEquals($expected, $this->_getTokenTypesForTest());
+    }
+
+    /**
+     * Returns an array with the token types found in a file associated with
+     * the currently running test.
+     *
+     * @return array(integer)
+     */
+    private function _getTokenTypesForTest()
+    {
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
-        $actual = array();
+        $types = array();
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array($token->type);
+            $types[] = $token->type;
         }
-
-        $expected = array(
-            array(PHP_Depend_ConstantsI::T_OPEN_TAG),
-            array(PHP_Depend_ConstantsI::T_BACKTICK),
-            array(PHP_Depend_ConstantsI::T_ENCAPSED_AND_WHITESPACE),
-            array(PHP_Depend_ConstantsI::T_VARIABLE),
-            array(PHP_Depend_ConstantsI::T_DOUBLE_QUOTE),
-            array(PHP_Depend_ConstantsI::T_BACKTICK),
-            array(PHP_Depend_ConstantsI::T_SEMICOLON),
-        );
-
-        self::assertEquals($expected, $actual);
+        return $types;
     }
 }
