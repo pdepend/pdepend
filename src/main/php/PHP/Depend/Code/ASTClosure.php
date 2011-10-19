@@ -91,6 +91,47 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
     }
 
     /**
+     * Returns whether this closure was defined as static or not.
+     *
+     * This method will return <b>TRUE</b> when the closure was declared as
+     * followed:
+     *
+     * <code>
+     * $closure = static function( $e ) {
+     *   return pow( $e, 2 );
+     * }
+     * </code>
+     *
+     * And it will return <b>FALSE</b> when we declare the closure as usual:
+     *
+     * <code>
+     * $closure = function( $e ) {
+     *   return pow( $e, 2 );
+     * }
+     * </code>
+     *
+     * @return boolean
+     * @since 0.11.0
+     */
+    public function isStatic()
+    {
+        return $this->getMetadataBoolean(6);
+    }
+
+    /**
+     * This method can be used to flag this closure instance as static.
+     *
+     * @param boolean $static Whether this closure is static or not.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function setStatic($static)
+    {
+        $this->setMetadataBoolean(6, (boolean) $static);
+    }
+
+    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
@@ -114,6 +155,6 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
      */
     protected function getMetadataSize()
     {
-        return 6;
+        return 7;
     }
 }

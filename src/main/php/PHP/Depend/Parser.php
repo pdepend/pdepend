@@ -5354,17 +5354,21 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses a static variable declaration list or a member primary
-     * prefix invoked in the static context of a class.
+     * This method parses a static variable declaration list, a member primary
+     * prefix invoked in the static context of a class or it parses a static
+     * closure declaration.
      *
+     * Static variable:
      * <code>
      * function foo() {
      * //  ------------------------------
      *     static $foo, $bar, $baz = null;
      * //  ------------------------------
      * }
+     * </code>
      *
-     *
+     * Static method invocation:
+     * <code>
      * class Foo {
      *     public function baz() {
      * //      ----------------
@@ -5377,6 +5381,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * class Bar extends Foo {
      *     public function foobar() {}
      * }
+     * </code>
+     *
+     * Static closure declaration:
+     * <code>
+     * $closure = static function($x, $y) {
+     *     return ($x * $y);
+     * };
      * </code>
      *
      * @return PHP_Depend_Code_ASTConstant
@@ -5404,6 +5415,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $prefix = $this->_parseStaticMemberPrimaryPrefix($static);
             return $this->_setNodePositionsAndReturn($prefix);
+        } else if ($tokenType === self::T_FUNCTION) {
+            $closure = $this->_parseClosureDeclaration();
+            $closure->setStatic(true);
+
+            return $this->_setNodePositionsAndReturn($closure);
         }
 
         $declaration = $this->_parseStaticVariableDeclaration($token);

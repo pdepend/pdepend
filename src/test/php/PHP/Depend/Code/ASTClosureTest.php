@@ -77,7 +77,18 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     public function testReturnsByReferenceReturnsFalseByDefault()
     {
         $closure = $this->_getFirstClosureInFunction();
-        self::assertFalse($closure->returnsByReference());
+        $this->assertFalse($closure->returnsByReference());
+    }
+
+    /**
+     * testReturnsByReferenceReturnsFalseByDefaultForStaticClosure
+     *
+     * @return void
+     */
+    public function testReturnsByReferenceReturnsFalseByDefaultForStaticClosure()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        $this->assertFalse($closure->returnsByReference());
     }
 
     /**
@@ -88,7 +99,18 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     public function testReturnsByReferenceReturnsTrueForClosure()
     {
         $closure = $this->_getFirstClosureInFunction();
-        self::assertTrue($closure->returnsByReference());
+        $this->assertTrue($closure->returnsByReference());
+    }
+
+    /**
+     * testReturnsByReferenceReturnsTrueForStaticClosure
+     *
+     * @return void
+     */
+    public function testReturnsByReferenceReturnsTrueForStaticClosure()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        $this->assertTrue($closure->returnsByReference());
     }
 
     /**
@@ -99,7 +121,91 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     public function testReturnsByReferenceReturnsTrueForAssignedClosure()
     {
         $closure = $this->_getFirstClosureInFunction();
-        self::assertTrue($closure->returnsByReference());
+        $this->assertTrue($closure->returnsByReference());
+    }
+
+    /**
+     * testIsStaticReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testIsStaticReturnsFalseByDefault()
+    {
+        $closure = new PHP_Depend_Code_ASTClosure();
+        $this->assertFalse($closure->isStatic());
+    }
+
+    /**
+     * testIsStaticReturnsTrueWhenSetToTrue
+     *
+     * @return void
+     */
+    public function testIsStaticReturnsTrueWhenSetToTrue()
+    {
+        $closure = new PHP_Depend_Code_ASTClosure();
+        $closure->setStatic(true);
+        
+        $this->assertTrue($closure->isStatic());
+    }
+
+    /**
+     * testIsStaticReturnsFalseWhenSetToFalse
+     *
+     * @return void
+     */
+    public function testIsStaticReturnsFalseWhenSetToFalse()
+    {
+        $closure = new PHP_Depend_Code_ASTClosure();
+        $closure->setStatic(false);
+
+        $this->assertFalse($closure->isStatic());
+    }
+
+    /**
+     * testIsStaticReturnsFalseForNonStaticClosure
+     *
+     * Source:
+     * <code>
+     * return function($x, $y) {
+     *     return pow($x, $y);
+     * }
+     * </code>
+     * 
+     * @return void
+     */
+    public function testIsStaticReturnsFalseForNonStaticClosure()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        $this->assertFalse($closure->isStatic());
+    }
+
+    /**
+     * testIsStaticReturnsTrueForStaticClosure
+     *
+     * Source:
+     * <code>
+     * return static function($x, $y) {
+     *     return pow($x, $y);
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testIsStaticReturnsTrueForStaticClosure()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        $this->assertTrue($closure->isStatic());
+    }
+
+    /**
+     * testClosureContainsExpectedNumberChildNodes
+     *
+     * @return void
+     */
+    public function testClosureContainsExpectedNumberChildNodes()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        $this->assertEquals(2, count($closure->getChildren()));
     }
 
     /**
@@ -132,7 +238,7 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
             ->will($this->returnValue(42));
 
         $node = new PHP_Depend_Code_ASTClosure();
-        self::assertEquals(42, $node->accept($visitor));
+        $this->assertEquals(42, $node->accept($visitor));
     }
 
     /**
@@ -180,14 +286,47 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testClosureContainsExpectedNumberChildNodes
+     * testStaticClosureHasExpectedStartLine
      *
      * @return void
      */
-    public function testClosureContainsExpectedNumberChildNodes()
+    public function testStaticClosureHasExpectedStartLine()
     {
-        $closure = $this->_getFirstClosureInFunction();
-        $this->assertEquals(2, count($closure->getChildren()));
+        $label = $this->_getFirstClosureInFunction();
+        $this->assertEquals(4, $label->getStartLine());
+    }
+
+    /**
+     * testStaticClosureHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testStaticClosureHasExpectedEndLine()
+    {
+        $label = $this->_getFirstClosureInFunction();
+        $this->assertEquals(7, $label->getEndLine());
+    }
+
+    /**
+     * testStaticClosureHasExpectedStartColumn
+     *
+     * @return void
+     */
+    public function testStaticClosureHasExpectedStartColumn()
+    {
+        $label = $this->_getFirstClosureInFunction();
+        $this->assertEquals(12, $label->getStartColumn());
+    }
+
+    /**
+     * testStaticClosureHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testStaticClosureHasExpectedEndColumn()
+    {
+        $label = $this->_getFirstClosureInFunction();
+        $this->assertEquals(9, $label->getEndColumn());
     }
 
     /**
