@@ -21,6 +21,9 @@
             <action date="13b5d12" dev="mapi" issue="18459091" system="pivotaltracker" type="fix">
                 PDepend task never ends, if there is an incorrect inheritance
             </action>
+            <action date="1e24a34" dev="mapi" issue="19875155" system="pivotaltracker" type="fix">
+                Implement static closures
+            </action>
         </release>
 
 		<release version="0.10.6"
