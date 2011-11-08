@@ -67,7 +67,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @group pdepend::ast
  * @group unittest
  *
- * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_ASTPropertyPostfix
  */
 class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest

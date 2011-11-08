@@ -72,7 +72,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * testAssignmentExpressionFromMethodInvocation
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
      */
     public function testAssignmentExpressionFromMethodInvocation()
     {
@@ -93,7 +92,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * testAssignmentExpressionFromPropertyAccess
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
      */
     public function testAssignmentExpressionFromPropertyAccess()
     {
