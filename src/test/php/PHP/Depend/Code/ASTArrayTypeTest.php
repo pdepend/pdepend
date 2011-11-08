@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTArrayType
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +107,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testArrayTypeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayTypeHasExpectedStartLine()
     {
@@ -126,12 +118,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testArrayTypeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayTypeHasExpectedStartColumn()
     {
@@ -143,12 +129,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testArrayTypeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayTypeHasExpectedEndLine()
     {
@@ -160,12 +140,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testArrayTypeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testArrayTypeHasExpectedEndColumn()
     {
@@ -177,10 +151,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testIsArrayReturnsTrue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsArrayReturnsTrue()
     {
@@ -192,10 +162,6 @@ class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
      * testIsPrimitiveReturnsFalse
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTArrayType
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPrimitiveReturnsFalse()
     {

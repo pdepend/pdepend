@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,9 +72,6 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
      * testSummaryReportFiltersClassesNotFlaggedUserDefined
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testSummaryReportFiltersClassesNotFlaggedUserDefined()
     {
@@ -83,9 +83,6 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
      * testSummaryReportFiltersInternalClasses
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testSummaryReportFiltersInternalClasses()
     {
@@ -97,9 +94,6 @@ class PHP_Depend_Bugs_SummaryReportContainsClassesWithoutSourceFileBug115Test
      * testSummaryReportDoesNotContainEmptyPackages
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testSummaryReportDoesNotContainEmptyPackages()
     {

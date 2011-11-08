@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTCatchStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +107,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementHasExpectedStartLine()
     {
@@ -126,12 +118,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementHasExpectedStartColumn()
     {
@@ -143,12 +129,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementHasExpectedEndLine()
     {
@@ -160,12 +140,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementHasExpectedEndColumn()
     {
@@ -177,12 +151,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testCatchStatementVariableHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementVariableHasExpectedStartLine()
     {
@@ -195,12 +163,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testCatchStatementVariableHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementVariableHasExpectedStartColumn()
     {
@@ -213,12 +175,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testCatchStatementVariableHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementVariableHasExpectedEndLine()
     {
@@ -231,12 +187,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testCatchStatementVariableHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCatchStatementVariableHasExpectedEndColumn()
     {
@@ -249,12 +199,6 @@ class PHP_Depend_Code_ASTCatchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testThirdChildOfCatchStatementIsScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCatchStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThirdChildOfCatchStatementIsScopeStatement()
     {

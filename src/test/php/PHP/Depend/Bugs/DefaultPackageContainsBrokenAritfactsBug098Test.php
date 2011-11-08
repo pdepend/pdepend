@@ -63,6 +63,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -71,9 +74,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain a function with a broken signature.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainFunctionWithBrokenSignature()
     {
@@ -92,9 +92,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain a class with a broken method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainClassWithBrokenMethod()
     {
@@ -113,9 +110,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain an interface with a broken body.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
     {

@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_DefaultNamespaceBug106Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -69,9 +72,6 @@ class PHP_Depend_Bugs_DefaultNamespaceBug106Test extends PHP_Depend_Bugs_Abstrac
      * testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
     {
@@ -83,9 +83,6 @@ class PHP_Depend_Bugs_DefaultNamespaceBug106Test extends PHP_Depend_Bugs_Abstrac
      * testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
     {

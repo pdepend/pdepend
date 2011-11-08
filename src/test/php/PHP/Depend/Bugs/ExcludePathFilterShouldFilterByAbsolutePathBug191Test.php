@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/191
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,9 +72,6 @@ class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
      * testAbsoluteUnixPathAsFilterPattern
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAbsoluteUnixPathAsFilterPattern()
     {
@@ -83,9 +83,6 @@ class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
      * testAbsoluteWindowsPathAsFilterPattern
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAbsoluteWindowsPathAsFilterPattern()
     {

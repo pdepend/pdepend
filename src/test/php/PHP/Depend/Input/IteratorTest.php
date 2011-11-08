@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Input_Iterator
+ * @group pdepend
+ * @group pdepend::input
+ * @group unittest
  */
 class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorWithOneFileExtension
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorWithOneFileExtension()
     {
@@ -84,9 +84,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorWithMultipleFileExtensions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorWithMultipleFileExtensions()
     {
@@ -100,9 +97,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorPassesLocalPathToFilterWhenRootIsPresent
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
     {
@@ -123,9 +117,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
     {
@@ -144,9 +135,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorPassesAbsolutePathToFilterWhenRootNotMatches
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
     {

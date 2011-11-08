@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::integration
+ * @group integrationtest
  */
 class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractTest
 {
@@ -95,9 +98,6 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
      * testUnchangedSourceFileGetsRestored
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::integration
-     * @group integrationtest
      */
     public function testUnchangedSourceFileGetsRestored()
     {
@@ -114,9 +114,6 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
      * testChangedSourceFileGetsProcessed
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::integration
-     * @group integrationtest
      */
     public function testChangedSourceFileGetsProcessed()
     {

@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::integration
+ * @group integrationtest
  */
 class PHP_Depend_Integration_DependExcludePathFilterTest
     extends PHP_Depend_AbstractTest
@@ -70,9 +73,6 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
      * testPDependFiltersByRelativePath
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::integration
-     * @group integrationtest
      */
     public function testPDependFiltersByRelativePath()
     {
@@ -94,9 +94,6 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
      * testPDependFiltersByAbsolutePath
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::integration
-     * @group integrationtest
      */
     public function testPDependFiltersByAbsolutePath()
     {
@@ -118,9 +115,6 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
      * testPDependNotFiltersByOverlappingPathMatch
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::integration
-     * @group integrationtest
      */
     public function  testPDependNotFiltersByOverlappingPathMatch()
     {

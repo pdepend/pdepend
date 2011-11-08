@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,9 +72,6 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
      * testAnalyzerCountsNumberOfMethodsForClassInterfaceSize
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAnalyzerCountsNumberOfMethodsForClassInterfaceSize()
     {
@@ -94,9 +94,6 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
      * testAnalyzerCountsNumberOfMethodsForClassSize
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testAnalyzerCountsNumberOfMethodsForClassSize()
     {

@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTCastExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,10 +107,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testNormalizesWhitespacesInCastExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testNormalizesWhitespacesInCastExpression()
     {
@@ -124,10 +118,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testNormalizesCaseInCastExpressionImage
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testNormalizesCaseInCastExpressionImage()
     {
@@ -139,10 +129,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsBooleanReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsBooleanReturnsFalseByDefault()
     {
@@ -154,10 +140,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsBooleanReturnsTrueForShortExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsBooleanReturnsTrueForShortExpression()
     {
@@ -169,10 +151,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsBooleanReturnsTrueForLongExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsBooleanReturnsTrueForLongExpression()
     {
@@ -184,10 +162,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsIntegerReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsIntegerReturnsFalseByDefault()
     {
@@ -199,10 +173,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsIntegerReturnsTrueForShortNotation
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsIntegerReturnsTrueForShortNotation()
     {
@@ -214,10 +184,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsIntegerReturnsTrueForLongNotation
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsIntegerReturnsTrueForLongNotation()
     {
@@ -229,10 +195,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsArrayReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsArrayReturnsFalseByDefault()
     {
@@ -244,10 +206,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsArrayReturnsTrueForArrayCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsArrayReturnsTrueForArrayCast()
     {
@@ -259,10 +217,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsFloatReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsFloatReturnsFalseByDefault()
     {
@@ -274,10 +228,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsFloatReturnsTrueForRealCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsFloatReturnsTrueForRealCast()
     {
@@ -289,10 +239,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsFloatReturnsTrueForFloatCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsFloatReturnsTrueForFloatCast()
     {
@@ -304,10 +250,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsFloatReturnsTrueForDoubleCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsFloatReturnsTrueForDoubleCast()
     {
@@ -319,10 +261,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsStringReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsStringReturnsFalseByDefault()
     {
@@ -334,10 +272,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsStringReturnsTrueForStringCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsStringReturnsTrueForStringCast()
     {
@@ -349,10 +283,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsObjectReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsObjectReturnsFalseByDefault()
     {
@@ -364,10 +294,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsObjectReturnsTrueForObjectCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsObjectReturnsTrueForObjectCast()
     {
@@ -379,10 +305,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsUnsetReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsUnsetReturnsFalseByDefault()
     {
@@ -394,10 +316,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testIsUnsetReturnsTrueForUnsetCast
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsUnsetReturnsTrueForUnsetCast()
     {
@@ -409,12 +327,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testParserHandlesNestedCastExpressions
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserHandlesNestedCastExpressions()
     {
@@ -434,12 +346,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testCastExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCastExpressionHasExpectedStartLine()
     {
@@ -451,12 +357,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testCastExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCastExpressionHasExpectedStartColumn()
     {
@@ -468,12 +368,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testCastExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCastExpressionHasExpectedEndLine()
     {
@@ -485,12 +379,6 @@ class PHP_Depend_Code_ASTCastExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testCastExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCastExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCastExpressionHasExpectedEndColumn()
     {

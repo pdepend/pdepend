@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTCompoundVariable
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +107,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithInlineLiteral()
     {
@@ -128,12 +120,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithInlineConstantEscapedLiteral()
     {
@@ -147,12 +133,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithInlineBacktickLiteral()
     {
@@ -166,12 +146,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithMemberPrimaryPrefix()
     {
@@ -191,12 +165,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
@@ -208,12 +176,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedStartLine()
     {
@@ -225,12 +187,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedStartColumn()
     {
@@ -242,12 +198,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedEndLine()
     {
@@ -259,12 +209,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedEndColumn()
     {

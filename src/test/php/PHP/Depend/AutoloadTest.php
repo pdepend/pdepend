@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @since     0.10.0
  *
  * @covers PHP_Depend_Autoload
+ * @group pdepend
+ * @group pdepend::autoload
+ * @group unittest
  */
 class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
 {
@@ -105,9 +108,6 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
      * testAutoloadLoadsClassInPhpDependNamespace
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::autoload
-     * @group unittest
      */
     public function testAutoloadLoadsClassInPhpDependNamespace()
     {
@@ -127,9 +127,6 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
      * testAutoloadNotLoadsClassFromDifferentNamespace
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::autoload
-     * @group unittest
      */
     public function testAutoloadNotLoadsClassFromDifferentNamespace()
     {

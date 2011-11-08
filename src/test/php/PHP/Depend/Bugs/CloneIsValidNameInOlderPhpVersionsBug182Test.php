@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,9 +72,6 @@ class PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test
      * testParserAcceptsCloneAsFunctionName
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsCloneAsFunctionName()
     {
@@ -82,9 +82,6 @@ class PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test
      * testParserAcceptsCloneAsMethodName
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsCloneAsMethodName()
     {
@@ -95,9 +92,6 @@ class PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test
      * testParserAcceptsCloneAsClassName
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsCloneAsClassName()
     {
@@ -108,9 +102,6 @@ class PHP_Depend_Bugs_CloneIsValidNameInOlderPhpVersionsBug182Test
      * testParserAcceptsCloneAsInterfaceName
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserAcceptsCloneAsInterfaceName()
     {

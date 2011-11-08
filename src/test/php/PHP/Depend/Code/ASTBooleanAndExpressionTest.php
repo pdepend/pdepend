@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTBooleanAndExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -67,10 +73,6 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTBooleanAndExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
@@ -88,10 +90,6 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
      *
      * @return void
      * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTBooleanAndExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
@@ -109,12 +107,6 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
      * testBooleanAndExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTBooleanAndExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedStartLine()
     {
@@ -126,12 +118,6 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
      * testBooleanAndExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTBooleanAndExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedStartColumn()
     {
@@ -143,12 +129,6 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
      * testBooleanAndExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTBooleanAndExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedEndLine()
     {
@@ -160,12 +140,6 @@ class PHP_Depend_Code_ASTBooleanAndExpressionTest extends PHP_Depend_Code_ASTNod
      * testBooleanAndExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTBooleanAndExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBooleanAndExpressionHasExpectedEndColumn()
     {

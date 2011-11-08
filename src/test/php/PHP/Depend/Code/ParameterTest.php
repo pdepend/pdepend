@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Code_Parameter
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that the allows null method returns <b>true</b> for a simple parameter.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
@@ -90,9 +90,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter passed by reference.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
@@ -112,9 +109,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
@@ -134,9 +128,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter with explicit <b>null</b> default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
@@ -156,9 +147,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter without explicit <b>null</b> default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
@@ -178,9 +166,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * parameter with explicit <b>null</b> default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67()
     {
@@ -200,9 +185,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67()
     {
@@ -220,9 +202,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * of a parent function/method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
     {
@@ -242,9 +221,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that the parameter class handles a type holder as expected.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference()
     {
@@ -264,9 +240,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that a parameter returns <b>null</b> when no type holder was set.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
@@ -285,9 +258,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that a parameter returns the expected function instance.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterReturnsExpectedDeclaringFunction()
     {
@@ -304,9 +274,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Tests that a parameter returns the expected method instance.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterReturnsExpectedDeclaringMethod()
     {
@@ -325,9 +292,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * testAcceptInvokesVisitParameterOnSuppliedVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testAcceptInvokesVisitParameterOnSuppliedVisitor()
     {
@@ -345,9 +309,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterExportThrowsReflectionExceptionForUnknownFunction()
     {
@@ -366,9 +327,6 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * function parameter.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParameterExportsExistingFunction()
     {

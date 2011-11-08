@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -69,9 +72,6 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesSimpleSignedDefaultValue()
     {
@@ -87,9 +87,6 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesMultipleSignedDefaultValue()
     {
@@ -105,9 +102,6 @@ class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test
      * Tests that the parser handles a parameter with a signed default value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserHandlesComplexSignedDefaultValue()
     {

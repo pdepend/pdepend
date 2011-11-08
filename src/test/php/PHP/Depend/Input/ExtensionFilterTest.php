@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Input_ExtensionFilter
+ * @group pdepend
+ * @group pdepend::input
+ * @group unittest
  */
 class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * testExtensionFilterAcceptsOneFileExtension
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExtensionFilterAcceptsOneFileExtension()
     {
@@ -84,9 +84,6 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * testExtensionFilterAcceptsMultipleFileExtensions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExtensionFilterAcceptsMultipleFileExtensions()
     {

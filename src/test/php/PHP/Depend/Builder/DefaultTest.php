@@ -631,6 +631,188 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTCommentReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTCommentReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTComment::CLAZZ,
+            $this->createBuilder()->buildASTComment('// Hello')
+        );
+    }
+
+    /**
+     * testBuildASTArrayTypeReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTArrayTypeReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArrayType::CLAZZ,
+            $this->createBuilder()->buildASTArrayType()
+        );
+    }
+
+    /**
+     * testBuildASTCompoundVariableReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTCompoundVariableReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
+            $this->createBuilder()->buildASTCompoundVariable('${x}')
+        );
+    }
+
+    /**
+     * testBuildASTAssignmentExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTAssignmentExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTAssignmentExpression::CLAZZ,
+            $this->createBuilder()->buildASTAssignmentExpression('=')
+        );
+    }
+
+    /**
+     * testBuildASTBooleanAndExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTBooleanAndExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ,
+            $this->createBuilder()->buildASTBooleanAndExpression()
+        );
+    }
+
+    /**
+     * testBuildASTBooleanOrExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTBooleanOrExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ,
+            $this->createBuilder()->buildASTBooleanOrExpression()
+        );
+    }
+
+    /**
+     * testBuildASTCastExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTCastExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTCastExpression::CLAZZ,
+            $this->createBuilder()->buildASTCastExpression('(boolean)')
+        );
+    }
+
+    /**
+     * testBuildASTCloneExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTCloneExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTCloneExpression::CLAZZ,
+            $this->createBuilder()->buildASTCloneExpression('clone')
+        );
+    }
+
+    /**
+     * testBuildASTCompoundExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTCompoundExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
+            $this->createBuilder()->buildASTCompoundExpression()
+        );
+    }
+
+    /**
+     * testBuildASTConditionalExpressionReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTConditionalExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTConditionalExpression::CLAZZ,
+            $this->createBuilder()->buildASTConditionalExpression()
+        );
+    }
+
+    /**
+     * testBuildASTBreakStatementReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTBreakStatementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTBreakStatement::CLAZZ,
+            $this->createBuilder()->buildASTBreakStatement('break')
+        );
+    }
+
+    /**
+     * testBuildASTCatchStatementReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTCatchStatementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTCatchStatement::CLAZZ,
+            $this->createBuilder()->buildASTCatchStatement('catch')
+        );
+    }
+
+    /**
+     * testBuildASTDeclareStatementReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTDeclareStatementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTDeclareStatement::CLAZZ,
+            $this->createBuilder()->buildASTDeclareStatement()
+        );
+    }
+
+    /**
+     * testBuildASTElseIfStatementReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTElseIfStatementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTElseIfStatement::CLAZZ,
+            $this->createBuilder()->buildASTElseIfStatement('elseif')
+        );
+    }
+
+    /**
      * testBuildASTArrayIndexExpressionReturnsExpectedType
      * 
      * @return void

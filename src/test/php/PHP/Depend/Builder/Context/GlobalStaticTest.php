@@ -59,6 +59,10 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Builder_Context_GlobalStatic
+ * @group pdepend
+ * @group pdepend::builder
+ * @group pdepend::builder::context
+ * @group unittest
  */
 class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTest
 {
@@ -66,10 +70,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterClassCallsRestoreClassOnBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testRegisterClassCallsRestoreClassOnBuilder()
     {
@@ -86,10 +86,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterInterfaceCallsRestoreInterfaceOnBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder()
     {
@@ -106,10 +102,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterFunctionCallsRestoreFunctionOnBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testRegisterFunctionCallsRestoreFunctionOnBuilder()
     {
@@ -126,10 +118,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testGetClassDelegatesCallToWrappedBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testGetClassDelegatesCallToWrappedBuilder()
     {
@@ -146,10 +134,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testGetClassOrInterfaceDelegatesCallToWrappedBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder()
     {

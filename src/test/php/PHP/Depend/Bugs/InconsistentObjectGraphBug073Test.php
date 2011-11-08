@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_AbstractTest
 {
@@ -75,9 +78,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage()
     {
@@ -103,9 +103,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage()
     {
@@ -127,9 +124,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage()
     {
@@ -156,9 +150,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage()
     {
@@ -180,9 +171,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
     {
@@ -208,9 +196,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
     {
@@ -240,9 +225,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
     {
@@ -272,9 +254,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * </code>
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
     {
@@ -295,9 +274,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithPackage()
     {
@@ -308,9 +284,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithoutPackage()
     {
@@ -321,9 +294,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithPackage()
     {
@@ -334,9 +304,6 @@ class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_
      * Tests that pdepend does not die with a fatal error.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithoutPackage()
     {
