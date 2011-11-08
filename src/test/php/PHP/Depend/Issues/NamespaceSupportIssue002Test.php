@@ -92,11 +92,10 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
      */
     public function testParserHandlesMultipleUseDeclarations()
     {
-        $packages = self::parseSource('issues/002-002-use-declaration.php');
-
-        $class = $packages->current()
-                          ->getClasses()
-                          ->current();
+        $class = self::parseSource('issues/002-002-use-declaration.php')
+            ->current()
+            ->getClasses()
+            ->current();
 
         $parentClass = $class->getParentClass();
         self::assertEquals('FooBar', $parentClass->getName());

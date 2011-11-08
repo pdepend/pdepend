@@ -78,7 +78,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
     public function testParserHandlesEmptyConfigurationFile()
     {
         $parser = new PHP_Depend_Util_Configuration_Parser(new stdClass());
-        $parser->parse($this->getTestConfiguration('pdepend.xml'));
+        $this->assertNotNull($parser->parse($this->getTestConfiguration('pdepend.xml')));
     }
 
     /**
@@ -141,11 +141,26 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
     public function testParserModifiesConfigurationAdaptive()
     {
         $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
-        $values = $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
+        $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
+
+        $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
+
+        self::assertEquals(23, $values->imageConvert->fontSize);
+    }
+
+    /**
+     * testParserOverwritesAlreadyDefinedConfigurationValues
+     *
+     * @return void
+     */
+    public function testParserOverwritesAlreadyDefinedConfigurationValues()
+    {
+        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
+
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals('Courier New', $values->imageConvert->fontFamily);
-        self::assertEquals(23, $values->imageConvert->fontSize);
     }
 
     /**
