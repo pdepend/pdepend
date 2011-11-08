@@ -119,7 +119,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testThirdChildOfForeachStatementIsASTScopeStatement()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -204,7 +204,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementContainsExpressionAsFirstChild()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -221,7 +221,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithoutKeyAndWithValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -238,7 +238,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithoutKeyAndWithValueByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -255,7 +255,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithKeyAndValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -272,7 +272,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithKeyAndValueByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -290,7 +290,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithObjectPropertyByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -308,7 +308,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithKeyAndObjectPropertyByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -326,7 +326,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithObjectPropertyAsKey()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -344,7 +344,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithObjectPropertyAsValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -362,7 +362,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testForeachStatementWithObjectPropertyAsKeyAndValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
     }
 
     /**

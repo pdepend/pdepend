@@ -136,7 +136,7 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
     }
     
     /**
@@ -153,7 +153,7 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testSecondChildOfDoWhileStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -238,7 +238,7 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
     public function testDoWhileStatementWithoutScopeStatementChild()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTIfStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTIfStatement::CLAZZ, $stmt->getChild(0));
     }
 
     /**

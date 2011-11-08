@@ -277,7 +277,7 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     public function testPropertyContainsExpectDefaultValueArray()
     {
         $property = $this->_getFirstPropertyInClass();
-        self::assertType('array', $property->getDefaultValue());
+        self::assertInternalType('array', $property->getDefaultValue());
     }
 
     /**

@@ -271,7 +271,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $className = 'PHP_Depend_Code_Package';
         
         foreach ($packages as $package) {
-            $this->assertType($className, $pdepend->getPackage($package));
+            $this->assertInstanceOf($className, $pdepend->getPackage($package));
         }
     }
     

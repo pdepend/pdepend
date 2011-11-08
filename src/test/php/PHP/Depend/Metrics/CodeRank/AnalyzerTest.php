@@ -463,7 +463,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $class   = new PHP_Depend_Code_Class('PDepend');
         $metrics = $this->_analyzer->getNodeMetrics($class);
 
-        self::assertType('array', $metrics);
+        self::assertInternalType('array', $metrics);
         self::assertEquals(0, count($metrics));
     }
 

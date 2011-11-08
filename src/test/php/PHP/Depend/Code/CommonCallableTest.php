@@ -115,7 +115,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     public function testGetParametersReturnsArrayWithObjectsOfTypeParameter()
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
-        self::assertType(PHP_Depend_Code_Parameter::CLAZZ, $parameters[0]);
+        self::assertInstanceOf(PHP_Depend_Code_Parameter::CLAZZ, $parameters[0]);
     }
 
     /**

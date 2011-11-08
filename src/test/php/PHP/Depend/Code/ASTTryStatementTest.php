@@ -187,7 +187,7 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -204,7 +204,7 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement()
     {
         $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTCatchStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTCatchStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**

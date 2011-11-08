@@ -73,7 +73,7 @@ class PHP_Depend_Log_LoggerFactoryTest extends PHP_Depend_AbstractTest
         $factory = new PHP_Depend_Log_LoggerFactory();
         $logger  = $factory->createLogger('summary-xml', 'pdepend.xml');
         
-        $this->assertType('PHP_Depend_Log_Summary_Xml', $logger);
+        $this->assertInstanceOf(PHP_Depend_Log_Summary_Xml::CLAZZ, $logger);
     }
     
     /**
@@ -88,7 +88,7 @@ class PHP_Depend_Log_LoggerFactoryTest extends PHP_Depend_AbstractTest
         $logger1 = $factory->createLogger('summary-xml', 'pdepend1.xml');
         $logger2 = $factory->createLogger('summary-xml', 'pdepend2.xml');
 
-        $this->assertType('PHP_Depend_Log_Summary_Xml', $logger1);
+        $this->assertInstanceOf(PHP_Depend_Log_Summary_Xml::CLAZZ, $logger1);
         $this->assertSame($logger1, $logger2);
     }
     

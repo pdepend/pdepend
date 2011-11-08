@@ -136,7 +136,7 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFirstChildOfWhileStatementIsASTExpression()
     {
         $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -153,7 +153,7 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testSecondChildOfWhileStatementIsASTScopeStatement()
     {
         $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**

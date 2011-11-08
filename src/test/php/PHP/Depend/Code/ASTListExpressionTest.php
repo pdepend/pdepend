@@ -281,7 +281,7 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
         $var  = $stmt->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $var);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $var);
     }
 
     /**
@@ -300,7 +300,7 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
         $var  = $stmt->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $var);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $var);
     }
 
     /**
@@ -319,7 +319,7 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
         $var  = $stmt->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ, $var);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ, $var);
     }
 
     /**
@@ -338,7 +338,7 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
         $var  = $stmt->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $var);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $var);
     }
 
     /**

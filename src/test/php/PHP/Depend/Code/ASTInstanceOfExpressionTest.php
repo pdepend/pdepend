@@ -309,7 +309,7 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
         );
 
         $reference = $instanceOf->getChild(0);
-        $this->assertType($type, $reference);
+        $this->assertInstanceOf($type, $reference);
         $this->assertEquals($image, $reference->getImage());
     }
 

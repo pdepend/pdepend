@@ -136,7 +136,7 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
     public function testConstantPostfixStructureForStaticAccessOnVariable()
     {
         $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTIdentifier::CLAZZ, $postfix->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTIdentifier::CLAZZ, $postfix->getChild(0));
     }
 
     /**

@@ -255,7 +255,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFirstChildOfForStatementIsInstanceOfForInit()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForInit::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForInit::CLAZZ, $stmt->getChild(0));
     }
 
     /**
@@ -272,7 +272,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFirstChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
 
@@ -304,7 +304,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testSecondChildOfForStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -321,7 +321,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testSecondChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -338,7 +338,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testThirdChildOfForStatementIsInstanceOfForUpdate()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -355,7 +355,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testThirdChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
     }
 
     /**
@@ -372,7 +372,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(3));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(3));
     }
 
     /**
@@ -389,7 +389,7 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFourthChildOfForStatementIsInstanceOfStatement()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTStatement::CLAZZ, $stmt->getChild(3));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTStatement::CLAZZ, $stmt->getChild(3));
     }
 
     /**

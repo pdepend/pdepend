@@ -78,7 +78,7 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
         $factory = new PHP_Depend_Util_Cache_Factory(
             $this->createConfigurationFixture()
         );
-        self::assertType('PHP_Depend_Util_Cache_Driver', $factory->create());
+        self::assertInstanceOf('PHP_Depend_Util_Cache_Driver', $factory->create());
     }
 
     /**
@@ -136,7 +136,7 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        self::assertType(
+        self::assertInstanceOf(
             PHP_Depend_Util_Cache_Driver_File::CLAZZ,
             $this->createFactoryFixture()->create()
         );
@@ -155,7 +155,7 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        self::assertType(
+        self::assertInstanceOf(
             PHP_Depend_Util_Cache_Driver_Memory::CLAZZ,
             $this->createFactoryFixture()->create()
         );

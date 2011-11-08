@@ -1346,7 +1346,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $string   = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
         $variable = $string->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
     }
 
     /**
@@ -1364,7 +1364,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $string   = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
         $variable = $string->getChild(0);
 
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
     }
 
     /**
@@ -1382,7 +1382,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current();
 
         $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
-        $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
     }
 
     /**

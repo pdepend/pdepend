@@ -99,7 +99,7 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
     public function testParserInjectsValueObjectIntoConstantDeclarator()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
-        self::assertType('PHP_Depend_Code_Value', $declarator->getValue());
+        self::assertInstanceOf(PHP_Depend_Code_Value::CLAZZ, $declarator->getValue());
     }
 
     /**

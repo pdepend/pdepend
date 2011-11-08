@@ -416,7 +416,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->getInterfaces()
             ->current();
 
-        $this->assertType(
+        $this->assertInstanceOf(
             PHP_Depend_Code_ASTFormalParameter::CLAZZ,
             $class->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ)
         );

@@ -170,7 +170,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testBacktickExpressionContainsExpectedCompoundVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
     }
 
     /**
@@ -233,7 +233,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(0));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(0));
     }
 
     /**
@@ -250,7 +250,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsVariableAfterNotOperator()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
     }
 
     /**
@@ -267,7 +267,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsVariableAfterSilenceOperator()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
     }
 
     /**
@@ -284,7 +284,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsCompoundVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
+        self::assertInstanceOf(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
     }
 
     /**
@@ -301,7 +301,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsCompoundExpressionAfterLiteral()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $string->getChild(1));
     }
 
     /**
@@ -318,7 +318,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
     }
 
     /**
@@ -335,7 +335,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
     public function testDoubleQuoteStringContainsDollarLiteralForVariableVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(0));
+        self::assertInstanceOf(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(0));
     }
 
     /**

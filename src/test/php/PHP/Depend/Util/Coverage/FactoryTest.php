@@ -78,7 +78,7 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
         $factory = new PHP_Depend_Util_Coverage_Factory();
         $report  = $factory->create(dirname(__FILE__) . '/_files/clover.xml');
 
-        $this->assertType(PHP_Depend_Util_Coverage_CloverReport::CLAZZ, $report);
+        $this->assertInstanceOf(PHP_Depend_Util_Coverage_CloverReport::CLAZZ, $report);
     }
 
     /**

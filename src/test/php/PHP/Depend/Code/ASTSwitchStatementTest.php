@@ -121,7 +121,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $children  = $stmt->getChildren();
 
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
     }
 
     /**
@@ -140,8 +140,8 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
         $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $children  = $stmt->getChildren();
 
-        $this->assertType(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[1]);
-        $this->assertType(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[2]);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[1]);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[2]);
     }
 
     /**

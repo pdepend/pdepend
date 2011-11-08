@@ -121,7 +121,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTString::CLAZZ, $string);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTString::CLAZZ, $string);
     }
 
     /**
@@ -159,7 +159,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTString::CLAZZ, $string);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTString::CLAZZ, $string);
     }
 
     /**

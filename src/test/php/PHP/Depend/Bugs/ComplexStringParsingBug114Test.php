@@ -152,6 +152,6 @@ class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_Abs
             ->current();
 
         $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
-        $this->assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
     }
 }

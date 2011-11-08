@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTVariableDeclaratorTest extends PHP_Depend_Code_ASTNodeT
         $declarator = new PHP_Depend_Code_ASTVariableDeclarator();
         $declarator->setValue(new PHP_Depend_Code_Value());
 
-        self::assertType(PHP_Depend_Code_Value::CLAZZ, $declarator->getValue());
+        self::assertInstanceOf(PHP_Depend_Code_Value::CLAZZ, $declarator->getValue());
     }
 
     /**

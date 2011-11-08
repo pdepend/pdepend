@@ -204,7 +204,7 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testFirstChildOfElseIfStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
     
     /**
@@ -221,7 +221,7 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
@@ -306,7 +306,7 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     public function testElseIfStatementWithoutScopeStatementBody()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForeachStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForeachStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
