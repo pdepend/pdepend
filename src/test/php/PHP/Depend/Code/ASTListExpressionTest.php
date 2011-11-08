@@ -61,62 +61,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTListExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitListExpression'));
-
-        $expr = new PHP_Depend_Code_ASTListExpression();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitListExpression'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTListExpression();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionHasExpectedStartLine()
     {
@@ -128,12 +85,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionHasExpectedStartColumn()
     {
@@ -145,12 +96,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionHasExpectedEndLine()
     {
@@ -162,12 +107,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionHasExpectedEndColumn()
     {
@@ -179,12 +118,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the list supports many variables in it
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionSupportsManyVariables()
     {
@@ -197,12 +130,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the list supports a single variable
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionSupportsSingleVariable()
     {
@@ -215,12 +142,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the list supports commas without variables
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionSupportsExtraCommas()
     {
@@ -233,12 +154,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testListExpressionWithComments
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionWithComments()
     {
@@ -251,12 +166,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testListExpressionWithoutChildExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionWithoutChildExpression()
     {
@@ -269,12 +178,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testListExpressionWithVariableVariable
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionWithVariableVariable()
     {
@@ -288,12 +191,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testListExpressionWithCompoundVariable
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionWithCompoundVariable()
     {
@@ -307,12 +204,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testListExpressionWithArrayElement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionWithArrayElement()
     {
@@ -326,12 +217,6 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testListExpressionWithObjectProperty
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTListExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testListExpressionWithObjectProperty()
     {

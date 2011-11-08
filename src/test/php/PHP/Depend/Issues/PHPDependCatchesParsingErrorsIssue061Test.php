@@ -63,6 +63,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @covers PHP_Depend
  * @group pdepend
  * @group pdepend::issues
+ * @group pdepend::textui
  * @group unittest
  */
 class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
@@ -95,10 +96,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Runner
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
@@ -117,10 +114,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Runner
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
@@ -139,10 +132,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Command
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess()
     {
@@ -163,10 +152,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Command
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess()
     {

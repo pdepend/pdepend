@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitExpression'));
-
-        $expr = new PHP_Depend_Code_ASTExpression();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitExpression'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTExpression();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * testExpressionHasExpectedNumberOfChildNodes
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testExpressionHasExpectedNumberOfChildNodes()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the generated object graph of an expression node.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testExpressionGraphWithBooleanExpressions()
     {
@@ -152,12 +103,6 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testExpressionHasExpectedStartLine()
     {
@@ -169,12 +114,6 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testExpressionHasExpectedStartColumn()
     {
@@ -186,12 +125,6 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testExpressionHasExpectedEndLine()
     {
@@ -203,12 +136,6 @@ class PHP_Depend_Code_ASTExpressionTest extends PHP_Depend_Code_ASTNodeTest
      * testExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testExpressionHasExpectedEndColumn()
     {

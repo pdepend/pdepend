@@ -57,62 +57,19 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTGlobalStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTGlobalStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitGlobalStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTGlobalStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTGlobalStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitGlobalStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTGlobalStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testGlobalStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGlobalStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGlobalStatementHasExpectedStartLine()
     {
@@ -124,12 +81,6 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testGlobalStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGlobalStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGlobalStatementHasExpectedStartColumn()
     {
@@ -141,12 +92,6 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testGlobalStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGlobalStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGlobalStatementHasExpectedEndLine()
     {
@@ -158,12 +103,6 @@ class PHP_Depend_Code_ASTGlobalStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testGlobalStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGlobalStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGlobalStatementHasExpectedEndColumn()
     {

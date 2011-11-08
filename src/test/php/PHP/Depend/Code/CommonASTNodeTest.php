@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @since     0.10.0
  *
  * @covers PHP_Depend_Code_ASTNode
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetCommentReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetCommentReturnsNullByDefault()
     {
@@ -82,9 +82,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetCommentReturnsInjectedCommentValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetCommentReturnsInjectedCommentValue()
     {
@@ -98,9 +95,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartColumnReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartColumnReturnsZeroByDefault()
     {
@@ -112,9 +106,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartColumnReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartColumnReturnsInjectedEndLineValue()
     {
@@ -128,9 +119,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartLineReturnsZeroByDefault()
     {
@@ -142,9 +130,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartLineReturnsInjectedEndLineValue()
     {
@@ -158,9 +143,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndColumnReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndColumnReturnsZeroByDefault()
     {
@@ -172,9 +154,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndColumnReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndColumnReturnsInjectedEndLineValue()
     {
@@ -188,9 +167,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndLineReturnsZeroByDefault()
     {
@@ -202,9 +178,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndLineReturnsInjectedEndLineValue()
     {

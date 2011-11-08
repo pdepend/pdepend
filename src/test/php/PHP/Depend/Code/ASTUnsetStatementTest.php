@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTUnsetStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTUnsetStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitUnsetStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTUnsetStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTUnsetStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitUnsetStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTUnsetStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testUnsetStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTUnsetStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testUnsetStatementHasExpectedStartLine()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testUnsetStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTUnsetStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testUnsetStatementHasExpectedStartColumn()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testUnsetStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTUnsetStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testUnsetStatementHasExpectedEndLine()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testUnsetStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTUnsetStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testUnsetStatementHasExpectedEndColumn()
     {

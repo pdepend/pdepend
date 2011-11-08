@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTLiteral
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithBooleanTrueExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithBooleanTrueExpression()
     {
@@ -82,11 +83,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithBooleanFalseExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithBooleanFalseExpression()
     {
@@ -98,11 +94,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithIntegerExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithIntegerExpression()
     {
@@ -114,11 +105,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithSignedIntegerExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithSignedIntegerExpression()
     {
@@ -130,11 +116,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithFloatExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithFloatExpression()
     {
@@ -146,11 +127,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithSignedFloatExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithSignedFloatExpression()
     {
@@ -162,11 +138,6 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithNullExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithNullExpression()
     {
@@ -175,57 +146,9 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitLiteral'));
-
-        $literal = new PHP_Depend_Code_ASTLiteral();
-        $literal->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitLiteral'))
-            ->will($this->returnValue(42));
-
-        $literal = new PHP_Depend_Code_ASTLiteral();
-        self::assertEquals(42, $literal->accept($visitor));
-    }
-
-    /**
      * Tests that an invalid literal results in the expected exception.
      * 
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()

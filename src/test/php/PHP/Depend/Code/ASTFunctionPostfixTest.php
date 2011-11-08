@@ -99,41 +99,6 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
         $postfix = $this->_getFirstFunctionPostfixInFunction();
         $this->assertEquals('$function', $postfix->getImage());
     }
-    
-    /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFunctionPostfix'));
-
-        $postfix = new PHP_Depend_Code_ASTFunctionPostfix();
-        $postfix->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFunctionPostfix'))
-            ->will($this->returnValue(42));
-
-        $postfix = new PHP_Depend_Code_ASTFunctionPostfix();
-        self::assertEquals(42, $postfix->accept($visitor));
-    }
 
     /**
      * Tests that a parsed function postfix has the expected object structure.

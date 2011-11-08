@@ -63,6 +63,10 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Configuration_Factory
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::configuration
+ * @group unittest
  */
 class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
 {
@@ -103,10 +107,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedCacheDriver
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedCacheDriver()
     {
@@ -120,10 +120,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedCacheLocation
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedCacheLocation()
     {
@@ -140,10 +136,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedFontFamily
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedFontFamily()
     {
@@ -157,10 +149,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedFontSize
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedFontSize()
     {
@@ -174,10 +162,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlDist
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlDist()
     {
@@ -193,10 +177,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateDefaultOverwritesSettingsWithValuesDefinedInXml
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateDefaultOverwritesSettingsWithValuesDefinedInXml()
     {
@@ -212,10 +192,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlAndXmlDist
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlAndXmlDist()
     {
@@ -231,10 +207,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateForNotExistingFileThrowsExpectedException
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      * @expectedException InvalidArgumentException
      */
     public function testCreateForNotExistingFileThrowsExpectedException()
@@ -247,10 +219,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsExpectedConfigurationInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateReturnsExpectedConfigurationInstance()
     {

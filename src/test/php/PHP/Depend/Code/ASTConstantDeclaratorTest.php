@@ -61,8 +61,10 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTConstantDeclarator
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -70,9 +72,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testReturnValueOfMagicSleepContainsValueProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testReturnValueOfMagicSleepContainsValueProperty()
     {
@@ -92,9 +91,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testParserInjectsValueObjectIntoConstantDeclarator
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserInjectsValueObjectIntoConstantDeclarator()
     {
@@ -106,9 +102,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testParserInjectsExpectedScalarValueIntoConstantDeclarator
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserInjectsExpectedScalarValueIntoConstantDeclarator()
     {
@@ -117,51 +110,9 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConstantDeclarator'));
-
-        $node = new PHP_Depend_Code_ASTConstantDeclarator();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConstantDeclarator'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTConstantDeclarator();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * testConstantDeclaratorHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedStartLine()
     {
@@ -173,9 +124,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedStartColumn()
     {
@@ -187,9 +135,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedEndLine()
     {
@@ -201,9 +146,6 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDeclaratorHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDeclaratorHasExpectedEndColumn()
     {

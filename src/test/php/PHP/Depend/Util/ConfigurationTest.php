@@ -63,6 +63,10 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Configuration
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::configuration
+ * @group unittest
  */
 class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
 {
@@ -70,10 +74,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertyAccessForExistingValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testPropertyAccessForExistingValue()
     {
@@ -89,10 +89,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertyAccessForNotExistingValueThrowsExpectedException
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      * @expectedException OutOfRangeException
      */
     public function testPropertyAccessForNotExistingValueThrowsExpectedException()
@@ -108,10 +104,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      * @expectedException OutOfRangeException
      */
     public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown()
@@ -124,10 +116,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testIssetReturnsTrueForExistingValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testIssetReturnsTrueForExistingValue()
     {
@@ -143,10 +131,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testIssetReturnsFalseForNotExistingValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testIssetReturnsFalseForNotExistingValue()
     {

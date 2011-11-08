@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTConstantPostfix
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConstantPostfix'));
-
-        $postfix = new PHP_Depend_Code_ASTConstantPostfix();
-        $postfix->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConstantPostfix'))
-            ->will($this->returnValue(42));
-
-        $postfix = new PHP_Depend_Code_ASTConstantPostfix();
-        self::assertEquals(42, $postfix->accept($visitor));
-    }
-
-    /**
      * Tests that a parsed constant postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantPostfixStructureForSimpleStaticAccess()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed method postfix has the expected object structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantPostfixStructureForStaticAccessOnVariable()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testConstantPostfixHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantPostfixHasExpectedStartLine()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testConstantPostfixHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantPostfixHasExpectedStartColumn()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testConstantPostfixHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantPostfixHasExpectedEndLine()
     {
@@ -194,12 +127,6 @@ class PHP_Depend_Code_ASTConstantPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * testConstantPostfixHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantPostfix
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantPostfixHasExpectedEndColumn()
     {

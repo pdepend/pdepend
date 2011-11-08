@@ -60,6 +60,11 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Code_Property
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
 {
@@ -67,10 +72,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * Tests that userland implementation redeclares all methods.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testAllReflectionApiMethodsAvailable()
     {
@@ -114,10 +115,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForVarProperty()
     {
@@ -150,10 +147,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForPublicProperty()
     {
@@ -186,10 +179,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForProtectedProperty()
     {
@@ -222,10 +211,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForPrivateProperty()
     {
@@ -258,10 +243,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForPublicStaticProperty()
     {
@@ -294,10 +275,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForProtectedStaticProperty()
     {
@@ -330,10 +307,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * native reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetModifiersForPrivateStaticProperty()
     {
@@ -366,10 +339,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * method call exception.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetAccessibleThrowsExceptionBecauseThisFeatureIsNotSupported()
     {
@@ -391,10 +360,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * exception.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetValueThrowsExceptionBecauseThisFeatureIsNotSupported()
     {
@@ -416,10 +381,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * exception.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetValueThrowsExceptionBecauseThisFeatureIsNotSupported()
     {
@@ -441,10 +402,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testToStringReturnsExpectedStringForPropertyWithoutDefaultValueIssue67()
     {
@@ -462,10 +419,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testToStringReturnsExpectedStringForPropertyWithArrayDefaultValueIssue67()
     {
@@ -483,10 +436,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testToStringReturnsExpectedStringForPropertyWithBooleanDefaultValueIssue67()
     {
@@ -504,10 +453,6 @@ class PHP_Depend_Code_ReflectionPropertyTest extends PHP_Depend_AbstractTest
      * reflection api.
      *
      * @return void
-     * @covers PHP_Depend_Code_Property
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testToStringReturnsExpectedStringForPropertyDeclaredStaticIssue67()
     {

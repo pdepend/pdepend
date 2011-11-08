@@ -117,41 +117,6 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitPropertyPostfix'));
-
-        $postfix = new PHP_Depend_Code_ASTPropertyPostfix();
-        $postfix->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTPropertyPostfix
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitPropertyPostfix'))
-            ->will($this->returnValue(42));
-
-        $postfix = new PHP_Depend_Code_ASTPropertyPostfix();
-        self::assertEquals(42, $postfix->accept($visitor));
-    }
-
-    /**
      * testPropertyPostfixGraphForArrayElementInvocation
      *
      * <code>

@@ -69,39 +69,6 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitSwitchLabel'));
-
-        $node = new PHP_Depend_Code_ASTSwitchLabel();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitSwitchLabel'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTSwitchLabel();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void

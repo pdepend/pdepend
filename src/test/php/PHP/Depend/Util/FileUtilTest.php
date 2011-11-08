@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Util_FileUtil
+ * @group pdepend
+ * @group pdepend::util
+ * @group unittest
  */
 class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
      * testGetSysTempDirReturnsExpectedDirectory
      * 
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testGetSysTempDirReturnsExpectedDirectory()
     {
@@ -84,9 +84,6 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
      * testGetUserHomeDirReturnsExpectedDirectory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testGetUserHomeDirReturnsExpectedDirectory()
     {
@@ -100,9 +97,6 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
      * testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group unittest
      */
     public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory()
     {

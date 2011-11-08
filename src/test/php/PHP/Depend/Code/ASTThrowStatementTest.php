@@ -59,61 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTThrowStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTThrowStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTThrowStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitThrowStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTThrowStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTThrowStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitThrowStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTThrowStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testThrowStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTThrowStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThrowStatementHasExpectedStartLine()
     {
@@ -125,11 +83,6 @@ class PHP_Depend_Code_ASTThrowStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testThrowStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTThrowStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThrowStatementHasExpectedStartColumn()
     {
@@ -141,11 +94,6 @@ class PHP_Depend_Code_ASTThrowStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testThrowStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTThrowStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThrowStatementHasExpectedEndLine()
     {
@@ -157,11 +105,6 @@ class PHP_Depend_Code_ASTThrowStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testThrowStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTThrowStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThrowStatementHasExpectedEndColumn()
     {

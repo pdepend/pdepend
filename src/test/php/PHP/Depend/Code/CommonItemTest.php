@@ -59,6 +59,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_AbstractItem
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
 {
@@ -66,9 +69,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetNameReturnsValueOfFirstConstructorArgument
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetNameReturnsValueOfFirstConstructorArgument()
     {
@@ -80,9 +80,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetUuidReturnsMd5HashByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetUuidReturnsMd5HashByDefault()
     {
@@ -94,9 +91,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetUuidReturnsInjectedUuidValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetUuidReturnsInjectedUuidValue()
     {
@@ -110,9 +104,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetSourceFileReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceFileReturnsNullByDefault()
     {
@@ -124,9 +115,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetSourceFileReturnsInjectedFileInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceFileReturnsInjectedFileInstance()
     {
@@ -142,9 +130,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsNullByDefault()
     {
@@ -156,9 +141,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsInjectedDocCommentValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsInjectedDocCommentValue()
     {

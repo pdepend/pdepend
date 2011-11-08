@@ -59,6 +59,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTScope
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -66,12 +72,6 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the scope-statement has the expected start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTScope
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testScopeHasExpectedStartLine()
     {
@@ -83,12 +83,6 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the scope-statement has the expected start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTScope
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testScopeHasExpectedStartColumn()
     {
@@ -100,12 +94,6 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the scope-statement has the expected end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTScope
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testScopeHasExpectedEndLine()
     {
@@ -117,12 +105,6 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the scope-statement has the expected end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTScope
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testScopeHasExpectedEndColumn()
     {

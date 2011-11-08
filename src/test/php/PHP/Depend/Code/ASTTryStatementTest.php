@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTTryStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitTryStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTTryStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitTryStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTTryStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * Tests that the try-statement has the expected start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testTryStatementHasExpectedStartLine()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the try-statement has the expected start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testTryStatementHasExpectedStartColumn()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the try-statement has the expected end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testTryStatementHasExpectedEndLine()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that the try-statement has the expected end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testTryStatementHasExpectedEndColumn()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testFirstChildOfTryStatementIsInstanceOfScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement()
     {
@@ -194,12 +127,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testSecondChildOfTryStatementIsInstanceOfCatchStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement()
     {
@@ -211,12 +138,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testTryStatementContainsMultipleChildInstancesOfCatchStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTTryStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testTryStatementContainsMultipleChildInstancesOfCatchStatement()
     {
@@ -240,10 +161,6 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserThrowsExceptionWhenNoCatchStatementFollows
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows()

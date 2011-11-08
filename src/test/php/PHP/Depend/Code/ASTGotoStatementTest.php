@@ -57,62 +57,19 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTGotoStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTGotoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitGotoStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTGotoStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTGotoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitGotoStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTGotoStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testGotoStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGotoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGotoStatementHasExpectedStartLine()
     {
@@ -124,12 +81,6 @@ class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testGotoStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGotoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGotoStatementHasExpectedStartColumn()
     {
@@ -141,12 +92,6 @@ class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testGotoStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGotoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGotoStatementHasExpectedEndLine()
     {
@@ -158,12 +103,6 @@ class PHP_Depend_Code_ASTGotoStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testGotoStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTGotoStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGotoStatementHasExpectedEndColumn()
     {

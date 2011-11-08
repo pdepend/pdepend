@@ -61,7 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_Parameter
  * @group pdepend
+ * @group pdepend::code
  * @group pdepend::issues
  * @group pdepend::parser
  * @group unittest
@@ -188,11 +190,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForNullDefaultValue
      * 
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForNullDefaultValue()
     {
@@ -216,11 +213,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForFalseDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForFalseDefaultValue()
     {
@@ -244,11 +236,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForTrueDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForTrueDefaultValue()
     {
@@ -272,11 +259,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForFloatDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForFloatDefaultValue()
     {
@@ -300,11 +282,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForIntegerDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForIntegerDefaultValue()
     {
@@ -328,11 +305,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForStringDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForStringDefaultValue()
     {
@@ -356,11 +328,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue()
     {
@@ -384,11 +351,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForNestedArrayDefaultValue()
     {
@@ -412,11 +374,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForConstantDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForConstantDefaultValue()
     {
@@ -440,11 +397,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsTrueForClassConstantDefaultValue
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsTrueForClassConstantDefaultValue()
     {
@@ -457,11 +409,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * without default value.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserHandlesParameterWithoutDefaultValueReturnsNull()
     {
@@ -473,11 +420,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * testIsDefaultValueAvailableReturnsFalseWhenNoDefaultValueExists
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsDefaultValueAvailableReturnsFalseWhenNoDefaultValueExists()
     {
@@ -490,11 +432,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * for all parameters.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserHandlesParameterOptionalIsFalseForAllParameters()
     {
@@ -511,11 +448,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * for all parameters.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserHandlesParameterOptionalIsFalseForAllParametersEvenADefaultValueExists()
     {
@@ -532,11 +464,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * for the first two parameters.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserHandlesParameterOptionalIsFalseForFirstTwoParameters()
     {
@@ -553,11 +480,6 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * for all parameters.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserHandlesParameterOptionalIsTrueForAllParameters()
     {
@@ -749,12 +671,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * was defined.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
      * @covers PHP_Depend_Parser_MissingValueException
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::parser
-     * @group unittest
      * @expectedException PHP_Depend_Parser_MissingValueException
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue()
@@ -767,6 +684,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * end of file while it parses a parameter default value.
      *
      * @return void
+     * @covers PHP_Depend_Parser_TokenStreamEndException
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()

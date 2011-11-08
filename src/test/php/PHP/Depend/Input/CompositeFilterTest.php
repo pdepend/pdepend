@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/DummyFilter.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Input_CompositeFilter
+ * @group pdepend
+ * @group pdepend::input
+ * @group unittest
  */
 class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
 {
@@ -69,9 +72,6 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
      * testCompositeInvokesFirstAcceptInFilterChain
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testCompositeInvokesFirstAcceptInFilterChain()
     {
@@ -89,9 +89,6 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
      * testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue()
     {
@@ -111,9 +108,6 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
      * testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue()
     {

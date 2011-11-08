@@ -57,6 +57,11 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_NodeIterator
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
 {
@@ -64,10 +69,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testFreeResetsTheInternalDataStructure
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeResetsTheInternalDataStructure()
     {
@@ -83,10 +84,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testFreeInvokesFreeOnAllChildNodes
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeInvokesFreeOnAllChildNodes()
     {
@@ -103,10 +100,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * objects.
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testCreateIteratorWidthValidInput()
     {
@@ -126,10 +119,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testNodeIteratorReturnsObjectsInUnmodifiedOrder
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testNodeIteratorReturnsObjectsInUnmodifiedOrder()
     {
@@ -154,10 +143,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testNodeIteratorReturnsObjectsUnique
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testNodeIteratorReturnsObjectsUnique()
     {
@@ -185,10 +170,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testIteratorUsesNodeNameAsItsIterationKey
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIteratorUsesNodeNameAsItsIterationKey()
     {
@@ -214,10 +195,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testCurrentReturnsFalseWhenNoMoreElementExists
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testCurrentReturnsFalseWhenNoMoreElementExists()
     {

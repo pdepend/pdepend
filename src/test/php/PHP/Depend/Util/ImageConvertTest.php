@@ -61,6 +61,10 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Util_ImageConvert
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::imagick
+ * @group unittest
  */
 class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
 {
@@ -68,10 +72,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * Tests the copy behaviour for same mime types.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertMakesCopyForSameMimeType()
     {
@@ -86,10 +86,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * Tests the image convert behaviour of the image magick execution path.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertWithImageMagickExtension()
     {
@@ -108,10 +104,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * Tests that the image convert util appends the default extension as fallback.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertAppendDefaultFileExtensionAsFallback()
     {
@@ -130,10 +122,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
     {
@@ -146,10 +134,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * for the font-family:
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertRecognizesFontFamilyInConfiguration()
     {
@@ -173,10 +157,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
     {
@@ -189,10 +169,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * for the font-size:
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertRecognizesFontSizeInConfiguration()
     {

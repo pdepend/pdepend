@@ -63,6 +63,10 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Configuration_Parser
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::configuration
+ * @group unittest
  */
 class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
 {
@@ -70,10 +74,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesEmptyConfigurationFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesEmptyConfigurationFile()
     {
@@ -85,10 +85,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesCacheDriverConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesCacheDriverConfigurationValue()
     {
@@ -102,10 +98,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesCacheLocationConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesCacheLocationConfigurationValue()
     {
@@ -119,10 +111,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesImagickFontFamilyConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesImagickFontFamilyConfigurationValue()
     {
@@ -136,10 +124,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesImagickFontSizeConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesImagickFontSizeConfigurationValue()
     {
@@ -153,10 +137,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserModifiesConfigurationAdaptive
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserModifiesConfigurationAdaptive()
     {

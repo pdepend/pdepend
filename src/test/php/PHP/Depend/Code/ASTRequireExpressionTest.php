@@ -63,57 +63,17 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @since      0.9.12
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTRequireExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitRequireExpression'));
-
-        $expr = new PHP_Depend_Code_ASTRequireExpression();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitRequireExpression'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTRequireExpression();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * testIsOnceReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsOnceReturnsFalseByDefault()
     {
@@ -125,9 +85,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testIsOnceReturnsTrueForRequireOnceExpression
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsOnceReturnsTrueForRequireOnceExpression()
     {
@@ -139,9 +96,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -161,9 +115,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionHasExpectedStartLine()
     {
@@ -175,9 +126,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionHasExpectedStartColumn()
     {
@@ -189,9 +137,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionHasExpectedEndLine()
     {
@@ -203,9 +148,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionHasExpectedEndColumn()
     {
@@ -217,9 +159,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartLine()
     {
@@ -231,9 +170,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartColumn()
     {
@@ -245,9 +181,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndLine()
     {
@@ -259,9 +192,6 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      * testRequireExpressionWithParenthesisHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndColumn()
     {

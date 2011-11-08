@@ -121,39 +121,6 @@ class PHP_Depend_Code_ASTClassReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitClassReference'));
-
-        $ref = $this->createNodeInstance();
-        $ref->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitClassReference'))
-            ->will($this->returnValue(42));
-
-        $ref = $this->createNodeInstance();
-        self::assertEquals(42, $ref->accept($visitor));
-    }
-
-    /**
      * testClassReferenceHasExpectedStartLine
      *
      * @return void

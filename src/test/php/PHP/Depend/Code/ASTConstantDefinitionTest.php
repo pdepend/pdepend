@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTConstantDefinition
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConstantDefinition'));
-
-        $node = new PHP_Depend_Code_ASTConstantDefinition();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConstantDefinition'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTConstantDefinition();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDefinitionHasExpectedDocComment()
     {
@@ -131,12 +88,6 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
     {
@@ -153,12 +104,6 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDefinitionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDefinitionHasExpectedStartLine()
     {
@@ -170,12 +115,6 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDefinitionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDefinitionHasExpectedStartColumn()
     {
@@ -187,12 +126,6 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDefinitionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDefinitionHasExpectedEndLine()
     {
@@ -204,12 +137,6 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      * testConstantDefinitionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConstantDefinition
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConstantDefinitionHasExpectedEndColumn()
     {

@@ -61,6 +61,10 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Util_Cache_Factory
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::cache
+ * @group unittest
  */
 class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
 {
@@ -68,10 +72,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsDriverInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsDriverInstance()
     {
@@ -85,10 +85,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateHasSingletonBehaviorForIdenticalCacheNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateHasSingletonBehaviorForIdenticalCacheNames()
     {
@@ -106,10 +102,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsDifferentInstancesForDifferentCacheNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsDifferentInstancesForDifferentCacheNames()
     {
@@ -127,10 +119,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsCacheInstanceOfTypeFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsCacheInstanceOfTypeFile()
     {
@@ -146,10 +134,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsCacheInstanceOfTypeMemory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsCacheInstanceOfTypeMemory()
     {
@@ -165,10 +149,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateThrowsExpectedExceptionForUnknownCacheDriver
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      * @expectedException InvalidArgumentException
      */
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver()

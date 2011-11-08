@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTLabelStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTLabelStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLabelStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitLabelStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTLabelStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLabelStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitLabelStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTLabelStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testLabelStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTLabelStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLabelStatementHasExpectedStartLine()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTLabelStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testLabelStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTLabelStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLabelStatementHasExpectedStartColumn()
     {
@@ -143,12 +94,7 @@ class PHP_Depend_Code_ASTLabelStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testLabelStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTLabelStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
+     *
      */
     public function testLabelStatementHasExpectedEndLine()
     {
@@ -160,12 +106,6 @@ class PHP_Depend_Code_ASTLabelStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testLabelStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTLabelStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLabelStatementHasExpectedEndColumn()
     {

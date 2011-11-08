@@ -59,60 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTVariable
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitVariable'));
-
-        $node = new PHP_Depend_Code_ASTVariable();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitVariable'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTVariable();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * testIsThisReturnsTrueForThisImageName
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsThisReturnsTrueForThisImageName()
     {
@@ -124,10 +83,6 @@ class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
      * testIsThisReturnsFalseForThisImageButDifferentCase
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsThisReturnsFalseForThisImageButDifferentCase()
     {
@@ -139,10 +94,6 @@ class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
      * testIsThisReturnsFalseForDifferentImage
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsThisReturnsFalseForDifferentImage()
     {
@@ -154,10 +105,6 @@ class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
      * testAcceptInvokesAcceptOnChildNode
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAcceptInvokesAcceptOnChildNode()
     {
@@ -168,68 +115,44 @@ class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
      * testVariableHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableHasExpectedStartLine()
     {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertEquals(6, $declarator->getStartLine());
+        $variable = $this->_getFirstVariableInClass(__METHOD__);
+        $this->assertEquals(6, $variable->getStartLine());
     }
 
     /**
      * testVariableHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableHasExpectedStartColumn()
     {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertEquals(9, $declarator->getStartColumn());
+        $variable = $this->_getFirstVariableInClass(__METHOD__);
+        $this->assertEquals(9, $variable->getStartColumn());
     }
 
     /**
      * testVariableHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableHasExpectedEndLine()
     {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertEquals(6, $declarator->getEndLine());
+        $variable = $this->_getFirstVariableInClass(__METHOD__);
+        $this->assertEquals(6, $variable->getEndLine());
     }
 
     /**
      * testVariableHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableHasExpectedEndColumn()
     {
-        $declarator = $this->_getFirstVariableInClass(__METHOD__);
-        $this->assertEquals(10, $declarator->getEndColumn());
+        $variable = $this->_getFirstVariableInClass(__METHOD__);
+        $this->assertEquals(10, $variable->getEndColumn());
     }
 
     /**

@@ -103,6 +103,25 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testAcceptReturnsReturnValueOfVisitMethod
+     *
+     * @return void
+     */
+    public function testAcceptReturnsReturnValueOfVisitMethod()
+    {
+        $methodName = 'visit' . substr(get_class($this), 19, -4);
+
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo($methodName))
+            ->will($this->returnValue(42));
+
+        $node = $this->createNodeInstance();
+        self::assertEquals(42, $node->accept($visitor));
+    }
+
+    /**
      * testFreeSetsParentReferenceToNull
      *
      * @return void

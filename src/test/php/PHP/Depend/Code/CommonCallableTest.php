@@ -59,6 +59,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_AbstractCallable
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
 {
@@ -66,9 +69,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersReturnsEmptyArrayByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersReturnsEmptyArrayByDefault()
     {
@@ -80,9 +80,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersReturnsArrayWithOneElement
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersReturnsArrayWithOneElement()
     {
@@ -94,9 +91,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersReturnsArrayWithThreeElements
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersReturnsArrayWithThreeElements()
     {
@@ -108,9 +102,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersReturnsArrayWithObjectsOfTypeParameter
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersReturnsArrayWithObjectsOfTypeParameter()
     {
@@ -122,9 +113,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue()
     {
@@ -136,9 +124,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue()
     {
@@ -150,9 +135,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersSetsOptionalOnParameterWithDefaultValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersSetsOptionalOnParameterWithDefaultValue()
     {
@@ -164,9 +146,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetParametersSetsOptionalOnLastParameterWithDefaultValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetParametersSetsOptionalOnLastParameterWithDefaultValue()
     {
@@ -178,9 +157,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetTokensDelegatesCallToCacheRestore
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
@@ -201,9 +177,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testSetTokensDelegatesCallToCacheStore
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetTokensDelegatesCallToCacheStore()
     {
@@ -226,9 +199,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStartLineReturnsZeroByDefault()
     {
@@ -240,9 +210,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsStartLineOfFirstToken
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
@@ -267,9 +234,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetEndLineReturnsZeroByDefault()
     {
@@ -281,9 +245,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsEndLineOfLastToken
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
@@ -308,9 +269,6 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      * testGetReturnClassReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetReturnClassReturnsNullByDefault()
     {

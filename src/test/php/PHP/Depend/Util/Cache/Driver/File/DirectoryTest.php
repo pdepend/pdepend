@@ -63,6 +63,11 @@ require_once dirname(__FILE__) . '/../../../../AbstractTest.php';
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Cache_Driver_File_Directory
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::cache
+ * @group pdepend::util::cache::file
+ * @group unittest
  */
 class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_AbstractTest
 {
@@ -97,11 +102,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testCreatesNotExistingCacheDirectory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testCreatesNotExistingCacheDirectory()
     {
@@ -113,11 +113,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testAddsCacheVersionFileToNewlyCreatedCache
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testAddsCacheVersionFileToNewlyCreatedCache()
     {
@@ -129,11 +124,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testCacheVersionFileContainsExpectedVersionString
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testCacheVersionFileContainsExpectedVersionString()
     {
@@ -148,11 +138,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testOverwritesPreviousCacheVersionFileWithActualVersionString
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testOverwritesPreviousCacheVersionFileWithActualVersionString()
     {
@@ -170,11 +155,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testDeletesCacheFileIfVersionFileNotExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testDeletesCacheFileIfVersionFileNotExists()
     {
@@ -192,11 +172,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testDeletesCacheDirectoryIfVersionFileNotExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testDeletesCacheDirectoryIfVersionFileNotExists()
     {
@@ -213,11 +188,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists()
     {
@@ -236,11 +206,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testCreateCacheDirectoryReturnsExpectedSubDirectory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testCreateCacheDirectoryReturnsExpectedSubDirectory()
     {
@@ -254,11 +219,6 @@ class PHP_Depend_Util_Cache_Driver_File_DirectoryTest extends PHP_Depend_Abstrac
      * testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group pdepend::util::cache::file
-     * @group unittest
      */
     public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory()
     {

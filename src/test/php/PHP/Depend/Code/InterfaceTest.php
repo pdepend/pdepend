@@ -60,6 +60,9 @@ require_once dirname(__FILE__) . '/AbstractItemTest.php';
  *
  * @covers PHP_Depend_Code_AbstractClassOrInterface
  * @covers PHP_Depend_Code_Interface
+  * @group pdepend
+  * @group pdepend::code
+  * @group unittest
  */
 class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 {
@@ -67,9 +70,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -105,9 +105,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -152,9 +149,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -192,9 +186,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetInterfacesZeroInheritance()
     {
@@ -211,9 +202,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetInterfacesOneLevelInheritance()
     {
@@ -230,9 +218,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetInterfacesTwoLevelInheritance()
     {
@@ -249,9 +234,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the result of the <b>getInterfaces()</b> method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetInterfacesComplexInheritance()
     {
@@ -269,9 +251,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * <b>false</b> for an input class.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
@@ -289,9 +268,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy()
     {
@@ -311,9 +287,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
@@ -333,9 +306,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
@@ -355,9 +325,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Checks the {@link PHP_Depend_Code_Interface::isSubtypeOf()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
@@ -379,9 +346,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * @param array(string=>boolean) $expected Expected result.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     private function _testIsSubtypeOnInheritanceHierarchy(array $expected)
     {
@@ -404,9 +368,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
@@ -426,9 +387,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
     {
@@ -448,9 +406,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * setParentClassReference() method and throws an exception.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      * @expectedException BadMethodCallException
      */
     public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference()
@@ -471,9 +426,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the returned modifiers of an interface.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testInterfaceReturnsExpectedModifiers()
     {
@@ -488,9 +440,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceStillIsParentOfChildMethods
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceStillIsParentOfChildMethods()
     {
@@ -504,9 +453,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile()
     {
@@ -523,9 +469,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceStillReferencesSameParentInterface
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceStillReferencesSameParentInterface()
     {
@@ -542,9 +485,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceIsReturnedByMethodAsReturnClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceIsReturnedByMethodAsReturnClass()
     {
@@ -563,9 +503,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceStillReferencesSamePackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceStillReferencesSamePackage()
     {
@@ -582,9 +519,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceRegistersToPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceRegistersToPackage()
     {
@@ -598,9 +532,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedInterfaceNotAddsDublicateClassToPackage
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedInterfaceNotAddsDublicateClassToPackage()
     {
@@ -614,9 +545,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetTokensDelegatesCallToCacheRestore
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
@@ -637,9 +565,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testSetTokensDelegatesCallToCacheStore
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetTokensDelegatesCallToCacheStore()
     {
@@ -663,9 +588,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStartLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStartLineReturnsZeroByDefault()
     {
@@ -677,9 +599,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStartLineReturnsStartLineOfFirstToken
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
@@ -704,9 +623,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetEndLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetEndLineReturnsZeroByDefault()
     {
@@ -777,9 +693,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testGetEndLineReturnsEndLineOfLastToken
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
@@ -804,9 +717,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testIsAbstractReturnsAlwaysTrue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsAbstractReturnsAlwaysTrue()
     {
@@ -818,9 +728,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testIsUserDefinedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsUserDefinedReturnsFalseByDefault()
     {
@@ -832,9 +739,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testIsUserDefinedReturnsTrueAfterSetUserDefinedCall
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsUserDefinedReturnsTrueAfterSetUserDefinedCall()
     {
@@ -848,9 +752,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseByDefault()
     {
@@ -862,9 +763,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
     {
@@ -878,9 +776,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsTrueAfterCallToWakeup()
     {
@@ -894,9 +789,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
@@ -929,9 +821,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testMagicWakeupSetsSourceFileOnChildMethods
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicWakeupSetsSourceFileOnChildMethods()
     {
@@ -951,9 +840,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testMagicWakeupSetsParentOnChildMethods
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicWakeupSetsParentOnChildMethods()
     {
@@ -972,9 +858,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testMagicWakeupCallsRegisterInterfaceOnBuilderContext
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicWakeupCallsRegisterInterfaceOnBuilderContext()
     {
@@ -992,9 +875,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      * testAcceptInvokesVisitInterfaceOnGivenVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testAcceptInvokesVisitInterfaceOnGivenVisitor()
     {

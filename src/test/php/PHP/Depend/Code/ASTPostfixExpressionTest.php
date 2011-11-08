@@ -69,41 +69,6 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitPostfixExpression'));
-
-        $expr = new PHP_Depend_Code_ASTPostfixExpression();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitPostfixExpression'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTPostfixExpression();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * testIncrementPostfixExpressionOnStaticClassMember
      *
      * @return void
@@ -114,10 +79,10 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
         $this->assertGraphEquals(
             $expr,
             array(
-                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
-                'PHP_Depend_Code_ASTClassOrInterfaceReference',
-                'PHP_Depend_Code_ASTPropertyPostfix',
-                'PHP_Depend_Code_ASTVariable'
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
             )
         );
     }

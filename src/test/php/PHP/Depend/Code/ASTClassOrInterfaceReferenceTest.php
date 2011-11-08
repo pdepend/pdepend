@@ -91,44 +91,6 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitClassOrInterfaceReference'));
-
-        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
-            $this->getBuilderContextMock(), __CLASS__
-        );
-        $reference->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitClassOrInterfaceReference'))
-            ->will($this->returnValue(42));
-
-
-        $reference = new PHP_Depend_Code_ASTClassOrInterfaceReference(
-            $this->getBuilderContextMock(), __CLASS__
-        );
-        self::assertEquals(42, $reference->accept($visitor));
-    }
-
-    /**
      * testGetTypeDelegatesToBuilderContextGetClassOrInterface
      *
      * @return void

@@ -499,41 +499,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitMemberPrimaryPrefix'));
-
-        $prefix = new PHP_Depend_Code_ASTMemberPrimaryPrefix();
-        $prefix->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitMemberPrimaryPrefix'))
-            ->will($this->returnValue(42));
-
-        $prefix = new PHP_Depend_Code_ASTMemberPrimaryPrefix();
-        self::assertEquals(42, $prefix->accept($visitor));
-    }
-
-    /**
      * testObjectMemberPrimaryPrefixHasExpectedStartLine
      *
      * @return void

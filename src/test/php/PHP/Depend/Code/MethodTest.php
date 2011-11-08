@@ -62,6 +62,9 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
  * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_Method
  * @covers PHP_Depend_Code_AbstractCallable
+  * @group pdepend
+  * @group pdepend::code
+  * @group unittest
  */
 class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 {
@@ -69,9 +72,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseByDefault()
     {
@@ -83,9 +83,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
     {
@@ -99,9 +96,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsTrueAfterCallToWakeup()
     {
@@ -115,9 +109,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testReturnValueOfMagicSleepContainsContextProperty
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testReturnValueOfMagicSleepContainsContextProperty()
     {
@@ -144,9 +135,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testParserSetsAbstractFlagOnMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserNotSetsAbstractFlagOnMethod()
     {
@@ -158,9 +146,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testParserSetsAbstractFlagOnMethod
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testParserSetsAbstractFlagOnMethod()
     {
@@ -172,9 +157,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetReturnClassForMethodWithNamespacedRootClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetReturnClassForMethodWithNamespacedRootClass()
     {
@@ -186,9 +168,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetReturnClassForMethodWithNamespacedClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetReturnClassForMethodWithNamespacedClass()
     {
@@ -200,9 +179,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetReturnClassForMethodWithNamespacedArrayRootClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass()
     {
@@ -214,9 +190,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetReturnClassForMethodWithNamespacedArrayClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetReturnClassForMethodWithNamespacedArrayClass()
     {
@@ -228,9 +201,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetExceptionsForMethodWithNamespacedRootClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetExceptionsForMethodWithNamespacedRootClass()
     {
@@ -245,9 +215,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetExceptionsForMethodWithNamespacedClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetExceptionsForMethodWithNamespacedClass()
     {
@@ -262,9 +229,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testInlineDependencyForMethodWithNamespacedRootClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testInlineDependencyForMethodWithNamespacedRootClass()
     {
@@ -279,9 +243,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testInlineDependencyForMethodWithNamespacedClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testInlineDependencyForMethodWithNamespacedClass()
     {
@@ -296,9 +257,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testReturnsReferenceReturnsExpectedTrue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testReturnsReferenceReturnsExpectedTrue()
     {
@@ -310,9 +268,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testReturnsReferenceReturnsExpectedFalse
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testReturnsReferenceReturnsExpectedFalse()
     {
@@ -324,9 +279,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStaticVariablesReturnsEmptyArrayByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStaticVariablesReturnsEmptyArrayByDefault()
     {
@@ -338,9 +290,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStaticVariablesReturnsFirstSetOfStaticVariables
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
     {
@@ -356,9 +305,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
     {
@@ -374,9 +320,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      * @expectedException PHP_Depend_Code_Exceptions_SourceNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()
@@ -390,9 +333,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * values.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetSourceFileInformationForNullValue()
     {
@@ -424,9 +364,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testByDefaultGetParentReturnsNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testByDefaultGetParentReturnsNull()
     {
@@ -438,9 +375,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testSetParentWithNullResetsPreviousParentToNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetParentWithNullResetsPreviousParentToNull()
     {
@@ -457,9 +391,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * default value <b>null</b> and that the package could be set and unset.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSetParent()
     {
@@ -474,9 +405,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the visitor accept method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testVisitorAccept()
     {
@@ -492,9 +420,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * fails with an exception for an invalid modifier value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetInvalidModifierFail()
     {
@@ -509,9 +434,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * accepts the defined visibility value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersAcceptsPublicValue()
     {
@@ -529,9 +451,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testIsStaticDefaultByReturnsFalse
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsStaticDefaultByReturnsFalse()
     {
@@ -544,9 +463,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * a method as static.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersMarksMethodAsStatic()
     {
@@ -563,9 +479,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testIsFinalByDefaultReturnsFalse
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsFinalByDefaultReturnsFalse()
     {
@@ -578,9 +491,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * a method as final.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersMarksMethodAsFinal()
     {
@@ -598,9 +508,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * a method as static+final.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersMarksMethodAsStaticFinal()
     {
@@ -619,9 +526,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * accepts the defined visibility value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersAcceptsProtectedValue()
     {
@@ -640,9 +544,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * accepts the defined visibility value.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersAcceptsPrivateValue()
     {
@@ -660,9 +561,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testIsPublicByDefaultReturnsFalse
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsPublicByDefaultReturnsFalse()
     {
@@ -675,9 +573,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * ignores repeated calls if the internal value is set.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetModifiersOnlyAcceptsTheFirstValue()
     {
@@ -692,9 +587,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testtestFreeResetsParentClassToNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeResetsParentClassToNull()
     {
@@ -708,9 +600,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testFreeResetsAllAssociatedASTNodes
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFreeResetsAllAssociatedASTNodes()
     {
@@ -724,9 +613,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
@@ -762,9 +648,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
@@ -809,9 +692,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
@@ -849,9 +729,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
@@ -887,9 +764,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedMethodStillReferencesSameDependency
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedMethodStillReferencesSameDependency()
     {
@@ -906,9 +780,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedMethodStillReferencesSameReturnClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedMethodStillReferencesSameReturnClass()
     {
@@ -925,9 +796,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedMethodStillReferencesSameParameterClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedMethodStillReferencesSameParameterClass()
     {
@@ -944,9 +812,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedMethodStillReferencesSameExceptionClass
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedMethodStillReferencesSameExceptionClass()
     {
@@ -963,9 +828,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testUnserializedMethodStillReferencesSameDependencyInterface
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testUnserializedMethodStillReferencesSameDependencyInterface()
     {

@@ -59,62 +59,19 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTInstanceOfExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitInstanceOfExpression'));
-
-        $expr = new PHP_Depend_Code_ASTInstanceOfExpression();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitInstanceOfExpression'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTInstanceOfExpression();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * Tests that the created instanceof object graph has the expected structure.
      * 
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithStringIdentifier()
     {
@@ -131,12 +88,6 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier()
     {
@@ -153,12 +104,6 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier()
     {
@@ -175,12 +120,6 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier()
     {
@@ -197,12 +136,6 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithStdClass()
     {
@@ -219,12 +152,6 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithPHPIncompleteClass()
     {
@@ -241,12 +168,6 @@ class PHP_Depend_Code_ASTInstanceOfExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests that the created instanceof object graph has the expected structure.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTInstanceOfExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testInstanceOfExpressionGraphWithStaticProperty()
     {

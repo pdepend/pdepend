@@ -61,6 +61,9 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::issues
+ * @group unittest
  */
 class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     extends PHP_Depend_Issues_AbstractTest
@@ -69,9 +72,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedNumberOfFunctionParameters
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsExpectedNumberOfFunctionParameters()
     {
@@ -83,9 +83,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedPositionOfFunctionParameters
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsExpectedPositionOfFunctionParameters()
     {
@@ -100,9 +97,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsFunctionParametersInExpectedOrder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsFunctionParametersInExpectedOrder()
     {
@@ -117,9 +111,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedTypeHintsForFunctionParameters
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsExpectedTypeHintsForFunctionParameters()
     {
@@ -134,9 +125,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedNumberOfMethodParameters
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsExpectedNumberOfMethodParameters()
     {
@@ -148,9 +136,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedPositionOfMethodParameters
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsExpectedPositionOfMethodParameters()
     {
@@ -165,9 +150,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsMethodParametersInExpectedOrder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsMethodParametersInExpectedOrder()
     {
@@ -182,9 +164,6 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
      * testParserSetsExpectedTypeHintsForMethodParameters
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserSetsExpectedTypeHintsForMethodParameters()
     {

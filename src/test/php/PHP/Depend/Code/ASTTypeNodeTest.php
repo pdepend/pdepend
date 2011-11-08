@@ -61,55 +61,16 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Code_ASTTypeNode
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTTypeNodeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitTypeNode'));
-
-        $typeNode = new PHP_Depend_Code_ASTTypeNode();
-        $typeNode->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitTypeNode'))
-            ->will($this->returnValue(42));
-
-        $typeNode = new PHP_Depend_Code_ASTTypeNode();
-        self::assertEquals(42, $typeNode->accept($visitor));
-    }
-
-    /**
      * testIsArrayReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsArrayReturnsFalseByDefault()
     {
@@ -121,9 +82,6 @@ class PHP_Depend_Code_ASTTypeNodeTest extends PHP_Depend_Code_ASTNodeTest
      * testIsPrimitiveReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPrimitiveReturnsFalseByDefault()
     {

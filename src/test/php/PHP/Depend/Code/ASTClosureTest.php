@@ -209,39 +209,6 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitClosure'));
-
-        $node = new PHP_Depend_Code_ASTClosure();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitClosure'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTClosure();
-        $this->assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * Tests the start line value.
      *
      * @return void

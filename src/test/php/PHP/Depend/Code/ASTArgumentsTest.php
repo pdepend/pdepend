@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  *
- * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_ASTArguments
  * @group pdepend
  * @group pdepend::ast
@@ -68,39 +68,6 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  */
 class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
 {
-    /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitArguments'));
-
-        $node = new PHP_Depend_Code_ASTArguments();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitArguments'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTArguments();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-    
     /**
      * Tests the start line value of an arguments instance.
      *
