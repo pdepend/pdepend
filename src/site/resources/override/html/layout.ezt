@@ -59,6 +59,10 @@
 
         <div class="viewport content">
             {raw $content->content->html}
+            <a href="https://pdepend.ci.cloudbees.com/" id="cloudbees" title="Built and Tested on CloudBees - DEV@cloud">
+                <img src="http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png"
+                     alt="Build on CloudBees button" />
+            </a>
         </div>
     	{include wcv_get_template( 'html/footer.ezt' ) send $tree, $content}
         {include wcv_get_template( 'html/piwik.ezt' )}
