@@ -620,6 +620,11 @@ class PHP_Depend_TextUI_Command
      */
     private function _printOption($option, $message, $length)
     {
+        // Ignore the phpunit xml option
+        if (0 === strpos($option, '--phpunit-xml=')) {
+            return;
+        }
+
         // Calculate the max message length
         $mlength = 77 - $length;
 

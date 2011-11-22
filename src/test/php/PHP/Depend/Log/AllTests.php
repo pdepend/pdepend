@@ -50,7 +50,6 @@ require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
 require_once dirname(__FILE__) . '/Jdepend/ChartTest.php';
 require_once dirname(__FILE__) . '/Jdepend/XmlTest.php';
 require_once dirname(__FILE__) . '/Overview/PyramidTest.php';
-require_once dirname(__FILE__) . '/Phpunit/XmlTest.php';
 require_once dirname(__FILE__) . '/Summary/XmlTest.php';
 
 /**
@@ -79,7 +78,6 @@ class PHP_Depend_Log_AllTests
         $suite->addTestSuite('PHP_Depend_Log_Jdepend_ChartTest');
         $suite->addTestSuite('PHP_Depend_Log_Jdepend_XmlTest');
         $suite->addTestSuite('PHP_Depend_Log_Overview_PyramidTest');
-        $suite->addTestSuite('PHP_Depend_Log_Phpunit_XmlTest');
         $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
         
         return $suite;
