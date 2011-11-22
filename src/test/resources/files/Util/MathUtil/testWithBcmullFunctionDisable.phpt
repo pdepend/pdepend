@@ -9,7 +9,7 @@ var_dump(PHP_Depend_Util_MathUtil::mul(1000, 1000));
 var_dump(PHP_Depend_Util_MathUtil::mul(10000, 10000));
 var_dump(PHP_Depend_Util_MathUtil::mul(100000, 100000));
 ?>
---EXPECT--
-string(7) "1000000"
-string(9) "100000000"
-string(11) "10000000000"
+--EXPECTREGEX--
+string\(7\) ["\']1000000["\']
+string\(9\) ["\']100000000["\']
+string\(11\) ["\']10000000000["\']
