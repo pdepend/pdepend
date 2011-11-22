@@ -2247,7 +2247,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_PARENTHESIS_OPEN:
-                $expressions[] = $this->_parseParenthesisExpression();
+                $expressions[] = $this->_parseParenthesisExpressionOrPrimaryPrefix();
                 break;
 
 
@@ -3180,6 +3180,28 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_parseStatementTermination();
 
         return $this->_setNodePositionsAndReturn($stmt);
+    }
+
+    /**
+     * Parses a simple parenthesis expression or a direct object access, which
+     * was introduced with PHP 5.4.0:
+     *
+     * <code>
+     * (new MyClass())->bar();
+     * </code>
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    private function _parseParenthesisExpressionOrPrimaryPrefix()
+    {
+        $expression = $this->_parseParenthesisExpression();
+
+        $this->consumeComments();
+        if (self::T_OBJECT_OPERATOR === $this->tokenizer->peek()) {
+            return $this->_parseMemberPrimaryPrefix($expression->getChild(0));
+        }
+        return $expression;
     }
 
     /**

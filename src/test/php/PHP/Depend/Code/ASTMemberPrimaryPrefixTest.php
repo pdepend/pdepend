@@ -205,6 +205,160 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     }
 
     /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodInvocation
+     *
+     * Source:
+     * <code>
+     * (new MyClass())->foo();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *     - ASTArguments           ->  ( )
+     *   - ASTMethodPostfix         ->  ->
+     *     - ASTIdentifier          ->  foo
+     *     - ASTArguments           ->  ( )
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodInvocation()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'),
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ        . ' (foo)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ       . ' (foo)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'
+            ))
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodChain
+     *
+     * Source:
+     * <code>
+     * (new MyClass)->foo()->bar();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTMethodPostfix         ->  ->
+     *       - ASTIdentifier          ->  foo
+     *       - ASTArguments           ->  ( )
+     *     - ASTMethodPostfix         ->  ->
+     *       - ASTIdentifier          ->  bar
+     *       - ASTArguments           ->  ( )
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodChain()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)'),
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ  . ' (->)', array(
+                    PHP_Depend_Code_ASTMethodPostfix::CLAZZ    . ' (foo)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (foo)',
+                        PHP_Depend_Code_ASTArguments::CLAZZ    . ' ()'),
+                    PHP_Depend_Code_ASTMethodPostfix::CLAZZ    . ' (bar)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (bar)',
+                        PHP_Depend_Code_ASTArguments::CLAZZ    . ' ()'))
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyAccess
+     *
+     * Source:
+     * <code>
+     * (new MyClass())->foo;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *     - ASTArguments           ->  ( )
+     *   - ASTPropertyPostfix       ->  ->
+     *     - ASTIdentifier          ->  foo
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'),
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ      . ' (foo)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ       . ' (foo)')
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyChain
+     *
+     * Source:
+     * <code>
+     * (new MyClass)->foo->bar;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTPropertyPostfix       ->  ->
+     *       - ASTIdentifier          ->  foo
+     *     - ASTPropertyPostfix       ->  ->
+     *       - ASTIdentifier          ->  bar
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyChain()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)'),
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ  . ' (->)', array(
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ  . ' (foo)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (foo)'),
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ  . ' (bar)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (bar)'))
+            )
+        );
+    }
+
+    /**
      * testMemberPrimaryPrefixGraphForObjectPropertyAccess
      * 
      * <code>
