@@ -68,6 +68,32 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetImageReturnsEmptyStringByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageReturnsEmptyStringByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame('', $node->getImage());
+    }
+
+    /**
+     * testGetImageReturnsExpectedNodeImage
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageReturnsExpectedNodeImage()
+    {
+        $node = $this->getNodeMock();
+        $node->setImage(__FUNCTION__);
+
+        $this->assertEquals(__FUNCTION__, $node->getImage());
+    }
+
+    /**
      * testGetCommentReturnsNullByDefault
      *
      * @return void
@@ -89,6 +115,106 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
         $node->setComment('/** Manuel */');
         
         self::assertEquals('/** Manuel */', $node->getComment());
+    }
+
+    /**
+     * testGetChildrenReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetChildrenReturnsEmptyArrayByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame(array(), $node->getChildren());
+    }
+
+    /**
+     * testGetChildrenReturnsArrayWithExpectedNodes
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetChildrenReturnsArrayWithExpectedNodes()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($child1 = $this->getNodeMock());
+
+        $this->assertSame(array($child0, $child1), $node->getChildren());
+    }
+
+    /**
+     * testGetChildThrowsExpectedExceptionForInvalidChildIndex
+     *
+     * @return void
+     * @expectedException OutOfBoundsException
+     * @since 0.11.0
+     */
+    public function testGetChildThrowsExpectedExceptionForInvalidChildIndex()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($child1 = $this->getNodeMock());
+
+        $node->getChild(2);
+    }
+
+    /**
+     * testGetChildReturnsExpectedNodeInstance
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetChildReturnsExpectedNodeInstance()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($child1 = $this->getNodeMock());
+        $node->addChild($child2 = $this->getNodeMock());
+
+        $this->assertSame($child1, $node->getChild(1));
+    }
+
+    /**
+     * testGetFirstChildOfTypeReturnsNullByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetFirstChildOfTypeReturnsNullByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertNull($node->getFirstChildOfType(PHP_Depend_Code_ASTArguments::CLAZZ));
+    }
+
+    /**
+     * testGetFirstChildOfTypeReturnsFirstMatchingChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetFirstChildOfTypeReturnsFirstMatchingChild()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getMock(PHP_Depend_Code_ASTIndexExpression::CLAZZ));
+
+        $this->assertSame($child0, $node->getFirstChildOfType(PHP_Depend_Code_ASTIndexExpression::CLAZZ));
+    }
+
+    /**
+     * testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTIndexExpression::CLAZZ));
+        $child0->addChild($child1 = $this->getMock(PHP_Depend_Code_ASTArguments::CLAZZ));
+
+        $this->assertSame($child1, $node->getFirstChildOfType(PHP_Depend_Code_ASTArguments::CLAZZ));
     }
 
     /**
@@ -188,15 +314,68 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testConfigureLinesAndColumnsSetsExpectedStartLine
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedStartLine()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(13, $node->getStartLine());
+    }
+
+    /**
+     * testConfigureLinesAndColumnsSetsExpectedEndLine
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedEndLine()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(17, $node->getEndLine());
+    }
+
+    /**
+     * testConfigureLinesAndColumnsSetsExpectedStartColumn
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedStartColumn()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(23, $node->getStartColumn());
+    }
+
+    /**
+     * testConfigureLinesAndColumnsSetsExpectedEndColumn
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedEndColumn()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(42, $node->getEndColumn());
+    }
+
+    /**
      * Returns a mocked ast node instance.
      *
      * @return PHP_Depend_Code_ASTNode
      */
-    protected function getNodeMock()
+    private function getNodeMock()
     {
-        return $this->getMockForAbstractClass(
-            PHP_Depend_Code_ASTNode::CLAZZ,
-            array(__CLASS__)
-        );
+        return $this->getMockForAbstractClass(PHP_Depend_Code_ASTNode::CLAZZ);
     }
 }

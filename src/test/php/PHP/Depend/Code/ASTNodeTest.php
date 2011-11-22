@@ -263,6 +263,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * an exception for an undefined node offset.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
      * @expectedException OutOfBoundsException
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
