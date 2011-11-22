@@ -12,6 +12,9 @@
 		<release version="0.11.0"
                  date="2011/10/04"
                  description="This release closes a critical bug that let PHP_Depend die with a E_FATAL when the used PHP version was 5.4 or greater.">
+            <action date="658c25c" dev="mapi" issue="21271399" system="pivotaltracker" type="update">
+                Deprecate the --phpunit-xml log option
+            </action>
             <action date="6dba831" dev="mapi" issue="19817309" system="pivotaltracker" type="add">
                 Implement PHP 5.4 array dereferencing
             </action>
