@@ -55,7 +55,6 @@
             <arg value="include_path=${-package.includepath}" />
             <arg value="${-package.executable}" />
             <arg value="--summary-xml=${commons:tmpdir}/summary.xml" />
-            <arg value="--phpunit-xml=${commons:tmpdir}/phpunit.xml" />
             <arg value="--jdepend-xml=${commons:tmpdir}/jdepend.xml" />
             <arg value="--jdepend-chart=${commons:tmpdir}/jdepend.svg" />
             <arg value="--overview-pyramid=${commons:tmpdir}/pyramid.svg" />
