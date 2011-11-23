@@ -188,6 +188,47 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetParentsOfTypeReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetParentsOfTypeReturnsEmptyArrayByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame(
+            array(),
+            $node->getParentsOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testGetParentsOfTypeReturnsExpectedParentNodes
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetParentsOfTypeReturnsExpectedParentNodes()
+    {
+        $parent0 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $parent1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTNode::CLAZZ);
+        $parent2 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $parent3 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTNode::CLAZZ);
+
+        $node = $this->getNodeMock();
+
+        $parent3->addChild($node);
+        $parent2->addChild($parent3);
+        $parent1->addChild($parent2);
+        $parent0->addChild($parent1);
+
+        $this->assertSame(
+            array($parent0, $parent2),
+            $node->getParentsOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
      * testGetChildrenReturnsEmptyArrayByDefault
      *
      * @return void
@@ -304,6 +345,86 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
         $this->assertSame(
             $child1,
             $node->getFirstChildOfType(PHP_Depend_Code_ASTArguments::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsEmptyArrayByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame(
+            array(),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTNode::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsDirectChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsDirectChild()
+    {
+        $child0 = $this->getNodeMock();
+        $child1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $node->addChild($child1);
+
+        $this->assertSame(
+            array($child1),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsIndirectChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsIndirectChild()
+    {
+        $child0 = $this->getNodeMock();
+        $child1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $child0->addChild($child1);
+
+        $this->assertSame(
+            array($child1),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsDirectAndIndirectChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsDirectAndIndirectChild()
+    {
+        $child0 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $child1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $child2 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $child0->addChild($child1);
+        $child1->addChild($child2);
+
+        $this->assertSame(
+            array($child0, $child1, $child2),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTScope::CLAZZ)
         );
     }
 
