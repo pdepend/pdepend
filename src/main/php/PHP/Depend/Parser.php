@@ -4620,7 +4620,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $token = $this->consumeToken(self::T_ARRAY);
 
-        $node = $this->_builder->buildASTArrayType();
+        $node = $this->_builder->buildASTTypeArray();
         $node->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,
@@ -5945,7 +5945,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     PHP_Depend_Util_Type::getPrimitiveType($annotation)
                 );
             } else if (PHP_Depend_Util_Type::isArrayType($annotation) === true) {
-                return $this->_builder->buildASTArrayType();
+                return $this->_builder->buildASTTypeArray();
             }
         }
         return null;

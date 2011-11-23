@@ -805,10 +805,10 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ASTArrayType
+     * @return PHP_Depend_Code_ASTTypeArray
      * @since 0.9.6
      */
-    function buildASTArrayType();
+    function buildASTTypeArray();
 
     /**
      * Builds a new primitive type node.

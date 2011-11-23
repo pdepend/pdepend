@@ -127,11 +127,6 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      */
     public function testToStringReturnsExpectedStringForParameterTypeArrayWithDefaultValueArrayIssue67()
     {
-        if ( version_compare( phpversion(), '5.4.0beta1' ) >= 0 )
-        {
-            $this->markTestSkipped( 'Test doesn\'t work with 5.4.0.' );
-        }
-
         // Include test code for native reflection
         include_once self::createCodeResourceUri('issues/067-025-parameter-__toString.php');
 
@@ -183,11 +178,6 @@ class PHP_Depend_Code_ReflectionParameterTest extends PHP_Depend_AbstractTest
      */
     public function testToStringReturnsExpectedStringForParameterWithDefaultValueArrayIssue67()
     {
-        if ( version_compare( phpversion(), '5.4.0beta1' ) >= 0 )
-        {
-            $this->markTestSkipped( 'Test doesn\'t work with 5.4.0.' );
-        }
-
         // Include test code for native reflection
         include_once self::createCodeResourceUri('issues/067-028-parameter-__toString.php');
 

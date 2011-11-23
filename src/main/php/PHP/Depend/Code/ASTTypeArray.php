@@ -44,12 +44,11 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
- * Test case for the {@link PHP_Depend_Code_ASTArrayType} class.
+ * This class represents an array type node.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,92 +58,52 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- *
- * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Code_ASTArrayType
- * @group pdepend
- * @group pdepend::ast
- * @group unittest
+ * @since      0.9.6
  */
-class PHP_Depend_Code_ASTArrayTypeTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTTypeArray extends PHP_Depend_Code_ASTTypeNode
 {
     /**
-     * testArrayTypeHasExpectedStartLine
-     *
-     * @return void
+     * The type of this node.
      */
-    public function testArrayTypeHasExpectedStartLine()
+    const CLAZZ = __CLASS__;
+
+    /**
+     * The visual image for this node type.
+     */
+    const IMAGE = 'array';
+
+    /**
+     * Constructs a new array type node.
+     */
+    public function __construct()
     {
-        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertEquals(2, $arrayType->getStartLine());
+        parent::__construct(self::IMAGE);
     }
 
     /**
-     * testArrayTypeHasExpectedStartColumn
+     * This method will return <b>true</b> when the underlying type is an array.
+     * For this concrete type implementation the returned value will be always
+     * <b>true</b>.
      *
-     * @return void
+     * @return boolean
      */
-    public function testArrayTypeHasExpectedStartColumn()
+    public function isArray()
     {
-        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertEquals(14, $arrayType->getStartColumn());
+        return true;
     }
 
     /**
-     * testArrayTypeHasExpectedEndLine
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
      *
-     * @return void
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param mixed                       $data    Optional previous calculated data.
+     *
+     * @return mixed
+     * @since 0.9.12
      */
-    public function testArrayTypeHasExpectedEndLine()
+    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertEquals(2, $arrayType->getEndLine());
-    }
-
-    /**
-     * testArrayTypeHasExpectedEndColumn
-     *
-     * @return void
-     */
-    public function testArrayTypeHasExpectedEndColumn()
-    {
-        $arrayType = $this->_getFirstArrayTypeInFunction(__METHOD__);
-        $this->assertEquals(18, $arrayType->getEndColumn());
-    }
-
-    /**
-     * testIsArrayReturnsTrue
-     *
-     * @return void
-     */
-    public function testIsArrayReturnsTrue()
-    {
-        $type = new PHP_Depend_Code_ASTArrayType();
-        $this->assertTrue($type->isArray());
-    }
-
-    /**
-     * testIsPrimitiveReturnsFalse
-     *
-     * @return void
-     */
-    public function testIsPrimitiveReturnsFalse()
-    {
-        $type = new PHP_Depend_Code_ASTArrayType();
-        $this->assertFalse($type->isPrimitive());
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return PHP_Depend_Code_ASTArrayType
-     */
-    private function _getFirstArrayTypeInFunction($testCase)
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTArrayType::CLAZZ
-        );
+        return $visitor->visitTypeArray($this, $data);
     }
 }

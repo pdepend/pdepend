@@ -282,7 +282,7 @@ class PHP_Depend_Code_Parameter
     public function isArray()
     {
         $node = $this->_formalParameter->getChild(0);
-        return ($node instanceof PHP_Depend_Code_ASTArrayType);
+        return ($node instanceof PHP_Depend_Code_ASTTypeArray);
     }
 
     /**

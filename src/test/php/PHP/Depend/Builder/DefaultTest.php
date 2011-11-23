@@ -657,15 +657,15 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testBuildASTArrayTypeReturnsExpectedType
+     * testBuildASTTypeArrayReturnsExpectedType
      *
      * @return void
      */
-    public function testBuildASTArrayTypeReturnsExpectedType()
+    public function testBuildASTTypeArrayReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTArrayType::CLAZZ,
-            $this->createBuilder()->buildASTArrayType()
+            PHP_Depend_Code_ASTTypeArray::CLAZZ,
+            $this->createBuilder()->buildASTTypeArray()
         );
     }
 

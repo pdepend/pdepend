@@ -134,7 +134,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
     public function testFormalParameterWithArrayTypeHint()
     {
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTArrayType::CLAZZ,
+            PHP_Depend_Code_ASTTypeArray::CLAZZ,
             $this->_getFirstFormalParameterInFunction()->getChild(0)
         );
     }

@@ -1226,12 +1226,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ASTArrayType
+     * @return PHP_Depend_Code_ASTTypeArray
      * @since 0.9.6
      */
-    public function buildASTArrayType()
+    public function buildASTTypeArray()
     {
-        return $this->_buildASTNodeInstance('ASTArrayType');
+        return $this->_buildASTNodeInstance('ASTTypeArray');
     }
 
     /**
