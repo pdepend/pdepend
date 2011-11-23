@@ -4629,7 +4629,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         $parameter = $this->_parseFormalParameterOrByReference();
-        $parameter->addChild($node);
+        $parameter->prependChild($node);
 
         return $parameter;
     }

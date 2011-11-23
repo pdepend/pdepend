@@ -281,10 +281,8 @@ class PHP_Depend_Code_Parameter
      */
     public function isArray()
     {
-        $arrayType = $this->_formalParameter->getFirstChildOfType(
-            PHP_Depend_Code_ASTArrayType::CLAZZ
-        );
-        return ($arrayType !== null);
+        $node = $this->_formalParameter->getChild(0);
+        return ($node instanceof PHP_Depend_Code_ASTArrayType);
     }
 
     /**
