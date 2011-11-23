@@ -96,11 +96,10 @@ class PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test
      * testHelperThrowsExceptionWithExpectedExceptionMessage
      *
      * @return void
+     * @expectedException PHP_Depend_Parser_TokenException
      */
     public function testHelperThrowsExceptionWithExpectedExceptionMessage()
     {
-        $this->setExpectedException('Exception', "Unexpected character in input:  '\' (ASCII=92) state=1");
-
         self::parseCodeResourceForTest();
     }
 }
