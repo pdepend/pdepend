@@ -465,44 +465,6 @@ class PHP_Depend_Code_Property
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        $this->_removeReferenceToDeclaringClass();
-        $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Removes the reference to the declaring class of this property instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToDeclaringClass()
-    {
-        $this->_declaringClass = null;
-    }
-
-    /**
-     * Removes all references to ast nodes associated with property instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        $this->_formalParameter    = null;
-        $this->_variableDeclarator = null;
-    }
-
-    /**
      * This method returns a string representation of this parameter.
      *
      * @return string
@@ -534,4 +496,23 @@ class PHP_Depend_Code_Property
             PHP_EOL
         );
     }
+
+    // @codeCoverageIgnoreStart
+
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.11.0
+     */
+    public function free()
+    {
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
+    }
+
+    // @codeCoverageIgnoreEnd
 }

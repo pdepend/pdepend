@@ -878,58 +878,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testFreeResetsAllAssociatedProperties
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedProperties()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(0, $class->getProperties()->count());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedParentInterfaces
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedParentInterfaces()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(0, $class->getInterfaces()->count());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedClassMethods
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedClassMethods()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(0, $class->getMethods()->count());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedASTNodes
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedASTNodes()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(array(), $class->getChildren());
-    }
-
-    /**
      * Tests that it is not possible to overwrite previously set class modifiers.
      *
      * @return void

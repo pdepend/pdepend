@@ -522,21 +522,6 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function free()
     {
-        $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Free memory consumed by the ast nodes associated with this callable
-     * instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        foreach ($this->nodes as $node) {
-            $node->free();
-        }
-        $this->nodes = array();
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
 }

@@ -324,24 +324,6 @@ class PHP_Depend
     }
 
     /**
-     * Helper method for PHP version < 5.3, this method can be used to
-     * unwire the complex object graph created by PHP_Depend, so that the
-     * garbage collector can free memory consumed by PHP_Depend. Please
-     * remember that this method will destroy all the data calculated by
-     * PHP_Depend, so it is unusable after a call to <b>free()</b>.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        if (is_object($this->_packages)) {
-            $this->_packages->free();
-        }
-        unset($this->_builder, $this->_packages);
-    }
-
-    /**
      * Returns the number of analyzed php classes and interfaces.
      *
      * @return integer
@@ -718,4 +700,24 @@ class PHP_Depend
 
         return $this->_initAnalyseListeners($loader);
     }
+
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Helper method for PHP version < 5.3, this method can be used to
+     * unwire the complex object graph created by PHP_Depend, so that the
+     * garbage collector can free memory consumed by PHP_Depend. Please
+     * remember that this method will destroy all the data calculated by
+     * PHP_Depend, so it is unusable after a call to <b>free()</b>.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.11.0
+     */
+    public function free()
+    {
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
+    }
+
+    // @codeCoverageIgnoreEnd
 }

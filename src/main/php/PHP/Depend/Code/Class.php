@@ -242,32 +242,4 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
 
         $this->context->registerClass($this);
     }
-
-    /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        parent::free();
-
-        $this->_removeReferencesToProperties();
-    }
-
-    /**
-     * Free memory consumed by the properties associated with this class instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToProperties()
-    {
-        $this->getProperties()->free();
-        $this->_properties = array();
-    }
 }

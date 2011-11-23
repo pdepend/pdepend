@@ -777,6 +777,8 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
     }
 
+    // @codeCoverageIgnoreStart
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
@@ -785,66 +787,12 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      *
      * @return void
      * @since 0.9.12
+     * @deprecated Since 0.11.0
      */
     public function free()
     {
-        $this->_removeReferenceToPackage();
-        $this->_removeReferencesToMethods();
-        $this->_removeReferencesToNodes();
-        $this->_removeReferencesToReferences();
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
 
-    /**
-     * Free memory consumed by the methods associated with this class/interface
-     * instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToMethods()
-    {
-        $this->getMethods()->free();
-        $this->methods = array();
-    }
-
-    /**
-     * Free memory consumed by the ast nodes associated with this class/interface
-     * instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        foreach ($this->nodes as $node) {
-            $node->free();
-        }
-        $this->nodes = array();
-    }
-
-    /**
-     * Free memory consumed by the parent package of this class/interface
-     * instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToPackage()
-    {
-        $this->_package = null;
-    }
-
-    /**
-     * Free memory consumed by references to/from this class/interface instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToReferences()
-    {
-        $this->getDependencies()->free();
-
-        $this->interfaceReferences  = array();
-        $this->parentClassReference = null;
-    }
+    // @codeCoverageIgnoreEnd
 }

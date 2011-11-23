@@ -584,32 +584,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testtestFreeResetsParentClassToNull
-     *
-     * @return void
-     */
-    public function testFreeResetsParentClassToNull()
-    {
-        $method = $this->getFirstMethodInClass();
-        $method->free();
-
-        self::assertNull($method->getParent());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedASTNodes
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedASTNodes()
-    {
-        $method = $this->getFirstMethodInClass();
-        $method->free();
-
-        self::assertEquals(array(), $method->getChildren());
-    }
-
-    /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void

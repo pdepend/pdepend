@@ -165,33 +165,6 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        parent::free();
-
-        $this->_removeReferenceToPackage();
-    }
-
-    /**
-     * Free memory consumed by the parent package of this function instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToPackage()
-    {
-        $this->_package = null;
-    }
-
-    /**
      * The magic sleep method will be called by the PHP engine when this class
      * gets serialized. It returns an array with those properties that should be
      * cached for all function instances.

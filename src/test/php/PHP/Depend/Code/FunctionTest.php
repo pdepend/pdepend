@@ -69,32 +69,6 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
 {
     /**
-     * testFreeResetsParentPackageToNull
-     *
-     * @return void
-     */
-    public function testFreeResetsParentPackageToNull()
-    {
-        $function = $this->_getFirstFunctionForTestCase();
-        $function->free();
-
-        self::assertNull($function->getPackage());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedASTNodes
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedASTNodes()
-    {
-        $function = $this->_getFirstFunctionForTestCase();
-        $function->free();
-
-        self::assertEquals(array(), $function->getChildren());
-    }
-
-    /**
      * testReturnsReferenceReturnsExpectedTrue
      *
      * @return void

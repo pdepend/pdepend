@@ -169,6 +169,8 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
         return ($this->_offset < $this->_count);
     }
 
+    // @codeCoverageIgnoreStart
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
@@ -177,12 +179,12 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      *
      * @return void
      * @since 0.9.12
+     * @deprecated Since 0.11.0
      */
     public function free()
     {
-        foreach ($this->_nodes as $node) {
-            $node->free();
-        }
-        $this->_nodes = array();
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
+
+    // @codeCoverageIgnoreEnd
 }

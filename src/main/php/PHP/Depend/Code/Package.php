@@ -319,6 +319,8 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         $visitor->visitPackage($this);
     }
 
+    // @codeCoverageIgnoreStart
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
@@ -327,38 +329,12 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      *
      * @return void
      * @since 0.9.12
+     * @deprecated Since 0.11.0
      */
     public function free()
     {
-        $this->_removeReferenceToTypes();
-        $this->_removeReferenceToFunctions();
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
 
-    /**
-     * Removes the reference to all functions that belong to this package.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToFunctions()
-    {
-        foreach ($this->functions as $function) {
-            $function->free();
-        }
-        $this->functions = array();
-    }
-
-    /**
-     * Removes the reference to all types that belong to this package.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToTypes()
-    {
-        foreach ($this->types as $type) {
-            $type->free();
-        }
-        $this->types = array();
-    }
+    // @codeCoverageIgnoreEnd
 }

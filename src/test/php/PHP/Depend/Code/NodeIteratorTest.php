@@ -66,36 +66,6 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
 {
     /**
-     * testFreeResetsTheInternalDataStructure
-     *
-     * @return void
-     */
-    public function testFreeResetsTheInternalDataStructure()
-    {
-        $nodes = array(new PHP_Depend_Code_Class(__FUNCTION__));
-
-        $iterator = new PHP_Depend_Code_NodeIterator($nodes);
-        $iterator->free();
-
-        $this->assertEquals(0, $iterator->count());
-    }
-
-    /**
-     * testFreeInvokesFreeOnAllChildNodes
-     *
-     * @return void
-     */
-    public function testFreeInvokesFreeOnAllChildNodes()
-    {
-        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(__FUNCTION__));
-        $class->expects($this->once())
-            ->method('free');
-        
-        $iterator = new PHP_Depend_Code_NodeIterator(array($class));
-        $iterator->free();
-    }
-
-    /**
      * Tests the ctor with an valid input array of {@link PHP_Depend_Code_NodeI}
      * objects.
      *

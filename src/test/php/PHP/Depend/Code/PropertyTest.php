@@ -511,19 +511,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testFreeResetsDeclaringClassToNull
-     *
-     * @return void
-     */
-    public function testFreeResetsDeclaringClassToNull()
-    {
-        $property = $this->_getFirstPropertyInClass();
-        $property->free();
-
-        self::assertNull($property->getDeclaringClass());
-    }
-
-    /**
      * Returns the first property found in the corresponding test file.
      *
      * @return PHP_Depend_Code_Property

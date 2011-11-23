@@ -243,31 +243,4 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     {
         return array_merge(array('modifiers'), parent::__sleep());
     }
-
-    /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        parent::free();
-        
-        $this->_removeReferenceToParentClass();
-    }
-
-    /**
-     * Removes the reference to the parent class.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToParentClass()
-    {
-        $this->setParent();
-    }
 }
