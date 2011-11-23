@@ -36,118 +36,53 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://pdepend.org/
+ * @link       http://www.pdepend.org/
+ * @since      0.11.0
  */
 
 /**
- * Define PHP 5.3 __NAMESPACE__ token constant.
- */
-if (!defined('T_NS_C')) {
-    define('T_NS_C', 42001);
-}
-
-/**
- * Define PHP 5.3 'use' token constant
- */
-if (!defined('T_USE')) {
-    define('T_USE', 42002);
-}
-
-/**
- * Define PHP 5.3 'namespace' token constant.
- */
-if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 42003);
-}
-
-/**
- * Define PHP 5.3's '__DIR__' token constant.
- */
-if (!defined('T_DIR')) {
-    define('T_DIR', 42004);
-}
-
-/**
- * Define PHP 5.3's 'T_GOTO' token constant.
- */
-if (!defined('T_GOTO')) {
-    define('T_GOTO', 42005);
-}
-
-/**
- * Define PHP 5.4's 'T_CALLABLE' token constant
- */
-if (!defined('T_CALLABLE')) {
-    define('T_CALLABLE', 42006);
-}
-
-/**
- * Base interface for all php code tokenizers.
+ * This class represents a callable type node.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       http://www.pdepend.org/
+ * @since      0.11.0
  */
-interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
+class PHP_Depend_Code_ASTTypeCallable extends PHP_Depend_Code_ASTType
 {
     /**
-     * Returns the name of the source file.
-     *
-     * @return string
+     * The type of this node.
      */
-    function getSourceFile();
+    const CLAZZ = __CLASS__;
 
     /**
-     * Sets a new php source file.
-     *
-     * @param string $sourceFile A php source file.
-     *
-     * @return void
+     * The visual image for this node type.
      */
-    function setSourceFile($sourceFile);
+    const IMAGE = 'callable';
 
     /**
-     * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
-     * there is no next token.
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
      *
-     * @return PHP_Depend_Token
-     */
-    function next();
-
-    /**
-     * Returns the next token type or {@link PHP_Depend_TokenizerI::T_EOF} if
-     * there is no next token.
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param mixed                       $data    Optional previous calculated data.
      *
-     * @return integer
+     * @return mixed
      */
-    function peek();
-    
-    /**
-     * Returns the type of next token, after the current token. This method
-     * ignores all comments between the current and the next token.
-     *
-     * @return integer
-     * @since 0.9.12
-     */
-    function peekNext();
-
-    /**
-     * Returns the previous token type or {@link PHP_Depend_TokenizerI::T_BOF}
-     * if there is no previous token.
-     *
-     * @return integer
-     */
-    function prev();
+    public function accept( PHP_Depend_Code_ASTVisitorI $visitor, $data = null )
+    {
+        return $visitor->visitTypeCallable($this, $data);
+    }
 }

@@ -36,118 +36,104 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://pdepend.org/
+ * @link       http://www.pdepend.org/
+ * @since      0.11.0
  */
 
-/**
- * Define PHP 5.3 __NAMESPACE__ token constant.
- */
-if (!defined('T_NS_C')) {
-    define('T_NS_C', 42001);
-}
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
 /**
- * Define PHP 5.3 'use' token constant
- */
-if (!defined('T_USE')) {
-    define('T_USE', 42002);
-}
-
-/**
- * Define PHP 5.3 'namespace' token constant.
- */
-if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 42003);
-}
-
-/**
- * Define PHP 5.3's '__DIR__' token constant.
- */
-if (!defined('T_DIR')) {
-    define('T_DIR', 42004);
-}
-
-/**
- * Define PHP 5.3's 'T_GOTO' token constant.
- */
-if (!defined('T_GOTO')) {
-    define('T_GOTO', 42005);
-}
-
-/**
- * Define PHP 5.4's 'T_CALLABLE' token constant
- */
-if (!defined('T_CALLABLE')) {
-    define('T_CALLABLE', 42006);
-}
-
-/**
- * Base interface for all php code tokenizers.
+ * Test case for the {@link PHP_Depend_Code_ASTTypeCallable} class.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       http://www.pdepend.org/
+ * @since      0.11.0
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTTypeCallable
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
-interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
+class PHP_Depend_Code_ASTTypeCallableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * Returns the name of the source file.
-     *
-     * @return string
-     */
-    function getSourceFile();
-
-    /**
-     * Sets a new php source file.
-     *
-     * @param string $sourceFile A php source file.
+     * testCallableTypeIsHandledCaseInsensitive
      *
      * @return void
      */
-    function setSourceFile($sourceFile);
+    public function testCallableTypeIsHandledCaseInsensitive()
+    {
+        $this->assertNotNull($this->_getFirstCallableTypeInFunction());
+    }
 
     /**
-     * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
-     * there is no next token.
+     * testCallableTypeHasExpectedStartLine
      *
-     * @return PHP_Depend_Token
+     * @return void
      */
-    function next();
+    public function testCallableTypeHasExpectedStartLine()
+    {
+        $type = $this->_getFirstCallableTypeInFunction();
+        $this->assertEquals(2, $type->getStartLine());
+    }
 
     /**
-     * Returns the next token type or {@link PHP_Depend_TokenizerI::T_EOF} if
-     * there is no next token.
+     * testCallableTypeHasExpectedEndLine
      *
-     * @return integer
+     * @return void
      */
-    function peek();
-    
-    /**
-     * Returns the type of next token, after the current token. This method
-     * ignores all comments between the current and the next token.
-     *
-     * @return integer
-     * @since 0.9.12
-     */
-    function peekNext();
+    public function testCallableTypeHasExpectedEndLine()
+    {
+        $type = $this->_getFirstCallableTypeInFunction();
+        $this->assertEquals(2, $type->getEndLine());
+    }
 
     /**
-     * Returns the previous token type or {@link PHP_Depend_TokenizerI::T_BOF}
-     * if there is no previous token.
+     * testCallableTypeHasExpectedStartColumn
      *
-     * @return integer
+     * @return void
      */
-    function prev();
+    public function testCallableTypeHasExpectedStartColumn()
+    {
+        $type = $this->_getFirstCallableTypeInFunction();
+        $this->assertEquals(49, $type->getStartColumn());
+    }
+
+    /**
+     * testCallableTypeHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testCallableTypeHasExpectedEndColumn()
+    {
+        $type = $this->_getFirstCallableTypeInFunction();
+        $this->assertEquals(54, $type->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTTypeArray
+     */
+    private function _getFirstCallableTypeInFunction()
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTTypeCallable::CLAZZ
+        );
+    }
 }

@@ -154,4 +154,60 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             $this->tokenizer->getSourceFile()
         );
     }
+
+    /**
+     * Tests if the given token type is a valid formal parameter in the supported
+     * PHP version.
+     *
+     * @param integer $tokenType Numerical token identifier.
+     *
+     * @return boolean
+     * @since 0.11.0
+     */
+    protected function isFormalParameterTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+
+        case self::T_STRING:
+        case self::T_CALLABLE:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Parses a formal parameter type hint that is valid in the supported PHP
+     * version.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    protected function parseFormalParameterTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_CALLABLE:
+            $this->consumeToken(self::T_CALLABLE);
+            return $this->builder->buildASTTypeCallable();
+
+        case self::T_STRING:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+            $name = $this->parseQualifiedName();
+
+            if (0 === strcasecmp('callable', $name)) {
+                return $this->builder->buildASTTypeCallable();
+            }
+            return $this->builder->buildASTClassOrInterfaceReference($name);
+
+        case PHP_Depend_TokenizerI::T_EOF:
+            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+        }
+        throw new PHP_Depend_Parser_UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
+        );
+    }
 }

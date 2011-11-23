@@ -874,6 +874,11 @@ interface PHP_Depend_ConstantsI
     const T_ENDDECLARE = 153;
 
     /**
+     * Token that represents the new Callable type hint.
+     */
+    const T_CALLABLE = 154;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

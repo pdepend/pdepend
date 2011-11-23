@@ -670,6 +670,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTTypeCallableReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTTypeCallableReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTypeCallable::CLAZZ,
+            $this->createBuilder()->buildASTTypeCallable()
+        );
+    }
+
+    /**
      * testBuildASTHeredocReturnsExpectedType
      *
      * @return void

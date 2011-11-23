@@ -125,6 +125,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
         T_PRIVATE                   =>  self::T_PRIVATE,
         T_REQUIRE                   =>  self::T_REQUIRE,
         T_ABSTRACT                  =>  self::T_ABSTRACT,
+        T_CALLABLE                  =>  self::T_CALLABLE,
         T_ENDWHILE                  =>  self::T_ENDWHILE,
         T_FUNCTION                  =>  self::T_FUNCTION,
         T_INT_CAST                  =>  self::T_INT_CAST,

@@ -1235,6 +1235,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new node for the callable type.
+     *
+     * @return PHP_Depend_Code_ASTTypeCallable
+     * @since 0.11.0
+     */
+    public function buildASTTypeCallable()
+    {
+        return $this->_buildASTNodeInstance('ASTTypeCallable');
+    }
+
+    /**
      * Builds a new primitive type node.
      *
      * @param string $image The source image for the primitive type.
