@@ -99,7 +99,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSimpleParameterIsFlaggedAsPassedByReference()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         self::assertTrue($param->isPassedByReference());
     }
 
@@ -110,7 +110,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParameterWithTypeHintIsFlaggedAsPassedByReference()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         self::assertTrue($param->isPassedByReference());
     }
 
@@ -121,8 +121,22 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParameterWithDefaultValueIsFlaggedAsPassedByReference()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         self::assertTrue($param->isPassedByReference());
+    }
+    
+    /**
+     * testFormalParameterWithArrayTypeHint
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFormalParameterWithArrayTypeHint()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ,
+            $this->_getFirstFormalParameterInFunction()->getChild(0)
+        );
     }
 
     /**
@@ -150,7 +164,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFormalParameterHasExpectedStartLine()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(3, $param->getStartLine());
     }
 
@@ -161,7 +175,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFormalParameterHasExpectedStartColumn()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(5, $param->getStartColumn());
     }
 
@@ -172,7 +186,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFormalParameterHasExpectedEndLine()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(6, $param->getEndLine());
     }
 
@@ -183,21 +197,20 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFormalParameterHasExpectedEndColumn()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(20, $param->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTFormalParameter
      */
-    private function _getFirstFormalParameterInFunction($testCase)
+    private function _getFirstFormalParameterInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTFormalParameter::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ
         );
     }
 }
