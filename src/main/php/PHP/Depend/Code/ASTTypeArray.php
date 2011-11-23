@@ -60,7 +60,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ASTTypeArray extends PHP_Depend_Code_ASTTypeNode
+class PHP_Depend_Code_ASTTypeArray extends PHP_Depend_Code_ASTType
 {
     /**
      * The type of this node.

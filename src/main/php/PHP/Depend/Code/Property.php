@@ -211,7 +211,7 @@ class PHP_Depend_Code_Property
     public function isArray()
     {
         $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
-            PHP_Depend_Code_ASTTypeNode::CLAZZ
+            PHP_Depend_Code_ASTType::CLAZZ
         );
         if ($typeNode === null) {
             return false;
@@ -229,7 +229,7 @@ class PHP_Depend_Code_Property
     public function isPrimitive()
     {
         $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
-            PHP_Depend_Code_ASTTypeNode::CLAZZ
+            PHP_Depend_Code_ASTType::CLAZZ
         );
         if ($typeNode === null) {
             return false;

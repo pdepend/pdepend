@@ -87,7 +87,7 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
             ->getClasses()
             ->current()
             ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTTypeNode::CLAZZ);
+            ->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
 
         $this->assertEquals($expected, $type->getImage());
     }
@@ -105,7 +105,7 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
             ->getClasses()
             ->current()
             ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTTypeNode::CLAZZ);
+            ->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
 
         $this->assertTrue($type->isArray());
     }
@@ -123,7 +123,7 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
             ->getClasses()
             ->current()
             ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTTypeNode::CLAZZ);
+            ->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
 
         $this->assertTrue($type->isArray());
     }

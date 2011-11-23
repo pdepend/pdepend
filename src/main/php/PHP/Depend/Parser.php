@@ -5923,7 +5923,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * doc comment information. The returned value will be <b>null</b> when no
      * type information exists.
      *
-     * @return PHP_Depend_Code_ASTTypeNode
+     * @return PHP_Depend_Code_ASTType
      * @since 0.9.6
      */
     private function _parseFieldDeclarationType()

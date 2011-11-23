@@ -61,7 +61,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-class PHP_Depend_Code_ASTPrimitiveType extends PHP_Depend_Code_ASTTypeNode
+class PHP_Depend_Code_ASTPrimitiveType extends PHP_Depend_Code_ASTType
 {
     /**
      * The image type of this node.

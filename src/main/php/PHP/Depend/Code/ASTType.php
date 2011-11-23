@@ -44,12 +44,11 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.9.6
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
- * Test case for the {@link PHP_Depend_Code_ASTTypeNode} class.
+ * Abstract base class for a type node.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,33 +58,48 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- *
- * @covers PHP_Depend_Code_ASTTypeNode
- * @group pdepend
- * @group pdepend::ast
- * @group unittest
+ * @since      0.9.6
  */
-class PHP_Depend_Code_ASTTypeNodeTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTType extends PHP_Depend_Code_ASTNode
 {
     /**
-     * testIsArrayReturnsFalseByDefault
-     *
-     * @return void
+     * The type of this class.
      */
-    public function testIsArrayReturnsFalseByDefault()
+    const CLAZZ = __CLASS__;
+    
+    /**
+     * This method will return <b>true</b> when the underlying type is an array.
+     *
+     * @return boolean
+     */
+    public function isArray()
     {
-        $type = new PHP_Depend_Code_ASTTypeNode();
-        self::assertFalse($type->isArray());
+        return false;
     }
 
     /**
-     * testIsPrimitiveReturnsFalseByDefault
+     * This method will return <b>true</b> when the underlying data type is a
+     * php primitive.
      *
-     * @return void
+     * @return boolean
      */
-    public function testIsPrimitiveReturnsFalseByDefault()
+    public function isPrimitive()
     {
-        $type = new PHP_Depend_Code_ASTTypeNode();
-        self::assertFalse($type->isPrimitive());
+        return false;
+    }
+
+    /**
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
+     *
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param mixed                       $data    Optional previous calculated data.
+     *
+     * @return mixed
+     * @since 0.9.12
+     */
+    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
+    {
+        return $visitor->visitType($this, $data);
     }
 }

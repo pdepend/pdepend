@@ -61,8 +61,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.5
  */
-class PHP_Depend_Code_ASTClassOrInterfaceReference
-    extends PHP_Depend_Code_ASTTypeNode
+class PHP_Depend_Code_ASTClassOrInterfaceReference extends PHP_Depend_Code_ASTType
 {
     /**
      * The image type of this node.

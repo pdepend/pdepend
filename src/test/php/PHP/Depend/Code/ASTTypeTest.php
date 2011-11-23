@@ -44,11 +44,12 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.9.6
  */
 
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
+
 /**
- * Abstract base class for a type node.
+ * Test case for the {@link PHP_Depend_Code_ASTType} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -58,48 +59,33 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.9.6
+ *
+ * @covers PHP_Depend_Code_ASTType
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
-class PHP_Depend_Code_ASTTypeNode extends PHP_Depend_Code_ASTNode
+class PHP_Depend_Code_ASTTypeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-    
-    /**
-     * This method will return <b>true</b> when the underlying type is an array.
+     * testIsArrayReturnsFalseByDefault
      *
-     * @return boolean
+     * @return void
      */
-    public function isArray()
+    public function testIsArrayReturnsFalseByDefault()
     {
-        return false;
+        $type = new PHP_Depend_Code_ASTType();
+        self::assertFalse($type->isArray());
     }
 
     /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
+     * testIsPrimitiveReturnsFalseByDefault
      *
-     * @return boolean
+     * @return void
      */
-    public function isPrimitive()
+    public function testIsPrimitiveReturnsFalseByDefault()
     {
-        return false;
-    }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
-     * @return mixed
-     * @since 0.9.12
-     */
-    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
-    {
-        return $visitor->visitTypeNode($this, $data);
+        $type = new PHP_Depend_Code_ASTType();
+        self::assertFalse($type->isPrimitive());
     }
 }
