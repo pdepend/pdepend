@@ -201,13 +201,43 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
                 return $this->builder->buildASTTypeCallable();
             }
             return $this->builder->buildASTClassOrInterfaceReference($name);
-
-        case PHP_Depend_TokenizerI::T_EOF:
-            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
+    }
+
+    /**
+     * Parses an integer value.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.11.0
+     */
+    protected function parseIntegerNumber()
+    {
+        $token = $this->consumeToken(self::T_LNUMBER);
+
+        if ('0' === $token->image) {
+            if (self::T_STRING === $this->tokenizer->peek()) {
+                $token1 = $this->consumeToken(self::T_STRING);
+                if (preg_match('(^b[01]+$)', $token1->image)) {
+                    $token->image     = $token->image . $token1->image;
+                    $token->endLine   = $token1->endLine;
+                    $token->endColumn = $token1->endColumn;
+                } else {
+                    throw new PHP_Depend_Parser_UnexpectedTokenException(
+                        $token1,
+                        $this->tokenizer->getSourceFile()
+                    );
+                }
+            }
+        }
+
+        $literal = $this->builder->buildASTLiteral($token->image);
+        $literal->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
         );
+
+        return $literal;
     }
 }

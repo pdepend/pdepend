@@ -4298,7 +4298,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_NULL:
         case self::T_TRUE:
         case self::T_FALSE:
-        case self::T_LNUMBER:
         case self::T_DNUMBER:
         case self::T_CONSTANT_ENCAPSED_STRING:
             $token = $this->consumeToken($tokenType);
@@ -4312,10 +4311,21 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             );
             return $literal;
 
+        case self::T_LNUMBER:
+            return $this->parseIntegerNumber();
+
         default:
             return $this->_parseString($tokenType);
         }
     }
+
+    /**
+     * Parses an integer value.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.11.0
+     */
+    protected abstract function parseIntegerNumber();
 
     /**
      * Parses a here- or nowdoc string instance.

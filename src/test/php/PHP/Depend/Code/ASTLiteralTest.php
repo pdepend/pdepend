@@ -76,7 +76,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithBooleanTrueExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('True', $literal->getImage());
+        $this->assertEquals('True', $literal->getImage());
     }
 
     /**
@@ -87,7 +87,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithBooleanFalseExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('False', $literal->getImage());
+        $this->assertEquals('False', $literal->getImage());
     }
 
     /**
@@ -98,7 +98,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithIntegerExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42', $literal->getImage());
+        $this->assertEquals('42', $literal->getImage());
     }
 
     /**
@@ -109,7 +109,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithSignedIntegerExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42', $literal->getImage());
+        $this->assertEquals('42', $literal->getImage());
     }
 
     /**
@@ -120,7 +120,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithFloatExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42.23', $literal->getImage());
+        $this->assertEquals('42.23', $literal->getImage());
     }
 
     /**
@@ -131,7 +131,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithSignedFloatExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42.23', $literal->getImage());
+        $this->assertEquals('42.23', $literal->getImage());
     }
 
     /**
@@ -142,7 +142,106 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     public function testLiteralWithNullExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('NULL', $literal->getImage());
+        $this->assertEquals('NULL', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithZeroIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithZeroIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithZeroOctalIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithZeroOctalIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('00', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithZeroHexIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithZeroHexIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0x0', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithZeroBinaryIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithZeroBinaryIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0b0', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNonZeroOctalIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithNonZeroOctalIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('02342', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNonZeroHexIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithNonZeroHexIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0x926', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNonZeroBinaryIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithNonZeroBinaryIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0b100100100110', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithBrokenBinaryIntegerThrowsExpectedException
+     *
+     * @return void
+     * @since 0.11.0
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     */
+    public function testLiteralWithBrokenBinaryIntegerThrowsExpectedException()
+    {
+        if (version_compare(phpversion(), '5.4dev') >= 0) {
+            $this->markTestSkipped('This test only affects PHP < 5.4');
+        }
+        $this->_getFirstLiteralInFunction();
     }
 
     /**
