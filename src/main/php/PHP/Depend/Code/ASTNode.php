@@ -523,21 +523,6 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        $this->_removeReferenceToParentNode();
-        $this->_removeReferencesToChildNodes();
-    }
-
-    /**
      * The magic sleep method will be called by PHP's runtime environment right
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.
@@ -570,28 +555,22 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
         }
     }
 
-    /**
-     * Removes the reference to the parent node instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToParentNode()
-    {
-        $this->parent = null;
-    }
+    // @codeCoverageIgnoreStart
 
     /**
-     * Removes the reference between this node and its child nodes.
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
      *
      * @return void
      * @since 0.9.12
+     * @deprecated Since 0.11.0
      */
-    private function _removeReferencesToChildNodes()
+    public function free()
     {
-        foreach ($this->nodes as $node) {
-            $node->free();
-        }
-        $this->nodes = array();
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
+
+    // @codeCoverageIgnoreEnd
 }

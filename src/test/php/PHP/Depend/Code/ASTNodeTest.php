@@ -122,35 +122,6 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testFreeSetsParentReferenceToNull
-     *
-     * @return void
-     */
-    public function testFreeSetsParentReferenceToNull()
-    {
-        $node = $this->createNodeInstance();
-        $node->setParent(clone $node);
-        $node->free();
-
-        self::assertNull($node->getParent());
-    }
-
-    /**
-     * testFreeSetsChildReferencesToNull
-     *
-     * @return void
-     */
-    public function testFreeSetsChildReferencesToNull()
-    {
-        $node = $this->createNodeInstance();
-        $node->addChild(clone $node);
-        $node->addChild(clone $node);
-        $node->free();
-
-        self::assertEquals(array(), $node->getChildren());
-    }
-
-    /**
      * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
      *
      * @return void
