@@ -115,7 +115,7 @@ interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
      * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
-     * @return array|integer
+     * @return PHP_Depend_Token
      */
     function next();
 
