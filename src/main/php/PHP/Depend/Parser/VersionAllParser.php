@@ -190,7 +190,8 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
 
         case self::T_CALLABLE:
             $this->consumeToken(self::T_CALLABLE);
-            return $this->builder->buildASTTypeCallable();
+            $type = $this->builder->buildASTTypeCallable();
+            break;
 
         case self::T_STRING:
         case self::T_BACKSLASH:
@@ -198,10 +199,13 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             $name = $this->parseQualifiedName();
 
             if (0 === strcasecmp('callable', $name)) {
-                return $this->builder->buildASTTypeCallable();
+                $type = $this->builder->buildASTTypeCallable();
+            } else {
+                $type = $this->builder->buildASTClassOrInterfaceReference($name);
             }
-            return $this->builder->buildASTClassOrInterfaceReference($name);
+            break;
         }
+        return $type;
     }
 
     /**
@@ -239,5 +243,31 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         );
 
         return $literal;
+    }
+
+    /**
+     * This method parses a PHP version specific identifier for method and
+     * property postfix expressions.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    protected function parsePostfixIdentifier()
+    {
+        switch ($this->tokenizer->peek()) {
+
+            case self::T_STRING:
+                $node = $this->parseLiteral();
+                break;
+
+            case self::T_CURLY_BRACE_OPEN:
+                $node = $this->parseCompoundExpression();
+                break;
+
+            default:
+                $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
+                break;
+        }
+        return $this->parseOptionalIndexExpression($node);
     }
 }

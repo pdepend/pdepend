@@ -172,6 +172,192 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testMethodPostfixGraphForCompoundExpression
+     *
+     * Source:
+     * <code>
+     * $object->{'method'}();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMethodPostfix
+     *   - ASTCompoundExpression  ->  { }
+     *     - ASTString            ->  'method'
+     *   - ASTArguments           ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMethodPostfixGraphForCompoundExpression()
+    {
+        $this->assertGraph(
+            $this->_getFirstMethodPostfixInFunction(),
+            array(
+                PHP_Depend_Code_ASTCompoundExpression::CLAZZ . " ()", array(
+                PHP_Depend_Code_ASTLiteral::CLAZZ            . " ('method')"),
+                PHP_Depend_Code_ASTArguments::CLAZZ          . " ()"
+            )
+        );
+    }
+
+    /**
+     * testMethodPostfixGraphForCompoundVariable
+     *
+     * Source:
+     * <code>
+     * $object->${'method'}();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMethodPostfix
+     *   - ASTCompoundVariable  ->  ${ }
+     *     - ASTString          ->  'method'
+     *   - ASTArguments         ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMethodPostfixGraphForCompoundVariable()
+    {
+        $this->assertGraph(
+            $this->_getFirstMethodPostfixInFunction(),
+            array(
+                PHP_Depend_Code_ASTCompoundVariable::CLAZZ . " ($)", array(
+                PHP_Depend_Code_ASTLiteral::CLAZZ          . " ('method')"),
+                PHP_Depend_Code_ASTArguments::CLAZZ        . " ()"
+            )
+        );
+    }
+
+    /**
+     * testMethodPostfixGraphForVariableVariable
+     *
+     * Source:
+     * <code>
+     * $object->$$method();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMethodPostfix
+     *   - ASTVariableVariable  ->  $
+     *     - ASTVariable        ->  $method
+     *   - ASTArguments         ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMethodPostfixGraphForVariableVariable()
+    {
+        $this->assertGraph(
+            $this->_getFirstMethodPostfixInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariableVariable::CLAZZ . ' ($)', array(
+                PHP_Depend_Code_ASTVariable::CLAZZ         . ' ($method)'),
+                PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'
+            )
+        );
+    }
+
+    /**
+     * testStaticMethodPostfixGraphForCompoundExpression
+     *
+     * Source:
+     * <code>
+     * MyClass::{'method'}();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMethodPostfix
+     *   - ASTCompoundExpression  ->  { }
+     *     - ASTString            ->  'method'
+     *   - ASTArguments           ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testStaticMethodPostfixGraphForCompoundExpression()
+    {
+        $this->assertGraph(
+            $this->_getFirstMethodPostfixInFunction(),
+            array(
+                PHP_Depend_Code_ASTCompoundExpression::CLAZZ . " ()", array(
+                PHP_Depend_Code_ASTLiteral::CLAZZ            . " ('method')"),
+                PHP_Depend_Code_ASTArguments::CLAZZ          . " ()"
+            )
+        );
+    }
+
+    /**
+     * testStaticMethodPostfixGraphForCompoundVariable
+     *
+     * Source:
+     * <code>
+     * MyClass::${'method'}();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMethodPostfix
+     *   - ASTCompoundVariable  ->  ${ }
+     *     - ASTString          ->  'method'
+     *   - ASTArguments         ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testStaticMethodPostfixGraphForCompoundVariable()
+    {
+        $this->assertGraph(
+            $this->_getFirstMethodPostfixInFunction(),
+            array(
+                PHP_Depend_Code_ASTCompoundVariable::CLAZZ . " ($)", array(
+                PHP_Depend_Code_ASTLiteral::CLAZZ          . " ('method')"),
+                PHP_Depend_Code_ASTArguments::CLAZZ        . " ()"
+            )
+        );
+    }
+
+    /**
+     * testStaticMethodPostfixGraphForVariableVariable
+     *
+     * Source:
+     * <code>
+     * MyClass::$$method();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMethodPostfix
+     *   - ASTVariableVariable  ->  $
+     *     - ASTVariable        ->  $method
+     *   - ASTArguments         ->  ( )
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testStaticMethodPostfixGraphForVariableVariable()
+    {
+        $this->assertGraph(
+            $this->_getFirstMethodPostfixInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariableVariable::CLAZZ . ' ($)', array(
+                PHP_Depend_Code_ASTVariable::CLAZZ         . ' ($method)'),
+                PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'
+            )
+        );
+    }
+
+    /**
      * testObjectMethodPostfixHasExpectedStartLine
      *
      * @return void

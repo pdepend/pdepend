@@ -347,6 +347,116 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserHandlesCallableTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesCallableTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeCallable::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesNamespaceTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesNamespaceTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesArrayTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesArrayTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeArray::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesSelfTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesSelfTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSelfReference::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesCompoundStaticMethodInvocation
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesCompoundStaticMethodInvocation()
+    {
+        $method  = $this->getFirstMethodForTestCase();
+        $postfix = $method->getFirstChildOfType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+
+        $this->assertNotNull($postfix);
+    }
+
+    /**
+     * testParserHandlesVariableStaticMethodInvocation
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesVariableStaticMethodInvocation()
+    {
+        $method  = $this->getFirstMethodForTestCase();
+        $postfix = $method->getFirstChildOfType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+
+        $this->assertNotNull($postfix);
+    }
+
+    /**
+     * testParserHandlesBinaryIntegerLiteral
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesBinaryIntegerLiteral()
+    {
+        $method  = $this->getFirstMethodForTestCase();
+        $literal = $method->getFirstChildOfType(PHP_Depend_Code_ASTLiteral::CLAZZ);
+
+        $this->assertEquals('0b0100110100111', $literal->getImage());
+    }
+
+    /**
+     * testParserThrowsExceptionForInvalidBinaryIntegerLiteral
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @since 0.11.0
+     */
+    public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
+    {
+        $this->getFirstMethodForTestCase();
+    }
+
+    /**
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void

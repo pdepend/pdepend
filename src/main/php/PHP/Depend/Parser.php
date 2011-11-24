@@ -1492,7 +1492,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTNode
      * @since 0.9.12
      */
-    private function _parseOptionalIndexExpression(PHP_Depend_Code_ASTNode $node)
+    protected function parseOptionalIndexExpression(PHP_Depend_Code_ASTNode $node)
     {
         $this->consumeComments();
 
@@ -1541,7 +1541,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $token->endColumn
         );
 
-        return $this->_parseOptionalIndexExpression($expr);
+        return $this->parseOptionalIndexExpression($expr);
     }
 
     /**
@@ -3350,9 +3350,18 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $function->addChild($this->_parseArguments());
 
         return $this->_parseOptionalMemberPrimaryPrefix(
-            $this->_parseOptionalIndexExpression($function)
+            $this->parseOptionalIndexExpression($function)
         );
     }
+
+    /**
+     * This method parses a PHP version specific identifier for method and
+     * property postfix expressions.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    protected abstract function parsePostfixIdentifier();
 
     /**
      * This method parses an optional member primary expression. It will parse
@@ -3415,8 +3424,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         switch ($tokenType) {
 
         case self::T_STRING:
-            $child = $this->_parseIdentifier();
-            $child = $this->_parseOptionalIndexExpression($child);
+            $child = $this->parseIdentifier();
+            $child = $this->parseOptionalIndexExpression($child);
             // TODO: Move this in a separate method
             if ($child instanceof PHP_Depend_Code_ASTIndexExpression) {
                 $prefix->addChild($this->_parsePropertyPostfix($child));
@@ -3425,22 +3434,22 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
 
         case self::T_CURLY_BRACE_OPEN:
-            $child = $this->_parseCompoundExpression();
+            $child = $this->parseCompoundExpression();
             break;
 
         default:
-            $child = $this->_parseCompoundVariableOrVariableVariableOrVariable();
+            $child = $this->parseCompoundVariableOrVariableVariableOrVariable();
             break;
         }
 
         $prefix->addChild(
             $this->_parseMethodOrPropertyPostfix(
-                $this->_parseOptionalIndexExpression($child)
+                $this->parseOptionalIndexExpression($child)
             )
         );
 
         return $this->_parseOptionalMemberPrimaryPrefix(
-            $this->_parseOptionalIndexExpression($prefix)
+            $this->parseOptionalIndexExpression($prefix)
         );
     }
 
@@ -3492,9 +3501,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         default:
             $postfix = $this->_parseMethodOrPropertyPostfix(
-                $this->_parseOptionalIndexExpression(
-                    $this->_parseCompoundVariableOrVariableVariableOrVariable()
-                )
+                $this->parsePostfixIdentifier()
             );
             break;
         }
@@ -3502,7 +3509,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $prefix->addChild($postfix);
 
         return $this->_parseOptionalMemberPrimaryPrefix(
-            $this->_parseOptionalIndexExpression($prefix)
+            $this->parseOptionalIndexExpression($prefix)
         );
     }
 
@@ -3519,7 +3526,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        $node = $this->_parseIdentifier();
+        $node = $this->parseIdentifier();
 
         $this->consumeComments();
         if ($this->tokenizer->peek() === self::T_PARENTHESIS_OPEN) {
@@ -3712,8 +3719,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        $variable = $this->_parseCompoundVariableOrVariableVariableOrVariable();
-        $variable = $this->_parseOptionalIndexExpression($variable);
+        $variable = $this->parseCompoundVariableOrVariableVariableOrVariable();
+        $variable = $this->parseOptionalIndexExpression($variable);
 
         $this->consumeComments();
         switch ($this->tokenizer->peek()) {
@@ -4073,7 +4080,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *         is not a valid variable token.
      * @since 0.9.6
      */
-    private function _parseCompoundVariableOrVariableVariableOrVariable()
+    protected function parseCompoundVariableOrVariableVariableOrVariable()
     {
         if ($this->tokenizer->peek() == self::T_DOLLAR) {
             return $this->_parseCompoundVariableOrVariableVariable();
@@ -4102,7 +4109,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         case self::T_CURLY_BRACE_OPEN:
             $variable = $this->builder->buildASTCompoundVariable($token->image);
-            $variable->addChild($this->_parseCompoundExpression());
+            $variable->addChild($this->parseCompoundExpression());
             break;
 
         default:
@@ -4147,7 +4154,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_VARIABLE:
             $variable = $this->builder->buildASTVariableVariable($token->image);
             $variable->addChild(
-                $this->_parseCompoundVariableOrVariableVariableOrVariable()
+                $this->parseCompoundVariableOrVariableVariableOrVariable()
             );
             break;
 
@@ -4245,7 +4252,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *         is not a valid variable token.
      * @since 0.9.6
      */
-    private function _parseCompoundExpression()
+    protected function parseCompoundExpression()
     {
         $this->consumeComments();
 
@@ -4263,7 +4270,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTIdentifier
      * @since 0.9.12
      */
-    private function _parseIdentifier()
+    protected function parseIdentifier()
     {
         $token = $this->consumeToken(self::T_STRING);
 
