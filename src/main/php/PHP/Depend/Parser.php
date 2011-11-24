@@ -3483,9 +3483,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $prefix->addChild($node);
 
         $this->consumeComments();
-        $tokenType = $this->tokenizer->peek();
 
-        switch ($tokenType) {
+        switch ($this->tokenizer->peek()) {
 
         case self::T_STRING:
             $postfix = $this->_parseMethodOrConstantPostfix();
