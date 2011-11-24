@@ -202,7 +202,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function buildCodeRankMetrics()
     {
-        foreach ($this->_nodes as $uuid => $info) {
+        foreach (array_keys($this->_nodes) as $uuid) {
             $this->_nodeMetrics[$uuid] = array(
                 self::M_CODE_RANK          =>  0,
                 self::M_REVERSE_CODE_RANK  =>  0
