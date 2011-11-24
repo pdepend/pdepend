@@ -256,17 +256,17 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     {
         switch ($this->tokenizer->peek()) {
 
-            case self::T_STRING:
-                $node = $this->parseLiteral();
-                break;
+        case self::T_STRING:
+            $node = $this->parseLiteral();
+            break;
 
-            case self::T_CURLY_BRACE_OPEN:
-                $node = $this->parseCompoundExpression();
-                break;
+        case self::T_CURLY_BRACE_OPEN:
+            $node = $this->parseCompoundExpression();
+            break;
 
-            default:
-                $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
-                break;
+        default:
+            $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
+            break;
         }
         return $this->parseOptionalIndexExpression($node);
     }
