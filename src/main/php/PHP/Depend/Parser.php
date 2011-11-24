@@ -2124,6 +2124,24 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
     }
 
+    private function _parseExpressionList(PHP_Depend_Code_ASTNode $expressionList)
+    {
+        $this->consumeComments();
+        while ($expression = $this->_parseOptionalExpression()) {
+            $expressionList->addChild($expression);
+
+            $this->consumeComments();
+            if (self::T_COMMA === $this->tokenizer->peek()) {
+                $this->consumeToken(self::T_COMMA);
+            } else {
+                break;
+            }
+            $this->consumeComments();
+        }
+
+        return $expressionList;
+    }
+
     /**
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
@@ -2143,8 +2161,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             switch ($tokenType) {
 
-            // TODO: Add these tokens
-            //case self::T_COMMA:
+            case self::T_COMMA:
             case self::T_AS:
             case self::T_BREAK:
             case self::T_CLOSE_TAG:
@@ -3172,11 +3189,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
         $token = $this->consumeToken(self::T_ECHO);
 
-        $stmt = $this->builder->buildASTEchoStatement($token->image);
-        // TODO: $stmt->addChild($this->_parseExpression())
-        if (($expr = $this->_parseOptionalExpression()) != null) {
-            $stmt->addChild($expr);
-        }
+        $stmt = $this->_parseExpressionList(
+            $this->builder->buildASTEchoStatement($token->image)
+        );
+
         $this->_parseStatementTermination();
 
         return $this->_setNodePositionsAndReturn($stmt);
@@ -3652,11 +3668,19 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->consumeComments();
 
-        return $this->_parseBraceExpression(
-            $this->builder->buildASTArguments(),
-            $this->consumeToken(self::T_PARENTHESIS_OPEN),
-            self::T_PARENTHESIS_CLOSE
-        );
+        $this->_tokenStack->push();
+
+        $arguments = $this->builder->buildASTArguments();
+
+        $this->consumeToken(self::T_PARENTHESIS_OPEN);
+        $this->consumeComments();
+
+        if (self::T_PARENTHESIS_CLOSE !== $this->tokenizer->peek()) {
+            $arguments = $this->_parseExpressionList($arguments);
+        }
+        $this->consumeToken(self::T_PARENTHESIS_CLOSE);
+
+        return $this->_setNodePositionsAndReturn($arguments);
     }
 
     /**

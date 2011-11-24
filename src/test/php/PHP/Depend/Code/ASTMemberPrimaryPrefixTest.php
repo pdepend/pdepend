@@ -450,9 +450,8 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      *   - ASTMethodPostfix       ->  ->
      *     - ASTVariable          ->  $method
      *     - ASTArguments         ->  ( )
-     *       - ASTExpression      ->  ...
-     *         - ASTLiteral         ->  23
-     *         - ASTLiteral         ->  42
+     *       - ASTLiteral         ->  23
+     *       - ASTLiteral         ->  42
      * </code>
      *
      * @return void
@@ -461,16 +460,15 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     public function testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess()
     {
         $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
-        $this->assertGraphEquals(
+        $this->assertGraph(
             $prefix,
             array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ,
-                PHP_Depend_Code_ASTExpression::CLAZZ,
-                PHP_Depend_Code_ASTLiteral::CLAZZ,
-                PHP_Depend_Code_ASTLiteral::CLAZZ
+                PHP_Depend_Code_ASTVariable::CLAZZ        . ' ($object)',
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ   . ' ($method)', array(
+                    PHP_Depend_Code_ASTVariable::CLAZZ    . ' ($method)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ   . ' ()', array(
+                        PHP_Depend_Code_ASTLiteral::CLAZZ . ' (23)',
+                        PHP_Depend_Code_ASTLiteral::CLAZZ . ' (42)'))
             )
         );
     }
