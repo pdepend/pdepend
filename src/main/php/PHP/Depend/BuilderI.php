@@ -797,7 +797,7 @@ interface PHP_Depend_BuilderI
      * //       ------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTArguments();
+     * @return PHP_Depend_Code_ASTArguments
      * @since 0.9.6
      */
     function buildASTArguments();
