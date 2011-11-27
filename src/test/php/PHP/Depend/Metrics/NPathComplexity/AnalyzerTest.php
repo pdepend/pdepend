@@ -174,12 +174,10 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      *
      * @return void
      * @since 0.9.12
-     * @todo Fix this, once the AST is complete
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration()
     {
-        //self::assertEquals(625, $this->_calculateFunctionMetric());
-        self::assertEquals(17, $this->_calculateFunctionMetric());
+        self::assertEquals(625, $this->_calculateFunctionMetric());
     }
 
     /**
