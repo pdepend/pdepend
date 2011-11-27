@@ -270,4 +270,51 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         }
         return $this->parseOptionalIndexExpression($node);
     }
+
+    /**
+     * Tests if the next token is a valid array start delimiter in the supported
+     * PHP version.
+     *
+     * @return boolean
+     * @since 0.11.0
+     */
+    protected function isArrayStartDelimiter()
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_ARRAY:
+        case self::T_SQUARED_BRACKET_OPEN:
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Parses a php array declaration.
+     *
+     * @param PHP_Depend_Code_ASTArray $array The context array node.
+     *
+     * @return PHP_Depend_Code_ASTArray
+     * @since 0.11.0
+     */
+    protected function parseArray(PHP_Depend_Code_ASTArray $array)
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_ARRAY:
+            $this->consumeToken(self::T_ARRAY);
+            $this->consumeComments();
+            $this->consumeToken(self::T_PARENTHESIS_OPEN);
+            $this->parseArrayElements($array, self::T_PARENTHESIS_CLOSE);
+            $this->consumeToken(self::T_PARENTHESIS_CLOSE);
+            break;
+
+        default:
+            $this->consumeToken(self::T_SQUARED_BRACKET_OPEN);
+            $this->parseArrayElements($array, self::T_SQUARED_BRACKET_CLOSE);
+            $this->consumeToken(self::T_SQUARED_BRACKET_CLOSE);
+            break;
+        }
+        return $array;
+    }
 }

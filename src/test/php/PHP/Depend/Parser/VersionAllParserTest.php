@@ -479,6 +479,36 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserHandlesRegularArraySyntax
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesRegularArraySyntax()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArray::CLAZZ,
+            $this->getFirstMethodForTestCase()
+                ->getFirstChildOfType(PHP_Depend_Code_ASTArray::CLAZZ)
+        );
+    }
+
+    /**
+     * testParserHandlesShortArraySyntax
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesShortArraySyntax()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArray::CLAZZ,
+            $this->getFirstMethodForTestCase()
+                ->getFirstChildOfType(PHP_Depend_Code_ASTArray::CLAZZ)
+        );
+    }
+
+    /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
