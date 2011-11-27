@@ -71,6 +71,180 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTArrayElementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testArrayElementGraphSimpleValue
+     *
+     * Source:
+     * <code>
+     * array($foo)
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     *   - ASTArrayElement
+     *     - ASTVariable    ->  $foo
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayElementGraphSimpleValue()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayElementInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ . ' ($foo)'
+            )
+        );
+    }
+
+    /**
+     * testArrayElementGraphSimpleValueByReference
+     *
+     * Source:
+     * <code>
+     * array(&$foo)
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     *   - ASTArrayElement
+     *     - ASTVariable    ->  $foo
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayElementGraphSimpleValueByReference()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayElementInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ . ' ($foo)'
+            )
+        );
+    }
+
+    /**
+     * testArrayElementGraphKeyValue
+     *
+     * Source:
+     * <code>
+     * array($key => $value)
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     *   - ASTArrayElement
+     *     - ASTVariable    ->  $key
+     *     - ASTVariable    ->  $value
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayElementGraphKeyValue()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayElementInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ . ' ($key)',
+                PHP_Depend_Code_ASTVariable::CLAZZ . ' ($value)'
+            )
+        );
+    }
+
+    /**
+     * testArrayElementGraphKeyValueByReference
+     *
+     * Source:
+     * <code>
+     * array($key => &$value)
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     *   - ASTArrayElement
+     *     - ASTVariable    ->  $key
+     *     - ASTVariable    ->  $value
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayElementGraphKeyValueByReference()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayElementInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ . ' ($key)',
+                PHP_Depend_Code_ASTVariable::CLAZZ . ' ($value)'
+            )
+        );
+    }
+
+    /**
+     * testArrayElementGraphWithTwoDimensions
+     *
+     * Source:
+     * <code>
+     * array(
+     *     "bar"  =>  array(
+     *         new Object,
+     *         23 => new Object,
+     *         array("foo"  =>  new Object)
+     *     )
+     * )
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     *   - ASTArrayElement
+     *     - ASTLiteral                     -> "bar"
+     *     - ASTArray
+     *       - ASTArrayElement
+     *         - ASTAllocationExpression    ->  new
+     *           - ASTClassReference        ->  Object
+     *       - ASTArrayElement
+     *         - ASTLiteral                 ->  23
+     *         - ASTAllocationExpression    ->  new
+     *           - ASTClassReference        ->  Object
+     *       - ASTArrayElement
+     *         - ASTArray
+     *           - ASTArrayElement
+     *             - ASTLiteral               ->  "foo"
+     *             - ASTAllocationExpression  ->  new
+     *               - ASTClassReference      ->  Object
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayElementGraphWithTwoDimensions()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayElementInFunction(),
+            array(
+                PHP_Depend_Code_ASTLiteral::CLAZZ                              . ' ("bar")',
+                PHP_Depend_Code_ASTArray::CLAZZ                                . ' ()', array(
+                    PHP_Depend_Code_ASTArrayElement::CLAZZ                     . ' ()', array(
+                        PHP_Depend_Code_ASTAllocationExpression::CLAZZ         . ' (new)', array(
+                            PHP_Depend_Code_ASTClassReference::CLAZZ           . ' (Object)')),
+                    PHP_Depend_Code_ASTArrayElement::CLAZZ                     . ' ()', array(
+                        PHP_Depend_Code_ASTLiteral::CLAZZ                      . ' (23)',
+                        PHP_Depend_Code_ASTAllocationExpression::CLAZZ         . ' (new)', array(
+                            PHP_Depend_Code_ASTClassReference::CLAZZ           . ' (Object)')),
+                    PHP_Depend_Code_ASTArrayElement::CLAZZ                     . ' ()', array(
+                        PHP_Depend_Code_ASTArray::CLAZZ                        . ' ()', array(
+                            PHP_Depend_Code_ASTArrayElement::CLAZZ             . ' ()', array(
+                                PHP_Depend_Code_ASTLiteral::CLAZZ              . ' ("foo")',
+                                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (Object)'))))
+            )
+            )
+        );
+    }
+
+    /**
      * testArrayElementByReferenceReturnsFalseByDefault
      *
      * @return void

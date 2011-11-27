@@ -71,6 +71,52 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTArrayTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testArrayGraphForEmptyArrayDefinition
+     *
+     * Source:
+     * <code>
+     * array()
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayGraphForEmptyArrayDefinition()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayInFunction(),
+            array()
+        );
+    }
+
+    /**
+     * testArrayGraphForEmptyShortArrayDefinition
+     *
+     * Source:
+     * <code>
+     * []
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTArray
+     * </code>
+     *
+     * @return void
+     */
+    public function testArrayGraphForEmptyShortArrayDefinition()
+    {
+        $this->assertGraph(
+            $this->_getFirstArrayInFunction(),
+            array()
+        );
+    }
+
+    /**
      * Tests the start line value of an array instance.
      *
      * @return void
