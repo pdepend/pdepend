@@ -69,6 +69,66 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testMemberPrimaryPrefixGraphDereferencedFromArray
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphDereferencedFromArray()
+    {
+        $this->_getFirstMemberPrimaryPrefixInFunction();
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphInIssetExpression
+     *
+     * Source:
+     * <code>
+     * $object->plots[0]->coords[0][$i]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable                    ->  $object
+     *   - ASTMemberPrimaryPrefix         ->
+     *     - ASTPropertyPostfix           ->  plots
+     *       - ASTArrayIndexExpression
+     *         - ASTIdentifier            ->  plots
+     *         - ASTLiteral               ->  0
+     *     - ASTPropertyPostfix           ->  coords
+     *       - ASTArrayIndexExpression
+     *         - ASTArrayIndexExpression
+     *           - ASTIdentifier          ->  coords
+     *           - ASTLiteral             ->  0
+     *         - ASTVariable              ->  $i
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphInIssetExpression()
+    {
+        $this->assertGraph(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ                          . ' ($object)',
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ               . ' (->)', array(
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ               . ' (plots)', array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ      . ' ()', array(
+                            PHP_Depend_Code_ASTIdentifier::CLAZZ            . ' (plots)',
+                            PHP_Depend_Code_ASTLiteral::CLAZZ               . ' (0)')),
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ               . ' (coords)', array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ      . ' ()', array(
+                            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ  . ' ()', array(
+                                PHP_Depend_Code_ASTIdentifier::CLAZZ        . ' (coords)',
+                                PHP_Depend_Code_ASTLiteral::CLAZZ           . ' (0)'),
+                            PHP_Depend_Code_ASTVariable::CLAZZ              . ' ($i)')))
+            )
+        );
+    }
+
+    /**
      * testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant
      *
      * Source:
@@ -89,9 +149,8 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
-            $prefix,
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTConstantPostfix::CLAZZ,

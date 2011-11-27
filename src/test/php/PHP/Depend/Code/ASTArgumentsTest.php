@@ -69,13 +69,33 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testArgumentsGraphWithMagicClassConstant
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArgumentsGraphWithMagicClassConstant()
+    {
+        $arguments = $this->_getFirstArgumentsOfFunction();
+        $this->assertGraph(
+            $arguments,
+            array(
+                PHP_Depend_Code_ASTConstant::CLAZZ     . ' (__CLASS__)',
+                PHP_Depend_Code_ASTLiteral::CLAZZ      . ' ("run")',
+                PHP_Depend_Code_ASTExpression::CLAZZ   . ' ()', array(
+                    PHP_Depend_Code_ASTVariable::CLAZZ . ' ($count)')
+            )
+        );
+    }
+
+    /**
      * Tests the start line value of an arguments instance.
      *
      * @return void
      */
     public function testArgumentsHasExpectedStartLine()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(5, $arguments->getStartLine());
     }
 
@@ -86,7 +106,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedStartColumn()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(8, $arguments->getStartColumn());
     }
 
@@ -97,7 +117,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedEndLine()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(7, $arguments->getEndLine());
     }
 
@@ -108,21 +128,19 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedEndColumn()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(21, $arguments->getEndColumn());
     }
 
     /**
      * Returns an arguments instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTArguments
      */
-    private function _getFirstArgumentsOfFunction($testCase)
+    private function _getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
+            $this->getCallingTestMethod(),
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
     }
