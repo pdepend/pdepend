@@ -44,12 +44,13 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.11.0
  */
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Code_ASTArguments} class.
+ * Test case for the {@link PHP_Depend_Code_ASTArrayElement} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,90 +60,114 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ * @since      0.11.0
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Code_ASTArguments
+ * @covers PHP_Depend_Code_ASTArrayElement
  * @group pdepend
  * @group pdepend::ast
  * @group unittest
  */
-class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTArrayElementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testArgumentsGraphWithMagicClassConstant
-     *
-     * @return void
-     * @since 0.11.0
-     */
-    public function testArgumentsGraphWithMagicClassConstant()
-    {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertGraph(
-            $arguments,
-            array(
-                PHP_Depend_Code_ASTConstant::CLAZZ         . ' (__CLASS__)',
-                PHP_Depend_Code_ASTLiteral::CLAZZ          . ' ("run")',
-                PHP_Depend_Code_ASTArray::CLAZZ            . ' ()', array(
-                    PHP_Depend_Code_ASTArrayElement::CLAZZ . ' ()', array(
-                        PHP_Depend_Code_ASTVariable::CLAZZ . ' ($count)'))
-            )
-        );
-    }
-
-    /**
-     * Tests the start line value of an arguments instance.
+     * testArrayElementByReferenceReturnsFalseByDefault
      *
      * @return void
      */
-    public function testArgumentsHasExpectedStartLine()
+    public function testArrayElementByReferenceReturnsFalseByDefault()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(5, $arguments->getStartLine());
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertFalse($array->isByReference());
     }
 
     /**
-     * Tests the start column value of an arguments instance.
+     * testArrayElementByReferenceReturnsTrueForValue
      *
      * @return void
      */
-    public function testArgumentsHasExpectedStartColumn()
+    public function testArrayElementByReferenceReturnsTrueForValue()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(8, $arguments->getStartColumn());
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertTrue($array->isByReference());
     }
 
     /**
-     * Tests the end line value of an arguments instance.
+     * testArrayElementByReferenceReturnsFalseForKeyValue
      *
      * @return void
      */
-    public function testArgumentsHasExpectedEndLine()
+    public function testArrayElementByReferenceReturnsFalseForKeyValue()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(7, $arguments->getEndLine());
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertFalse($array->isByReference());
     }
 
     /**
-     * Tests the end column value of an arguments instance.
+     * testArrayElementByReferenceReturnsTrueForKeyValue
      *
      * @return void
      */
-    public function testArgumentsHasExpectedEndColumn()
+    public function testArrayElementByReferenceReturnsTrueForKeyValue()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(21, $arguments->getEndColumn());
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertTrue($array->isByReference());
     }
 
     /**
-     * Returns an arguments instance for the currently executed test case.
+     * Tests the start line value of an array element.
      *
-     * @return PHP_Depend_Code_ASTArguments
+     * @return void
      */
-    private function _getFirstArgumentsOfFunction()
+    public function testArrayElementHasExpectedStartLine()
+    {
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertEquals(5, $array->getStartLine());
+    }
+
+    /**
+     * Tests the start column value of an array element.
+     *
+     * @return void
+     */
+    public function testArrayElementHasExpectedStartColumn()
+    {
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertEquals(9, $array->getStartColumn());
+    }
+
+    /**
+     * Tests the end line value of an array element.
+     *
+     * @return void
+     */
+    public function testArrayElementHasExpectedEndLine()
+    {
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertEquals(11, $array->getEndLine());
+    }
+
+    /**
+     * Tests the end column value of an array element.
+     *
+     * @return void
+     */
+    public function testArrayElementHasExpectedEndColumn()
+    {
+        $array = $this->_getFirstArrayElementInFunction();
+        $this->assertEquals(29, $array->getEndColumn());
+    }
+
+    /**
+     * Returns an array element for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTArrayElement
+     */
+    private function _getFirstArrayElementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            PHP_Depend_Code_ASTArguments::CLAZZ
+            PHP_Depend_Code_ASTArrayElement::CLAZZ
         );
     }
 }

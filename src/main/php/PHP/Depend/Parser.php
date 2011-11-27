@@ -914,7 +914,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeToken(self::T_FUNCTION);
         $this->consumeComments();
 
-        $returnReference = $this->_parseOptionalReturnbyReference();
+        $returnReference = $this->_parseOptionalByReference();
 
         if ($this->_isNextTokenFormalParameterList()) {
             $callable = $this->_parseClosureDeclaration();
@@ -938,17 +938,17 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Parses an optional returns by reference token. The return value will be
+     * Parses an optional by reference token. The return value will be
      * <b>true</b> when a reference token was found, otherwise this method will
      * return <b>false</b>.
      *
      * @return boolean
      * @since 0.9.8
      */
-    private function _parseOptionalReturnbyReference()
+    private function _parseOptionalByReference()
     {
-        if ($this->_isNextTokenReturnByReference()) {
-            return $this->_parseReturnByReference();
+        if ($this->_isNextTokenByReference()) {
+            return $this->_parseByReference();
         }
         return false;
     }
@@ -959,7 +959,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return boolean
      * @since 0.9.8
      */
-    private function _isNextTokenReturnByReference()
+    private function _isNextTokenByReference()
     {
         return ($this->tokenizer->peek() === self::T_BITWISE_AND);
     }
@@ -969,7 +969,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return boolean
      */
-    private function _parseReturnByReference()
+    private function _parseByReference()
     {
         $this->consumeToken(self::T_BITWISE_AND);
         $this->consumeComments();
@@ -1041,7 +1041,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeToken(self::T_FUNCTION);
         $this->consumeComments();
 
-        $returnsReference = $this->_parseOptionalReturnbyReference();
+        $returnsReference = $this->_parseOptionalByReference();
 
         $methodName = $this->parseFunctionName();
 
@@ -1076,7 +1076,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         $closure = $this->builder->buildASTClosure();
-        $closure->setReturnsByReference($this->_parseOptionalReturnbyReference());
+        $closure->setReturnsByReference($this->_parseOptionalByReference());
         $closure->addChild($this->_parseFormalParameters());
         $closure = $this->_parseOptionalBoundVariables($closure);
         $closure->addChild($this->_parseScope());
@@ -2170,6 +2170,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_CURLY_BRACE_CLOSE:
             case self::T_DECLARE:
             case self::T_DO:
+            case self::T_DOUBLE_ARROW:
             case self::T_ECHO:
             case self::T_END_HEREDOC:
             case self::T_ENDFOREACH:
@@ -4403,21 +4404,20 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $this->_tokenStack->push();
 
-        $array = $this->builder->buildASTExpression();
+        $array = $this->builder->buildASTArray();
 
         $this->consumeToken(self::T_ARRAY);
         $this->consumeComments();
         $this->consumeToken(self::T_PARENTHESIS_OPEN);
+        $this->consumeComments();
 
-        while ($expr = $this->_parseOptionalExpression()) {
-            $array->addChild($expr);
+        while (self::T_PARENTHESIS_CLOSE !== $this->tokenizer->peek()) {
+            $array->addChild($this->parseArrayElement());
 
             $this->consumeComments();
             if (self::T_COMMA === $this->tokenizer->peek()) {
                 $this->consumeToken(self::T_COMMA);
                 $this->consumeComments();
-            } else {
-                break;
             }
         }
 
@@ -4425,6 +4425,34 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         return $this->_setNodePositionsAndReturn($array);
     }
+
+    protected function parseArrayElement()
+    {
+        $this->consumeComments();
+
+        $this->_tokenStack->push();
+
+        $element = $this->builder->buildASTArrayElement();
+        if ($this->_parseOptionalByReference()) {
+            $element->setByReference();
+        }
+        $element->addChild($this->_parseOptionalExpression());
+
+        $this->consumeComments();
+        if (self::T_DOUBLE_ARROW === $this->tokenizer->peek()) {
+            $this->consumeToken(self::T_DOUBLE_ARROW);
+            $this->consumeComments();
+
+            if ($this->_parseOptionalByReference()) {
+                $element->setByReference();
+            }
+            $element->addChild($this->_parseOptionalExpression());
+        }
+
+        return $this->_setNodePositionsAndReturn($element);
+    }
+
+
 
     /**
      * Parses a here- or nowdoc string instance.

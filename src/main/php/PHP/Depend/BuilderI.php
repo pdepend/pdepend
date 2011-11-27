@@ -859,6 +859,22 @@ interface PHP_Depend_BuilderI
     function buildASTString();
 
     /**
+     * Builds a new php array node.
+     *
+     * @return PHP_Depend_Code_ASTArray
+     * @since 0.11.0
+     */
+    function buildASTArray();
+
+    /**
+     * Builds a new array element node.
+     *
+     * @return PHP_Depend_Code_ASTArrayElement
+     * @since 0.11.0
+     */
+    function buildASTArrayElement();
+
+    /**
      * Builds a new heredoc node.
      *
      * @return PHP_Depend_Code_ASTHeredoc

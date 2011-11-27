@@ -47,6 +47,8 @@
 
 require_once dirname(__FILE__) . '/ASTAllocationExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
+require_once dirname(__FILE__) . '/ASTArrayTest.php';
+require_once dirname(__FILE__) . '/ASTArrayElementTest.php';
 require_once dirname(__FILE__) . '/ASTArrayIndexExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTTypeArrayTest.php';
 require_once dirname(__FILE__) . '/ASTAssignmentExpressionTest.php';
@@ -190,6 +192,8 @@ class PHP_Depend_Code_AllTests
 
         $suite->addTestSuite('PHP_Depend_Code_ASTAllocationExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArgumentsTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTArrayTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTArrayElementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArrayIndexExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTTypeArrayTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTAssignmentExpressionTest');

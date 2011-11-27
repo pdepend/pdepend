@@ -44,12 +44,21 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
+ * @since      0.11.0
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
- * Test case for the {@link PHP_Depend_Code_ASTArguments} class.
+ * This class represents a single array element expression.
+ *
+ * <code>
+ * //              _  ______  __________________________
+ * //                                __  ___  __________
+ * $array = array( 1, 2 => 3, array( $a, &$b, 1 => &$c ) );
+ *
+ * //         _  ______  _____________________
+ * //                      __  ___  ________
+ * $array = [ 1, 2 => 3, [ $a, &$b, 1 => &$c ] ];
+ * </code>
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,90 +68,60 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- *
- * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Code_ASTArguments
- * @group pdepend
- * @group pdepend::ast
- * @group unittest
+ * @since      0.11.0
  */
-class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
+class PHP_Depend_Code_ASTArrayElement extends PHP_Depend_Code_ASTExpression
 {
     /**
-     * testArgumentsGraphWithMagicClassConstant
-     *
-     * @return void
-     * @since 0.11.0
+     * Type of this node class.
      */
-    public function testArgumentsGraphWithMagicClassConstant()
+    const CLAZZ = __CLASS__;
+
+    /**
+     * This method will return <b>true</b> when the element value is passed by
+     * reference.
+     *
+     * @return boolean
+     */
+    public function isByReference()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertGraph(
-            $arguments,
-            array(
-                PHP_Depend_Code_ASTConstant::CLAZZ         . ' (__CLASS__)',
-                PHP_Depend_Code_ASTLiteral::CLAZZ          . ' ("run")',
-                PHP_Depend_Code_ASTArray::CLAZZ            . ' ()', array(
-                    PHP_Depend_Code_ASTArrayElement::CLAZZ . ' ()', array(
-                        PHP_Depend_Code_ASTVariable::CLAZZ . ' ($count)'))
-            )
-        );
+        return $this->getMetadataBoolean(5);
     }
 
     /**
-     * Tests the start line value of an arguments instance.
+     * This method can be used to mark the element value as passed by reference.
      *
      * @return void
      */
-    public function testArgumentsHasExpectedStartLine()
+    public function setByReference()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(5, $arguments->getStartLine());
+        return $this->setMetadataBoolean(5, true);
     }
 
     /**
-     * Tests the start column value of an arguments instance.
+     * Returns the total number of the used property bag.
      *
-     * @return void
+     * @return integer
+     * @since 0.10.4
+     * @see PHP_Depend_Code_ASTNode#getMetadataSize()
      */
-    public function testArgumentsHasExpectedStartColumn()
+    protected function getMetadataSize()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(8, $arguments->getStartColumn());
+        return 6;
     }
 
     /**
-     * Tests the end line value of an arguments instance.
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
      *
-     * @return void
-     */
-    public function testArgumentsHasExpectedEndLine()
-    {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(7, $arguments->getEndLine());
-    }
-
-    /**
-     * Tests the end column value of an arguments instance.
+     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
+     * @param mixed                       $data    Optional previous calculated data.
      *
-     * @return void
+     * @return mixed
+     * @since 0.9.12
      */
-    public function testArgumentsHasExpectedEndColumn()
+    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
-        $this->assertEquals(21, $arguments->getEndColumn());
-    }
-
-    /**
-     * Returns an arguments instance for the currently executed test case.
-     *
-     * @return PHP_Depend_Code_ASTArguments
-     */
-    private function _getFirstArgumentsOfFunction()
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
-            PHP_Depend_Code_ASTArguments::CLAZZ
-        );
+        return $visitor->visitArrayElement($this, $data);
     }
 }

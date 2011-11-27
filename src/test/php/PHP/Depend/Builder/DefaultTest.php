@@ -736,6 +736,34 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTArrayReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTArrayReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArray::CLAZZ,
+            $this->createBuilder()->buildASTArray()
+        );
+    }
+
+    /**
+     * testBuildASTArrayElementReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTArrayElementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArrayElement::CLAZZ,
+            $this->createBuilder()->buildASTArrayElement()
+        );
+    }
+
+    /**
      * testBuildASTScopeReturnsExpectedType
      *
      * @return void

@@ -763,6 +763,29 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new php array node.
+     *
+     * @return PHP_Depend_Code_ASTArray
+     * @since 0.11.0
+     */
+    public function buildASTArray()
+    {
+        return $this->_buildASTNodeInstance('ASTArray');
+    }
+
+    /**
+     * Builds a new array element node.
+     *
+     * @return PHP_Depend_Code_ASTArrayElement
+     * @since 0.11.0
+     */
+    public function buildASTArrayElement()
+    {
+        return $this->_buildASTNodeInstance('ASTArrayElement');
+    }
+
+
+    /**
      * Builds a new instanceof expression node.
      *
      * @param string $image The source image of this expression.
