@@ -71,6 +71,10 @@ abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
      */
     protected function createSummaryXmlForCallingTest()
     {
+        $this->changeWorkingDirectory(
+            $this->createCodeResourceURI('config/')
+        );
+
         $file = self::createRunResourceURI('summary.xml');
 
         $log = new PHP_Depend_Log_Summary_Xml();

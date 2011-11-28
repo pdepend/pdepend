@@ -108,18 +108,34 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Changes the current working directory to an directory associated with the
      * calling test case.
      *
+     * @param string $directory Optional working directory.
+     *
      * @return void
      * @since 0.10.0
      */
-    protected function changeWorkingDirectory()
+    protected function changeWorkingDirectory($directory = null)
     {
-        $resource = self::createCodeResourceUriForTest();
-        if (is_file($resource)) {
-            $resource = dirname($resource);
+        if (null === $directory) {
+            $directory = $this->getTestWorkingDirectory();
         }
 
         $this->workingDirectory = getcwd();
-        chdir($resource);
+        chdir($directory);
+    }
+
+    /**
+     * Returns the working directory for the currently executed test.
+     *
+     * @return string
+     * @since 0.11.0
+     */
+    protected function getTestWorkingDirectory()
+    {
+        $resource = self::createCodeResourceUriForTest();
+        if (is_file($resource)) {
+            return dirname($resource);
+        }
+        return $resource;
     }
 
     /**
