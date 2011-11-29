@@ -407,6 +407,10 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function createPDependFixture()
     {
+        $this->changeWorkingDirectory(
+            $this->createCodeResourceURI('config/')
+        );
+
         return new PHP_Depend($this->createConfigurationFixture());
     }
 
