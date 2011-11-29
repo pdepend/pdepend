@@ -4595,13 +4595,15 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param PHP_Depend_Code_ASTNode $node      The parent string or nowdoc node.
      * @param integer                 $stopToken The stop token type.
+     * @param string                  $stopValue Optional stop value
      *
      * @return PHP_Depend_Code_ASTNode
      * @since 0.9.12
      */
     private function _parseStringExpressions(
         PHP_Depend_Code_ASTNode $node,
-        $stopToken
+        $stopToken,
+        $stopValue = null
     ) {
         while (($tokenType = $this->tokenizer->peek()) != self::T_EOF) {
             switch ($tokenType) {
@@ -5831,6 +5833,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_DOUBLE_QUOTE:
                 $defaultValue->setValue($this->_parseStringSequence($tokenType));
+                break;
+
+            case self::T_START_HEREDOC:
+                $defaultValue->setValue(null);
+                $this->_parseHeredoc();
                 break;
 
             case self::T_DIR:
