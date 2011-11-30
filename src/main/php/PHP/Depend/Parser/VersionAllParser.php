@@ -272,6 +272,29 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     }
 
     /**
+     * Implements some quirks and hacks to support php here- and now-doc for
+     * PHP 5.2.x versions :/
+     *
+     * @return PHP_Depend_Code_ASTHeredoc
+     * @since 0.11.0
+     */
+    protected function parseHeredoc()
+    {
+        $heredoc = parent::parseHeredoc();
+        if (version_compare(phpversion(), "5.3.0alpha") >= 0) {
+            return $heredoc;
+        }
+
+        // Consume dangling semicolon
+        $this->tokenizer->next();
+
+        $token = $this->tokenizer->next();
+        preg_match('(/\*(\'|")\*/)', $token->image, $match);
+
+        return $heredoc;
+    }
+
+    /**
      * Tests if the next token is a valid array start delimiter in the supported
      * PHP version.
      *

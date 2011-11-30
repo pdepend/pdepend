@@ -77,7 +77,7 @@ class PHP_Depend_Bugs_ParserBug21500611Test extends PHP_Depend_Bugs_AbstractTest
      */
     public function testParserHandlesNowdocInPropertyDeclaration()
     {
-        $this->getFirstHeredocInClass();
+        $this->assertNull($this->getFirstHeredocInClass());
     }
 
     /**
@@ -87,7 +87,37 @@ class PHP_Depend_Bugs_ParserBug21500611Test extends PHP_Depend_Bugs_AbstractTest
      */
     public function testParserHandlesNowdocInStaticVariableDeclaration()
     {
-        $this->getFirstHeredocInClass();
+        $this->assertNull($this->getFirstHeredocInClass());
+    }
+
+    /**
+     * testParserHandlesNowdocForMultipleStaticVariableDeclarations
+     *
+     * @return void
+     */
+    public function testParserHandlesNowdocForMultipleStaticVariableDeclarations()
+    {
+        $this->assertNull($this->getFirstHeredocInClass());
+    }
+
+    /**
+     * testParserHandlesNowdocInParameterDefaultValue
+     *
+     * @return void
+     */
+    public function testParserHandlesNowdocInParameterDefaultValue()
+    {
+        $this->assertNull($this->getFirstHeredocInClass());
+    }
+
+    /**
+     * testParserHandlesNowdocForMultipleParametersDefaultValue
+     *
+     * @return void
+     */
+    public function testParserHandlesNowdocForMultipleParametersDefaultValue()
+    {
+        $this->assertNull($this->getFirstHeredocInClass());
     }
 
     /**

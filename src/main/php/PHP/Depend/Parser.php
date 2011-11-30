@@ -2286,7 +2286,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_START_HEREDOC:
-                $expressions[] = $this->_parseHeredoc();
+                $expressions[] = $this->parseHeredoc();
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
@@ -4512,7 +4512,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTHeredoc
      * @since 0.9.12
      */
-    private function _parseHeredoc()
+    protected function parseHeredoc()
     {
         $this->_tokenStack->push();
         $this->consumeToken(self::T_START_HEREDOC);
@@ -4595,15 +4595,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param PHP_Depend_Code_ASTNode $node      The parent string or nowdoc node.
      * @param integer                 $stopToken The stop token type.
-     * @param string                  $stopValue Optional stop value
      *
      * @return PHP_Depend_Code_ASTNode
      * @since 0.9.12
      */
     private function _parseStringExpressions(
         PHP_Depend_Code_ASTNode $node,
-        $stopToken,
-        $stopValue = null
+        $stopToken
     ) {
         while (($tokenType = $this->tokenizer->peek()) != self::T_EOF) {
             switch ($tokenType) {
@@ -4616,13 +4614,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             case self::T_DOLLAR:
-                $expr = $this->_parseCompoundVariableOrLiteral();
-                $node->addChild($expr);
+                $node->addChild($this->_parseCompoundVariableOrLiteral());
                 break;
 
             case self::T_VARIABLE:
-                $expr = $this->_parseVariable();
-                $node->addChild($expr);
+                $node->addChild($this->_parseVariable());
                 break;
 
             case self::T_CURLY_BRACE_OPEN:
@@ -5837,7 +5833,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_START_HEREDOC:
                 $defaultValue->setValue(null);
-                $this->_parseHeredoc();
+                $this->parseHeredoc();
                 break;
 
             case self::T_DIR:
