@@ -238,7 +238,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testLiteralWithBrokenBinaryIntegerThrowsExpectedException()
     {
-        if (version_compare(phpversion(), '5.4dev') >= 0) {
+        if (version_compare(phpversion(), '5.4alpha') >= 0) {
             $this->markTestSkipped('This test only affects PHP < 5.4');
         }
         $this->_getFirstLiteralInFunction();

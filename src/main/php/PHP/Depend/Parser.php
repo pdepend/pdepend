@@ -4604,6 +4604,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $stopToken
     ) {
         while (($tokenType = $this->tokenizer->peek()) != self::T_EOF) {
+
             switch ($tokenType) {
 
             case $stopToken:

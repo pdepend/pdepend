@@ -69,13 +69,27 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTHeredocTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testHeredocAsArrayInitializeValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testHeredocAsArrayInitializeValue()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTLiteral::CLAZZ,
+            $this->_getFirstHeredocInClass()->getChild(0)
+        );
+    }
+
+    /**
      * testHeredocHasExpectedStartLine
      *
      * @return void
      */
     public function testHeredocHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstHeredocInFunction(__METHOD__);
+        $stmt = $this->_getFirstHeredocInFunction();
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -86,7 +100,7 @@ class PHP_Depend_Code_ASTHeredocTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testHeredocHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstHeredocInFunction(__METHOD__);
+        $stmt = $this->_getFirstHeredocInFunction();
         $this->assertEquals(10, $stmt->getStartColumn());
     }
 
@@ -97,7 +111,7 @@ class PHP_Depend_Code_ASTHeredocTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testHeredocHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstHeredocInFunction(__METHOD__);
+        $stmt = $this->_getFirstHeredocInFunction();
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
@@ -108,21 +122,33 @@ class PHP_Depend_Code_ASTHeredocTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testHeredocHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstHeredocInFunction(__METHOD__);
+        $stmt = $this->_getFirstHeredocInFunction();
         $this->assertEquals(3, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
+     * @return PHP_Depend_Code_ASTHeredoc
+     */
+    private function _getFirstHeredocInFunction()
+    {
+        return $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTHeredoc::CLAZZ
+        );
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
      *
      * @return PHP_Depend_Code_ASTHeredoc
      */
-    private function _getFirstHeredocInFunction($testCase)
+    private function _getFirstHeredocInClass()
     {
-        return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTHeredoc::CLAZZ
+        return $this->getFirstNodeOfTypeInClass(
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTHeredoc::CLAZZ
         );
     }
 }

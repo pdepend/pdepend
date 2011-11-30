@@ -453,6 +453,10 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      */
     public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
     {
+        if (version_compare(phpversion(), '5.4alpha') >= 0)
+        {
+            $this->markTestSkipped( 'This test only affects PHP < 5.4' );
+        }
         $this->getFirstMethodForTestCase();
     }
 
