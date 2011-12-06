@@ -15,7 +15,7 @@
                               parser which results in an E_FATAL. This can happen
                               when a control structure does not contain a body
                               or termination token.">
-            <action date="5ac3e55" dev="mapi" due-to="audittest" type="fix">
+            <action date="b367a41" dev="mapi" due-to="audittest" type="fix">
                 E_FATAL when a control structure like if, for or foreach does not
                 contain a body or a termination symbol.
             </action>
