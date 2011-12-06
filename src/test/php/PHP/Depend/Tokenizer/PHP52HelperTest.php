@@ -238,6 +238,11 @@ class PHP_Depend_Tokenizer_PHP52HelperTest extends PHP_Depend_AbstractTest
      */
     public function testHelperThrowsExpectedExceptionWhenTokenGetAllFails()
     {
+        if ( version_compare( phpversion(), '5.3.0' ) >= 0 )
+        {
+            $this->markTestSkipped( 'This test only works with PHP versions < 5.2.0' );
+        }
+
         PHP_Depend_Tokenizer_PHP52Helper::tokenize(
             '<?php
             class MyClass {
