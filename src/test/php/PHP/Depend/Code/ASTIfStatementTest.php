@@ -146,6 +146,17 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testParserThrowsExpectedExceptionWhenIfStatementHasNoBody
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody()
+    {
+        $this->_getFirstIfStatementInFunction(__METHOD__);
+    }
+
+    /**
      * Tests the start line value.
      *
      * @return void

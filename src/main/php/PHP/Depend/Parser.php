@@ -2003,7 +2003,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } else if ($tokenType === self::T_COLON) {
             $stmt->addChild($this->_parseAlternativeScope());
         } else {
-            $stmt->addChild($this->_parseOptionalStatement());
+            $stmt->addChild($this->_parseStatement());
         }
         return $stmt;
     }
@@ -5023,6 +5023,25 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeToken(self::T_CURLY_BRACE_CLOSE);
 
         return $this->_setNodePositionsAndReturn($scope);
+    }
+
+    /**
+     * Parse a statement.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_UnexpectedTokenException
+     * @since 0.11.0
+     */
+    private function _parseStatement()
+    {
+        if (null === ($stmt = $this->_parseOptionalStatement()))
+        {
+            throw new PHP_Depend_Parser_UnexpectedTokenException(
+                $this->tokenizer->next(),
+                $this->_sourceFile->getFileName()
+            );
+        }
+        return $stmt;
     }
 
     /**

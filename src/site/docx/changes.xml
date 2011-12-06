@@ -44,6 +44,18 @@
             </action>
         </release>
 
+        <release version="0.10.7"
+                 date="2011/12/06"
+                 description="This release closes a critical bug in PHP_Depend's
+                              parser which results in an E_FATAL. This can happen
+                              when a control structure does not contain a body
+                              or termination token.">
+            <action date="b367a41" dev="mapi" due-to="audittest" type="fix">
+                E_FATAL when a control structure like if, for or foreach does not
+                contain a body or a termination symbol.
+            </action>
+        </release>
+
 		<release version="0.10.6"
                  date="2011/08/21"
                  description="This release closes a critical bug in PHP_Depend's
