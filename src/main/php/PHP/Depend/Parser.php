@@ -5034,8 +5034,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseStatement()
     {
-        if (null === ($stmt = $this->_parseOptionalStatement()))
-        {
+        if (null === ($stmt = $this->_parseOptionalStatement())) {
             throw new PHP_Depend_Parser_UnexpectedTokenException(
                 $this->tokenizer->next(),
                 $this->_sourceFile->getFileName()
