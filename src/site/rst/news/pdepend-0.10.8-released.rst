@@ -1,6 +1,6 @@
-==============
-Version 0.10.8
-==============
+=======================
+Version 0.10.8 released
+=======================
 
 :Author:       Manuel Pichler
 :Copyright:    All rights reserved

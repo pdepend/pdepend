@@ -16,7 +16,7 @@
                              file contains a statement before the class or
                              interface doc comment.">
 
-            <action date="23905939" dev="mapi" system="pivotaltracker" due-to="Sebastian Bergmann" due-to-email="sb@sebastian-bergmann.de" type="fix">
+            <action date="b62bed7" dev="mapi" issue="23905939" system="pivotaltracker" due-to="Sebastian Bergmann" due-to-email="sb@sebastian-bergmann.de" type="fix">
                 Package gets lost when prefixed with control structure
             </action>
         </release>
