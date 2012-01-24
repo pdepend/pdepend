@@ -36,41 +36,71 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://pdepend.org/
+ * @link       https://www.pivotaltracker.com/story/show/23905939
+ * @since      0.10.8
  */
 
-require_once 'PHPUnit/Extensions/PhptTestSuite.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Util_MathUtil} class.
+ * Test case for bug #23905939.
  *
- * @category   QualityAssurance
+ * @category   PHP
  * @package    PHP_Depend
- * @subpackage Util
+ * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @link       https://www.pivotaltracker.com/story/show/23905939
+ * @since      0.10.8
  *
- * @covers PHP_Depend_Util_MathUtil
+ * @ticket 23905939
+ * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
-class PHP_Depend_Util_MathUtilTest extends PHPUnit_Extensions_PhptTestSuite
+class PHP_Depend_Bugs_ParserBug23905939Test extends PHP_Depend_Bugs_AbstractTest
 {
     /**
-     * Constructs a new test suite
+     * testParserExtractsCorrectClassPackage
+     * 
+     * @return void
      */
-    public function __construct()
+    public function testParserExtractsCorrectClassPackage()
     {
-        parent::__construct(
-            realpath(dirname(__FILE__) . '/../../../../resources/files/Util/MathUtil/')
-        );
+        $packages = $this->parseCodeResourceForTest();
+        $packages->next();
+
+        $class = $packages->current()
+            ->getClasses()
+            ->current();
+
+        $this->assertEquals('my.package', $class->getPackage()->getName());
+    }
+
+    /**
+     * testParserExtractsCorrectInterfacePackage
+     *
+     * @return void
+     */
+    public function testParserExtractsCorrectInterfacePackage()
+    {
+        $packages = $this->parseCodeResourceForTest();
+        $packages->next();
+
+        $interface = $packages->current()
+            ->getInterfaces()
+            ->current();
+
+        $this->assertEquals('my.package', $interface->getPackage()->getName());
     }
 }
