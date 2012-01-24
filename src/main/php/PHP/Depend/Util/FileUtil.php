@@ -70,7 +70,7 @@ final class PHP_Depend_Util_FileUtil
     public static function getUserHomeDirOrSysTempDir()
     {
         $home = self::getUserHomeDir();
-        if (file_exists($home)) {
+        if (file_exists($home) && is_writable($home)) {
             return $home;
         }
         return self::getSysTempDir();
