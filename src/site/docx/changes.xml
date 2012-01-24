@@ -9,6 +9,17 @@
     </properties>
 
 	<body>
+        <release version="0.10.8"
+                 date="2012/01/24"
+                description="This release closes an issue in PHP_Depend's parser
+                             that produces invalid package names when the source
+                             file contains a statement before the class or
+                             interface doc comment.">
+
+            <action date="23905939" dev="mapi" system="pivotaltracker" due-to="Sebastian Bergmann" due-to-email="sb@sebastian-bergmann.de" type="fix">
+                Package gets lost when prefixed with control structure
+            </action>
+        </release>
         <release version="0.10.7"
                  date="2011/12/06"
                  description="This release closes a critical bug in PHP_Depend's

@@ -370,7 +370,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     // Consume whatever token
                     $this->consumeToken($tokenType);
                 }
-                $this->reset();
                 break;
             }
 
@@ -5939,8 +5938,20 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $type = $this->tokenizer->peek();
         while ($type == self::T_COMMENT || $type == self::T_DOC_COMMENT) {
-            $this->_tokenStack->add($this->tokenizer->next());
+
+            $token = $this->tokenizer->next();
+
+            $this->_tokenStack->add($token);
             $type = $this->tokenizer->peek();
+
+            if (self::T_COMMENT === $type) {
+                continue;
+            }
+
+            $this->_docComment  = $token->image;
+            if (preg_match('(\s+@package\s+[^\s]+\s+)', $token->image)) {
+                $this->_packageName = $this->_parsePackageAnnotation($token->image);
+            }
         }
     }
 }
