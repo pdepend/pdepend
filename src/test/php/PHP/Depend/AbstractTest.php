@@ -56,7 +56,7 @@
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
+abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
      * The current working directory.
