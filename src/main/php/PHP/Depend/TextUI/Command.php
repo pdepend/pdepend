@@ -212,10 +212,10 @@ class PHP_Depend_TextUI_Command
                 $errors = $this->_runner->getParseErrors();
 
                 printf(
-                  '%sThe following error%s occured:%s',
-                  PHP_EOL,
-                  count($errors) > 1 ? 's' : '',
-                  PHP_EOL
+                    '%sThe following error%s occured:%s',
+                    PHP_EOL,
+                    count($errors) > 1 ? 's' : '',
+                    PHP_EOL
                 );
 
                 foreach ($errors as $error) {
