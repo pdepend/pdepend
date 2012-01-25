@@ -5849,11 +5849,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $defaultValue->setValue($this->_parseStringSequence($tokenType));
                 break;
 
-            case self::T_START_HEREDOC:
-                $defaultValue->setValue(null);
-                $this->parseHeredoc();
-                break;
-
             case self::T_DIR:
             case self::T_FILE:
             case self::T_LINE:
