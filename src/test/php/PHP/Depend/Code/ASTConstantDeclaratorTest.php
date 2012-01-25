@@ -110,6 +110,18 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
+     * testParserInjectsExpectedHeredocValueIntoConstantDeclarator
+     *
+     * @return void
+     * @since 0.10.9
+     */
+    public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator()
+    {
+        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        self::assertEquals('Testing!', $declarator->getValue()->getValue());
+    }
+
+    /**
      * testConstantDeclaratorHasExpectedStartLine
      *
      * @return void

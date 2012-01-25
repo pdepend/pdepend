@@ -5871,6 +5871,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $defaultValue->setValue(null);
                 $this->consumeToken($tokenType);
                 break;
+            
+            case self::T_START_HEREDOC:
+                $defaultValue->setValue(
+                    $this->parseHeredoc()->getChild(0)->getImage()
+                );
+                break;
 
             default:
                 throw new PHP_Depend_Parser_UnexpectedTokenException(

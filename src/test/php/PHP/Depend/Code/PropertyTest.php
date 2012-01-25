@@ -352,6 +352,18 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetDefaultValueReturnsExpectedStringFromHeredoc
+     *
+     * @return void
+     * @since 0.10.9
+     */
+    public function testGetDefaultValueReturnsExpectedStringFromHeredoc()
+    {
+        $property = $this->_getFirstPropertyInClass();
+        $this->assertEquals('Testing!', $property->getDefaultValue());
+    }
+
+    /**
      * Tests that the {@link PHP_Depend_Code_Property::isPrimitive()} method
      * returns <b>false</b> for an property without var annotation.
      *

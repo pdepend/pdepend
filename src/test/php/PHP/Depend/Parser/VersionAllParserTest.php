@@ -469,30 +469,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
-     * testParserThrowsExpectedExceptionForInvalidToken
-     *
-     * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
-     */
-    public function testParserThrowsExpectedExceptionForInvalidToken()
-    {
-        self::parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForTokenStreamEnd
-     *
-     * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
-     */
-    public function testParserThrowsExpectedExceptionForTokenStreamEnd()
-    {
-        self::parseCodeResourceForTest();
-    }
-
-//###################
-
-    /**
      * testParserHandlesCallableTypeHint
      *
      * @return void
@@ -604,6 +580,28 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
             $this->markTestSkipped( 'This test only affects PHP < 5.4' );
         }
         $this->getFirstMethodForTestCase();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInvalidToken
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInvalidToken()
+    {
+        self::parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTokenStreamEnd
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     */
+    public function testParserThrowsExpectedExceptionForTokenStreamEnd()
+    {
+        self::parseCodeResourceForTest();
     }
 
     /**
@@ -731,7 +729,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
         $function = $this->getFirstFunctionForTestCase();
         self::assertEquals('__TRAIT__', $function->getName());
     }
-//###################
 
     /**
      * Returns the first class or interface that could be found in the code under
