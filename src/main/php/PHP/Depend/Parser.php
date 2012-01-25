@@ -4730,8 +4730,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _parseStatement()
     {
-        if (null === ($stmt = $this->_parseOptionalStatement()))
-        {
+        if (null === ($stmt = $this->_parseOptionalStatement())) {
             throw new PHP_Depend_Parser_UnexpectedTokenException(
                 $this->tokenizer->next(),
                 $this->_sourceFile->getFileName()
@@ -5547,6 +5546,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 // There is a default value but we don't handle it at the moment.
                 $defaultValue->setValue(null);
                 $this->consumeToken($tokenType);
+                break;
+            
+            case self::T_START_HEREDOC:
+                $defaultValue->setValue(
+                    $this->_parseHeredoc()->getChild(0)->getImage()
+                );
                 break;
 
             default:
