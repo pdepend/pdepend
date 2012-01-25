@@ -209,8 +209,16 @@ class PHP_Depend_TextUI_Command
             $result = $this->_runner->run();
 
             if ($this->_runner->hasParseErrors() === true) {
-                echo PHP_EOL, 'Following errors occured:', PHP_EOL;
-                foreach ($this->_runner->getParseErrors() as $error) {
+                $errors = $this->_runner->getParseErrors();
+
+                printf(
+                  '%sThe following error%s occured:%s',
+                  PHP_EOL,
+                  count($errors) > 1 ? 's' : '',
+                  PHP_EOL
+                );
+
+                foreach ($errors as $error) {
                     echo $error, PHP_EOL;
                 }
                 echo PHP_EOL;
