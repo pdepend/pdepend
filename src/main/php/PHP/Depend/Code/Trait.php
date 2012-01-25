@@ -68,7 +68,8 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
     const CLAZZ = __CLASS__;
 
     /**
-     * Returns a list of all methods provided by this type or one of its parents.
+     * Returns an array with {@link PHP_Depend_Code_Method} objects that are
+     * implemented or imported by this trait.
      *
      * @return array(PHP_Depend_Code_Method)
      */
@@ -81,8 +82,7 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
     /**
      * Visitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
+     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
      *
      * @return void
      */
