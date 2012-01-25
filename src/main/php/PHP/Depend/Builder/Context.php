@@ -75,6 +75,17 @@ interface PHP_Depend_Builder_Context
     function registerFunction(PHP_Depend_Code_Function $function);
 
     /**
+     * This method can be used to register an existing trait in the current
+     * class context.
+     *
+     * @param PHP_Depend_Code_Trait $trait The trait instance.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    function registerTrait(PHP_Depend_Code_Trait $trait);
+
+    /**
      * This method can be used to register an existing class in the current
      * class context.
      * 
@@ -88,11 +99,21 @@ interface PHP_Depend_Builder_Context
      * This method can be used to register an existing interface in the current
      * class context.
      *
-     * @param PHP_Depend_Code_Class $interface The interface instance.
+     * @param PHP_Depend_Code_Interface $interface The interface instance.
      *
      * @return void
      */
     function registerInterface(PHP_Depend_Code_Interface $interface);
+
+    /**
+     * Returns the trait instance for the given qualified name.
+     *
+     * @param string $qualifiedName Full qualified trait name.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    function getTrait($qualifiedName);
 
     /**
      * Returns the class instance for the given qualified name.

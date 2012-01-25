@@ -204,7 +204,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     }
 
     /**
-     * Returns all {@link PHP_Depend_Code_AbstractClassOrInterface} objects in
+     * Returns all {@link PHP_Depend_Code_AbstractType} objects in
      * this package.
      *
      * @return PHP_Depend_Code_NodeIterator
@@ -217,11 +217,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     /**
      * Adds the given type to this package and returns the input type instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The new package type.
+     * @param PHP_Depend_Code_AbstractType $type The new package type.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return PHP_Depend_Code_AbstractType
      */
-    public function addType(PHP_Depend_Code_AbstractClassOrInterface $type)
+    public function addType(PHP_Depend_Code_AbstractType $type)
     {
         // Skip if this package already contains this type
         if (in_array($type, $this->types, true)) {
@@ -243,12 +243,11 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     /**
      * Removes the given type instance from this package.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
-     *        to remove.
+     * @param PHP_Depend_Code_AbstractType $type The type instance to remove.
      *
      * @return void
      */
-    public function removeType(PHP_Depend_Code_AbstractClassOrInterface $type)
+    public function removeType(PHP_Depend_Code_AbstractType $type)
     {
         if (($index = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list

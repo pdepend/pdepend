@@ -102,6 +102,38 @@ interface PHP_Depend_BuilderI
     function buildASTClassOrInterfaceReference($qualifiedName);
 
     /**
+     * Builds a new php trait instance.
+     *
+     * @param string $qualifiedName The full qualified trait name.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    function buildTrait($qualifiedName);
+
+    /**
+     * Restores an existing trait instance within the context of this builder.
+     *
+     * @param PHP_Depend_Code_Trait $trait An existing trait instance.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    function restoreTrait(PHP_Depend_Code_Trait $trait);
+
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Trait}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    function getTrait($qualifiedName);
+
+    /**
      * Builds a new code class instance.
      *
      * @param string $qualifiedName The class name.

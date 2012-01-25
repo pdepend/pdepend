@@ -67,6 +67,23 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
 class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testRegisterTraitCallsRestoreClassOnBuilder
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testRegisterTraitCallsRestoreClassOnBuilder()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('restoreTrait')
+            ->with(self::isInstanceOf(PHP_Depend_Code_Trait::CLAZZ));
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context->registerTrait(new PHP_Depend_Code_Trait(__CLASS__));
+    }
+
+    /**
      * testRegisterClassCallsRestoreClassOnBuilder
      *
      * @return void
@@ -112,6 +129,23 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
 
         $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
         $context->registerFunction(new PHP_Depend_Code_Function(__CLASS__));
+    }
+
+    /**
+     * testGetTraitDelegatesCallToWrappedBuilder
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetTraitDelegatesCallToWrappedBuilder()
+    {
+        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder->expects($this->once())
+            ->method('getTrait')
+            ->with(self::equalTo(__CLASS__));
+
+        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context->getTrait(__CLASS__);
     }
 
     /**

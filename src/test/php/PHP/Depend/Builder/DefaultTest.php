@@ -156,6 +156,63 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildTraitWithSameQualifiedNameUnique
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildTraitWithSameQualifiedNameUnique()
+    {
+        $builder = $this->createBuilder();
+
+        $class = $builder->buildTrait(__CLASS__);
+        $class->setPackage($builder->buildPackage(__FUNCTION__));
+
+        $builder->restoreTrait($class);
+
+        self::assertSame($class, $builder->getTrait(__CLASS__));
+    }
+
+    /**
+     * Tests that the {@link PHP_Depend_Builder_Default::buildTrait()} method
+     * creates two different trait instances for the same class name, but
+     * different packages.
+     *
+     * @return void
+     */
+    public function testBuildTraitCreatesTwoDifferentInstancesForDifferentPackages()
+    {
+        $builder = $this->createBuilder();
+
+        $trait1 = $builder->buildTrait('php\depend1\Parser');
+        $trait2 = $builder->buildTrait('php\depend2\Parser');
+
+        $this->assertNotSame($trait1, $trait2);
+    }
+
+    /**
+     * Tests that {@link PHP_Depend_Builder_Default::buildTrait()} returns
+     * a previous trait instance for a specified package, if it is called for a
+     * same named trait in the default package.
+     *
+     * @return void
+     */
+    public function testBuildTraitReusesExistingNonDefaultPackageInstanceForDefaultPackage()
+    {
+        $builder = $this->createBuilder();
+
+        $trait = $builder->buildTrait('php\depend\Parser');
+        $trait->setPackage($builder->buildPackage(__FUNCTION__));
+
+        $builder->restoreTrait($trait);
+
+        self::assertSame(
+            $trait->getPackage(),
+            $builder->getTrait('Parser')->getPackage()
+        );
+    }
+
+    /**
      * Tests that the node builder creates a class for the same name only once.
      *
      * @return void

@@ -100,6 +100,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     protected $defaultFile = null;
 
     /**
+     * All generated {@link PHP_Depend_Code_Trait} objects
+     *
+     * @var array
+     */
+    private $_traits = array();
+
+    /**
      * All generated {@link PHP_Depend_Code_Class} objects
      *
      * @var array(string=>PHP_Depend_Code_Class) $_classes
@@ -133,6 +140,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @var boolean $_frozen
      */
     private $_frozen = false;
+
+    /**
+     * Cache of all traits created during the regular parsing process.
+     *
+     * @var array
+     */
+    private $_frozenTraits = array();
 
     /**
      * Cache of all classes created during the regular parsing process.
@@ -222,6 +236,45 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             return $classOrInterface;
         }
         return $this->buildClassInternal($qualifiedName);
+    }
+
+    /**
+     * Builds a new php trait instance.
+     *
+     * @param string $qualifiedName The full qualified trait name.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    public function buildTrait($qualifiedName)
+    {
+        $this->checkBuilderState();
+
+        $trait = new PHP_Depend_Code_Trait($this->extractTypeName($qualifiedName));
+        $trait->setCache($this->cache)
+            ->setContext($this->context)
+            ->setSourceFile($this->defaultFile);
+
+        return $trait;
+    }
+
+    /**
+     * This method will try to find an already existing instance for the given
+     * qualified name. It will create a new {@link PHP_Depend_Code_Trait}
+     * instance when no matching type exists.
+     *
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    public function getTrait($qualifiedName)
+    {
+        $trait = $this->findTrait($qualifiedName);
+        if ($trait === null) {
+            $trait = $this->buildTraitInternal($qualifiedName);
+        }
+        return $trait;
     }
 
     /**
@@ -1649,10 +1702,78 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new trait instance or reuses a previous created trait.
+     *
+     * Where possible you should give a qualified trait name, that is prefixed
+     * with the package identifier.
+     *
+     * <code>
+     *   $builder->buildTrait('php::depend::Parser');
+     * </code>
+     *
+     * To determine the correct trait, this method implements the following
+     * algorithm.
+     *
+     * <ol>
+     *   <li>Check for an exactly matching instance and reuse it.</li>
+     *   <li>Check for a class instance that belongs to the default package. If
+     *   such an instance exists, reuse it and replace the default package with
+     *   the newly given package information.</li>
+     *   <li>Check that the requested trait is in the default package, if this
+     *   is true, reuse the first trait instance and ignore the default package.
+     *   </li>
+     *   <li>Create a new instance for the specified package.</li>
+     * </ol>
+     *
+     * @param string $qualifiedName The qualified trait name.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.9.5
+     */
+    protected function buildTraitInternal($qualifiedName)
+    {
+        $this->_internal = true;
+
+        $trait = $this->buildTrait($qualifiedName);
+        $trait->setPackage(
+            $this->buildPackage($this->extractPackageName($qualifiedName))
+        );
+
+        $this->restoreClass($trait);
+
+        return $trait;
+    }
+
+    /**
+     * This method tries to find a trait instance matching for the given
+     * qualified name in all scopes already processed. It will return the best
+     * matching instance or <b>null</b> if no match exists.
+     *
+     * @param string $qualifiedName The qualified trait name.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.9.5
+     */
+    protected function findTrait($qualifiedName)
+    {
+        $this->freeze();
+
+        $trait = $this->findType(
+            $this->_frozenTraits,
+            $qualifiedName
+        );
+
+        if ($trait === null) {
+            $trait = $this->findType($this->_traits, $qualifiedName);
+        }
+        return $trait;
+    }
+
+    /**
      * Builds a new new interface instance.
      *
-     * If there is an existing class instance for the given name, this method
-     * checks if this class is part of the default namespace. If this is the
+     * If there is an existing interface instance for the given name, this method
+     * checks if this interface is part of the default namespace. If this is the
      * case this method will update all references to the new interface and it
      * removes the class instance. Otherwise it creates new interface instance.
      *
@@ -1711,13 +1832,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->freeze();
 
-        $interface = $this->findClassOrInterface(
+        $interface = $this->findType(
             $this->_frozenInterfaces,
             $qualifiedName
         );
 
         if ($interface === null) {
-            $interface = $this->findClassOrInterface(
+            $interface = $this->findType(
                 $this->_interfaces,
                 $qualifiedName
             );
@@ -1782,13 +1903,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         $this->freeze();
 
-        $class = $this->findClassOrInterface(
+        $class = $this->findType(
             $this->_frozenClasses,
             $qualifiedName
         );
 
         if ($class === null) {
-            $class = $this->findClassOrInterface($this->_classes, $qualifiedName);
+            $class = $this->findType($this->_classes, $qualifiedName);
         }
         return $class;
     }
@@ -1801,10 +1922,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param array  $instances     Map of already created instances.
      * @param string $qualifiedName The qualified interface or class name.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return PHP_Depend_Code_AbstractType
      * @since 0.9.5
      */
-    protected function findClassOrInterface(array $instances, $qualifiedName)
+    protected function findType(array $instances, $qualifiedName)
     {
         $classOrInterfaceName = $this->extractTypeName($qualifiedName);
         $packageName          = $this->extractPackageName($qualifiedName);
@@ -1843,9 +1964,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         $this->_frozen = true;
 
+        $this->_frozenTraits     = $this->_copyTypesWithPackage($this->_traits);
         $this->_frozenClasses    = $this->_copyTypesWithPackage($this->_classes);
         $this->_frozenInterfaces = $this->_copyTypesWithPackage($this->_interfaces);
 
+        $this->_traits     = array();
         $this->_classes    = array();
         $this->_interfaces = array();
     }
@@ -1889,6 +2012,23 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Restores a trait within the internal type scope.
+     *
+     * @param PHP_Depend_Code_Trait $trait A trait instance.
+     *
+     * @return void
+     * @since 0.10.0
+     */
+    public function restoreTrait(PHP_Depend_Code_Trait $trait)
+    {
+        $this->storeTrait(
+            $trait->getName(),
+            $trait->getPackageName(),
+            $trait
+        );
+    }
+
+    /**
      * Restores a class within the internal type scope.
      *
      * @param PHP_Depend_Code_Class $class A class instance.
@@ -1920,6 +2060,29 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
             $interface->getPackageName(),
             $interface
         );
+    }
+
+    /**
+     * This method will persist a trait instance for later reuse.
+     *
+     * @param string                $traitName   The local trait name.
+     * @param string                $packageName The package name
+     * @param PHP_Depend_Code_Trait $trait       The context trait.
+     *
+     * @return void
+     * @@since 0.11.0
+     */
+    protected function storeTrait(
+        $traitName, $packageName, PHP_Depend_Code_Trait $trait
+    ) {
+        $traitName = strtolower($traitName);
+        if (!isset($this->_traits[$traitName][$packageName])) {
+            $this->_traits[$traitName][$packageName] = array();
+        }
+        $this->_traits[$traitName][$packageName][$trait->getUUID()] = $trait;
+
+        $package = $this->buildPackage($packageName);
+        $package->addType($trait);
     }
 
     /**
