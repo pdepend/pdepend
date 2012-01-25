@@ -44,6 +44,14 @@
             </action>
         </release>
 
+        <release version="0.10.9"
+                 date="2012/01/25"
+                 description="">
+            <action date="" dev="mapi" issue="23951621" system="pivotaltracker" due-to="Brian Kendig" type="fix">
+                PHP_Depend fails on Heredocs and Nowdocs in property declaration.
+            </action>
+        </release>
+
         <release version="0.10.8"
                  date="2012/01/24"
                 description="This release closes an issue in PHP_Depend's parser
