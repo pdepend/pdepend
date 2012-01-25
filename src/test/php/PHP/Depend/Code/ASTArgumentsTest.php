@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,12 +55,12 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  *
- * @covers PHP_Depend_Code_ASTNode
+ * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_ASTArguments
  * @group pdepend
  * @group pdepend::ast
@@ -69,38 +69,26 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
+     * testArgumentsGraphWithMagicClassConstant
      *
      * @return void
+     * @since 0.11.0
      */
-    public function testAcceptInvokesVisitOnGivenVisitor()
+    public function testArgumentsGraphWithMagicClassConstant()
     {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitArguments'));
-
-        $node = new PHP_Depend_Code_ASTArguments();
-        $node->accept($visitor);
+        $arguments = $this->_getFirstArgumentsOfFunction();
+        $this->assertGraph(
+            $arguments,
+            array(
+                PHP_Depend_Code_ASTConstant::CLAZZ         . ' (__CLASS__)',
+                PHP_Depend_Code_ASTLiteral::CLAZZ          . ' ("run")',
+                PHP_Depend_Code_ASTArray::CLAZZ            . ' ()', array(
+                    PHP_Depend_Code_ASTArrayElement::CLAZZ . ' ()', array(
+                        PHP_Depend_Code_ASTVariable::CLAZZ . ' ($count)'))
+            )
+        );
     }
 
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitArguments'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTArguments();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-    
     /**
      * Tests the start line value of an arguments instance.
      *
@@ -108,7 +96,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedStartLine()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(5, $arguments->getStartLine());
     }
 
@@ -119,7 +107,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedStartColumn()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(8, $arguments->getStartColumn());
     }
 
@@ -130,7 +118,7 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedEndLine()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(7, $arguments->getEndLine());
     }
 
@@ -141,21 +129,19 @@ class PHP_Depend_Code_ASTArgumentsTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testArgumentsHasExpectedEndColumn()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction(__METHOD__);
+        $arguments = $this->_getFirstArgumentsOfFunction();
         $this->assertEquals(21, $arguments->getEndColumn());
     }
 
     /**
      * Returns an arguments instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTArguments
      */
-    private function _getFirstArgumentsOfFunction($testCase)
+    private function _getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
+            $this->getCallingTestMethod(),
             PHP_Depend_Code_ASTArguments::CLAZZ
         );
     }

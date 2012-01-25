@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,7 +55,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
@@ -69,41 +69,6 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitPostfixExpression'));
-
-        $expr = new PHP_Depend_Code_ASTPostfixExpression();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitPostfixExpression'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTPostfixExpression();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * testIncrementPostfixExpressionOnStaticClassMember
      *
      * @return void
@@ -114,10 +79,10 @@ class PHP_Depend_Code_ASTPostfixExpressionTest extends PHP_Depend_Code_ASTNodeTe
         $this->assertGraphEquals(
             $expr,
             array(
-                'PHP_Depend_Code_ASTMemberPrimaryPrefix',
-                'PHP_Depend_Code_ASTClassOrInterfaceReference',
-                'PHP_Depend_Code_ASTPropertyPostfix',
-                'PHP_Depend_Code_ASTVariable'
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                PHP_Depend_Code_ASTVariable::CLAZZ
             )
         );
     }

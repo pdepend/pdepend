@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -54,13 +54,16 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  * @since     0.10.0
  *
  * @covers PHP_Depend_Autoload
+ * @group pdepend
+ * @group pdepend::autoload
+ * @group unittest
  */
 class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
 {
@@ -105,9 +108,6 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
      * testAutoloadLoadsClassInPhpDependNamespace
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::autoload
-     * @group unittest
      */
     public function testAutoloadLoadsClassInPhpDependNamespace()
     {
@@ -127,9 +127,6 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
      * testAutoloadNotLoadsClassFromDifferentNamespace
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::autoload
-     * @group unittest
      */
     public function testAutoloadNotLoadsClassFromDifferentNamespace()
     {

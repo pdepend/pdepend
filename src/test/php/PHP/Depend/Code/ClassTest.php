@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -54,7 +54,7 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
@@ -875,58 +875,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = $this->getFirstClassForTestCase();
         self::assertEquals(6, count($class->getProperties()));
-    }
-
-    /**
-     * testFreeResetsAllAssociatedProperties
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedProperties()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(0, $class->getProperties()->count());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedParentInterfaces
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedParentInterfaces()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(0, $class->getInterfaces()->count());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedClassMethods
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedClassMethods()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(0, $class->getMethods()->count());
-    }
-
-    /**
-     * testFreeResetsAllAssociatedASTNodes
-     *
-     * @return void
-     */
-    public function testFreeResetsAllAssociatedASTNodes()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $class->free();
-
-        self::assertEquals(array(), $class->getChildren());
     }
 
     /**

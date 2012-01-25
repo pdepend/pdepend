@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTForStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitForStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTForStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitForStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTForStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementHasExpectedStartLine()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementHasExpectedStartColumn()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementHasExpectedEndLine()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementHasExpectedEndColumn()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForExpressionHasExpectedStartLine()
     {
@@ -194,12 +127,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForExpressionHasExpectedStartColumn()
     {
@@ -211,12 +138,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForExpressionHasExpectedEndLine()
     {
@@ -228,12 +149,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForExpressionHasExpectedEndColumn()
     {
@@ -245,34 +160,22 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testFirstChildOfForStatementIsInstanceOfForInit
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFirstChildOfForStatementIsInstanceOfForInit()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForInit::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForInit::CLAZZ, $stmt->getChild(0));
     }
 
     /**
      * testFirstChildOfForStatementCanBeLeftBlank
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFirstChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
 
@@ -280,126 +183,82 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserHandlesBooleanLiteralInForInit
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserHandlesBooleanLiteralInForInit()
     {
-        self::parseCodeResourceForTest();
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
      * testSecondChildOfForStatementIsInstanceOfExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSecondChildOfForStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testSecondChildOfForStatementCanBeLeftBlank
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSecondChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testThirdChildOfForStatementIsInstanceOfForUpdate
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThirdChildOfForStatementIsInstanceOfForUpdate()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForUpdate::CLAZZ, $stmt->getChild(2));
     }
 
     /**
      * testThirdChildOfForStatementCanBeLeftBlank
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThirdChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
     }
 
     /**
      * testFourthChildOfForStatementIsInstanceOfScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(3));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(3));
     }
 
     /**
      * testFourthChildOfForStatementIsInstanceOfStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFourthChildOfForStatementIsInstanceOfStatement()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTStatement::CLAZZ, $stmt->getChild(3));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTStatement::CLAZZ, $stmt->getChild(3));
     }
 
     /**
      * testParserResetsScopeTreeForEmptyForInit
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserResetsScopeTreeForEmptyForInit()
     {
@@ -415,10 +274,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserResetsScopeTreeForEmptyForExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserResetsScopeTreeForEmptyForExpression()
     {
@@ -434,12 +289,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForStatementAlternativeScopeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementAlternativeScopeHasExpectedStartLine()
     {
@@ -451,12 +300,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForStatementAlternativeScopeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementAlternativeScopeHasExpectedStartColumn()
     {
@@ -468,12 +311,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForStatementAlternativeScopeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementAlternativeScopeHasExpectedEndLine()
     {
@@ -485,12 +322,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForStatementAlternativeScopeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementAlternativeScopeHasExpectedEndColumn()
     {
@@ -502,12 +333,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testForStatementTerminatedByPhpCloseTag
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForStatementTerminatedByPhpCloseTag()
     {
@@ -519,10 +344,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserHandlesBooleanLiteralInForExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserHandlesBooleanLiteralInForExpression()
     {
@@ -533,10 +354,6 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserResetsScopeTreeForEmptyForUpdate
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserResetsScopeTreeForEmptyForUpdate()
     {
@@ -552,32 +369,20 @@ class PHP_Depend_Code_ASTForStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserHandlesParenthesisExpressionInForUpdate
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserHandlesParenthesisExpressionInForUpdate()
     {
-        self::parseCodeResourceForTest();
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
      * testParserHandlesBooleanLiteralInForUpdate
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParserHandlesBooleanLiteralInForUpdate()
     {
-        self::parseCodeResourceForTest();
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -56,64 +56,24 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  * @since      0.10.0
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTFormalParameters
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTFormalParametersTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFormalParameters'));
-
-        $param = new PHP_Depend_Code_ASTFormalParameters();
-        $param->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFormalParameters'))
-            ->will($this->returnValue(42));
-
-        $param = new PHP_Depend_Code_ASTFormalParameters();
-        self::assertEquals(42, $param->accept($visitor));
-    }
-
-    /**
      * testFormalParametersHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParametersHasExpectedStartLine()
     {
@@ -125,9 +85,6 @@ class PHP_Depend_Code_ASTFormalParametersTest extends PHP_Depend_Code_ASTNodeTes
      * testFormalParametersHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParametersHasExpectedStartColumn()
     {
@@ -139,9 +96,6 @@ class PHP_Depend_Code_ASTFormalParametersTest extends PHP_Depend_Code_ASTNodeTes
      * testFormalParametersHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParametersHasExpectedEndLine()
     {
@@ -153,9 +107,6 @@ class PHP_Depend_Code_ASTFormalParametersTest extends PHP_Depend_Code_ASTNodeTes
      * testFormalParametersHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParametersHasExpectedEndColumn()
     {

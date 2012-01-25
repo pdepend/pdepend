@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -51,7 +51,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
@@ -797,7 +797,7 @@ interface PHP_Depend_BuilderI
      * //       ------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTArguments();
+     * @return PHP_Depend_Code_ASTArguments
      * @since 0.9.6
      */
     function buildASTArguments();
@@ -805,10 +805,18 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ASTArrayType
+     * @return PHP_Depend_Code_ASTTypeArray
      * @since 0.9.6
      */
-    function buildASTArrayType();
+    function buildASTTypeArray();
+
+    /**
+     * Builds a new node for the callable type.
+     *
+     * @return PHP_Depend_Code_ASTTypeCallable
+     * @since 0.11.0
+     */
+    function buildASTTypeCallable();
 
     /**
      * Builds a new primitive type node.
@@ -849,6 +857,22 @@ interface PHP_Depend_BuilderI
      * @since 0.9.10
      */
     function buildASTString();
+
+    /**
+     * Builds a new php array node.
+     *
+     * @return PHP_Depend_Code_ASTArray
+     * @since 0.11.0
+     */
+    function buildASTArray();
+
+    /**
+     * Builds a new array element node.
+     *
+     * @return PHP_Depend_Code_ASTArrayElement
+     * @since 0.11.0
+     */
+    function buildASTArrayElement();
 
     /**
      * Builds a new heredoc node.

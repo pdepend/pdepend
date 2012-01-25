@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -56,13 +56,17 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Configuration
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::configuration
+ * @group unittest
  */
 class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
 {
@@ -70,10 +74,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertyAccessForExistingValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testPropertyAccessForExistingValue()
     {
@@ -89,10 +89,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertyAccessForNotExistingValueThrowsExpectedException
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      * @expectedException OutOfRangeException
      */
     public function testPropertyAccessForNotExistingValueThrowsExpectedException()
@@ -108,10 +104,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      * @expectedException OutOfRangeException
      */
     public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown()
@@ -124,10 +116,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testIssetReturnsTrueForExistingValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testIssetReturnsTrueForExistingValue()
     {
@@ -143,10 +131,6 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testIssetReturnsFalseForNotExistingValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testIssetReturnsFalseForNotExistingValue()
     {

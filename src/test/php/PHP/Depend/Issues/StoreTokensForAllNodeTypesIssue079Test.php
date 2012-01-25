@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -58,10 +58,15 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::issues
+ * @group unittest
  */
 class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depend_Issues_AbstractTest
 {
@@ -69,11 +74,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parameter contains the start line of the first token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParameterContainsStartLineOfFirstToken()
     {
@@ -90,11 +91,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parameter contains the end line of the last token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Parameter
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParameterContainsEndLineOfLastToken()
     {
@@ -112,10 +109,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * contains an invalid token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserThrowsExpectedExceptionForArrayInConstantDeclaration()
     {
@@ -131,11 +124,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected function tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Function
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedFunctionTokens()
     {
@@ -163,11 +152,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected function tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Function
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedFunctionTokensWithParameters()
     {
@@ -204,11 +189,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the function uses the start line of the first token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Function
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testFunctionContainsStartLineOfFirstToken()
     {
@@ -227,11 +208,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the function uses the end line of the last token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Function
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testFunctionContainsEndLineOfLastToken()
     {
@@ -250,11 +227,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Method
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedMethodTokens()
     {
@@ -285,11 +258,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Method
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedMethodTokensWithStaticModifier()
     {
@@ -321,11 +290,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected method tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Method
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers()
     {
@@ -358,11 +323,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the method uses the start line of the first token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Method
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testMethodContainsStartLineOfFirstToken()
     {
@@ -383,11 +344,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the method uses the end line of the last token.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Method
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testMethodContainsEndLineOfLastToken()
     {
@@ -408,11 +365,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected class tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Class
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedClassTokens()
     {
@@ -442,11 +395,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected class tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Class
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedClassTokensWithFinalModifier()
     {
@@ -477,11 +426,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected class tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Class
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedClassTokensWithAbstractModifier()
     {
@@ -512,11 +457,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parser stores the expected interface tokens.
      *
      * @return void
-     * @covers PHP_Depend_Parser
      * @covers PHP_Depend_Code_Interface
-     * @group pdepend
-     * @group pdepend::issues
-     * @group unittest
      */
     public function testParserStoresExpectedInterfaceTokens()
     {

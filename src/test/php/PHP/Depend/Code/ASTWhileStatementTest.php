@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTWhileStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitWhileStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTWhileStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitWhileStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTWhileStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * Tests the generated object graph of a while statement.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementGraphWithBooleanExpressions()
     {
@@ -126,46 +83,28 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testFirstChildOfWhileStatementIsASTExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFirstChildOfWhileStatementIsASTExpression()
     {
         $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
     /**
      * testSecondChildOfWhileStatementIsASTScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSecondChildOfWhileStatementIsASTScopeStatement()
     {
         $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testWhileStatementHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementHasExpectedStartLine()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementHasExpectedStartColumn()
     {
@@ -194,12 +127,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementHasExpectedEndLine()
     {
@@ -211,12 +138,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementHasExpectedEndColumn()
     {
@@ -228,12 +149,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementAlternativeScopeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementAlternativeScopeHasExpectedStartLine()
     {
@@ -245,12 +160,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementAlternativeScopeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementAlternativeScopeHasExpectedStartColumn()
     {
@@ -262,12 +171,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementAlternativeScopeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementAlternativeScopeHasExpectedEndLine()
     {
@@ -279,12 +182,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementAlternativeScopeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementAlternativeScopeHasExpectedEndColumn()
     {
@@ -296,12 +193,6 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testWhileStatementTerminatedByPhpCloseTag
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testWhileStatementTerminatedByPhpCloseTag()
     {

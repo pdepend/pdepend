@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -54,23 +54,49 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  * @since     0.10.0
  *
  * @covers PHP_Depend_Code_ASTNode
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetImageReturnsEmptyStringByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageReturnsEmptyStringByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame('', $node->getImage());
+    }
+
+    /**
+     * testGetImageReturnsExpectedNodeImage
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetImageReturnsExpectedNodeImage()
+    {
+        $node = $this->getNodeMock();
+        $node->setImage(__FUNCTION__);
+
+        $this->assertEquals(__FUNCTION__, $node->getImage());
+    }
+
+    /**
      * testGetCommentReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetCommentReturnsNullByDefault()
     {
@@ -82,9 +108,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetCommentReturnsInjectedCommentValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetCommentReturnsInjectedCommentValue()
     {
@@ -95,12 +118,320 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testPrependChildSimplyAddsFirstChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testPrependChildSimplyAddsFirstChild()
+    {
+        $node = $this->getNodeMock();
+        $node->prependChild($child = $this->getNodeMock());
+
+        $this->assertSame($child, $node->getChild(0));
+    }
+
+    /**
+     * testPrependChildMovesFirstChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testPrependChildMovesFirstChild()
+    {
+        $node = $this->getNodeMock();
+        $node->prependChild($child0 = $this->getNodeMock());
+        $node->prependChild($child1 = $this->getNodeMock());
+
+        $this->assertSame($child0, $node->getChild(1));
+    }
+
+    /**
+     * testPrependChildPrependsNewChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testPrependChildPrependsNewChild()
+    {
+        $node = $this->getNodeMock();
+        $node->prependChild($child0 = $this->getNodeMock());
+        $node->prependChild($child1 = $this->getNodeMock());
+
+        $this->assertSame($child1, $node->getChild(0));
+    }
+
+    /**
+     * testGetParentReturnsNullByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetParentReturnsNullByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertNull($node->getParent());
+    }
+
+    /**
+     * testGetParentReturnsExpectedNode
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetParentReturnsExpectedNode()
+    {
+        $node = $this->getNodeMock();
+        $node->setParent($parent = $this->getNodeMock());
+
+        $this->assertSame($parent, $node->getParent());
+    }
+
+    /**
+     * testGetParentsOfTypeReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetParentsOfTypeReturnsEmptyArrayByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame(
+            array(),
+            $node->getParentsOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testGetParentsOfTypeReturnsExpectedParentNodes
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetParentsOfTypeReturnsExpectedParentNodes()
+    {
+        $parent0 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $parent1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTNode::CLAZZ);
+        $parent2 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $parent3 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTNode::CLAZZ);
+
+        $node = $this->getNodeMock();
+
+        $parent3->addChild($node);
+        $parent2->addChild($parent3);
+        $parent1->addChild($parent2);
+        $parent0->addChild($parent1);
+
+        $this->assertSame(
+            array($parent0, $parent2),
+            $node->getParentsOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testGetChildrenReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetChildrenReturnsEmptyArrayByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame(array(), $node->getChildren());
+    }
+
+    /**
+     * testGetChildrenReturnsArrayWithExpectedNodes
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetChildrenReturnsArrayWithExpectedNodes()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($child1 = $this->getNodeMock());
+
+        $this->assertSame(array($child0, $child1), $node->getChildren());
+    }
+
+    /**
+     * testGetChildThrowsExpectedExceptionForInvalidChildIndex
+     *
+     * @return void
+     * @expectedException OutOfBoundsException
+     * @since 0.11.0
+     */
+    public function testGetChildThrowsExpectedExceptionForInvalidChildIndex()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($child1 = $this->getNodeMock());
+
+        $node->getChild(2);
+    }
+
+    /**
+     * testGetChildReturnsExpectedNodeInstance
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetChildReturnsExpectedNodeInstance()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($child1 = $this->getNodeMock());
+        $node->addChild($child2 = $this->getNodeMock());
+
+        $this->assertSame($child1, $node->getChild(1));
+    }
+
+    /**
+     * testGetFirstChildOfTypeReturnsNullByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetFirstChildOfTypeReturnsNullByDefault()
+    {
+        $this->assertNull(
+            $this->getNodeMock()->getFirstChildOfType(
+                PHP_Depend_Code_ASTArguments::CLAZZ
+            )
+        );
+    }
+
+    /**
+     * testGetFirstChildOfTypeReturnsFirstMatchingChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetFirstChildOfTypeReturnsFirstMatchingChild()
+    {
+        $child0 = $this->getMockForAbstractClass(
+            PHP_Depend_Code_ASTIndexExpression::CLAZZ
+        );
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+
+        $this->assertSame(
+            $child0,
+            $node->getFirstChildOfType(PHP_Depend_Code_ASTIndexExpression::CLAZZ)
+        );
+    }
+
+    /**
+     * testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive()
+    {
+        $child0 = $this->getMockForAbstractClass(
+            PHP_Depend_Code_ASTIndexExpression::CLAZZ
+        );
+        $child1 = $this->getMockForAbstractClass(
+            PHP_Depend_Code_ASTArguments::CLAZZ
+        );
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $child0->addChild($child1);
+
+        $this->assertSame(
+            $child1,
+            $node->getFirstChildOfType(PHP_Depend_Code_ASTArguments::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsEmptyArrayByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsEmptyArrayByDefault()
+    {
+        $node = $this->getNodeMock();
+        $this->assertSame(
+            array(),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTNode::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsDirectChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsDirectChild()
+    {
+        $child0 = $this->getNodeMock();
+        $child1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $node->addChild($child1);
+
+        $this->assertSame(
+            array($child1),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsIndirectChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsIndirectChild()
+    {
+        $child0 = $this->getNodeMock();
+        $child1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $child0->addChild($child1);
+
+        $this->assertSame(
+            array($child1),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
+     * testFindChildrenOfTypeReturnsDirectAndIndirectChild
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFindChildrenOfTypeReturnsDirectAndIndirectChild()
+    {
+        $child0 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $child1 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+        $child2 = $this->getMockForAbstractClass(PHP_Depend_Code_ASTScope::CLAZZ);
+
+        $node = $this->getNodeMock();
+        $node->addChild($child0);
+        $child0->addChild($child1);
+        $child1->addChild($child2);
+
+        $this->assertSame(
+            array($child0, $child1, $child2),
+            $node->findChildrenOfType(PHP_Depend_Code_ASTScope::CLAZZ)
+        );
+    }
+
+    /**
      * testGetStartColumnReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartColumnReturnsZeroByDefault()
     {
@@ -112,9 +443,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartColumnReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartColumnReturnsInjectedEndLineValue()
     {
@@ -128,9 +456,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartLineReturnsZeroByDefault()
     {
@@ -142,9 +467,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetStartLineReturnsInjectedEndLineValue()
     {
@@ -158,9 +480,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndColumnReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndColumnReturnsZeroByDefault()
     {
@@ -172,9 +491,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndColumnReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndColumnReturnsInjectedEndLineValue()
     {
@@ -188,9 +504,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsZeroByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndLineReturnsZeroByDefault()
     {
@@ -202,9 +515,6 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsInjectedEndLineValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testGetEndLineReturnsInjectedEndLineValue()
     {
@@ -215,15 +525,97 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testConfigureLinesAndColumnsSetsExpectedStartLine
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedStartLine()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(13, $node->getStartLine());
+    }
+
+    /**
+     * testConfigureLinesAndColumnsSetsExpectedEndLine
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedEndLine()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(17, $node->getEndLine());
+    }
+
+    /**
+     * testConfigureLinesAndColumnsSetsExpectedStartColumn
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedStartColumn()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(23, $node->getStartColumn());
+    }
+
+    /**
+     * testConfigureLinesAndColumnsSetsExpectedEndColumn
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testConfigureLinesAndColumnsSetsExpectedEndColumn()
+    {
+        $node = $this->getNodeMock();
+        $node->configureLinesAndColumns(13, 17, 23, 42);
+
+        $this->assertEquals(42, $node->getEndColumn());
+    }
+
+    /**
+     * testSleepReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testSleepReturnsExpectedSetOfPropertyNames()
+    {
+        $node = $this->getNodeMock();
+        $this->assertEquals(array('comment', 'metadata', 'nodes'), $node->__sleep());
+    }
+
+    /**
+     * testUnserializeSetsParentNodeOnChildren
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testUnserializeSetsParentNodeOnChildren()
+    {
+        $node = $this->getNodeMock();
+        $node->addChild($this->getNodeMock());
+        $node->addChild($this->getNodeMock());
+
+        $copy = unserialize(serialize($node));
+
+        $this->assertSame($copy, $copy->getChild(1)->getParent());
+    }
+
+    /**
      * Returns a mocked ast node instance.
      *
      * @return PHP_Depend_Code_ASTNode
      */
-    protected function getNodeMock()
+    private function getNodeMock()
     {
-        return $this->getMockForAbstractClass(
-            PHP_Depend_Code_ASTNode::CLAZZ,
-            array(__CLASS__)
-        );
+        return $this->getMockForAbstractClass(PHP_Depend_Code_ASTNode::CLAZZ);
     }
 }

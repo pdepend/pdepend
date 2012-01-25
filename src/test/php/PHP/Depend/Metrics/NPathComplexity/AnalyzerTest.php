@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,7 +55,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -174,12 +174,10 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      *
      * @return void
      * @since 0.9.12
-     * @todo Fix this, once the AST is complete
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration()
     {
-        //self::assertEquals(625, $this->_calculateFunctionMetric());
-        self::assertEquals(17, $this->_calculateFunctionMetric());
+        self::assertEquals(625, $this->_calculateFunctionMetric());
     }
 
     /**

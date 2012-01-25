@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTElseIfStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitElseIfStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTElseIfStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitElseIfStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTElseIfStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testHasElseMethodReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testHasElseMethodReturnsFalseByDefault()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testHasElseMethodReturnsTrueWhenElseIfBranchExists
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testHasElseMethodReturnsTrueWhenElseIfBranchExists()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testHasElseMethodReturnsTrueWhenElseBranchWithIfExists
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testHasElseMethodReturnsTrueWhenElseBranchExists
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testHasElseMethodReturnsTrueWhenElseBranchExists()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the generated object graph of an elseif statement.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementGraphWithBooleanExpressions()
     {
@@ -194,46 +127,28 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testFirstChildOfElseIfStatementIsInstanceOfExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFirstChildOfElseIfStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
     
     /**
      * testSecondChildOfElseIfStatementIsInstanceOfScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementHasExpectedStartLine()
     {
@@ -245,12 +160,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementHasExpectedStartColumn()
     {
@@ -262,12 +171,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementHasExpectedEndLine()
     {
@@ -279,12 +182,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementHasExpectedEndColumn()
     {
@@ -296,29 +193,17 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testElseIfStatementWithoutScopeStatementBody
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementWithoutScopeStatementBody()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTForeachStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTForeachStatement::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testElseIfStatementAlternativeScopeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementAlternativeScopeHasExpectedStartLine()
     {
@@ -330,12 +215,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testElseIfStatementAlternativeScopeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementAlternativeScopeHasExpectedStartColumn()
     {
@@ -347,12 +226,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testElseIfStatementAlternativeScopeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementAlternativeScopeHasExpectedEndLine()
     {
@@ -364,12 +237,6 @@ class PHP_Depend_Code_ASTElseIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testElseIfStatementAlternativeScopeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTElseIfStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testElseIfStatementAlternativeScopeHasExpectedEndColumn()
     {

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,7 +55,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -522,21 +522,6 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function free()
     {
-        $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Free memory consumed by the ast nodes associated with this callable
-     * instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        foreach ($this->nodes as $node) {
-            $node->free();
-        }
-        $this->nodes = array();
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
 }

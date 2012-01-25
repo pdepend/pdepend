@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -50,7 +50,6 @@ require_once dirname(__FILE__) . '/LoggerFactoryTest.php';
 require_once dirname(__FILE__) . '/Jdepend/ChartTest.php';
 require_once dirname(__FILE__) . '/Jdepend/XmlTest.php';
 require_once dirname(__FILE__) . '/Overview/PyramidTest.php';
-require_once dirname(__FILE__) . '/Phpunit/XmlTest.php';
 require_once dirname(__FILE__) . '/Summary/XmlTest.php';
 
 /**
@@ -60,7 +59,7 @@ require_once dirname(__FILE__) . '/Summary/XmlTest.php';
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -79,7 +78,6 @@ class PHP_Depend_Log_AllTests
         $suite->addTestSuite('PHP_Depend_Log_Jdepend_ChartTest');
         $suite->addTestSuite('PHP_Depend_Log_Jdepend_XmlTest');
         $suite->addTestSuite('PHP_Depend_Log_Overview_PyramidTest');
-        $suite->addTestSuite('PHP_Depend_Log_Phpunit_XmlTest');
         $suite->addTestSuite('PHP_Depend_Log_Summary_XmlTest');
         
         return $suite;

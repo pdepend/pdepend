@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   Builder_Context
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -53,12 +53,16 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @category  QualityAssurance
  * @package   Builder_Context
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Builder_Context_GlobalStatic
+ * @group pdepend
+ * @group pdepend::builder
+ * @group pdepend::builder::context
+ * @group unittest
  */
 class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTest
 {
@@ -66,10 +70,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterClassCallsRestoreClassOnBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testRegisterClassCallsRestoreClassOnBuilder()
     {
@@ -86,10 +86,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterInterfaceCallsRestoreInterfaceOnBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder()
     {
@@ -106,10 +102,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterFunctionCallsRestoreFunctionOnBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testRegisterFunctionCallsRestoreFunctionOnBuilder()
     {
@@ -126,10 +118,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testGetClassDelegatesCallToWrappedBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testGetClassDelegatesCallToWrappedBuilder()
     {
@@ -146,10 +134,6 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testGetClassOrInterfaceDelegatesCallToWrappedBuilder
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::builder
-     * @group pdepend::builder::context
-     * @group unittest
      */
     public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder()
     {

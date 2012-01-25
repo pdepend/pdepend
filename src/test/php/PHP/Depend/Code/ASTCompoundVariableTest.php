@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,85 +55,36 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTCompoundVariable
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitCompoundVariable'));
-
-        $node = new PHP_Depend_Code_ASTCompoundVariable();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitCompoundVariable'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTCompoundVariable();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithInlineLiteral()
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTString::CLAZZ, $string);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTString::CLAZZ, $string);
     }
 
     /**
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithInlineConstantEscapedLiteral()
     {
@@ -147,31 +98,19 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithInlineBacktickLiteral()
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertType(PHP_Depend_Code_ASTString::CLAZZ, $string);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTString::CLAZZ, $string);
     }
 
     /**
      * Tests that a parsed compound variable has the expected object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableGraphWithMemberPrimaryPrefix()
     {
@@ -191,12 +130,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
@@ -208,12 +141,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedStartLine()
     {
@@ -225,12 +152,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedStartColumn()
     {
@@ -242,12 +163,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedEndLine()
     {
@@ -259,12 +174,6 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTCompoundVariable
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testCompoundVariableHasExpectedEndColumn()
     {

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -53,7 +53,7 @@
  * @package    PHP_Depend
  * @subpackage TextUI
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -209,8 +209,16 @@ class PHP_Depend_TextUI_Command
             $result = $this->_runner->run();
 
             if ($this->_runner->hasParseErrors() === true) {
-                echo PHP_EOL, 'Following errors occured:', PHP_EOL;
-                foreach ($this->_runner->getParseErrors() as $error) {
+                $errors = $this->_runner->getParseErrors();
+
+                printf(
+                  '%sThe following error%s occured:%s',
+                  PHP_EOL,
+                  count($errors) > 1 ? 's' : '',
+                  PHP_EOL
+                );
+
+                foreach ($errors as $error) {
                     echo $error, PHP_EOL;
                 }
                 echo PHP_EOL;
@@ -620,6 +628,11 @@ class PHP_Depend_TextUI_Command
      */
     private function _printOption($option, $message, $length)
     {
+        // Ignore the phpunit xml option
+        if (0 === strpos($option, '--phpunit-xml=')) {
+            return;
+        }
+
         // Calculate the max message length
         $mlength = 77 - $length;
 

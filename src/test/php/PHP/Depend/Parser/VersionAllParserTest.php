@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -56,7 +56,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -469,30 +469,6 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
-     * testParserAcceptsTraitAsMethodName
-     * 
-     * @return void
-     * @since 0.11.0
-     */
-    public function testParserAcceptsTraitAsMethodName()
-    {
-        $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('trait', $method->getName());
-    }
-
-    /**
-     * testParserAcceptsTraitConstantAsMethodName
-     *
-     * @return void
-     * @since 0.11.0
-     */
-    public function testParserAcceptsTraitConstantAsMethodName()
-    {
-        $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('__trait__', $method->getName());
-    }
-
-    /**
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void
@@ -512,6 +488,152 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
         self::parseCodeResourceForTest();
+    }
+
+//###################
+
+    /**
+     * testParserHandlesCallableTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesCallableTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeCallable::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesNamespaceTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesNamespaceTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesArrayTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesArrayTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeArray::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesSelfTypeHint
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesSelfTypeHint()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSelfReference::CLAZZ, $type);
+    }
+
+    /**
+     * testParserHandlesCompoundStaticMethodInvocation
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesCompoundStaticMethodInvocation()
+    {
+        $method  = $this->getFirstMethodForTestCase();
+        $postfix = $method->getFirstChildOfType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+
+        $this->assertNotNull($postfix);
+    }
+
+    /**
+     * testParserHandlesVariableStaticMethodInvocation
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesVariableStaticMethodInvocation()
+    {
+        $method  = $this->getFirstMethodForTestCase();
+        $postfix = $method->getFirstChildOfType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+
+        $this->assertNotNull($postfix);
+    }
+
+    /**
+     * testParserHandlesBinaryIntegerLiteral
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesBinaryIntegerLiteral()
+    {
+        $method  = $this->getFirstMethodForTestCase();
+        $literal = $method->getFirstChildOfType(PHP_Depend_Code_ASTLiteral::CLAZZ);
+
+        $this->assertEquals('0b0100110100111', $literal->getImage());
+    }
+
+    /**
+     * testParserThrowsExceptionForInvalidBinaryIntegerLiteral
+     *
+     * @return void
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @since 0.11.0
+     */
+    public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
+    {
+        if (version_compare(phpversion(), '5.4alpha') >= 0)
+        {
+            $this->markTestSkipped( 'This test only affects PHP < 5.4' );
+        }
+        $this->getFirstMethodForTestCase();
+    }
+
+    /**
+     * testParserHandlesRegularArraySyntax
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesRegularArraySyntax()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArray::CLAZZ,
+            $this->getFirstMethodForTestCase()
+                ->getFirstChildOfType(PHP_Depend_Code_ASTArray::CLAZZ)
+        );
+    }
+
+    /**
+     * testParserHandlesShortArraySyntax
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserHandlesShortArraySyntax()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTArray::CLAZZ,
+            $this->getFirstMethodForTestCase()
+                ->getFirstChildOfType(PHP_Depend_Code_ASTArray::CLAZZ)
+        );
     }
 
     /**
@@ -563,6 +685,30 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserAcceptsTraitAsMethodName
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        self::assertEquals('trait', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsTraitConstantAsMethodName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testParserAcceptsTraitConstantAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        self::assertEquals('__trait__', $method->getName());
+    }
+
+    /**
      * testParserAcceptsTraitAsFunctionName
      *
      * @return void
@@ -585,6 +731,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
         $function = $this->getFirstFunctionForTestCase();
         self::assertEquals('__TRAIT__', $function->getName());
     }
+//###################
 
     /**
      * Returns the first class or interface that could be found in the code under

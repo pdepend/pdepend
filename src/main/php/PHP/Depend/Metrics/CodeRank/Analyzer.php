@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -53,7 +53,7 @@
  * @package    PHP_Depend
  * @subpackage Metrics
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -202,7 +202,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function buildCodeRankMetrics()
     {
-        foreach ($this->_nodes as $uuid => $info) {
+        foreach (array_keys($this->_nodes) as $uuid) {
             $this->_nodeMetrics[$uuid] = array(
                 self::M_CODE_RANK          =>  0,
                 self::M_REVERSE_CODE_RANK  =>  0

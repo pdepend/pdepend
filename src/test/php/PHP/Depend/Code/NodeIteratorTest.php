@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -53,60 +53,23 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_NodeIterator
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
 {
-    /**
-     * testFreeResetsTheInternalDataStructure
-     *
-     * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
-     */
-    public function testFreeResetsTheInternalDataStructure()
-    {
-        $nodes = array(new PHP_Depend_Code_Class(__FUNCTION__));
-
-        $iterator = new PHP_Depend_Code_NodeIterator($nodes);
-        $iterator->free();
-
-        $this->assertEquals(0, $iterator->count());
-    }
-
-    /**
-     * testFreeInvokesFreeOnAllChildNodes
-     *
-     * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
-     */
-    public function testFreeInvokesFreeOnAllChildNodes()
-    {
-        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(__FUNCTION__));
-        $class->expects($this->once())
-            ->method('free');
-        
-        $iterator = new PHP_Depend_Code_NodeIterator(array($class));
-        $iterator->free();
-    }
-
     /**
      * Tests the ctor with an valid input array of {@link PHP_Depend_Code_NodeI}
      * objects.
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testCreateIteratorWidthValidInput()
     {
@@ -126,10 +89,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testNodeIteratorReturnsObjectsInUnmodifiedOrder
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testNodeIteratorReturnsObjectsInUnmodifiedOrder()
     {
@@ -154,10 +113,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testNodeIteratorReturnsObjectsUnique
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testNodeIteratorReturnsObjectsUnique()
     {
@@ -185,10 +140,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testIteratorUsesNodeNameAsItsIterationKey
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIteratorUsesNodeNameAsItsIterationKey()
     {
@@ -214,10 +165,6 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testCurrentReturnsFalseWhenNoMoreElementExists
      *
      * @return void
-     * @covers PHP_Depend_Code_NodeIterator
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testCurrentReturnsFalseWhenNoMoreElementExists()
     {

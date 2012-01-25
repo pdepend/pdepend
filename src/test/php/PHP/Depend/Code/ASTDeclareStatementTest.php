@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -56,64 +56,24 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  * @since      0.10.0
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTDeclareStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitDeclareStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTDeclareStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitDeclareStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTDeclareStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testDeclareStatementWithSingleParameter
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithSingleParameter()
     {
@@ -125,9 +85,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithMultipleParameter
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithMultipleParameter()
     {
@@ -139,9 +96,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -161,9 +115,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementHasExpectedStartLine()
     {
@@ -175,9 +126,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementHasExpectedStartColumn()
     {
@@ -189,9 +137,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementHasExpectedEndLine()
     {
@@ -203,9 +148,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementHasExpectedEndColumn()
     {
@@ -217,9 +159,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithScopeHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithScopeHasExpectedStartLine()
     {
@@ -231,9 +170,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithScopeHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithScopeHasExpectedStartColumn()
     {
@@ -245,9 +181,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithScopeHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithScopeHasExpectedEndLine()
     {
@@ -259,9 +192,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithScopeHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithScopeHasExpectedEndColumn()
     {
@@ -273,9 +203,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithAlternativeScopeHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartLine()
     {
@@ -287,9 +214,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithAlternativeScopeHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartColumn()
     {
@@ -301,9 +225,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithAlternativeScopeHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndLine()
     {
@@ -315,9 +236,6 @@ class PHP_Depend_Code_ASTDeclareStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDeclareStatementWithAlternativeScopeHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndColumn()
     {

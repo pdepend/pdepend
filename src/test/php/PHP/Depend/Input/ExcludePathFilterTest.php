@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,12 +55,15 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Input_ExcludePathFilter
+ * @group pdepend
+ * @group pdepend::input
+ * @group unittest
  */
 class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testAbsoluteUnixPathAsFilterPatternMatches
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testAbsoluteUnixPathAsFilterPatternMatches()
     {
@@ -82,9 +82,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testAbsoluteUnixPathAsFilterPatternNotMatches
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testAbsoluteUnixPathAsFilterPatternNotMatches()
     {
@@ -96,9 +93,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testUnixPathAsFilterPatternNotMatchesPartial
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testUnixPathAsFilterPatternNotMatchesPartial()
     {
@@ -114,9 +108,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testAbsoluteWindowsPathAsFilterPatternMatches
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testAbsoluteWindowsPathAsFilterPatternMatches()
     {
@@ -128,9 +119,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testAbsoluteWindowsPathAsFilterPatternNotMatches
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testAbsoluteWindowsPathAsFilterPatternNotMatches()
     {
@@ -142,9 +130,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testWindowsPathAsFilterPatternNotMatchesPartial
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testWindowsPathAsFilterPatternNotMatchesPartial()
     {
@@ -160,9 +145,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExcludePathFilterRejectsFile()
     {
@@ -176,9 +158,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsFiles
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExcludePathFilterRejectsFiles()
     {
@@ -192,9 +171,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsDirectory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExcludePathFilterRejectsDirectory()
     {
@@ -208,9 +184,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsDirectories
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExcludePathFilterRejectsDirectories()
     {
@@ -224,9 +197,6 @@ class PHP_Depend_Input_ExcludePathFilterTest extends PHP_Depend_AbstractTest
      * testExcludePathFilterRejectsFilesAndDirectories
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExcludePathFilterRejectsFilesAndDirectories()
     {

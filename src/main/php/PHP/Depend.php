@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -54,7 +54,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
@@ -321,24 +321,6 @@ class PHP_Depend
         $this->fireEndLogProcess();
 
         return ($this->_packages = $packages);
-    }
-
-    /**
-     * Helper method for PHP version < 5.3, this method can be used to
-     * unwire the complex object graph created by PHP_Depend, so that the
-     * garbage collector can free memory consumed by PHP_Depend. Please
-     * remember that this method will destroy all the data calculated by
-     * PHP_Depend, so it is unusable after a call to <b>free()</b>.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        if (is_object($this->_packages)) {
-            $this->_packages->free();
-        }
-        unset($this->_builder, $this->_packages);
     }
 
     /**
@@ -718,4 +700,24 @@ class PHP_Depend
 
         return $this->_initAnalyseListeners($loader);
     }
+
+    // @codeCoverageIgnoreStart
+
+    /**
+     * Helper method for PHP version < 5.3, this method can be used to
+     * unwire the complex object graph created by PHP_Depend, so that the
+     * garbage collector can free memory consumed by PHP_Depend. Please
+     * remember that this method will destroy all the data calculated by
+     * PHP_Depend, so it is unusable after a call to <b>free()</b>.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.11.0
+     */
+    public function free()
+    {
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
+    }
+
+    // @codeCoverageIgnoreEnd
 }

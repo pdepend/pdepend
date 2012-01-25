@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTComment
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitComment'));
-
-        $node = new PHP_Depend_Code_ASTComment();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitComment'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTComment();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * testSingleLineCommentHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSingleLineCommentHasExpectedStartLine()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testSingleLineCommentHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSingleLineCommentHasExpectedStartColumn()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testSingleLineCommentHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSingleLineCommentHasExpectedEndLine()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testSingleLineCommentHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSingleLineCommentHasExpectedEndColumn()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testMultiLineCommentHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMultiLineCommentHasExpectedStartLine()
     {
@@ -194,12 +127,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testMultiLineCommentHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMultiLineCommentHasExpectedStartColumn()
     {
@@ -211,12 +138,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testMultiLineCommentHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMultiLineCommentHasExpectedEndLine()
     {
@@ -228,12 +149,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testMultiLineCommentHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMultiLineCommentHasExpectedEndColumn()
     {
@@ -245,12 +160,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testDocCommentHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDocCommentHasExpectedStartLine()
     {
@@ -262,12 +171,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testDocCommentHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDocCommentHasExpectedStartColumn()
     {
@@ -279,12 +182,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testDocCommentHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDocCommentHasExpectedEndLine()
     {
@@ -296,12 +193,6 @@ class PHP_Depend_Code_ASTCommentTest extends PHP_Depend_Code_ASTNodeTest
      * testDocCommentHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTComment
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDocCommentHasExpectedEndColumn()
     {

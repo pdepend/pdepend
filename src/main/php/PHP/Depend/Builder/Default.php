@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Builder
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -53,7 +53,7 @@
  * @package    PHP_Depend
  * @subpackage Builder
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -763,6 +763,29 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new php array node.
+     *
+     * @return PHP_Depend_Code_ASTArray
+     * @since 0.11.0
+     */
+    public function buildASTArray()
+    {
+        return $this->_buildASTNodeInstance('ASTArray');
+    }
+
+    /**
+     * Builds a new array element node.
+     *
+     * @return PHP_Depend_Code_ASTArrayElement
+     * @since 0.11.0
+     */
+    public function buildASTArrayElement()
+    {
+        return $this->_buildASTNodeInstance('ASTArrayElement');
+    }
+
+
+    /**
      * Builds a new instanceof expression node.
      *
      * @param string $image The source image of this expression.
@@ -1215,7 +1238,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * //       ------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTArguments();
+     * @return PHP_Depend_Code_ASTArguments
      * @since 0.9.6
      */
     public function buildASTArguments()
@@ -1226,12 +1249,23 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ASTArrayType
+     * @return PHP_Depend_Code_ASTTypeArray
      * @since 0.9.6
      */
-    public function buildASTArrayType()
+    public function buildASTTypeArray()
     {
-        return $this->_buildASTNodeInstance('ASTArrayType');
+        return $this->_buildASTNodeInstance('ASTTypeArray');
+    }
+
+    /**
+     * Builds a new node for the callable type.
+     *
+     * @return PHP_Depend_Code_ASTTypeCallable
+     * @since 0.11.0
+     */
+    public function buildASTTypeCallable()
+    {
+        return $this->_buildASTNodeInstance('ASTTypeCallable');
     }
 
     /**

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,12 +55,15 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Input_Iterator
+ * @group pdepend
+ * @group pdepend::input
+ * @group unittest
  */
 class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorWithOneFileExtension
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorWithOneFileExtension()
     {
@@ -84,9 +84,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorWithMultipleFileExtensions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorWithMultipleFileExtensions()
     {
@@ -100,9 +97,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorPassesLocalPathToFilterWhenRootIsPresent
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
     {
@@ -123,9 +117,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
     {
@@ -144,9 +135,6 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      * testIteratorPassesAbsolutePathToFilterWhenRootNotMatches
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
     {

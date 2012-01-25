@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -47,8 +47,10 @@
 
 require_once dirname(__FILE__) . '/ASTAllocationExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTArgumentsTest.php';
+require_once dirname(__FILE__) . '/ASTArrayTest.php';
+require_once dirname(__FILE__) . '/ASTArrayElementTest.php';
 require_once dirname(__FILE__) . '/ASTArrayIndexExpressionTest.php';
-require_once dirname(__FILE__) . '/ASTArrayTypeTest.php';
+require_once dirname(__FILE__) . '/ASTTypeArrayTest.php';
 require_once dirname(__FILE__) . '/ASTAssignmentExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTBooleanAndExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTBooleanOrExpressionTest.php';
@@ -119,7 +121,8 @@ require_once dirname(__FILE__) . '/ASTSwitchStatementTest.php';
 require_once dirname(__FILE__) . '/ASTSwitchLabelTest.php';
 require_once dirname(__FILE__) . '/ASTThrowStatementTest.php';
 require_once dirname(__FILE__) . '/ASTTryStatementTest.php';
-require_once dirname(__FILE__) . '/ASTTypeNodeTest.php';
+require_once dirname(__FILE__) . '/ASTTypeTest.php';
+require_once dirname(__FILE__) . '/ASTTypeCallableTest.php';
 require_once dirname(__FILE__) . '/ASTUnaryExpressionTest.php';
 require_once dirname(__FILE__) . '/ASTUnsetStatementTest.php';
 require_once dirname(__FILE__) . '/ASTVariableTest.php';
@@ -154,7 +157,7 @@ require_once dirname(__FILE__) . '/Filter/AllTests.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
@@ -189,8 +192,10 @@ class PHP_Depend_Code_AllTests
 
         $suite->addTestSuite('PHP_Depend_Code_ASTAllocationExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArgumentsTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTArrayTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTArrayElementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTArrayIndexExpressionTest');
-        $suite->addTestSuite('PHP_Depend_Code_ASTArrayTypeTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTTypeArrayTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTAssignmentExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTBooleanAndExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTBooleanOrExpressionTest');
@@ -261,7 +266,8 @@ class PHP_Depend_Code_AllTests
         $suite->addTestSuite('PHP_Depend_Code_ASTSwitchLabelTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTThrowStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTTryStatementTest');
-        $suite->addTestSuite('PHP_Depend_Code_ASTTypeNodeTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTTypeTest');
+        $suite->addTestSuite('PHP_Depend_Code_ASTTypeCallableTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTUnaryExpressionTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTUnsetStatementTest');
         $suite->addTestSuite('PHP_Depend_Code_ASTVariableTest');

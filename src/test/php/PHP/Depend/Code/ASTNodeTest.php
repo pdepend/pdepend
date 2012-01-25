@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,7 +55,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
@@ -103,32 +103,22 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testFreeSetsParentReferenceToNull
+     * testAcceptReturnsReturnValueOfVisitMethod
      *
      * @return void
      */
-    public function testFreeSetsParentReferenceToNull()
+    public function testAcceptReturnsReturnValueOfVisitMethod()
     {
+        $methodName = 'visit' . substr(get_class($this), 19, -4);
+
+        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
+        $visitor->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo($methodName))
+            ->will($this->returnValue(42));
+
         $node = $this->createNodeInstance();
-        $node->setParent(clone $node);
-        $node->free();
-
-        self::assertNull($node->getParent());
-    }
-
-    /**
-     * testFreeSetsChildReferencesToNull
-     *
-     * @return void
-     */
-    public function testFreeSetsChildReferencesToNull()
-    {
-        $node = $this->createNodeInstance();
-        $node->addChild(clone $node);
-        $node->addChild(clone $node);
-        $node->free();
-
-        self::assertEquals(array(), $node->getChildren());
+        self::assertEquals(42, $node->accept($visitor));
     }
 
     /**
@@ -244,6 +234,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
      * an exception for an undefined node offset.
      *
      * @return void
+     * @covers PHP_Depend_Code_ASTNode
      * @expectedException OutOfBoundsException
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()

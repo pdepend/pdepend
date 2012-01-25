@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -53,7 +53,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
@@ -277,7 +277,7 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     public function testPropertyContainsExpectDefaultValueArray()
     {
         $property = $this->_getFirstPropertyInClass();
-        self::assertType('array', $property->getDefaultValue());
+        self::assertInternalType('array', $property->getDefaultValue());
     }
 
     /**
@@ -508,19 +508,6 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
     {
         $property = $this->_getFirstPropertyInClass();
         self::assertEquals(13, $property->getEndColumn());
-    }
-
-    /**
-     * testFreeResetsDeclaringClassToNull
-     *
-     * @return void
-     */
-    public function testFreeResetsDeclaringClassToNull()
-    {
-        $property = $this->_getFirstPropertyInClass();
-        $property->free();
-
-        self::assertNull($property->getDeclaringClass());
     }
 
     /**

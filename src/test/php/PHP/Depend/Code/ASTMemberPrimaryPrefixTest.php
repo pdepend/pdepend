@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,7 +55,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
@@ -68,6 +68,66 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  */
 class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNodeTest
 {
+    /**
+     * testMemberPrimaryPrefixGraphDereferencedFromArray
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphDereferencedFromArray()
+    {
+        $this->_getFirstMemberPrimaryPrefixInFunction();
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphInIssetExpression
+     *
+     * Source:
+     * <code>
+     * $object->plots[0]->coords[0][$i]
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTVariable                    ->  $object
+     *   - ASTMemberPrimaryPrefix         ->
+     *     - ASTPropertyPostfix           ->  plots
+     *       - ASTArrayIndexExpression
+     *         - ASTIdentifier            ->  plots
+     *         - ASTLiteral               ->  0
+     *     - ASTPropertyPostfix           ->  coords
+     *       - ASTArrayIndexExpression
+     *         - ASTArrayIndexExpression
+     *           - ASTIdentifier          ->  coords
+     *           - ASTLiteral             ->  0
+     *         - ASTVariable              ->  $i
+     * </code>
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testMemberPrimaryPrefixGraphInIssetExpression()
+    {
+        $this->assertGraph(
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
+            array(
+                PHP_Depend_Code_ASTVariable::CLAZZ                          . ' ($object)',
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ               . ' (->)', array(
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ               . ' (plots)', array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ      . ' ()', array(
+                            PHP_Depend_Code_ASTIdentifier::CLAZZ            . ' (plots)',
+                            PHP_Depend_Code_ASTLiteral::CLAZZ               . ' (0)')),
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ               . ' (coords)', array(
+                        PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ      . ' ()', array(
+                            PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ  . ' ()', array(
+                                PHP_Depend_Code_ASTIdentifier::CLAZZ        . ' (coords)',
+                                PHP_Depend_Code_ASTLiteral::CLAZZ           . ' (0)'),
+                            PHP_Depend_Code_ASTVariable::CLAZZ              . ' ($i)')))
+            )
+        );
+    }
+
     /**
      * testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant
      *
@@ -89,9 +149,8 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      */
     public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant()
     {
-        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
-            $prefix,
+            $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTConstantPostfix::CLAZZ,
@@ -205,6 +264,160 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     }
 
     /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodInvocation
+     *
+     * Source:
+     * <code>
+     * (new MyClass())->foo();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *     - ASTArguments           ->  ( )
+     *   - ASTMethodPostfix         ->  ->
+     *     - ASTIdentifier          ->  foo
+     *     - ASTArguments           ->  ( )
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodInvocation()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'),
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ        . ' (foo)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ       . ' (foo)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'
+            ))
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodChain
+     *
+     * Source:
+     * <code>
+     * (new MyClass)->foo()->bar();
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTMethodPostfix         ->  ->
+     *       - ASTIdentifier          ->  foo
+     *       - ASTArguments           ->  ( )
+     *     - ASTMethodPostfix         ->  ->
+     *       - ASTIdentifier          ->  bar
+     *       - ASTArguments           ->  ( )
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodChain()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)'),
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ  . ' (->)', array(
+                    PHP_Depend_Code_ASTMethodPostfix::CLAZZ    . ' (foo)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (foo)',
+                        PHP_Depend_Code_ASTArguments::CLAZZ    . ' ()'),
+                    PHP_Depend_Code_ASTMethodPostfix::CLAZZ    . ' (bar)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (bar)',
+                        PHP_Depend_Code_ASTArguments::CLAZZ    . ' ()'))
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyAccess
+     *
+     * Source:
+     * <code>
+     * (new MyClass())->foo;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *     - ASTArguments           ->  ( )
+     *   - ASTPropertyPostfix       ->  ->
+     *     - ASTIdentifier          ->  foo
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyAccess()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ        . ' ()'),
+                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ      . ' (foo)', array(
+                    PHP_Depend_Code_ASTIdentifier::CLAZZ       . ' (foo)')
+            )
+        );
+    }
+
+    /**
+     * testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyChain
+     *
+     * Source:
+     * <code>
+     * (new MyClass)->foo->bar;
+     * </code>
+     *
+     * AST:
+     * <code>
+     * - ASTMemberPrimaryPrefix
+     *   - ASTAllocationExpression  ->  new
+     *     - ASTClassReference      ->  MyClass
+     *   - ASTMemberPrimaryPrefix
+     *     - ASTPropertyPostfix       ->  ->
+     *       - ASTIdentifier          ->  foo
+     *     - ASTPropertyPostfix       ->  ->
+     *       - ASTIdentifier          ->  bar
+     * </code>
+     *
+     * @return void
+     */
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyChain()
+    {
+        $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
+        $this->assertGraph(
+            $prefix,
+            array(
+                PHP_Depend_Code_ASTAllocationExpression::CLAZZ . ' (new)', array(
+                    PHP_Depend_Code_ASTClassReference::CLAZZ   . ' (MyClass)'),
+                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ  . ' (->)', array(
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ  . ' (foo)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (foo)'),
+                    PHP_Depend_Code_ASTPropertyPostfix::CLAZZ  . ' (bar)', array(
+                        PHP_Depend_Code_ASTIdentifier::CLAZZ   . ' (bar)'))
+            )
+        );
+    }
+
+    /**
      * testMemberPrimaryPrefixGraphForObjectPropertyAccess
      * 
      * <code>
@@ -296,9 +509,8 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      *   - ASTMethodPostfix       ->  ->
      *     - ASTVariable          ->  $method
      *     - ASTArguments         ->  ( )
-     *       - ASTExpression      ->  ...
-     *         - ASTLiteral         ->  23
-     *         - ASTLiteral         ->  42
+     *       - ASTLiteral         ->  23
+     *       - ASTLiteral         ->  42
      * </code>
      *
      * @return void
@@ -307,16 +519,15 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
     public function testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess()
     {
         $prefix = $this->_getFirstMemberPrimaryPrefixInFunction();
-        $this->assertGraphEquals(
+        $this->assertGraph(
             $prefix,
             array(
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ,
-                PHP_Depend_Code_ASTExpression::CLAZZ,
-                PHP_Depend_Code_ASTLiteral::CLAZZ,
-                PHP_Depend_Code_ASTLiteral::CLAZZ
+                PHP_Depend_Code_ASTVariable::CLAZZ        . ' ($object)',
+                PHP_Depend_Code_ASTMethodPostfix::CLAZZ   . ' ($method)', array(
+                    PHP_Depend_Code_ASTVariable::CLAZZ    . ' ($method)',
+                    PHP_Depend_Code_ASTArguments::CLAZZ   . ' ()', array(
+                        PHP_Depend_Code_ASTLiteral::CLAZZ . ' (23)',
+                        PHP_Depend_Code_ASTLiteral::CLAZZ . ' (42)'))
             )
         );
     }
@@ -496,41 +707,6 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
                     PHP_Depend_Code_ASTArguments::CLAZZ                             . ' ()')
             )
         );
-    }
-
-    /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitMemberPrimaryPrefix'));
-
-        $prefix = new PHP_Depend_Code_ASTMemberPrimaryPrefix();
-        $prefix->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitMemberPrimaryPrefix'))
-            ->will($this->returnValue(42));
-
-        $prefix = new PHP_Depend_Code_ASTMemberPrimaryPrefix();
-        self::assertEquals(42, $prefix->accept($visitor));
     }
 
     /**

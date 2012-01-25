@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,7 +55,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
@@ -63,6 +63,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @covers PHP_Depend
  * @group pdepend
  * @group pdepend::issues
+ * @group pdepend::textui
  * @group unittest
  */
 class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
@@ -95,10 +96,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Runner
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
@@ -117,10 +114,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Runner
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
@@ -139,10 +132,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Command
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess()
     {
@@ -163,10 +152,6 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      *
      * @return void
      * @covers PHP_Depend_TextUI_Command
-     * @group pdepend
-     * @group pdepend::issues
-     * @group pdepend::textui
-     * @group unittest
      */
     public function testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess()
     {

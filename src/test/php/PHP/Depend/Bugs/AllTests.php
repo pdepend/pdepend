@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -103,6 +103,7 @@ require_once dirname(__FILE__) . '/ClassLevelAnalyzerBug09936901Test.php';
 require_once dirname(__FILE__) . '/PHPDependBug13405179Test.php';
 require_once dirname(__FILE__) . '/ParserBug17264279Test.php';
 require_once dirname(__FILE__) . '/EndlessInheritanceBug18459091Test.php';
+require_once dirname(__FILE__) . '/ParserBug21500611Test.php';
 
 /**
  * Test suite for bugs meta package.
@@ -111,7 +112,7 @@ require_once dirname(__FILE__) . '/EndlessInheritanceBug18459091Test.php';
  * @package    PHP_Depend
  * @subpackage Issues
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
@@ -184,6 +185,7 @@ class PHP_Depend_Bugs_AllTests
         $suite->addTestSuite('PHP_Depend_Bugs_PHPDependBug13405179Test');
         $suite->addTestSuite('PHP_Depend_Bugs_ParserBug17264279Test');
         $suite->addTestSuite('PHP_Depend_Bugs_EndlessInheritanceBug18459091Test');
+        $suite->addTestSuite('PHP_Depend_Bugs_ParserBug21500611Test');
 
         return $suite;
     }

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -53,7 +53,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -241,33 +241,5 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
         parent::__wakeup();
 
         $this->context->registerClass($this);
-    }
-
-    /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        parent::free();
-
-        $this->_removeReferencesToProperties();
-    }
-
-    /**
-     * Free memory consumed by the properties associated with this class instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToProperties()
-    {
-        $this->getProperties()->free();
-        $this->_properties = array();
     }
 }

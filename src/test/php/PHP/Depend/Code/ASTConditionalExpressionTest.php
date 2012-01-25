@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTConditionalExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConditionalExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConditionalExpression'));
-
-        $node = new PHP_Depend_Code_ASTConditionalExpression();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTConditionalExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitConditionalExpression'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTConditionalExpression();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * testConditionalExpressionHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConditionalExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConditionalExpressionHasExpectedStartLine()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      * testConditionalExpressionHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConditionalExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConditionalExpressionHasExpectedStartColumn()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      * testConditionalExpressionHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConditionalExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConditionalExpressionHasExpectedEndLine()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTConditionalExpressionTest extends PHP_Depend_Code_ASTNo
      * testConditionalExpressionHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTConditionalExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testConditionalExpressionHasExpectedEndColumn()
     {

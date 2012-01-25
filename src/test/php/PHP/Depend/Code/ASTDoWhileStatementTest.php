@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTDoWhileStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitDoWhileStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTDoWhileStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitDoWhileStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTDoWhileStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testDoWhileStatementHasExpectedNumberOfChildNodes
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoWhileStatementHasExpectedNumberOfChildNodes()
     {
@@ -126,46 +83,28 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
     }
     
     /**
      * testSecondChildOfDoWhileStatementIsInstanceOfExpression
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSecondChildOfDoWhileStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoWhileStatementHasExpectedStartLine()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoWhileStatementHasExpectedStartColumn()
     {
@@ -194,12 +127,6 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoWhileStatementHasExpectedEndLine()
     {
@@ -211,12 +138,6 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoWhileStatementHasExpectedEndColumn()
     {
@@ -228,17 +149,11 @@ class PHP_Depend_Code_ASTDoWhileStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testDoWhileStatementWithoutScopeStatementChild
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTDoWhileStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoWhileStatementWithoutScopeStatementChild()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTIfStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTIfStatement::CLAZZ, $stmt->getChild(0));
     }
 
     /**

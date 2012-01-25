@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,63 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTFieldDeclaration
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFieldDeclaration'));
-
-        $node = new PHP_Depend_Code_ASTFieldDeclaration();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFieldDeclaration'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTFieldDeclaration();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * Tests that a field declaration contains the expected class reference.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
     {
@@ -125,9 +85,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that a field declaration does not contain a class reference.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
     {
@@ -153,9 +110,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of valid modifiers.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
@@ -172,9 +126,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * @param integer $modifiers Combinations of invalid modifiers.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
@@ -194,9 +145,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsPublicReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPublicReturnsFalseByDefault()
     {
@@ -208,9 +156,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsPublicReturnsTrueWhenCorrespondingModifierWasSet
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet()
     {
@@ -224,9 +169,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsProtectedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsProtectedReturnsFalseByDefault()
     {
@@ -238,9 +180,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet()
     {
@@ -254,9 +193,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsPrivateReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPrivateReturnsFalseByDefault()
     {
@@ -268,9 +204,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet()
     {
@@ -284,9 +217,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsStaticReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsStaticReturnsFalseByDefault()
     {
@@ -298,9 +228,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testIsStaticReturnsTrueWhenCorrespondingModifierWasSet
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet()
     {
@@ -314,16 +241,12 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
         $declaration = $this->createNodeInstance();
         self::assertEquals(
             array(
-//                'modifiers',
                 'comment',
                 'metadata',
                 'nodes'
@@ -336,9 +259,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFieldDeclarationHasExpectedStartLine()
     {
@@ -350,9 +270,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFieldDeclarationHasExpectedStartColumn()
     {
@@ -364,9 +281,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFieldDeclarationHasExpectedEndLine()
     {
@@ -378,9 +292,6 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
      * testFieldDeclarationHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFieldDeclarationHasExpectedEndColumn()
     {

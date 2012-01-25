@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util_Configuration
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -56,13 +56,17 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Util_Configuration
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Configuration_Parser
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::configuration
+ * @group unittest
  */
 class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
 {
@@ -70,25 +74,17 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesEmptyConfigurationFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesEmptyConfigurationFile()
     {
         $parser = new PHP_Depend_Util_Configuration_Parser(new stdClass());
-        $parser->parse($this->getTestConfiguration('pdepend.xml'));
+        $this->assertNotNull($parser->parse($this->getTestConfiguration('pdepend.xml')));
     }
 
     /**
      * testParserHandlesCacheDriverConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesCacheDriverConfigurationValue()
     {
@@ -102,10 +98,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesCacheLocationConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesCacheLocationConfigurationValue()
     {
@@ -119,10 +111,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesImagickFontFamilyConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesImagickFontFamilyConfigurationValue()
     {
@@ -136,10 +124,6 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserHandlesImagickFontSizeConfigurationValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserHandlesImagickFontSizeConfigurationValue()
     {
@@ -153,19 +137,30 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      * testParserModifiesConfigurationAdaptive
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testParserModifiesConfigurationAdaptive()
     {
         $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
-        $values = $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
+        $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
+
+        $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
+
+        self::assertEquals(23, $values->imageConvert->fontSize);
+    }
+
+    /**
+     * testParserOverwritesAlreadyDefinedConfigurationValues
+     *
+     * @return void
+     */
+    public function testParserOverwritesAlreadyDefinedConfigurationValues()
+    {
+        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
+
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals('Courier New', $values->imageConvert->fontFamily);
-        self::assertEquals(23, $values->imageConvert->fontSize);
     }
 
     /**

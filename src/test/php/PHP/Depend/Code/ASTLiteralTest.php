@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,10 +55,16 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTLiteral
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -66,166 +72,182 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithBooleanTrueExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithBooleanTrueExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('True', $literal->getImage());
+        $this->assertEquals('True', $literal->getImage());
     }
 
     /**
      * testLiteralWithBooleanFalseExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithBooleanFalseExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('False', $literal->getImage());
+        $this->assertEquals('False', $literal->getImage());
     }
 
     /**
      * testLiteralWithIntegerExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithIntegerExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42', $literal->getImage());
+        $this->assertEquals('42', $literal->getImage());
     }
 
     /**
      * testLiteralWithSignedIntegerExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithSignedIntegerExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42', $literal->getImage());
+        $this->assertEquals('42', $literal->getImage());
     }
 
     /**
      * testLiteralWithFloatExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithFloatExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42.23', $literal->getImage());
+        $this->assertEquals('42.23', $literal->getImage());
     }
 
     /**
      * testLiteralWithSignedFloatExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithSignedFloatExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('42.23', $literal->getImage());
+        $this->assertEquals('42.23', $literal->getImage());
     }
 
     /**
      * testLiteralWithNullExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testLiteralWithNullExpression()
     {
         $literal = $this->_getFirstLiteralInFunction();
-        self::assertEquals('NULL', $literal->getImage());
+        $this->assertEquals('NULL', $literal->getImage());
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
+     * testLiteralWithZeroIntegerValue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
+     * @since 0.11.0
      */
-    public function testAcceptInvokesVisitOnGivenVisitor()
+    public function testLiteralWithZeroIntegerValue()
     {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitLiteral'));
-
-        $literal = new PHP_Depend_Code_ASTLiteral();
-        $literal->accept($visitor);
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0', $literal->getImage());
     }
 
     /**
-     * testAcceptReturnsReturnValueOfVisitMethod
+     * testLiteralWithZeroOctalIntegerValue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
+     * @since 0.11.0
      */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
+    public function testLiteralWithZeroOctalIntegerValue()
     {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitLiteral'))
-            ->will($this->returnValue(42));
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('00', $literal->getImage());
+    }
 
-        $literal = new PHP_Depend_Code_ASTLiteral();
-        self::assertEquals(42, $literal->accept($visitor));
+    /**
+     * testLiteralWithZeroHexIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithZeroHexIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0x0', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithZeroBinaryIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithZeroBinaryIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0b0', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNonZeroOctalIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithNonZeroOctalIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('02342', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNonZeroHexIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithNonZeroHexIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0x926', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithNonZeroBinaryIntegerValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testLiteralWithNonZeroBinaryIntegerValue()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('0b100100100110', $literal->getImage());
+    }
+
+    /**
+     * testLiteralWithBrokenBinaryIntegerThrowsExpectedException
+     *
+     * @return void
+     * @since 0.11.0
+     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     */
+    public function testLiteralWithBrokenBinaryIntegerThrowsExpectedException()
+    {
+        if (version_compare(phpversion(), '5.4alpha') >= 0) {
+            $this->markTestSkipped('This test only affects PHP < 5.4');
+        }
+        $this->_getFirstLiteralInFunction();
     }
 
     /**
      * Tests that an invalid literal results in the expected exception.
      * 
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTLiteral
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,12 +40,14 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
  * @deprecated Since release 0.10.5, please use the summary logger
  */
+
+// @codeCoverageIgnoreStart
 
 /**
  * This logger provides a xml log file, that is compatible with the files
@@ -56,7 +58,7 @@
  * @package    PHP_Depend
  * @subpackage Log
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -210,6 +212,11 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     public function close()
     {
+        trigger_error(
+            'The --phpunit-xml log option is deprecated.',
+            E_USER_DEPRECATED
+        );
+
         if ($this->_logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
@@ -443,3 +450,5 @@ class PHP_Depend_Log_Phpunit_Xml
         return $metrics;
     }
 }
+
+// @codeCoverageIgnoreEnd

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,12 +55,15 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Input
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Input_ExtensionFilter
+ * @group pdepend
+ * @group pdepend::input
+ * @group unittest
  */
 class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
 {
@@ -68,9 +71,6 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * testExtensionFilterAcceptsOneFileExtension
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExtensionFilterAcceptsOneFileExtension()
     {
@@ -84,9 +84,6 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      * testExtensionFilterAcceptsMultipleFileExtensions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::input
-     * @group unittest
      */
     public function testExtensionFilterAcceptsMultipleFileExtensions()
     {

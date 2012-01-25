@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util_Configuration
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -56,13 +56,17 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Util_Configuration
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  * @since      0.10.0
  *
  * @covers PHP_Depend_Util_Configuration_Factory
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::configuration
+ * @group unittest
  */
 class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
 {
@@ -103,10 +107,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedCacheDriver
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedCacheDriver()
     {
@@ -120,10 +120,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedCacheLocation
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedCacheLocation()
     {
@@ -140,10 +136,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedFontFamily
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedFontFamily()
     {
@@ -157,10 +149,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testDefaultConfigurationHasExpectedFontSize
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testDefaultConfigurationHasExpectedFontSize()
     {
@@ -174,10 +162,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlDist
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlDist()
     {
@@ -193,10 +177,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateDefaultOverwritesSettingsWithValuesDefinedInXml
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateDefaultOverwritesSettingsWithValuesDefinedInXml()
     {
@@ -212,10 +192,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlAndXmlDist
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateDefaultOverwritesSettingsWithValuesDefinedInXmlAndXmlDist()
     {
@@ -231,10 +207,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateForNotExistingFileThrowsExpectedException
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      * @expectedException InvalidArgumentException
      */
     public function testCreateForNotExistingFileThrowsExpectedException()
@@ -247,10 +219,6 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsExpectedConfigurationInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::configuration
-     * @group unittest
      */
     public function testCreateReturnsExpectedConfigurationInstance()
     {

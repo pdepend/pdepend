@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,63 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
  * @covers PHP_Depend_Code_ASTFormalParameter
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFormalParameter'));
-
-        $param = new PHP_Depend_Code_ASTFormalParameter();
-        $param->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitFormalParameter'))
-            ->will($this->returnValue(42));
-
-        $param = new PHP_Depend_Code_ASTFormalParameter();
-        self::assertEquals(42, $param->accept($visitor));
-    }
-
-    /**
      * testIsPassedByReferenceReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPassedByReferenceReturnsFalseByDefault()
     {
@@ -123,9 +83,6 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testIsPassedByReferenceCanBeSetToTrue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testIsPassedByReferenceCanBeSetToTrue()
     {
@@ -139,13 +96,10 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testSimpleParameterIsFlaggedAsPassedByReference
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testSimpleParameterIsFlaggedAsPassedByReference()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         self::assertTrue($param->isPassedByReference());
     }
 
@@ -153,13 +107,10 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testParameterWithTypeHintIsFlaggedAsPassedByReference
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParameterWithTypeHintIsFlaggedAsPassedByReference()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         self::assertTrue($param->isPassedByReference());
     }
 
@@ -167,23 +118,33 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testParameterWithDefaultValueIsFlaggedAsPassedByReference
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testParameterWithDefaultValueIsFlaggedAsPassedByReference()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         self::assertTrue($param->isPassedByReference());
     }
+    
+    /**
+     * testFormalParameterWithArrayTypeHint
+     * 
+     * @return void
+     * @since 0.11.0
+     */
+    public function testFormalParameterWithArrayTypeHint()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTypeArray::CLAZZ,
+            $this->_getFirstFormalParameterInFunction()->getChild(0)
+        );
+    }
+
+    //public function
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -202,13 +163,10 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedStartLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParameterHasExpectedStartLine()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(3, $param->getStartLine());
     }
 
@@ -216,13 +174,10 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedStartColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParameterHasExpectedStartColumn()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(5, $param->getStartColumn());
     }
 
@@ -230,13 +185,10 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedEndLine
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParameterHasExpectedEndLine()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(6, $param->getEndLine());
     }
 
@@ -244,27 +196,23 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterHasExpectedEndColumn
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testFormalParameterHasExpectedEndColumn()
     {
-        $param = $this->_getFirstFormalParameterInFunction(__METHOD__);
+        $param = $this->_getFirstFormalParameterInFunction();
         $this->assertEquals(20, $param->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTFormalParameter
      */
-    private function _getFirstFormalParameterInFunction($testCase)
+    private function _getFirstFormalParameterInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTFormalParameter::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTFormalParameter::CLAZZ
         );
     }
 }

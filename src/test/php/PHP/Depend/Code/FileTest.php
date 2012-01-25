@@ -4,7 +4,7 @@
  * 
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -53,12 +53,15 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_File
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
 {
@@ -66,9 +69,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetNameReturnsTheFileName
      * 
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetNameReturnsTheFileName()
     {
@@ -80,9 +80,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetFileNameReturnsTheFileName
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetFileNameReturnsTheFileName()
     {
@@ -94,9 +91,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetUuidReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetUuidReturnsNullByDefault()
     {
@@ -108,9 +102,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetUuidReturnsInjectedUuidValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetUuidReturnsInjectedUuidValue()
     {
@@ -124,9 +115,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsNullByDefault()
     {
@@ -138,9 +126,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsInjectedDocCommentValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsInjectedDocCommentValue()
     {
@@ -154,9 +139,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetTokensDelegatesCallToCacheRestoreWithFileUuid
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetTokensDelegatesCallToCacheRestoreWithFileUuid()
     {
@@ -180,9 +162,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testSetTokensDelegatesCallToCacheStoreWithFileUuid
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testSetTokensDelegatesCallToCacheStoreWithFileUuid()
     {
@@ -206,9 +185,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testAcceptInvokesVisitFileOnGivenVisitor
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testAcceptInvokesVisitFileOnGivenVisitor()
     {
@@ -225,9 +201,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull()
     {
@@ -239,9 +212,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testMagicStringMethodReturnInjectedFileNameValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicStringMethodReturnInjectedFileNameValue()
     {
@@ -253,9 +223,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      * 
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
@@ -278,9 +245,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testMagicWakeupMethodInvokesSetSourceFileOnChildNodes
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
     {
@@ -302,9 +266,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testIsCachedReturnsFalseByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseByDefault()
     {
@@ -316,9 +277,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
     {
@@ -332,9 +290,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testIsCachedReturnsTrueAfterCallToWakeup
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testIsCachedReturnsTrueAfterCallToWakeup()
     {
@@ -348,9 +303,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsZeroWhenSourceFileNotExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStartLineReturnsZeroWhenSourceFileNotExists()
     {
@@ -362,9 +314,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetStartLineReturnsOneWhenSourceFileExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetStartLineReturnsOneWhenSourceFileExists()
     {
@@ -376,9 +325,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsZeroWhenSourceFileNotExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetEndLineReturnsZeroWhenSourceFileNotExists()
     {
@@ -390,23 +336,17 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * testGetEndLineReturnsOneWhenSourceFileExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        self::assertEquals(435, $file->getEndLine());
+        self::assertEquals(372, $file->getEndLine());
     }
 
     /**
      * testGetSourceReturnsNullWhenSourceFileNotExists
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceReturnsNullWhenSourceFileNotExists()
     {
@@ -418,9 +358,6 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      * Tests the {@link PHP_Depend_Code_File#getSource()} method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceReturnsOriginalFileContents()
     {

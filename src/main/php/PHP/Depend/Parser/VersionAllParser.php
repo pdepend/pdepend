@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -56,7 +56,7 @@
  * @package    PHP_Depend
  * @subpackage Parser
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
@@ -160,5 +160,191 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()
         );
+    }
+
+    /**
+     * Tests if the given token type is a valid formal parameter in the supported
+     * PHP version.
+     *
+     * @param integer $tokenType Numerical token identifier.
+     *
+     * @return boolean
+     * @since 0.11.0
+     */
+    protected function isFormalParameterTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+
+        case self::T_STRING:
+        case self::T_CALLABLE:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Parses a formal parameter type hint that is valid in the supported PHP
+     * version.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    protected function parseFormalParameterTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_CALLABLE:
+            $this->consumeToken(self::T_CALLABLE);
+            $type = $this->builder->buildASTTypeCallable();
+            break;
+
+        case self::T_STRING:
+        case self::T_BACKSLASH:
+        case self::T_NAMESPACE:
+            $name = $this->parseQualifiedName();
+
+            if (0 === strcasecmp('callable', $name)) {
+                $type = $this->builder->buildASTTypeCallable();
+            } else {
+                $type = $this->builder->buildASTClassOrInterfaceReference($name);
+            }
+            break;
+        }
+        return $type;
+    }
+
+    /**
+     * Parses an integer value.
+     *
+     * @return PHP_Depend_Code_ASTLiteral
+     * @since 0.11.0
+     */
+    protected function parseIntegerNumber()
+    {
+        $token = $this->consumeToken(self::T_LNUMBER);
+
+        if ('0' === $token->image) {
+            if (self::T_STRING === $this->tokenizer->peek()) {
+                $token1 = $this->consumeToken(self::T_STRING);
+                if (preg_match('(^b[01]+$)', $token1->image)) {
+                    $token->image     = $token->image . $token1->image;
+                    $token->endLine   = $token1->endLine;
+                    $token->endColumn = $token1->endColumn;
+                } else {
+                    throw new PHP_Depend_Parser_UnexpectedTokenException(
+                        $token1,
+                        $this->tokenizer->getSourceFile()
+                    );
+                }
+            }
+        }
+
+        $literal = $this->builder->buildASTLiteral($token->image);
+        $literal->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $literal;
+    }
+
+    /**
+     * This method parses a PHP version specific identifier for method and
+     * property postfix expressions.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    protected function parsePostfixIdentifier()
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_STRING:
+            $node = $this->parseLiteral();
+            break;
+
+        case self::T_CURLY_BRACE_OPEN:
+            $node = $this->parseCompoundExpression();
+            break;
+
+        default:
+            $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
+            break;
+        }
+        return $this->parseOptionalIndexExpression($node);
+    }
+
+    /**
+     * Implements some quirks and hacks to support php here- and now-doc for
+     * PHP 5.2.x versions :/
+     *
+     * @return PHP_Depend_Code_ASTHeredoc
+     * @since 0.11.0
+     */
+    protected function parseHeredoc()
+    {
+        $heredoc = parent::parseHeredoc();
+        if (version_compare(phpversion(), "5.3.0alpha") >= 0) {
+            return $heredoc;
+        }
+
+        // Consume dangling semicolon
+        $this->tokenizer->next();
+
+        $token = $this->tokenizer->next();
+        preg_match('(/\*(\'|")\*/)', $token->image, $match);
+
+        return $heredoc;
+    }
+
+    /**
+     * Tests if the next token is a valid array start delimiter in the supported
+     * PHP version.
+     *
+     * @return boolean
+     * @since 0.11.0
+     */
+    protected function isArrayStartDelimiter()
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_ARRAY:
+        case self::T_SQUARED_BRACKET_OPEN:
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Parses a php array declaration.
+     *
+     * @param PHP_Depend_Code_ASTArray $array The context array node.
+     *
+     * @return PHP_Depend_Code_ASTArray
+     * @since 0.11.0
+     */
+    protected function parseArray(PHP_Depend_Code_ASTArray $array)
+    {
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_ARRAY:
+            $this->consumeToken(self::T_ARRAY);
+            $this->consumeComments();
+            $this->consumeToken(self::T_PARENTHESIS_OPEN);
+            $this->parseArrayElements($array, self::T_PARENTHESIS_CLOSE);
+            $this->consumeToken(self::T_PARENTHESIS_CLOSE);
+            break;
+
+        default:
+            $this->consumeToken(self::T_SQUARED_BRACKET_OPEN);
+            $this->parseArrayElements($array, self::T_SQUARED_BRACKET_CLOSE);
+            $this->consumeToken(self::T_SQUARED_BRACKET_CLOSE);
+            break;
+        }
+        return $array;
     }
 }

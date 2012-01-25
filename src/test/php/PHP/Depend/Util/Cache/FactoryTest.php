@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util_Cache
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,12 +55,16 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Util_Cache
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Util_Cache_Factory
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::cache
+ * @group unittest
  */
 class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
 {
@@ -68,27 +72,19 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsDriverInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsDriverInstance()
     {
         $factory = new PHP_Depend_Util_Cache_Factory(
             $this->createConfigurationFixture()
         );
-        self::assertType('PHP_Depend_Util_Cache_Driver', $factory->create());
+        self::assertInstanceOf('PHP_Depend_Util_Cache_Driver', $factory->create());
     }
 
     /**
      * testCreateHasSingletonBehaviorForIdenticalCacheNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateHasSingletonBehaviorForIdenticalCacheNames()
     {
@@ -106,10 +102,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsDifferentInstancesForDifferentCacheNames
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsDifferentInstancesForDifferentCacheNames()
     {
@@ -127,16 +119,12 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsCacheInstanceOfTypeFile
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsCacheInstanceOfTypeFile()
     {
         $this->changeWorkingDirectory();
 
-        self::assertType(
+        self::assertInstanceOf(
             PHP_Depend_Util_Cache_Driver_File::CLAZZ,
             $this->createFactoryFixture()->create()
         );
@@ -146,16 +134,12 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateReturnsCacheInstanceOfTypeMemory
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      */
     public function testCreateReturnsCacheInstanceOfTypeMemory()
     {
         $this->changeWorkingDirectory();
 
-        self::assertType(
+        self::assertInstanceOf(
             PHP_Depend_Util_Cache_Driver_Memory::CLAZZ,
             $this->createFactoryFixture()->create()
         );
@@ -165,10 +149,6 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateThrowsExpectedExceptionForUnknownCacheDriver
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::cache
-     * @group unittest
      * @expectedException InvalidArgumentException
      */
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver()

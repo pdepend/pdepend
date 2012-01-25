@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -51,12 +51,12 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  */
-class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
+abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
      * The current working directory.
@@ -108,18 +108,34 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Changes the current working directory to an directory associated with the
      * calling test case.
      *
+     * @param string $directory Optional working directory.
+     *
      * @return void
      * @since 0.10.0
      */
-    protected function changeWorkingDirectory()
+    protected function changeWorkingDirectory($directory = null)
     {
-        $resource = self::createCodeResourceUriForTest();
-        if (is_file($resource)) {
-            $resource = dirname($resource);
+        if (null === $directory) {
+            $directory = $this->getTestWorkingDirectory();
         }
 
         $this->workingDirectory = getcwd();
-        chdir($resource);
+        chdir($directory);
+    }
+
+    /**
+     * Returns the working directory for the currently executed test.
+     *
+     * @return string
+     * @since 0.11.0
+     */
+    protected function getTestWorkingDirectory()
+    {
+        $resource = self::createCodeResourceUriForTest();
+        if (is_file($resource)) {
+            return dirname($resource);
+        }
+        return $resource;
     }
 
     /**
@@ -389,6 +405,10 @@ class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function createPDependFixture()
     {
+        $this->changeWorkingDirectory(
+            $this->createCodeResourceURI('config/')
+        );
+
         return new PHP_Depend($this->createConfigurationFixture());
     }
 

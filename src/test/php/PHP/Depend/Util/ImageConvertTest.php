@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -55,12 +55,16 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Util
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  *
  * @covers PHP_Depend_Util_ImageConvert
+ * @group pdepend
+ * @group pdepend::util
+ * @group pdepend::util::imagick
+ * @group unittest
  */
 class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
 {
@@ -68,10 +72,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * Tests the copy behaviour for same mime types.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertMakesCopyForSameMimeType()
     {
@@ -86,10 +86,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * Tests the image convert behaviour of the image magick execution path.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertWithImageMagickExtension()
     {
@@ -108,10 +104,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * Tests that the image convert util appends the default extension as fallback.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertAppendDefaultFileExtensionAsFallback()
     {
@@ -130,10 +122,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
     {
@@ -146,10 +134,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * for the font-family:
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertRecognizesFontFamilyInConfiguration()
     {
@@ -173,10 +157,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
     {
@@ -189,10 +169,6 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      * for the font-size:
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::util
-     * @group pdepend::util::imagick
-     * @group unittest
      */
     public function testConvertRecognizesFontSizeInConfiguration()
     {

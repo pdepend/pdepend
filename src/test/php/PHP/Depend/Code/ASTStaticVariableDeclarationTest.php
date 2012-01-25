@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,69 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitStaticVariableDeclaration'));
-
-        $expr = new PHP_Depend_Code_ASTStaticVariableDeclaration();
-        $expr->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitStaticVariableDeclaration'))
-            ->will($this->returnValue(42));
-
-        $expr = new PHP_Depend_Code_ASTStaticVariableDeclaration();
-        self::assertEquals(42, $expr->accept($visitor));
-    }
-
-    /**
      * Tests that the declaration has the expected start line value.
      * 
      * @return void
-     *
-     * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedStartLine()
     {
@@ -129,13 +83,6 @@ class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_A
      * Tests that the declaration has the expected start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedStartColumn()
     {
@@ -147,13 +94,6 @@ class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_A
      * Tests that the declaration has the expected end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedEndLine()
     {
@@ -165,13 +105,6 @@ class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_A
      * Tests that the declaration has the expected end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTStaticVariableDeclaration
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticVariableDeclarationHasExpectedEndColumn()
     {

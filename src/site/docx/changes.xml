@@ -12,6 +12,24 @@
 		<release version="0.11.0"
                  date="2011/10/04"
                  description="This release closes a critical bug that let PHP_Depend die with a E_FATAL when the used PHP version was 5.4 or greater.">
+            <action date="338bca2" dev="mapi" issue="19874825" system="pivotaltracker" type="add">
+                Implement the short array syntax introduced with PHP 5.4
+            </action>
+            <action date="bbb06c7" dev="mapi" issue="9069837" system="pivotaltracker" type="add">
+                Implement expression lists.
+            </action>
+            <action date="911b6ec" dev="mapi" issue="21435399" system="pivotaltracker" type="add">
+                Implement PHP 5.4 variable method names
+            </action>
+            <action date="e3bccf1" dev="mapi" issue="21408469" system="pivotaltracker" type="add">
+                Implement PHP 5.4 binary number format
+            </action>
+            <action date="ee5caa6" dev="mapi" issue="21339411" system="pivotaltracker" type="add">
+                Implement PHP 5.4 callable type hint
+            </action>
+            <action date="658c25c" dev="mapi" issue="21271399" system="pivotaltracker" type="update">
+                Deprecate the --phpunit-xml log option
+            </action>
             <action date="6dba831" dev="mapi" issue="19817309" system="pivotaltracker" type="add">
                 Implement PHP 5.4 array dereferencing
             </action>
@@ -23,6 +41,30 @@
             </action>
             <action date="1e24a34" dev="mapi" issue="19875155" system="pivotaltracker" type="fix">
                 Implement static closures
+            </action>
+        </release>
+
+        <release version="0.10.8"
+                 date="2012/01/24"
+                description="This release closes an issue in PHP_Depend's parser
+                             that produces invalid package names when the source
+                             file contains a statement before the class or
+                             interface doc comment.">
+
+            <action date="b62bed7" dev="mapi" issue="23905939" system="pivotaltracker" due-to="Sebastian Bergmann" due-to-email="sb@sebastian-bergmann.de" type="fix">
+                Package gets lost when prefixed with control structure
+            </action>
+        </release>
+
+        <release version="0.10.7"
+                 date="2011/12/06"
+                 description="This release closes a critical bug in PHP_Depend's
+                              parser which results in an E_FATAL. This can happen
+                              when a control structure does not contain a body
+                              or termination token.">
+            <action date="b367a41" dev="mapi" due-to="audittest" type="fix">
+                E_FATAL when a control structure like if, for or foreach does not
+                contain a body or a termination symbol.
             </action>
         </release>
 

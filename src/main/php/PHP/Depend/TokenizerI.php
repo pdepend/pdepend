@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -96,13 +96,20 @@ if (!defined('T_GOTO')) {
 }
 
 /**
+ * Define PHP 5.4's 'T_CALLABLE' token constant
+ */
+if (!defined('T_CALLABLE')) {
+    define('T_CALLABLE', 42007);
+}
+
+/**
  * Base interface for all php code tokenizers.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -129,7 +136,7 @@ interface PHP_Depend_TokenizerI extends PHP_Depend_ConstantsI
      * Returns the next token or {@link PHP_Depend_TokenizerI::T_EOF} if
      * there is no next token.
      *
-     * @return array|integer
+     * @return PHP_Depend_Token
      */
     function next();
 

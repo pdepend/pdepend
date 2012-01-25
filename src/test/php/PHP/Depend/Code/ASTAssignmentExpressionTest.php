@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,10 +55,16 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTAssignmentExpression
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
@@ -66,11 +72,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * testAssignmentExpressionFromMethodInvocation
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAssignmentExpressionFromMethodInvocation()
     {
@@ -91,11 +92,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * testAssignmentExpressionFromPropertyAccess
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAssignmentExpressionFromPropertyAccess()
     {
@@ -115,11 +111,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * testAssignmentExpressionFromFunctionReturnValue
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAssignmentExpressionFromFunctionReturnValue()
     {
@@ -138,58 +129,9 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     }
 
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitAssignmentExpression'));
-
-        $node = new PHP_Depend_Code_ASTAssignmentExpression();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitAssignmentExpression'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTAssignmentExpression();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * Tests the resulting object graph.
      * 
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAssignmentExpressionGraphForIntegerLiteral()
     {
@@ -206,12 +148,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the resulting object graph.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testAssignmentExpressionGraphForFloatLiteral()
     {
@@ -228,12 +164,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableAssignmentExpressionHasExpectedStartLine()
     {
@@ -245,12 +175,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableAssignmentExpressionHasExpectedStartColumn()
     {
@@ -262,12 +186,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableAssignmentExpressionHasExpectedEndLine()
     {
@@ -279,12 +197,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testVariableAssignmentExpressionHasExpectedEndColumn()
     {
@@ -296,12 +208,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedStartLine()
     {
@@ -313,12 +219,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn()
     {
@@ -330,12 +230,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedEndLine()
     {
@@ -347,12 +241,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn()
     {
@@ -364,12 +252,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedStartLine()
     {
@@ -381,12 +263,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn()
     {
@@ -398,12 +274,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedEndLine()
     {
@@ -415,12 +285,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn()
     {
@@ -432,12 +296,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedStartLine()
     {
@@ -449,12 +307,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the start column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn()
     {
@@ -466,12 +318,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end column of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn()
     {
@@ -483,12 +329,6 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
      * Tests the end line of an assignment-expression.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTAssignmentExpression
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedEndLine()
     {

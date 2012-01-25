@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -57,12 +57,15 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @package    PHP_Depend
  * @subpackage Bugs
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  *
  * @covers stdClass
+ * @group pdepend
+ * @group pdepend::bugs
+ * @group regressiontest
  */
 class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
     extends PHP_Depend_Bugs_AbstractTest
@@ -71,9 +74,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain a function with a broken signature.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainFunctionWithBrokenSignature()
     {
@@ -92,9 +92,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain a class with a broken method.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainClassWithBrokenMethod()
     {
@@ -113,9 +110,6 @@ class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
      * Tests that the result does not contain an interface with a broken body.
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::bugs
-     * @group regressiontest
      */
     public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
     {

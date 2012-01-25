@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,83 +55,34 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTForeachStatement
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitForeachStatement'));
-
-        $stmt = new PHP_Depend_Code_ASTForeachStatement();
-        $stmt->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitForeachStatement'))
-            ->will($this->returnValue(42));
-
-        $stmt = new PHP_Depend_Code_ASTForeachStatement();
-        self::assertEquals(42, $stmt->accept($visitor));
-    }
-
-    /**
      * testThirdChildOfForeachStatementIsASTScopeStatement
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testThirdChildOfForeachStatementIsASTScopeStatement()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(2));
     }
 
     /**
      * Tests the start line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementHasExpectedStartLine()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the start column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementHasExpectedStartColumn()
     {
@@ -160,12 +105,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end line value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementHasExpectedEndLine()
     {
@@ -177,12 +116,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * Tests the end column value.
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementHasExpectedEndColumn()
     {
@@ -194,187 +127,116 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementContainsListExpressionAsFirstChild
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementContainsExpressionAsFirstChild()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
     /**
      * testForeachStatementWithoutKeyAndWithValue
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithoutKeyAndWithValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testForeachStatementWithoutKeyAndWithValueByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithoutKeyAndWithValueByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testForeachStatementWithKeyAndValue
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithKeyAndValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $stmt->getChild(2));
     }
 
     /**
      * testForeachStatementWithKeyAndValueByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithKeyAndValueByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
     }
 
     /**
      * testForeachStatementWithObjectPropertyByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseForeachStatement
-     * @covers PHP_Depend_Parser::_parseVariableOrMemberByReference
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithObjectPropertyByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testForeachStatementWithKeyAndObjectPropertyByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseForeachStatement
-     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithKeyAndObjectPropertyByReference()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $stmt->getChild(2));
     }
 
     /**
      * testForeachStatementWithObjectPropertyAsKey
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseForeachStatement
-     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithObjectPropertyAsKey()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testForeachStatementWithObjectPropertyAsValue
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseForeachStatement
-     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithObjectPropertyAsValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testForeachStatementWithObjectPropertyAsKeyAndValue
      *
      * @return void
-     * @covers PHP_Depend_Parser::_parseForeachStatement
-     * @covers PHP_Depend_Parser::_parseVariableOrMemberOptionalByReference
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithObjectPropertyAsKeyAndValue()
     {
         $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $stmt->getChild(1));
     }
 
     /**
      * testForeachStatementThrowsExpectedExceptionForKeyByReference
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testForeachStatementThrowsExpectedExceptionForKeyByReference()
@@ -386,12 +248,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementWithCommentBeforeClosingParenthesis
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementWithCommentBeforeClosingParenthesis()
     {
@@ -402,12 +258,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementAlternativeScopeHasExpectedStartLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementAlternativeScopeHasExpectedStartLine()
     {
@@ -419,12 +269,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementAlternativeScopeHasExpectedStartColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementAlternativeScopeHasExpectedStartColumn()
     {
@@ -436,12 +280,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementAlternativeScopeHasExpectedEndLine
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementAlternativeScopeHasExpectedEndLine()
     {
@@ -453,12 +291,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementAlternativeScopeHasExpectedEndColumn
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementAlternativeScopeHasExpectedEndColumn()
     {
@@ -470,12 +302,6 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementTerminatedByPhpCloseTag
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Builder_Default
-     * @covers PHP_Depend_Code_ASTForeachStatement
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testForeachStatementTerminatedByPhpCloseTag()
     {

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://pdepend.org/
@@ -53,12 +53,15 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @category  QualityAssurance
  * @package   PHP_Depend
  * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2012 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_AbstractItem
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
 {
@@ -66,9 +69,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetNameReturnsValueOfFirstConstructorArgument
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetNameReturnsValueOfFirstConstructorArgument()
     {
@@ -80,9 +80,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetUuidReturnsMd5HashByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetUuidReturnsMd5HashByDefault()
     {
@@ -94,9 +91,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetUuidReturnsInjectedUuidValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetUuidReturnsInjectedUuidValue()
     {
@@ -110,9 +104,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetSourceFileReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceFileReturnsNullByDefault()
     {
@@ -124,9 +115,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetSourceFileReturnsInjectedFileInstance
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetSourceFileReturnsInjectedFileInstance()
     {
@@ -142,9 +130,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsNullByDefault
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsNullByDefault()
     {
@@ -156,9 +141,6 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
      * testGetDocCommentReturnsInjectedDocCommentValue
      *
      * @return void
-     * @group pdepend
-     * @group pdepend::code
-     * @group unittest
      */
     public function testGetDocCommentReturnsInjectedDocCommentValue()
     {

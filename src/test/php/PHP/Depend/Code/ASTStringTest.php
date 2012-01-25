@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
@@ -55,66 +55,23 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTString
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
 class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitString'));
-
-        $node = new PHP_Depend_Code_ASTString();
-        $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     *
-     * @return void
-     * @covers PHP_Depend_Code_ASTNode
-     * @covers PHP_Depend_Code_ASTString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod()
-    {
-        $visitor = $this->getMock('PHP_Depend_Code_ASTVisitorI');
-        $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('visitString'))
-            ->will($this->returnValue(42));
-
-        $node = new PHP_Depend_Code_ASTString();
-        self::assertEquals(42, $node->accept($visitor));
-    }
-
-    /**
      * testDoubleQuoteStringContainsTwoChildNodes
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsTwoChildNodes()
     {
@@ -126,12 +83,6 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * testDoubleQuoteStringContainsExpectedTextContent
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsExpectedTextContent()
     {
@@ -143,12 +94,6 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * testBacktickExpressionContainsTwoChildNodes
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBacktickExpressionContainsTwoChildNodes()
     {
@@ -160,29 +105,17 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * testBacktickExpressionContainsExpectedCompoundVariable
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBacktickExpressionContainsExpectedCompoundVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        $this->assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
+        $this->assertInstanceOf(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
     }
 
     /**
      * testDoubleQuoteStringWithEmbeddedComplexBacktickExpression
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringWithEmbeddedComplexBacktickExpression()
     {
@@ -200,12 +133,6 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * testBacktickExpressionWithEmbeddedComplexDoubleQuoteString
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testBacktickExpressionWithEmbeddedComplexDoubleQuoteString()
     {
@@ -223,130 +150,83 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * testDoubleQuoteStringContainsVariable
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(0));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(0));
     }
 
     /**
      * testDoubleQuoteStringContainsVariableAfterNotOperator
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsVariableAfterNotOperator()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
     }
 
     /**
      * testDoubleQuoteStringContainsVariableAfterSilenceOperator
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsVariableAfterSilenceOperator()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
     }
 
     /**
      * testDoubleQuoteStringContainsCompoundVariable
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsCompoundVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
+        self::assertInstanceOf(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $string->getChild(0));
     }
 
     /**
      * testDoubleQuoteStringContainsCompoundExpressionAfterLiteral
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsCompoundExpressionAfterLiteral()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTCompoundExpression::CLAZZ, $string->getChild(1));
     }
 
     /**
      * testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
+        self::assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $string->getChild(1));
     }
 
     /**
      * testDoubleQuoteStringContainsDollarLiteralForVariableVariable
      *
      * @return void
-     * @covers PHP_Depend_Parser
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Builder_Default
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      */
     public function testDoubleQuoteStringContainsDollarLiteralForVariableVariable()
     {
         $string = $this->_getFirstStringInFunction(__METHOD__);
-        self::assertType(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(0));
+        self::assertInstanceOf(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(0));
     }
 
     /**
      * Tests that an invalid literal results in the expected exception.
      *
      * @return void
-     * @covers PHP_Depend_Code_ASTString
-     * @covers PHP_Depend_Parser::_parseLiteralOrString
-     * @group pdepend
-     * @group pdepend::ast
-     * @group unittest
      * @expectedException PHP_Depend_Parser_TokenException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()

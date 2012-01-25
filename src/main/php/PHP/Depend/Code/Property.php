@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2011, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
@@ -53,7 +53,7 @@
  * @package    PHP_Depend
  * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2011 Manuel Pichler. All rights reserved.
+ * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
@@ -211,7 +211,7 @@ class PHP_Depend_Code_Property
     public function isArray()
     {
         $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
-            PHP_Depend_Code_ASTTypeNode::CLAZZ
+            PHP_Depend_Code_ASTType::CLAZZ
         );
         if ($typeNode === null) {
             return false;
@@ -229,7 +229,7 @@ class PHP_Depend_Code_Property
     public function isPrimitive()
     {
         $typeNode = $this->_fieldDeclaration->getFirstChildOfType(
-            PHP_Depend_Code_ASTTypeNode::CLAZZ
+            PHP_Depend_Code_ASTType::CLAZZ
         );
         if ($typeNode === null) {
             return false;
@@ -465,44 +465,6 @@ class PHP_Depend_Code_Property
     }
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    public function free()
-    {
-        $this->_removeReferenceToDeclaringClass();
-        $this->_removeReferencesToNodes();
-    }
-
-    /**
-     * Removes the reference to the declaring class of this property instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferenceToDeclaringClass()
-    {
-        $this->_declaringClass = null;
-    }
-
-    /**
-     * Removes all references to ast nodes associated with property instance.
-     *
-     * @return void
-     * @since 0.9.12
-     */
-    private function _removeReferencesToNodes()
-    {
-        $this->_formalParameter    = null;
-        $this->_variableDeclarator = null;
-    }
-
-    /**
      * This method returns a string representation of this parameter.
      *
      * @return string
@@ -534,4 +496,23 @@ class PHP_Depend_Code_Property
             PHP_EOL
         );
     }
+
+    // @codeCoverageIgnoreStart
+
+    /**
+     * This method can be called by the PHP_Depend runtime environment or a
+     * utilizing component to free up memory. This methods are required for
+     * PHP version < 5.3 where cyclic references can not be resolved
+     * automatically by PHP's garbage collector.
+     *
+     * @return void
+     * @since 0.9.12
+     * @deprecated Since 0.11.0
+     */
+    public function free()
+    {
+        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
+    }
+
+    // @codeCoverageIgnoreEnd
 }
