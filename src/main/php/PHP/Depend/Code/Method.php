@@ -192,13 +192,12 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     /**
      * Sets the parent type object.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $parent The parent type.
+     * @param PHP_Depend_Code_AbstractType $parent The parent type.
      *
      * @return void
      */
-    public function setParent(
-        PHP_Depend_Code_AbstractClassOrInterface $parent = null
-    ) {
+    public function setParent(PHP_Depend_Code_AbstractType $parent = null)
+    {
         $this->parent = $parent;
     }
 

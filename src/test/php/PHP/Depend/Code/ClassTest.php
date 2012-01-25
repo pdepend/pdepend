@@ -1233,18 +1233,18 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertEquals(
             array(
-                'cache',
                 'constants',
+                'interfaceReferences',
+                'parentClassReference',
+                'cache',
                 'context',
                 'docComment',
                 'endLine',
-                'interfaceReferences',
                 'methods',
                 'modifiers',
                 'name',
                 'nodes',
                 'packageName',
-                'parentClassReference',
                 'startLine',
                 'userDefined',
                 'uuid'

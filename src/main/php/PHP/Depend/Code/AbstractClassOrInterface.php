@@ -59,24 +59,8 @@
  * @link       http://pdepend.org/
  */
 abstract class PHP_Depend_Code_AbstractClassOrInterface
-       extends PHP_Depend_Code_AbstractItem
+       extends PHP_Depend_Code_AbstractType
 {
-    /**
-     * The internal used cache instance.
-     *
-     * @var PHP_Depend_Util_Cache_Driver
-     * @since 0.10.0
-     */
-    protected $cache = null;
-
-    /**
-     * The currently used builder context.
-     *
-     * @var PHP_Depend_Builder_Context
-     * @since 0.10.0
-     */
-    protected $context = null;
-
     /**
      * The parent for this class node.
      *
@@ -93,209 +77,11 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     protected $interfaceReferences = array();
 
     /**
-     * The parent package for this class.
-     *
-     * @var PHP_Depend_Code_Package
-     */
-    private $_package = null;
-
-    /**
-     * List of {@link PHP_Depend_Code_Method} objects in this class.
-     *
-     * @var array(PHP_Depend_Code_Method)
-     */
-    protected $methods = array();
-
-    /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
      * @var array(string=>mixed)
      */
     protected $constants = null;
-
-    /**
-     * This property will indicate that the class or interface is user defined.
-     * The parser marks all classes and interfaces as user defined that have a
-     * source file and were part of parsing process.
-     *
-     * @var boolean
-     * @since 0.9.5
-     */
-    protected $userDefined = false;
-
-    /**
-     * List of all parsed child nodes.
-     *
-     * @var array(PHP_Depend_Code_ASTNodeI)
-     * @since 0.9.6
-     */
-    protected $nodes = array();
-
-    /**
-     * The start line number of the class or interface declaration.
-     *
-     * @var integer
-     * @since 0.9.12
-     */
-    protected $startLine = 0;
-
-    /**
-     * The end line number of the class or interface declaration.
-     *
-     * @var integer
-     * @since 0.9.12
-     */
-    protected $endLine = 0;
-
-    /**
-     * Name of the parent package for this class or interface instance. Or
-     * <b>NULL</b> when no package was specified.
-     *
-     * @var string
-     * @since 0.10.0
-     */
-    protected $packageName = null;
-
-    /**
-     * Was this class or interface instance restored from the cache?
-     *
-     * @var boolean
-     * @since 0.10.0
-     */
-    protected $cached = false;
-
-    /**
-     * Setter method for the currently used token cache, where this class or
-     * interface instance can store the associated tokens.
-     *
-     * @param PHP_Depend_Util_Cache_Driver $cache The currently used cache instance.
-     *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
-     * @since 0.10.0
-     */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
-    {
-        $this->cache = $cache;
-        return $this;
-    }
-
-    /**
-     * Sets the currently active builder context.
-     *
-     * @param PHP_Depend_Builder_Context $context Current builder context.
-     *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
-     * @since 0.10.0
-     */
-    public function setContext(PHP_Depend_Builder_Context $context)
-    {
-        $this->context = $context;
-        return $this;
-    }
-
-    /**
-     * Adds a parsed child node to this node.
-     *
-     * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
-     *
-     * @return void
-     * @access private
-     * @since 0.9.6
-     */
-    public function addChild(PHP_Depend_Code_ASTNodeI $node)
-    {
-        $this->nodes[] = $node;
-    }
-
-    /**
-     * Returns all child nodes of this class.
-     *
-     * @return array(PHP_Depend_Code_ASTNodeI)
-     * @since 0.9.12
-     */
-    public function getChildren()
-    {
-        return $this->nodes;
-    }
-
-    /**
-     * This method will search recursive for the first child node that is an
-     * instance of the given <b>$targetType</b>. The returned value will be
-     * <b>null</b> if no child exists for that.
-     *
-     * @param string $targetType Searched class or interface type.
-     *
-     * @return PHP_Depend_Code_ASTNodeI
-     * @access private
-     * @since 0.9.6
-     * @todo Refactor $_methods property to getAllMethods() when it exists.
-     */
-    public function getFirstChildOfType($targetType)
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                return $node;
-            }
-            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-        foreach ($this->methods as $method) {
-            if (($child = $method->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Will find all children for the given type.
-     *
-     * @param string $targetType The target class or interface type.
-     * @param array  &$results   The found children.
-     *
-     * @return array(PHP_Depend_Code_ASTNodeI)
-     * @access private
-     * @since 0.9.6
-     * @todo Refactor $_methods property to getAllMethods() when it exists.
-     */
-    public function findChildrenOfType($targetType, array &$results = array())
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                $results[] = $node;
-            }
-            $node->findChildrenOfType($targetType, $results);
-        }
-        foreach ($this->methods as $method) {
-            $method->findChildrenOfType($targetType, $results);
-        }
-        return $results;
-    }
-
-    /**
-     * This method will return <b>true</b> when this type has a declaration in
-     * the analyzed source files.
-     *
-     * @return boolean
-     * @since 0.9.5
-     */
-    public function isUserDefined()
-    {
-        return $this->userDefined;
-    }
-
-    /**
-     * This method can be used to mark a type as user defined. User defined
-     * means that the type has a valid declaration in the analyzed source files.
-     *
-     * @return void
-     * @since 0.9.5
-     */
-    public function setUserDefined()
-    {
-        $this->userDefined = true;
-    }
 
     /**
      * Returns the parent class or <b>null</b> if this class has no parent.
@@ -511,32 +297,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     }
 
     /**
-     * Returns all {@link PHP_Depend_Code_Method} objects in this type.
-     *
-     * @return PHP_Depend_Code_NodeIterator
-     */
-    public function getMethods()
-    {
-        return new PHP_Depend_Code_NodeIterator($this->methods);
-    }
-
-    /**
-     * Adds the given method to this type.
-     *
-     * @param PHP_Depend_Code_Method $method A new type method.
-     *
-     * @return PHP_Depend_Code_Method
-     */
-    public function addMethod(PHP_Depend_Code_Method $method)
-    {
-        $method->setParent($this);
-
-        $this->methods[] = $method;
-
-        return $method;
-    }
-
-    /**
      * Returns all {@link PHP_Depend_Code_AbstractClassOrInterface} objects this
      * type depends on.
      *
@@ -550,116 +310,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
 
         return new PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
-    }
-
-    /**
-     * Returns an <b>array</b> with all tokens within this type.
-     *
-     * @return array(PHP_Depend_Token)
-     */
-    public function getTokens()
-    {
-        return (array) $this->cache
-            ->type('tokens')
-            ->restore($this->uuid);
-    }
-
-    /**
-     * Sets the tokens for this type.
-     *
-     * @param array(PHP_Depend_Token) $tokens The generated tokens.
-     *
-     * @return void
-     */
-    public function setTokens(array $tokens)
-    {
-        $this->startLine = reset($tokens)->startLine;
-        $this->endLine   = end($tokens)->endLine;
-
-        $this->cache
-            ->type('tokens')
-            ->store($this->uuid, $tokens);
-    }
-
-    /**
-     * Returns the line number where the class or interface declaration starts.
-     *
-     * @return integer
-     * @since 0.9.6
-     */
-    public function getStartLine()
-    {
-        return $this->startLine;
-    }
-
-    /**
-     * Returns the line number where the class or interface declaration ends.
-     *
-     * @return integer
-     * @since 0.9.6
-     */
-    public function getEndLine()
-    {
-        return $this->endLine;
-    }
-
-    /**
-     * Returns the name of the parent package.
-     *
-     * @return string
-     * @since 0.10.0
-     */
-    public function getPackageName()
-    {
-        return $this->packageName;
-    }
-
-    /**
-     * Returns the parent package for this class.
-     *
-     * @return PHP_Depend_Code_Package
-     */
-    public function getPackage()
-    {
-        return $this->_package;
-    }
-
-    /**
-     * Sets the parent package for this class.
-     *
-     * @param PHP_Depend_Code_Package $package The parent package.
-     *
-     * @return void
-     */
-    public function setPackage(PHP_Depend_Code_Package $package)
-    {
-        $this->_package    = $package;
-        $this->packageName = $package->getName();
-    }
-
-    /**
-     * Resets the associated package reference.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public function unsetPackage()
-    {
-        $this->_package    = null;
-        $this->packageName = null;
-    }
-
-    /**
-     * This method will return <b>true</b> when this class or interface instance
-     * was restored from the cache and not currently parsed. Otherwise this
-     * method will return <b>false</b>.
-     *
-     * @return boolean
-     * @since 0.10.0
-     */
-    public function isCached()
-    {
-        return $this->cached;
     }
 
     /**
@@ -738,43 +388,10 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function __sleep()
     {
-        return array(
-            'cache',
-            'constants',
-            'context',
-            'docComment',
-            'endLine',
-            'interfaceReferences',
-            'methods',
-            'modifiers',
-            'name',
-            'nodes',
-            'packageName',
-            'parentClassReference',
-            'startLine',
-            'userDefined',
-            'uuid'
+        return array_merge(
+            array('constants', 'interfaceReferences', 'parentClassReference'),
+            parent::__sleep()
         );
-    }
-
-    /**
-     * The magic wakeup method is called by the PHP runtime environment when a
-     * serialized instance of this class gets unserialized and all properties
-     * are restored. This implementation of the <b>__wakeup()</b> method sets
-     * a flag that this object was restored from the cache and it restores the
-     * dependency between this class or interface and it's child methods.
-     *
-     * @return void
-     * @since 0.10.0
-     */
-    public function __wakeup()
-    {
-        $this->cached = true;
-
-        foreach ($this->methods as $method) {
-            $method->sourceFile = $this->sourceFile;
-            $method->setParent($this);
-        }
     }
 
     // @codeCoverageIgnoreStart

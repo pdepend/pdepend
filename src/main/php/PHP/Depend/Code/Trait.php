@@ -38,91 +38,71 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
- * @since      0.10.0
+ * @since      0.11.0
  */
 
-// @codeCoverageIgnoreStart
-
 /**
- * Base interface for a concrete cache driver.
+ * Representation of a trait.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Util_Cache
+ * @subpackage Code
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
- * @since      0.10.0
+ * @since      0.11.0
  */
-interface PHP_Depend_Util_Cache_Driver
+class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
 {
     /**
-     * The current cache version.
+     * The type of this class.
      */
-    const VERSION = '@version:16c1ef8ac4884db09c72f41d39695ff9:@';
+    const CLAZZ = __CLASS__;
 
     /**
-     * Sets the type for the next <em>store()</em> or <em>restore()</em> method
-     * call. A type is something like a namespace or group for cache entries.
+     * Returns a list of all methods provided by this type or one of its parents.
      *
-     * Note that the cache type will be reset after each storage method call, so
-     * you must invoke right before every call to <em>restore()</em> or
-     * <em>store()</em>.
-     *
-     * @param string $type The name or object type for the next storage method call.
-     *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return array(PHP_Depend_Code_Method)
      */
-    function type($type);
+    public function getAllMethods()
+    {
+        return $this->methods;
+    }
+
 
     /**
-     * This method will store the given <em>$data</em> under <em>$key</em>. This
-     * method can be called with a third parameter that will be used as a
-     * verification token, when the a cache entry gets restored. If the stored
-     * hash and the supplied hash are not identical, that cache entry will be
-     * removed and not returned.
+     * Visitor method for node tree traversal.
      *
-     * @param string $key  The cache key for the given data.
-     * @param mixed  $data Any data that should be cached.
-     * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return  void
-     */
-    function store($key, $data, $hash = null);
-
-    /**
-     * This method tries to restore an existing cache entry for the given
-     * <em>$key</em>. If a matching entry exists, this method verifies that the
-     * given <em>$hash</em> and the the value stored with cache entry are equal.
-     * Then it returns the cached entry. Otherwise this method will return
-     * <b>NULL</b>.
-     *
-     * @param string $key  The cache key for the given data.
-     * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return mixed
-     */
-    function restore($key, $hash = null);
-
-    /**
-     * This method will remove an existing cache entry for the given identifier.
-     * It will delete all cache entries where the cache key start with the given
-     * <b>$pattern</b>. If no matching entry exists, this method simply does
-     * nothing.
-     *
-     * @param string $pattern The cache key pattern.
+     * @param PHP_Depend_VisitorI $visitor The context visitor
+     *                                              implementation.
      *
      * @return void
      */
-    function remove($pattern);
-}
+    public function accept(PHP_Depend_VisitorI $visitor)
+    {
+        $visitor->visitTrait($this);
+    }
 
-// @codeCoverageIgnoreEnd
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @return void
+     */
+    public function  __wakeup()
+    {
+        parent::__wakeup();
+
+        $this->context->registerTrait($this);
+    }
+}

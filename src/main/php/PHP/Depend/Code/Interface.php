@@ -76,15 +76,6 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     protected $modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
 
     /**
-     * Name of the parent package for this interface instance. This property is
-     * used to restore the parent package instance while the object tree gets
-     * unserialized from the cache.
-     *
-     * @var string
-     */
-    protected $packageName = null;
-
-    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
