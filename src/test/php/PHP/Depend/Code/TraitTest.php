@@ -61,11 +61,99 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @since     0.11.0
  *
  * @covers PHP_Depend_Code_Trait
+ * @covers PHP_Depend_Code_AbstractType
  * @group pdepend
  * @group pdepend::code
  * @group unittest
  */
 class PHP_Depend_Code_TraitTest extends PHP_Depend_AbstractTest
 {
+    /**
+     * testTraitHasExpectedStartLine
+     *
+     * @return void
+     */
+    public function testTraitHasExpectedStartLine()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(5, $trait->getStartLine());
+    }
 
+    /**
+     * testTraitHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitHasExpectedEndLine()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(11, $trait->getEndLine());
+    }
+
+    /**
+     * testTraitHasExpectedPackage
+     *
+     * @return void
+     */
+    public function testTraitHasExpectedPackage()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals('org.pdepend', $trait->getPackage()->getName());
+    }
+
+    /**
+     * testTraitHasExpectedNamespace
+     *
+     * @return void
+     */
+    public function testTraitHasExpectedNamespace()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals('org\pdepend\code', $trait->getPackage()->getName());
+    }
+
+    /**
+     * testGetPackageNameReturnsExpectedName
+     *
+     * @return void
+     */
+    public function testGetPackageNameReturnsExpectedName()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals('org\pdepend\code', $trait->getPackageName());
+    }
+
+    /**
+     * testMagicWakeupCallsRegisterTraitOnBuilderContext
+     *
+     * @return void
+     */
+    public function testMagicWakeupCallsRegisterTraitOnBuilderContext()
+    {
+        $trait = new PHP_Depend_Code_Trait(__FUNCTION__);
+
+        $context = $this->getMockBuilder('PHP_Depend_Builder_Context')
+            ->disableOriginalClone()
+            ->getMock();
+        $context->expects($this->once())
+            ->method('registerTrait')
+            ->with($this->isInstanceOf(PHP_Depend_Code_Trait::CLAZZ));
+
+        $trait->setContext($context);
+
+        $trait->__wakeup();
+    }
+
+    /**
+     * Returns the first trait found the code under test.
+     *
+     * @return PHP_Depend_Code_Trait
+     */
+    protected function getFirstTraitForTest()
+    {
+        return $this->parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current();
+    }
 }

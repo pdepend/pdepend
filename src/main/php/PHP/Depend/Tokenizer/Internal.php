@@ -326,6 +326,18 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
             self::T_CONST            =>  self::T_STRING,
             self::T_FUNCTION         =>  self::T_STRING,
         ),
+        self::T_TRAIT_C=> array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
+            self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
+        ),
+        self::T_TRAIT => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
+            self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
+        ),
     );
 
     /**

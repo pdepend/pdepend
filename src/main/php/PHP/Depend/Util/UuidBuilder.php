@@ -88,16 +88,19 @@ class PHP_Depend_Util_UuidBuilder
     }
 
     /**
-     * Generates an identifier for the given class or interface instance.
+     * Generates an identifier for the given class, interface or trait instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $class A class instance.
+     * @param PHP_Depend_Code_AbstractType $type A class instance.
      *
      * @return string
      */
-    public function forClassOrInterface(
-        PHP_Depend_Code_AbstractClassOrInterface $class
-    ) {
-        return $this->forOffsetItem($class, 'class');
+    public function forClassOrInterface(PHP_Depend_Code_AbstractType $type)
+    {
+
+        return $this->forOffsetItem(
+            $type,
+            ltrim(strrchr(strtolower(get_class($type)), '_'), '_')
+        );
     }
 
     /**

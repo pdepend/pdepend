@@ -458,6 +458,41 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     protected abstract function parseFunctionName();
 
     /**
+     * @return PHP_Depend_Code_AbstractTrait
+     */
+    private function _parseTraitDeclaration()
+    {
+        $this->_tokenStack->push();
+
+        $trait = $this->_parseTraitSignature();
+        $trait = $this->_parseTypeBody($trait);
+        $trait->setTokens($this->_tokenStack->pop());
+
+        $this->reset();
+
+        return $trait;
+    }
+
+    /**
+     * @return PHP_Depend_Code_Trait
+     */
+    private function _parseTraitSignature()
+    {
+        $this->consumeToken(self::T_TRAIT);
+        $this->consumeComments();
+
+        $qualifiedName = $this->_createQualifiedTypeName($this->parseClassName());
+
+        $trait = $this->builder->buildTrait($qualifiedName);
+        $trait->setSourceFile($this->_sourceFile);
+        $trait->setDocComment($this->_docComment);
+        $trait->setUUID($this->_uuidBuilder->forClassOrInterface($trait));
+        $trait->setUserDefined();
+
+        return $trait;
+    }
+
+    /**
      * Parses the dependencies in a interface signature.
      *
      * @return PHP_Depend_Code_Interface
@@ -467,7 +502,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         $interface = $this->_parseInterfaceSignature();
-        $interface = $this->_parseClassOrInterfaceBody($interface);
+        $interface = $this->_parseTypeBody($interface);
         $interface->setTokens($this->_tokenStack->pop());
 
         $this->reset();
@@ -528,7 +563,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->push();
 
         $class = $this->_parseClassSignature();
-        $class = $this->_parseClassOrInterfaceBody($class);
+        $class = $this->_parseTypeBody($class);
         $class->setTokens($this->_tokenStack->pop());
 
         $this->reset();
@@ -661,16 +696,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * Parses a class/interface body.
+     * Parses a class/interface/trait body.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The context class
-     *        or interface instance.
+     * @param PHP_Depend_Code_AbstractType $type Context class, trait or interface
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return PHP_Depend_Code_AbstractType
      */
-    private function _parseClassOrInterfaceBody(
-        PHP_Depend_Code_AbstractClassOrInterface $type
-    ) {
+    private function _parseTypeBody(PHP_Depend_Code_AbstractType $type)
+    {
         $this->_classOrInterface = $type;
 
         // Consume comments and read opening curly brace
@@ -5142,6 +5175,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
             return $this->_parseOptionalStatement();
 
+        case self::T_TRAIT:
+            $package = $this->_getNamespaceOrPackage();
+            $package->addType($trait = $this->_parseTraitDeclaration());
+
+            $this->builder->restoreTrait($trait);
+            $this->_sourceFile->addChild($trait);
+            return $trait;
+
         case self::T_INTERFACE:
             $package = $this->_getNamespaceOrPackage();
             $package->addType($interface = $this->_parseInterfaceDeclaration());
@@ -6082,6 +6123,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $notExpectedTags = array(
             self::T_CLASS,
             self::T_FINAL,
+            self::T_TRAIT,
             self::T_ABSTRACT,
             self::T_FUNCTION,
             self::T_INTERFACE
