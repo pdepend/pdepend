@@ -171,4 +171,91 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
         $iterator = new PHP_Depend_Code_NodeIterator(array());
         $this->assertFalse($iterator->current());
     }
+
+    /**
+     * testArrayBehaviorOffsetExistsReturnsFalse
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayBehaviorOffsetExistsReturnsFalse()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(array());
+        $this->assertFalse(isset($iterator[1]));
+    }
+
+    /**
+     * testArrayBehaviorOffsetExistsReturnsTrue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayBehaviorOffsetExistsReturnsTrue()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(
+            array(
+                new PHP_Depend_Code_Class('Class'),
+                new PHP_Depend_Code_Interface('Interface'),
+                new PHP_Depend_Code_Trait('Trait')
+            )
+        );
+        $this->assertTrue(isset($iterator[1]));
+    }
+
+    /**
+     * testArrayBehaviorOffsetGetReturnsExpectedNode
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testArrayBehaviorOffsetGetReturnsExpectedNode()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(
+            array(
+                $class     = new PHP_Depend_Code_Class('Class'),
+                $interface = new PHP_Depend_Code_Interface('Interface'),
+                $trait     = new PHP_Depend_Code_Trait('Trait')
+            )
+        );
+        $this->assertSame($interface, $iterator[1]);
+    }
+
+    /**
+     * testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException
+     *
+     * @return void
+     * @since 0.11.0
+     * @expectedException OutOfBoundsException
+     */
+    public function testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(array());
+        $iterator[0]->getName();
+    }
+
+    /**
+     * testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException
+     *
+     * @return void
+     * @since 0.11.0
+     * @expectedException BadMethodCallException
+     */
+    public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException()
+    {
+        $iterator    = new PHP_Depend_Code_NodeIterator(array());
+        $iterator[0] = new PHP_Depend_Code_Class('Class');
+    }
+
+    /**
+     * testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException
+     *
+     * @return void
+     * @since 0.11.0
+     * @expectedException BadMethodCallException
+     */
+    public function testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException()
+    {
+        $iterator = new PHP_Depend_Code_NodeIterator(array());
+        unset($iterator[0]);
+    }
 }

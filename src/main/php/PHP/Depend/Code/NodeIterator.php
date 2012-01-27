@@ -58,7 +58,7 @@
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-class PHP_Depend_Code_NodeIterator implements Iterator, Countable
+class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
 {
     /**
      * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
@@ -85,10 +85,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
      * Constructs a new node iterator from the given {@link PHP_Depend_Code_NodeI}
      * node array.
      *
-     * @param array(PHP_Depend_Code_NodeI) $nodes List of code nodes.
-     *
-     * @throws RuntimeException If the array contains something different from
-     *                          a {@link PHP_Depend_Code_NodeI} object.
+     * @param array $nodes List of code nodes.
      */
     public function __construct(array $nodes)
     {
@@ -119,7 +116,7 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     /**
      * Returns the current node or <b>false</b>
      *
-     * @return PHP_Depend_Code_NodeI|false
+     * @return PHP_Depend_Code_NodeI
      */
     public function current()
     {
@@ -167,6 +164,67 @@ class PHP_Depend_Code_NodeIterator implements Iterator, Countable
     public function valid()
     {
         return ($this->_offset < $this->_count);
+    }
+
+    /**
+     * Whether a offset exists
+     *
+     * @param mixed $offset An offset to check for.
+     *
+     * @return boolean Returns true on success or false on failure. The return
+     *                 value will be casted to boolean if non-boolean was returned.
+     * @since 0.11.0
+     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->_nodes[$offset]);
+    }
+
+    /**
+     * Offset to retrieve
+     *
+     * @param PHP_Depend_Code_NodeI $offset The offset to retrieve.
+     *
+     * @return mixed Can return all value types.
+     * @since 0.11.0
+     * @link http://php.net/manual/en/arrayaccess.offsetget.php
+     */
+    public function offsetGet($offset)
+    {
+        if (isset($this->_nodes[$offset])) {
+            return $this->_nodes[$offset];
+        }
+        throw new OutOfBoundsException("The offset {$offset} does not exist.");
+    }
+
+    /**
+     * Offset to set
+     *
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value The value to set.
+     *
+     * @return void
+     * @since 0.11.0
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new BadMethodCallException('Not supported operation.');
+    }
+
+    /**
+     * Offset to unset
+     *
+     * @param mixed $offset The offset to unset.
+     *
+     * @return void
+     * @since 0.11.0
+     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
+     */
+    public function offsetUnset($offset)
+    {
+        throw new BadMethodCallException('Not supported operation.');
     }
 
     // @codeCoverageIgnoreStart
