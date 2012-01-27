@@ -224,12 +224,58 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testRemoveTypeResetsPackageReferenceFromRemovedType()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $class   = new PHP_Depend_Code_Class('Class', 0, 'class.php');
+        $class   = new PHP_Depend_Code_Class('Class');
 
         $package->addType($class);
         $package->removeType($class);
 
         self::assertNull($class->getPackage());
+    }
+
+    /**
+     * testGetTraitsReturnsExpectedNumberOfTraits
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetTraitsReturnsExpectedNumberOfTraits()
+    {
+        $package = new PHP_Depend_Code_Package('package');
+        $package->addType(new PHP_Depend_Code_Class('Class'));
+        $package->addType(new PHP_Depend_Code_Trait('Trait0'));
+        $package->addType(new PHP_Depend_Code_Interface('Interface'));
+        $package->addType(new PHP_Depend_Code_Trait('Trait1'));
+
+        $this->assertEquals(2, count($package->getTraits()));
+    }
+
+    /**
+     * testGetTraitsContainsExpectedTrait
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetTraitsContainsExpectedTrait()
+    {
+        $package = new PHP_Depend_Code_Package('package');
+        $trait   = $package->addType(new PHP_Depend_Code_Trait('Trait'));
+
+        $traits = $package->getTraits();
+        $this->assertSame($trait, $traits[0]);
+    }
+
+    /**
+     * testAddTypeSetsParentPackageOfTrait
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testAddTypeSetsParentPackageOfTrait()
+    {
+        $package = new PHP_Depend_Code_Package('package');
+        $trait   = $package->addType(new PHP_Depend_Code_Trait('Trait'));
+
+        $this->assertSame($package, $trait->getPackage());
     }
     
     /**

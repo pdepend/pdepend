@@ -170,6 +170,18 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     }
 
     /**
+     * Returns an array with all {@link PHP_Depend_Code_Trait} instances
+     * declared in this package.
+     *
+     * @return array
+     * @since 0.11.0
+     */
+    public function getTraits()
+    {
+        return $this->_getTypesOfType(PHP_Depend_Code_Trait::CLAZZ);
+    }
+
+    /**
      * Returns an iterator with all {@link PHP_Depend_Code_Class} instances
      * within this package.
      *
@@ -177,13 +189,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getClasses()
     {
-        $classes = array();
-        foreach ($this->types as $type) {
-            if ($type instanceof PHP_Depend_Code_Class) {
-                $classes[] = $type;
-            }
-        }
-        return new PHP_Depend_Code_NodeIterator($classes);
+        return $this->_getTypesOfType(PHP_Depend_Code_Class::CLAZZ);
     }
 
     /**
@@ -194,13 +200,27 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getInterfaces()
     {
-        $interfaces = array();
+        return $this->_getTypesOfType(PHP_Depend_Code_Interface::CLAZZ);
+    }
+
+    /**
+     * Returns an iterator with all types of the given <b>$className</b> in this
+     * package.
+     *
+     * @param string $className The class/type we are looking for.
+     *
+     * @return PHP_Depend_Code_NodeIterator
+     * @since 0.11.0
+     */
+    private function _getTypesOfType($className)
+    {
+        $types = array();
         foreach ($this->types as $type) {
-            if ($type instanceof PHP_Depend_Code_Interface) {
-                $interfaces[] = $type;
+            if ($type instanceof $className) {
+                $types[] = $type;
             }
         }
-        return new PHP_Depend_Code_NodeIterator($interfaces);
+        return new PHP_Depend_Code_NodeIterator($types);
     }
 
     /**
