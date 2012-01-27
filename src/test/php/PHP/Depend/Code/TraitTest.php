@@ -124,6 +124,17 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetMethodsReturnsExpectedNumberOfMethods
+     *
+     * @return void
+     */
+    public function testGetMethodsReturnsExpectedNumberOfMethods()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(3, count($trait->getMethods()));
+    }
+
+    /**
      * testMagicWakeupCallsRegisterTraitOnBuilderContext
      *
      * @return void
