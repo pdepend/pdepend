@@ -63,14 +63,14 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_AbstractClassOrInterface $parent
+     * @var PHP_Depend_Code_AbstractType
      */
     protected $parent = null;
 
     /**
      * Defined modifiers for this property node.
      *
-     * @var integer $_modifiers
+     * @var integer
      */
     protected $modifiers = 0;
 
@@ -182,7 +182,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface|null
+     * @return PHP_Depend_Code_AbstractType|null
      */
     public function getParent()
     {
