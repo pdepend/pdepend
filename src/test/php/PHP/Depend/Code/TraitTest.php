@@ -135,23 +135,39 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testAcceptInvokesVisitTraitOnGivenVisitor
+     *
+     * @return void
+     */
+    public function testAcceptInvokesVisitTraitOnGivenVisitor()
+    {
+        $visitor = $this->getMockBuilder(PHP_Depend_VisitorI::CLAZZ)
+            ->disableOriginalClone()
+            ->getMock();
+        $visitor->expects($this->once())
+            ->method('visitTrait')
+            ->with($this->isInstanceOf(PHP_Depend_Code_Trait::CLAZZ));
+
+        $trait = new PHP_Depend_Code_Trait('MyTrait');
+        $trait->accept($visitor);
+    }
+
+    /**
      * testMagicWakeupCallsRegisterTraitOnBuilderContext
      *
      * @return void
      */
     public function testMagicWakeupCallsRegisterTraitOnBuilderContext()
     {
-        $trait = new PHP_Depend_Code_Trait(__FUNCTION__);
-
-        $context = $this->getMockBuilder('PHP_Depend_Builder_Context')
+        $context = $this->getMockBuilder(PHP_Depend_Builder_Context::CLAZZ)
             ->disableOriginalClone()
             ->getMock();
         $context->expects($this->once())
             ->method('registerTrait')
             ->with($this->isInstanceOf(PHP_Depend_Code_Trait::CLAZZ));
 
+        $trait = new PHP_Depend_Code_Trait(__FUNCTION__);
         $trait->setContext($context);
-
         $trait->__wakeup();
     }
 

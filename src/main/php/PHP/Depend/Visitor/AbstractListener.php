@@ -87,6 +87,32 @@ abstract class PHP_Depend_Visitor_AbstractListener
     }
 
     /**
+     * Is called when the visitor starts a new trait instance.
+     *
+     * @param PHP_Depend_Code_Trait $trait The context trait instance.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function startVisitTrait(PHP_Depend_Code_Trait $trait)
+    {
+        $this->startVisitNode($trait);
+    }
+
+    /**
+     * Is called when the visitor ends with a trait instance.
+     *
+     * @param PHP_Depend_Code_Trait $trait The context trait instance.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function endVisitTrait(PHP_Depend_Code_Trait $trait)
+    {
+        $this->endVisitNode($trait);
+    }
+
+    /**
      * Is called when the visitor starts a new file instance.
      *
      * @param PHP_Depend_Code_File $file The context file instance.

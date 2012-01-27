@@ -61,57 +61,64 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     /**
      * The last visited class instance.
      *
-     * @var PHP_Depend_Code_Class $class
+     * @var PHP_Depend_Code_Class
      */
-    public $class = null;
+    public $class;
+
+    /**
+     * The last visited trait instance.
+     *
+     * @var PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    public $trait;
 
     /**
      * The last visited interface instance.
      *
-     * @var PHP_Depend_Code_Interface $interface
+     * @var PHP_Depend_Code_Interface
      */
-    public $interface = null;
+    public $interface;
 
     /**
      * The last visited method instance.
      *
-     * @var PHP_Depend_Code_Method $method
+     * @var PHP_Depend_Code_Method
      */
-    public $method = null;
+    public $method;
 
     /**
      * The last visited package instance.
      *
-     * @var PHP_Depend_Code_Package $method
+     * @var PHP_Depend_Code_Package
      */
-    public $package = null;
+    public $package;
 
     /**
      * The last visited parameter instance.
      *
-     * @var PHP_Depend_Code_Parameter $parameter
+     * @var PHP_Depend_Code_Parameter
      */
-    public $parameter = null;
+    public $parameter;
 
     /**
      * The last visited property instance.
      *
-     * @var PHP_Depend_Code_Property $property
+     * @var PHP_Depend_Code_Property
      */
-    public $property = null;
+    public $property;
 
     /**
      * The last visited function instance.
      *
-     * @var PHP_Depend_Code_Function $method
+     * @var PHP_Depend_Code_Function
      */
-    public $function = null;
+    public $function;
 
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param PHP_Depend_Visitor_ListenerI $listener
-     *        The new visit listener.
+     * @param PHP_Depend_Visitor_ListenerI $listener The new visit listener.
      *
      * @return void
      */
@@ -130,6 +137,20 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
     {
         $this->class = $class;
     }
+
+    /**
+     * Visits a trait node.
+     *
+     * @param PHP_Depend_Code_Trait $trait The current trait node.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function visitTrait(PHP_Depend_Code_Trait $trait)
+    {
+        $this->trait = $trait;
+    }
+
 
     /**
      * Visits a code interface object.

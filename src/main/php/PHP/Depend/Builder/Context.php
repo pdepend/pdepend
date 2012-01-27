@@ -65,6 +65,11 @@
 interface PHP_Depend_Builder_Context
 {
     /**
+     * The type of this interface
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * This method can be used to register an existing function in the current
      * application context.
      * 

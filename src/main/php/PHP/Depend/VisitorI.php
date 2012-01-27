@@ -59,6 +59,11 @@
 interface PHP_Depend_VisitorI
 {
     /**
+     * The type of this interface
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * Adds a new listener to this node visitor.
      *
      * @param PHP_Depend_Visitor_ListenerI $listener The new visit listener.
@@ -75,6 +80,16 @@ interface PHP_Depend_VisitorI
      * @return void
      */
     function visitClass(PHP_Depend_Code_Class $class);
+
+    /**
+     * Visits a trait node.
+     *
+     * @param PHP_Depend_Code_Trait $trait The current trait node.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    function visitTrait(PHP_Depend_Code_Trait $trait);
 
     /**
      * Visits a file node.

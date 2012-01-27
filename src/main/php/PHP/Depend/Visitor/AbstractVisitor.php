@@ -118,6 +118,27 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     }
 
     /**
+     * Visits a trait node.
+     *
+     * @param PHP_Depend_Code_Trait $trait The current trait node.
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function visitTrait(PHP_Depend_Code_Trait $trait)
+    {
+        $this->fireStartTrait($trait);
+
+        $trait->getSourceFile()->accept($this);
+
+        foreach ($trait->getMethods() as $method) {
+            $method->accept($this);
+        }
+
+        $this->fireEndTrait($trait);
+    }
+
+    /**
      * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
@@ -210,6 +231,9 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
         foreach ($package->getInterfaces() as $interface) {
             $interface->accept($this);
         }
+        foreach ($package->getTraits() as $trait) {
+            $trait->accept($this);
+        }
         foreach ($package->getFunctions() as $function) {
             $function->accept($this);
         }
@@ -269,6 +293,34 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
     {
         foreach ($this->_listeners as $listener) {
             $listener->endVisitClass($class);
+        }
+    }
+
+    /**
+     * Sends a start trait event.
+     *
+     * @param PHP_Depend_Code_Trait $trait The context trait instance.
+     *
+     * @return void
+     */
+    protected function fireStartTrait(PHP_Depend_Code_Trait $trait)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->startVisitTrait($trait);
+        }
+    }
+
+    /**
+     * Sends an end trait event.
+     *
+     * @param PHP_Depend_Code_Trait $trait The context trait instance.
+     *
+     * @return void
+     */
+    protected function fireEndTrait(PHP_Depend_Code_Trait $trait)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->endVisitTrait($trait);
         }
     }
 

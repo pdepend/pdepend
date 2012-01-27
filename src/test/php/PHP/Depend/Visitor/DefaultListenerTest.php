@@ -314,4 +314,34 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $parameter = $this->getMock('PHP_Depend_Code_Parameter', array(), array(null), '', false);
         $listener->endVisitParameter($parameter);
     }
+
+    /**
+     * testListenerInvokesStartVisitNotForTrait
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testListenerInvokesStartVisitNotForTrait()
+    {
+        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('startVisitNode'));
+        $listener->expects($this->once())
+            ->method('startVisitNode');
+
+        $listener->startVisitTrait(new PHP_Depend_Code_Trait('MyTrait'));
+    }
+
+    /**
+     * testListenerInvokesEndVisitNotForTrait
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testListenerInvokesEndVisitNotForTrait()
+    {
+        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('endVisitNode'));
+        $listener->expects($this->once())
+            ->method('endVisitNode');
+
+        $listener->endVisitTrait(new PHP_Depend_Code_Trait('MyTrait'));
+    }
 }
