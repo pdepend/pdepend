@@ -184,9 +184,9 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
     /**
      * Offset to retrieve
      *
-     * @param PHP_Depend_Code_NodeI $offset The offset to retrieve.
+     * @param mixed $offset The offset to retrieve.
      *
-     * @return mixed Can return all value types.
+     * @return PHP_Depend_Code_NodeI Can return all value types.
      * @since 0.11.0
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      */
@@ -202,7 +202,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
      * Offset to set
      *
      * @param mixed $offset The offset to assign the value to.
-     * @param mixed $value The value to set.
+     * @param mixed $value  The value to set.
      *
      * @return void
      * @since 0.11.0
