@@ -278,6 +278,25 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new trait reference node.
+     *
+     * @param string $qualifiedName The full qualified trait name.
+     *
+     * @return PHP_Depend_Code_ASTTraitReference
+     * @since 0.11.0
+     */
+    public function buildASTTraitReference($qualifiedName)
+    {
+        $this->checkBuilderState();
+
+        PHP_Depend_Util_Log::debug(
+            'Creating: PHP_Depend_Code_ASTTraitReference(' . $qualifiedName . ')'
+        );
+
+        return new PHP_Depend_Code_ASTTraitReference($this->context, $qualifiedName);
+    }
+
+    /**
      * Builds a new class instance or reuses a previous created class.
      *
      * Where possible you should give a qualified class name, that is prefixed
@@ -944,6 +963,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTLogicalXorExpression()
     {
         return $this->_buildASTNodeInstance('ASTLogicalXorExpression', 'xor');
+    }
+
+    /**
+     * Builds a new trait use-statement node.
+     *
+     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @since 0.11.0
+     */
+    public function buildASTTraitUseStatement()
+    {
+        return $this->_buildASTNodeInstance('ASTTraitUseStatement');
     }
 
     /**

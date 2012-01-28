@@ -561,6 +561,24 @@ interface PHP_Depend_BuilderI
     function buildASTLogicalXorExpression();
 
     /**
+     * Builds a new trait use-statement node.
+     *
+     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @since 0.11.0
+     */
+    function buildASTTraitUseStatement();
+
+    /**
+     * Builds a new trait reference node.
+     *
+     * @param string $qualifiedName The full qualified trait name.
+     *
+     * @return PHP_Depend_Code_ASTTraitReference
+     * @since 0.11.0
+     */
+    function buildASTTraitReference($qualifiedName);
+
+    /**
      * Builds a new switch-statement-node.
      *
      * @return PHP_Depend_Code_ASTSwitchStatement

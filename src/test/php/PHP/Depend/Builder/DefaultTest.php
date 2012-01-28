@@ -1445,6 +1445,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTUseTraitStatementReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTUseTraitStatementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ,
+            $this->createBuilder()->buildASTTraitUseStatement()
+        );
+    }
+
+    /**
      * testBuildASTSwitchStatementReturnsExpectedType
      *
      * @return void
@@ -1577,6 +1591,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
             $this->createBuilder()->buildASTStaticReference(
                 $this->createBuilder()->buildClass(__CLASS__)
             )
+        );
+    }
+
+    /**
+     * testBuildASTTraitReferenceReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTTraitReferenceReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTraitReference::CLAZZ,
+            $this->createBuilder()->buildASTTraitReference(__CLASS__)
         );
     }
 
