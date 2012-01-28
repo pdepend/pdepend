@@ -103,7 +103,7 @@ class PHP_Depend_Bugs_IncorrectPropertyEndlineBug068Test extends PHP_Depend_Bugs
             ->current();
 
         $this->assertSame(9, $property->getStartLine());
-        $this->assertSame(10, $property->getEndLine());
+        $this->assertSame(9, $property->getEndLine());
     }
 
     /**

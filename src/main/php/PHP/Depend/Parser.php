@@ -1266,17 +1266,26 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $stmt->setNewName($this->parseFunctionName());
                 }
             } else {
+                if (count($reference) < 2) {
+                    throw new PHP_Depend_Parser_InvalidStateException(
+                        $this->tokenizer->next()->startLine,
+                        $this->_sourceFile->getFileName(),
+                        'Expecting full qualified trait method name.'
+                    );
+                }
+
+                $stmt = $this->builder->buildASTTraitAdaptationPrecedence($reference[0]);
+                $stmt->addChild($reference[1]);
+
                 $this->consumeToken(self::T_INSTEADOF);
                 $this->consumeComments();
 
-                $exclude = $this->parseQualifiedName();
-                $this->consumeComments();
+                $stmt->addChild($this->_parseTraitReference());
 
+                $this->consumeComments();
                 while (self::T_COMMA === $this->tokenizer->peek()) {
                     $this->consumeToken(self::T_COMMA);
-                    $this->consumeComments();
-
-                    $exclude = $this->parseQualifiedName();
+                    $stmt->addChild($this->_parseTraitReference());
                     $this->consumeComments();
                 }
             }
@@ -6502,8 +6511,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while ($type == self::T_COMMENT || $type == self::T_DOC_COMMENT) {
 
             $token = $this->tokenizer->next();
-
-            $this->_tokenStack->add($token);
             $type = $this->tokenizer->peek();
 
             if (self::T_COMMENT === $type) {
