@@ -48,7 +48,7 @@
  */
 
 /**
- * This node class represents a trait adaptation scope.
+ * This node class represents a trait adaptation alias.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -60,12 +60,41 @@
  * @link       http://www.pdepend.org/
  * @since      0.11.0
  */
-class PHP_Depend_Code_ASTTraitAdaptation extends PHP_Depend_Code_ASTScope
+class PHP_Depend_Code_ASTTraitAdaptationAlias extends PHP_Depend_Code_ASTStatement
 {
     /**
      * The type of this class.
      */
     const CLAZZ = __CLASS__;
+
+    protected $newName;
+
+    protected $newModifier;
+
+    public function setNewModifier($newModifier)
+    {
+        $this->newModifier = $newModifier;
+    }
+
+    public function getNewModifier()
+    {
+        return $this->newModifier;
+    }
+
+    public function setNewName($newName)
+    {
+        $this->newName = $newName;
+    }
+
+    public function getNewName()
+    {
+        return $this->newName;
+    }
+
+    public function  __sleep()
+    {
+        return array_merge(array('newName', 'newModifier'), parent::__sleep());
+    }
 
     /**
      * Accept method of the visitor design pattern. This method will be called
@@ -78,6 +107,6 @@ class PHP_Depend_Code_ASTTraitAdaptation extends PHP_Depend_Code_ASTScope
      */
     public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
     {
-        return $visitor->visitTraitAdaptation($this, $data);
+        return $visitor->visitTraitAdaptationAlias($this, $data);
     }
 }

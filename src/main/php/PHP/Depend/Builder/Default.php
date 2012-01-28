@@ -977,7 +977,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
-     * Builds a new trait adaptation expression
+     * Builds a new trait adaptation scope
      *
      * @return PHP_Depend_Code_ASTTraitAdaptation
      * @since 0.11.0
@@ -985,6 +985,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     public function buildASTTraitAdaptation()
     {
         return $this->_buildASTNodeInstance('ASTTraitAdaptation');
+    }
+
+    /**
+     * Builds a new trait adaptation alias statement.
+     *
+     * @param string $image The original trait method name.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptationAlias
+     * @since 0.11.0
+     */
+    public function buildASTTraitAdaptationAlias($image)
+    {
+        return $this->_buildASTNodeInstance('ASTTraitAdaptationAlias', $image);
     }
 
     /**

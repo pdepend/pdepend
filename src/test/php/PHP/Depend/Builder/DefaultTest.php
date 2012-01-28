@@ -1473,6 +1473,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTTraitAdaptationAliasReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTTraitAdaptationAliasReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTraitAdaptationAlias::CLAZZ,
+            $this->createBuilder()->buildASTTraitAdaptationAlias(__CLASS__)
+        );
+    }
+
+    /**
      * testBuildASTSwitchStatementReturnsExpectedType
      *
      * @return void

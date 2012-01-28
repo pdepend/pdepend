@@ -47,8 +47,10 @@
  * @since      0.11.0
  */
 
+require_once dirname(__FILE__) . '/ASTNodeTest.php';
+
 /**
- * This node class represents a trait adaptation scope.
+ * Test case for the {@link PHP_Depend_Code_ASTTraitAdaptation} class.
  *
  * @category   PHP
  * @package    PHP_Depend
@@ -59,25 +61,70 @@
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
  * @since      0.11.0
+ *
+ * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTTraitAdaptation
+ * @group pdepend
+ * @group pdepend::ast
+ * @group unittest
  */
-class PHP_Depend_Code_ASTTraitAdaptation extends PHP_Depend_Code_ASTScope
+class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * The type of this class.
+     * testTraitAdaptationHasExpectedStartLine
+     *
+     * @return void
      */
-    const CLAZZ = __CLASS__;
+    public function testTraitAdaptationHasExpectedStartLine()
+    {
+        $stmt = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(5, $stmt->getStartLine());
+    }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
+     * testTraitAdaptationHasExpectedStartColumn
      *
-     * @param PHP_Depend_Code_ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
-     * @return mixed
+     * @return void
      */
-    public function accept(PHP_Depend_Code_ASTVisitorI $visitor, $data = null)
+    public function testTraitAdaptationHasExpectedStartColumn()
     {
-        return $visitor->visitTraitAdaptation($this, $data);
+        $stmt = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(54, $stmt->getStartColumn());
+    }
+
+    /**
+     * testTraitAdaptationHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitAdaptationHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(9, $stmt->getEndLine());
+    }
+
+    /**
+     * testTraitAdaptationHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testTraitAdaptationHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(5, $stmt->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptation
+     */
+    private function _getFirstTraitReferenceInClass()
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTTraitAdaptation::CLAZZ
+        );
     }
 }
+

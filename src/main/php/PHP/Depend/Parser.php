@@ -790,6 +790,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->_docComment = $token->image;
                 break;
 
+            case self::T_USE:
+                $type->addChild($this->_parseTraitUseStatement());
+                break;
+
             default:
                 throw new PHP_Depend_Parser_UnexpectedTokenException(
                     $this->tokenizer->next(),
@@ -1134,6 +1138,170 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         } else {
             $this->consumeToken(self::T_SEMICOLON);
         }
+    }
+
+    /**
+     * Parses a trait use statement.
+     *
+     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @since 0.11.0
+     */
+    private function _parseTraitUseStatement()
+    {
+        $this->_tokenStack->push();
+        $this->consumeToken(self::T_USE);
+
+        $useStatement = $this->builder->buildASTTraitUseStatement();
+        $useStatement->addChild($this->_parseTraitReference());
+
+        $this->consumeComments();
+        while (self::T_COMMA === $this->tokenizer->peek()) {
+            $this->consumeToken(self::T_COMMA);
+            $useStatement->addChild($this->_parseTraitReference());
+        }
+
+        return $this->_setNodePositionsAndReturn(
+            $this->_parseOptionalTraitAdaptation($useStatement)
+        );
+    }
+
+    /**
+     * Parses a trait reference instance.
+     *
+     * @return PHP_Depend_Code_ASTTraitReference
+     * @since 0.11.0
+     */
+    private function _parseTraitReference()
+    {
+        $this->consumeComments();
+        $this->_tokenStack->push();
+
+        return $this->_setNodePositionsAndReturn(
+            $this->builder->buildASTTraitReference(
+                $this->parseQualifiedName()
+            )
+        );
+    }
+
+    /**
+     * Parses the adaptation list of the given use statement or simply reads
+     * the terminating semicolon, when no adaptation list exists.
+     *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $useStatement The parent use
+     *
+     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @since 0.11.0
+     */
+    private function _parseOptionalTraitAdaptation(
+        PHP_Depend_Code_ASTTraitUseStatement $useStatement
+    ) {
+        $this->consumeComments();
+        if (self::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
+            $useStatement->addChild($this->_parseTraitAdaptation());
+        } else {
+            $this->consumeToken(self::T_SEMICOLON);
+        }
+        return $useStatement;
+    }
+
+    /**
+     * Parses the adaptation expression of a trait use statement.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptation
+     * @since 0.11.0
+     */
+    private function _parseTraitAdaptation()
+    {
+        $this->_tokenStack->push();
+
+        $adaptation = $this->builder->buildASTTraitAdaptation();
+
+        $this->consumeToken(self::T_CURLY_BRACE_OPEN);
+
+        do {
+
+            $this->_tokenStack->push();
+
+            $reference = $this->_parseTraitMethodReference();
+            $this->consumeComments();
+
+            if (self::T_AS === $this->tokenizer->peek()) {
+
+                $stmt = $this->builder->buildASTTraitAdaptationAlias($reference[0]);
+
+                if (2 === count($reference)) {
+                    $stmt->addChild($reference[1]);
+                }
+
+                $this->consumeToken(self::T_AS);
+                $this->consumeComments();
+
+                switch ($this->tokenizer->peek()) {
+
+                case self::T_PUBLIC:
+                case self::T_PROTECTED:
+                case self::T_PRIVATE:
+                    $stmt->setNewModifier($this->tokenizer->next()->type);
+                    $this->consumeComments();
+                    break;
+                }
+
+                if (self::T_SEMICOLON !== $this->tokenizer->peek()) {
+                    $stmt->setNewName($this->parseFunctionName());
+                }
+            } else {
+                echo 'INSTEADOF', PHP_EOL;
+                $this->consumeToken(self::T_INSTEADOF);
+                $this->consumeComments();
+
+
+                $exclude = $this->parseQualifiedName();
+                $this->consumeComments();
+
+                echo '  ', $exclude, PHP_EOL;
+
+                while (self::T_COMMA === $this->tokenizer->peek()) {
+                    $exclude = $this->parseQualifiedName();
+                    $this->consumeComments();
+
+                    echo ', ', $exclude;
+                }
+            }
+
+            $this->consumeComments();
+            $this->consumeToken(self::T_SEMICOLON);
+
+            $adaptation->addChild($this->_setNodePositionsAndReturn($stmt));
+
+            $this->consumeComments();
+        } while (self::T_CURLY_BRACE_CLOSE !== $this->tokenizer->peek());
+
+        $this->consumeToken(self::T_CURLY_BRACE_CLOSE);
+
+        return $this->_setNodePositionsAndReturn($adaptation);
+    }
+
+    private function _parseTraitMethodReference()
+    {
+        $this->_tokenStack->push();
+
+        $qualifiedName = $this->parseQualifiedName();
+
+        $this->consumeComments();
+        if (self::T_DOUBLE_COLON === $this->tokenizer->peek()) {
+
+            $traitReference = $this->_setNodePositionsAndReturn(
+                $this->builder->buildASTTraitReference($qualifiedName)
+            );
+
+            $this->consumeToken(self::T_DOUBLE_COLON);
+            $this->consumeComments();
+
+            return array($this->parseFunctionName(), $traitReference);
+        }
+        $this->_tokenStack->pop();
+
+        return array($qualifiedName);
     }
 
     /**
