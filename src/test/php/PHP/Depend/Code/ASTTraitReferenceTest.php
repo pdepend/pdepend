@@ -71,46 +71,46 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testUnsetStatementHasExpectedStartLine
+     * testTraitReferenceHasExpectedStartLine
      *
      * @return void
      */
-    public function testUnsetStatementHasExpectedStartLine()
+    public function testTraitReferenceHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstUnsetStatementInClass();
+        $stmt = $this->_getFirstTraitReferenceInClass();
         $this->assertEquals(5, $stmt->getStartLine());
     }
 
     /**
-     * testUnsetStatementHasExpectedStartColumn
+     * testTraitReferenceHasExpectedStartColumn
      *
      * @return void
      */
-    public function testUnsetStatementHasExpectedStartColumn()
+    public function testTraitReferenceHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstUnsetStatementInClass();
+        $stmt = $this->_getFirstTraitReferenceInClass();
         $this->assertEquals(9, $stmt->getStartColumn());
     }
 
     /**
-     * testUnsetStatementHasExpectedEndLine
+     * testTraitReferenceHasExpectedEndLine
      *
      * @return void
      */
-    public function testUnsetStatementHasExpectedEndLine()
+    public function testTraitReferenceHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstUnsetStatementInClass();
+        $stmt = $this->_getFirstTraitReferenceInClass();
         $this->assertEquals(5, $stmt->getEndLine());
     }
 
     /**
-     * testUnsetStatementHasExpectedEndColumn
+     * testTraitReferenceHasExpectedEndColumn
      *
      * @return void
      */
-    public function testUnsetStatementHasExpectedEndColumn()
+    public function testTraitReferenceHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstUnsetStatementInClass();
+        $stmt = $this->_getFirstTraitReferenceInClass();
         $this->assertEquals(27, $stmt->getEndColumn());
     }
 
@@ -119,7 +119,7 @@ class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return PHP_Depend_Code_ASTTraitReference
      */
-    private function _getFirstUnsetStatementInClass()
+    private function _getFirstTraitReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),

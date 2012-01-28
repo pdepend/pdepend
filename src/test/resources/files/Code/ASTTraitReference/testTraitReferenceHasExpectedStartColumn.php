@@ -1,5 +1,5 @@
 <?php
-class testUnsetStatementHasExpectedEndColumn
+class testTraitReferenceHasExpectedStartColumn
 {
     use
         \Path\To\MyTraitOne
