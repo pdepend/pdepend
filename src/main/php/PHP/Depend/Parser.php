@@ -1224,70 +1224,15 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeToken(self::T_CURLY_BRACE_OPEN);
 
         do {
-
             $this->_tokenStack->push();
 
             $reference = $this->_parseTraitMethodReference();
             $this->consumeComments();
 
             if (self::T_AS === $this->tokenizer->peek()) {
-
-                $stmt = $this->builder->buildASTTraitAdaptationAlias($reference[0]);
-
-                if (2 === count($reference)) {
-                    $stmt->addChild($reference[1]);
-                }
-
-                $this->consumeToken(self::T_AS);
-                $this->consumeComments();
-
-                switch ($this->tokenizer->peek()) {
-
-                case self::T_PUBLIC:
-                    $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PUBLIC);
-                    $this->consumeToken(self::T_PUBLIC);
-                    $this->consumeComments();
-                    break;
-
-                case self::T_PROTECTED:
-                    $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PROTECTED);
-                    $this->consumeToken(self::T_PROTECTED);
-                    $this->consumeComments();
-                    break;
-
-                case self::T_PRIVATE:
-                    $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PRIVATE);
-                    $this->consumeToken(self::T_PRIVATE);
-                    $this->consumeComments();
-                    break;
-                }
-
-                if (self::T_SEMICOLON !== $this->tokenizer->peek()) {
-                    $stmt->setNewName($this->parseFunctionName());
-                }
+                $stmt = $this->_parseTraitAdaptationAliasStatement($reference);
             } else {
-                if (count($reference) < 2) {
-                    throw new PHP_Depend_Parser_InvalidStateException(
-                        $this->tokenizer->next()->startLine,
-                        $this->_sourceFile->getFileName(),
-                        'Expecting full qualified trait method name.'
-                    );
-                }
-
-                $stmt = $this->builder->buildASTTraitAdaptationPrecedence($reference[0]);
-                $stmt->addChild($reference[1]);
-
-                $this->consumeToken(self::T_INSTEADOF);
-                $this->consumeComments();
-
-                $stmt->addChild($this->_parseTraitReference());
-
-                $this->consumeComments();
-                while (self::T_COMMA === $this->tokenizer->peek()) {
-                    $this->consumeToken(self::T_COMMA);
-                    $stmt->addChild($this->_parseTraitReference());
-                    $this->consumeComments();
-                }
+                $stmt = $this->_parseTraitAdaptationPrecedenceStatement($reference);
             }
 
             $this->consumeComments();
@@ -1339,6 +1284,89 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->_tokenStack->pop();
 
         return array($qualifiedName);
+    }
+
+    /**
+     * Parses a trait adaptation alias statement.
+     *
+     * @param array $reference Parsed method reference array.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptationAlias
+     * @since 0.11.0
+     */
+    private function _parseTraitAdaptationAliasStatement(array $reference)
+    {
+        $stmt = $this->builder->buildASTTraitAdaptationAlias($reference[0]);
+
+        if (2 === count($reference)) {
+            $stmt->addChild($reference[1]);
+        }
+
+        $this->consumeToken(self::T_AS);
+        $this->consumeComments();
+
+        switch ($this->tokenizer->peek()) {
+
+        case self::T_PUBLIC:
+            $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PUBLIC);
+            $this->consumeToken(self::T_PUBLIC);
+            $this->consumeComments();
+            break;
+
+        case self::T_PROTECTED:
+            $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PROTECTED);
+            $this->consumeToken(self::T_PROTECTED);
+            $this->consumeComments();
+            break;
+
+        case self::T_PRIVATE:
+            $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PRIVATE);
+            $this->consumeToken(self::T_PRIVATE);
+            $this->consumeComments();
+            break;
+        }
+
+        if (self::T_SEMICOLON !== $this->tokenizer->peek()) {
+            $stmt->setNewName($this->parseFunctionName());
+        }
+        return $stmt;
+    }
+
+    /**
+     * Parses a trait adaptation precedence statement.
+     *
+     * @param array $reference Parsed method reference array.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
+     * @throws PHP_Depend_Parser_InvalidStateException
+     * @since 0.11.0
+     */
+    private function _parseTraitAdaptationPrecedenceStatement(array $reference)
+    {
+        if (count($reference) < 2) {
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $this->tokenizer->next()->startLine,
+                $this->_sourceFile->getFileName(),
+                'Expecting full qualified trait method name.'
+            );
+        }
+
+        $stmt = $this->builder->buildASTTraitAdaptationPrecedence($reference[0]);
+        $stmt->addChild($reference[1]);
+
+        $this->consumeToken(self::T_INSTEADOF);
+        $this->consumeComments();
+
+        $stmt->addChild($this->_parseTraitReference());
+
+        $this->consumeComments();
+        while (self::T_COMMA === $this->tokenizer->peek()) {
+            $this->consumeToken(self::T_COMMA);
+            $stmt->addChild($this->_parseTraitReference());
+            $this->consumeComments();
+        }
+
+        return $stmt;
     }
 
     /**

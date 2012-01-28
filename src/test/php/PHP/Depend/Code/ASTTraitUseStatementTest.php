@@ -71,6 +71,94 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testTraitUseStatementWithSimpleAliasHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithSimpleAliasHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(6, $stmt->getEndLine());
+    }
+
+    /**
+     * testTraitUseStatementWithSimpleAliasHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithSimpleAliasHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(21, $stmt->getEndColumn());
+    }
+
+    /**
+     * testTraitUseStatementWithQualifiedAliasHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithQualifiedAliasHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(6, $stmt->getEndLine());
+    }
+
+    /**
+     * testTraitUseStatementWithQualifiedAliasHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithQualifiedAliasHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(21, $stmt->getEndColumn());
+    }
+
+    /**
+     * testTraitUseStatementWithSingleInsteadofHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithSingleInsteadofHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(9, $stmt->getEndLine());
+    }
+
+    /**
+     * testTraitUseStatementWithSingleInsteadofHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithSingleInsteadofHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(93, $stmt->getEndColumn());
+    }
+
+    /**
+     * testTraitUseStatementWithMultipleInsteadofHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithMultipleInsteadofHasExpectedEndLine()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(11, $stmt->getEndLine());
+    }
+
+    /**
+     * testTraitUseStatementWithMultipleInsteadofHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testTraitUseStatementWithMultipleInsteadofHasExpectedEndColumn()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(97, $stmt->getEndColumn());
+    }
+
+    /**
      * testTraitUseStatementHasExpectedStartLine
      *
      * @return void
