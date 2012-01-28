@@ -71,14 +71,109 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetNewNameReturnsNullByDefault
+     * 
+     * @return void
+     */
+    public function testGetNewNameReturnsNullByDefault()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertNull($alias->getNewName());
+    }
+
+    /**
+     * testGetNewNameReturnsExpectedValue
+     *
+     * @return void
+     */
+    public function testGetNewNameReturnsExpectedValue()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals('myMethodAlias', $alias->getNewName());
+    }
+
+    /**
+     * testGetNewModifierReturnsMinusOneByDefault
+     *
+     * @return void
+     */
+    public function testGetNewModifierReturnsMinusOneByDefault()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(-1, $alias->getNewModifier());
+    }
+
+    /**
+     * testGetNewModifierReturnsExpectedIsPublicValue
+     *
+     * @return void
+     */
+    public function testGetNewModifierReturnsExpectedIsPublicValue()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC,
+            $alias->getNewModifier()
+        );
+    }
+
+    /**
+     * testGetNewModifierReturnsExpectedIsProtectedValue
+     *
+     * @return void
+     */
+    public function testGetNewModifierReturnsExpectedIsProtectedValue()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED,
+            $alias->getNewModifier()
+        );
+    }
+
+    /**
+     * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     */
+    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
+    {
+        $alias = new PHP_Depend_Code_ASTTraitAdaptationAlias();
+        $this->assertSame(
+            array(
+                'newName',
+                'newModifier',
+                'comment',
+                'metadata',
+                'nodes'
+            ),
+            $alias->__sleep()
+        );
+    }
+
+    /**
+     * testGetNewModifierReturnsExpectedIsPrivateValue
+     *
+     * @return void
+     */
+    public function testGetNewModifierReturnsExpectedIsPrivateValue()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PRIVATE,
+            $alias->getNewModifier()
+        );
+    }
+    
+    /**
      * testTraitAdaptationAliasHasExpectedStartLine
      *
      * @return void
      */
     public function testTraitAdaptationAliasHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(6, $stmt->getStartLine());
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(6, $alias->getStartLine());
     }
 
     /**
@@ -88,8 +183,8 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
      */
     public function testTraitAdaptationAliasHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(9, $stmt->getStartColumn());
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(9, $alias->getStartColumn());
     }
 
     /**
@@ -99,8 +194,8 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
      */
     public function testTraitAdaptationAliasHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(6, $stmt->getEndLine());
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(6, $alias->getEndLine());
     }
 
     /**
@@ -110,8 +205,8 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
      */
     public function testTraitAdaptationAliasHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(46, $stmt->getEndColumn());
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertEquals(46, $alias->getEndColumn());
     }
 
     /**
@@ -119,12 +214,67 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias
      */
-    private function _getFirstTraitReferenceInClass()
+    private function _getFirstTraitAdaptationAliasInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
             PHP_Depend_Code_ASTTraitAdaptationAlias::CLAZZ
         );
+    }
+
+    /**
+     * testTraitReferenceHasExpectedStartLine
+     *
+     * @return void
+     */
+    public function testTraitReferenceHasExpectedStartLine()
+    {
+        $alias = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(7, $alias->getStartLine());
+    }
+
+    /**
+     * testTraitReferenceHasExpectedStartColumn
+     *
+     * @return void
+     */
+    public function testTraitReferenceHasExpectedStartColumn()
+    {
+        $alias = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(9, $alias->getStartColumn());
+    }
+
+    /**
+     * testTraitReferenceHasExpectedEndLine
+     *
+     * @return void
+     */
+    public function testTraitReferenceHasExpectedEndLine()
+    {
+        $alias = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(7, $alias->getEndLine());
+    }
+
+    /**
+     * testTraitReferenceHasExpectedEndColumn
+     *
+     * @return void
+     */
+    public function testTraitReferenceHasExpectedEndColumn()
+    {
+        $alias = $this->_getFirstTraitReferenceInClass();
+        $this->assertEquals(56, $alias->getEndColumn());
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
+     * @return PHP_Depend_Code_ASTTraitReference
+     */
+    private function _getFirstTraitReferenceInClass()
+    {
+        return $this->_getFirstTraitAdaptationAliasInClass()
+            ->getFirstChildOfType(PHP_Depend_Code_ASTTraitReference::CLAZZ);
     }
 }
 

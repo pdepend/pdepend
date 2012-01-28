@@ -67,30 +67,73 @@ class PHP_Depend_Code_ASTTraitAdaptationAlias extends PHP_Depend_Code_ASTStateme
      */
     const CLAZZ = __CLASS__;
 
+    /**
+     * The new aliased method name.
+     *
+     * @var string
+     */
     protected $newName;
 
-    protected $newModifier;
+    /**
+     * The new method modifier for the imported method.
+     *
+     * @var integer
+     */
+    protected $newModifier = -1;
 
+    /**
+     * Sets the new method modifier.
+     *
+     * @param integer $newModifier The new method modifier.
+     *
+     * @return void
+     */
     public function setNewModifier($newModifier)
     {
         $this->newModifier = $newModifier;
     }
 
+    /**
+     * Returns the new method modifier or <b>-1</b> when this alias does not
+     * specify a new method modifier.
+     *
+     * @return integer
+     */
     public function getNewModifier()
     {
         return $this->newModifier;
     }
 
+    /**
+     * Sets the new aliased method name.
+     *
+     * @param string $newName The new aliased method name.
+     *
+     * @return void
+     */
     public function setNewName($newName)
     {
         $this->newName = $newName;
     }
 
+    /**
+     * Returns the new aliased method name or <b>NULL</b> when this alias does
+     * not specify a new method name.
+     *
+     * @return string
+     */
     public function getNewName()
     {
         return $this->newName;
     }
 
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array
+     */
     public function  __sleep()
     {
         return array_merge(array('newName', 'newModifier'), parent::__sleep());

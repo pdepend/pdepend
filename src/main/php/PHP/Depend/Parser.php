@@ -1239,9 +1239,20 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 switch ($this->tokenizer->peek()) {
 
                 case self::T_PUBLIC:
+                    $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PUBLIC);
+                    $this->consumeToken(self::T_PUBLIC);
+                    $this->consumeComments();
+                    break;
+
                 case self::T_PROTECTED:
+                    $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PROTECTED);
+                    $this->consumeToken(self::T_PROTECTED);
+                    $this->consumeComments();
+                    break;
+
                 case self::T_PRIVATE:
-                    $stmt->setNewModifier($this->tokenizer->next()->type);
+                    $stmt->setNewModifier(PHP_Depend_ConstantsI::IS_PRIVATE);
+                    $this->consumeToken(self::T_PRIVATE);
                     $this->consumeComments();
                     break;
                 }
