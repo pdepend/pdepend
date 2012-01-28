@@ -579,12 +579,22 @@ interface PHP_Depend_BuilderI
     /**
      * Builds a new trait adaptation alias statement.
      *
-     * @param string $image The original trait method name.
+     * @param string $image The trait method name.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias
      * @since 0.11.0
      */
     function buildASTTraitAdaptationAlias($image);
+
+    /**
+     * Builds a new trait adaptation precedence statement.
+     *
+     * @param string $image The trait method name.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
+     * @since 0.11.0
+     */
+    function buildASTTraitAdaptationPrecedence($image);
 
     /**
      * Builds a new trait reference node.

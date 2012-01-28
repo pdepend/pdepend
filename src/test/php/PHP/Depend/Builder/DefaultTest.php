@@ -1487,6 +1487,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTTraitAdaptationPrecedenceReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTTraitAdaptationPrecedenceReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTraitAdaptationPrecedence::CLAZZ,
+            $this->createBuilder()->buildASTTraitAdaptationPrecedence(__CLASS__)
+        );
+    }
+
+    /**
      * testBuildASTSwitchStatementReturnsExpectedType
      *
      * @return void
