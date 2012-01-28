@@ -77,7 +77,7 @@ class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTraitAdaptationHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
+        $stmt = $this->_getFirstTraitAdaptationInClass();
         $this->assertEquals(5, $stmt->getStartLine());
     }
 
@@ -88,7 +88,7 @@ class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTraitAdaptationHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
+        $stmt = $this->_getFirstTraitAdaptationInClass();
         $this->assertEquals(54, $stmt->getStartColumn());
     }
 
@@ -99,7 +99,7 @@ class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTraitAdaptationHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
+        $stmt = $this->_getFirstTraitAdaptationInClass();
         $this->assertEquals(9, $stmt->getEndLine());
     }
 
@@ -110,7 +110,7 @@ class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testTraitAdaptationHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
+        $stmt = $this->_getFirstTraitAdaptationInClass();
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
@@ -119,7 +119,7 @@ class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return PHP_Depend_Code_ASTTraitAdaptation
      */
-    private function _getFirstTraitReferenceInClass()
+    private function _getFirstTraitAdaptationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
