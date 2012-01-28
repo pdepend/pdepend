@@ -61,45 +61,52 @@ if (!defined('T_TRAIT')) {
 }
 
 /**
+ * Define PHP 5.4 'insteadof' token constant.
+ */
+if (!defined('T_INSTEADOF')) {
+    define('T_INSTEADOF', 42002);
+}
+
+/**
  * Define PHP 5.3 __NAMESPACE__ token constant.
  */
 if (!defined('T_NS_C')) {
-    define('T_NS_C', 42002);
+    define('T_NS_C', 42003);
 }
 
 /**
  * Define PHP 5.3 'use' token constant
  */
 if (!defined('T_USE')) {
-    define('T_USE', 42003);
+    define('T_USE', 42004);
 }
 
 /**
  * Define PHP 5.3 'namespace' token constant.
  */
 if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 42004);
+    define('T_NAMESPACE', 42005);
 }
 
 /**
  * Define PHP 5.3's '__DIR__' token constant.
  */
 if (!defined('T_DIR')) {
-    define('T_DIR', 42005);
+    define('T_DIR', 42006);
 }
 
 /**
  * Define PHP 5.3's 'T_GOTO' token constant.
  */
 if (!defined('T_GOTO')) {
-    define('T_GOTO', 42006);
+    define('T_GOTO', 42007);
 }
 
 /**
  * Define PHP 5.4's 'T_CALLABLE' token constant
  */
 if (!defined('T_CALLABLE')) {
-    define('T_CALLABLE', 42007);
+    define('T_CALLABLE', 42008);
 }
 
 /**

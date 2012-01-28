@@ -89,6 +89,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         case self::T_TRAIT:
         case self::T_STRING:
         case self::T_TRAIT_C:
+        case self::T_INSTEADOF:
         case self::T_NAMESPACE:
             return true;
         }
@@ -146,6 +147,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         case self::T_TRUE:
         case self::T_FALSE:
         case self::T_TRAIT:
+        case self::T_INSTEADOF:
         case self::T_NAMESPACE:
         case self::T_DIR:
         case self::T_NS_C:

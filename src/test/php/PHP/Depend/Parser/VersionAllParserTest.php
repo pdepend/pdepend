@@ -158,6 +158,28 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * testParserAcceptsInsteadofAsClassName
+     *
+     * @return void
+     */
+    public function testParserAcceptsInsteadofAsClassName()
+    {
+        $class = $this->getFirstTypeForTestCase();
+        self::assertSame('insteadof', $class->getName());
+    }
+
+    /**
+     * testParserAcceptsInsteadofAsInterfaceName
+     *
+     * @return void
+     */
+    public function testParserAcceptsInsteadofAsInterfaceName()
+    {
+        $interface = $this->getFirstTypeForTestCase();
+        self::assertSame('insteadof', $interface->getName());
+    }
+
+    /**
      * testParserAcceptsUseAsClassName
      *
      * @return void

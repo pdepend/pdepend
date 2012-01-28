@@ -150,6 +150,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
         T_BOOL_CAST                 =>  self::T_BOOL_CAST,
         T_CHARACTER                 =>  self::T_CHARACTER,
         T_CLOSE_TAG                 =>  self::T_CLOSE_TAG,
+        T_INSTEADOF                 =>  self::T_INSTEADOF,
         T_PROTECTED                 =>  self::T_PROTECTED,
         T_CURLY_OPEN                =>  self::T_CURLY_BRACE_OPEN,
         T_ENDFOREACH                =>  self::T_ENDFOREACH,
@@ -238,6 +239,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
         'false'          =>  self::T_FALSE,
         'trait'          =>  self::T_TRAIT,
         'parent'         =>  self::T_PARENT,
+        'insteadof'      =>  self::T_INSTEADOF,
         'namespace'      =>  self::T_NAMESPACE,
         '__dir__'        =>  self::T_DIR,
         '__trait__'      =>  self::T_TRAIT_C,
@@ -333,6 +335,12 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
             self::T_FUNCTION         =>  self::T_STRING,
         ),
         self::T_TRAIT => array(
+            self::T_OBJECT_OPERATOR  =>  self::T_STRING,
+            self::T_DOUBLE_COLON     =>  self::T_STRING,
+            self::T_CONST            =>  self::T_STRING,
+            self::T_FUNCTION         =>  self::T_STRING,
+        ),
+        self::T_INSTEADOF => array(
             self::T_OBJECT_OPERATOR  =>  self::T_STRING,
             self::T_DOUBLE_COLON     =>  self::T_STRING,
             self::T_CONST            =>  self::T_STRING,

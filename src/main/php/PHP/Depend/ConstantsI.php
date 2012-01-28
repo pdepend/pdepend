@@ -889,6 +889,11 @@ interface PHP_Depend_ConstantsI
     const T_CALLABLE = 156;
 
     /**
+     * Token that represents the new 'insteadof' keyword.
+     */
+    const T_INSTEADOF = 157;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;
