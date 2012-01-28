@@ -458,7 +458,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     protected abstract function parseFunctionName();
 
     /**
-     * @return PHP_Depend_Code_AbstractTrait
+     * Parses a trait declaration.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
      */
     private function _parseTraitDeclaration()
     {
@@ -474,6 +477,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Parses the signature of a trait.
+     *
      * @return PHP_Depend_Code_Trait
      */
     private function _parseTraitSignature()
@@ -1261,21 +1266,18 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                     $stmt->setNewName($this->parseFunctionName());
                 }
             } else {
-                echo 'INSTEADOF', PHP_EOL;
                 $this->consumeToken(self::T_INSTEADOF);
                 $this->consumeComments();
-
 
                 $exclude = $this->parseQualifiedName();
                 $this->consumeComments();
 
-                echo '  ', $exclude, PHP_EOL;
-
                 while (self::T_COMMA === $this->tokenizer->peek()) {
-                    $exclude = $this->parseQualifiedName();
+                    $this->consumeToken(self::T_COMMA);
                     $this->consumeComments();
 
-                    echo ', ', $exclude;
+                    $exclude = $this->parseQualifiedName();
+                    $this->consumeComments();
                 }
             }
 
@@ -1292,6 +1294,21 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_setNodePositionsAndReturn($adaptation);
     }
 
+    /**
+     * Parses a trait method reference and returns the found reference as an
+     * <b>array</b>.
+     *
+     * The returned array with contain only one element, when the referenced
+     * method is specified by the method's name, without the declaring trait.
+     * When the method reference contains the declaring trait the returned
+     * <b>array</b> will contain two elements. The first element is the plain
+     * method name and the second element is an instance of the
+     * {@link PHP_Depend_Code_ASTTraitReference} class that represents the
+     * declaring trait.
+     *
+     * @return array
+     * @since 0.11.0
+     */
     private function _parseTraitMethodReference()
     {
         $this->_tokenStack->push();
