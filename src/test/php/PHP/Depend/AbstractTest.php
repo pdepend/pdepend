@@ -183,6 +183,20 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
+     * @param string $nodeType The searched node class.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @since 0.11.0
+     */
+    protected function getFirstNodeOfTypeInTrait($nodeType)
+    {
+        return $this->getFirstTraitForTestCase()
+            ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns a node instance for the currently executed test case.
+     *
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
@@ -206,6 +220,21 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         return $this->getFirstInterfaceForTestCase($testCase)
             ->getFirstChildOfType($nodeType);
+    }
+
+    /**
+     * Returns the first trait found in a test file associated with the given
+     * test case.
+     *
+     * @return PHP_Depend_Code_Trait
+     * @since 0.11.0
+     */
+    protected function getFirstTraitForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getTraits()
+            ->current();
     }
 
     /**
