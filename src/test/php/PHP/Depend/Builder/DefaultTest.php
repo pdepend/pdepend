@@ -1445,16 +1445,30 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * testBuildASTUseTraitStatementReturnsExpectedType
+     * testBuildASTTraitUseStatementReturnsExpectedType
      *
      * @return void
      * @since 0.11.0
      */
-    public function testBuildASTUseTraitStatementReturnsExpectedType()
+    public function testBuildASTTraitUseStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTraitUseStatement::CLAZZ,
             $this->createBuilder()->buildASTTraitUseStatement()
+        );
+    }
+
+    /**
+     * testBuildASTTraitAdaptationReturnsExpectedType
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testBuildASTTraitAdaptationReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTTraitAdaptation::CLAZZ,
+            $this->createBuilder()->buildASTTraitAdaptation()
         );
     }
 

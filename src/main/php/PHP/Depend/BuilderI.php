@@ -569,6 +569,14 @@ interface PHP_Depend_BuilderI
     function buildASTTraitUseStatement();
 
     /**
+     * Builds a new trait adaptation expression.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptation
+     * @since 0.11.0
+     */
+    function buildASTTraitAdaptation();
+
+    /**
      * Builds a new trait reference node.
      *
      * @param string $qualifiedName The full qualified trait name.

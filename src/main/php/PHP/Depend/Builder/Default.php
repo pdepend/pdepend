@@ -977,6 +977,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Builds a new trait adaptation expression
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptation
+     * @since 0.11.0
+     */
+    public function buildASTTraitAdaptation()
+    {
+        return $this->_buildASTNodeInstance('ASTTraitAdaptation');
+    }
+
+    /**
      * Builds a new switch-statement-node.
      *
      * @return PHP_Depend_Code_ASTSwitchStatement
