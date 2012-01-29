@@ -90,6 +90,39 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
     }
 
     /**
+     * This method tests if the given {@link PHP_Depend_Code_Method} is excluded
+     * by precedence statement in this use statement. It will return <b>true</b>
+     * if the given <b>$method</b> is excluded, otherwise the return value of
+     * this method will be <b>false</b>.
+     *
+     * @param PHP_Depend_Code_Method $method The method to test for exclusion.
+     *
+     * @return boolean
+     */
+    public function hasExcludeFor(PHP_Depend_Code_Method $method)
+    {
+        $methodName   = strtolower($method->getName());
+        $methodParent = $method->getParent();
+
+        $precedences = $this->findChildrenOfType(
+            PHP_Depend_Code_ASTTraitAdaptationPrecedence::CLAZZ
+        );
+
+        foreach ($precedences as $precedence) {
+            if (strtolower($precedence->getImage()) !== $methodName) {
+                continue;
+            }
+            $children = $precedence->getChildren();
+            for ($i = 1, $count = count($children); $i < $count; ++$i) {
+                if ($methodParent === $children[$i]->getType()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Collects all directly defined methods or method aliases for the given
      * {@link PHP_Depend_Code_ASTTraitReference}
      *

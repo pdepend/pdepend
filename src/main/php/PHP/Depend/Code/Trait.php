@@ -83,6 +83,11 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
 
         foreach ($uses as $use) {
             foreach ($use->getAllMethods() as $method) {
+                foreach ($uses as $use2) {
+                    if ($use2->hasExcludeFor($method)) {
+                        continue 2;
+                    }
+                }
 
                 $name = strtolower($method->getName());
 

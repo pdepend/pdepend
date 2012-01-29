@@ -110,7 +110,7 @@ interface PHP_Depend_Code_ASTNodeI
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return PHP_Depend_Code_ASTNodeI[]
      */
     function getChildren();
 

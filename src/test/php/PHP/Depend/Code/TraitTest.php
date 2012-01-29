@@ -218,6 +218,33 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetAllMethodsHandlesTraitMethodPrecedence
+     *
+     * @return void
+     */
+    public function testGetAllMethodsHandlesTraitMethodPrecedence()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertEquals(
+            'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
+            $methods['foo']->getParent()->getName()
+        );
+    }
+
+    /**
+     * testGetAllMethodsExcludeTraitMethodWithPrecedence
+     *
+     * @return void
+     */
+    public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(1, count($trait->getAllMethods()));
+    }
+
+    /**
      * testGetAllMethodsWithMethodCollisionThrowsExpectedException
      *
      * @return void
