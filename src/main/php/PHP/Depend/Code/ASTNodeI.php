@@ -132,7 +132,7 @@ interface PHP_Depend_Code_ASTNodeI
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return arrayPHP_Depend_Code_ASTNodeI[]
      */
     function findChildrenOfType($targetType);
 

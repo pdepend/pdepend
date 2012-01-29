@@ -227,7 +227,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * @param string $targetType The target class or interface type.
      * @param array  &$results   The found children.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return PHP_Depend_Code_ASTNodeI[]
      * @access private
      * @todo Refactor $_methods property to getAllMethods() when it exists.
      */
