@@ -414,7 +414,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * @param array  &$results   Already found node instances. This parameter
      *        is only for internal usage.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return PHP_Depend_Code_ASTNodeI[]
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
