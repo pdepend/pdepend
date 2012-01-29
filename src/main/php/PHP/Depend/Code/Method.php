@@ -75,6 +75,18 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     protected $modifiers = 0;
 
     /**
+     * This method returns a OR combined integer of the declared modifiers for
+     * this method.
+     *
+     * @return integer
+     * @since 0.11.0
+     */
+    public function getModifiers()
+    {
+        return $this->modifiers;
+    }
+
+    /**
      * This method sets a OR combined integer of the declared modifiers for this
      * node.
      *
@@ -90,10 +102,6 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function setModifiers($modifiers)
     {
-        if ($this->modifiers !== 0) {
-            return;
-        }
-
         $expected = ~PHP_Depend_ConstantsI::IS_PUBLIC
                   & ~PHP_Depend_ConstantsI::IS_PROTECTED
                   & ~PHP_Depend_ConstantsI::IS_PRIVATE

@@ -446,6 +446,35 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             !$method->isPrivate()
         );
     }
+
+    /**
+     * testGetModifiersReturnsZeroByDefault
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetModifiersReturnsZeroByDefault()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $this->assertSame(0, $method->getModifiers());
+    }
+
+    /**
+     * testGetModifiersReturnsPreviousSetValue
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetModifiersReturnsPreviousSetValue()
+    {
+        $method = new PHP_Depend_Code_Method('method');
+        $method->setModifiers(PHP_Depend_ConstantsI::IS_ABSTRACT);
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_ABSTRACT,
+            $method->getModifiers()
+        );
+    }
     
     /**
      * testIsStaticDefaultByReturnsFalse
@@ -566,21 +595,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     {
         $method = new PHP_Depend_Code_Method('method');
         self::assertFalse($method->isPublic());
-    }
-    
-    /**
-     * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
-     * ignores repeated calls if the internal value is set.
-     *
-     * @return void
-     */
-    public function testSetModifiersOnlyAcceptsTheFirstValue()
-    {
-        $method = new PHP_Depend_Code_Method('method');
-        $method->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
-        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
-
-        self::assertTrue($method->isPublic());
     }
 
     /**
