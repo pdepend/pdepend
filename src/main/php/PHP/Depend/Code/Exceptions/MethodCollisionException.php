@@ -38,21 +38,22 @@
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Code_Exceptions
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
+ * @version    SVN: $Id: Collection.php 1030 2010-01-01 12:06:13Z mapi $
  * @link       http://pdepend.org/
  * @since      0.11.0
  */
 
 /**
- * Representation of a trait.
+ * This type of exception will be thrown when a trait related method collision
+ * occurred.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
- * @subpackage Code
+ * @subpackage Code_Exceptions
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -60,72 +61,29 @@
  * @link       http://pdepend.org/
  * @since      0.11.0
  */
-class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
+class PHP_Depend_Code_Exceptions_MethodCollisionException
+    extends PHP_Depend_Code_Exceptions_AbstractException
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
-     * Returns an array with {@link PHP_Depend_Code_Method} objects that are
-     * implemented or imported by this trait.
+     * Constructs a new exception instance.
      *
-     * @return PHP_Depend_Code_Method[]
+     * @param PHP_Depend_Code_Method       $method The method that could not be
+     *        applied to the given <b>$type</b>.
+     * @param PHP_Depend_Code_AbstractType $type   The class or trait that cannot
+     *        resolve the imported methods.
      */
-    public function getAllMethods()
-    {
-        $methods = array();
-
-        $uses = $this->findChildrenOfType(
-            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+    public function __construct(
+        PHP_Depend_Code_Method $method,
+        PHP_Depend_Code_AbstractType $type
+    ) {
+        parent::__construct(
+            sprintf(
+                'Trait method %s has not been applied, because there are ' .
+                'collisions with other trait methods on %s\%s.',
+                $method->getName(),
+                preg_replace('(\W+)', '\\', $type->getPackage()->getName()),
+                $type->getName()
+            )
         );
-
-        foreach ($uses as $use) {
-            foreach ($use->getAllMethods() as $method) {
-
-                $name = strtolower($method->getName());
-
-                if (isset($methods[$name])) {
-                    throw new PHP_Depend_Code_Exceptions_MethodCollisionException(
-                        $method, $this
-                    );
-                }
-                $methods[$name] = $method;
-            }
-        }
-
-        foreach ($this->methods as $method) {
-            $methods[strtolower($method->getName())] = $method;
-        }
-
-        return $methods;
-    }
-
-    /**
-     * Visitor method for node tree traversal.
-     *
-     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
-     *
-     * @return void
-     */
-    public function accept(PHP_Depend_VisitorI $visitor)
-    {
-        $visitor->visitTrait($this);
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     *
-     * @return void
-     */
-    public function  __wakeup()
-    {
-        parent::__wakeup();
-
-        $this->context->registerTrait($this);
     }
 }

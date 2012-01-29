@@ -57,6 +57,8 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://pdepend.org/
+ *
+ * @covers PHP_Depend_Code_AbstractItem
  */
 abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
 {
@@ -91,6 +93,20 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
         $item->setSourceFile(new PHP_Depend_Code_File('HelloWorld.php'));
         
         $this->assertSame($file, $item->getSourceFile());
+    }
+
+    /**
+     * testSetNameChangesPreviousName
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testSetNameChangesPreviousName()
+    {
+        $item = $this->createItem();
+        $item->setName(__METHOD__);
+
+        $this->assertEquals(__METHOD__, $item->getName());
     }
 
     /**

@@ -67,6 +67,119 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      */
     const CLAZZ = __CLASS__;
 
+    private $_allMethods;
+
+    /**
+     * Returns an array with all aliased or directly imported methods.
+     *
+     * @return PHP_Depend_Code_Method[]
+     */
+    public function getAllMethods()
+    {
+        if (is_array($this->_allMethods)) {
+            return $this->_allMethods;
+        }
+
+        $this->_allMethods = array();
+        foreach ($this->nodes as $node) {
+            if ($node instanceof PHP_Depend_Code_ASTTraitReference) {
+                $this->_collectMethods($node);
+            }
+        }
+        return $this->_allMethods;
+    }
+
+    /**
+     * Collects all directly defined methods or method aliases for the given
+     * {@link PHP_Depend_Code_ASTTraitReference}
+     *
+     * @param PHP_Depend_Code_ASTTraitReference $reference Context trait reference.
+     *
+     * @return void
+     */
+    private function _collectMethods(PHP_Depend_Code_ASTTraitReference $reference)
+    {
+        foreach ($reference->getType()->getAllMethods() as $method) {
+            foreach ($this->_getAliasesFor($method) as $alias) {
+                $this->_allMethods[] = $alias;
+            }
+        }
+    }
+
+    /**
+     * Returns an <b>array</b> with all aliases for the given method. If no
+     * alias exists for the given method, this method will simply return the
+     * an <b>array</b> with the original method.
+     *
+     * @param PHP_Depend_Code_Method $method The imported trait method.
+     *
+     * @return PHP_Depend_Code_Method[]
+     */
+    private function _getAliasesFor(PHP_Depend_Code_Method $method)
+    {
+        $name = strtolower($method->getName());
+
+        $newNames = array();
+        foreach ($this->_getAliases() as $alias) {
+            $name2 = strtolower($alias->getImage());
+            if ($name2 !== $name) {
+                continue;
+            }
+
+            $modifier = $method->getModifiers();
+            if (-1 < $alias->getNewModifier()) {
+                $modifier &= ~(
+                    PHP_Depend_ConstantsI::IS_PUBLIC |
+                    PHP_Depend_ConstantsI::IS_PROTECTED |
+                    PHP_Depend_ConstantsI::IS_PRIVATE
+                );
+                $modifier |= $alias->getNewModifier();
+            }
+
+            $newName = $method->getName();
+            if ($alias->getNewName()) {
+                $newName = $alias->getNewName();
+            }
+
+            if (0 === count($alias->getChildren())) {
+                $newMethod = clone $method;
+                $newMethod->setName($newName);
+                $newMethod->setModifiers($modifier);
+
+                $newNames[] = $newMethod;
+                continue;
+            }
+
+            if ($alias->getChild(0)->getType() !== $method->getParent()) {
+                continue;
+            }
+
+            $newMethod = clone $method;
+            $newMethod->setName($newName);
+            $newMethod->setModifiers($modifier);
+
+            $newNames[] = $newMethod;
+        }
+
+        if (count($newNames) > 0) {
+            return $newNames;
+        }
+        return array($method);
+    }
+
+    /**
+     * Returns an <b>array</b> with all alias statements declared in this use
+     * statement.
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptationAlias[]
+     */
+    private function _getAliases()
+    {
+        return $this->findChildrenOfType(
+            PHP_Depend_Code_ASTTraitAdaptationAlias::CLAZZ
+        );
+    }
+
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

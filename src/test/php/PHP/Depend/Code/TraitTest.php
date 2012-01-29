@@ -46,7 +46,7 @@
  * @since     0.11.0
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+require_once dirname(__FILE__) . '/AbstractItemTest.php';
 
 /**
  * Test case for the {@link PHP_Depend_Code_Trait} class.
@@ -66,8 +66,170 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @group pdepend::code
  * @group unittest
  */
-class PHP_Depend_Code_TraitTest extends PHP_Depend_AbstractTest
+class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
 {
+    /**
+     * testGetAllMethodsOnSimpleTraitReturnsExpectedResult
+     *
+     * @return void
+     */
+    public function testGetAllMethodsOnSimpleTraitReturnsExpectedResult()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(
+            array('foo', 'bar', 'baz'),
+            array_keys($trait->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult
+     *
+     * @return void
+     */
+    public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(
+            array('foo', 'bar', 'baz'),
+            array_keys($trait->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertSame($trait, $methods['foo']->getParent());
+    }
+
+    /**
+     * testGetAllMethodsWithAliasedMethodCollision
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithAliasedMethodCollision()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(
+            array('foo', 'bar'),
+            array_keys($trait->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithAliasedMethodTwice
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithAliasedMethodTwice()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertEquals(
+            array('foo', 'bar'),
+            array_keys($trait->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToPublic
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedToPublic()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToProtected
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedToProtected()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToPrivate
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedToPrivate()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PRIVATE,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED | PHP_Depend_ConstantsI::IS_ABSTRACT,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedKeepsStaticModifier
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier()
+    {
+        $trait   = $this->getFirstTraitForTest();
+        $methods = $trait->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC | PHP_Depend_ConstantsI::IS_STATIC,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithMethodCollisionThrowsExpectedException
+     *
+     * @return void
+     * @covers PHP_Depend_Code_Exceptions_MethodCollisionException
+     * @expectedException PHP_Depend_Code_Exceptions_MethodCollisionException
+     */
+    public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $trait->getAllMethods();
+    }
+
     /**
      * testTraitHasExpectedStartLine
      *
@@ -182,5 +344,15 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_AbstractTest
             ->current()
             ->getTypes()
             ->current();
+    }
+
+    /**
+     * Creates an item instance.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    protected function createItem()
+    {
+        return new PHP_Depend_Code_Trait(__CLASS__);
     }
 }
