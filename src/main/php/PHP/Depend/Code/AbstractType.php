@@ -44,7 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://pdepend.org/
- * @since      0.11.0
+ * @since      1.0.0
  */
 
 /**
@@ -58,7 +58,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
- * @since      0.11.0
+ * @since      1.0.0
  */
 abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
 {
@@ -298,7 +298,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * imported through traits.
      *
      * @return PHP_Depend_Code_Method[]
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function getTraitMethods()
     {

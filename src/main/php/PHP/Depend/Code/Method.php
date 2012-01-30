@@ -79,7 +79,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      * this method.
      *
      * @return integer
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function getModifiers()
     {

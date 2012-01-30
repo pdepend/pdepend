@@ -205,7 +205,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceAsClassName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceAsClassName()
     {
@@ -217,7 +217,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceAsInterfaceName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceAsInterfaceName()
     {
@@ -229,7 +229,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceConstantAsClassName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsClassName()
     {
@@ -241,7 +241,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceConstantAsInterfaceName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsInterfaceName()
     {
@@ -253,7 +253,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitAsClassName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitAsClassName()
     {
@@ -265,7 +265,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitAsInterfaceName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitAsInterfaceName()
     {
@@ -277,7 +277,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitConstantAsClassName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsClassName()
     {
@@ -289,7 +289,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitConstantAsInterfaceName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsInterfaceName()
     {
@@ -323,7 +323,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsDirConstantAsClassName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsDirConstantAsClassName()
     {
@@ -335,7 +335,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsDirConstantAsInterfaceName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsDirConstantAsInterfaceName()
     {
@@ -459,7 +459,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceKeywordAsMethodName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceKeywordAsMethodName()
     {
@@ -471,7 +471,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceConstantAsMethodName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsMethodName()
     {
@@ -494,7 +494,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesCallableTypeHint
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesCallableTypeHint()
     {
@@ -508,7 +508,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesNamespaceTypeHint
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesNamespaceTypeHint()
     {
@@ -522,7 +522,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesArrayTypeHint
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesArrayTypeHint()
     {
@@ -536,7 +536,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesSelfTypeHint
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesSelfTypeHint()
     {
@@ -550,7 +550,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesCompoundStaticMethodInvocation
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesCompoundStaticMethodInvocation()
     {
@@ -564,7 +564,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesVariableStaticMethodInvocation
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesVariableStaticMethodInvocation()
     {
@@ -578,7 +578,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesBinaryIntegerLiteral
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesBinaryIntegerLiteral()
     {
@@ -593,7 +593,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      *
      * @return void
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
     {
@@ -630,7 +630,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesRegularArraySyntax
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesRegularArraySyntax()
     {
@@ -645,7 +645,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserHandlesShortArraySyntax
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserHandlesShortArraySyntax()
     {
@@ -660,7 +660,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsGotoAsFunctionName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsGotoAsFunctionName()
     {
@@ -672,7 +672,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsDirConstantAsFunctionName
      * 
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsDirConstantAsFunctionName()
     {
@@ -684,7 +684,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceKeywordAsFunctionName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceKeywordAsFunctionName()
     {
@@ -696,7 +696,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsNamespaceConstantAsFunctionName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsFunctionName()
     {
@@ -708,7 +708,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitAsMethodName
      * 
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitAsMethodName()
     {
@@ -720,7 +720,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitConstantAsMethodName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsMethodName()
     {
@@ -732,7 +732,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitAsFunctionName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitAsFunctionName()
     {
@@ -744,7 +744,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserAcceptsTraitConstantAsFunctionName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsFunctionName()
     {

@@ -173,7 +173,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
      *
      * @return boolean Returns true on success or false on failure. The return
      *                 value will be casted to boolean if non-boolean was returned.
-     * @since 0.11.0
+     * @since 1.0.0
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      */
     public function offsetExists($offset)
@@ -187,7 +187,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
      * @param mixed $offset The offset to retrieve.
      *
      * @return PHP_Depend_Code_NodeI Can return all value types.
-     * @since 0.11.0
+     * @since 1.0.0
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      */
     public function offsetGet($offset)
@@ -205,7 +205,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
      * @param mixed $value  The value to set.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      */
     public function offsetSet($offset, $value)
@@ -219,7 +219,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
      * @param mixed $offset The offset to unset.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      */
     public function offsetUnset($offset)
@@ -237,7 +237,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
      *
      * @return void
      * @since 0.9.12
-     * @deprecated Since 0.11.0
+     * @deprecated Since 1.0.0
      */
     public function free()
     {

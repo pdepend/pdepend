@@ -86,7 +86,7 @@ interface PHP_Depend_Builder_Context
      * @param PHP_Depend_Code_Trait $trait The trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function registerTrait(PHP_Depend_Code_Trait $trait);
 
@@ -116,7 +116,7 @@ interface PHP_Depend_Builder_Context
      * @param string $qualifiedName Full qualified trait name.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function getTrait($qualifiedName);
 

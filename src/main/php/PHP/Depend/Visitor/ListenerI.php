@@ -84,7 +84,7 @@ interface PHP_Depend_Visitor_ListenerI
      * @param PHP_Depend_Code_Trait $trait The context trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function startVisitTrait(PHP_Depend_Code_Trait $trait);
 
@@ -94,7 +94,7 @@ interface PHP_Depend_Visitor_ListenerI
      * @param PHP_Depend_Code_Trait $trait The context trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function endVisitTrait(PHP_Depend_Code_Trait $trait);
 

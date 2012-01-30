@@ -77,7 +77,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageForVariableMethod()
     {
@@ -93,7 +93,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageForVariableStaticMethod()
     {
@@ -109,7 +109,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageForArrayIndexedVariableStaticMethod()
     {
@@ -125,7 +125,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageForMultiArrayIndexedVariableStaticMethod()
     {
@@ -188,7 +188,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMethodPostfixGraphForCompoundExpression()
     {
@@ -219,7 +219,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMethodPostfixGraphForCompoundVariable()
     {
@@ -250,7 +250,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMethodPostfixGraphForVariableVariable()
     {
@@ -281,7 +281,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testStaticMethodPostfixGraphForCompoundExpression()
     {
@@ -312,7 +312,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testStaticMethodPostfixGraphForCompoundVariable()
     {
@@ -343,7 +343,7 @@ class PHP_Depend_Code_ASTMethodPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testStaticMethodPostfixGraphForVariableVariable()
     {

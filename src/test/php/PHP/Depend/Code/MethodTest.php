@@ -451,7 +451,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetModifiersReturnsZeroByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetModifiersReturnsZeroByDefault()
     {
@@ -463,7 +463,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetModifiersReturnsPreviousSetValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetModifiersReturnsPreviousSetValue()
     {

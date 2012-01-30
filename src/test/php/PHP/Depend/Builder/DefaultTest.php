@@ -159,7 +159,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildTraitWithSameQualifiedNameUnique
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildTraitWithSameQualifiedNameUnique()
     {
@@ -730,7 +730,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTTypeCallableReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTTypeCallableReturnsExpectedType()
     {
@@ -796,7 +796,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTArrayReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTArrayReturnsExpectedType()
     {
@@ -810,7 +810,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTArrayElementReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTArrayElementReturnsExpectedType()
     {
@@ -1448,7 +1448,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTTraitUseStatementReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTTraitUseStatementReturnsExpectedType()
     {
@@ -1462,7 +1462,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTTraitAdaptationReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTTraitAdaptationReturnsExpectedType()
     {
@@ -1476,7 +1476,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTTraitAdaptationAliasReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTTraitAdaptationAliasReturnsExpectedType()
     {
@@ -1490,7 +1490,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTTraitAdaptationPrecedenceReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTTraitAdaptationPrecedenceReturnsExpectedType()
     {
@@ -1640,7 +1640,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTTraitReferenceReturnsExpectedType
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTTraitReferenceReturnsExpectedType()
     {
@@ -1813,7 +1813,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
      * testBuildASTMemberPrimaryPrefixReturnsExpectedType
      * 
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testBuildASTMemberPrimaryPrefixReturnsExpectedType()
     {

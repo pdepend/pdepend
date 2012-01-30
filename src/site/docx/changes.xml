@@ -9,7 +9,7 @@
     </properties>
 
 	<body>
-		<release version="0.11.0"
+		<release version="1.0.0"
                  date="2011/10/04"
                  description="This release closes a critical bug that let PHP_Depend die with a E_FATAL when the used PHP version was 5.4 or greater.">
             <action date="84f612e" dev="mapi" issue="8927307" system="pivotaltracker" type="add">

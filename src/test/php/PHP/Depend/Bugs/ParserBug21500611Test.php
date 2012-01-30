@@ -44,7 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       https://www.pivotaltracker.com/story/show/21500611
- * @since      0.11.0
+ * @since      1.0.0
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       https://www.pivotaltracker.com/story/show/21500611
- * @since      0.11.0
+ * @since      1.0.0
  *
  * @ticket 21500611
  * @covers stdClass

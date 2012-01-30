@@ -127,7 +127,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the working directory for the currently executed test.
      *
      * @return string
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function getTestWorkingDirectory()
     {
@@ -186,7 +186,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $nodeType The searched node class.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function getFirstNodeOfTypeInTrait($nodeType)
     {
@@ -227,7 +227,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * test case.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function getFirstTraitForTestCase()
     {

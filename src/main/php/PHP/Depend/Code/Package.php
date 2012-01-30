@@ -174,7 +174,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * declared in this package.
      *
      * @return array
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function getTraits()
     {
@@ -210,7 +210,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * @param string $className The class/type we are looking for.
      *
      * @return PHP_Depend_Code_NodeIterator
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _getTypesOfType($className)
     {
@@ -348,7 +348,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      *
      * @return void
      * @since 0.9.12
-     * @deprecated Since 0.11.0
+     * @deprecated Since 1.0.0
      */
     public function free()
     {

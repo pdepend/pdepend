@@ -76,7 +76,7 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageForVariableFunction()
     {
@@ -92,7 +92,7 @@ class PHP_Depend_Code_ASTFunctionPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageForArrayIndexedVariableFunction()
     {

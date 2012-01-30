@@ -86,7 +86,7 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromFunctionCall()
     {
@@ -119,7 +119,7 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromVariableFunctionCall()
     {
@@ -154,7 +154,7 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromMethodCall()
     {
@@ -191,7 +191,7 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromVariableMethodCall()
     {
@@ -228,7 +228,7 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromStaticMethodCall()
     {
@@ -265,7 +265,7 @@ class PHP_Depend_Code_ASTArrayIndexExpressionTest extends PHP_Depend_Code_ASTNod
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromVariableStaticMethodCall()
     {

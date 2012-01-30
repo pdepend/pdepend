@@ -107,7 +107,7 @@ interface PHP_Depend_BuilderI
      * @param string $qualifiedName The full qualified trait name.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildTrait($qualifiedName);
 
@@ -117,7 +117,7 @@ interface PHP_Depend_BuilderI
      * @param PHP_Depend_Code_Trait $trait An existing trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function restoreTrait(PHP_Depend_Code_Trait $trait);
 
@@ -129,7 +129,7 @@ interface PHP_Depend_BuilderI
      * @param string $qualifiedName The full qualified type identifier.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function getTrait($qualifiedName);
 
@@ -564,7 +564,7 @@ interface PHP_Depend_BuilderI
      * Builds a new trait use-statement node.
      *
      * @return PHP_Depend_Code_ASTTraitUseStatement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTTraitUseStatement();
 
@@ -572,7 +572,7 @@ interface PHP_Depend_BuilderI
      * Builds a new trait adaptation scope.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptation
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTTraitAdaptation();
 
@@ -582,7 +582,7 @@ interface PHP_Depend_BuilderI
      * @param string $image The trait method name.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTTraitAdaptationAlias($image);
 
@@ -592,7 +592,7 @@ interface PHP_Depend_BuilderI
      * @param string $image The trait method name.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTTraitAdaptationPrecedence($image);
 
@@ -602,7 +602,7 @@ interface PHP_Depend_BuilderI
      * @param string $qualifiedName The full qualified trait name.
      *
      * @return PHP_Depend_Code_ASTTraitReference
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTTraitReference($qualifiedName);
 
@@ -892,7 +892,7 @@ interface PHP_Depend_BuilderI
      * Builds a new node for the callable type.
      *
      * @return PHP_Depend_Code_ASTTypeCallable
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTTypeCallable();
 
@@ -940,7 +940,7 @@ interface PHP_Depend_BuilderI
      * Builds a new php array node.
      *
      * @return PHP_Depend_Code_ASTArray
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTArray();
 
@@ -948,7 +948,7 @@ interface PHP_Depend_BuilderI
      * Builds a new array element node.
      *
      * @return PHP_Depend_Code_ASTArrayElement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function buildASTArrayElement();
 

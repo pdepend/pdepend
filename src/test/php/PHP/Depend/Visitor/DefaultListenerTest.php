@@ -319,7 +319,7 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * testListenerInvokesStartVisitNotForTrait
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testListenerInvokesStartVisitNotForTrait()
     {
@@ -334,7 +334,7 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      * testListenerInvokesEndVisitNotForTrait
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testListenerInvokesEndVisitNotForTrait()
     {

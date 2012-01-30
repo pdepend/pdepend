@@ -44,7 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://www.pdepend.org/
- * @since      0.11.0
+ * @since      1.0.0
  */
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/
- * @since      0.11.0
+ * @since      1.0.0
  *
  * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_ASTArrayElement

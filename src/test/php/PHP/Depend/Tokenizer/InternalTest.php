@@ -71,7 +71,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * testTokenizerReturnsExpectedConstantForTraitKeyword
      * 
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testTokenizerReturnsExpectedConstantForTraitKeyword()
     {
@@ -101,7 +101,7 @@ class PHP_Depend_Tokenizer_InternalTest extends PHP_Depend_AbstractTest
      * testTokenizerReturnsExpectedConstantForTraitMagicConstant
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testTokenizerReturnsExpectedConstantForTraitMagicConstant()
     {

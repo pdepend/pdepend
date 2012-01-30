@@ -149,7 +149,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithZeroIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithZeroIntegerValue()
     {
@@ -161,7 +161,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithZeroOctalIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithZeroOctalIntegerValue()
     {
@@ -173,7 +173,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithZeroHexIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithZeroHexIntegerValue()
     {
@@ -185,7 +185,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithZeroBinaryIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithZeroBinaryIntegerValue()
     {
@@ -197,7 +197,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithNonZeroOctalIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithNonZeroOctalIntegerValue()
     {
@@ -209,7 +209,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithNonZeroHexIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithNonZeroHexIntegerValue()
     {
@@ -221,7 +221,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithNonZeroBinaryIntegerValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testLiteralWithNonZeroBinaryIntegerValue()
     {
@@ -233,7 +233,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * testLiteralWithBrokenBinaryIntegerThrowsExpectedException
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @expectedException PHP_Depend_Parser_UnexpectedTokenException
      */
     public function testLiteralWithBrokenBinaryIntegerThrowsExpectedException()

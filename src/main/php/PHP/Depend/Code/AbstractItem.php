@@ -135,7 +135,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      * @param string $name The item name.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function setName( $name )
     {

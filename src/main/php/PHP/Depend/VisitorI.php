@@ -87,7 +87,7 @@ interface PHP_Depend_VisitorI
      * @param PHP_Depend_Code_Trait $trait The current trait node.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     function visitTrait(PHP_Depend_Code_Trait $trait);
 

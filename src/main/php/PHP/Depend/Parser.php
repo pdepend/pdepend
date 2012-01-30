@@ -461,7 +461,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a trait declaration.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitDeclaration()
     {
@@ -584,7 +584,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * and an optional list of implemented interfaces.
      *
      * @return PHP_Depend_Code_Class
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseClassSignature()
     {
@@ -647,7 +647,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_Class $class The context class instance.
      *
      * @return PHP_Depend_Code_Class
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseClassExtends(PHP_Depend_Code_Class $class)
     {
@@ -1149,7 +1149,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a trait use statement.
      *
      * @return PHP_Depend_Code_ASTTraitUseStatement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitUseStatement()
     {
@@ -1174,7 +1174,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a trait reference instance.
      *
      * @return PHP_Depend_Code_ASTTraitReference
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitReference()
     {
@@ -1195,7 +1195,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_ASTTraitUseStatement $useStatement The parent use
      *
      * @return PHP_Depend_Code_ASTTraitUseStatement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseOptionalTraitAdaptation(
         PHP_Depend_Code_ASTTraitUseStatement $useStatement
@@ -1213,7 +1213,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses the adaptation expression of a trait use statement.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptation
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitAdaptation()
     {
@@ -1261,7 +1261,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * declaring trait.
      *
      * @return array
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitMethodReference()
     {
@@ -1292,7 +1292,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param array $reference Parsed method reference array.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitAdaptationAliasStatement(array $reference)
     {
@@ -1339,7 +1339,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
      * @throws PHP_Depend_Parser_InvalidStateException
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseTraitAdaptationPrecedenceStatement(array $reference)
     {
@@ -2396,7 +2396,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_ASTNode $exprList Parent that accepts multiple expr.
      * 
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseExpressionList(PHP_Depend_Code_ASTNode $exprList)
     {
@@ -3492,7 +3492,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * </code>
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseParenthesisExpressionOrPrimaryPrefix()
     {
@@ -3613,7 +3613,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * 
      * @return PHP_Depend_Code_ASTNode The original input node or this node
      *         wrapped with a function postfix instance.
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseOptionalFunctionPostfix(PHP_Depend_Code_ASTNode $node)
     {
@@ -3660,7 +3660,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * property postfix expressions.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected abstract function parsePostfixIdentifier();
 
@@ -3909,7 +3909,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *        by multiple array or string index expressions.
      *
      * @return string
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _extractPostfixImage(PHP_Depend_Code_ASTNode $node)
     {
@@ -3926,7 +3926,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *        the method postfix node.
      *
      * @return PHP_Depend_Code_ASTMethodPostfix
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseMethodPostfix(PHP_Depend_Code_ASTNode $node)
     {
@@ -4160,7 +4160,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a simple PHP constant use and returns a corresponding node.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseConstant()
     {
@@ -4670,7 +4670,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses an integer value.
      *
      * @return PHP_Depend_Code_ASTLiteral
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected abstract function parseIntegerNumber();
 
@@ -4678,7 +4678,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses an array structure.
      *
      * @return PHP_Depend_Code_ASTArray
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseArray()
     {
@@ -4696,7 +4696,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * PHP version.
      *
      * @return boolean
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected abstract function isArrayStartDelimiter();
 
@@ -4706,7 +4706,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_ASTArray $array The context array node.
      *
      * @return PHP_Depend_Code_ASTArray
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected abstract function parseArray(PHP_Depend_Code_ASTArray $array);
 
@@ -4717,7 +4717,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param integer                  $endDelimiter The version specific delimiter.
      *
      * @return PHP_Depend_Code_ASTArray
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parseArrayElements(
         PHP_Depend_Code_ASTArray $array,
@@ -4743,7 +4743,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * reference or a key/value pair with a referenced value.
      *
      * @return PHP_Depend_Code_ASTArrayElement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parseArrayElement()
     {
@@ -5248,7 +5248,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param integer $tokenType Numerical token identifier.
      *
      * @return boolean
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected abstract function isFormalParameterTypeHint($tokenType);
 
@@ -5257,7 +5257,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * version.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected abstract function parseFormalParameterTypeHint();
 
@@ -5295,7 +5295,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @return PHP_Depend_Code_ASTNode
      * @throws PHP_Depend_Parser_UnexpectedTokenException
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseStatement()
     {
@@ -5508,7 +5508,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param PHP_Depend_Code_ASTClosure $closure The context closure instance.
      *
      * @return PHP_Depend_Code_ASTClosure
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _parseOptionalBoundVariables(
         PHP_Depend_Code_ASTClosure $closure
@@ -6304,7 +6304,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Returns the currently active package or namespace.
      *
      * @return PHP_Depend_Code_Package
-     * @since 0.11.0
+     * @since 1.0.0
      */
     private function _getNamespaceOrPackage()
     {

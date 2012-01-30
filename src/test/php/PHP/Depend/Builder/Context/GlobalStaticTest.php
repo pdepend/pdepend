@@ -70,7 +70,7 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testRegisterTraitCallsRestoreClassOnBuilder
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testRegisterTraitCallsRestoreClassOnBuilder()
     {
@@ -135,7 +135,7 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      * testGetTraitDelegatesCallToWrappedBuilder
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetTraitDelegatesCallToWrappedBuilder()
     {

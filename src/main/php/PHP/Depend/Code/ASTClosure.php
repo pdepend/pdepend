@@ -111,7 +111,7 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return boolean
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function isStatic()
     {
@@ -124,7 +124,7 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
      * @param boolean $static Whether this closure is static or not.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function setStatic($static)
     {
@@ -150,7 +150,7 @@ class PHP_Depend_Code_ASTClosure extends PHP_Depend_Code_ASTNode
      * Returns the total number of the used property bag.
      *
      * @return integer
-     * @since 0.11.0
+     * @since 1.0.0
      * @see PHP_Depend_Code_ASTNode#getMetadataSize()
      */
     protected function getMetadataSize()

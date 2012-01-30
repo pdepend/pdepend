@@ -71,7 +71,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetImageReturnsEmptyStringByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageReturnsEmptyStringByDefault()
     {
@@ -83,7 +83,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetImageReturnsExpectedNodeImage
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetImageReturnsExpectedNodeImage()
     {
@@ -121,7 +121,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testPrependChildSimplyAddsFirstChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testPrependChildSimplyAddsFirstChild()
     {
@@ -135,7 +135,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testPrependChildMovesFirstChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testPrependChildMovesFirstChild()
     {
@@ -150,7 +150,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testPrependChildPrependsNewChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testPrependChildPrependsNewChild()
     {
@@ -165,7 +165,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetParentReturnsNullByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetParentReturnsNullByDefault()
     {
@@ -177,7 +177,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetParentReturnsExpectedNode
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetParentReturnsExpectedNode()
     {
@@ -191,7 +191,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetParentsOfTypeReturnsEmptyArrayByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetParentsOfTypeReturnsEmptyArrayByDefault()
     {
@@ -206,7 +206,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetParentsOfTypeReturnsExpectedParentNodes
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetParentsOfTypeReturnsExpectedParentNodes()
     {
@@ -232,7 +232,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetChildrenReturnsEmptyArrayByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetChildrenReturnsEmptyArrayByDefault()
     {
@@ -244,7 +244,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetChildrenReturnsArrayWithExpectedNodes
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetChildrenReturnsArrayWithExpectedNodes()
     {
@@ -260,7 +260,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      *
      * @return void
      * @expectedException OutOfBoundsException
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetChildThrowsExpectedExceptionForInvalidChildIndex()
     {
@@ -275,7 +275,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetChildReturnsExpectedNodeInstance
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetChildReturnsExpectedNodeInstance()
     {
@@ -291,7 +291,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetFirstChildOfTypeReturnsNullByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetFirstChildOfTypeReturnsNullByDefault()
     {
@@ -306,7 +306,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetFirstChildOfTypeReturnsFirstMatchingChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetFirstChildOfTypeReturnsFirstMatchingChild()
     {
@@ -327,7 +327,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive()
     {
@@ -352,7 +352,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testFindChildrenOfTypeReturnsEmptyArrayByDefault
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testFindChildrenOfTypeReturnsEmptyArrayByDefault()
     {
@@ -367,7 +367,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testFindChildrenOfTypeReturnsDirectChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testFindChildrenOfTypeReturnsDirectChild()
     {
@@ -388,7 +388,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testFindChildrenOfTypeReturnsIndirectChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testFindChildrenOfTypeReturnsIndirectChild()
     {
@@ -409,7 +409,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testFindChildrenOfTypeReturnsDirectAndIndirectChild
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testFindChildrenOfTypeReturnsDirectAndIndirectChild()
     {
@@ -528,7 +528,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testConfigureLinesAndColumnsSetsExpectedStartLine
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testConfigureLinesAndColumnsSetsExpectedStartLine()
     {
@@ -542,7 +542,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testConfigureLinesAndColumnsSetsExpectedEndLine
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testConfigureLinesAndColumnsSetsExpectedEndLine()
     {
@@ -556,7 +556,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testConfigureLinesAndColumnsSetsExpectedStartColumn
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testConfigureLinesAndColumnsSetsExpectedStartColumn()
     {
@@ -570,7 +570,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testConfigureLinesAndColumnsSetsExpectedEndColumn
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testConfigureLinesAndColumnsSetsExpectedEndColumn()
     {
@@ -584,7 +584,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testSleepReturnsExpectedSetOfPropertyNames
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testSleepReturnsExpectedSetOfPropertyNames()
     {
@@ -596,7 +596,7 @@ class PHP_Depend_Code_CommonASTNodeTest extends PHP_Depend_AbstractTest
      * testUnserializeSetsParentNodeOnChildren
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testUnserializeSetsParentNodeOnChildren()
     {

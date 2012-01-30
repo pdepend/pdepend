@@ -254,7 +254,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorVisitsTrait
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testVisitorVisitsTrait()
     {
@@ -275,7 +275,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesStartTraitOnListener
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testVisitorInvokesStartTraitOnListener()
     {
@@ -297,7 +297,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      * testVisitorInvokesEndTraitOnListener
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testVisitorInvokesEndTraitOnListener()
     {

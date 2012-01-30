@@ -176,7 +176,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testArrayBehaviorOffsetExistsReturnsFalse
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayBehaviorOffsetExistsReturnsFalse()
     {
@@ -188,7 +188,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testArrayBehaviorOffsetExistsReturnsTrue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayBehaviorOffsetExistsReturnsTrue()
     {
@@ -206,7 +206,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testArrayBehaviorOffsetGetReturnsExpectedNode
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testArrayBehaviorOffsetGetReturnsExpectedNode()
     {
@@ -224,7 +224,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @expectedException OutOfBoundsException
      */
     public function testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException()
@@ -237,7 +237,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @expectedException BadMethodCallException
      */
     public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException()
@@ -250,7 +250,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
      * testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @expectedException BadMethodCallException
      */
     public function testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException()

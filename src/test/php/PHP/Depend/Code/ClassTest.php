@@ -141,7 +141,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsOnClassWithParentReturnsTraitMethod
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsOnClassWithParentReturnsTraitMethod()
     {
@@ -158,7 +158,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod()
     {
@@ -175,7 +175,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult()
     {
@@ -190,7 +190,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance()
     {
@@ -204,7 +204,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithAliasedMethodCollision
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithAliasedMethodCollision()
     {
@@ -219,7 +219,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithAliasedMethodTwice
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithAliasedMethodTwice()
     {
@@ -234,7 +234,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithVisibilityChangedToPublic
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedToPublic()
     {
@@ -251,7 +251,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithVisibilityChangedToProtected
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedToProtected()
     {
@@ -268,7 +268,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithVisibilityChangedToPrivate
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedToPrivate()
     {
@@ -285,7 +285,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier()
     {
@@ -302,7 +302,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithVisibilityChangedKeepsStaticModifier
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier()
     {
@@ -319,7 +319,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsHandlesTraitMethodPrecedence
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsHandlesTraitMethodPrecedence()
     {
@@ -336,7 +336,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsExcludeTraitMethodWithPrecedence
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
     {
@@ -348,7 +348,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithMethodCollisionThrowsExpectedException
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      * @covers PHP_Depend_Code_Exceptions_MethodCollisionException
      * @expectedException PHP_Depend_Code_Exceptions_MethodCollisionException
      */

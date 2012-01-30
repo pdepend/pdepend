@@ -99,7 +99,7 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
      * testSetNameChangesPreviousName
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testSetNameChangesPreviousName()
     {

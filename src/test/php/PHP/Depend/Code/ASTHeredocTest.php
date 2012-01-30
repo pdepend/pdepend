@@ -72,7 +72,7 @@ class PHP_Depend_Code_ASTHeredocTest extends PHP_Depend_Code_ASTNodeTest
      * testHeredocAsArrayInitializeValue
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testHeredocAsArrayInitializeValue()
     {

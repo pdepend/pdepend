@@ -236,7 +236,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testGetTraitsReturnsExpectedNumberOfTraits
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetTraitsReturnsExpectedNumberOfTraits()
     {
@@ -253,7 +253,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testGetTraitsContainsExpectedTrait
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGetTraitsContainsExpectedTrait()
     {
@@ -268,7 +268,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
      * testAddTypeSetsParentPackageOfTrait
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testAddTypeSetsParentPackageOfTrait()
     {

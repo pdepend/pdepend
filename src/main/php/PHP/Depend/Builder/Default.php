@@ -244,7 +244,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $qualifiedName The full qualified trait name.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildTrait($qualifiedName)
     {
@@ -266,7 +266,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $qualifiedName The full qualified type identifier.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function getTrait($qualifiedName)
     {
@@ -283,7 +283,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $qualifiedName The full qualified trait name.
      *
      * @return PHP_Depend_Code_ASTTraitReference
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTTraitReference($qualifiedName)
     {
@@ -838,7 +838,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Builds a new php array node.
      *
      * @return PHP_Depend_Code_ASTArray
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTArray()
     {
@@ -849,7 +849,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Builds a new array element node.
      *
      * @return PHP_Depend_Code_ASTArrayElement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTArrayElement()
     {
@@ -969,7 +969,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Builds a new trait use-statement node.
      *
      * @return PHP_Depend_Code_ASTTraitUseStatement
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTTraitUseStatement()
     {
@@ -980,7 +980,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Builds a new trait adaptation scope
      *
      * @return PHP_Depend_Code_ASTTraitAdaptation
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTTraitAdaptation()
     {
@@ -993,7 +993,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $image The trait method name.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTTraitAdaptationAlias($image)
     {
@@ -1006,7 +1006,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $image The trait method name.
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTTraitAdaptationPrecedence($image)
     {
@@ -1381,7 +1381,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Builds a new node for the callable type.
      *
      * @return PHP_Depend_Code_ASTTypeCallable
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function buildASTTypeCallable()
     {
@@ -2137,7 +2137,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param PHP_Depend_Code_Trait $trait       The context trait.
      *
      * @return void
-     * @@since 0.11.0
+     * @@since 1.0.0
      */
     protected function storeTrait(
         $traitName, $packageName, PHP_Depend_Code_Trait $trait

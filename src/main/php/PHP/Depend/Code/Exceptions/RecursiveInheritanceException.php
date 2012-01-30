@@ -44,7 +44,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id: Collection.php 1030 2010-01-01 12:06:13Z mapi $
  * @link       http://pdepend.org/
- * @since      0.11.0
+ * @since      1.0.0
  */
 
 /**
@@ -59,7 +59,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
- * @since      0.11.0
+ * @since      1.0.0
  */
 class PHP_Depend_Code_Exceptions_RecursiveInheritanceException
     extends PHP_Depend_Code_Exceptions_AbstractException

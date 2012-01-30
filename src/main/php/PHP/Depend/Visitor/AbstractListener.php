@@ -92,7 +92,7 @@ abstract class PHP_Depend_Visitor_AbstractListener
      * @param PHP_Depend_Code_Trait $trait The context trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function startVisitTrait(PHP_Depend_Code_Trait $trait)
     {
@@ -105,7 +105,7 @@ abstract class PHP_Depend_Visitor_AbstractListener
      * @param PHP_Depend_Code_Trait $trait The context trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function endVisitTrait(PHP_Depend_Code_Trait $trait)
     {

@@ -171,7 +171,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * @param integer $tokenType Numerical token identifier.
      *
      * @return boolean
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function isFormalParameterTypeHint($tokenType)
     {
@@ -191,7 +191,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * version.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parseFormalParameterTypeHint()
     {
@@ -221,7 +221,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * Parses an integer value.
      *
      * @return PHP_Depend_Code_ASTLiteral
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parseIntegerNumber()
     {
@@ -259,7 +259,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * property postfix expressions.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parsePostfixIdentifier()
     {
@@ -285,7 +285,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * PHP 5.2.x versions :/
      *
      * @return PHP_Depend_Code_ASTHeredoc
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parseHeredoc()
     {
@@ -308,7 +308,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * PHP version.
      *
      * @return boolean
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function isArrayStartDelimiter()
     {
@@ -327,7 +327,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * @param PHP_Depend_Code_ASTArray $array The context array node.
      *
      * @return PHP_Depend_Code_ASTArray
-     * @since 0.11.0
+     * @since 1.0.0
      */
     protected function parseArray(PHP_Depend_Code_ASTArray $array)
     {

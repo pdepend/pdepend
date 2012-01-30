@@ -72,7 +72,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * testMemberPrimaryPrefixGraphDereferencedFromArray
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphDereferencedFromArray()
     {
@@ -105,7 +105,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphInIssetExpression()
     {
@@ -145,7 +145,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant()
     {
@@ -176,7 +176,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticProperty()
     {
@@ -210,7 +210,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticMethod()
     {
@@ -246,7 +246,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphWithDynamicClassAndDynamicMethod()
     {
@@ -456,7 +456,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphForObjectWithVariablePropertyAccess()
     {
@@ -514,7 +514,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess()
     {
@@ -554,7 +554,7 @@ class PHP_Depend_Code_ASTMemberPrimaryPrefixTest extends PHP_Depend_Code_ASTNode
      * </code>
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testGraphDereferencedArrayFromFunctionCallAndMethodInvocation()
     {

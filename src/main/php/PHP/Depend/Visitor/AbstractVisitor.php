@@ -123,7 +123,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      * @param PHP_Depend_Code_Trait $trait The current trait node.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function visitTrait(PHP_Depend_Code_Trait $trait)
     {

@@ -129,7 +129,7 @@ class PHP_Depend_Code_ASTFormalParameterTest extends PHP_Depend_Code_ASTNodeTest
      * testFormalParameterWithArrayTypeHint
      * 
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function testFormalParameterWithArrayTypeHint()
     {

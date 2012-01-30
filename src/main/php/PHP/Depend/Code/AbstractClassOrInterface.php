@@ -121,7 +121,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * and parent of this parent the second element and so on.
      *
      * @return array
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function getParentClasses()
     {
@@ -417,7 +417,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      *
      * @return void
      * @since 0.9.12
-     * @deprecated Since 0.11.0
+     * @deprecated Since 1.0.0
      */
     public function free()
     {

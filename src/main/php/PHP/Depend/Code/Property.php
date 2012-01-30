@@ -507,7 +507,7 @@ class PHP_Depend_Code_Property
      *
      * @return void
      * @since 0.9.12
-     * @deprecated Since 0.11.0
+     * @deprecated Since 1.0.0
      */
     public function free()
     {

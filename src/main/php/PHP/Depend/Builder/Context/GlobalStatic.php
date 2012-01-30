@@ -102,7 +102,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      * @param PHP_Depend_Code_Trait $trait The trait instance.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function registerTrait(PHP_Depend_Code_Trait $trait)
     {
@@ -141,7 +141,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      * @param string $qualifiedName Full qualified trait name.
      *
      * @return PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function getTrait( $qualifiedName )
     {

@@ -69,7 +69,7 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
      * The last visited trait instance.
      *
      * @var PHP_Depend_Code_Trait
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public $trait;
 
@@ -144,7 +144,7 @@ class PHP_Depend_Visitor_TestNodeVisitor implements PHP_Depend_VisitorI
      * @param PHP_Depend_Code_Trait $trait The current trait node.
      *
      * @return void
-     * @since 0.11.0
+     * @since 1.0.0
      */
     public function visitTrait(PHP_Depend_Code_Trait $trait)
     {
