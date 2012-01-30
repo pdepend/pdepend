@@ -12,6 +12,9 @@
 		<release version="0.11.0"
                  date="2011/10/04"
                  description="This release closes a critical bug that let PHP_Depend die with a E_FATAL when the used PHP version was 5.4 or greater.">
+            <action date="84f612e" dev="mapi" issue="8927307" system="pivotaltracker" type="add">
+                Add support for traits
+            </action>
             <action date="338bca2" dev="mapi" issue="19874825" system="pivotaltracker" type="add">
                 Implement the short array syntax introduced with PHP 5.4
             </action>

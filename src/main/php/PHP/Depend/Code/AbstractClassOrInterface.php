@@ -271,26 +271,39 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Returns a list of all methods provided by this type or one of its parents.
      *
-     * @return array(PHP_Depend_Code_Method)
+     * @return PHP_Depend_Code_Method[]
      * @since 0.9.10
      */
     public function getAllMethods()
     {
+        $uses = $this->findChildrenOfType(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+        );
+
         $methods = array();
         foreach ($this->getInterfaces() as $interface) {
             foreach ($interface->getAllMethods() as $method) {
-                $methods[$method->getName()] = $method;
+                $methods[strtolower($method->getName())] = $method;
             }
         }
 
-        foreach ($this->getParentClasses() as $parentClass) {
-            foreach ($parentClass->getMethods() as $method) {
-                $methods[$method->getName()] = $method;
+        if (is_object($parentClass = $this->getParentClass())) {
+            foreach ($parentClass->getAllMethods() as $method) {
+                foreach ($uses as $use) {
+                    if ($use->hasExcludeFor($method)) {
+                        continue 2;
+                    }
+                }
+                $methods[strtolower($method->getName())] = $method;
             }
+        }
+
+        foreach ($this->getTraitMethods() as $method) {
+            $methods[strtolower($method->getName())] = $method;
         }
 
         foreach ($this->methods as $method) {
-            $methods[$method->getName()] = $method;
+            $methods[strtolower($method->getName())] = $method;
         }
 
         return $methods;

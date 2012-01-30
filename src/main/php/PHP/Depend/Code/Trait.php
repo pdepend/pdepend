@@ -75,30 +75,7 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
      */
     public function getAllMethods()
     {
-        $methods = array();
-
-        $uses = $this->findChildrenOfType(
-            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
-        );
-
-        foreach ($uses as $use) {
-            foreach ($use->getAllMethods() as $method) {
-                foreach ($uses as $use2) {
-                    if ($use2->hasExcludeFor($method)) {
-                        continue 2;
-                    }
-                }
-
-                $name = strtolower($method->getName());
-
-                if (isset($methods[$name])) {
-                    throw new PHP_Depend_Code_Exceptions_MethodCollisionException(
-                        $method, $this
-                    );
-                }
-                $methods[$name] = $method;
-            }
-        }
+        $methods = $this->getTraitMethods();
 
         foreach ($this->methods as $method) {
             $methods[strtolower($method->getName())] = $method;

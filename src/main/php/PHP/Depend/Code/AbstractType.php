@@ -294,6 +294,42 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     }
 
     /**
+     * Returns an array with {@link PHP_Depend_Code_Method} objects that are
+     * imported through traits.
+     *
+     * @return PHP_Depend_Code_Method[]
+     * @since 0.11.0
+     */
+    protected function getTraitMethods()
+    {
+        $methods = array();
+
+        $uses = $this->findChildrenOfType(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+        );
+
+        foreach ($uses as $use) {
+            foreach ($use->getAllMethods() as $method) {
+                foreach ($uses as $use2) {
+                    if ($use2->hasExcludeFor($method)) {
+                        continue 2;
+                    }
+                }
+
+                $name = strtolower($method->getName());
+
+                if (isset($methods[$name])) {
+                    throw new PHP_Depend_Code_Exceptions_MethodCollisionException(
+                        $method, $this
+                    );
+                }
+                $methods[$name] = $method;
+            }
+        }
+        return $methods;
+    }
+
+    /**
      * Returns an <b>array</b> with all tokens within this type.
      *
      * @return array(PHP_Depend_Token)

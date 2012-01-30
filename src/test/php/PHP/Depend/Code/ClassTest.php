@@ -138,6 +138,227 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetAllMethodsOnClassWithParentReturnsTraitMethod
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsOnClassWithParentReturnsTraitMethod()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertInstanceOf(
+            PHP_Depend_Code_Trait::CLAZZ,
+            $methods['foo']->getParent()
+        );
+    }
+
+    /**
+     * testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertInstanceOf(
+            PHP_Depend_Code_Class::CLAZZ,
+            $methods['foo']->getParent()
+        );
+    }
+
+    /**
+     * testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(
+            array('foo', 'bar', 'baz'),
+            array_keys($class->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertSame($class, $methods['foo']->getParent());
+    }
+
+    /**
+     * testGetAllMethodsWithAliasedMethodCollision
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithAliasedMethodCollision()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(
+            array('foo', 'bar'),
+            array_keys($class->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithAliasedMethodTwice
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithAliasedMethodTwice()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(
+            array('foo', 'bar'),
+            array_keys($class->getAllMethods())
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToPublic
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithVisibilityChangedToPublic()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToProtected
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithVisibilityChangedToProtected()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToPrivate
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithVisibilityChangedToPrivate()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PRIVATE,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED | PHP_Depend_ConstantsI::IS_ABSTRACT,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedKeepsStaticModifier
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC | PHP_Depend_ConstantsI::IS_STATIC,
+            $methods['foo']->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsHandlesTraitMethodPrecedence
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsHandlesTraitMethodPrecedence()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertEquals(
+            'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
+            $methods['foo']->getParent()->getName()
+        );
+    }
+
+    /**
+     * testGetAllMethodsExcludeTraitMethodWithPrecedence
+     *
+     * @return void
+     * @since 0.11.0
+     */
+    public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(1, count($class->getAllMethods()));
+    }
+
+    /**
+     * testGetAllMethodsWithMethodCollisionThrowsExpectedException
+     *
+     * @return void
+     * @since 0.11.0
+     * @covers PHP_Depend_Code_Exceptions_MethodCollisionException
+     * @expectedException PHP_Depend_Code_Exceptions_MethodCollisionException
+     */
+    public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $class->getAllMethods();
+    }
+
+    /**
      * testGetConstantsReturnsAnEmptyArrayByDefault
      *
      * @return void
