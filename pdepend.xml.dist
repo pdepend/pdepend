@@ -9,7 +9,7 @@
     </imageConvert>
     
     <cache>
-        <driver>memory</driver>
+        <driver>file</driver>
     </cache>
 
 </configuration>
