@@ -72,7 +72,7 @@ class PHP_Depend_Util_Cache_Factory
     /**
      * Singleton property that holds existing cache instances.
      *
-     * @var array(string=>PHP_Depend_Util_Cache_Driver)
+     * @var PHP_Depend_Util_Cache_Driver[]
      */
     protected $caches = array();
 
