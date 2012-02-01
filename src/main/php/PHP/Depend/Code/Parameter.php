@@ -308,7 +308,7 @@ class PHP_Depend_Code_Parameter
 
     /**
      * This method will return <b>true</b> when this parameter is optional and
-     * can be left blank on invokation.
+     * can be left blank on invocation.
      *
      * @return boolean
      * @since 0.9.5
