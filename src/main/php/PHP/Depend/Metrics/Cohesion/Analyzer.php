@@ -114,9 +114,13 @@ class PHP_Depend_Metrics_Cohesion_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
+        $this->fireStartAnalyzer();
+
         foreach ($packages as $package) {
             $package->accept($this);
         }
+
+        $this->fireEndAnalyzer();
     }
 
     /*
