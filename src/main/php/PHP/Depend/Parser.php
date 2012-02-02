@@ -1885,7 +1885,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      */
     private function _setNodePositionsAndReturn(PHP_Depend_Code_ASTNode $node)
     {
-        $tokens = $this->_tokenStack->pop();
+        $tokens = $this->_stripTrailingComments($this->_tokenStack->pop());
 
         $end   = $tokens[count($tokens) - 1];
         $start = $tokens[0];
@@ -1898,6 +1898,24 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         );
 
         return $node;
+    }
+
+    /**
+     * Strips all trailing comments from the given token stream.
+     *
+     * @param PHP_Depend_Token[] $tokens Original token stream.
+     *
+     * @return PHP_Depend_Token[]
+     * @since 1.0.0
+     */
+    private function _stripTrailingComments(array $tokens)
+    {
+        $comments = array(self::T_COMMENT, self::T_DOC_COMMENT);
+
+        while (count($tokens) > 1 && in_array(end($tokens)->type, $comments)) {
+            array_pop($tokens);
+        }
+        return $tokens;
     }
 
     /**
