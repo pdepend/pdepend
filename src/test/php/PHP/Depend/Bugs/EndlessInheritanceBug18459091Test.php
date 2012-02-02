@@ -92,8 +92,11 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
@@ -108,8 +111,11 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
@@ -123,8 +129,11 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
@@ -138,8 +147,11 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
     }

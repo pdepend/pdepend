@@ -499,8 +499,11 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $packages = self::parseTestCaseSource(self::getCallingTestMethod());
         $package  = $packages->current();
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 
         return $analyzer->getNodeMetrics($package->getClasses()->current());

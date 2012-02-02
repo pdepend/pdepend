@@ -126,7 +126,7 @@ abstract class PHP_Depend_Metrics_AbstractCachingAnalyzer
     {
         $this->_metricsCached = (array) $this->_cache
             ->type('metrics')
-            ->restore(__CLASS__);
+            ->restore(get_class($this));
     }
 
     /**
@@ -139,7 +139,7 @@ abstract class PHP_Depend_Metrics_AbstractCachingAnalyzer
     {
         $this->_cache
             ->type('metrics')
-            ->store(__CLASS__, $this->metrics);
+            ->store(get_class($this), $this->metrics);
 
         $this->_metricsCached = array();
     }

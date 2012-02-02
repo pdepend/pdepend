@@ -60,7 +60,7 @@
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
+       extends PHP_Depend_Metrics_AbstractCachingAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
@@ -77,28 +77,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     const M_CYCLOMATIC_COMPLEXITY_1 = 'ccn',
           M_CYCLOMATIC_COMPLEXITY_2 = 'ccn2';
-
-    /**
-     * Hash with all calculated node metrics.
-     *
-     * <code>
-     * array(
-     *     '0375e305-885a-4e91-8b5c-e25bda005438'  =>  array(
-     *         'loc'    =>  42,
-     *         'ncloc'  =>  17,
-     *         'cc'     =>  12
-     *     ),
-     *     'e60c22f0-1a63-4c40-893e-ed3b35b84d0b'  =>  array(
-     *         'loc'    =>  42,
-     *         'ncloc'  =>  17,
-     *         'cc'     =>  12
-     *     )
-     * )
-     * </code>
-     *
-     * @var array(string=>array) $_nodeMetrics
-     */
-    private $_nodeMetrics = null;
 
     /**
      * The project Cyclomatic Complexity Number.
@@ -123,11 +101,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->_nodeMetrics === null) {
+        if ($this->metrics === null) {
+            $this->loadCache();
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->_nodeMetrics = array();
+            $this->metrics = array();
 
             // Visit all packages
             foreach ($packages as $package) {
@@ -135,6 +114,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             }
 
             $this->fireEndAnalyzer();
+            $this->unloadCache();
         }
     }
 
@@ -178,21 +158,20 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
-     * @return array(string=>mixed)
+     * @return array
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        $metrics = array();
-        if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            $metrics = $this->_nodeMetrics[$node->getUUID()];
+        if (isset($this->metrics[$node->getUUID()])) {
+            return $this->metrics[$node->getUUID()];
         }
-        return $metrics;
+        return array();
     }
 
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
-     * @return array(string=>mixed)
+     * @return array
      */
     public function getProjectMetrics()
     {
@@ -208,12 +187,16 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-        $this->calculateComplexity($function);
+
+        if (false === $this->restoreFromCache($function)) {
+            $this->calculateComplexity($function);
+        }
+        $this->_updateProjectMetrics($function->getUUID());
+
         $this->fireEndFunction($function);
     }
 
@@ -223,7 +206,6 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_Interface $interface The context code interface.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -236,12 +218,16 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      * @param PHP_Depend_Code_Class $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-        $this->calculateComplexity($method);
+
+        if (false === $this->restoreFromCache($method)) {
+            $this->calculateComplexity($method);
+        }
+        $this->_updateProjectMetrics($method->getUUID());
+
         $this->fireEndMethod($method);
     }
 
@@ -264,25 +250,22 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
             $data = $child->accept($this, $data);
         }
 
-        $this->_storeNodeComplexityAndUpdateProject($callable->getUUID(), $data);
+        $this->metrics[$callable->getUUID()] = $data;
     }
 
     /**
      * Stores the complexity of a node and updates the corresponding project
      * values.
      *
-     * @param string                 $nodeId     Identifier of the analyzed item.
-     * @param array(string=>integer) $complexity The node complexity values.
+     * @param string $nodeId Identifier of the analyzed item.
      *
      * @return void
-     * @since 0.9.8
+     * @since 1.0.0
      */
-    private function _storeNodeComplexityAndUpdateProject($nodeId, array $complexity)
+    private function _updateProjectMetrics($nodeId)
     {
-        $this->_nodeMetrics[$nodeId] = $complexity;
-
-        $this->_ccn  += $complexity[self::M_CYCLOMATIC_COMPLEXITY_1];
-        $this->_ccn2 += $complexity[self::M_CYCLOMATIC_COMPLEXITY_2];
+        $this->_ccn  += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_1];
+        $this->_ccn2 += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_2];
     }
 
     /**

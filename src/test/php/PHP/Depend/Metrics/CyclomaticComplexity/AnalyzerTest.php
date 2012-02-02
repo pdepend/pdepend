@@ -60,6 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  *
+ * @covers PHP_Depend_Metrics_AbstractCachingAnalyzer
  * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
  * @group pdepend
  * @group pdepend::metrics
@@ -70,13 +71,31 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     extends PHP_Depend_Metrics_AbstractTest
 {
     /**
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 1.0.0
+     */
+    private $_cache;
+
+    /**
+     * Initializes a in memory cache.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->_cache = new PHP_Depend_Util_Cache_Driver_Memory();
+    }
+
+    /**
      * testGetCCNReturnsZeroForUnknownNode
      *
      * @return void
      */
     public function testGetCCNReturnsZeroForUnknownNode()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         self::assertEquals(0, $analyzer->getCCN($this->getMock('PHP_Depend_Code_NodeI')));
     }
 
@@ -87,7 +106,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testGetCCN2ReturnsZeroForUnknownNode()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         self::assertEquals(0, $analyzer->getCCN2($this->getMock('PHP_Depend_Code_NodeI')));
     }
 
@@ -101,7 +120,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
         $actual   = array();
@@ -127,7 +146,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateFunctionCCNAndCNN2ProjectMetrics()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 12, 'ccn2' => 16);
@@ -146,7 +165,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
         $classes = $package->getClasses();
@@ -176,7 +195,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateCCNWithConditionalExprInCompoundExpr()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 2);
@@ -197,7 +216,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
             ->getFunctions()
             ->current();
 
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
         self::assertEquals(3, $analyzer->getCCN($function));
@@ -215,7 +234,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
             ->getFunctions()
             ->current();
 
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
         self::assertEquals(3, $analyzer->getCCN2($function));
@@ -228,7 +247,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 3, 'ccn2' => 3);
@@ -244,7 +263,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 4, 'ccn2' => 4);
@@ -260,7 +279,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateCCNDetectsExpressionsInAForLoop()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 4);
@@ -276,7 +295,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateCCNDetectsExpressionsInAWhileLoop()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 4);
@@ -292,7 +311,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testCalculateProjectMetrics()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
         
         $expected = array('ccn' => 24, 'ccn2' => 32);
@@ -308,12 +327,80 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
      */
     public function testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();
 
         self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * testAnalyzerRestoresExpectedFunctionMetricsFromCache
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
+    {
+        $packages = self::parseCodeResourceForTest();
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics0 = $analyzer->getNodeMetrics($function);
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics1 = $analyzer->getNodeMetrics($function);
+
+        $this->assertEquals($metrics0, $metrics1);
+    }
+
+    /**
+     * testAnalyzerRestoresExpectedMethodMetricsFromCache
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
+    {
+        $packages = self::parseCodeResourceForTest();
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics0 = $analyzer->getNodeMetrics($method);
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics1 = $analyzer->getNodeMetrics($method);
+
+        $this->assertEquals($metrics0, $metrics1);
+    }
+
+    /**
+     * Returns a pre configured ccn analyzer.
+     *
+     * @return PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @since 1.0.0
+     */
+    private function _createAnalyzer()
+    {
+        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer->setCache($this->_cache);
+
+        return $analyzer;
     }
 }

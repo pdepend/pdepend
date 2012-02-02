@@ -81,8 +81,12 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
             ->getClasses()
             ->current();
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
+
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getNodeMetrics($class);
@@ -103,8 +107,11 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
             ->getClasses()
             ->current();
 
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer());
+        $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($class);
