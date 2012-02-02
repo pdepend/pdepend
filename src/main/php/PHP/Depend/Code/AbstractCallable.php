@@ -511,6 +511,8 @@ abstract class PHP_Depend_Code_AbstractCallable
         $this->cached = true;
     }
 
+    // @codeCoverageIgnoreStart
+
     /**
      * This method can be called by the PHP_Depend runtime environment or a
      * utilizing component to free up memory. This methods are required for
@@ -524,4 +526,6 @@ abstract class PHP_Depend_Code_AbstractCallable
     {
         trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
     }
+
+    // @codeCoverageIgnoreEnd
 }
