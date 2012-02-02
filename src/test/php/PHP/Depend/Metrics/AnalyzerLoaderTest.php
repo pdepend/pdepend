@@ -79,8 +79,11 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Metrics_Hierarchy_Analyzer',
         );
         
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader($expected);
-        $loader->setClassLocator(new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator());
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
+            new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator(),
+            $this->getMock( 'PHP_Depend_Util_Cache_Driver' ),
+            $expected
+        );
 
         $actual = array();
         foreach ($loader->getIterator() as $analyzer) {
@@ -113,8 +116,12 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
             ->method('findAll')
             ->will($this->returnValue(array($reflection)));
 
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
-        $loader->setClassLocator($locator);
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
+            $locator,
+            $this->getMock( 'PHP_Depend_Util_Cache_Driver' ),
+            array('PHP_Depend_Metrics_AnalyzerI')
+        );
+
         self::assertEquals(1, iterator_count($loader->getIterator()));
     }
 
@@ -141,8 +148,12 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
             ->method('findAll')
             ->will($this->returnValue(array($reflection)));
 
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(array('PHP_Depend_Metrics_AnalyzerI'));
-        $loader->setClassLocator($locator);
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
+            $locator,
+            $this->getMock( 'PHP_Depend_Util_Cache_Driver' ),
+            array('PHP_Depend_Metrics_AnalyzerI')
+        );
+
         self::assertEquals(0, iterator_count($loader->getIterator()));
     }
 }

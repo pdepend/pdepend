@@ -64,44 +64,52 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * All matching analyzer instances.
      *
-     * @var array(string=>PHP_Depend_Metrics_AnalyzerI)
+     * @var PHP_Depend_Metrics_AnalyzerI[]
      */
-    private $_analyzers = null;
+    private $_analyzers;
     
-    private $_acceptedTypes = array();
+    private $_acceptedTypes;
 
-    private $_options = array();
+    private $_options;
+
+    /**
+     * The system wide used cache.
+     *
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 1.0.0
+     */
+    private $_cache;
 
     /**
      * Used locator for installed analyzer classes.
      *
      * @var PHP_Depend_Metrics_AnalyzerClassLocator
      */
-    private $_classLocator = null;
+    private $_classLocator;
 
     /**
      * Constructs a new analyzer loader.
      *
-     * @param array(string)        $acceptedTypes Accepted/expected analyzer types.
-     * @param array(string=>mixed) $options       List of cli options.
+     * @param PHP_Depend_Metrics_AnalyzerClassLocator $classLocator  Class locator
+     *        used to find analyzer source files on the current system.
+     * @param PHP_Depend_Util_Cache_Driver            $cache         The cache
+     *        driver may be used by some analyzers to store calculated metrics.
+     * @param array                                   $acceptedTypes This property
+     *        contains the class names of the required analyzer.
+     * @param array                                   $options       Array with
+     *        additional options supplied on the command line.
      */
-    public function __construct(array $acceptedTypes, array $options = array())
-    {
+    public function __construct(
+        PHP_Depend_Metrics_AnalyzerClassLocator $classLocator,
+        PHP_Depend_Util_Cache_Driver $cache,
+        array $acceptedTypes,
+        array $options = array()
+    ) {
+        $this->_cache        = $cache;
+        $this->_classLocator = $classLocator;
+
         $this->_options       = $options;
         $this->_acceptedTypes = $acceptedTypes;
-    }
-
-    /**
-     * Setter method for the used analyzer class locator.
-     *
-     * @param PHP_Depend_Metrics_AnalyzerClassLocator $locator The analyzer class
-     *        locator instance.
-     *
-     * @return void
-     */
-    public function setClassLocator(PHP_Depend_Metrics_AnalyzerClassLocator $locator)
-    {
-        $this->_classLocator = $locator;
     }
 
     /**
@@ -133,9 +141,9 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Loads all accepted node analyzers.
      *
-     * @param array(string) $acceptedTypes Accepted/expected analyzer types.
+     * @param array $acceptedTypes Accepted/expected analyzer types.
      *
-     * @return array(PHP_Depend_Metrics_AnalyzerI)
+     * @return PHP_Depend_Metrics_AnalyzerI
      */
     private function _loadAcceptedAnalyzers(array $acceptedTypes)
     {
@@ -153,7 +161,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * expected analyzer types.
      *
      * @param ReflectionClass $reflection    Reflection class for an analyzer.
-     * @param array(string)   $expectedTypes List of accepted analyzer types.
+     * @param array           $expectedTypes List of accepted analyzer types.
      *
      * @return boolean
      * @since 0.9.10
@@ -220,6 +228,10 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      */
     private function _configure(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
+        if ($analyzer instanceof PHP_Depend_Metrics_CacheAware) {
+            $analyzer->setCache($this->_cache);
+        }
+
         if (!($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI)) {
             return $analyzer;
         }

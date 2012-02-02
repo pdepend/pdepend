@@ -153,9 +153,17 @@ class PHP_Depend
      * List of all {@link PHP_Depend_Parser_Exception} that were caught during
      * the parsing process.
      *
-     * @var array(PHP_Depend_Parser_Exception) $_parseExceptions
+     * @var PHP_Depend_Parser_Exception[]
      */
     private $_parseExceptions = array();
+
+    /**
+     * The configured cache factory.
+     *
+     * @var PHP_Depend_Util_Cache_Factory
+     * @since 1.0.0
+     */
+    private $_cacheFactory;
 
     /**
      * Constructs a new php depend facade.
@@ -168,6 +176,8 @@ class PHP_Depend
 
         $this->_codeFilter = new PHP_Depend_Code_Filter_Null();
         $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();
+
+        $this->_cacheFactory = new PHP_Depend_Util_Cache_Factory($configuration);
     }
 
     /**
@@ -525,10 +535,6 @@ class PHP_Depend
         // Reset list of thrown exceptions
         $this->_parseExceptions = array();
 
-        // Create a cache instance
-        $cacheFactory = new PHP_Depend_Util_Cache_Factory($this->configuration);
-        $cache = $cacheFactory->create();
-
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
 
         $this->fireStartParseProcess($this->_builder);
@@ -539,7 +545,7 @@ class PHP_Depend
             $parser = new PHP_Depend_Parser_VersionAllParser(
                 $tokenizer,
                 $this->_builder,
-                $cache
+                $this->_cacheFactory->create()
             );
             $parser->setMaxNestingLevel(1024);
 
@@ -693,9 +699,13 @@ class PHP_Depend
             }
         }
 
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader($analyzerSet, $options);
-        $loader->setClassLocator(
-            new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator()
+        $cacheKey = md5(serialize($this->_files) . serialize($this->_directories));
+
+        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
+            new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator(),
+            $this->_cacheFactory->create($cacheKey),
+            $analyzerSet,
+            $options
         );
 
         return $this->_initAnalyseListeners($loader);
