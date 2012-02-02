@@ -174,6 +174,18 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetTraitReturnsDummyIfNoMatchingTraitExists
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetTraitReturnsDummyIfNoMatchingTraitExists()
+    {
+        $builder = $this->createBuilder();
+        $this->assertEquals(__FUNCTION__, $builder->getTrait(__FUNCTION__)->getName());
+    }
+
+    /**
      * Tests that the {@link PHP_Depend_Builder_Default::buildTrait()} method
      * creates two different trait instances for the same class name, but
      * different packages.
@@ -227,6 +239,21 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $builder->restoreClass($class);
 
         self::assertSame($class, $builder->getClass(__FUNCTION__));
+    }
+
+    /**
+     * testGetClassReturnsDummyIfNoMatchingTraitExists
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetClassReturnsDummyIfNoMatchingClassExists()
+    {
+        $builder = $this->createBuilder();
+        $this->assertEquals(
+            __FUNCTION__,
+            $builder->getClass(__FUNCTION__)->getName()
+        );
     }
 
     /**
@@ -284,6 +311,21 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         $builder->restoreInterface($interface);
 
         self::assertSame($interface, $builder->getInterface(__FUNCTION__));
+    }
+
+    /**
+     * testGetInterfaceReturnsDummyIfNoMatchingInterfaceExists
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetInterfaceReturnsDummyIfNoMatchingInterfaceExists()
+    {
+        $builder = $this->createBuilder();
+        $this->assertEquals(
+            __FUNCTION__,
+            $builder->getInterface(__FUNCTION__)->getName()
+        );
     }
 
     /**
@@ -515,6 +557,21 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
         self::assertSame(
             $interface,
             $builder->getInterface('php_Depend_tokenizeri')
+        );
+    }
+
+    /**
+     * testGetClassOrInterfaceReturnsDummyIfNoMatchingTypeExists
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetClassOrInterfaceReturnsDummyIfNoMatchingTypeExists()
+    {
+        $builder = $this->createBuilder();
+        $this->assertEquals(
+            __FUNCTION__,
+            $builder->getClassOrInterface(__FUNCTION__)->getName()
         );
     }
 

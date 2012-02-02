@@ -71,6 +71,230 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testHasExcludeForReturnsFalseIfNoInsteadExists
+     *
+     * @return void
+     */
+    public function testHasExcludeForReturnsFalseIfNoInsteadExists()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $useStmt = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+        );
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertFalse($useStmt->hasExcludeFor($methods[0]));
+    }
+
+    /**
+     * testHasExcludeForReturnsFalseIfMethodNotAffectedByInstead
+     *
+     * @return void
+     */
+    public function testHasExcludeForReturnsFalseIfMethodNotAffectedByInstead()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $useStmt = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+        );
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertFalse($useStmt->hasExcludeFor($methods[0]));
+    }
+
+    /**
+     * testHasExcludeForReturnsTrueIfMethodAffectedByInstead
+     *
+     * @return void
+     */
+    public function testHasExcludeForReturnsTrueIfMethodAffectedByInstead()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $useStmt = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+        );
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertTrue($useStmt->hasExcludeFor($methods[0]));
+    }
+
+    /**
+     * testGetAllMethodsOnClassWithParentReturnsTraitMethod
+     *
+     * @return void
+     */
+    public function testGetAllMethodsOnClassWithParentReturnsTraitMethod()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertInstanceOf(
+            PHP_Depend_Code_Trait::CLAZZ,
+            $methods[0]->getParent()
+        );
+    }
+
+    /**
+     * testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertInstanceOf(
+            PHP_Depend_Code_Trait::CLAZZ,
+            $methods[0]->getParent()
+        );
+    }
+
+    /**
+     * testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals('foo', $methods[0]->getName());
+    }
+
+    /**
+     * testGetAllMethodsWithAliasedMethodCollision
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithAliasedMethodCollision()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(2, count($useStmt->getAllMethods()));
+    }
+
+    /**
+     * testGetAllMethodsWithAliasedMethodTwice
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithAliasedMethodTwice()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertEquals(2, count($useStmt->getAllMethods()));
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToPublic
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedToPublic()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC,
+            $methods[0]->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToProtected
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedToProtected()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED,
+            $methods[0]->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedToPrivate
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedToPrivate()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PRIVATE,
+            $methods[0]->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PROTECTED | PHP_Depend_ConstantsI::IS_ABSTRACT,
+            $methods[0]->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsWithVisibilityChangedKeepsStaticModifier
+     *
+     * @return void
+     */
+    public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals(
+            PHP_Depend_ConstantsI::IS_PUBLIC | PHP_Depend_ConstantsI::IS_STATIC,
+            $methods[0]->getModifiers()
+        );
+    }
+
+    /**
+     * testGetAllMethodsHandlesTraitMethodPrecedence
+     *
+     * @return void
+     */
+    public function testGetAllMethodsHandlesTraitMethodPrecedence()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertEquals(
+            'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
+            $methods[0]->getParent()->getName()
+        );
+    }
+
+    /**
+     * testGetAllMethodsExcludeTraitMethodWithPrecedence
+     *
+     * @return void
+     */
+    public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
+    {
+        $useStmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertSame(2, count($useStmt->getAllMethods()));
+    }
+
+    /**
      * testTraitUseStatementWithSimpleAliasHasExpectedEndLine
      *
      * @return void

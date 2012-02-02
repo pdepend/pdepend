@@ -67,6 +67,9 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      */
     const CLAZZ = __CLASS__;
 
+    /**
+     * @var PHP_Depend_Code_Method[]
+     */
     private $_allMethods;
 
     /**
@@ -76,14 +79,12 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      */
     public function getAllMethods()
     {
-        if (is_array($this->_allMethods)) {
-            return $this->_allMethods;
-        }
-
-        $this->_allMethods = array();
-        foreach ($this->nodes as $node) {
-            if ($node instanceof PHP_Depend_Code_ASTTraitReference) {
-                $this->_collectMethods($node);
+        if (false === is_array($this->_allMethods)) {
+            $this->_allMethods = array();
+            foreach ($this->nodes as $node) {
+                if ($node instanceof PHP_Depend_Code_ASTTraitReference) {
+                    $this->_collectMethods($node);
+                }
             }
         }
         return $this->_allMethods;

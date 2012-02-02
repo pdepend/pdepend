@@ -71,6 +71,22 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testGetTraitDelegatesToContextGetTraitMethod
+     *
+     * @return void
+     */
+    public function testGetTraitDelegatesToContextGetTraitMethod()
+    {
+        $context = $this->getMock(PHP_Depend_Builder_Context::CLAZZ);
+        $context->expects($this->once())
+            ->method('getTrait')
+            ->with($this->equalTo(__CLASS__));
+
+        $reference = new PHP_Depend_Code_ASTTraitReference($context, __CLASS__);
+        $reference->getType();
+    }
+
+    /**
      * testTraitReferenceHasExpectedStartLine
      *
      * @return void
