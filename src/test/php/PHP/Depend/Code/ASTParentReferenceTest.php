@@ -144,6 +144,18 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testGetImageReturnsExpectedValue
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetImageReturnsExpectedValue()
+    {
+        $reference = $this->createNodeInstance();
+        $this->assertEquals('parent', $reference->getImage());
+    }
+
+    /**
      * testParentReferenceHasExpectedStartLine
      *
      * @return void

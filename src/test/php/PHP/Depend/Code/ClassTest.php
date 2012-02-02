@@ -440,6 +440,18 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetConstantsReturnsExpectedInterfaceConstants
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetConstantsReturnsExpectedInterfaceConstants()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+    }
+
+    /**
      * testGetConstantReturnsFalseForNotExistentConstant
      *
      * @return void

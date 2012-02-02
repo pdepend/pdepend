@@ -775,6 +775,18 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetConstantsReturnsExpectedInterfaceConstants
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetConstantsReturnsExpectedInterfaceConstants()
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $interface->getConstants());
+    }
+
+    /**
      * testIsCachedReturnsFalseByDefault
      *
      * @return void

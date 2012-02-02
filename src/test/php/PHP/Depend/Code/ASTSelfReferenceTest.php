@@ -145,6 +145,18 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testGetImageReturnsExpectedValue
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetImageReturnsExpectedValue()
+    {
+        $reference = $this->createNodeInstance();
+        $this->assertEquals('self', $reference->getImage());
+    }
+
+    /**
      * testSelfReferenceHasExpectedStartLine
      *
      * @return void
