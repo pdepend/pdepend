@@ -90,14 +90,14 @@ class PHP_Depend_Util_Cache_Factory
      * Creates a new instance or returns an existing cache for the given cache
      * identifier.
      *
-     * @param string $cacheKey The name/ of a /identifier for the cache instance.
+     * @param string $cacheKey The name/identifier for the cache instance.
      *
      * @return PHP_Depend_Util_Cache_Driver
      */
-    public function create($cacheKey = 'default')
+    public function create($cacheKey = null)
     {
         if (false === isset($this->caches[$cacheKey])) {
-            $this->caches[$cacheKey] = $this->createCache();
+            $this->caches[$cacheKey] = $this->createCache($cacheKey);
         }
         return $this->caches[$cacheKey];
     }
@@ -105,15 +105,20 @@ class PHP_Depend_Util_Cache_Factory
     /**
      * Creates a cache instance based on the supplied configuration.
      *
+     * @param string $cacheKey The name/identifier for the cache instance.
+     *
      * @return PHP_Depend_Util_Cache_Driver
      * @throws InvalidArgumentException If the configured cache driver is unknown.
      */
-    protected function createCache()
+    protected function createCache($cacheKey)
     {
         switch ($this->configuration->cache->driver) {
 
         case 'file':
-            return $this->createFileCache($this->configuration->cache->location);
+            return $this->createFileCache(
+                $this->configuration->cache->location,
+                $cacheKey
+            );
 
         case 'memory':
             return $this->createMemoryCache();
@@ -127,12 +132,13 @@ class PHP_Depend_Util_Cache_Factory
      * Creates a new file system based cache instance.
      *
      * @param string $location Cache root directory.
+     * @param string $cacheKey The name/identifier for the cache instance.
      *
      * @return PHP_Depend_Util_Cache_Driver_File
      */
-    protected function createFileCache($location)
+    protected function createFileCache($location, $cacheKey)
     {
-        return new PHP_Depend_Util_Cache_Driver_File($location);
+        return new PHP_Depend_Util_Cache_Driver_File($location, $cacheKey);
     }
 
     /**
