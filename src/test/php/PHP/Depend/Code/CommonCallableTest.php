@@ -154,6 +154,20 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetChildrenReturnsExpectedNumberOfNodes
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetChildrenReturnsExpectedNumberOfNodes()
+    {
+        $children = $this->getFirstCallableForTest()
+            ->getChildren();
+
+        $this->assertEquals(2, count($children));
+    }
+
+    /**
      * testGetTokensDelegatesCallToCacheRestore
      *
      * @return void

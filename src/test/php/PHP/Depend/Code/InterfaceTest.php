@@ -59,10 +59,12 @@ require_once dirname(__FILE__) . '/AbstractItemTest.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_AbstractClassOrInterface
+ * @covers PHP_Depend_Code_AbstractType
  * @covers PHP_Depend_Code_Interface
-  * @group pdepend
-  * @group pdepend::code
-  * @group unittest
+ * @covers PHP_Depend_Parser
+ * @group pdepend
+ * @group pdepend::code
+ * @group unittest
  */
 class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 {
@@ -687,6 +689,30 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $interface = $this->getFirstInterfaceForTestCase();
         self::assertEquals(3, count($interface->getInterfaceReferences()));
+    }
+
+    /**
+     * testGetAllChildrenReturnsAnEmptyArrayByDefault
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllChildrenReturnsAnEmptyArrayByDefault()
+    {
+        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $this->assertSame(array(), $interface->getChildren());
+    }
+
+    /**
+     * testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        $this->assertSame(2, count($interface->getChildren()));
     }
 
     /**

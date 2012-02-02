@@ -60,6 +60,7 @@ require_once dirname(__FILE__) . '/AbstractItemTest.php';
  * @link      http://pdepend.org/
  * @since     1.0.0
  *
+ * @covers PHP_Depend_Parser
  * @covers PHP_Depend_Code_Trait
  * @covers PHP_Depend_Code_AbstractType
  * @group pdepend
@@ -255,6 +256,30 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
     {
         $trait = $this->getFirstTraitForTest();
         $trait->getAllMethods();
+    }
+
+    /**
+     * testGetAllChildrenReturnsAnEmptyArrayByDefault
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllChildrenReturnsAnEmptyArrayByDefault()
+    {
+        $trait = new PHP_Depend_Code_Trait(__CLASS__);
+        $this->assertSame(array(), $trait->getChildren());
+    }
+
+    /**
+     * testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertSame(2, count($trait->getChildren()));
     }
 
     /**

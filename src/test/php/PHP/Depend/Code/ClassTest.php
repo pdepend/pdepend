@@ -60,7 +60,9 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
  * @link      http://pdepend.org/
  *
  * @covers PHP_Depend_Code_AbstractClassOrInterface
+ * @covers PHP_Depend_Code_AbstractType
  * @covers PHP_Depend_Code_Class
+ * @covers PHP_Depend_Parser
  * @group pdepend
  * @group pdepend::code
  * @group unittest
@@ -356,6 +358,30 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = $this->getFirstClassForTestCase();
         $class->getAllMethods();
+    }
+
+    /**
+     * testGetAllChildrenReturnsAnEmptyArrayByDefault
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllChildrenReturnsAnEmptyArrayByDefault()
+    {
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $this->assertSame(array(), $class->getChildren());
+    }
+
+    /**
+     * testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertSame(2, count($class->getChildren()));
     }
 
     /**

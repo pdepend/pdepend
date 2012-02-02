@@ -73,7 +73,20 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
     public function testGetNameReturnsValueOfFirstConstructorArgument()
     {
         $item = $this->getItemMock();
-        self::assertEquals(__CLASS__, $item->getName());
+        $this->assertEquals(__CLASS__, $item->getName());
+    }
+    
+    /**
+     * testSetNameOverridesPreviousItemName
+     * 
+     * @since 1.0.0
+     */
+    public function testSetNameOverridesPreviousItemName()
+    {
+        $item = $this->getItemMock();
+        $item->setName(__FUNCTION__);
+        
+        $this->assertEquals(__FUNCTION__, $item->getName());        
     }
 
     /**
@@ -84,7 +97,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
     public function testGetUuidReturnsMd5HashByDefault()
     {
         $item = $this->getItemMock();
-        self::assertRegExp('(^[a-f0-9]{32}$)', $item->getUUID());
+        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getUUID());
     }
 
     /**
@@ -97,7 +110,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
         $item = $this->getItemMock();
         $item->setUuid(__METHOD__);
 
-        self::assertEquals(__METHOD__, $item->getUuid());
+        $this->assertEquals(__METHOD__, $item->getUuid());
     }
 
     /**
@@ -108,7 +121,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
     public function testGetSourceFileReturnsNullByDefault()
     {
         $item = $this->getItemMock();
-        self::assertNull($item->getSourceFile());
+        $this->assertNull($item->getSourceFile());
     }
 
     /**
@@ -123,7 +136,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
         $item = $this->getItemMock();
         $item->setSourceFile($file);
 
-        self::assertSame($file, $item->getSourceFile());
+        $this->assertSame($file, $item->getSourceFile());
     }
 
     /**
@@ -134,7 +147,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
     public function testGetDocCommentReturnsNullByDefault()
     {
         $item = $this->getItemMock();
-        self::assertNull($item->getDocComment());
+        $this->assertNull($item->getDocComment());
     }
 
     /**
@@ -147,7 +160,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
         $item = $this->getItemMock();
         $item->setDocComment('/** Manuel */');
 
-        self::assertSame('/** Manuel */', $item->getDocComment());
+        $this->assertSame('/** Manuel */', $item->getDocComment());
     }
 
     /**
