@@ -93,4 +93,35 @@ class PHP_Depend_Util_Cache_Driver_FileTest
     {
         return new PHP_Depend_Util_Cache_Driver_File($this->cacheDir);
     }
+
+    /**
+     * testFileDriverStoresFileWithCacheKeyIfPresent
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testFileDriverStoresFileWithCacheKeyIfPresent()
+    {
+        $cache = new PHP_Depend_Util_Cache_Driver_File($this->cacheDir, 'foo');
+        $cache->type('bar')->store('baz', __METHOD__);
+
+        $key = md5('baz' . 'foo');
+        $dir = substr($key, 0, 2);
+
+        $this->assertEquals(1, count(glob("{$this->cacheDir}/{$dir}/{$key}*.bar")));
+    }
+
+    /**
+     * testFileDriverRestoresFileWithCacheKeyIfPresent
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testFileDriverRestoresFileWithCacheKeyIfPresent()
+    {
+        $cache = new PHP_Depend_Util_Cache_Driver_File($this->cacheDir, 'foo');
+        $cache->type('bar')->store('baz', __METHOD__);
+
+        $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));
+    }
 }
