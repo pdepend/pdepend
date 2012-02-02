@@ -61,11 +61,10 @@
  * @link       http://www.pdepend.org/
  */
 class PHP_Depend_Metrics_NPathComplexity_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
+       extends PHP_Depend_Metrics_AbstractCachingAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_FilterAwareI,
                PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_CacheAware,
                PHP_Depend_Code_ASTVisitorI
 {
     /**
@@ -79,38 +78,6 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     const M_NPATH_COMPLEXITY = 'npath';
 
     /**
-     * This property will hold the calculated NPath Complexity values for the
-     * analyzed functions and methods.
-     *
-     * <code>
-     * array(
-     *     'uuid1'  =>  '17',
-     *     'uuid2'  =>  '42',
-     *     // ...
-     * )
-     * </code>
-     *
-     * @var array(string=>string) $_metrics
-     */
-    private $_metrics = null;
-
-    /**
-     * Metrics restored from the cache. This property is only used temporary.
-     *
-     * @var array
-     * @since 1.0.0
-     */
-    private $_metricsCached = array();
-
-    /**
-     * Injected cache driver.
-     *
-     * @var PHP_Depend_Util_Cache_Driver
-     * @since 1.0.0
-     */
-    private $_cache;
-
-    /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
@@ -119,17 +86,17 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->_metrics === null) {
-            $this->_loadCache();
+        if ($this->metrics === null) {
+            $this->loadCache();
             $this->fireStartAnalyzer();
 
-            $this->_metrics = array();
+            $this->metrics = array();
             foreach ($packages as $package) {
                 $package->accept($this);
             }
 
             $this->fireEndAnalyzer();
-            $this->_unloadCache();
+            $this->unloadCache();
         }
     }
 
@@ -151,9 +118,9 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         $metric = array();
-        if (isset($this->_metrics[$node->getUUID()])) {
+        if (isset($this->metrics[$node->getUUID()])) {
             $metric = array(
-                self::M_NPATH_COMPLEXITY  =>  $this->_metrics[$node->getUUID()]
+                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$node->getUUID()]
             );
         }
         return $metric;
@@ -182,7 +149,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->fireStartFunction($function);
 
-        if (false === $this->_restoreFromCache($function)) {
+        if (false === $this->restoreFromCache($function)) {
             $this->calculateComplexity($function);
         }
 
@@ -200,7 +167,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $this->fireStartMethod($method);
 
-        if (false === $this->_restoreFromCache($method)) {
+        if (false === $this->restoreFromCache($method)) {
             $this->calculateComplexity($method);
         }
 
@@ -225,7 +192,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             $npath = PHP_Depend_Util_MathUtil::mul($npath, $stmt);
         }
 
-        $this->_metrics[$callable->getUUID()] = $npath;
+        $this->metrics[$callable->getUUID()] = $npath;
     }
 
     /**
@@ -625,67 +592,5 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             }
         }
         return $sum;
-    }
-
-    /**
-     * Setter method for the system wide used cache.
-     *
-     * @param PHP_Depend_Util_Cache_Driver $cache Used cache object.
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
-    {
-        $this->_cache = $cache;
-    }
-
-    /**
-     * Tries to restore the metrics for a cached callable. If this method has
-     * restored the metrics it will return <b>TRUE</b>, otherwise the return
-     * value will be <b>FALSE</b>.
-     *
-     * @param PHP_Depend_Code_AbstractCallable $callable
-     *
-     * @return boolean
-     * @since 1.0.0
-     */
-    private function _restoreFromCache(PHP_Depend_Code_AbstractCallable $callable)
-    {
-        $uuid = $callable->getUUID();
-        if ($callable->isCached() && isset($this->_metricsCached[$uuid])) {
-            $this->_metrics[$uuid] = $this->_metricsCached[$uuid];
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Initializes the previously calculated metrics from the cache.
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    private function _loadCache()
-    {
-        $this->_metricsCached = (array) $this->_cache
-            ->type('metrics')
-            ->restore(__CLASS__);
-    }
-
-    /**
-     * Unloads the metrics cache and stores the current set of metrics in the
-     * cache.
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    private function _unloadCache()
-    {
-        $this->_cache
-            ->type('metrics')
-            ->store(__CLASS__, $this->_metrics);
-
-        $this->_metricsCached = array();
     }
 }

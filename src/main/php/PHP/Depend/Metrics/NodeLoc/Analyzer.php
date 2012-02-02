@@ -75,12 +75,11 @@
  * @link       http://pdepend.org/
  */
 class PHP_Depend_Metrics_NodeLoc_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
+       extends PHP_Depend_Metrics_AbstractCachingAnalyzer
     implements PHP_Depend_Metrics_AnalyzerI,
                PHP_Depend_Metrics_NodeAwareI,
                PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_ProjectAwareI,
-               PHP_Depend_Metrics_CacheAware
+               PHP_Depend_Metrics_ProjectAwareI
 {
     /**
      * Type of this analyzer class.
@@ -95,13 +94,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
           M_EXECUTABLE_LINES_OF_CODE  = 'eloc',
           M_LOGICAL_LINES_OF_CODE     = 'lloc',
           M_NON_COMMENT_LINES_OF_CODE = 'ncloc';
-
-    /**
-     * Collected node metrics
-     *
-     * @var array(string=>array)
-     */
-    private $_nodeMetrics = null;
 
     /**
      * Collected project metrics.
@@ -135,16 +127,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     private $_classLogicalLines = 0;
 
     /**
-     * System wide used cache instance.
-     *
-     * @var PHP_Depend_Util_Cache_Driver
-     * @since 1.0.0
-     */
-    private $_cache;
-
-    private $_cachedMetrics = array();
-
-    /**
      * This method will return an <b>array</b> with all generated metric values
      * for the given <b>$node</b> instance. If there are no metrics for the
      * requested node, this method will return an empty <b>array</b>.
@@ -165,8 +147,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         $metrics = array();
-        if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            $metrics = $this->_nodeMetrics[$node->getUUID()];
+        if (isset($this->metrics[$node->getUUID()])) {
+            $metrics = $this->metrics[$node->getUUID()];
         }
         return $metrics;
     }
@@ -198,17 +180,17 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->_nodeMetrics === null) {
-            $this->_loadCache();
+        if ($this->metrics === null) {
+            $this->loadCache();
             $this->fireStartAnalyzer();
 
-            $this->_nodeMetrics = array();
+            $this->metrics = array();
             foreach ($packages as $package) {
                 $package->accept($this);
             }
 
             $this->fireEndAnalyzer();
-            $this->_storeCache();
+            $this->unloadCache();
         }
     }
 
@@ -233,7 +215,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $method->accept($this);
         }
 
-        if ($this->_restoreFromCache($class)) {
+        if ($this->restoreFromCache($class)) {
             return $this->fireEndClass($class);
         }
 
@@ -242,7 +224,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $class->getEndLine() - $class->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->_nodeMetrics[$class->getUUID()] = array(
+        $this->metrics[$class->getUUID()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $this->_classExecutableLines,
@@ -269,13 +251,13 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         }
         // Check for initial file
         $uuid = $file->getUUID();
-        if (isset($this->_nodeMetrics[$uuid])) {
+        if (isset($this->metrics[$uuid])) {
             return;
         }
 
         $this->fireStartFile($file);
 
-        if ($this->_restoreFromCache($file)) {
+        if ($this->restoreFromCache($file)) {
             $this->_updateProjectMetrics($uuid);
             return $this->fireEndFile($file);
         }
@@ -285,7 +267,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $file->getEndLine();
         $ncloc = $loc - $cloc;
 
-        $this->_nodeMetrics[$uuid] = array(
+        $this->metrics[$uuid] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -312,7 +294,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $function->getSourceFile()->accept($this);
 
-        if ($this->_restoreFromCache($function)) {
+        if ($this->restoreFromCache($function)) {
             return $this->fireEndFunction($function);
         }
 
@@ -324,7 +306,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->_nodeMetrics[$function->getUUID()] = array(
+        $this->metrics[$function->getUUID()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -352,7 +334,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $method->accept($this);
         }
 
-        if ($this->_restoreFromCache($interface)) {
+        if ($this->restoreFromCache($interface)) {
             return $this->fireEndInterface($interface);
         }
 
@@ -361,7 +343,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->_nodeMetrics[$interface->getUUID()] = array(
+        $this->metrics[$interface->getUUID()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
@@ -383,7 +365,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     {
         $this->fireStartMethod($method);
 
-        if ($this->_restoreFromCache($method)) {
+        if ($this->restoreFromCache($method)) {
             return $this->fireEndMethod($method);
         }
         
@@ -400,7 +382,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->_nodeMetrics[$method->getUUID()] = array(
+        $this->metrics[$method->getUUID()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -415,27 +397,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     }
 
     /**
-     * Tries to restore the node metrics from the cache. This method will return
-     * <b>TRUE</b> if it could restore the metrics, otherwise it will return
-     * <b>FALSE</b>.
-     *
-     * @param PHP_Depend_Code_NodeI $item The context code item.
-     *
-     * @return boolean
-     * @since 1.0.0
-     */
-    private function _restoreFromCache(PHP_Depend_Code_NodeI $item)
-    {
-        $uuid = $item->getUUID();
-        if ($item->isCached() && isset($this->_cachedMetrics[$uuid])) {
-            $this->_nodeMetrics[$uuid] = $this->_cachedMetrics[$uuid];
-
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Updates the project metrics based on the node metrics identifier by the
      * given <b>$uuid</b>.
      *
@@ -445,7 +406,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     private function _updateProjectMetrics($uuid)
     {
-        foreach ($this->_nodeMetrics[$uuid] as $metric => $value) {
+        foreach ($this->metrics[$uuid] as $metric => $value) {
             $this->_projectMetrics[$metric] += $value;
         }
     }
@@ -536,46 +497,5 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             unset($lines);
         }
         return array(count($clines), count($elines), $llines);
-    }
-
-    /**
-     * Setter method for the system wide used cache.
-     *
-     * @param PHP_Depend_Util_Cache_Driver $cache Used cache object.
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
-    {
-        $this->_cache = $cache;
-    }
-
-    /**
-     * Loads previously calculated metrics from the cache.
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    private function _loadCache()
-    {
-        $this->_cachedMetrics = (array) $this->_cache
-            ->type('metrics')
-            ->restore(__CLASS__);
-    }
-
-    /**
-     * Stores the actual set of metrics in the cache.
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    private function _storeCache()
-    {
-        $this->_cache
-            ->type('metrics')
-            ->store(__CLASS__, $this->_nodeMetrics);
-
-        $this->_cachedMetrics = array();
     }
 }
