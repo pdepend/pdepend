@@ -86,7 +86,6 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
         $this->_cache = new PHP_Depend_Util_Cache_Driver_Memory();
     }
 
-
     /**
      * testAnalyzerCalculatesCorrectFunctionMetrics
      *

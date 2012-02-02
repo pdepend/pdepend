@@ -160,7 +160,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
      *
-     * @return array(string=>mixed)
+     * @return array
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
@@ -182,7 +182,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * )
      * </code>
      *
-     * @return array(string=>mixed)
+     * @return array
      */
     public function getProjectMetrics()
     {

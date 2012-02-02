@@ -69,6 +69,78 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
 {
     /**
+     * @var PHP_Depend_Util_Cache_Driver
+     * @since 1.0.0
+     */
+    private $_cache;
+
+    /**
+     * Initializes a in memory cache.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->_cache = new PHP_Depend_Util_Cache_Driver_Memory();
+    }
+
+    /**
+     * testAnalyzerRestoresExpectedFunctionMetricsFromCache
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
+    {
+        $packages = self::parseCodeResourceForTest();
+        $function = $packages->current()
+            ->getFunctions()
+            ->current();
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics0 = $analyzer->getNodeMetrics($function);
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics1 = $analyzer->getNodeMetrics($function);
+
+        $this->assertEquals($metrics0, $metrics1);
+    }
+
+    /**
+     * testAnalyzerRestoresExpectedMethodMetricsFromCache
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
+    {
+        $packages = self::parseCodeResourceForTest();
+        $method   = $packages->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics0 = $analyzer->getNodeMetrics($method);
+
+        $analyzer = $this->_createAnalyzer();
+        $analyzer->analyze($packages);
+
+        $metrics1 = $analyzer->getNodeMetrics($method);
+
+        $this->assertEquals($metrics0, $metrics1);
+    }
+
+    /**
      * testNPathComplexityForNestedIfStatementsWithScope
      *
      * @return void
@@ -516,10 +588,24 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      */
     private function _calculateNPathComplexity(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer = $this->_createAnalyzer();
         $callable->accept($analyzer);
 
         $metrics = $analyzer->getNodeMetrics($callable);
         return $metrics['npath'];
+    }
+
+    /**
+     * Creates a ready to use npath complexity analyzer.
+     *
+     * @return PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @since 1.0.0
+     */
+    private function _createAnalyzer()
+    {
+        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer->setCache($this->_cache);
+
+        return $analyzer;
     }
 }

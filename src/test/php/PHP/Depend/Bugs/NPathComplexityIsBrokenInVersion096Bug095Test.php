@@ -83,6 +83,7 @@ class PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test extends PHP_
             ->current();
 
         $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $analyzer->analyze($packages);
 
         self::assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));
