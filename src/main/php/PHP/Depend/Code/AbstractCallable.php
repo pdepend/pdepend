@@ -90,7 +90,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * List of all exceptions classes referenced by this callable.
      *
-     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference[]
      * @since 0.9.5
      */
     protected $exceptionClassReferences = array();
@@ -105,7 +105,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * List of all parsed child nodes.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI)
+     * @var PHP_Depend_Code_ASTNodeI[]
      * @since 0.9.6
      */
     protected $nodes = array();
@@ -129,7 +129,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * List of method/function parameters.
      *
-     * @var array(PHP_Depend_Code_Parameter)
+     * @var PHP_Depend_Code_Parameter[]
      */
     private $_parameters = null;
 
@@ -173,7 +173,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Returns all child nodes of this method.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return PHP_Depend_Code_ASTNodeI[]
      * @since 0.9.8
      */
     public function getChildren()
@@ -211,7 +211,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @param string $targetType The target class or interface type.
      * @param array  &$results   The found children.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return PHP_Depend_Code_ASTNodeI[]
      * @access private
      * @since 0.9.6
      */
@@ -241,7 +241,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Sets the tokens found in the function body.
      *
-     * @param array(mixed) $tokens The body tokens.
+     * @param PHP_Depend_Token[] $tokens The body tokens.
      *
      * @return void
      */
@@ -356,7 +356,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Returns an array with all method/function parameters.
      *
-     * @return array(PHP_Depend_Code_Parameter)
+     * @return PHP_Depend_Code_Parameter[]
      */
     public function getParameters()
     {
@@ -394,7 +394,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Returns an array with all declared static variables.
      *
-     * @return array(string=>mixed)
+     * @return array
      * @since 0.9.6
      */
     public function getStaticVariables()
@@ -478,7 +478,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * gets serialized. It returns an array with those properties that should be
      * cached for all callable instances.
      *
-     * @return array(string)
+     * @return array
      * @since 0.10.0
      */
     public function __sleep()
