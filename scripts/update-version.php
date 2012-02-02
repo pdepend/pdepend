@@ -77,7 +77,8 @@ class PHP_Depend_CacheVersionUpdater
         '/Metrics',
         '/Parser',
         '/Tokenizer',
-        '/Parser.php'
+        '/Parser.php',
+        '/ConstantsI.php'
     );
 
     /**
