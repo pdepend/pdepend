@@ -72,21 +72,21 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * The log output file.
      *
-     * @var string $_logFile
+     * @var string
      */
     private $_logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
      *
-     * @var PHP_Depend_Code_NodeIterator $code
+     * @var PHP_Depend_Code_NodeIterator
      */
     protected $code = null;
 
     /**
      * Set of all analyzed files.
      *
-     * @var array(string=>PHP_Depend_Code_File) $fileSet
+     * @var PHP_Depend_Code_File[]
      */
     protected $fileSet = array();
 
@@ -94,7 +94,7 @@ class PHP_Depend_Log_Summary_Xml
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI)
+     * @var PHP_Depend_Metrics_AnalyzerI[]
      */
     private $_nodeAwareAnalyzers = array();
 
@@ -102,14 +102,14 @@ class PHP_Depend_Log_Summary_Xml
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_ProjectAwareI}.
      *
-     * @var array(PHP_Depend_Metrics_ProjectAwareI)
+     * @var PHP_Depend_Metrics_ProjectAwareI[]
      */
     private $_projectAwareAnalyzers = array();
 
     /**
      * The internal used xml stack.
      *
-     * @var array(DOMElement) $_xmlStack
+     * @var DOMElement[]
      */
     private $_xmlStack = array();
 
@@ -249,7 +249,6 @@ class PHP_Depend_Log_Summary_Xml
      * @param PHP_Depend_Code_Class $class The current class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -286,7 +285,6 @@ class PHP_Depend_Log_Summary_Xml
      * @param PHP_Depend_Code_Function $function The current function node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -318,10 +316,9 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Depend_Code_Method $method The method class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -342,7 +339,6 @@ class PHP_Depend_Log_Summary_Xml
      * @param PHP_Depend_Code_Class $package The package class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
