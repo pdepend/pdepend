@@ -125,6 +125,18 @@ class PHP_Depend_Code_ASTClosureTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testParserHandlesPureClosureStatementWithoutAssignment
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testParserHandlesPureClosureStatementWithoutAssignment()
+    {
+        $closure = $this->_getFirstClosureInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTClosure::CLAZZ, $closure);
+    }
+
+    /**
      * testIsStaticReturnsFalseByDefault
      *
      * @return void

@@ -17,6 +17,9 @@
                 <file>src/main/php/PHP/Depend/ProcessListenerI.php</file>
                 <file>src/main/php/PHP/Depend/TokenizerI.php</file>
                 <file>src/main/php/PHP/Depend/VisitorI.php</file>
+
+                <!-- Exclude this exotic result printer -->
+                <file>src/main/php/PHP/Depend/DbusUI/ResultPrinter.php</file>
             </exclude>
         </whitelist>
     </filter>
