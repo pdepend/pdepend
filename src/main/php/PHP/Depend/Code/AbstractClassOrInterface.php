@@ -276,10 +276,6 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getAllMethods()
     {
-        $uses = $this->findChildrenOfType(
-            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
-        );
-
         $methods = array();
         foreach ($this->getInterfaces() as $interface) {
             foreach ($interface->getAllMethods() as $method) {
@@ -288,13 +284,8 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
         }
 
         if (is_object($parentClass = $this->getParentClass())) {
-            foreach ($parentClass->getAllMethods() as $method) {
-                foreach ($uses as $use) {
-                    if ($use->hasExcludeFor($method)) {
-                        continue 2;
-                    }
-                }
-                $methods[strtolower($method->getName())] = $method;
+            foreach ($parentClass->getAllMethods() as $methodName => $method) {
+                $methods[$methodName] = $method;
             }
         }
 

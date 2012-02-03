@@ -716,6 +716,42 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetDependenciesReturnsEmptyResultByDefault
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesReturnsEmptyResultByDefault()
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        $this->assertEquals(0, count($interface->getDependencies()));
+    }
+
+    /**
+     * testGetDependenciesContainsExtendedInterface
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesContainsExtendedInterface()
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        $this->assertEquals(1, count($interface->getDependencies()));
+    }
+
+    /**
+     * testGetDependenciesContainsExtendedInterfaces
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesContainsExtendedInterfaces()
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        $this->assertEquals(3, count($interface->getDependencies()));
+    }
+
+    /**
      * testGetEndLineReturnsEndLineOfLastToken
      *
      * @return void

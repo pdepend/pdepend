@@ -157,6 +157,23 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
+     * testGetAllMethodsOnClassWhereTraitExcludesParentMethod
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetAllMethodsOnClassWhereTraitExcludesParentMethod()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $methods = $class->getAllMethods();
+
+        $this->assertInstanceOf(
+            PHP_Depend_Code_Trait::CLAZZ,
+            $methods['foo']->getParent()
+        );
+    }
+
+    /**
      * testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod
      *
      * @return void
@@ -515,6 +532,66 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = $this->getFirstClassForTestCase();
         self::assertTrue($class->hasConstant('BAR'));
+    }
+
+    /**
+     * testGetDependenciesReturnsEmptyResultByDefault
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesReturnsEmptyResultByDefault()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(0, count($class->getDependencies()));
+    }
+
+    /**
+     * testGetDependenciesContainsImplementedInterface
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesContainsImplementedInterface()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(1, count($class->getDependencies()));
+    }
+
+    /**
+     * testGetDependenciesContainsImplementedInterfaces
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesContainsImplementedInterfaces()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(3, count($class->getDependencies()));
+    }
+
+    /**
+     * testGetDependenciesContainsParentClass
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesContainsParentClass()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(1, count($class->getDependencies()));
+    }
+
+    /**
+     * testGetDependenciesContainsParentClassAndInterfaces
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDependenciesContainsParentClassAndInterfaces()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $this->assertEquals(3, count($class->getDependencies()));
     }
 
     /**
@@ -1379,6 +1456,22 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             ),
             $classes
         );
+    }
+
+    /**
+     * testGetParentReturnsNullWhenParentIsFiltered
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetParentReturnsNullWhenParentIsFiltered()
+    {
+        PHP_Depend_Code_Filter_Collection::getInstance()->setFilter(
+            new PHP_Depend_Code_Filter_Package(array('org.pdepend.filter'))
+        );
+
+        $class = $this->getFirstClassForTestCase();
+        $this->assertNull($class->getParentClass());
     }
 
     /**
