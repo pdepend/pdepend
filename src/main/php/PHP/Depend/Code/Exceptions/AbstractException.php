@@ -47,6 +47,8 @@
  * @since      0.10.0
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * Base class for code related exceptions.
  *
@@ -64,3 +66,5 @@ abstract class PHP_Depend_Code_Exceptions_AbstractException extends RuntimeExcep
 {
     
 }
+
+// @codeCoverageIgnoreEnd

@@ -47,6 +47,8 @@
  * @since      0.9.12
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * This is an abstract base class for index nodes.
  *
@@ -68,3 +70,5 @@ abstract class PHP_Depend_Code_ASTIndexExpression
      */
     const CLAZZ = __CLASS__;
 }
+
+// @codeCoverageIgnoreEnd

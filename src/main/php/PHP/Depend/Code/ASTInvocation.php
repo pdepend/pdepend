@@ -47,6 +47,8 @@
  * @since      0.9.6
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * This is an abstract base class for invocation nodes.
  *
@@ -67,3 +69,5 @@ abstract class PHP_Depend_Code_ASTInvocation extends PHP_Depend_Code_ASTNode
      */
     const CLAZZ = __CLASS__;
 }
+
+// @codeCoverageIgnoreEnd
