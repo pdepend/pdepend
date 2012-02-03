@@ -2580,14 +2580,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 );
                 break;
 
-            case self::T_SQUARED_BRACKET_OPEN:
-                $expressions[] = $this->_parseBraceExpression(
-                    $this->builder->buildASTExpression(),
-                    $this->consumeToken(self::T_SQUARED_BRACKET_OPEN),
-                    self::T_SQUARED_BRACKET_CLOSE
-                );
-                break;
-
             case self::T_INCLUDE:
                 $expressions[] = $this->_parseIncludeExpression();
                 break;
