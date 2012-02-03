@@ -42,13 +42,15 @@
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2008-2012 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id: Collection.php 1030 2010-01-01 12:06:13Z mapi $
+ * @version    SVN: $Id$
  * @link       http://pdepend.org/
+ * @since      1.0.0
  */
 
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
+
 /**
- * Static composite filter for code nodes. This class is used for an overall
- * filtering.
+ * Test case for the {@link PHP_Depend_Code_Filter_Collection} class.
  *
  * @category   QualityAssurance
  * @package    PHP_Depend
@@ -58,71 +60,44 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
+ * @since      1.0.0
+ *
+ * @covers PHP_Depend_Code_Filter_Collection
+ * @group pdepend
+ * @group pdepend::code
+ * @group pdepend::code::filter
+ * @group unittest
  */
-final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
+class PHP_Depend_Code_Filter_CollectionTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Singleton instance of this filter.
-     *
-     * @var PHP_Depend_Code_Filter_Collection $_instance
-     */
-    private static $_instance = null;
-
-    /**
-     * Singleton method for this filter class.
-     *
-     * @return PHP_Depend_Code_Filter_Collection
-     */
-    public static function getInstance()
-    {
-        if (self::$_instance === null) {
-            self::$_instance = new PHP_Depend_Code_Filter_Collection();
-        }
-        return self::$_instance;
-    }
-
-    /**
-     * Constructs a new static filter.
-     *
-     * @access private
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * An optional configured filter instance.
-     *
-     * @var PHP_Depend_Code_FilterI
-     */
-    private $_filter = null;
-
-    /**
-     * Sets the used filter instance.
-     *
-     * @param PHP_Depend_Code_FilterI $filter The new filter instance.
+     * testAcceptsReturnsTrueByDefault
      *
      * @return void
-     * @since 0.9.12
      */
-    public function setFilter(PHP_Depend_Code_FilterI $filter = null)
+    public function testAcceptsReturnsTrueByDefault()
     {
-        $this->_filter = $filter;
+        $collection = new PHP_Depend_Code_Filter_Collection();
+        $this->assertTrue($collection->accept(new PHP_Depend_Code_Class(__CLASS__)));
     }
 
     /**
-     * Returns <b>true</b> if the given node should be part of the node iterator,
-     * otherwise this method will return <b>false</b>.
+     * testAcceptsCallsNestedFilterWhenSet
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return boolean
+     * @return void
      */
-    public function accept(PHP_Depend_Code_NodeI $node)
+    public function testAcceptsCallsNestedFilterWhenSet()
     {
-        if ($this->_filter === null) {
-            return true;
-        }
-        return $this->_filter->accept($node);
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+
+        $filter = $this->getMock('PHP_Depend_Code_FilterI');
+        $filter->expects($this->once())
+            ->method('accept')
+            ->with($this->equalTo($class));
+
+
+        $collection = new PHP_Depend_Code_Filter_Collection();
+        $collection->setFilter($filter);
+        $collection->accept($class);
     }
 }
