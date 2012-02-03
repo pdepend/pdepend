@@ -119,6 +119,22 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
     }
 
     /**
+     * testHasExcludeForReturnsTrueIfMethodAffectedBySecondInstead
+     *
+     * @return void
+     */
+    public function testHasExcludeForReturnsTrueIfMethodAffectedBySecondInstead()
+    {
+        $class   = $this->getFirstClassForTestCase();
+        $useStmt = $class->getFirstChildOfType(
+            PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+        );
+        $methods = $useStmt->getAllMethods();
+
+        $this->assertTrue($useStmt->hasExcludeFor($methods[0]));
+    }
+
+    /**
      * testGetAllMethodsOnClassWithParentReturnsTraitMethod
      *
      * @return void
