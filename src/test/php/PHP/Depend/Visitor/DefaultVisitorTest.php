@@ -272,6 +272,30 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testVisitorInvokesAcceptOnTraitMethods
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testVisitorInvokesAcceptOnTraitMethods()
+    {
+        $trait = new PHP_Depend_Code_Trait('MyTrait');
+        $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $trait->addMethod($method0 = new PHP_Depend_Code_Method('m0'));
+        $trait->addMethod($method1 = new PHP_Depend_Code_Method('m1'));
+
+        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitMethod'));
+        $visitor->expects($this->at(0))
+            ->method('visitMethod')
+            ->with($this->equalTo($method0));
+        $visitor->expects($this->at(1))
+            ->method('visitMethod')
+            ->with($this->equalTo($method1));
+
+        $trait->accept($visitor);
+    }
+
+    /**
      * testVisitorInvokesStartTraitOnListener
      *
      * @return void
