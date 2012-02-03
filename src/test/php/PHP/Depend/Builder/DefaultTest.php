@@ -576,6 +576,36 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testGetClassOrInterfaceReturnsClassInExtensionPackage
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetClassOrInterfaceReturnsClassInExtensionPackage()
+    {
+        $builder = $this->createBuilder();
+        $this->assertEquals(
+            '+reflection',
+            $builder->getClassOrInterface('Reflection')->getPackage()->getName()
+        );
+    }
+
+    /**
+     * testGetClassOrInterfaceStripsLeadingBackslashFromClass
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetClassOrInterfaceStripsLeadingBackslashFromClass()
+    {
+        $builder = $this->createBuilder();
+        $this->assertEquals(
+            'foo\bar',
+            $builder->getClassOrInterface('\foo\bar\Baz')->getPackage()->getName()
+        );
+    }
+
+    /**
      * Tests that the node builder works case insensitive for interface names.
      *
      * @return void
