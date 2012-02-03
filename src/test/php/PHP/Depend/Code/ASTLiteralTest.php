@@ -245,6 +245,18 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testLiteralWithCurlyBraceFollowedByCompoundExpression
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testLiteralWithCurlyBraceFollowedByCompoundExpression()
+    {
+        $literal = $this->_getFirstLiteralInFunction();
+        $this->assertEquals('{', $literal->getImage());
+    }
+
+    /**
      * Tests that an invalid literal results in the expected exception.
      * 
      * @return void
