@@ -320,6 +320,8 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      * testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined
      *
      * @return void
+     * @covers PHP_Depend_Code_Exceptions_AbstractException
+     * @covers PHP_Depend_Code_Exceptions_SourceNotFoundException
      * @expectedException PHP_Depend_Code_Exceptions_SourceNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()

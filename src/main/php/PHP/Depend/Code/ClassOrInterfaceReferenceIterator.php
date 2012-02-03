@@ -66,8 +66,8 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
     /**
      * Constructs a new reference iterator instance.
      *
-     * @param array(PHP_Depend_Code_ASTClassOrInterfaceReference) $references List
-     *        of references to concrete type instances.
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference[] $references List of
+     *        references to concrete type instances.
      */
     public function __construct(array $references)
     {
@@ -78,10 +78,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
      * This method creates a set of {@link PHP_Depend_Code_AbstractClassOrInterface}
      * objects from the given reference array.
      *
-     * @param array(PHP_Depend_Code_ASTClassOrInterfaceReference) $references List
-     *        of references to concrete type instances.
+     * @param PHP_Depend_Code_ASTClassOrInterfaceReference[] $references List of
+     *        references to concrete type instances.
      *
-     * @return array(PHP_Depend_Code_AbstractClassOrInterface)
+     * @return PHP_Depend_Code_AbstractClassOrInterface[]
      */
     protected function createClassesAndInterfaces(array $references)
     {

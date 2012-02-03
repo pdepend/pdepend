@@ -63,6 +63,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @since      0.9.12
  *
  * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTIndexExpression
  * @covers PHP_Depend_Code_ASTStringIndexExpression
  * @group pdepend
  * @group pdepend::ast

@@ -47,6 +47,8 @@
  * @since      0.9.6
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * Root interface for an ast node.
  *
@@ -195,3 +197,5 @@ interface PHP_Depend_Code_ASTNodeI
      */
     function free();
 }
+
+// @codeCoverageIgnoreStart

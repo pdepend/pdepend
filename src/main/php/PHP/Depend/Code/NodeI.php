@@ -46,6 +46,8 @@
  * @link       http://pdepend.org/
  */
 
+// @codeCoverageIgnoreStart
+
 /**
  * Represents any possible code node.
  *
@@ -84,3 +86,5 @@ interface PHP_Depend_Code_NodeI
      */
     function accept(PHP_Depend_VisitorI $visitor);
 }
+
+// @codeCoverageIgnoreEnd

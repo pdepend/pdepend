@@ -67,6 +67,18 @@ require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
 class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetUUIDReturnsExpectedObjectHash
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetUUIDReturnsExpectedObjectHash()
+    {
+        $package = new PHP_Depend_Code_Package(__FUNCTION__);
+        $this->assertEquals(spl_object_hash($package), $package->getUUID());
+    }
+
+    /**
      * Tests that the {@link PHP_Depend_Code_Package::getTypes()} method returns
      * an empty {@link PHP_Depend_Code_NodeIterator}.
      *

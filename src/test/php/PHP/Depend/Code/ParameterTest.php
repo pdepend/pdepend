@@ -68,20 +68,25 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetUUIDReturnsExpectedObjectHash
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetUUIDReturnsExpectedObjectHash()
+    {
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getUUID());
+    }
+
+    /**
      * Tests that the allows null method returns <b>true</b> for a simple parameter.
      *
      * @return void
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
         self::assertTrue($parameters[0]->allowsNull());
     }
 
@@ -93,14 +98,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
         self::assertTrue($parameters[0]->allowsNull());
     }
 
@@ -112,14 +110,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
         self::assertFalse($parameters[0]->allowsNull());
     }
 
@@ -131,14 +122,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
         self::assertTrue($parameters[0]->allowsNull());
     }
 
@@ -150,14 +134,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
         self::assertFalse($parameters[0]->allowsNull());
     }
 
@@ -169,14 +146,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameter = $this->_getFirstMethodInClass()->getParameters();
         self::assertTrue($parameter[0]->allowsNull());
     }
 
@@ -188,12 +158,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67()
     {
-        $packages  = self::parseCodeResourceForTest();
-        $parameter = $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-
+        $parameter = $this->getFirstFunctionForTestCase()->getParameters();
         self::assertNull($parameter[0]->getDeclaringClass());
     }
 
@@ -243,14 +208,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-            
+        $parameters = $this->_getFirstMethodInClass()->getParameters();
         self::assertNull($parameters[0]->getClass());
     }
 
@@ -261,11 +219,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnsExpectedDeclaringFunction()
     {
-        $function = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current();
-
+        $function   = $this->getFirstFunctionForTestCase();
         $parameters = $function->getParameters();
         self::assertSame($function, $parameters[0]->getDeclaringFunction());
     }
@@ -277,15 +231,26 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testParameterReturnsExpectedDeclaringMethod()
     {
-        $method = self::parseCodeResourceForTest()
+        $method     = $this->_getFirstMethodInClass();
+        $parameters = $method->getParameters();
+        self::assertSame($method, $parameters[0]->getDeclaringFunction());
+    }
+
+    /**
+     * Returns the first class method found in the test file associated with the
+     * calling test method.
+     *
+     * @return PHP_Depend_Code_Method
+     * @since 1.0.0
+     */
+    private function _getFirstMethodInClass()
+    {
+        return self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current();
-
-        $parameters = $method->getParameters();
-        self::assertSame($method, $parameters[0]->getDeclaringFunction());
     }
 
     /**

@@ -66,6 +66,18 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
 {
     /**
+     * testGetDeclaringClass
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testGetDeclaringClass()
+    {
+        $property = $this->_getFirstPropertyInClass();
+        $this->assertEquals(__FUNCTION__, $property->getDeclaringClass()->getName());
+    }
+
+    /**
      * testGetClassForPropertyWithNamespacedInternalType
      *
      * @return void

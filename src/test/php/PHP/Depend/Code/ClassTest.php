@@ -1408,6 +1408,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame
      *
      * @return void
+     * @covers PHP_Depend_Code_Exceptions_AbstractException
      * @covers PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
@@ -1478,6 +1479,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      * testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
      *
      * @return void
+     * @covers PHP_Depend_Code_Exceptions_AbstractException
      * @covers PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */

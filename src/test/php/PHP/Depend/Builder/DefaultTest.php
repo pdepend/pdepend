@@ -1881,6 +1881,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTMethodPostfixReturnsExpectedType
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testBuildASTMethodPostfixReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+            $this->createBuilder()->buildASTMethodPostfix('foo')
+        );
+    }
+
+    /**
      * testBuildASTFunctionPostfixReturnsExpectedType
      *
      * @return void
