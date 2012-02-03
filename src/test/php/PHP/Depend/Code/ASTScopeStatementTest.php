@@ -69,13 +69,89 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testParserHandlesInlineScopeStatement
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.0
+     */
+    public function testParserHandlesInlineScopeStatement()
+    {
+        $stmt = $this->_getFirstScopeStatementInFunction();
+        $this->assertEquals(1, count($stmt->getChildren()));
+
+        return $stmt;
+    }
+
+    /**
+     * testInlineScopeStatementHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.0
+     * @depends testParserHandlesInlineScopeStatement
+     */
+    public function testInlineScopeStatementHasExpectedStartLine($stmt)
+    {
+        $this->assertEquals(4, $stmt->getStartLine());
+
+        return $stmt;
+    }
+
+    /**
+     * testInlineScopeStatementHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.0
+     * @depends testInlineScopeStatementHasExpectedStartLine
+     */
+    public function testInlineScopeStatementHasExpectedStartColumn($stmt)
+    {
+        $this->assertEquals(5, $stmt->getStartColumn());
+
+        return $stmt;
+    }
+
+    /**
+     * testInlineScopeStatementHasExpectedEndLine
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.0
+     * @depends testInlineScopeStatementHasExpectedStartColumn
+     */
+    public function testInlineScopeStatementHasExpectedEndLine($stmt)
+    {
+        $this->assertEquals(5, $stmt->getEndLine());
+
+        return $stmt;
+    }
+
+    /**
+     * testInlineScopeStatementHasExpectedEndColumn
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.0
+     * @depends testInlineScopeStatementHasExpectedEndLine
+     */
+    public function testInlineScopeStatementHasExpectedEndColumn($stmt)
+    {
+        $this->assertEquals(20, $stmt->getEndColumn());
+    }
+    
+    /**
      * Tests that the scope-statement has the expected start line value.
      *
      * @return void
      */
     public function testScopeStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -86,7 +162,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(34, $stmt->getStartColumn());
     }
 
@@ -97,7 +173,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
@@ -108,7 +184,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
@@ -119,7 +195,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testAlternativeScopeStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(6, $stmt->getStartLine());
     }
 
@@ -130,7 +206,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testAlternativeScopeStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(13, $stmt->getStartColumn());
     }
 
@@ -141,7 +217,7 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testAlternativeScopeStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(17, $stmt->getEndLine());
     }
 
@@ -152,21 +228,20 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testAlternativeScopeStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(15, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTScopeStatement
      */
-    private function _getFirstScopeStatementInFunction($testCase)
+    private function _getFirstScopeStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTScopeStatement::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTScopeStatement::CLAZZ
         );
     }
 }

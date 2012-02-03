@@ -61,6 +61,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @link       http://www.pdepend.org/
  *
  * @covers PHP_Depend_Parser
+ * @covers PHP_Depend_Code_ASTNode
  * @covers PHP_Depend_Code_ASTScope
  * @group pdepend
  * @group pdepend::ast
@@ -75,7 +76,7 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeHasExpectedStartLine()
     {
-        $stmt = $this->_getFunctionScope(__METHOD__);
+        $stmt = $this->_getFunctionScope();
         $this->assertEquals(3, $stmt->getStartLine());
     }
 
@@ -97,7 +98,7 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeHasExpectedEndLine()
     {
-        $stmt = $this->_getFunctionScope(__METHOD__);
+        $stmt = $this->_getFunctionScope();
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
@@ -108,21 +109,19 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testScopeHasExpectedEndColumn()
     {
-        $stmt = $this->_getFunctionScope(__METHOD__);
+        $stmt = $this->_getFunctionScope();
         $this->assertEquals(1, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTScope
      */
-    private function _getFunctionScope($testCase)
+    private function _getFunctionScope()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTScope::CLAZZ
+            $this->getCallingTestMethod(), PHP_Depend_Code_ASTScope::CLAZZ
         );
     }
 }
