@@ -10,7 +10,7 @@
 
 	<body>
 		<release version="1.0.0"
-                 date="2011/10/04"
+                 date="2012/02/04"
                  description="Now that we have completed support for all the new
                               language features introduced with PHP 5.4, we are
                               ready to release version 1.0.0 of PHP_Depend. PHP_Depend
