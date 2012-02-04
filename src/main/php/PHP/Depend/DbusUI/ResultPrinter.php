@@ -206,18 +206,6 @@ class PHP_Depend_DbusUI_ResultPrinter
     public function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
     }
-
-    /**
-     * Generic notification method that is called for every node start.
-     *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::startVisitNode()
-     */
-    public function startVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-    }
 }
 
 // @codeCoverageIgnoreEnd
