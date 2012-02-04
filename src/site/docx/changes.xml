@@ -11,7 +11,19 @@
 	<body>
 		<release version="1.0.0"
                  date="2011/10/04"
-                 description="This release closes a critical bug that let PHP_Depend die with a E_FATAL when the used PHP version was 5.4 or greater.">
+                 description="Now that we have completed support for all the new
+                              language features introduced with PHP 5.4, we are
+                              ready to release version 1.0.0 of PHP_Depend. PHP_Depend
+                              can now handle traits, static closures, binary numbers,
+                              the callable type hint and the new short array syntax.
+                              Beside that, we have spent much effort in improving
+                              PHP_Depend's overall performance and we got an average
+                              speed gain of ~ 15% for processing major frameworks
+                              like Symfony2 or FLOW3, when PHP_Depend's file cache
+                              (default setup) is used.
+
+                              Additionally this release closes several minor issues
+                              in PHP_Depend.">
             <action date="84f612e" dev="mapi" issue="8927307" system="pivotaltracker" type="add">
                 Add support for traits
             </action>
