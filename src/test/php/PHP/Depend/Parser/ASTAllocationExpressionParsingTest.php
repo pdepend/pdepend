@@ -71,6 +71,81 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     extends PHP_Depend_Parser_AbstractTest
 {
     /**
+     * testAllocationExpressionForSelfProperty
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAllocationExpressionForSelfProperty()
+    {
+        $allocation = $this->_getFirstAllocationInClass();
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            $allocation->getChild(0)
+        );
+    }
+
+    /**
+     * testAllocationExpressionForParentProperty
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAllocationExpressionForParentProperty()
+    {
+        $allocation = $this->_getFirstAllocationInClass();
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            $allocation->getChild(0)
+        );
+    }
+
+    /**
+     * testAllocationExpressionForStaticProperty
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAllocationExpressionForStaticProperty()
+    {
+        $allocation = $this->_getFirstAllocationInClass();
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            $allocation->getChild(0)
+        );
+    }
+
+    /**
+     * testAllocationExpressionForThisProperty
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAllocationExpressionForThisProperty()
+    {
+        $allocation = $this->_getFirstAllocationInClass();
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+            $allocation->getChild(0)
+        );
+    }
+
+    /**
+     * testAllocationExpressionForObjectProperty
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAllocationExpressionForObjectProperty()
+    {
+        $allocation = $this->_getFirstAllocationInClass();
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            $allocation->getChild(0)
+        );
+    }
+
+    /**
      * Tests that the allocation object graph contains the expected objects
      *
      * @return void
@@ -285,4 +360,18 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
         self::parseCodeResourceForTest();
     }
 
+    /**
+     * Returns the first allocation expression found in the test file associated
+     * with the calling test method.
+     *
+     * @return PHP_Depend_Code_ASTAllocationExpression
+     * @since 1.0.1
+     */
+    private function _getFirstAllocationInClass()
+    {
+        return $this->getFirstNodeOfTypeInClass(
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+        );
+    }
 }

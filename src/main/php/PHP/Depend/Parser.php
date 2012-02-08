@@ -2018,41 +2018,31 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_DOLLAR:
         case self::T_VARIABLE:
             // TODO: Parse variable or Member Primary Prefix + Property Postfix
-            $expr->addChild(
-                $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix()
-            );
+            $ref = $this->_parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
             break;
 
         case self::T_SELF:
-            $expr->addChild(
-                $this->_parseSelfReference(
-                    $this->consumeToken(self::T_SELF)
-                )
-            );
+            $ref = $this->_parseSelfReference($this->consumeToken(self::T_SELF));
             break;
 
         case self::T_PARENT:
-            $expr->addChild(
-                $this->_parseParentReference(
-                    $this->consumeToken(self::T_PARENT)
-                )
-            );
+            $ref = $this->_parseParentReference($this->consumeToken(self::T_PARENT));
             break;
 
         case self::T_STATIC:
-            $expr->addChild(
-                $this->_parseStaticReference(
-                    $this->consumeToken(self::T_STATIC)
-                )
-            );
+            $ref = $this->_parseStaticReference($this->consumeToken(self::T_STATIC));
             break;
 
         default:
-            $expr->addChild(
-                $this->_parseClassOrInterfaceReference($classRef)
-            );
+            $ref = $this->_parseClassOrInterfaceReference($classRef);
             break;
         }
+
+        $expr->addChild(
+            $this->_parseOptionalMemberPrimaryPrefix(
+                $this->_parseOptionalStaticMemberPrimaryPrefix($ref)
+            )
+        );
 
         return $expr;
     }
@@ -2435,6 +2425,29 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses an expression node and returns it. When no expression
+     * was found this method will throw an InvalidStateException.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 1.0.1
+     */
+    private function _parseExpression()
+    {
+        if (null === ($expr = $this->_parseOptionalExpression())) {
+            $token = $this->consumeToken($this->tokenizer->peek());
+
+            throw new PHP_Depend_Parser_InvalidStateException(
+                $token->startLine,
+                $this->_sourceFile->getFileName(),
+                'Mandatory expression expected.'
+            );
+        }
+        return $expr;
+    }
+
+    /**
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
      *
@@ -2638,12 +2651,41 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 );
                 break;
 
+            // TODO: Handle comments here
+            case self::T_COMMENT:
+            case self::T_DOC_COMMENT:
+                $this->consumeToken($tokenType);
+                break;
+
+            // TODO: Implement print expression
+            case self::T_PRINT:
+
+            // TODO: Implement this
+            case self::T_STRING_VARNAME:
+
             // TODO: Make this a arithmetic expression
             case self::T_PLUS:
             case self::T_MINUS:
             case self::T_MUL:
             case self::T_DIV:
             case self::T_MOD:
+
+            // TODO: Implement compare expressions
+            case self::T_IS_EQUAL:
+            case self::T_IS_NOT_EQUAL:
+            case self::T_IS_IDENTICAL:
+            case self::T_IS_NOT_IDENTICAL:
+            case self::T_IS_GREATER_OR_EQUAL:
+            case self::T_IS_SMALLER_OR_EQUAL:
+            case self::T_ANGLE_BRACKET_OPEN:
+            case self::T_ANGLE_BRACKET_CLOSE:
+
+            case self::T_EMPTY:
+            case self::T_CONCAT:
+            case self::T_BITWISE_OR:
+            case self::T_BITWISE_AND:
+            case self::T_BITWISE_NOT:
+            case self::T_BITWISE_XOR:
                 $token = $this->consumeToken($tokenType);
 
                 $expr = $this->builder->buildASTExpression();
@@ -2654,12 +2696,26 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $expr->setEndColumn($token->endColumn);
 
                 $expressions[] = $expr;
+                break;
 
+            case self::T_AT:
+            case self::T_EXCLAMATION_MARK:
+                $token = $this->consumeToken($tokenType);
+
+                $expr = $this->builder->buildASTUnaryExpression($token->image);
+                $expr->setStartLine($token->startLine);
+                $expr->setStartColumn($token->startColumn);
+                $expr->setEndLine($token->endLine);
+                $expr->setEndColumn($token->endColumn);
+
+                $expressions[] = $expr;
                 break;
 
             default:
-                $this->consumeToken($tokenType);
-                break;
+                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                    $this->consumeToken($tokenType),
+                    $this->_sourceFile->getFileName()
+                );
             }
         }
 
@@ -3766,6 +3822,32 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         return $this->_parseOptionalMemberPrimaryPrefix(
             $this->parseOptionalIndexExpression($prefix)
         );
+    }
+
+    /**
+     * This method parses an optional member primary expression. It will parse
+     * the primary expression when a double colon operator can be found at the
+     * actual token stream position. Otherwise this method simply returns the
+     * input {@link PHP_Depend_Code_ASTNode} instance.
+     *
+     * @param PHP_Depend_Code_ASTNode $node This node represents primary prefix
+     *        left expression. It will be the first child of the parsed member
+     *        primary expression.
+     *
+     * @return PHP_Depend_Code_ASTNode
+     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     *         parsing process.
+     * @since 1.0.1
+     */
+    private function _parseOptionalStaticMemberPrimaryPrefix(
+        PHP_Depend_Code_ASTNode $node
+    ) {
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() === self::T_DOUBLE_COLON) {
+            return $this->_parseStaticMemberPrimaryPrefix($node);
+        }
+        return $node;
     }
 
     /**
