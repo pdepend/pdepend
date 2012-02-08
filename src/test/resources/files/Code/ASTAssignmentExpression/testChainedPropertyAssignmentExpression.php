@@ -1,5 +1,5 @@
 <?php
-function testChainedPropertyAssignmentExpressionHasExpectedEndColumn()
+function testChainedPropertyAssignmentExpression()
 {
     Foo::bar(
         __FUNCTION__

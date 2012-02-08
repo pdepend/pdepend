@@ -76,7 +76,7 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAssignmentExpressionFromMethodInvocation()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            $this->_getFirstAssignmentExpressionInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
@@ -96,7 +96,7 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAssignmentExpressionFromPropertyAccess()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            $this->_getFirstAssignmentExpressionInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
@@ -115,7 +115,7 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAssignmentExpressionFromFunctionReturnValue()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            $this->_getFirstAssignmentExpressionInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
@@ -136,7 +136,7 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAssignmentExpressionGraphForIntegerLiteral()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            $this->_getFirstAssignmentExpressionInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTLiteral::CLAZZ
@@ -152,7 +152,7 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     public function testAssignmentExpressionGraphForFloatLiteral()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(__METHOD__),
+            $this->_getFirstAssignmentExpressionInFunction(),
             array(
                 PHP_Depend_Code_ASTVariable::CLAZZ,
                 PHP_Depend_Code_ASTLiteral::CLAZZ
@@ -161,192 +161,423 @@ class PHP_Depend_Code_ASTAssignmentExpressionTest extends PHP_Depend_Code_ASTNod
     }
 
     /**
-     * Tests the start line of an assignment-expression.
+     * testAssignmentExpressionWithEqual
      *
      * @return void
+     * @since 1.0.1
      */
-    public function testVariableAssignmentExpressionHasExpectedStartLine()
+    public function testAssignmentExpressionWithEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithAndEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithAndEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('&=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithConcatEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithConcatEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('.=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithDivEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithDivEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('/=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithMinusEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithMinusEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('-=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithModEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithModEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('%=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithMulEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithMulEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('*=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithOrEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithOrEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('|=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithPlusEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithPlusEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('+=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithXorEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithXorEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('^=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithShiftLeftEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithShiftLeftEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('<<=', $expr->getImage());
+    }
+
+    /**
+     * testAssignmentExpressionWithShiftRightEqual
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testAssignmentExpressionWithShiftRightEqual()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertEquals('>>=', $expr->getImage());
+    }
+
+    /**
+     * testVariableAssignmentExpression
+     *
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 1.0.1
+     */
+    public function testVariableAssignmentExpression()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTAssignmentExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
+     * Tests the start line of an assignment-expression.
+     *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
+     * @return void
+     * @depends testVariableAssignmentExpression
+     */
+    public function testVariableAssignmentExpressionHasExpectedStartLine($expr)
+    {
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * Tests the start column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedStartColumn()
+    public function testVariableAssignmentExpressionHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * Tests the end line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedEndLine()
+    public function testVariableAssignmentExpressionHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(6, $expr->getEndLine());
     }
 
     /**
      * Tests the end column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedEndColumn()
+    public function testVariableAssignmentExpressionHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getEndColumn());
+    }
+
+    /**
+     * testStaticPropertyAssignmentExpression
+     *
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 1.0.1
+     */
+    public function testStaticPropertyAssignmentExpression()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTAssignmentExpression::CLAZZ, $expr);
+
+        return $expr;
     }
 
     /**
      * Tests the start line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedStartLine()
+    public function testStaticPropertyAssignmentExpressionHasExpectedStartLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * Tests the start column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn()
+    public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * Tests the end line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedEndLine()
+    public function testStaticPropertyAssignmentExpressionHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
      * Tests the end column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn()
+    public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
-        $this->assertEquals(80, $expr->getEndColumn());
+        $this->assertEquals(60, $expr->getEndColumn());
+    }
+
+    /**
+     * testObjectPropertyAssignmentExpression
+     *
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 1.0.1
+     */
+    public function testObjectPropertyAssignmentExpression()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTAssignmentExpression::CLAZZ, $expr);
+
+        return $expr;
     }
 
     /**
      * Tests the start line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedStartLine()
+    public function testObjectPropertyAssignmentExpressionHasExpectedStartLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * Tests the start column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn()
+    public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * Tests the end line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedEndLine()
+    public function testObjectPropertyAssignmentExpressionHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getEndLine());
     }
 
     /**
      * Tests the end column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn()
+    public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(15, $expr->getEndColumn());
+    }
+
+    /**
+     * testChainedPropertyAssignmentExpression
+     *
+     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @since 1.0.1
+     */
+    public function testChainedPropertyAssignmentExpression()
+    {
+        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTAssignmentExpression::CLAZZ, $expr);
+
+        return $expr;
     }
 
     /**
      * Tests the start line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedStartLine()
+    public function testChainedPropertyAssignmentExpressionHasExpectedStartLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * Tests the start column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn()
+    public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * Tests the end column of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn()
+    public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(23, $expr->getEndColumn());
     }
 
     /**
      * Tests the end line of an assignment-expression.
      *
+     * @param PHP_Depend_Code_ASTAssignmentExpression $expr
+     *
      * @return void
+     * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedEndLine()
+    public function testChainedPropertyAssignmentExpressionHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction(__METHOD__);
         $this->assertEquals(8, $expr->getEndLine());
     }
 
     /**
      * Returns a test assignment-expression.
      *
-     * @param string $testCase The calling test case.
-     *
      * @return PHP_Depend_Code_ASTAssignmentExpression
      */
-    private function _getFirstAssignmentExpressionInFunction($testCase)
+    private function _getFirstAssignmentExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTAssignmentExpression::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTAssignmentExpression::CLAZZ
         );
     }
 }

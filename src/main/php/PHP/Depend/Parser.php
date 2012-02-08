@@ -2634,9 +2634,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_EQUAL:
             case self::T_OR_EQUAL:
+            case self::T_SL_EQUAL:
+            case self::T_SR_EQUAL:
             case self::T_AND_EQUAL:
             case self::T_DIV_EQUAL:
             case self::T_MOD_EQUAL:
+            case self::T_MUL_EQUAL:
             case self::T_XOR_EQUAL:
             case self::T_PLUS_EQUAL:
             case self::T_MINUS_EQUAL:
