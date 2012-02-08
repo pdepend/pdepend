@@ -2787,10 +2787,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Applies all reduce rules against the given expression list.
      *
-     * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
+     * @param PHP_Depend_Code_ASTExpression[] $expressions Unprepared input
      *        array with parsed expression nodes found in the source tree.
      *
-     * @return array(PHP_Depend_Code_ASTExpression)
+     * @return PHP_Depend_Code_ASTExpression[]
      * @since 0.10.0
      */
     private function _reduce(array $expressions)
@@ -2801,10 +2801,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Reduces all unary-expressions in the given expression list.
      *
-     * @param array(PHP_Depend_Code_ASTExpression) $expressions Unprepared input
+     * @param PHP_Depend_Code_ASTExpression[] $expressions Unprepared input
      *        array with parsed expression nodes found in the source tree.
      *
-     * @return array(PHP_Depend_Code_ASTExpression)
+     * @return PHP_Depend_Code_ASTExpression[]
      * @since 0.10.0
      */
     private function _reduceUnaryExpression(array $expressions)
