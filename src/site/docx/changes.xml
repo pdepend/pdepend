@@ -16,7 +16,7 @@
             <action date="97189b0" dev="mapi" issue="24635313" system="pivotaltracker" type="fix" due-to="Rex Mcconnell">
                 _parseOptionalExpression() returning null causes exception
             </action>
-            <action date="" dev="mapi" issue="24638569" system="pivotaltracker" type="fix" due-to="bluszcz">
+            <action date="f20f40a" dev="mapi" issue="24638569" system="pivotaltracker" type="fix" due-to="bluszcz">
                 pdepend crashes on vanilia drupal site
             </action>
         </release>

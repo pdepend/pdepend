@@ -2237,7 +2237,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         PHP_Depend_Token $start,
         $closeToken
     ) {
-        $node->addChild($this->_parseExpression());
+        if (is_object($expr = $this->_parseOptionalExpression())) {
+            $node->addChild($expr);
+        }
 
         $end = $this->consumeToken($closeToken);
 

@@ -69,60 +69,221 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTExitExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testExitExpressionHasExpectedStartLine
+     * testExitExpressionWithExitCode
      *
-     * @return void
+     * @return PHP_Depend_Code_ASTExitExpression
+     * @since 1.0.1
      */
-    public function testExitExpressionHasExpectedStartLine()
+    public function testExitExpressionWithExitCode()
     {
-        $stmt = $this->_getFirstExitExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        $expr = $this->_getFirstExitExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExitExpression::CLAZZ, $expr);
+
+        return $expr;
     }
 
     /**
-     * testExitExpressionHasExpectedStartColumn
+     * testExitExpressionWithExitCodeHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
      *
      * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionHasExpectedStartColumn()
+    public function testExitExpressionWithExitCodeHasExpectedStartLine($expr)
     {
-        $stmt = $this->_getFirstExitExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
-     * testExitExpressionHasExpectedEndLine
+     * testExitExpressionWithExitCodeHasExpectedEndLine
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
      *
      * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionHasExpectedEndLine()
+    public function testExitExpressionWithExitCodeHasExpectedEndLine($expr)
     {
-        $stmt = $this->_getFirstExitExpressionInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getEndLine());
+        $this->assertEquals(6, $expr->getEndLine());
     }
 
     /**
-     * testExitExpressionHasExpectedEndColumn
+     * testExitExpressionWithExitCodeHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
      *
      * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionHasExpectedEndColumn()
+    public function testExitExpressionWithExitCodeHasExpectedStartColumn($expr)
     {
-        $stmt = $this->_getFirstExitExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        $this->assertEquals(5, $expr->getStartColumn());
+    }
+
+    /**
+     * testExitExpressionWithExitCodeHasExpectedEndColumn
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithExitCode
+     */
+    public function testExitExpressionWithExitCodeHasExpectedEndColumn($expr)
+    {
+        $this->assertEquals(5, $expr->getEndColumn());
+    }
+
+    /**
+     * testExitExpressionWithEmptyArgs
+     *
+     * @return PHP_Depend_Code_ASTExitExpression
+     * @since 1.0.1
+     */
+    public function testExitExpressionWithEmptyArgs()
+    {
+        $expr = $this->_getFirstExitExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExitExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
+     * testExitExpressionWithEmptyArgsHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return PHP_Depend_Code_ASTExitExpression
+     * @since 1.0.1
+     * @depends void
+     */
+    public function testExitExpressionWithEmptyArgsHasExpectedStartLine($expr)
+    {
+        $this->assertEquals(4, $expr->getStartLine());
+    }
+
+    /**
+     * testExitExpressionWithEmptyArgsHasExpectedEndLine
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithEmptyArgs
+     */
+    public function testExitExpressionWithEmptyArgsHasExpectedEndLine($expr)
+    {
+        $this->assertEquals(4, $expr->getEndLine());
+    }
+
+    /**
+     * testExitExpressionWithEmptyArgsHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithEmptyArgs
+     */
+    public function testExitExpressionWithEmptyArgsHasExpectedStartColumn($expr)
+    {
+        $this->assertEquals(5, $expr->getStartColumn());
+    }
+
+    /**
+     * testExitExpressionWithEmptyArgsHasExpectedEndColumn
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @since 1.0.1
+     * @depends testExitExpressionWithEmptyArgs
+     */
+    public function testExitExpressionWithEmptyArgsHasExpectedEndColumn($expr)
+    {
+        $this->assertEquals(10, $expr->getEndColumn());
+    }
+
+    /**
+     * testExitExpressionWithoutArgs
+     *
+     * @return PHP_Depend_Code_ASTExitExpression
+     * @since 1.0.1
+     */
+    public function testExitExpressionWithoutArgs()
+    {
+        $expr = $this->_getFirstExitExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTExitExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
+     * testExitExpressionWithoutArgsHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @depends testExitExpressionWithoutArgs
+     */
+    public function testExitExpressionWithoutArgsHasExpectedStartLine($expr)
+    {
+        $this->assertEquals(4, $expr->getStartLine());
+    }
+
+    /**
+     * testExitExpressionWithoutArgsHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @depends testExitExpressionWithoutArgs
+     */
+    public function testExitExpressionWithoutArgsHasExpectedStartColumn($expr)
+    {
+        $this->assertEquals(5, $expr->getStartColumn());
+    }
+
+    /**
+     * testExitExpressionHasExpectedEndLineWithoutArgs
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @depends testExitExpressionWithoutArgs
+     */
+    public function testExitExpressionWithoutArgsHasExpectedEndLine($expr)
+    {
+        $this->assertEquals(4, $expr->getEndLine());
+    }
+
+    /**
+     * testExitExpressionHasExpectedEndColumnWithoutArgs
+     *
+     * @param PHP_Depend_Code_ASTExitExpression $expr
+     *
+     * @return void
+     * @depends testExitExpressionWithoutArgs
+     */
+    public function testExitExpressionWithoutArgsHasExpectedEndColumn($expr)
+    {
+        $this->assertEquals(8, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTExitExpression
      */
-    private function _getFirstExitExpressionInFunction($testCase)
+    private function _getFirstExitExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTExitExpression::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTExitExpression::CLAZZ
         );
     }
 }
