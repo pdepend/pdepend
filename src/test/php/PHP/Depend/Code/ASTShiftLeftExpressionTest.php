@@ -71,6 +71,17 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTShiftLeftExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testShiftLeftExpressionReturnsExpectedImage
+     *
+     * @return void
+     */
+    public function testShiftLeftExpressionReturnsExpectedImage()
+    {
+        $expr = new PHP_Depend_Code_ASTShiftLeftExpression();
+        $this->assertEquals('<<', $expr->getImage());
+    }
+
+    /**
      * testShiftLeftExpression
      *
      * @return PHP_Depend_Code_ASTShiftLeftExpression
