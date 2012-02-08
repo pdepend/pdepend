@@ -9,6 +9,15 @@
     </properties>
 
 	<body>
+        <release version="1.0.1"
+                 date="2012/02/08"
+                 description="This release fixes two bugs in PHP_Depend's
+                              parser, which resulted in uncatchable errors.">
+            <action date="" dev="mapi" issue="24635313" system="pivotaltracker" type="fix">
+                _parseOptionalExpression() returning null causes exception
+            </action>
+        </release>
+
 		<release version="1.0.0"
                  date="2012/02/04"
                  description="Now that we have completed support for all the new

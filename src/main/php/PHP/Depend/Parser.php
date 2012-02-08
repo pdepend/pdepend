@@ -1452,10 +1452,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->consumeToken(self::T_CLONE);
 
         $expr = $this->builder->buildASTCloneExpression($token->image);
-        // TODO: $expr->addChild($this->_parseExpression());
-        if (($child = $this->_parseOptionalExpression()) != null) {
-            $expr->addChild($child);
-        }
+        $expr->addChild($this->_parseExpression());
+
         return $this->_setNodePositionsAndReturn($expr);
     }
 
@@ -2071,10 +2069,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->consumeToken(self::T_COLON);
 
-        // TODO: $expr->addChild($this->_parseExpression());
-        if (($child = $this->_parseOptionalExpression()) != null) {
-            $expr->addChild($child);
-        }
+        $expr->addChild($this->_parseExpression());
 
         return $this->_setNodePositionsAndReturn($expr);
     }
@@ -2242,10 +2237,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         PHP_Depend_Token $start,
         $closeToken
     ) {
-        // TODO: $node->addChild($this->_parseExpression());
-        if (is_object($expr = $this->_parseOptionalExpression())) {
-            $node->addChild($expr);
-        }
+        $node->addChild($this->_parseExpression());
+
         $end = $this->consumeToken($closeToken);
 
         $node->configureLinesAndColumns(
@@ -2657,21 +2650,17 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $this->consumeToken($tokenType);
                 break;
 
-            // TODO: Implement print expression
-            case self::T_PRINT:
+            case self::T_PRINT: // TODO: Implement print expression
 
-            // TODO: Implement this
-            case self::T_STRING_VARNAME:
+            case self::T_STRING_VARNAME: // TODO: Implement this
 
-            // TODO: Make this a arithmetic expression
-            case self::T_PLUS:
+            case self::T_PLUS: // TODO: Make this a arithmetic expression
             case self::T_MINUS:
             case self::T_MUL:
             case self::T_DIV:
             case self::T_MOD:
 
-            // TODO: Implement compare expressions
-            case self::T_IS_EQUAL:
+            case self::T_IS_EQUAL: // TODO: Implement compare expressions
             case self::T_IS_NOT_EQUAL:
             case self::T_IS_IDENTICAL:
             case self::T_IS_NOT_IDENTICAL:
@@ -2865,10 +2854,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->consumeToken(self::T_CASE);
 
         $label = $this->builder->buildASTSwitchLabel($token->image);
-        // TODO: $label->addChild($this->_parseExpression());
-        if (($expr = $this->_parseOptionalExpression()) != null) {
-            $label->addChild($expr);
-        }
+        $label->addChild($this->_parseExpression());
 
         if ($this->tokenizer->peek() === self::T_COLON) {
             $this->consumeToken(self::T_COLON);
@@ -3008,10 +2994,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $token = $this->consumeToken(self::T_THROW);
 
         $stmt = $this->builder->buildASTThrowStatement($token->image);
-        // TODO: $stmt->addChild($this->_parseExpression());
-        if (($expr = $this->_parseOptionalExpression()) != null) {
-            $stmt->addChild($expr);
-        }
+        $stmt->addChild($this->_parseExpression());
+
         $this->_parseStatementTermination();
 
         return $this->_setNodePositionsAndReturn($stmt);
@@ -3322,10 +3306,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->consumeComments();
         $this->consumeToken(self::T_PARENTHESIS_OPEN);
 
-        // TODO: $foreach->addChild($this->_parseExpression());
-        if (($expr = $this->_parseOptionalExpression()) != null) {
-            $foreach->addChild($expr);
-        }
+        $foreach->addChild($this->_parseExpression());
 
         $this->consumeToken(self::T_AS);
         $this->consumeComments();
@@ -4847,7 +4828,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->_parseOptionalByReference()) {
             $element->setByReference();
         }
-        $element->addChild($this->_parseOptionalExpression());
+        $element->addChild($this->_parseExpression());
 
         $this->consumeComments();
         if (self::T_DOUBLE_ARROW === $this->tokenizer->peek()) {
@@ -4857,7 +4838,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if ($this->_parseOptionalByReference()) {
                 $element->setByReference();
             }
-            $element->addChild($this->_parseOptionalExpression());
+            $element->addChild($this->_parseExpression());
         }
 
         return $this->_setNodePositionsAndReturn($element);
