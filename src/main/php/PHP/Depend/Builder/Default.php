@@ -922,6 +922,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
+     * Build a new shift right expression.
+     *
+     * @return PHP_Depend_Code_ASTShiftRightExpression
+     * @since 1.0.1
+     */
+    public function buildASTShiftRightExpression()
+    {
+        return $this->_buildASTNodeInstance('ASTShiftRightExpression');
+    }
+
+    /**
      * Builds a new boolean and-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanAndExpression
