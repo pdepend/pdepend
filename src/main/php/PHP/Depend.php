@@ -547,7 +547,7 @@ class PHP_Depend
                 $this->_builder,
                 $this->_cacheFactory->create()
             );
-            $parser->setMaxNestingLevel(1024);
+            $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
             // Disable annotation parsing?
             if ($this->_withoutAnnotations === true) {
@@ -582,7 +582,7 @@ class PHP_Depend
 
         $this->fireStartAnalyzeProcess();
 
-        ini_set('xdebug.max_nesting_level', 1024);
+        ini_set('xdebug.max_nesting_level', $this->configuration->parser->nesting);
 
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware

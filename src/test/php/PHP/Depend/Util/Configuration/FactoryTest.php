@@ -204,6 +204,19 @@ class PHP_Depend_Util_Configuration_FactoryTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testDefaultConfigurationHasExpectedParserNesting
+     *
+     * @return void
+     */
+    public function testDefaultConfigurationHasExpectedParserNesting()
+    {
+        $factory = new PHP_Depend_Util_Configuration_Factory();
+        $config  = $factory->createDefault();
+
+        self::assertEquals(8192, $config->parser->nesting);
+    }
+
+    /**
      * testCreateForNotExistingFileThrowsExpectedException
      *
      * @return void

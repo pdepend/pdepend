@@ -134,6 +134,19 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testParserHandlesParserNestingConfigurationValue
+     *
+     * @return void
+     */
+    public function testParserHandlesParserNestingConfigurationValue()
+    {
+        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
+
+        self::assertEquals(423, $values->parser->nesting);
+    }
+
+    /**
      * testParserModifiesConfigurationAdaptive
      *
      * @return void
@@ -191,6 +204,9 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
                 "imageConvert": {
                     "fontFamily": "Arial",
                     "fontSize":   42
+                },
+                "parser": {
+                    "nesting": 4096
                 }
             }'
         );

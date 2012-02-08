@@ -103,6 +103,9 @@ class PHP_Depend_Util_Configuration_Factory
         $this->default->imageConvert             = new stdClass();
         $this->default->imageConvert->fontSize   = '11';
         $this->default->imageConvert->fontFamily = 'Arial';
+
+        $this->default->parser          = new stdClass();
+        $this->default->parser->nesting = 8192;
     }
 
     /**

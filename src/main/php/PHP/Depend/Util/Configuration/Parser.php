@@ -109,6 +109,7 @@ class PHP_Depend_Util_Configuration_Parser
         $this->sxml = new SimpleXMLElement($file, null, true);
 
         $this->parseCache();
+        $this->parseParser();
         $this->parseImageConvert();
 
         return $this->settings;
@@ -143,6 +144,19 @@ class PHP_Depend_Util_Configuration_Parser
         if (isset($this->sxml->imageConvert->fontSize)) {
             $this->settings->imageConvert->fontSize
                 = (float) $this->sxml->imageConvert->fontSize;
+        }
+    }
+
+    /**
+     * This method parses the parser related configuration settings.
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    protected function parseParser()
+    {
+        if (isset($this->sxml->parser->nesting)) {
+            $this->settings->parser->nesting = (int) $this->sxml->parser->nesting;
         }
     }
 }

@@ -13,8 +13,11 @@
                  date="2012/02/08"
                  description="This release fixes two bugs in PHP_Depend's
                               parser, which resulted in uncatchable errors.">
-            <action date="" dev="mapi" issue="24635313" system="pivotaltracker" type="fix">
+            <action date="97189b0" dev="mapi" issue="24635313" system="pivotaltracker" type="fix" due-to="Rex Mcconnell">
                 _parseOptionalExpression() returning null causes exception
+            </action>
+            <action date="" dev="mapi" issue="24638569" system="pivotaltracker" type="fix" due-to="bluszcz">
+                pdepend crashes on vanilia drupal site
             </action>
         </release>
 
