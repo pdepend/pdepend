@@ -2075,6 +2075,26 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * This method parses a shift left expression node.
+     *
+     * @return PHP_Depend_Code_ASTShiftLeftExpression
+     * @since 1.0.1
+     */
+    private function _parseShiftLeftExpression()
+    {
+        $token = $this->consumeToken(self::T_SL);
+
+        $expr = $this->builder->buildASTShiftLeftExpression();
+        $expr->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+        return $expr;
+    }
+
+    /**
      * This method parses a boolean and-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanAndExpression
@@ -2610,6 +2630,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             case self::T_INC:
                 $expressions[] = $this->_parseIncrementExpression($expressions);
+                break;
+
+            case self::T_SL:
+                $expressions[] = $this->_parseShiftLeftExpression();
                 break;
 
             case self::T_DIR:

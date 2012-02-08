@@ -521,6 +521,14 @@ interface PHP_Depend_BuilderI
     function buildASTConditionalExpression();
 
     /**
+     * Build a new shift left expression.
+     *
+     * @return PHP_Depend_Code_ASTShiftLeftExpression
+     * @since 1.0.1
+     */
+    function buildASTShiftLeftExpression();
+
+    /**
      * Builds a new boolean and-expression.
      *
      * @return PHP_Depend_Code_ASTBooleanAndExpression

@@ -1038,6 +1038,20 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * testBuildASTShiftLeftExpressionReturnsExpectedType
+     *
+     * @return void
+     * @since 1.0.1
+     */
+    public function testBuildASTShiftLeftExpressionReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            PHP_Depend_Code_ASTShiftLeftExpression::CLAZZ,
+            $this->createBuilder()->buildASTShiftLeftExpression()
+        );
+    }
+
+    /**
      * testBuildASTBooleanAndExpressionReturnsExpectedType
      *
      * @return void
