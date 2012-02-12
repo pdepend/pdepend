@@ -79,7 +79,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
         $context = $this->getMock('PHP_Depend_Builder_Context');
 
         $reference = new PHP_Depend_Code_ASTStaticReference($context, $target);
-        self::assertSame($target, $reference->getType());
+        $this->assertSame($target, $reference->getType());
     }
 
     /**
@@ -140,7 +140,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testMagicSelfReturnsExpectedSetOfPropertyNames()
     {
         $reference = $this->createNodeInstance();
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'qualifiedName',
                 'context',
@@ -165,47 +165,69 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testStaticReference
+     *
+     * @return PHP_Depend_Code_ASTStaticReference
+     * @since 1.0.2
+     */
+    public function testStaticReference()
+    {
+        $reference = $this->_getFirstStaticReferenceInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTStaticReference::CLAZZ, $reference);
+
+        return $reference;
+    }
+
+    /**
      * testStaticReferenceHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTStaticReference $reference
+     *
      * @return void
+     * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedStartLine()
+    public function testStaticReferenceHasExpectedStartLine($reference)
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $ref->getStartLine());
+        $this->assertEquals(5, $reference->getStartLine());
     }
 
     /**
      * testStaticReferenceHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTStaticReference $reference
+     *
      * @return void
+     * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedStartColumn()
+    public function testStaticReferenceHasExpectedStartColumn($reference)
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(13, $ref->getStartColumn());
+        $this->assertEquals(13, $reference->getStartColumn());
     }
 
     /**
      * testStaticReferenceHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTStaticReference $reference
+     *
      * @return void
+     * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedEndLine()
+    public function testStaticReferenceHasExpectedEndLine($reference)
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $ref->getEndLine());
+        $this->assertEquals(5, $reference->getEndLine());
     }
 
     /**
      * testStaticReferenceHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTStaticReference $reference
+     *
      * @return void
+     * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedEndColumn()
+    public function testStaticReferenceHasExpectedEndColumn($reference)
     {
-        $ref = $this->_getFirstStaticReferenceInClass(__METHOD__);
-        $this->assertEquals(18, $ref->getEndColumn());
+        $this->assertEquals(18, $reference->getEndColumn());
     }
 
     /**
@@ -231,10 +253,11 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return PHP_Depend_Code_ASTStaticReference
      */
-    private function _getFirstStaticReferenceInClass($testCase)
+    private function _getFirstStaticReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTStaticReference::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTStaticReference::CLAZZ
         );
     }
 }

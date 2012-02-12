@@ -69,46 +69,68 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testStatementHasExpectedStartLine
+     * testStatement
      *
-     * @return void
+     * @return PHP_Depend_Code_ASTStatement
+     * @since 1.0.2
      */
-    public function testStatementHasExpectedStartLine()
+    public function testStatement()
     {
         $stmt = $this->_getFirstStatementInFunction(__METHOD__);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
+     * testStatementHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTStatement $stmt
+     *
+     * @return void
+     * @depends testStatement
+     */
+    public function testStatementHasExpectedStartLine($stmt)
+    {
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testStatementHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTStatement $stmt
+     *
      * @return void
+     * @depends testStatement
      */
-    public function testStatementHasExpectedStartColumn()
+    public function testStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testStatementHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTStatement $stmt
+     *
      * @return void
+     * @depends testStatement
      */
-    public function testStatementHasExpectedEndLine()
+    public function testStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstStatementInFunction(__METHOD__);
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
      * testStatementHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTStatement $stmt
+     *
      * @return void
+     * @depends testStatement
      */
-    public function testStatementHasExpectedEndColumn()
+    public function testStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndColumn());
     }
 

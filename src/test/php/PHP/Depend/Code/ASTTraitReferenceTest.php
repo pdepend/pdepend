@@ -85,49 +85,71 @@ class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
         $reference = new PHP_Depend_Code_ASTTraitReference($context, __CLASS__);
         $reference->getType();
     }
+    
+    /**
+     * testTraitReference
+     * 
+     * @return PHP_Depend_Code_ASTTraitReference
+     * @since 1.0.2
+     */
+    public function testTraitReference()
+    {
+        $reference = $this->_getFirstTraitReferenceInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTraitReference::CLAZZ, $reference);
+        
+        return $reference;
+    }
 
     /**
      * testTraitReferenceHasExpectedStartLine
+     * 
+     * @param PHP_Depend_Code_ASTTraitReference $reference
      *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine()
+    public function testTraitReferenceHasExpectedStartLine($reference)
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(5, $stmt->getStartLine());
+        $this->assertEquals(5, $reference->getStartLine());
     }
 
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn()
+    public function testTraitReferenceHasExpectedStartColumn($reference)
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(9, $stmt->getStartColumn());
+        $this->assertEquals(9, $reference->getStartColumn());
     }
 
     /**
      * testTraitReferenceHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine()
+    public function testTraitReferenceHasExpectedEndLine($reference)
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(5, $stmt->getEndLine());
+        $this->assertEquals(5, $reference->getEndLine());
     }
 
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn()
+    public function testTraitReferenceHasExpectedEndColumn($reference)
     {
-        $stmt = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(27, $stmt->getEndColumn());
+        $this->assertEquals(27, $reference->getEndColumn());
     }
 
     /**

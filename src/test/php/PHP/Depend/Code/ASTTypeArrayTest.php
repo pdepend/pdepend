@@ -69,46 +69,68 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTypeArrayTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testArrayType
+     *
+     * @return PHP_Depend_Code_ASTTypeArray
+     * @since 1.0.2
+     */
+    public function testArrayType()
+    {
+        $type = $this->_getFirstArrayTypeInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeArray::CLAZZ, $type);
+
+        return $type;
+    }
+
+    /**
      * testArrayTypeHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTTypeArray $type
+     *
      * @return void
+     * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedStartLine()
+    public function testArrayTypeHasExpectedStartLine($type)
     {
-        $type = $this->_getFirstArrayTypeInFunction(__METHOD__);
         $this->assertEquals(2, $type->getStartLine());
     }
 
     /**
      * testArrayTypeHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTypeArray $type
+     *
      * @return void
+     * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedStartColumn()
+    public function testArrayTypeHasExpectedStartColumn($type)
     {
-        $type = $this->_getFirstArrayTypeInFunction(__METHOD__);
         $this->assertEquals(14, $type->getStartColumn());
     }
 
     /**
      * testArrayTypeHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTypeArray $type
+     *
      * @return void
+     * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedEndLine()
+    public function testArrayTypeHasExpectedEndLine($type)
     {
-        $type = $this->_getFirstArrayTypeInFunction(__METHOD__);
         $this->assertEquals(2, $type->getEndLine());
     }
 
     /**
      * testArrayTypeHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTypeArray $type
+     *
      * @return void
+     * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedEndColumn()
+    public function testArrayTypeHasExpectedEndColumn($type)
     {
-        $type = $this->_getFirstArrayTypeInFunction(__METHOD__);
         $this->assertEquals(18, $type->getEndColumn());
     }
 
@@ -137,14 +159,13 @@ class PHP_Depend_Code_ASTTypeArrayTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTTypeArray
      */
-    private function _getFirstArrayTypeInFunction($testCase)
+    private function _getFirstArrayTypeInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTTypeArray::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTTypeArray::CLAZZ
         );
     }
 }

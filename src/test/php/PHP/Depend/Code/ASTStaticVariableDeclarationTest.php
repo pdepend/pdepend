@@ -69,60 +69,81 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTStaticVariableDeclarationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testStaticVariableDeclaration
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @since 1.0.2
+     */
+    public function testStaticVariableDeclaration()
+    {
+        $declaration = $this->_getFirstStaticVariableDeclarationInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ, $declaration);
+
+        return $declaration;
+    }
+
+    /**
      * Tests that the declaration has the expected start line value.
+     *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $declaration
      * 
      * @return void
+     * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedStartLine()
+    public function testStaticVariableDeclarationHasExpectedStartLine($declaration)
     {
-        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(4, $declaration->getStartLine());
     }
 
     /**
      * Tests that the declaration has the expected start column value.
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $declaration
+     *
      * @return void
+     * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedStartColumn()
+    public function testStaticVariableDeclarationHasExpectedStartColumn($declaration)
     {
-        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(5, $declaration->getStartColumn());
     }
 
     /**
      * Tests that the declaration has the expected end line value.
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $declaration
+     *
      * @return void
+     * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedEndLine()
+    public function testStaticVariableDeclarationHasExpectedEndLine($declaration)
     {
-        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(5, $declaration->getEndLine());
     }
 
     /**
      * Tests that the declaration has the expected end column value.
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $declaration
+     *
      * @return void
+     * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedEndColumn()
+    public function testStaticVariableDeclarationHasExpectedEndColumn($declaration)
     {
-        $declaration = $this->_getFirstStaticVariableDeclarationInFunction(__METHOD__);
         $this->assertSame(23, $declaration->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTStringIndexExpression
      */
-    private function _getFirstStaticVariableDeclarationInFunction($testCase)
+    private function _getFirstStaticVariableDeclarationInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ
         );
     }
 

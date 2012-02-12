@@ -69,46 +69,68 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testReturnStatement
+     *
+     * @return PHP_Depend_Code_ASTReturnStatement
+     * @since 1.0.2
+     */
+    public function testReturnStatement()
+    {
+        $stmt = $this->_getFirstReturnStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTReturnStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
      * testReturnStatementHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTReturnStatement $stmt
+     *
      * @return void
+     * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedStartLine()
+    public function testReturnStatementHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testReturnStatementHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTReturnStatement $stmt
+     *
      * @return void
+     * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedStartColumn()
+    public function testReturnStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testReturnStatementHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTReturnStatement $stmt
+     *
      * @return void
+     * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedEndLine()
+    public function testReturnStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
         $this->assertEquals(7, $stmt->getEndLine());
     }
 
     /**
      * testReturnStatementHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTReturnStatement $stmt
+     *
      * @return void
+     * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedEndColumn()
+    public function testReturnStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndColumn());
     }
 
@@ -119,7 +141,7 @@ class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesEmptyReturnStatement()
     {
-        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstReturnStatementInFunction();
         $this->assertEquals(12, $stmt->getEndColumn());
     }
 
@@ -130,21 +152,20 @@ class PHP_Depend_Code_ASTReturnStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserHandlesReturnStatementWithSimpleBoolean()
     {
-        $stmt = $this->_getFirstReturnStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstReturnStatementInFunction();
         $this->assertEquals(17, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTReturnStatement
      */
-    private function _getFirstReturnStatementInFunction($testCase)
+    private function _getFirstReturnStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTReturnStatement::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTReturnStatement::CLAZZ
         );
     }
 }

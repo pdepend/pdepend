@@ -75,7 +75,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementGraphWithBooleanExpressions()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $children[0]);
@@ -88,7 +88,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementGraphWithLabels()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTSwitchLabel::CLAZZ, $children[1]);
@@ -96,46 +96,68 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testSwitchStatement
+     *
+     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @since 1.0.2
+     */
+    public function testSwitchStatement()
+    {
+        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSwitchStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
      * Tests the start line value.
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedStartLine()
+    public function testSwitchStatementHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * Tests the start column value.
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedStartColumn()
+    public function testSwitchStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * Tests the end line value.
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedEndLine()
+    public function testSwitchStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
      * Tests the end column value.
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedEndColumn()
+    public function testSwitchStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
@@ -146,7 +168,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserIgnoresDocCommentInSwitchStatement()
     {
-        $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->_getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -156,7 +178,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserIgnoresCommentInSwitchStatement()
     {
-        $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->_getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -167,7 +189,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException()
     {
-        $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->_getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -178,50 +200,72 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testUnclosedSwitchStatementResultsInExpectedException()
     {
-        $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $this->_getFirstSwitchStatementInFunction();
+    }
+
+    /**
+     * testSwitchStatementWithAlternativeScope
+     *
+     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @since 1.0.2
+     */
+    public function testSwitchStatementWithAlternativeScope()
+    {
+        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSwitchStatement::CLAZZ, $stmt);
+
+        return $stmt;
     }
 
     /**
      * testSwitchStatementAlternativeScopeHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedStartLine()
+    public function testSwitchStatementAlternativeScopeHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testSwitchStatementAlternativeScopeHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedStartColumn()
+    public function testSwitchStatementAlternativeScopeHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testSwitchStatementAlternativeScopeHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedEndLine()
+    public function testSwitchStatementAlternativeScopeHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(25, $stmt->getEndLine());
     }
 
     /**
      * testSwitchStatementAlternativeScopeHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTSwitchStatement $stmt
+     *
      * @return void
+     * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedEndColumn()
+    public function testSwitchStatementAlternativeScopeHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
         $this->assertEquals(14, $stmt->getEndColumn());
     }
 
@@ -232,21 +276,20 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSwitchStatementTerminatedByPhpCloseTag()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstSwitchStatementInFunction();
         self::assertEquals(9, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTSwitchStatement
      */
-    private function _getFirstSwitchStatementInFunction($testCase)
+    private function _getFirstSwitchStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTSwitchStatement::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTSwitchStatement::CLAZZ
         );
     }
 }

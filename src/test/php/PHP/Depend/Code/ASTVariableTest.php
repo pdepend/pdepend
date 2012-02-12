@@ -112,60 +112,81 @@ class PHP_Depend_Code_ASTVariableTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testVariable
+     *
+     * @return PHP_Depend_Code_ASTVariable
+     * @since 1.0.2
+     */
+    public function testVariable()
+    {
+        $variable = $this->_getFirstVariableInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+
+        return $variable;
+    }
+
+    /**
      * testVariableHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTVariable $variable
+     *
      * @return void
+     * @depends testVariable
      */
-    public function testVariableHasExpectedStartLine()
+    public function testVariableHasExpectedStartLine($variable)
     {
-        $variable = $this->_getFirstVariableInClass(__METHOD__);
         $this->assertEquals(6, $variable->getStartLine());
     }
 
     /**
      * testVariableHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTVariable $variable
+     *
      * @return void
+     * @depends testVariable
      */
-    public function testVariableHasExpectedStartColumn()
+    public function testVariableHasExpectedStartColumn($variable)
     {
-        $variable = $this->_getFirstVariableInClass(__METHOD__);
         $this->assertEquals(9, $variable->getStartColumn());
     }
 
     /**
      * testVariableHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTVariable $variable
+     *
      * @return void
+     * @depends testVariable
      */
-    public function testVariableHasExpectedEndLine()
+    public function testVariableHasExpectedEndLine($variable)
     {
-        $variable = $this->_getFirstVariableInClass(__METHOD__);
         $this->assertEquals(6, $variable->getEndLine());
     }
 
     /**
      * testVariableHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTVariable $variable
+     *
      * @return void
+     * @depends testVariable
      */
-    public function testVariableHasExpectedEndColumn()
+    public function testVariableHasExpectedEndColumn($variable)
     {
-        $variable = $this->_getFirstVariableInClass(__METHOD__);
         $this->assertEquals(10, $variable->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTVariable
      */
-    private function _getFirstVariableInClass($testCase)
+    private function _getFirstVariableInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTVariable::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTVariable::CLAZZ
         );
     }
 }

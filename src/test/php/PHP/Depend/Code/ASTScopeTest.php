@@ -70,47 +70,69 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testScope
+     *
+     * @return PHP_Depend_Code_ASTScope
+     * @since 1.0.2
+     */
+    public function testScope()
+    {
+        $scope = $this->_getFirstScopeInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScope::CLAZZ, $scope);
+
+        return $scope;
+    }
+
+    /**
      * Tests that the scope-statement has the expected start line value.
      *
+     * @param PHP_Depend_Code_ASTScope $scope
+     *
      * @return void
+     * @depends testScope
      */
-    public function testScopeHasExpectedStartLine()
+    public function testScopeHasExpectedStartLine($scope)
     {
-        $stmt = $this->_getFunctionScope();
-        $this->assertEquals(3, $stmt->getStartLine());
+        $this->assertEquals(3, $scope->getStartLine());
     }
 
     /**
      * Tests that the scope-statement has the expected start column value.
      *
+     * @param PHP_Depend_Code_ASTScope $scope
+     *
      * @return void
+     * @depends testScope
      */
-    public function testScopeHasExpectedStartColumn()
+    public function testScopeHasExpectedStartColumn($scope)
     {
-        $stmt = $this->_getFunctionScope(__METHOD__);
-        $this->assertEquals(1, $stmt->getStartColumn());
+        $this->assertEquals(1, $scope->getStartColumn());
     }
 
     /**
      * Tests that the scope-statement has the expected end line value.
      *
+     * @param PHP_Depend_Code_ASTScope $scope
+     *
      * @return void
+     * @depends testScope
      */
-    public function testScopeHasExpectedEndLine()
+    public function testScopeHasExpectedEndLine($scope)
     {
-        $stmt = $this->_getFunctionScope();
-        $this->assertEquals(8, $stmt->getEndLine());
+        $this->assertEquals(8, $scope->getEndLine());
     }
 
     /**
      * Tests that the scope-statement has the expected end column value.
      *
+     * @param PHP_Depend_Code_ASTScope $scope
+     *
      * @return void
+     * @depends testScope
      */
-    public function testScopeHasExpectedEndColumn()
+    public function testScopeHasExpectedEndColumn($scope)
     {
-        $stmt = $this->_getFunctionScope();
-        $this->assertEquals(1, $stmt->getEndColumn());
+        $this->assertEquals(1, $scope->getEndColumn());
     }
 
     /**
@@ -118,10 +140,11 @@ class PHP_Depend_Code_ASTScopeTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return PHP_Depend_Code_ASTScope
      */
-    private function _getFunctionScope()
+    private function _getFirstScopeInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(), PHP_Depend_Code_ASTScope::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTScope::CLAZZ
         );
     }
 }

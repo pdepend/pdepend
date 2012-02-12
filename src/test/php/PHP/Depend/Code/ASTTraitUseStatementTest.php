@@ -399,90 +399,134 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
     }
 
     /**
-     * testTraitUseStatementHasExpectedStartLine
+     * testTraitUseStatement
      *
-     * @return void
+     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @since 1.0.2
      */
-    public function testTraitUseStatementHasExpectedStartLine()
+    public function testTraitUseStatement()
     {
         $stmt = $this->_getFirstTraitUseStatementInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTraitUseStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
+     * testTraitUseStatementHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
+     * @return void
+     * @depends testTraitUseStatement
+     */
+    public function testTraitUseStatementHasExpectedStartLine($stmt)
+    {
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testTraitUseStatementHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatement
      */
-    public function testTraitUseStatementHasExpectedStartColumn()
+    public function testTraitUseStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInClass();
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testTraitUseStatementHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatement
      */
-    public function testTraitUseStatementHasExpectedEndLine()
+    public function testTraitUseStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInClass();
         $this->assertEquals(9, $stmt->getEndLine());
     }
 
     /**
      * testTraitUseStatementHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatement
      */
-    public function testTraitUseStatementHasExpectedEndColumn()
+    public function testTraitUseStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInClass();
         $this->assertEquals(13, $stmt->getEndColumn());
+    }
+
+    /**
+     * testTraitUseStatementInTrait
+     *
+     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @since 1.0.2
+     */
+    public function testTraitUseStatementInTrait()
+    {
+        $stmt = $this->_getFirstTraitUseStatementInTrait();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTraitUseStatement::CLAZZ, $stmt);
+
+        return $stmt;
     }
 
     /**
      * testTraitUseStatementInTraitHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatementInTrait
      */
-    public function testTraitUseStatementInTraitHasExpectedStartLine()
+    public function testTraitUseStatementInTraitHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInTrait();
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testTraitUseStatementInTraitHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatementInTrait
      */
-    public function testTraitUseStatementInTraitHasExpectedStartColumn()
+    public function testTraitUseStatementInTraitHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInTrait();
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testTraitUseStatementInTraitHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatementInTrait
      */
-    public function testTraitUseStatementInTraitHasExpectedEndLine()
+    public function testTraitUseStatementInTraitHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInTrait();
         $this->assertEquals(4, $stmt->getEndLine());
     }
 
     /**
      * testTraitUseStatementInTraitHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTraitUseStatement $stmt
+     *
      * @return void
+     * @depends testTraitUseStatementInTrait
      */
-    public function testTraitUseStatementInTraitHasExpectedEndColumn()
+    public function testTraitUseStatementInTraitHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstTraitUseStatementInTrait();
         $this->assertEquals(19, $stmt->getEndColumn());
     }
 

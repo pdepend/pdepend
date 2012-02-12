@@ -72,60 +72,81 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTStringIndexExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testStringIndexExpression
+     *
+     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @since 1.0.2
+     */
+    public function testStringIndexExpression()
+    {
+        $expr = $this->_getFirstStringIndexExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTStringIndexExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
      * testStringIndexExpressionHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $expr
+     *
      * @return void
+     * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedStartLine()
+    public function testStringIndexExpressionHasExpectedStartLine($expr)
     {
-        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * testStringIndexExpressionHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $expr
+     *
      * @return void
+     * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedStartColumn()
+    public function testStringIndexExpressionHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
         $this->assertEquals(23, $expr->getStartColumn());
     }
 
     /**
      * testStringIndexExpressionHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $expr
+     *
      * @return void
+     * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedEndLine()
+    public function testStringIndexExpressionHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
      * testStringIndexExpressionHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTStringIndexExpression $expr
+     *
      * @return void
+     * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedEndColumn()
+    public function testStringIndexExpressionHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstStringIndexExpressionInFunction(__METHOD__);
         $this->assertEquals(28, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTStringIndexExpression
      */
-    private function _getFirstStringIndexExpressionInFunction($testCase)
+    private function _getFirstStringIndexExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTStringIndexExpression::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTStringIndexExpression::CLAZZ
         );
     }
 }

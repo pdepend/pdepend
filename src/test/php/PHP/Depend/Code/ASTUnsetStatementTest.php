@@ -69,46 +69,68 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTUnsetStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
-     * testUnsetStatementHasExpectedStartLine
+     * testUnsetStatement
      *
-     * @return void
+     * @return PHP_Depend_Code_ASTUnsetStatement
+     * @since 1.0.2
      */
-    public function testUnsetStatementHasExpectedStartLine()
+    public function testUnsetStatement()
     {
         $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnsetStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
+     * testUnsetStatementHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTUnsetStatement $stmt
+     *
+     * @return void
+     * @depends testUnsetStatement
+     */
+    public function testUnsetStatementHasExpectedStartLine($stmt)
+    {
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testUnsetStatementHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTUnsetStatement $stmt
+     *
      * @return void
+     * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedStartColumn()
+    public function testUnsetStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testUnsetStatementHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTUnsetStatement $stmt
+     *
      * @return void
+     * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedEndLine()
+    public function testUnsetStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
      * testUnsetStatementHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTUnsetStatement $stmt
+     *
      * @return void
+     * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedEndColumn()
+    public function testUnsetStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
         $this->assertEquals(22, $stmt->getEndColumn());
     }
 

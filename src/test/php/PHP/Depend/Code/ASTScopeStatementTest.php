@@ -143,92 +143,136 @@ class PHP_Depend_Code_ASTScopeStatementTest extends PHP_Depend_Code_ASTNodeTest
     {
         $this->assertEquals(20, $stmt->getEndColumn());
     }
+
+    /**
+     * testScopeStatement
+     *
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.2
+     */
+    public function testScopeStatement()
+    {
+        $stmt = $this->_getFirstScopeStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
     
     /**
      * Tests that the scope-statement has the expected start line value.
      *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
      * @return void
+     * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedStartLine()
+    public function testScopeStatementHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * Tests that the scope-statement has the expected start column value.
      *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
      * @return void
+     * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedStartColumn()
+    public function testScopeStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(34, $stmt->getStartColumn());
     }
 
     /**
      * Tests that the scope-statement has the expected end line value.
      *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
      * @return void
+     * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedEndLine()
+    public function testScopeStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
      * Tests that the scope-statement has the expected end column value.
      *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
      * @return void
+     * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedEndColumn()
+    public function testScopeStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
-     * testAlternativeScopeStatementHasExpectedStartLine
-     *
-     * @return void
+     * testScopeStatementWithAlternative
+     * 
+     * @return PHP_Depend_Code_ASTScopeStatement
+     * @since 1.0.2
      */
-    public function testAlternativeScopeStatementHasExpectedStartLine()
+    public function testScopeStatementWithAlternative()
     {
         $stmt = $this->_getFirstScopeStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
+     * testScopeStatementWithAlternativeHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
+     *
+     * @return void
+     * @depends testScopeStatementWithAlternative
+     */
+    public function testScopeStatementWithAlternativeHasExpectedStartLine($stmt)
+    {
         $this->assertEquals(6, $stmt->getStartLine());
     }
 
     /**
-     * testAlternativeScopeStatementHasExpectedStartColumn
+     * testScopeStatementWithAlternativeHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
      *
      * @return void
+     * @depends testScopeStatementWithAlternative
      */
-    public function testAlternativeScopeStatementHasExpectedStartColumn()
+    public function testScopeStatementWithAlternativeHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(13, $stmt->getStartColumn());
     }
 
     /**
-     * testAlternativeScopeStatementHasExpectedEndLine
+     * testScopeStatementWithAlternativeHasExpectedEndLine
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
      *
      * @return void
+     * @depends testScopeStatementWithAlternative
      */
-    public function testAlternativeScopeStatementHasExpectedEndLine()
+    public function testScopeStatementWithAlternativeHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(17, $stmt->getEndLine());
     }
 
     /**
-     * testAlternativeScopeStatementHasExpectedEndColumn
+     * testScopeStatementWithAlternativeHasExpectedEndColumn
+     *
+     * @param PHP_Depend_Code_ASTScopeStatement $stmt
      *
      * @return void
+     * @depends testScopeStatementWithAlternative
      */
-    public function testAlternativeScopeStatementHasExpectedEndColumn()
+    public function testScopeStatementWithAlternativeHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
         $this->assertEquals(15, $stmt->getEndColumn());
     }
 

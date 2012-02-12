@@ -157,47 +157,69 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
+     * testSelfReference
+     *
+     * @return PHP_Depend_Code_ASTSelfReference
+     * @since 1.0.2
+     */
+    public function testSelfReference()
+    {
+        $reference = $this->_getFirstSelfReferenceInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTSelfReference::CLAZZ, $reference);
+
+        return $reference;
+    }
+
+    /**
      * testSelfReferenceHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTSelfReference $reference
+     *
      * @return void
+     * @depends testSelfReference
      */
-    public function testSelfReferenceHasExpectedStartLine()
+    public function testSelfReferenceHasExpectedStartLine($reference)
     {
-        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $ref->getStartLine());
+        $this->assertEquals(5, $reference->getStartLine());
     }
 
     /**
      * testSelfReferenceHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTSelfReference $reference
+     *
      * @return void
+     * @depends testSelfReference
      */
-    public function testSelfReferenceHasExpectedStartColumn()
+    public function testSelfReferenceHasExpectedStartColumn($reference)
     {
-        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
-        $this->assertEquals(13, $ref->getStartColumn());
+        $this->assertEquals(13, $reference->getStartColumn());
     }
 
     /**
      * testSelfReferenceHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTSelfReference $reference
+     *
      * @return void
+     * @depends testSelfReference
      */
-    public function testSelfReferenceHasExpectedEndLine()
+    public function testSelfReferenceHasExpectedEndLine($reference)
     {
-        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
-        $this->assertEquals(5, $ref->getEndLine());
+        $this->assertEquals(5, $reference->getEndLine());
     }
 
     /**
      * testSelfReferenceHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTSelfReference $reference
+     *
      * @return void
+     * @depends testSelfReference
      */
-    public function testSelfReferenceHasExpectedEndColumn()
+    public function testSelfReferenceHasExpectedEndColumn($reference)
     {
-        $ref = $this->_getFirstSelfReferenceInClass(__METHOD__);
-        $this->assertEquals(16, $ref->getEndColumn());
+        $this->assertEquals(16, $reference->getEndColumn($reference));
     }
 
     /**
@@ -216,14 +238,13 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTSelfReference
      */
-    private function _getFirstSelfReferenceInClass($testCase)
+    private function _getFirstSelfReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTSelfReference::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTSelfReference::CLAZZ
         );
     }
 }

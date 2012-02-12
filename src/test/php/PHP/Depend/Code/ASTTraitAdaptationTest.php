@@ -71,47 +71,69 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTraitAdaptationTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testTraitAdaptation
+     * 
+     * @return PHP_Depend_Code_ASTTraitAdaptation
+     * @since 1.0.2
+     */
+    public function testTraitAdaptation()
+    {
+        $scope = $this->_getFirstTraitAdaptationInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTraitAdaptation::CLAZZ, $scope);
+        
+        return $scope;
+    }
+   
+    /**
      * testTraitAdaptationHasExpectedStartLine
+     * 
+     * @param PHP_Depend_Code_ASTTraitAdaptation $scope
      *
      * @return void
+     * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedStartLine()
+    public function testTraitAdaptationHasExpectedStartLine($scope)
     {
-        $stmt = $this->_getFirstTraitAdaptationInClass();
-        $this->assertEquals(5, $stmt->getStartLine());
+        $this->assertEquals(5, $scope->getStartLine());
     }
 
     /**
      * testTraitAdaptationHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptation $scope
+     *
      * @return void
+     * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedStartColumn()
+    public function testTraitAdaptationHasExpectedStartColumn($scope)
     {
-        $stmt = $this->_getFirstTraitAdaptationInClass();
-        $this->assertEquals(54, $stmt->getStartColumn());
+        $this->assertEquals(32, $scope->getStartColumn());
     }
 
     /**
      * testTraitAdaptationHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptation $scope
+     *
      * @return void
+     * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedEndLine()
+    public function testTraitAdaptationHasExpectedEndLine($scope)
     {
-        $stmt = $this->_getFirstTraitAdaptationInClass();
-        $this->assertEquals(9, $stmt->getEndLine());
+        $this->assertEquals(9, $scope->getEndLine());
     }
 
     /**
      * testTraitAdaptationHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptation $scope
+     *
      * @return void
+     * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedEndColumn()
+    public function testTraitAdaptationHasExpectedEndColumn($scope)
     {
-        $stmt = $this->_getFirstTraitAdaptationInClass();
-        $this->assertEquals(5, $stmt->getEndColumn());
+        $this->assertEquals(5, $scope->getEndColumn());
     }
 
     /**

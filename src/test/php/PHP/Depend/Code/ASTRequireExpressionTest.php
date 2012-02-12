@@ -88,7 +88,7 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
      */
     public function testIsOnceReturnsTrueForRequireOnceExpression()
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
+        $expr = $this->_getFirstRequireExpressionInFunction();
         $this->assertTrue($expr->isOnce());
     }
 
@@ -112,104 +112,147 @@ class PHP_Depend_Code_ASTRequireExpressionTest extends PHP_Depend_Code_ASTNodeTe
     }
 
     /**
+     * testRequireExpression
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 1.0.2
+     */
+    public function testRequireExpression()
+    {
+        $expr = $this->_getFirstRequireExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTRequireExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
      * testRequireExpressionHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedStartLine()
+    public function testRequireExpressionHasExpectedStartLine($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * testRequireExpressionHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedStartColumn()
+    public function testRequireExpressionHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * testRequireExpressionHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedEndLine()
+    public function testRequireExpressionHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
      * testRequireExpressionHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedEndColumn()
+    public function testRequireExpressionHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(35, $expr->getEndColumn());
+    }
+
+    /**
+     * testRequireExpressionWithParenthesis
+     *
+     * @return PHP_Depend_Code_ASTRequireExpression
+     * @since 1.0.2
+     */
+    public function testRequireExpressionWithParenthesis()
+    {
+        $expr = $this->_getFirstRequireExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTRequireExpression::CLAZZ, $expr);
+
+        return $expr;
     }
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedStartLine()
+    public function testRequireExpressionWithParenthesisHasExpectedStartLine($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedStartColumn()
+    public function testRequireExpressionWithParenthesisHasExpectedStartColumn($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedEndLine()
+    public function testRequireExpressionWithParenthesisHasExpectedEndLine($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(6, $expr->getEndLine());
     }
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTRequireExpression $expr
+     *
      * @return void
+     * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedEndColumn()
+    public function testRequireExpressionWithParenthesisHasExpectedEndColumn($expr)
     {
-        $expr = $this->_getFirstRequireExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTRequireExpression
      */
-    private function _getFirstRequireExpressionInFunction($testCase)
+    private function _getFirstRequireExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTRequireExpression::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTRequireExpression::CLAZZ
         );
     }
 }

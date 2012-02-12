@@ -157,9 +157,9 @@ class PHP_Depend_Code_ASTExitExpressionTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @param PHP_Depend_Code_ASTExitExpression $expr
      *
-     * @return PHP_Depend_Code_ASTExitExpression
+     * @return void
      * @since 1.0.1
-     * @depends void
+     * @depends testExitExpressionWithEmptyArgs
      */
     public function testExitExpressionWithEmptyArgsHasExpectedStartLine($expr)
     {

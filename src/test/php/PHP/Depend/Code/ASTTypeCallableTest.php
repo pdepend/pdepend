@@ -81,53 +81,75 @@ class PHP_Depend_Code_ASTTypeCallableTest extends PHP_Depend_Code_ASTNodeTest
     }
 
     /**
-     * testCallableTypeHasExpectedStartLine
+     * testCallableType
      *
-     * @return void
+     * @return PHP_Depend_Code_ASTTypeCallable
+     * @since 1.0.2
      */
-    public function testCallableTypeHasExpectedStartLine()
+    public function testCallableType()
     {
         $type = $this->_getFirstCallableTypeInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeCallable::CLAZZ, $type);
+
+        return $type;
+    }
+
+    /**
+     * testCallableTypeHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTTypeCallable $type
+     *
+     * @return void
+     * @depends testCallableType
+     */
+    public function testCallableTypeHasExpectedStartLine($type)
+    {
         $this->assertEquals(2, $type->getStartLine());
     }
 
     /**
      * testCallableTypeHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTypeCallable $type
+     *
      * @return void
+     * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedEndLine()
+    public function testCallableTypeHasExpectedEndLine($type)
     {
-        $type = $this->_getFirstCallableTypeInFunction();
         $this->assertEquals(2, $type->getEndLine());
     }
 
     /**
      * testCallableTypeHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTypeCallable $type
+     *
      * @return void
+     * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedStartColumn()
+    public function testCallableTypeHasExpectedStartColumn($type)
     {
-        $type = $this->_getFirstCallableTypeInFunction();
-        $this->assertEquals(49, $type->getStartColumn());
+        $this->assertEquals(27, $type->getStartColumn());
     }
 
     /**
      * testCallableTypeHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTypeCallable $type
+     *
      * @return void
+     * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedEndColumn()
+    public function testCallableTypeHasExpectedEndColumn($type)
     {
-        $type = $this->_getFirstCallableTypeInFunction();
-        $this->assertEquals(54, $type->getEndColumn());
+        $this->assertEquals(34, $type->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return PHP_Depend_Code_ASTTypeArray
+     * @return PHP_Depend_Code_ASTTypeCallable
      */
     private function _getFirstCallableTypeInFunction()
     {

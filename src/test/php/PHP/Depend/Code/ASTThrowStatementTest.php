@@ -69,60 +69,81 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTThrowStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testThrowStatement
+     *
+     * @return PHP_Depend_Code_ASTThrowStatement
+     * @since 1.0.2
+     */
+    public function testThrowStatement()
+    {
+        $stmt = $this->_getFirstThrowStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTThrowStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
      * testThrowStatementHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTThrowStatement $stmt
+     *
      * @return void
+     * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedStartLine()
+    public function testThrowStatementHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstThrowStatementInFunction(__METHOD__);
         $this->assertSame(4, $stmt->getStartLine());
     }
 
     /**
      * testThrowStatementHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTThrowStatement $stmt
+     *
      * @return void
+     * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedStartColumn()
+    public function testThrowStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstThrowStatementInFunction(__METHOD__);
         $this->assertSame(5, $stmt->getStartColumn());
     }
 
     /**
      * testThrowStatementHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTThrowStatement $stmt
+     *
      * @return void
+     * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedEndLine()
+    public function testThrowStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstThrowStatementInFunction(__METHOD__);
         $this->assertSame(5, $stmt->getEndLine());
     }
 
     /**
      * testThrowStatementHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTThrowStatement $stmt
+     *
      * @return void
+     * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedEndColumn()
+    public function testThrowStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstThrowStatementInFunction(__METHOD__);
         $this->assertSame(38, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTThrowStatement
      */
-    private function _getFirstThrowStatementInFunction($testCase)
+    private function _getFirstThrowStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTThrowStatement::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTThrowStatement::CLAZZ
         );
     }
 }

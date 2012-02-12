@@ -69,68 +69,94 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testTryStatement
+     *
+     * @return PHP_Depend_Code_ASTTryStatement
+     * @since 1.0.2
+     */
+    public function testTryStatement()
+    {
+        $stmt = $this->_getFirstTryStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTryStatement::CLAZZ, $stmt);
+
+        return $stmt;
+    }
+
+    /**
      * Tests that the try-statement has the expected start line value.
      *
+     * @param PHP_Depend_Code_ASTTryStatement $stmt
+     *
      * @return void
+     * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedStartLine()
+    public function testTryStatementHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * Tests that the try-statement has the expected start column value.
      *
+     * @param PHP_Depend_Code_ASTTryStatement $stmt
+     *
      * @return void
+     * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedStartColumn()
+    public function testTryStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * Tests that the try-statement has the expected end line value.
      *
+     * @param PHP_Depend_Code_ASTTryStatement $stmt
+     *
      * @return void
+     * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedEndLine()
+    public function testTryStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
      * Tests that the try-statement has the expected end column value.
      *
+     * @param PHP_Depend_Code_ASTTryStatement $stmt
+     *
      * @return void
+     * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedEndColumn()
+    public function testTryStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
      * testFirstChildOfTryStatementIsInstanceOfScopeStatement
      *
+     * @param PHP_Depend_Code_ASTTryStatement $stmt
+     *
      * @return void
+     * @depends testTryStatement
      */
-    public function testFirstChildOfTryStatementIsInstanceOfScopeStatement()
+    public function testFirstChildOfTryStatementIsInstanceOfScopeStatement($stmt)
     {
-        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(0));
     }
 
     /**
      * testSecondChildOfTryStatementIsInstanceOfCatchStatement
      *
+     * @param PHP_Depend_Code_ASTTryStatement $stmt
+     *
      * @return void
+     * @depends testTryStatement
      */
-    public function testSecondChildOfTryStatementIsInstanceOfCatchStatement()
+    public function testSecondChildOfTryStatementIsInstanceOfCatchStatement($stmt)
     {
-        $stmt = $this->_getFirstTryStatementInFunction(__METHOD__);
         $this->assertInstanceOf(PHP_Depend_Code_ASTCatchStatement::CLAZZ, $stmt->getChild(1));
     }
 
@@ -165,20 +191,19 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows()
     {
-        $this->_getFirstTryStatementInFunction(__METHOD__);
+        $this->_getFirstTryStatementInFunction();
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTTryStatement
      */
-    private function _getFirstTryStatementInFunction($testCase)
+    private function _getFirstTryStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTTryStatement::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTTryStatement::CLAZZ
         );
     }
 }

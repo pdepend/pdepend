@@ -75,7 +75,7 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testWhileStatementGraphWithBooleanExpressions()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstWhileStatementInFunction();
         $this->assertEquals(2, count($stmt->getChildren()));
     }
 
@@ -86,7 +86,7 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testFirstChildOfWhileStatementIsASTExpression()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstWhileStatementInFunction();
         $this->assertInstanceOf(PHP_Depend_Code_ASTExpression::CLAZZ, $stmt->getChild(0));
     }
 
@@ -97,95 +97,139 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testSecondChildOfWhileStatementIsASTScopeStatement()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstWhileStatementInFunction();
         $this->assertInstanceOf(PHP_Depend_Code_ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+    }
+
+    /**
+     * testWhileStatement
+     *
+     * @return PHP_Depend_Code_ASTWhileStatement
+     * @since 1.0.2
+     */
+    public function testWhileStatement()
+    {
+        $stmt = $this->_getFirstWhileStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTWhileStatement::CLAZZ, $stmt);
+
+        return $stmt;
     }
 
     /**
      * testWhileStatementHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedStartLine()
+    public function testWhileStatementHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testWhileStatementHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedStartColumn()
+    public function testWhileStatementHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testWhileStatementHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedEndLine()
+    public function testWhileStatementHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
     /**
      * testWhileStatementHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedEndColumn()
+    public function testWhileStatementHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
+    }
+
+    /**
+     * testWhileStatementWithAlternativeScope
+     *
+     * @return PHP_Depend_Code_ASTWhileStatement
+     * @since 1.0.2
+     */
+    public function testWhileStatementWithAlternativeScope()
+    {
+        $stmt = $this->_getFirstWhileStatementInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTWhileStatement::CLAZZ, $stmt);
+
+        return $stmt;
     }
 
     /**
      * testWhileStatementAlternativeScopeHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedStartLine()
+    public function testWhileStatementAlternativeScopeHasExpectedStartLine($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
     /**
      * testWhileStatementAlternativeScopeHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedStartColumn()
+    public function testWhileStatementAlternativeScopeHasExpectedStartColumn($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
      * testWhileStatementAlternativeScopeHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedEndLine()
+    public function testWhileStatementAlternativeScopeHasExpectedEndLine($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
     /**
      * testWhileStatementAlternativeScopeHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTWhileStatement $stmt
+     *
      * @return void
+     * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedEndColumn()
+    public function testWhileStatementAlternativeScopeHasExpectedEndColumn($stmt)
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
         $this->assertEquals(13, $stmt->getEndColumn());
     }
 
@@ -196,21 +240,20 @@ class PHP_Depend_Code_ASTWhileStatementTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testWhileStatementTerminatedByPhpCloseTag()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction(__METHOD__);
+        $stmt = $this->_getFirstWhileStatementInFunction();
         self::assertEquals(9, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTWhileStatement
      */
-    private function _getFirstWhileStatementInFunction($testCase)
+    private function _getFirstWhileStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTWhileStatement::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTWhileStatement::CLAZZ
         );
     }
 }

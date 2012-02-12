@@ -164,48 +164,70 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
             $alias->getNewModifier()
         );
     }
+
+    /**
+     * testTraitAdaptationAlias
+     *
+     * @return PHP_Depend_Code_ASTTraitAdaptationAlias
+     * @since 1.0.2
+     */
+    public function testTraitAdaptationAlias()
+    {
+        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTraitAdaptationAlias::CLAZZ, $alias);
+
+        return $alias;
+    }
     
     /**
      * testTraitAdaptationAliasHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptationAlias $alias
+     *
      * @return void
+     * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedStartLine()
+    public function testTraitAdaptationAliasHasExpectedStartLine($alias)
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(6, $alias->getStartLine());
     }
 
     /**
      * testTraitAdaptationAliasHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptationAlias $alias
+     *
      * @return void
+     * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedStartColumn()
+    public function testTraitAdaptationAliasHasExpectedStartColumn($alias)
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(9, $alias->getStartColumn());
     }
 
     /**
      * testTraitAdaptationAliasHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptationAlias $alias
+     *
      * @return void
+     * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedEndLine()
+    public function testTraitAdaptationAliasHasExpectedEndLine($alias)
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(6, $alias->getEndLine());
     }
 
     /**
      * testTraitAdaptationAliasHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTraitAdaptationAlias $alias
+     *
      * @return void
+     * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedEndColumn()
+    public function testTraitAdaptationAliasHasExpectedEndColumn($alias)
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(46, $alias->getEndColumn());
     }
 
@@ -223,47 +245,69 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
     }
 
     /**
+     * testTraitReference
+     *
+     * @return PHP_Depend_Code_ASTTraitReference
+     * @since 1.0.2
+     */
+    public function testTraitReference()
+    {
+        $reference = $this->_getFirstTraitReferenceInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTTraitReference::CLAZZ, $reference);
+
+        return $reference;
+    }
+
+    /**
      * testTraitReferenceHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine()
+    public function testTraitReferenceHasExpectedStartLine($reference)
     {
-        $alias = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(7, $alias->getStartLine());
+        $this->assertEquals(7, $reference->getStartLine());
     }
 
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn()
+    public function testTraitReferenceHasExpectedStartColumn($reference)
     {
-        $alias = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(9, $alias->getStartColumn());
+        $this->assertEquals(9, $reference->getStartColumn());
     }
 
     /**
      * testTraitReferenceHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine()
+    public function testTraitReferenceHasExpectedEndLine($reference)
     {
-        $alias = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(7, $alias->getEndLine());
+        $this->assertEquals(7, $reference->getEndLine());
     }
 
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTTraitReference $reference
+     *
      * @return void
+     * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn()
+    public function testTraitReferenceHasExpectedEndColumn($reference)
     {
-        $alias = $this->_getFirstTraitReferenceInClass();
-        $this->assertEquals(56, $alias->getEndColumn());
+        $this->assertEquals(36, $reference->getEndColumn());
     }
 
     /**

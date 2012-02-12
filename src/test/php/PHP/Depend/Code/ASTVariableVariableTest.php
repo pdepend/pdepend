@@ -69,47 +69,69 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTVariableVariableTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testVariableVariable
+     *
+     * @return PHP_Depend_Code_ASTVariableVariable
+     * @since 1.0.2
+     */
+    public function testVariableVariable()
+    {
+        $variable = $this->_getFirstVariableVariableInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $variable);
+
+        return $variable;
+    }    
+    
+    /**
      * testVariableVariableHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTVariableVariable $variable
+     *
      * @return void
+     * @depends testVariableVariable
      */
-    public function testVariableVariableHasExpectedStartLine()
+    public function testVariableVariableHasExpectedStartLine($variable)
     {
-        $declarator = $this->_getFirstVariableVariableInClass(__METHOD__);
-        $this->assertEquals(6, $declarator->getStartLine());
+        $this->assertEquals(6, $variable->getStartLine());
     }
 
     /**
      * testVariableVariableHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTVariableVariable $variable
+     *
      * @return void
+     * @depends testVariableVariable
      */
-    public function testVariableVariableHasExpectedStartColumn()
+    public function testVariableVariableHasExpectedStartColumn($variable)
     {
-        $declarator = $this->_getFirstVariableVariableInClass(__METHOD__);
-        $this->assertEquals(9, $declarator->getStartColumn());
+        $this->assertEquals(9, $variable->getStartColumn());
     }
 
     /**
      * testVariableVariableHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTVariableVariable $variable
+     *
      * @return void
+     * @depends testVariableVariable
      */
-    public function testVariableVariableHasExpectedEndLine()
+    public function testVariableVariableHasExpectedEndLine($variable)
     {
-        $declarator = $this->_getFirstVariableVariableInClass(__METHOD__);
-        $this->assertEquals(8, $declarator->getEndLine());
+        $this->assertEquals(8, $variable->getEndLine());
     }
 
     /**
      * testVariableVariableHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTVariableVariable $variable
+     *
      * @return void
+     * @depends testVariableVariable
      */
-    public function testVariableVariableHasExpectedEndColumn()
+    public function testVariableVariableHasExpectedEndColumn($variable)
     {
-        $declarator = $this->_getFirstVariableVariableInClass(__METHOD__);
-        $this->assertEquals(12, $declarator->getEndColumn());
+        $this->assertEquals(12, $variable->getEndColumn());
     }
 
     /**
@@ -119,10 +141,11 @@ class PHP_Depend_Code_ASTVariableVariableTest extends PHP_Depend_Code_ASTNodeTes
      *
      * @return PHP_Depend_Code_ASTVariableVariable
      */
-    private function _getFirstVariableVariableInClass($testCase)
+    private function _getFirstVariableVariableInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTVariableVariable::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTVariableVariable::CLAZZ
         );
     }
 }

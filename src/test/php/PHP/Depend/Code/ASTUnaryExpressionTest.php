@@ -69,60 +69,81 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTUnaryExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testUnaryExpression
+     *
+     * @return PHP_Depend_Code_ASTUnaryExpression
+     * @since 1.0.2
+     */
+    public function testUnaryExpression()
+    {
+        $expr = $this->_getFirstUnaryExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTUnaryExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
      * testUnaryExpressionHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTUnaryExpression $expr
+     *
      * @return void
+     * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedStartLine()
+    public function testUnaryExpressionHasExpectedStartLine($expr)
     {
-        $stmt = $this->_getFirstUnaryExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * testUnaryExpressionHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTUnaryExpression $expr
+     *
      * @return void
+     * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedStartColumn()
+    public function testUnaryExpressionHasExpectedStartColumn($expr)
     {
-        $stmt = $this->_getFirstUnaryExpressionInFunction(__METHOD__);
-        $this->assertEquals(22, $stmt->getStartColumn());
+        $this->assertEquals(22, $expr->getStartColumn());
     }
 
     /**
      * testUnaryExpressionHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTUnaryExpression $expr
+     *
      * @return void
+     * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedEndLine()
+    public function testUnaryExpressionHasExpectedEndLine($expr)
     {
-        $stmt = $this->_getFirstUnaryExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndLine());
+        $this->assertEquals(5, $expr->getEndLine());
     }
 
     /**
      * testUnaryExpressionHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTUnaryExpression $expr
+     *
      * @return void
+     * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedEndColumn()
+    public function testUnaryExpressionHasExpectedEndColumn($expr)
     {
-        $stmt = $this->_getFirstUnaryExpressionInFunction(__METHOD__);
-        $this->assertEquals(14, $stmt->getEndColumn());
+        $this->assertEquals(14, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTUnaryExpression
      */
-    private function _getFirstUnaryExpressionInFunction($testCase)
+    private function _getFirstUnaryExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTUnaryExpression::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTUnaryExpression::CLAZZ
         );
     }
 }
