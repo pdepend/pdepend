@@ -1,11 +1,11 @@
 #!/bin/sh
 
 rm -rf ~/.pdepend/*
-pdepend --jdepend-xml=/tmp/jdp01.xml --summary-xml=/tmp/sum01.xml $1
-pdepend --jdepend-xml=/tmp/jdp01c.xml --summary-xml=/tmp/sum01c.xml $1
-src/bin/pdepend.php --jdepend-xml=/tmp/jdp02.xml --summary-xml=/tmp/sum02.xml $1
-src/bin/pdepend.php --jdepend-xml=/tmp/jdp03.xml --summary-xml=/tmp/sum03.xml $1
+pdepend --jdepend-xml=/tmp/jdpa0.xml --summary-xml=/tmp/suma0.xml $1
+pdepend --jdepend-xml=/tmp/jdpa1.xml --summary-xml=/tmp/suma1.xml $1
+src/bin/pdepend.php --jdepend-xml=/tmp/jdpb0.xml --summary-xml=/tmp/sumb0.xml $1
+src/bin/pdepend.php --jdepend-xml=/tmp/jdpb1.xml --summary-xml=/tmp/sumb1.xml $1
 
-meld /tmp/sum01.xml /tmp/sum02.xml /tmp/sum03.xml
+meld /tmp/suma0.xml /tmp/sumb0.xml /tmp/sumb1.xml
 
-meld /tmp/jdp01.xml /tmp/jdp02.xml /tmp/jdp03.xml
+meld /tmp/jdpa0.xml /tmp/jdpb0.xml /tmp/jdpb1.xml
