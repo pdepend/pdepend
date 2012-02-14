@@ -293,7 +293,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
             $methods[strtolower($method->getName())] = $method;
         }
 
-        foreach ($this->methods as $method) {
+        foreach ($this->getMethods() as $method) {
             $methods[strtolower($method->getName())] = $method;
         }
 
@@ -387,7 +387,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * names of all those properties that should be cached for this class or
      * interface instance.
      *
-     * @return array(string)
+     * @return array
      * @since 0.10.0
      */
     public function __sleep()

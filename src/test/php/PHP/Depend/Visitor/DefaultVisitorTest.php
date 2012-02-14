@@ -279,7 +279,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testVisitorInvokesAcceptOnTraitMethods()
     {
-        $trait = new PHP_Depend_Code_Trait('MyTrait');
+        $trait = $this->createTraitFixture();
         $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
         $trait->addMethod($method0 = new PHP_Depend_Code_Method('m0'));
         $trait->addMethod($method1 = new PHP_Depend_Code_Method('m1'));
@@ -303,9 +303,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testVisitorInvokesStartTraitOnListener()
     {
+        $trait = $this->createTraitFixture();
+        $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+
         $package = new PHP_Depend_Code_Package('MyPackage');
-        $package->addType(new PHP_Depend_Code_Trait('MyTrait'))
-            ->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $package->addType($trait);
 
         $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
         $listener->expects($this->once())
@@ -325,9 +327,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testVisitorInvokesEndTraitOnListener()
     {
+        $trait = $this->createTraitFixture();
+        $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+
         $package = new PHP_Depend_Code_Package('MyPackage');
-        $package->addType(new PHP_Depend_Code_Trait('MyTrait'))
-            ->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $package->addType($trait);
 
         $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
         $listener->expects($this->once())

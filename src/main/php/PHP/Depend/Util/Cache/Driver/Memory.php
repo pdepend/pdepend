@@ -91,6 +91,28 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
     protected $type = self::ENTRY_TYPE;
 
     /**
+     * Unique identifier within the same cache instance.
+     *
+     * @var string
+     */
+    protected $staticId = null;
+
+    /**
+     * Global stack, mainly used during testing.
+     *
+     * @var array
+     */
+    protected static $staticCache = array();
+
+    /**
+     * Instantiates a new in memory cache instance.
+     */
+    public function __construct()
+    {
+        $this->staticId = sha1(uniqid(rand(0, PHP_INT_MAX)));
+    }
+
+    /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method
      * call. A type is something like a namespace or group for cache entries.
      *
@@ -181,5 +203,29 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
         $this->type = self::ENTRY_TYPE;
 
         return "{$key}.{$type}";
+    }
+
+    /**
+     * PHP's magic serialize sleep method.
+     *
+     * @return array
+     * @since 1.0.2
+     */
+    public function __sleep()
+    {
+        self::$staticCache[$this->staticId] = $this->cache;
+
+        return array('staticId');
+    }
+
+    /**
+     * PHP's magic serialize wakeup method.
+     *
+     * @return void
+     * @since 1.0.2
+     */
+    public function __wakeup()
+    {
+        $this->cache = self::$staticCache[$this->staticId];
     }
 }

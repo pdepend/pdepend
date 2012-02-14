@@ -84,13 +84,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     private $_package = null;
 
     /**
-     * List of {@link PHP_Depend_Code_Method} objects in this class.
-     *
-     * @var array(PHP_Depend_Code_Method)
-     */
-    protected $methods = array();
-
-    /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
      * @var array(string=>mixed)
@@ -141,6 +134,22 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * @var boolean
      */
     protected $cached = false;
+
+    /**
+     * The modifiers for this class instance.
+     *
+     * @var integer $_modifiers
+     */
+    protected $modifiers = 0;
+
+    /**
+     * Temporary property that only holds methods during the parsing process.
+     *
+     * @var PHP_Depend_Code_Method[]
+     * @since 1.0.2
+     */
+    private $_methods = array();
+
 
     /**
      * Setter method for the currently used token cache, where this class or
@@ -213,11 +222,13 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
                 return $child;
             }
         }
-        foreach ($this->methods as $method) {
+        $methods = $this->getMethods();
+        foreach ($methods as $method) {
             if (($child = $method->getFirstChildOfType($targetType)) !== null) {
                 return $child;
             }
         }
+
         return null;
     }
 
@@ -239,9 +250,11 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
             }
             $node->findChildrenOfType($targetType, $results);
         }
-        foreach ($this->methods as $method) {
+
+        foreach ($this->getMethods() as $method) {
             $method->findChildrenOfType($targetType, $results);
         }
+
         return $results;
     }
 
@@ -274,7 +287,20 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getMethods()
     {
-        return new PHP_Depend_Code_NodeIterator($this->methods);
+        if (is_array($this->_methods)) {
+            return new PHP_Depend_Code_NodeIterator($this->_methods);
+        }
+
+        $methods = (array) $this->cache
+            ->type('methods')
+            ->restore($this->getUUID());
+
+        foreach ($methods as $method) {
+            $method->sourceFile = $this->sourceFile;
+            $method->setParent($this);
+        }
+
+        return new PHP_Depend_Code_NodeIterator($methods);
     }
 
     /**
@@ -288,7 +314,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     {
         $method->setParent($this);
 
-        $this->methods[] = $method;
+        $this->_methods[] = $method;
 
         return $method;
     }
@@ -332,7 +358,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
-     * @return array(PHP_Depend_Token)
+     * @return PHP_Depend_Token[]
      */
     public function getTokens()
     {
@@ -344,7 +370,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Sets the tokens for this type.
      *
-     * @param array(PHP_Depend_Token) $tokens The generated tokens.
+     * @param PHP_Depend_Token[] $tokens The generated tokens.
      *
      * @return void
      */
@@ -451,12 +477,19 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function __sleep()
     {
+        if (is_array($this->_methods)) {
+            $this->cache
+                ->type('methods')
+                ->store($this->uuid, $this->_methods);
+
+            $this->_methods = null;
+        }
+
         return array(
             'cache',
             'context',
             'docComment',
             'endLine',
-            'methods',
             'modifiers',
             'name',
             'nodes',
@@ -478,11 +511,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function __wakeup()
     {
-        $this->cached = true;
-
-        foreach ($this->methods as $method) {
-            $method->sourceFile = $this->sourceFile;
-            $method->setParent($this);
-        }
+        $this->cached   = true;
+        $this->_methods = null;
     }
 }

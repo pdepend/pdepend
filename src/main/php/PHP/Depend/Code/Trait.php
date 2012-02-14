@@ -77,7 +77,7 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
     {
         $methods = $this->getTraitMethods();
 
-        foreach ($this->methods as $method) {
+        foreach ($this->getMethods() as $method) {
             $methods[strtolower($method->getName())] = $method;
         }
 

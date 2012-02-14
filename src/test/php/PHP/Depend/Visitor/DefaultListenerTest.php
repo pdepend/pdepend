@@ -122,25 +122,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerCallsStartNodeEndNodeForClass()
     {
-        include_once 'PHP/Depend/Code/Class.php';
-
-        $class = $this->getMock(
-            'PHP_Depend_Code_Class',
-            array(
-                'getName', 'getSourceFile'
-            ),
-            array(__FUNCTION__)
-        );
-        $class->expects($this->atLeastOnce())
-            ->method('getName')
-            ->will($this->returnValue(__FUNCTION__));
-        $class->expects($this->atLeastOnce())
-            ->method('getSourceFile')
-            ->will(
-                $this->returnValue(
-                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
-                )
-            );
+        $class = $this->createClassFixture(__FUNCTION__);
+        $class->setSourceFile(new PHP_Depend_Code_File(__FILE__));
 
         $listener = new PHP_Depend_Visitor_TestListener();
         $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
@@ -152,6 +135,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $expected = array(
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
+            realpath($GLOBALS['argv'][0]) . '#start' => true,
+            realpath($GLOBALS['argv'][0]) . '#end' => true,
         );
 
         $this->assertEquals($expected, $actual);
@@ -165,25 +150,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerCallsStartNodeEndNodeForInterface()
     {
-        include_once 'PHP/Depend/Code/Interface.php';
-
-        $interface = $this->getMock(
-            'PHP_Depend_Code_Interface',
-            array(
-                'getName', 'getSourceFile'
-            ),
-            array(__FUNCTION__)
-        );
-        $interface->expects($this->atLeastOnce())
-            ->method('getName')
-            ->will($this->returnValue(__FUNCTION__));
-        $interface->expects($this->atLeastOnce())
-            ->method('getSourceFile')
-            ->will(
-                $this->returnValue(
-                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
-                )
-            );
+        $interface = $this->createInterfaceFixture(__FUNCTION__);
+        $interface->setSourceFile(new PHP_Depend_Code_File(__FILE__));
 
         $listener = new PHP_Depend_Visitor_TestListener();
         $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
@@ -195,6 +163,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $expected = array(
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
+            realpath($GLOBALS['argv'][0]) . '#start' => true,
+            realpath($GLOBALS['argv'][0]) . '#end' => true,
         );
 
         $this->assertEquals($expected, $actual);
@@ -208,28 +178,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerCallsStartNodeEndNodeForFunction()
     {
-        include_once 'PHP/Depend/Code/Function.php';
-
-        $function = $this->getMock(
-            'PHP_Depend_Code_Function',
-            array(
-                'getName', 'getSourceFile', 'getParameters'
-            ),
-            array(__FUNCTION__)
-        );
-        $function->expects($this->atLeastOnce())
-            ->method('getName')
-            ->will($this->returnValue(__FUNCTION__));
-        $function->expects($this->atLeastOnce())
-            ->method('getSourceFile')
-            ->will(
-                $this->returnValue(
-                    $this->getMock('PHP_Depend_Code_File', array(), array(null))
-                )
-            );
-        $function->expects($this->atLeastOnce())
-            ->method('getParameters')
-            ->will($this->returnValue(array()));
+        $function = $this->createFunctionFixture(__FUNCTION__);
+        $function->setSourceFile(new PHP_Depend_Code_File(__FILE__));
 
         $listener = new PHP_Depend_Visitor_TestListener();
         $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
@@ -241,6 +191,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $expected = array(
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
+            realpath($GLOBALS['argv'][0]) . '#start' => true,
+            realpath($GLOBALS['argv'][0]) . '#end' => true,
         );
 
         $this->assertEquals($expected, $actual);
@@ -254,21 +206,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerCallsStartNodeEndNodeForMethod()
     {
-        include_once 'PHP/Depend/Code/Method.php';
-
-        $method = $this->getMock(
-            'PHP_Depend_Code_Method',
-            array(
-                'getName', 'getSourceFile', 'getParameters'
-            ),
-            array(__FUNCTION__)
-        );
-        $method->expects($this->atLeastOnce())
-            ->method('getName')
-            ->will($this->returnValue(__FUNCTION__));
-        $method->expects($this->atLeastOnce())
-            ->method('getParameters')
-            ->will($this->returnValue(array()));
+        $method = $this->createMethodFixture(__FUNCTION__);
+        $method->setSourceFile(new PHP_Depend_Code_File(__FILE__));
 
         $listener = new PHP_Depend_Visitor_TestListener();
         $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();

@@ -75,7 +75,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testVisitClassIgnoresClassesThatAreNotUserDefined()
     {
-        $notUserDefined = new PHP_Depend_Code_Class('Pichler');
+        $notUserDefined = $this->createClassFixture();
 
         $package = new PHP_Depend_Code_Package('PHP_Depend');
         $package->addType($notUserDefined);
@@ -94,8 +94,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testVisitClassCountsClassesThatAreNotUserDefined()
     {
-
-        $userDefined = new PHP_Depend_Code_Class('Manuel');
+        $userDefined = $this->createClassFixture();
         $userDefined->setUserDefined();
 
         $package = new PHP_Depend_Code_Package('PHP_Depend');
@@ -115,7 +114,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testVisitClassIgnoresInterfacesThatAreNotUserDefined()
     {
-        $notUserDefined = new PHP_Depend_Code_Interface('Pichler');
+        $notUserDefined = $this->createInterfaceFixture();
 
         $package = new PHP_Depend_Code_Package('PHP_Depend');
         $package->addType($notUserDefined);
@@ -134,7 +133,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testVisitClassCountsInterfacesThatAreNotUserDefined()
     {
-        $userDefined = new PHP_Depend_Code_Interface('Manuel');
+        $userDefined = $this->createInterfaceFixture();
         $userDefined->setUserDefined();
 
         $package = new PHP_Depend_Code_Package('PHP_Depend');

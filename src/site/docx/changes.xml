@@ -9,6 +9,15 @@
     </properties>
 
 	<body>
+        <release version="1.0.2"
+                 date=""
+                 description="" >
+
+            <action date="" dev="mapi" issue="24702477" system="pivotaltracker" type="add" due-to="bluszcz">
+                Huge memory footprint
+            </action>
+        </release>
+
         <release version="1.0.1"
                  date="2012/02/08"
                  description="This release fixes two bugs in PHP_Depend's

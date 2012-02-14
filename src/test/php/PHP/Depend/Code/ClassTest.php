@@ -701,6 +701,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             ->will($this->returnValue(null));
 
         $class = new PHP_Depend_Code_Class('Clazz');
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $class->addChild($node1);
         $class->addChild($node2);
 
@@ -960,6 +961,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetMethodsNodeIteratorIsEmptyByDefault()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         self::assertEquals(0, $class->getMethods()->count());
     }
 
@@ -971,7 +974,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testAddMethodStoresNewlyAddedMethodInCollection()
     {
-        $class  = new PHP_Depend_Code_Class(__CLASS__);
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
         self::assertEquals(1, $class->getMethods()->count());
@@ -984,7 +988,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testAddMethodSetsParentOfNewlyAddedMethod()
     {
-        $class  = new PHP_Depend_Code_Class(__CLASS__);
+        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
         $method = $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
         self::assertSame($class, $method->getParent());
@@ -1583,6 +1589,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $class->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
 
         self::assertEquals(
@@ -1594,7 +1601,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
                 'context',
                 'docComment',
                 'endLine',
-                'methods',
                 'modifiers',
                 'name',
                 'nodes',
@@ -1615,6 +1621,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testMagicWakeupSetsSourceFileOnChildMethods()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
 
         $method = new PHP_Depend_Code_Method(__FUNCTION__);
         $class->addMethod($method);
@@ -1625,24 +1632,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class->__wakeup();
 
         self::assertSame($file, $method->getSourceFile());
-    }
-
-    /**
-     * testMagicWakeupSetsParentOnChildMethods
-     *
-     * @return void
-     */
-    public function testMagicWakeupSetsParentOnChildMethods()
-    {
-        $class  = new PHP_Depend_Code_Class(__CLASS__);
-        $method = new PHP_Depend_Code_Method(__FUNCTION__);
-
-        $class->addMethod($method);
-        $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
-        $method->setParent(null);
-        $class->__wakeup();
-
-        self::assertSame($class, $method->getParent());
     }
 
     /**
@@ -1670,6 +1659,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     protected function createItem()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
 
         return $class;

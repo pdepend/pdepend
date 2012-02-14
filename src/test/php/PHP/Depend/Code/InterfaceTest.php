@@ -95,7 +95,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $interface = new PHP_Depend_Code_Interface('Interface');
+        $interface = $this->createItem();
         $interface->addChild($node1);
         $interface->addChild($node2);
 
@@ -139,7 +139,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
 
-        $interface = new PHP_Depend_Code_Interface('Interface');
+        $interface = $this->createItem();
         $interface->addChild($node2);
         $interface->addChild($node3);
 
@@ -174,7 +174,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $interface = new PHP_Depend_Code_Interface('Interface');
+        $interface = $this->createItem();
         $interface->addChild($node1);
         $interface->addChild($node2);
 
@@ -412,7 +412,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference()
     {
-        $interface = new PHP_Depend_Code_Interface('IFooBar');
+        $interface = $this->createItem();
         $interface->setParentClassReference(
             $this->getMock(
                 'PHP_Depend_Code_ASTClassReference',
@@ -431,7 +431,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testInterfaceReturnsExpectedModifiers()
     {
-        $interface = new PHP_Depend_Code_Interface('Foo');
+        $interface = $this->createItem();
         $this->assertSame(
             PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT,
             $interface->getModifiers()
@@ -558,7 +558,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $cache->expects($this->once())
             ->method('restore');
 
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->setCache($cache)
             ->getTokens();
     }
@@ -581,7 +581,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('store')
             ->with(self::equalTo(null), self::equalTo($tokens));
 
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->setCache($cache)
             ->setTokens($tokens);
     }
@@ -593,7 +593,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStartLineReturnsZeroByDefault()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         self::assertSame(0, $interface->getStartLine());
     }
 
@@ -609,7 +609,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('type')
             ->will($this->returnValue($cache));
 
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->setCache($cache)
             ->setTokens(
                 array(
@@ -628,7 +628,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetEndLineReturnsZeroByDefault()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         self::assertSame(0, $interface->getEndLine());
     }
 
@@ -639,7 +639,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetParentClassReferenceReturnsNullByDefault()
     {
-        $class = new PHP_Depend_Code_Interface(__CLASS__);
+        $class = $this->createItem();
         self::assertNull($class->getParentClassReference());
     }
 
@@ -650,7 +650,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetParentClassesReturnsEmptyArrayByDefault()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $this->assertSame(array(), $interface->getParentClasses());
     }
 
@@ -676,7 +676,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         self::assertSame(array(), $interface->getInterfaceReferences());
     }
 
@@ -699,7 +699,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $this->assertSame(array(), $interface->getChildren());
     }
 
@@ -763,7 +763,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('type')
             ->will($this->returnValue($cache));
 
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->setCache($cache)
             ->setTokens(
                 array(
@@ -782,7 +782,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsAbstractReturnsAlwaysTrue()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         self::assertTrue($interface->isAbstract());
     }
 
@@ -793,7 +793,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsUserDefinedReturnsFalseByDefault()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         self::assertFalse($interface->isUserDefined());
     }
 
@@ -804,7 +804,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testIsUserDefinedReturnsTrueAfterSetUserDefinedCall()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->setUserDefined();
 
         self::assertTrue($interface->isUserDefined());
@@ -866,7 +866,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
 
         self::assertEquals(
@@ -878,7 +878,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
                 'context',
                 'docComment',
                 'endLine',
-                'methods',
                 'modifiers',
                 'name',
                 'nodes',
@@ -898,34 +897,15 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMagicWakeupSetsSourceFileOnChildMethods()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $method    = new PHP_Depend_Code_Method(__FUNCTION__);
         $interface->addMethod($method);
 
         $file = new PHP_Depend_Code_File(__FILE__);
         $interface->setSourceFile($file);
-        $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
         $interface->__wakeup();
 
         self::assertSame($file, $method->getSourceFile());
-    }
-
-    /**
-     * testMagicWakeupSetsParentOnChildMethods
-     *
-     * @return void
-     */
-    public function testMagicWakeupSetsParentOnChildMethods()
-    {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
-        $method    = new PHP_Depend_Code_Method(__FUNCTION__);
-
-        $interface->addMethod($method);
-        $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
-        $method->setParent(null);
-        $interface->__wakeup();
-
-        self::assertSame($interface, $method->getParent());
     }
 
     /**
@@ -935,7 +915,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMagicWakeupCallsRegisterInterfaceOnBuilderContext()
     {
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
 
         $context = $this->getMock('PHP_Depend_Builder_Context');
         $context->expects($this->once())
@@ -957,18 +937,19 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
             ->method('visitInterface')
             ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
 
-        $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface = $this->createItem();
         $interface->accept($visitor);
     }
 
     /**
      * Creates an abstract item instance.
      *
-     * @return PHP_Depend_Code_AbstractItem
+     * @return PHP_Depend_Code_Interface
      */
     protected function createItem()
     {
         $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
 
         return $interface;

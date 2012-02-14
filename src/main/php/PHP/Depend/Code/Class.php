@@ -75,13 +75,6 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     private $_properties = null;
 
     /**
-     * The modifiers for this class instance.
-     *
-     * @var integer $_modifiers
-     */
-    protected $modifiers = 0;
-
-    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return boolean
