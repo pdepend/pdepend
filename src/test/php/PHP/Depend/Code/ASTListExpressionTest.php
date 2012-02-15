@@ -71,47 +71,139 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
 class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
 {
     /**
+     * testListExpression
+     *
+     * @return PHP_Depend_Code_ASTListExpression
+     * @since 1.0.2
+     */
+    public function testListExpression()
+    {
+        $expr = $this->_getFirstListExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTListExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
      * Tests the start line value.
      *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
      * @return void
+     * @depends testListExpression
      */
-    public function testListExpressionHasExpectedStartLine()
+    public function testListExpressionHasExpectedStartLine($expr)
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        $this->assertEquals(4, $expr->getStartLine());
     }
 
     /**
      * Tests the start column value.
      *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
      * @return void
+     * @depends testListExpression
      */
-    public function testListExpressionHasExpectedStartColumn()
+    public function testListExpressionHasExpectedStartColumn($expr)
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        $this->assertEquals(5, $expr->getStartColumn());
     }
 
     /**
      * Tests the end line value.
      *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
      * @return void
+     * @depends testListExpression
      */
-    public function testListExpressionHasExpectedEndLine()
+    public function testListExpressionHasExpectedEndLine($expr)
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getEndLine());
+        $this->assertEquals(4, $expr->getEndLine());
     }
 
     /**
      * Tests the end column value.
      *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
      * @return void
+     * @depends testListExpression
      */
-    public function testListExpressionHasExpectedEndColumn()
+    public function testListExpressionHasExpectedEndColumn($expr)
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $this->assertEquals(16, $stmt->getEndColumn());
+        $this->assertEquals(16, $expr->getEndColumn());
+    }
+
+    /**
+     * testListExpressionWithNestedList
+     *
+     * @return PHP_Depend_Code_ASTListExpression
+     * @since 1.0.2
+     */
+    public function testListExpressionWithNestedList()
+    {
+        $expr = $this->_getFirstListExpressionInFunction();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTListExpression::CLAZZ, $expr);
+
+        return $expr;
+    }
+
+    /**
+     * testListExpressionWithNestedListHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testListExpressionWithNestedList
+     */
+    public function testListExpressionWithNestedListHasExpectedStartLine($expr)
+    {
+        $this->assertEquals(4, $expr->getStartLine());
+    }
+    
+    /**
+     * testListExpressionWithNestedListHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testListExpressionWithNestedList
+     */
+    public function testListExpressionWithNestedListHasExpectedStartColumn($expr)
+    {
+        $this->assertEquals(5, $expr->getStartColumn());
+    }
+    
+    /**
+     * testListExpressionWithNestedListHasExpectedEndLine
+     *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testListExpressionWithNestedList
+     */
+    public function testListExpressionWithNestedListHasExpectedEndLine($expr)
+    {
+        $this->assertEquals(4, $expr->getEndLine());
+    }
+    
+    /**
+     * testListExpressionWithNestedListHasExpectedEndColumn
+     *
+     * @param PHP_Depend_Code_ASTListExpression $expr
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testListExpressionWithNestedList
+     */
+    public function testListExpressionWithNestedListHasExpectedEndColumn($expr)
+    {
+        $this->assertEquals(42, $expr->getEndColumn());
     }
 
     /**
@@ -121,8 +213,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionSupportsManyVariables()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $stmt->getChildren();
+        $expr = $this->_getFirstListExpressionInFunction();
+        $vars = $expr->getChildren();
         $this->assertEquals(3, count($vars));
     }
 
@@ -133,8 +225,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionSupportsSingleVariable()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $stmt->getChildren();
+        $expr = $this->_getFirstListExpressionInFunction();
+        $vars = $expr->getChildren();
         $this->assertEquals(1, count($vars));
     }
 
@@ -145,8 +237,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionSupportsExtraCommas()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $stmt->getChildren();
+        $expr = $this->_getFirstListExpressionInFunction();
+        $vars = $expr->getChildren();
         $this->assertEquals(3, count($vars));
     }
 
@@ -157,8 +249,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithComments()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $stmt->getChildren();
+        $expr = $this->_getFirstListExpressionInFunction();
+        $vars = $expr->getChildren();
         $this->assertEquals(3, count($vars));
     }
 
@@ -169,8 +261,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithoutChildExpression()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $vars = $stmt->getChildren();
+        $expr = $this->_getFirstListExpressionInFunction();
+        $vars = $expr->getChildren();
         $this->assertEquals(0, count($vars));
     }
 
@@ -181,8 +273,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithVariableVariable()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $var  = $stmt->getChild(0);
+        $expr = $this->_getFirstListExpressionInFunction();
+        $var  = $expr->getChild(0);
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $var);
     }
@@ -194,8 +286,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithCompoundVariable()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $var  = $stmt->getChild(0);
+        $expr = $this->_getFirstListExpressionInFunction();
+        $var  = $expr->getChild(0);
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTCompoundVariable::CLAZZ, $var);
     }
@@ -207,8 +299,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithArrayElement()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $var  = $stmt->getChild(0);
+        $expr = $this->_getFirstListExpressionInFunction();
+        $var  = $expr->getChild(0);
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ, $var);
     }
@@ -220,8 +312,8 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testListExpressionWithObjectProperty()
     {
-        $stmt = $this->_getFirstListExpressionInFunction(__METHOD__);
-        $var  = $stmt->getChild(0);
+        $expr = $this->_getFirstListExpressionInFunction();
+        $var  = $expr->getChild(0);
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ, $var);
     }
@@ -229,14 +321,13 @@ class PHP_Depend_Code_ASTListExpressionTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTListExpression
      */
-    private function _getFirstListExpressionInFunction($testCase)
+    private function _getFirstListExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, PHP_Depend_Code_ASTListExpression::CLAZZ
+            $this->getCallingTestMethod(),
+            PHP_Depend_Code_ASTListExpression::CLAZZ
         );
     }
 }

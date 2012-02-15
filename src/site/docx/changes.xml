@@ -22,6 +22,9 @@
             <action date="4d6a687" dev="mapi" issue="24732243" system="pivotaltracker" type="fix" due-to="Brian Kendig">
                 pdepend fails on 'const'
             </action>
+            <action date="" dev="mapi" issue="24975343" system="pivotaltracker" type="fix" due-to="bluszcz">
+                PHP_Depend doesn't handle nested list expressions.
+            </action>
         </release>
 
         <release version="1.0.1"

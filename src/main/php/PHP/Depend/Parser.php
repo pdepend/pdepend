@@ -1491,6 +1491,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_PARENTHESIS_CLOSE:
                 break 2;
 
+            case self::T_LIST:
+                $list->addChild($this->_parseListExpression());
+                $this->consumeComments();
+                break;
+
             default:
                 $list->addChild($this->_parseVariableOrConstantOrPrimaryPrefix());
                 $this->consumeComments();
@@ -4133,6 +4138,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         case self::T_NAMESPACE:
             $node = $this->_parseMemberPrefixOrFunctionPostfix();
             break;
+
+        default:
+            throw new PHP_Depend_Parser_UnexpectedTokenException(
+                $this->tokenizer->next(),
+                $this->_sourceFile->getFileName()
+            );
         }
 
         return $node;
