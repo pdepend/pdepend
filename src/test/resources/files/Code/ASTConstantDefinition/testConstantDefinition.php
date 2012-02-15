@@ -1,5 +1,5 @@
 <?php
-class testConstantDefinitionHasExpectedStartLine
+class testConstantDefinition
 {
     const
       FOO

@@ -5497,6 +5497,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
             break;
 
+        case self::T_CONST:
+            return $this->_parseConstantDefinition();
+
         case self::T_FUNCTION:
             return $this->_parseFunctionOrClosureDeclaration();
 

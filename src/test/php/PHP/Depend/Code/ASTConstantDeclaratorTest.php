@@ -94,7 +94,7 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testParserInjectsValueObjectIntoConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $declarator = $this->_getFirstConstantDeclaratorInClass();
         self::assertInstanceOf(PHP_Depend_Code_Value::CLAZZ, $declarator->getValue());
     }
 
@@ -105,7 +105,7 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testParserInjectsExpectedScalarValueIntoConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $declarator = $this->_getFirstConstantDeclaratorInClass();
         self::assertEquals(42, $declarator->getValue()->getValue());
     }
 
@@ -117,65 +117,86 @@ class PHP_Depend_Code_ASTConstantDeclaratorTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
+        $declarator = $this->_getFirstConstantDeclaratorInClass();
         self::assertEquals('Testing!', $declarator->getValue()->getValue());
+    }
+
+    /**
+     * testConstantDeclarator
+     *
+     * @return PHP_Depend_Code_ASTConstantDeclarator
+     * @since 1.0.2
+     */
+    public function testConstantDeclarator()
+    {
+        $declarator = $this->_getFirstConstantDeclaratorInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTConstantDeclarator::CLAZZ, $declarator);
+
+        return $declarator;
     }
 
     /**
      * testConstantDeclaratorHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTConstantDeclarator $declarator
+     *
      * @return void
+     * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedStartLine()
+    public function testConstantDeclaratorHasExpectedStartLine($declarator)
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
         $this->assertEquals(5, $declarator->getStartLine());
     }
 
     /**
      * testConstantDeclaratorHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTConstantDeclarator $declarator
+     *
      * @return void
+     * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedStartColumn()
+    public function testConstantDeclaratorHasExpectedStartColumn($declarator)
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
         $this->assertEquals(7, $declarator->getStartColumn());
     }
 
     /**
      * testConstantDeclaratorHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTConstantDeclarator $declarator
+     *
      * @return void
+     * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedEndLine()
+    public function testConstantDeclaratorHasExpectedEndLine($declarator)
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
         $this->assertEquals(7, $declarator->getEndLine());
     }
 
     /**
      * testConstantDeclaratorHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTConstantDeclarator $declarator
+     *
      * @return void
+     * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedEndColumn()
+    public function testConstantDeclaratorHasExpectedEndColumn($declarator)
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass(__METHOD__);
         $this->assertEquals(14, $declarator->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTConstantDeclarator
      */
-    private function _getFirstConstantDeclaratorInClass($testCase)
+    private function _getFirstConstantDeclaratorInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTConstantDeclarator::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTConstantDeclarator::CLAZZ
         );
     }
 }

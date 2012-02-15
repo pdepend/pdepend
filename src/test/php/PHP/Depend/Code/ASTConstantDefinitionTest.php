@@ -75,7 +75,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testConstantDefinitionHasExpectedDocComment()
     {
-        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $constant = $this->_getFirstConstantDefinitionInClass();
         $this->assertEquals(
             "/**\n" .
             "     * Foo bar baz foobar.\n" .
@@ -91,7 +91,7 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
      */
     public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
     {
-        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
+        $constant = $this->_getFirstConstantDefinitionInClass();
         $this->assertEquals(
             "/**\n" .
             "     * Foo bar baz foobar.\n" .
@@ -101,60 +101,173 @@ class PHP_Depend_Code_ASTConstantDefinitionTest extends PHP_Depend_Code_ASTNodeT
     }
 
     /**
+     * testConstantDefinition
+     *
+     * @return PHP_Depend_Code_ASTConstantDefinition
+     * @since 1.0.2
+     */
+    public function testConstantDefinition()
+    {
+        $constant = $this->_getFirstConstantDefinitionInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTConstantDefinition::CLAZZ, $constant);
+
+        return $constant;
+    }
+
+    /**
      * testConstantDefinitionHasExpectedStartLine
      *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
      * @return void
+     * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedStartLine()
+    public function testConstantDefinitionHasExpectedStartLine($constant)
     {
-        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
         $this->assertEquals(4, $constant->getStartLine());
     }
 
     /**
      * testConstantDefinitionHasExpectedStartColumn
      *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
      * @return void
+     * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedStartColumn()
+    public function testConstantDefinitionHasExpectedStartColumn($constant)
     {
-        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
         $this->assertEquals(5, $constant->getStartColumn());
     }
 
     /**
      * testConstantDefinitionHasExpectedEndLine
      *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
      * @return void
+     * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedEndLine()
+    public function testConstantDefinitionHasExpectedEndLine($constant)
     {
-        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
         $this->assertEquals(7, $constant->getEndLine());
     }
 
     /**
      * testConstantDefinitionHasExpectedEndColumn
      *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
      * @return void
+     * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedEndColumn()
+    public function testConstantDefinitionHasExpectedEndColumn($constant)
     {
-        $constant = $this->_getFirstConstantDefinitionInClass(__METHOD__);
         $this->assertEquals(12, $constant->getEndColumn());
+    }
+
+    /**
+     * testConstantDefinitionWithDeclarators
+     *
+     * @return PHP_Depend_Code_ASTConstantDefinition
+     * @since 1.0.2
+     */
+    public function testConstantDefinitionWithDeclarators()
+    {
+        $constant = $this->_getFirstConstantDefinitionInClass();
+        $this->assertInstanceOf(PHP_Depend_Code_ASTConstantDefinition::CLAZZ, $constant);
+
+        return $constant;
+    }
+
+    /**
+     * testConstantDefinitionWithDeclaratorsHasExpectedStartLine
+     *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testConstantDefinitionWithDeclarators
+     */
+    public function testConstantDefinitionWithDeclaratorsHasExpectedStartLine($constant)
+    {
+        $this->assertEquals(4, $constant->getStartLine());
+    }
+    
+    /**
+     * testConstantDefinitionWithDeclaratorsHasExpectedStartColumn
+     *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testConstantDefinitionWithDeclarators
+     */
+    public function testConstantDefinitionWithDeclaratorsHasExpectedStartColumn($constant)
+    {
+        $this->assertEquals(5, $constant->getStartColumn());
+    }
+    
+    /**
+     * testConstantDefinitionWithDeclaratorsHasExpectedEndLine
+     *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testConstantDefinitionWithDeclarators
+     */
+    public function testConstantDefinitionWithDeclaratorsHasExpectedEndLine($constant)
+    {
+        $this->assertEquals(6, $constant->getEndLine());
+    }
+    
+    /**
+     * testConstantDefinitionWithDeclaratorsHasExpectedEndColumn
+     *
+     * @param PHP_Depend_Code_ASTConstantDefinition $constant
+     *
+     * @return void
+     * @since 1.0.2
+     * @depends testConstantDefinitionWithDeclarators
+     */
+    public function testConstantDefinitionWithDeclaratorsHasExpectedEndColumn($constant)
+    {
+        $this->assertEquals(18, $constant->getEndColumn());
+    }
+
+    /**
+     * testConstantDefinitionInGlobalScope
+     *
+     * @return void
+     * @since 1.0.2
+     */
+    public function testConstantDefinitionInGlobalScope()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * testConstantDefinitionInNamespaceScope
+     *
+     * @return void
+     * @since 1.0.2
+     */
+    public function testConstantDefinitionInNamespaceScope()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
      * @return PHP_Depend_Code_ASTConstantDefinition
      */
-    private function _getFirstConstantDefinitionInClass($testCase)
+    private function _getFirstConstantDefinitionInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, PHP_Depend_Code_ASTConstantDefinition::CLAZZ
+            $this->getCallingTestMethod(), 
+            PHP_Depend_Code_ASTConstantDefinition::CLAZZ
         );
     }
 }

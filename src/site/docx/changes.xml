@@ -13,8 +13,11 @@
                  date=""
                  description="" >
 
-            <action date="" dev="mapi" issue="24702477" system="pivotaltracker" type="add" due-to="bluszcz">
+            <action date="75c9755" dev="mapi" issue="24702477" system="pivotaltracker" type="add" due-to="bluszcz">
                 Huge memory footprint
+            </action>
+            <action date="" dev="mapi" issue="24732243" system="pivotaltracker" type="fix" due-to="Brian Kendig">
+                pdepend fails on 'const'
             </action>
         </release>
 
