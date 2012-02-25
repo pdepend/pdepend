@@ -54,7 +54,18 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
 require_once 'PHP/Depend/Autoload.php';
 
 // Allow as much memory as possible by default
-ini_set('memory_limit', -1);
+if (extension_loaded('suhosin')) {
+    $limit = ini_get('memory_limit');
+    if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
+        $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
+        $limit = ($match[1] * (1 << $shift[$match[2]]));
+    }
+    if (ini_get('suhosin.memory_limit') > $limit) {
+        ini_set('memory_limit', ini_get('suhosin.memory_limit'));
+    }
+} else {
+    ini_set('memory_limit', -1);
+}
 
 // Disable E_STRICT for all PHP versions < 5.3.x
 if (version_compare(phpversion(), '5.3.0')) {

@@ -9,6 +9,16 @@
     </properties>
 
 	<body>
+        <release version="1.0.3"
+                 date="2012/02/25"
+                 description="This release closes a minor issue in PHP_Depend's
+                              memory handling when it is run in a PHP environment
+                              that uses the Suhosin patch and the suhosin.memory_limit
+                              setting.">
+            <action date="" dev="mapi" issue="25450915" system="pivotaltracker" type="fix" due-to="Gordon Franke">
+                Alert disable memory_limit
+            </action>
+        </release>
         <release version="1.0.2"
                  date="2012/02/15"
                  description="This release contains a huge improvement in PHP_Depend's
