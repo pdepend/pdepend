@@ -8,6 +8,7 @@
             <xsd:choice minOccurs="0" maxOccurs="unbounded" >
                 <xsd:element ref="imageConvert" minOccurs="0" maxOccurs="1" />
                 <xsd:element ref="cache" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="parser" minOccurs="0" maxOccurs="1" />
             </xsd:choice>
         </xsd:complexType>
     </xsd:element>
@@ -43,4 +44,15 @@
 
     <xsd:element name="fontFamily" type="xsd:string" />
     <xsd:element name="fontSize" type="xsd:int" />
+
+    <xsd:element name="parser">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="nesting" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="nesting" type="xsd:int" />
+
 </xsd:schema>
