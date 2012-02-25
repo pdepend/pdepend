@@ -54,7 +54,7 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
 require_once 'PHP/Depend/Autoload.php';
 
 // Allow as much memory as possible by default
-if (extension_loaded('suhosin')) {
+if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
     $limit = ini_get('memory_limit');
     if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
         $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
