@@ -14,7 +14,7 @@
                  description="This release closes an issue introduced with the
                               last release. It closes one more regression related
                               to PHP's memory_limit and the Suhosin patch.">
-            <action date="" dev="mapi" type="fix" due-to="Guido van Biemen">
+            <action date="b869eff" dev="mapi" type="fix" due-to="Guido van Biemen">
                 Fixed fatal error due to bug in memory_limit modification code.
             </action>
         </release>
