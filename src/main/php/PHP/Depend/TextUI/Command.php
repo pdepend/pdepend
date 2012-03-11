@@ -185,9 +185,6 @@ class PHP_Depend_TextUI_Command
         }
 
         if (isset($options['--notify-me'])) {
-            // Import the class source
-            include_once 'PHP/Depend/DbusUI/ResultPrinter.php';
-            // Load the dbus result printer.
             $this->_runner->addProcessListener(
                 new PHP_Depend_DbusUI_ResultPrinter()
             );
