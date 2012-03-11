@@ -29,7 +29,7 @@ IRC
 - You will always find help on PHP Depend related topics in the `#pdepend`__
   channel on the `FreeNode`__ network.
 
-__ irc://irc.freenode.net/#arbit
+__ irc://irc.freenode.net/#pdepend
 __ http://freenode.net
 
 Issue-Tracker
