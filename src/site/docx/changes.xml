@@ -9,6 +9,15 @@
     </properties>
 
 	<body>
+        <release version="1.0.5"
+                 date="2012/04/05"
+                 description="This release closes a bug introduced with the
+                              last release, which causes PHP_Depend not to flush
+                              it's metric cache when a file has changed.">
+            <action date="99d5c13" dev="mapi" issue="27588643" system="pivotaltracker" type="fix">
+                PHP_Depend doesn't invalidate the cache.
+            </action>
+        </release>
         <release version="1.0.4"
                  date="2012/02/25"
                  description="This release closes an issue introduced with the
