@@ -62,7 +62,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
 {
     /**
      * The type of this class.
-     * 
+     *
      * @since 0.10.0
      */
     const CLAZZ = __CLASS__;
@@ -188,8 +188,6 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function  __wakeup()
     {
-        parent::__wakeup();
-
         $this->context->registerFunction($this);
     }
 }

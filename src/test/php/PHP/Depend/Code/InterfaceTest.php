@@ -645,7 +645,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * testGetParentClassesReturnsEmptyArrayByDefault
-     * 
+     *
      * @return void
      */
     public function testGetParentClassesReturnsEmptyArrayByDefault()
@@ -656,7 +656,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * testGetParentClassesReturnsEmptyArray
-     * 
+     *
      * @return void
      */
     public function testGetParentClassesReturnsEmptyArray()
@@ -847,19 +847,6 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testIsCachedReturnsTrueAfterCallToWakeup
-     *
-     * @return void
-     */
-    public function testIsCachedReturnsTrueAfterCallToWakeup()
-    {
-        $interface = $this->createItem();
-        $interface = unserialize(serialize($interface));
-
-        self::assertTrue($interface->isCached());
-    }
-
-    /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      *
      * @return void
@@ -901,11 +888,9 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
         $method    = new PHP_Depend_Code_Method(__FUNCTION__);
         $interface->addMethod($method);
 
-        $file = new PHP_Depend_Code_File(__FILE__);
-        $interface->setSourceFile($file);
         $interface->__wakeup();
 
-        self::assertSame($file, $method->getSourceFile());
+        self::assertSame($interface->getSourceFile(), $method->getSourceFile());
     }
 
     /**
@@ -949,6 +934,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     protected function createItem()
     {
         $interface = new PHP_Depend_Code_Interface(__CLASS__);
+        $interface->setSourceFile(new PHP_Depend_Code_File(__FILE__));
         $interface->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
 

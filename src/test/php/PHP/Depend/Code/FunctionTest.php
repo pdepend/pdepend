@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
@@ -89,7 +89,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function = $this->_getFirstFunctionForTestCase();
         self::assertFalse($function->returnsReference());
     }
-    
+
     /**
      * testGetStaticVariablesReturnsEmptyArrayByDefault
      *
@@ -100,7 +100,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         self::assertEquals(array(), $function->getStaticVariables());
     }
-    
+
     /**
      * testGetStaticVariablesReturnsFirstSetOfStaticVariables
      *
@@ -113,7 +113,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             $this->_getFirstFunctionForTestCase()->getStaticVariables()
         );
     }
-    
+
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
      *
@@ -128,31 +128,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testGetSourceFileReturnsNullByDefault
-     *
-     * @return void
-     */
-    public function testGetSourceFileReturnsNullByDefault()
-    {
-        self::assertNull($this->createItem()->getSourceFile());
-    }
-    
-    /**
-     * Tests that build interface updates the source file information for null
-     * values.
-     *
-     * @return void
-     */
-    public function testSetSourceFileInformationForNullValue()
-    {
-        $item = $this->createItem();
-        $file = new PHP_Depend_Code_File(__FILE__);
-
-        $item->setSourceFile($file);
-        self::assertSame($file, $item->getSourceFile());
-    }
-    
-    /**
      * Tests the ctor and the {@link PHP_Depend_Code_Function::getName()} method.
      *
      * @return void
@@ -162,7 +137,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         self::assertEquals('createItem', $function->getName());
     }
-    
+
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
      *
@@ -173,7 +148,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         self::assertNull($function->getPackage());
     }
-    
+
     /**
      * testUnsetPackageWithNullWillResetPreviousPackage
      *
@@ -183,7 +158,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     {
         $package  = new PHP_Depend_Code_Package('package');
         $function = $this->createItem();
-        
+
         $function->setPackage($package);
         $function->unsetPackage();
 
@@ -212,7 +187,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetPackageNotEstablishesBackReference()
     {
         $package = $this->getMock(
-            PHP_Depend_Code_Package::CLAZZ, 
+            PHP_Depend_Code_Package::CLAZZ,
             array(),
             array(__FUNCTION__)
         );
@@ -222,7 +197,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         $function->setPackage($package);
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Function::getPackage()} returns as
      * default value <b>null</b> and that the package could be set and unset.
@@ -233,7 +208,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     {
         $package  = new PHP_Depend_Code_Package('package');
         $function = $this->createItem();
-        
+
         $function->setPackage($package);
         self::assertSame($package, $function->getPackage());
     }
@@ -283,19 +258,6 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
         serialize($function);
 
         self::assertFalse($function->isCached());
-    }
-
-    /**
-     * testIsCachedReturnsTrueAfterCallToWakeup
-     *
-     * @return void
-     */
-    public function testIsCachedReturnsTrueAfterCallToWakeup()
-    {
-        $function = $this->createItem();
-        $function = unserialize(serialize($function));
-
-        self::assertTrue($function->isCached());
     }
 
     /**
@@ -701,7 +663,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
             ->getFunctions()
             ->current();
     }
-    
+
     /**
      * Creates an abstract item instance.
      *
@@ -710,6 +672,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     protected function createItem()
     {
         $function = new PHP_Depend_Code_Function(__FUNCTION__);
+        $function->setSourceFile(new PHP_Depend_Code_File(__FILE__));
         $function->setContext($this->getMock('PHP_Depend_Builder_Context'));
 
         return $function;

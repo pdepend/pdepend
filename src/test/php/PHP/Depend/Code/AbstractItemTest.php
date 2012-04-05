@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
@@ -63,39 +63,6 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
 abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
 {
     /**
-     * Tests that build interface updates the source file information for null
-     * values.
-     *
-     * @return void
-     */
-    public function testSetSourceFileInformationForNullValue()
-    {
-        $item = $this->createItem();
-        $file = new PHP_Depend_Code_File(__FILE__);
-        
-        $this->assertNull($item->getSourceFile());
-        $item->setSourceFile($file);
-        $this->assertSame($file, $item->getSourceFile());
-    }
-    
-    /**
-     * Tests that the build interface method doesn't update an existing source
-     * file info.
-     *
-     * @return void
-     */
-    public function testDoesntSetSourceFileInformationForNotNullValue()
-    {
-        $item = $this->createItem();
-        $file = new PHP_Depend_Code_File(__FILE__);
-        
-        $item->setSourceFile($file);
-        $item->setSourceFile(new PHP_Depend_Code_File('HelloWorld.php'));
-        
-        $this->assertSame($file, $item->getSourceFile());
-    }
-
-    /**
      * testSetNameChangesPreviousName
      *
      * @return void
@@ -133,7 +100,7 @@ abstract class PHP_Depend_Code_AbstractItemTest extends PHP_Depend_AbstractTest
 
         return self::parseSource($fileOrDirectory, $ignoreAnnotations);
     }
-    
+
     /**
      * Creates an abstract item instance.
      *

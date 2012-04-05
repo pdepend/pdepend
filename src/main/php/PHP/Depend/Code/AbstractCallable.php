@@ -134,14 +134,6 @@ abstract class PHP_Depend_Code_AbstractCallable
     private $_parameters = null;
 
     /**
-     * Was this callable instance restored from the cache?
-     *
-     * @var boolean
-     * @since 0.10.0
-     */
-    protected $cached = false;
-
-    /**
      * Setter method for the currently used token cache, where this callable
      * instance can store the associated tokens.
      *
@@ -431,7 +423,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function isCached()
     {
-        return $this->cached;
+        return $this->sourceFile->isCached();
     }
 
     /**
@@ -495,20 +487,6 @@ abstract class PHP_Depend_Code_AbstractCallable
             'returnClassReference',
             'exceptionClassReferences'
         );
-    }
-
-    /**
-     * The magic wakeup method is called by the PHP runtime environment when a
-     * serialized instance of this class gets unserialized and all properties
-     * are restored. This implementation of the <b>__wakeup()</b> method sets
-     * a flag that this object was restored from the cache.
-     *
-     * @return void
-     * @since 0.10.0
-     */
-    public function __wakeup()
-    {
-        $this->cached = true;
     }
 
     // @codeCoverageIgnoreStart

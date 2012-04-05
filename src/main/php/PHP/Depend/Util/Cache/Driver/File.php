@@ -202,7 +202,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      *
      * @param string $file The cache file name.
      * @param string $hash The verification hash.
-     * 
+     *
      * @return mixed
      */
     protected function restoreFile($file, $hash)
@@ -279,7 +279,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      * extension.
      *
      * @param string $key The cache key for the given data.
-     * 
+     *
      * @return string
      */
     protected function getCacheFileWithoutExtension($key)

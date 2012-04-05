@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
@@ -90,19 +90,6 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         serialize($method);
 
         self::assertFalse($method->isCached());
-    }
-
-    /**
-     * testIsCachedReturnsTrueAfterCallToWakeup
-     *
-     * @return void
-     */
-    public function testIsCachedReturnsTrueAfterCallToWakeup()
-    {
-        $method = $this->createItem();
-        $method = unserialize(serialize($method));
-
-        self::assertTrue($method->isCached());
     }
 
     /**
@@ -263,7 +250,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method = $this->getFirstMethodInClass();
         self::assertTrue($method->returnsReference());
     }
-    
+
     /**
      * testReturnsReferenceReturnsExpectedFalse
      *
@@ -274,7 +261,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method = $this->getFirstMethodInClass();
         self::assertFalse($method->returnsReference());
     }
-    
+
     /**
      * testGetStaticVariablesReturnsEmptyArrayByDefault
      *
@@ -285,7 +272,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method = new PHP_Depend_Code_Method('method');
         self::assertEquals(array(), $method->getStaticVariables());
     }
-    
+
     /**
      * testGetStaticVariablesReturnsFirstSetOfStaticVariables
      *
@@ -294,13 +281,13 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
     {
         $method = $this->getFirstMethodInClass();
-                        
+
         self::assertEquals(
             array('a' => 42, 'b' => 23),
             $method->getStaticVariables()
         );
     }
-    
+
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
      *
@@ -309,7 +296,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
     {
         $method = $this->getFirstMethodInClass();
-                        
+
         self::assertEquals(
             array('a' => 42, 'b' => 23, 'c' => 17),
             $method->getStaticVariables()
@@ -345,7 +332,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 
         $method = new PHP_Depend_Code_Method(__FUNCTION__);
         $method->setParent($class);
-        
+
         self::assertSame($file, $method->getSourceFile());
     }
 
@@ -361,7 +348,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             'This test should be removed, but a default implementation exists.'
         );
     }
-    
+
     /**
      * testByDefaultGetParentReturnsNull
      *
@@ -372,7 +359,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method = new PHP_Depend_Code_Method('method');
         self::assertNull($method->getParent());
     }
-        
+
     /**
      * testSetParentWithNullResetsPreviousParentToNull
      *
@@ -387,7 +374,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method->setParent(null);
         self::assertNull($method->getParent());
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Method::getParent()} returns as
      * default value <b>null</b> and that the package could be set and unset.
@@ -402,7 +389,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method->setParent($class);
         self::assertSame($class, $method->getParent());
     }
-    
+
     /**
      * Tests the visitor accept method.
      *
@@ -413,10 +400,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method  = new PHP_Depend_Code_Method('method', 0);
         $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
         $method->accept($visitor);
-        
+
         self::assertSame($method, $visitor->method);
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * fails with an exception for an invalid modifier value.
@@ -426,11 +413,11 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetInvalidModifierFail()
     {
         $this->setExpectedException('InvalidArgumentException');
-        
+
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(-1);
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * accepts the defined visibility value.
@@ -477,7 +464,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             $method->getModifiers()
         );
     }
-    
+
     /**
      * testIsStaticDefaultByReturnsFalse
      *
@@ -488,7 +475,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
         $method = new PHP_Depend_Code_Method('method');
         self::assertFalse($method->isStatic());
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method marks
      * a method as static.
@@ -505,7 +492,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertTrue($method->isStatic());
     }
-    
+
     /**
      * testIsFinalByDefaultReturnsFalse
      *
@@ -551,7 +538,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
 
         self::assertTrue($method->isFinal() && $method->isStatic());
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * accepts the defined visibility value.
@@ -569,7 +556,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             !$method->isPrivate()
         );
     }
-    
+
     /**
      * Tests that the {@link PHP_Depend_Code_Method::setModifiers()} method
      * accepts the defined visibility value.
@@ -587,7 +574,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             !$method->isProtected()
         );
     }
-    
+
     /**
      * testIsPublicByDefaultReturnsFalse
      *
@@ -845,7 +832,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
             ->getMethods()
             ->current();
     }
-    
+
     /**
      * Creates an abstract item instance.
      *
@@ -853,6 +840,9 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
      */
     protected function createItem()
     {
-        return new PHP_Depend_Code_Method('method');
+        $method = new PHP_Depend_Code_Method('method');
+        $method->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+
+        return $method;
     }
 }

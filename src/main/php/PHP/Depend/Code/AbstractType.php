@@ -129,13 +129,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     protected $packageName = null;
 
     /**
-     * Was this class or interface instance restored from the cache?
-     *
-     * @var boolean
-     */
-    protected $cached = false;
-
-    /**
      * The modifiers for this class instance.
      *
      * @var integer $_modifiers
@@ -457,7 +450,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function isCached()
     {
-        return $this->cached;
+        return $this->sourceFile->isCached();
     }
 
     /**
@@ -511,7 +504,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function __wakeup()
     {
-        $this->cached   = true;
         $this->_methods = null;
     }
 }

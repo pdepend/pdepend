@@ -319,6 +319,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if ($this->cache->restore($this->_sourceFile->getUUID(), $hash)) {
             return;
         }
+
         $this->cache->remove($this->_sourceFile->getUUID());
 
         $this->setUpEnvironment();
@@ -2442,7 +2443,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * given <b>$exprList</b> node.
      *
      * @param PHP_Depend_Code_ASTNode $exprList Parent that accepts multiple expr.
-     * 
+     *
      * @return PHP_Depend_Code_ASTNode
      * @since 1.0.0
      */
@@ -3715,7 +3716,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * node.
      *
      * @param PHP_Depend_Code_ASTNode $node The previously parsed node.
-     * 
+     *
      * @return PHP_Depend_Code_ASTNode The original input node or this node
      *         wrapped with a function postfix instance.
      * @since 1.0.0
@@ -5781,7 +5782,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             // Append to qualified name
             $qualifiedName[] = '\\';
             $qualifiedName[] = $this->parseClassName();
-            
+
             $this->consumeComments();
 
             // Get next token type
@@ -6280,7 +6281,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $defaultValue->setValue(null);
                 $this->consumeToken($tokenType);
                 break;
-            
+
             case self::T_START_HEREDOC:
                 $defaultValue->setValue(
                     $this->parseHeredoc()->getChild(0)->getImage()

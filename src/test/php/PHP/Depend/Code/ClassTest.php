@@ -1429,7 +1429,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * testGetParentClassesReturnsEmptyArrayByDefault
-     * 
+     *
      * @return void
      */
     public function testGetParentClassesReturnsEmptyArrayByDefault()
@@ -1440,7 +1440,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
 
     /**
      * testGetParentClassesReturnsExpectedListClasses
-     * 
+     *
      * @return void
      */
     public function testGetParentClassesReturnsExpectedListClasses()
@@ -1569,19 +1569,6 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     }
 
     /**
-     * testIsCachedReturnsTrueAfterCallToWakeup
-     *
-     * @return void
-     */
-    public function testIsCachedReturnsTrueAfterCallToWakeup()
-    {
-        $class = $this->createItem();
-        $class = unserialize(serialize($class));
-
-        self::assertTrue($class->isCached());
-    }
-
-    /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      *
      * @return void
@@ -1659,6 +1646,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     protected function createItem()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class->setSourceFile(new PHP_Depend_Code_File(__FILE__));
         $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
         $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
 
