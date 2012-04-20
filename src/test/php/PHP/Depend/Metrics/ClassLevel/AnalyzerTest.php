@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
@@ -83,7 +83,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->analyze($packages);
     }
-    
+
     /**
      * Tests that {@link PHP_Depend_Metrics_ClassLevel_Analyzer::addAnalyzer()}
      * fails for an invalid child analyzer.
@@ -113,7 +113,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
 
     /**
      * testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics
-     * 
+     *
      * @return void
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
@@ -123,7 +123,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
             array_keys($this->_calculateClassMetrics())
         );
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct IMPL values.
      *
@@ -183,7 +183,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(1, $this->_calculateClassMetric('impl'));
     }
-    
+
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
@@ -223,7 +223,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(2, $this->_calculateClassMetric('cis'));
     }
-    
+
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
@@ -256,7 +256,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
 
     /**
      * testCalculateNpmMetricForEmptyClass
-     * 
+     *
      * @return void
      */
     public function testCalculateNpmMetricForEmptyClass()
@@ -323,7 +323,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(1, $this->_calculateClassMetric('npm'));
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct VARS metric
      *
@@ -333,7 +333,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(1, $this->_calculateClassMetric('vars'));
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct VARS metric
      *
@@ -343,7 +343,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(3, $this->_calculateClassMetric('vars'));
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct VARSi metric
      *
@@ -363,7 +363,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(5, $this->_calculateClassMetric('varsi'));
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
      *
@@ -383,9 +383,9 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(1, $this->_calculateClassMetric('varsnp'));
     }
-    
+
     /**
-     * Tests that the analyzer calculates the correct WMC metric. 
+     * Tests that the analyzer calculates the correct WMC metric.
      *
      * @return void
      */
@@ -413,12 +413,12 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(3, $this->_calculateClassMetric('wmc'));
     }
-    
+
     /**
-     * Tests that the analyzer calculates the correct WMCi metric. 
+     * Tests that the analyzer calculates the correct WMCi metric.
      *
      * @return void
-     */    
+     */
     public function testCalculateWMCiMetric()
     {
         self::assertEquals(3, $this->_calculateClassMetric('wmci'));
@@ -443,9 +443,9 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         self::assertEquals(5, $this->_calculateClassMetric('wmci'));
     }
-    
+
     /**
-     * Tests that the analyzer calculates the correct WMCnp metric. 
+     * Tests that the analyzer calculates the correct WMCnp metric.
      *
      * @return void
      */
@@ -507,5 +507,199 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $analyzer->analyze($packages);
 
         return $analyzer->getNodeMetrics($package->getClasses()->current());
+    }
+
+    /**
+     * testGetNodeMetricsForTrait
+     *
+     * @return array
+     * @since 1.0.6
+     */
+    public function testGetNodeMetricsForTrait()
+    {
+        $metrics = $this->_calculateTraitMetrics();
+
+        self::assertInternalType('array', $metrics);
+
+        return $metrics;
+    }
+
+    /**
+     * testGetNodeMetricsForTraitReturnsExpectedMetricSet
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics)
+    {
+        self::assertEquals(
+            array('impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'),
+            array_keys($metrics)
+        );
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct IMPL values.
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateIMPLMetricForTrait(array $metrics)
+    {
+        self::assertEquals(0, $metrics['impl']);
+    }
+
+    /**
+     * Tests that the calculated Class Interface Size(CSI) is correct.
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateCISMetricForTrait(array $metrics)
+    {
+        self::assertEquals(2, $metrics['cis']);
+    }
+
+    /**
+     * Tests that the calculated Class SiZe(CSZ) metric is correct.
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateCSZMetricForTrait(array $metrics)
+    {
+        self::assertEquals(3, $metrics['csz']);
+    }
+
+    /**
+     * testCalculateNpmMetricForClassWithPublicMethod
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateNpmMetricForTrait(array $metrics)
+    {
+        self::assertEquals(2, $metrics['npm']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct VARS metric
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateVARSMetricForTrait(array $metrics)
+    {
+        self::assertEquals(0, $metrics['vars']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct VARSi metric
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateVARSiMetricForTrait(array $metrics)
+    {
+        self::assertEquals(0, $metrics['varsi']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct VARSnp metric
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateVARSnpMetricForTrait(array $metrics)
+    {
+        self::assertEquals(0, $metrics['varsnp']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMC metric.
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateWMCMetricForTrait(array $metrics)
+    {
+        self::assertEquals(10, $metrics['wmc']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCi metric.
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateWMCiMetricForTrait(array $metrics)
+    {
+        self::assertEquals(10, $metrics['wmci']);
+    }
+
+    /**
+     * Tests that the analyzer calculates the correct WMCnp metric.
+     *
+     * @param array $metrics Calculated class metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateWMCnpMetricForTrait(array $metrics)
+    {
+        self::assertEquals(8, $metrics['wmcnp']);
+    }
+
+    /**
+     * Analyzes the source code associated with the calling test method and
+     * returns all measured metrics.
+     *
+     * @return mixed
+     * @since 1.0.6
+     */
+    private function _calculateTraitMetrics()
+    {
+        $packages = $this->parseCodeResourceForTest();
+        $package  = $packages->current();
+
+        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+
+        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer->addAnalyzer($ccnAnalyzer);
+        $analyzer->analyze($packages);
+
+        return $analyzer->getNodeMetrics($package->getTraits()->current());
     }
 }

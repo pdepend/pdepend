@@ -276,7 +276,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Returns all {@link PHP_Depend_Code_Method} objects in this type.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return PHP_Depend_Code_Method[]
      */
     public function getMethods()
     {

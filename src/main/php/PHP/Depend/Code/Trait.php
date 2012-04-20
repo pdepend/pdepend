@@ -68,6 +68,18 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
     const CLAZZ = __CLASS__;
 
     /**
+     * Returns all properties for this class.
+     *
+     * @return PHP_Depend_Code_Property[]
+     * @since 1.0.6
+     * @todo Return properties declared by a trait.
+     */
+    public function getProperties()
+    {
+        return array();
+    }
+
+    /**
      * Returns an array with {@link PHP_Depend_Code_Method} objects that are
      * implemented or imported by this trait.
      *

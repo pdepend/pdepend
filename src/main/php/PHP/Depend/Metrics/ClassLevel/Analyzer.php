@@ -205,16 +205,20 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     {
         $this->fireStartClass($class);
 
+        $impl  = $class->getInterfaces()->count();
+        $varsi = $this->_calculateVARSi($class);
+        $wmci  = $this->_calculateWMCiForClass($class);
+
         $this->_nodeMetrics[$class->getUUID()] = array(
-            self::M_IMPLEMENTED_INTERFACES       => $class->getInterfaces()->count(),
+            self::M_IMPLEMENTED_INTERFACES       => $impl,
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
             self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
             self::M_PROPERTIES                   => 0,
-            self::M_PROPERTIES_INHERIT           => $this->_calculateVARSi($class),
+            self::M_PROPERTIES_INHERIT           => $varsi,
             self::M_PROPERTIES_NON_PRIVATE       => 0,
             self::M_WEIGHTED_METHODS             => 0,
-            self::M_WEIGHTED_METHODS_INHERIT     => $this->_calculateWMCi($class),
+            self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
             self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
         );
 
@@ -239,6 +243,43 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
         // Empty visit method, we don't want interface metrics
+    }
+
+    /**
+     * Visits a trait node.
+     *
+     * @param PHP_Depend_Code_Trait $trait The current trait node.
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function visitTrait(PHP_Depend_Code_Trait $trait)
+    {
+        $this->fireStartTrait($trait);
+
+        $wmci = $this->_calculateWMCiForTrait($trait);
+
+        $this->_nodeMetrics[$trait->getUUID()] = array(
+            self::M_IMPLEMENTED_INTERFACES       => 0,
+            self::M_CLASS_INTERFACE_SIZE         => 0,
+            self::M_CLASS_SIZE                   => 0,
+            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
+            self::M_PROPERTIES                   => 0,
+            self::M_PROPERTIES_INHERIT           => 0,
+            self::M_PROPERTIES_NON_PRIVATE       => 0,
+            self::M_WEIGHTED_METHODS             => 0,
+            self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
+            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
+        );
+
+        foreach ($trait->getProperties() as $property) {
+            $property->accept($this);
+        }
+        foreach ($trait->getMethods() as $method) {
+            $method->accept($this);
+        }
+
+        $this->fireEndTrait($trait);
     }
 
     /**
@@ -341,23 +382,54 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      *
      * @return integer
      */
-    private function _calculateWMCi(PHP_Depend_Code_Class $class)
+    private function _calculateWMCiForClass(PHP_Depend_Code_Class $class)
     {
-        // List of methods, this method only counts not overwritten methods.
-        $ccn = array();
-
-        // First collect all methods of the context class
-        foreach ($class->getMethods() as $m) {
-            $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
-        }
+        $ccn = $this->_calculateWMCi($class);
 
         foreach ($class->getParentClasses() as $parent) {
-            foreach ($parent->getMethods() as $m) {
-                if (!$m->isPrivate() && !isset($ccn[$m->getName()])) {
-                    $ccn[$m->getName()] = $this->_cyclomaticAnalyzer->getCCN2($m);
+            foreach ($parent->getMethods() as $method) {
+                if ($method->isPrivate()) {
+                    continue;
                 }
+                if (isset($ccn[($name = $method->getName())])) {
+                    continue;
+                }
+                $ccn[$name] = $this->_cyclomaticAnalyzer->getCCN2($method);
             }
         }
+
         return array_sum($ccn);
+    }
+
+    /**
+     * Calculates the Weight Method Per Class metric for a trait.
+     *
+     * @param PHP_Depend_Code_Trait $trait The context trait instance.
+     *
+     * @return integer
+     * @since 1.0.6
+     */
+    private function _calculateWMCiForTrait(PHP_Depend_Code_Trait $trait)
+    {
+        return array_sum($this->_calculateWMCi($trait));
+    }
+
+    /**
+     * Calculates the Weight Method Per Class metric.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The context type instance.
+     *
+     * @return integer[]
+     * @since 1.0.6
+     */
+    private function _calculateWMCi(PHP_Depend_Code_AbstractType $type)
+    {
+        $ccn = array();
+
+        foreach ($type->getMethods() as $method) {
+            $ccn[$method->getName()] = $this->_cyclomaticAnalyzer->getCCN2($method);
+        }
+
+        return $ccn;
     }
 }

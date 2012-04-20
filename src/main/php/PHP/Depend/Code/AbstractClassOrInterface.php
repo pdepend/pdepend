@@ -120,7 +120,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * direct parent of this class is the first element in the returned array
      * and parent of this parent the second element and so on.
      *
-     * @return array
+     * @return PHP_Depend_Code_Class[]
      * @since 1.0.0
      */
     public function getParentClasses()
