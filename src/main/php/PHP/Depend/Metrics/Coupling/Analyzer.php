@@ -253,7 +253,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
 
             $this->_fanout += $efferentCoupling;
         }
-        
+
         $this->_temporaryCouplingMap = array();
     }
 
@@ -334,7 +334,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
+     * @param PHP_Depend_Code_Method $method The method class node.
      *
      * @return void
      */
@@ -389,7 +389,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      *        is used by the declaring class or <b>null</b> when no class is defined.
      *
      * @return void
-     * @since 0.10.2 
+     * @since 0.10.2
      */
     private function _calculateClassOrInterfaceCoupling(
         PHP_Depend_Code_AbstractClassOrInterface $declaringClass,
