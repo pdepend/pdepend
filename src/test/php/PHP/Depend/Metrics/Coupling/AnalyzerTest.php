@@ -84,7 +84,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
 
     /**
      * testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics
-     * 
+     *
      * @return void
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
@@ -266,7 +266,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithoutDependencies
-     * 
+     *
      * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDependencies()
@@ -286,7 +286,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithStaticReference
-     * 
+     *
      * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithStaticReference()
@@ -486,7 +486,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
 
     /**
      * testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace
-     * 
+     *
      * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace()
@@ -611,6 +611,153 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
     }
 
     /**
+     * testGetNodeMetricsForTrait
+     *
+     * @return array
+     * @since 1.0.6
+     */
+    public function testGetNodeMetricsForTrait()
+    {
+        $metrics = $this->_calculateTraitMetrics();
+        $this->assertInternalType('array', $metrics);
+
+        return $metrics;
+    }
+
+    /**
+     * testGetNodeMetricsForTraitReturnsExpectedMetricSet
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics)
+    {
+        $this->assertEquals(array('ca', 'cbo', 'ce'), array_keys($metrics));
+    }
+
+    /**
+     * testCalculateCEMetricForTrait
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateCEMetricForTrait(array $metrics)
+    {
+        self::assertEquals(4, $metrics['ce']);
+    }
+
+    /**
+     * testCalculateCBOMetricForTrait
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateCBOMetricForTrait(array $metrics)
+    {
+        self::assertEquals(4, $metrics['cbo']);
+    }
+
+    /**
+     * testCalculateCAMetricForTrait
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetNodeMetricsForTrait
+     */
+    public function testCalculateCAMetricForTrait(array $metrics)
+    {
+        self::assertEquals(0, $metrics['ca']);
+    }
+
+    /**
+     * testGetProjectMetricsForTrait
+     *
+     * @return array
+     * @since 1.0.6
+     */
+    public function testGetProjectMetricsForTrait()
+    {
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($this->parseCodeResourceForTest());
+
+        $metrics = $analyzer->getProjectMetrics();
+        $this->assertInternalType('array', $metrics);
+
+        return $metrics;
+    }
+
+    /**
+     * testGetProjectMetricsForTraitReturnsExpectedMetricSet
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetProjectMetricsForTrait
+     */
+    public function testGetProjectMetricsForTraitReturnsExpectedMetricSet(array $metrics)
+    {
+        $this->assertEquals(array('calls', 'fanout'), array_keys($metrics));
+    }
+
+    /**
+     * testCalculateCallsMetricForTrait
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetProjectMetricsForTrait
+     */
+    public function testCalculateCallsMetricForTrait(array $metrics)
+    {
+        self::assertEquals(7, $metrics['calls']);
+    }
+
+    /**
+     * testCalculateFanoutMetricForTrait
+     *
+     * @param array $metrics Calculated coupling metrics.
+     *
+     * @return void
+     * @since 1.0.6
+     * @depends testGetProjectMetricsForTrait
+     */
+    public function testCalculateFanoutMetricForTrait(array $metrics)
+    {
+        self::assertEquals(4, $metrics['fanout']);
+    }
+
+    /**
+     * Analyzes the source code associated with the calling test method and
+     * returns all measured metrics.
+     *
+     * @return mixed
+     * @since 1.0.6
+     */
+    private function _calculateTraitMetrics()
+    {
+        $packages = $this->parseCodeResourceForTest();
+        $package  = $packages->current();
+
+        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer->analyze($packages);
+
+        return $analyzer->getNodeMetrics($package->getTraits()->current());
+    }
+
+    /**
      * Tests that the analyzer calculates the expected call count.
      *
      * @param string  $testCase File with test source.
@@ -627,7 +774,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
     ) {
         $expected = array('calls' => $calls, 'fanout' => $fanout);
         $actual   = $this->_calculateProjectMetrics($testCase);
-        
+
         self::assertEquals($expected, $actual);
     }
 

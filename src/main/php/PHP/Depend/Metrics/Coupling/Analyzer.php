@@ -344,16 +344,16 @@ class PHP_Depend_Metrics_Coupling_Analyzer
 
         $declaringClass = $method->getParent();
 
-        $this->_calculateClassOrInterfaceCoupling(
+        $this->_calculateTypeCoupling(
             $declaringClass,
             $method->getReturnClass()
         );
 
         foreach ($method->getExceptionClasses() as $type) {
-            $this->_calculateClassOrInterfaceCoupling($declaringClass, $type);
+            $this->_calculateTypeCoupling($declaringClass, $type);
         }
         foreach ($method->getDependencies() as $type) {
-            $this->_calculateClassOrInterfaceCoupling($declaringClass, $type);
+            $this->_calculateTypeCoupling($declaringClass, $type);
         }
 
         $this->_countCalls($method);
@@ -372,7 +372,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         $this->fireStartProperty($property);
 
-        $this->_calculateClassOrInterfaceCoupling(
+        $this->_calculateTypeCoupling(
             $property->getDeclaringClass(),
             $property->getClass()
         );
@@ -383,41 +383,41 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Calculates the coupling between the given types.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $declaringClass The declaring
-     *        or context class.
-     * @param PHP_Depend_Code_AbstractClassOrInterface $coupledClass   The class that
-     *        is used by the declaring class or <b>null</b> when no class is defined.
+     * @param PHP_Depend_Code_AbstractType $declaringType The declaring type
+     *        or the context type.
+     * @param PHP_Depend_Code_AbstractType $coupledType   The type that is used
+     *        by the declaring type or <b>null</b> when no type is defined.
      *
      * @return void
      * @since 0.10.2
      */
-    private function _calculateClassOrInterfaceCoupling(
-        PHP_Depend_Code_AbstractClassOrInterface $declaringClass,
-        PHP_Depend_Code_AbstractClassOrInterface $coupledClass = null
+    private function _calculateTypeCoupling(
+        PHP_Depend_Code_AbstractType $declaringType,
+        PHP_Depend_Code_AbstractType $coupledType = null
     ) {
-        $this->_initClassOrInterfaceDependencyMap($declaringClass);
+        $this->_initClassOrInterfaceDependencyMap($declaringType);
 
-        if (null === $coupledClass) {
+        if (null === $coupledType) {
             return;
         }
-        if ($coupledClass->isSubtypeOf($declaringClass)
-            || $declaringClass->isSubtypeOf($coupledClass)
+        if ($coupledType->isSubtypeOf($declaringType)
+            || $declaringType->isSubtypeOf($coupledType)
         ) {
             return;
         }
 
-        $this->_initClassOrInterfaceDependencyMap($coupledClass);
+        $this->_initClassOrInterfaceDependencyMap($coupledType);
 
         $this->_temporaryCouplingMap[
-            $declaringClass->getUUID()
+            $declaringType->getUUID()
         ]['ce'][
-            $coupledClass->getUUID()
+            $coupledType->getUUID()
         ] = true;
 
         $this->_temporaryCouplingMap[
-            $coupledClass->getUUID()
+            $coupledType->getUUID()
         ]['ca'][
-            $declaringClass->getUUID()
+            $declaringType->getUUID()
         ] = true;
     }
 
@@ -425,14 +425,14 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * This method will initialize a temporary coupling container for the given
      * given class or interface instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $classOrInterface The
-     *        currently visited/traversed class or interface instance.
+     * @param PHP_Depend_Code_AbstractType $classOrInterface The currently
+     *        visited/traversed class or interface instance.
      *
      * @return void
      * @since 0.10.2
      */
     private function _initClassOrInterfaceDependencyMap(
-        PHP_Depend_Code_AbstractClassOrInterface $classOrInterface
+        PHP_Depend_Code_AbstractType $classOrInterface
     ) {
         if (isset($this->_temporaryCouplingMap[$classOrInterface->getUUID()])) {
             return;

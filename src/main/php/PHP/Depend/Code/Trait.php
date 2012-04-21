@@ -97,6 +97,19 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
     }
 
     /**
+     * Checks that this user type is a subtype of the given <b>$type</b> instance.
+     *
+     * @param PHP_Depend_Code_AbstractType $type Possible parent type.
+     *
+     * @return boolean
+     * @todo Should we handle trait subtypes?
+     */
+    public function isSubtypeOf(PHP_Depend_Code_AbstractType $type)
+    {
+        return false;
+    }
+
+    /**
      * Visitor method for node tree traversal.
      *
      * @param PHP_Depend_VisitorI $visitor The context visitor implementation.

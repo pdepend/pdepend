@@ -461,6 +461,17 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     public abstract function getAllMethods();
 
     /**
+     * Checks that this user type is a subtype of the given <b>$type</b>
+     * instance.
+     *
+     * @param PHP_Depend_Code_AbstractType $type The possible parent type instance.
+     *
+     * @return boolean
+     * @since 1.0.6
+     */
+    public abstract function isSubtypeOf(PHP_Depend_Code_AbstractType $type);
+
+    /**
      * The magic sleep method is called by the PHP runtime environment before an
      * instance of this class gets serialized. It returns an array with the
      * names of all those properties that should be cached for this class or

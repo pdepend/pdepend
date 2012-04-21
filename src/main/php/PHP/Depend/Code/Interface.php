@@ -62,7 +62,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
 {
     /**
      * The type of this class.
-     * 
+     *
      * @since 0.10.0
      */
     const CLAZZ = __CLASS__;
@@ -105,11 +105,11 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type Possible parent type.
+     * @param PHP_Depend_Code_AbstractType $type Possible parent type.
      *
      * @return boolean
      */
-    public function isSubtypeOf(PHP_Depend_Code_AbstractClassOrInterface $type)
+    public function isSubtypeOf(PHP_Depend_Code_AbstractType $type)
     {
         if ($type === $this) {
             return true;
