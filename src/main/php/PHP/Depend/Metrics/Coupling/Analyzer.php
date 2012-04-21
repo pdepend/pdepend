@@ -124,7 +124,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @var array(string=>array)
      * @since 0.10.2
      */
-    private $_temporaryCouplingMap = array();
+    private $_dependencyMap = array();
 
     /**
      * This array holds a mapping between node identifiers and an array with
@@ -226,10 +226,10 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     private function _reset()
     {
-        $this->_calls                = 0;
-        $this->_fanout               = 0;
-        $this->_nodeMetrics          = array();
-        $this->_temporaryCouplingMap = array();
+        $this->_calls         = 0;
+        $this->_fanout        = 0;
+        $this->_nodeMetrics   = array();
+        $this->_dependencyMap = array();
     }
 
     /**
@@ -241,7 +241,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     private function _postProcessTemporaryCouplingMap()
     {
-        foreach ($this->_temporaryCouplingMap as $uuid => $metrics) {
+        foreach ($this->_dependencyMap as $uuid => $metrics) {
             $afferentCoupling = count($metrics['ca']);
             $efferentCoupling = count($metrics['ce']);
 
@@ -254,7 +254,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             $this->_fanout += $efferentCoupling;
         }
 
-        $this->_temporaryCouplingMap = array();
+        $this->_dependencyMap = array();
     }
 
     /**
@@ -287,9 +287,9 @@ class PHP_Depend_Metrics_Coupling_Analyzer
         }
 
         foreach ($fanouts as $fanout) {
-            $this->_initClassOrInterfaceDependencyMap($fanout);
+            $this->_initDependencyMap($fanout);
 
-            $this->_temporaryCouplingMap[
+            $this->_dependencyMap[
                 $fanout->getUUID()
             ]['ca'][
                 $function->getUUID()
@@ -312,7 +312,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        $this->_initClassOrInterfaceDependencyMap($class);
+        $this->_initDependencyMap($class);
         return parent::visitClass($class);
     }
 
@@ -327,7 +327,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
-        $this->_initClassOrInterfaceDependencyMap($interface);
+        $this->_initDependencyMap($interface);
         return parent::visitInterface($interface);
     }
 
@@ -344,16 +344,16 @@ class PHP_Depend_Metrics_Coupling_Analyzer
 
         $declaringClass = $method->getParent();
 
-        $this->_calculateTypeCoupling(
+        $this->_calculateCoupling(
             $declaringClass,
             $method->getReturnClass()
         );
 
         foreach ($method->getExceptionClasses() as $type) {
-            $this->_calculateTypeCoupling($declaringClass, $type);
+            $this->_calculateCoupling($declaringClass, $type);
         }
         foreach ($method->getDependencies() as $type) {
-            $this->_calculateTypeCoupling($declaringClass, $type);
+            $this->_calculateCoupling($declaringClass, $type);
         }
 
         $this->_countCalls($method);
@@ -372,7 +372,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     {
         $this->fireStartProperty($property);
 
-        $this->_calculateTypeCoupling(
+        $this->_calculateCoupling(
             $property->getDeclaringClass(),
             $property->getClass()
         );
@@ -391,11 +391,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * @return void
      * @since 0.10.2
      */
-    private function _calculateTypeCoupling(
+    private function _calculateCoupling(
         PHP_Depend_Code_AbstractType $declaringType,
         PHP_Depend_Code_AbstractType $coupledType = null
     ) {
-        $this->_initClassOrInterfaceDependencyMap($declaringType);
+        $this->_initDependencyMap($declaringType);
 
         if (null === $coupledType) {
             return;
@@ -406,15 +406,15 @@ class PHP_Depend_Metrics_Coupling_Analyzer
             return;
         }
 
-        $this->_initClassOrInterfaceDependencyMap($coupledType);
+        $this->_initDependencyMap($coupledType);
 
-        $this->_temporaryCouplingMap[
+        $this->_dependencyMap[
             $declaringType->getUUID()
         ]['ce'][
             $coupledType->getUUID()
         ] = true;
 
-        $this->_temporaryCouplingMap[
+        $this->_dependencyMap[
             $coupledType->getUUID()
         ]['ca'][
             $declaringType->getUUID()
@@ -425,20 +425,19 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * This method will initialize a temporary coupling container for the given
      * given class or interface instance.
      *
-     * @param PHP_Depend_Code_AbstractType $classOrInterface The currently
+     * @param PHP_Depend_Code_AbstractType $type The currently
      *        visited/traversed class or interface instance.
      *
      * @return void
      * @since 0.10.2
      */
-    private function _initClassOrInterfaceDependencyMap(
-        PHP_Depend_Code_AbstractType $classOrInterface
-    ) {
-        if (isset($this->_temporaryCouplingMap[$classOrInterface->getUUID()])) {
+    private function _initDependencyMap(PHP_Depend_Code_AbstractType $type)
+    {
+        if (isset($this->_dependencyMap[$type->getUUID()])) {
             return;
         }
 
-        $this->_temporaryCouplingMap[$classOrInterface->getUUID()] = array(
+        $this->_dependencyMap[$type->getUUID()] = array(
             'ce' => array(),
             'ca' => array()
         );
