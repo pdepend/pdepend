@@ -9,6 +9,17 @@
     </properties>
 
 	<body>
+        <release version="1.0.6"
+                 date="2012/04/22"
+                 description="This release closes a bug with traits that were
+                              introduced with PHP 5.4. This bug results in an
+                              E_FATAL when PHP_Depend performs coupling analysis
+                              on a trait.">
+            <action date="ac71753" dev="mapi" type="fix">
+                Fixed: E_FATAL when the coupling analyzer processes a trait.
+            </action>
+        </release>
+
         <release version="1.0.5"
                  date="2012/04/05"
                  description="This release closes a bug introduced with the
