@@ -17,7 +17,10 @@
                               on a trait.">
             <action date="ac71753" dev="mapi" type="fix">
                 Fixed: E_FATAL when the coupling analyzer processes a trait.
-            </action>
+			</action>
+			<action date="" dev="mapi" type="add" due-to="zerkalica">
+				Added: Composer support
+			</action>
         </release>
 
         <release version="1.0.5"
