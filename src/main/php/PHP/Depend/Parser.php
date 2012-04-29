@@ -6682,7 +6682,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $token = $this->consumeToken($type);
             $type = $this->tokenizer->peek();
 
-            if (self::T_COMMENT === $type) {
+            if (self::T_COMMENT === $token->type) {
                 continue;
             }
 

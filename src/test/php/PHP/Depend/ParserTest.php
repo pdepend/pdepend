@@ -1494,6 +1494,22 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * Tests to ensure function docblock comments are parsed correctly
+     *
+     * @return void
+     */
+    public function testFunctionDocBlockIsCorrectlyParsed()
+    {
+        $function = self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current();
+
+        $this->assertEquals( $function->getDocComment(),
+            "/**\n * This is the function docblock for foo\n *\n */" );
+    }
+
+    /**
      * Returns an interface instance from the mixed code test file.
      *
      * @return PHP_Depend_Code_Interface
