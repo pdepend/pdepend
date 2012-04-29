@@ -9,6 +9,14 @@
     </properties>
 
 	<body>
+        <release version="1.0.7"
+                 date="2012/04/29"
+                 description="This release closes a minor bug within the parsing
+                              code for doc comments..">
+            <action date="ac71753" dev="mapi" type="fix" due-to="Slashbunny">
+                Fixed: DocComment is sometimes incorrectly set for functions
+            </action>
+        </release>
         <release version="1.0.6"
                  date="2012/04/22"
                  description="This release closes a bug with traits that were
@@ -19,7 +27,7 @@
                 Fixed: E_FATAL when the coupling analyzer processes a trait.
 			</action>
 			<action date="3d98f02" dev="mapi" type="add" due-to="zerkalica">
-				Added: Composer support 
+				Added: Composer support
 			</action>
         </release>
 
