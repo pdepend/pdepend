@@ -6680,13 +6680,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while ($type == self::T_COMMENT || $type == self::T_DOC_COMMENT) {
 
             $token = $this->consumeToken($type);
-            $type = $this->tokenizer->peek();
+            $type  = $this->tokenizer->peek();
 
             if (self::T_COMMENT === $token->type) {
                 continue;
             }
 
-            $this->_docComment  = $token->image;
+            $this->_docComment = $token->image;
             if (preg_match('(\s+@package\s+[^\s]+\s+)', $token->image)) {
                 $this->_packageName = $this->_parsePackageAnnotation($token->image);
             }
