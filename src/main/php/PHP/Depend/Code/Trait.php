@@ -60,7 +60,7 @@
  * @link       http://pdepend.org/
  * @since      1.0.0
  */
-class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
+class PHP_Depend_Code_Trait extends PHP_Depend_Code_Class
 {
     /**
      * The type of this class.
