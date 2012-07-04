@@ -87,7 +87,7 @@ class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
         $quoted = array_map('preg_quote', $patterns);
 
         $this->relative = '(' . str_replace('\*', '.*', join('|', $quoted)) . ')i';
-        $this->absolute = '(^(' . str_replace('\*', '.*', join('^', $quoted)) . '))i';
+        $this->absolute = '(^(' . str_replace('\*', '.*', join('|', $quoted)) .'))i';
     }
 
     /**
