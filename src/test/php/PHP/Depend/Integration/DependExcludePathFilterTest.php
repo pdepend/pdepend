@@ -108,7 +108,15 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
             new PHP_Depend_Input_ExcludePathFilter(array($pattern))
         );
 
-        self::assertEquals(1, count($pdepend->analyze()));
+        self::assertEquals(
+            1,
+            count($pdepend->analyze()),
+            sprintf(
+                'Pattern "%s" does not match in directory "%s".',
+                $pattern,
+                $directory
+            )
+        );
     }
 
     /**
