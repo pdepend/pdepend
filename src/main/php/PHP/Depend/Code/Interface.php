@@ -156,7 +156,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      * @return void
      * @since 0.10.0
      */
-    public function  __wakeup()
+    public function __wakeup()
     {
         parent::__wakeup();
 

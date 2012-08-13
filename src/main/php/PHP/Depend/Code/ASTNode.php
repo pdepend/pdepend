@@ -530,7 +530,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * @return array
      * @since 0.10.0
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array(
             'comment',

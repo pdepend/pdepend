@@ -172,7 +172,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      * @return array(string)
      * @since 0.10.0
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array_merge(array('context', 'packageName'), parent::__sleep());
     }
@@ -186,7 +186,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      * @return void
      * @since 0.10.0
      */
-    public function  __wakeup()
+    public function __wakeup()
     {
         $this->context->registerFunction($this);
     }

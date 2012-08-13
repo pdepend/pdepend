@@ -134,7 +134,7 @@ class PHP_Depend_Code_ASTTraitAdaptationAlias extends PHP_Depend_Code_ASTStateme
      *
      * @return array
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array_merge(array('newName', 'newModifier'), parent::__sleep());
     }

@@ -139,7 +139,7 @@ final class PHP_Depend_Code_ASTParentReference
      * @return array(string)
      * @since 0.10.0
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array_merge(array('reference'), parent::__sleep());
     }

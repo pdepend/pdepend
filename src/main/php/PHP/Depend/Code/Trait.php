@@ -129,7 +129,7 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_AbstractType
      *
      * @return void
      */
-    public function  __wakeup()
+    public function __wakeup()
     {
         parent::__wakeup();
 

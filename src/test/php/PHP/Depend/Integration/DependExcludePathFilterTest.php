@@ -128,7 +128,7 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
      *
      * @return void
      */
-    public function  testPDependNotFiltersByOverlappingPathMatch()
+    public function testPDependNotFiltersByOverlappingPathMatch()
     {
         $this->changeWorkingDirectory();
 

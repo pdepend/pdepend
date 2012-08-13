@@ -138,7 +138,7 @@ class PHP_Depend_Code_ASTDeclareStatement extends PHP_Depend_Code_ASTStatement
      * @return array(string)
      * @since 0.10.0
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array_merge(array('values'), parent::__sleep());
     }

@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTVariableDeclarator extends PHP_Depend_Code_ASTNode
      * @return array(string)
      * @since 0.10.0
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array_merge(array('value'), parent::__sleep());
     }

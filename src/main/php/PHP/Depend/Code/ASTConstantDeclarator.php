@@ -144,7 +144,7 @@ class PHP_Depend_Code_ASTConstantDeclarator extends PHP_Depend_Code_ASTNode
      *
      * @return array(string)
      */
-    public function  __sleep()
+    public function __sleep()
     {
         return array_merge(array('value'), parent::__sleep());
     }
