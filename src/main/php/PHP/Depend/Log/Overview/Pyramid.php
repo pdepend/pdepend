@@ -73,42 +73,42 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      *
      * @var string $_logFile
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The used coupling analyzer.
      *
      * @var PHP_Depend_Metrics_Coupling_Analyzer $_coupling
      */
-    private $_coupling = null;
+    private $coupling = null;
 
     /**
      * The used cyclomatic complexity analyzer.
      *
      * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticComplexity
      */
-    private $_cyclomaticComplexity = null;
+    private $cyclomaticComplexity = null;
 
     /**
      * The used inheritance analyzer.
      *
      * @var PHP_Depend_Metrics_Inheritance_Analyzer $_inheritance
      */
-    private $_inheritance = null;
+    private $inheritance = null;
 
     /**
      * The used node count analyzer.
      *
      * @var PHP_Depend_Metrics_NodeCount_Analyzer $_nodeCount
      */
-    private $_nodeCount = null;
+    private $nodeCount = null;
 
     /**
      * The used node loc analyzer.
      *
      * @var PHP_Depend_Metrics_NodeLoc_Analyzer $_nodeLoc
      */
-    private $_nodeLoc = null;
+    private $nodeLoc = null;
 
     /**
      * Holds defined thresholds for the computed proportions. This set is based
@@ -116,7 +116,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      *
      * @var array(string => array) $_thresholds
      */
-    private $_thresholds = array(
+    private $thresholds = array(
         'cyclo-loc'     =>  array(0.16, 0.20, 0.24),
         'loc-nom'       =>  array(7, 10, 13),
         'nom-noc'       =>  array(4, 7, 10),
@@ -136,7 +136,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -167,15 +167,15 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if ($analyzer instanceof PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
-            $this->_cyclomaticComplexity = $analyzer;
+            $this->cyclomaticComplexity = $analyzer;
         } else if ($analyzer instanceof PHP_Depend_Metrics_Coupling_Analyzer) {
-            $this->_coupling = $analyzer;
+            $this->coupling = $analyzer;
         } else if ($analyzer instanceof PHP_Depend_Metrics_Inheritance_Analyzer) {
-            $this->_inheritance = $analyzer;
+            $this->inheritance = $analyzer;
         } else if ($analyzer instanceof PHP_Depend_Metrics_NodeCount_Analyzer) {
-            $this->_nodeCount = $analyzer;
+            $this->nodeCount = $analyzer;
         } else if ($analyzer instanceof PHP_Depend_Metrics_NodeLoc_Analyzer) {
-            $this->_nodeLoc = $analyzer;
+            $this->nodeLoc = $analyzer;
         } else {
             return false;
         }
@@ -190,12 +190,12 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
     public function close()
     {
         // Check for configured log file
-        if ($this->_logFile === null) {
+        if ($this->logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
 
-        $metrics     = $this->_collectMetrics();
-        $proportions = $this->_computeProportions($metrics);
+        $metrics     = $this->collectMetrics();
+        $proportions = $this->computeProportions($metrics);
 
         $svg = new DOMDocument('1.0', 'UTF-8');
         $svg->load(dirname(__FILE__) . '/pyramid.svg');
@@ -204,7 +204,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
         foreach ($items as $name => $value) {
             $svg->getElementById("pdepend.{$name}")->nodeValue = $value;
 
-            if (($threshold = $this->_computeThreshold($name, $value)) === null) {
+            if (($threshold = $this->computeThreshold($name, $value)) === null) {
                 continue;
             }
             if (($color = $svg->getElementById("threshold.{$threshold}")) === null) {
@@ -224,7 +224,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
         $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
 
-        PHP_Depend_Util_ImageConvert::convert($temp, $this->_logFile);
+        PHP_Depend_Util_ImageConvert::convert($temp, $this->logFile);
 
         // Remove temp file
         unlink($temp);
@@ -240,13 +240,13 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      *
      * @return string
      */
-    private function _computeThreshold($name, $value)
+    private function computeThreshold($name, $value)
     {
-        if (!isset($this->_thresholds[$name])) {
+        if (!isset($this->thresholds[$name])) {
             return null;
         }
 
-        $threshold = $this->_thresholds[$name];
+        $threshold = $this->thresholds[$name];
         if ($value <= $threshold[0]) {
             return 'low';
         } else if ($value >= $threshold[2]) {
@@ -269,7 +269,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      *
      * @return array(string => float)
      */
-    private function _computeProportions(array $metrics)
+    private function computeProportions(array $metrics)
     {
         $orders = array(
             array('cyclo', 'loc', 'nom', 'noc', 'nop'),
@@ -300,29 +300,29 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      * @return array(string => mixed)
      * @throws RuntimeException If one of the required analyzers isn't set.
      */
-    private function _collectMetrics()
+    private function collectMetrics()
     {
-        if ($this->_coupling === null) {
+        if ($this->coupling === null) {
             throw new RuntimeException('Missing Coupling analyzer.');
         }
-        if ($this->_cyclomaticComplexity === null) {
+        if ($this->cyclomaticComplexity === null) {
             throw new RuntimeException('Missing Cyclomatic Complexity analyzer.');
         }
-        if ($this->_inheritance === null) {
+        if ($this->inheritance === null) {
             throw new RuntimeException('Missing Inheritance analyzer.');
         }
-        if ($this->_nodeCount === null) {
+        if ($this->nodeCount === null) {
             throw new RuntimeException('Missing Node Count analyzer.');
         }
-        if ($this->_nodeLoc === null) {
+        if ($this->nodeLoc === null) {
             throw new RuntimeException('Missing Node LOC analyzer.');
         }
 
-        $coupling    = $this->_coupling->getProjectMetrics();
-        $cyclomatic  = $this->_cyclomaticComplexity->getProjectMetrics();
-        $inheritance = $this->_inheritance->getProjectMetrics();
-        $nodeCount   = $this->_nodeCount->getProjectMetrics();
-        $nodeLoc     = $this->_nodeLoc->getProjectMetrics();
+        $coupling    = $this->coupling->getProjectMetrics();
+        $cyclomatic  = $this->cyclomaticComplexity->getProjectMetrics();
+        $inheritance = $this->inheritance->getProjectMetrics();
+        $nodeCount   = $this->nodeCount->getProjectMetrics();
+        $nodeLoc     = $this->nodeLoc->getProjectMetrics();
 
         return array(
             'cyclo'   =>  $cyclomatic['ccn2'],

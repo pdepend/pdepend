@@ -82,7 +82,7 @@ class PHP_Depend_Util_ImageConvert
         }
 
         if ($inputType === 'svg') {
-            self::prepareSVG($input);
+            self::prepareSvg($input);
         }
 
         if ($inputType === $outputType) {
@@ -149,7 +149,7 @@ class PHP_Depend_Util_ImageConvert
      *
      * @return void
      */
-    protected static function prepareSVG($input)
+    protected static function prepareSvg($input)
     {
         // Check for a configuration instance
         if (($config = PHP_Depend_Util_ConfigurationInstance::get()) === null) {

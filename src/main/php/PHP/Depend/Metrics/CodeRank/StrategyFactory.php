@@ -80,14 +80,14 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
      *
      * @var string $_defaultStrategy
      */
-    private $_defaultStrategy = self::STRATEGY_INHERITANCE;
+    private $defaultStrategy = self::STRATEGY_INHERITANCE;
 
     /**
      * List of all valid properties.
      *
      * @var array(string) $_validStrategies
      */
-    private $_validStrategies = array(
+    private $validStrategies = array(
         self::STRATEGY_INHERITANCE,
         self::STRATEGY_METHOD,
         self::STRATEGY_PROPERTY
@@ -100,7 +100,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
      */
     public function createDefaultStrategy()
     {
-        return $this->createStrategy($this->_defaultStrategy);
+        return $this->createStrategy($this->defaultStrategy);
     }
 
     /**
@@ -114,7 +114,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
      */
     public function createStrategy($strategyName)
     {
-        if (in_array($strategyName, $this->_validStrategies) === false) {
+        if (in_array($strategyName, $this->validStrategies) === false) {
             throw new InvalidArgumentException(
                 sprintf('Cannot load file for identifier "%s".', $strategyName)
             );

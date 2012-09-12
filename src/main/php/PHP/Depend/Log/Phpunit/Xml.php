@@ -74,7 +74,7 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @var string $_logFile
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
@@ -96,28 +96,28 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
      */
-    private $_nodeAwareAnalyzers = array();
+    private $nodeAwareAnalyzers = array();
 
     /**
      * The internal used xml stack.
      *
      * @var array(DOMElement) $_xmlStack
      */
-    private $_xmlStack = array();
+    private $xmlStack = array();
 
     /**
      * Number of visited files.
      *
      * @var integer $_files
      */
-    private $_files = 0;
+    private $files = 0;
 
     /**
      * This property contains some additional metrics for the file-DOMElement.
      *
      * @var array(string=>integer) $_additionalFileMetrics
      */
-    private $_additionalFileMetrics = array(
+    private $additionalFileMetrics = array(
         'classes'    =>  0,
         'functions'  =>  0
     );
@@ -128,7 +128,7 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @var array(string=>string)
      */
-    private $_phpunitTranslationTable = array(
+    private $phpunitTranslationTable = array(
         'ccn2'    =>  'ccn',
         'noc'     =>  'classes',
         'noi'     =>  'interfs',
@@ -160,7 +160,7 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -196,7 +196,7 @@ class PHP_Depend_Log_Phpunit_Xml
             $accept = true;
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
-            $this->_nodeAwareAnalyzers[] = $analyzer;
+            $this->nodeAwareAnalyzers[] = $analyzer;
 
             $accept = true;
         }
@@ -217,7 +217,7 @@ class PHP_Depend_Log_Phpunit_Xml
             E_USER_DEPRECATED
         );
 
-        if ($this->_logFile === null) {
+        if ($this->logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
 
@@ -229,7 +229,7 @@ class PHP_Depend_Log_Phpunit_Xml
         // Is this this correct?
         $metricsXml = $dom->appendChild($dom->createElement('metrics'));
 
-        array_push($this->_xmlStack, $metricsXml);
+        array_push($this->xmlStack, $metricsXml);
 
         foreach ($this->code as $node) {
             $node->accept($this);
@@ -238,9 +238,9 @@ class PHP_Depend_Log_Phpunit_Xml
         // Create project metrics and apply Phpunit translation table
         $metrics = array_merge(
             $this->projectMetrics,
-            array('files'  =>  $this->_files)
+            array('files'  =>  $this->files)
         );
-        $metrics = $this->_applyPHPUnitTranslationTable($metrics);
+        $metrics = $this->applyPhpUnitTranslationTable($metrics);
 
         // Sort metrics
         ksort($metrics);
@@ -250,7 +250,7 @@ class PHP_Depend_Log_Phpunit_Xml
             $metricsXml->setAttribute($name, $value);
         }
 
-        $dom->save($this->_logFile);
+        $dom->save($this->logFile);
     }
 
     /**
@@ -263,7 +263,7 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
-        $this->_visitType($class);
+        $this->visitType($class);
     }
 
     /**
@@ -276,7 +276,7 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
-        $metricsXml = end($this->_xmlStack);
+        $metricsXml = end($this->xmlStack);
         $document   = $metricsXml->ownerDocument;
 
         $xpath  = new DOMXPath($document);
@@ -290,19 +290,19 @@ class PHP_Depend_Log_Phpunit_Xml
             $fileXml->setAttribute('name', $file->getFileName());
 
             // Append all metrics
-            $this->_appendMetrics($fileXml, $file, $this->_additionalFileMetrics);
+            $this->appendMetrics($fileXml, $file, $this->additionalFileMetrics);
 
             // Append file to metrics xml
             $metricsXml->appendChild($fileXml);
 
             // Update project file counter
-            ++$this->_files;
+            ++$this->files;
         } else {
             $fileXml = $result->item(0);
         }
 
         // Add file to stack
-        array_push($this->_xmlStack, $fileXml);
+        array_push($this->xmlStack, $fileXml);
     }
 
     /**
@@ -318,13 +318,13 @@ class PHP_Depend_Log_Phpunit_Xml
         // First visit function file
         $function->getSourceFile()->accept($this);
 
-        $fileXml  = end($this->_xmlStack);
+        $fileXml  = end($this->xmlStack);
         $document = $fileXml->ownerDocument;
 
         $functionXml = $document->createElement('function');
         $functionXml->setAttribute('name', $function->getName());
 
-        $this->_appendMetrics($functionXml, $function);
+        $this->appendMetrics($functionXml, $function);
 
         $fileXml->appendChild($functionXml);
 
@@ -332,7 +332,7 @@ class PHP_Depend_Log_Phpunit_Xml
         $fileXml->setAttribute('functions', 1 + $fileXml->getAttribute('functions'));
 
         // Remove xml file element
-        array_pop($this->_xmlStack);
+        array_pop($this->xmlStack);
     }
 
     /**
@@ -345,7 +345,7 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
-        $this->_visitType($interface);
+        $this->visitType($interface);
     }
 
     /**
@@ -358,13 +358,13 @@ class PHP_Depend_Log_Phpunit_Xml
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        $classXml = end($this->_xmlStack);
+        $classXml = end($this->xmlStack);
         $document = $classXml->ownerDocument;
 
         $methodXml = $document->createElement('method');
         $methodXml->setAttribute('name', $method->getName());
 
-        $this->_appendMetrics($methodXml, $method);
+        $this->appendMetrics($methodXml, $method);
 
         $classXml->appendChild($methodXml);
     }
@@ -376,21 +376,21 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @return void
      */
-    private function _visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
+    private function visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
     {
         $type->getSourceFile()->accept($this);
 
-        $fileXml  = end($this->_xmlStack);
+        $fileXml  = end($this->xmlStack);
         $document = $fileXml->ownerDocument;
 
         $classXml = $document->createElement('class');
         $classXml->setAttribute('name', $type->getName());
 
-        $this->_appendMetrics($classXml, $type);
+        $this->appendMetrics($classXml, $type);
 
         $fileXml->appendChild($classXml);
 
-        array_push($this->_xmlStack, $classXml);
+        array_push($this->xmlStack, $classXml);
 
         foreach ($type->getMethods() as $method) {
             $method->accept($this);
@@ -399,9 +399,9 @@ class PHP_Depend_Log_Phpunit_Xml
         $fileXml->setAttribute('classes', 1 + $fileXml->getAttribute('classes'));
 
         // Remove xml class element
-        array_pop($this->_xmlStack);
+        array_pop($this->xmlStack);
         // Remove xml file element
-        array_pop($this->_xmlStack);
+        array_pop($this->xmlStack);
     }
 
     /**
@@ -414,15 +414,15 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @return void
      */
-    private function _appendMetrics(
+    private function appendMetrics(
         DOMElement $xml,
         PHP_Depend_Code_NodeI $node,
         array $metrics = array()
     ) {
-        foreach ($this->_nodeAwareAnalyzers as $analyzer) {
+        foreach ($this->nodeAwareAnalyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
         }
-        $metrics = $this->_applyPHPUnitTranslationTable($metrics);
+        $metrics = $this->applyPhpUnitTranslationTable($metrics);
 
         ksort($metrics);
         foreach ($metrics as $name => $value) {
@@ -437,9 +437,9 @@ class PHP_Depend_Log_Phpunit_Xml
      *
      * @return array(string=>mixed)
      */
-    private function _applyPHPUnitTranslationTable(array $metrics)
+    private function applyPhpUnitTranslationTable(array $metrics)
     {
-        foreach ($this->_phpunitTranslationTable as $pdepend => $phpunit) {
+        foreach ($this->phpunitTranslationTable as $pdepend => $phpunit) {
             if (!isset($metrics[$pdepend])) {
                 continue;
             }

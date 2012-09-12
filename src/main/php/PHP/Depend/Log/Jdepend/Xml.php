@@ -74,7 +74,7 @@ class PHP_Depend_Log_Jdepend_Xml
      *
      * @var string $_logFile
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
@@ -148,7 +148,7 @@ class PHP_Depend_Log_Jdepend_Xml
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -201,7 +201,7 @@ class PHP_Depend_Log_Jdepend_Xml
     public function close()
     {
         // Check for configured output
-        if ($this->_logFile === null) {
+        if ($this->logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
 
@@ -219,7 +219,7 @@ class PHP_Depend_Log_Jdepend_Xml
         }
 
         $dom->appendChild($jdepend);
-        $dom->save($this->_logFile);
+        $dom->save($this->logFile);
     }
 
     /**

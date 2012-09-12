@@ -76,7 +76,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
     public function testGetUUIDReturnsExpectedObjectHash()
     {
         $parameters = $this->_getFirstMethodInClass()->getParameters();
-        $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getUUID());
+        $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getUuid());
     }
 
     /**

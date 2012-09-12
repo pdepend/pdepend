@@ -249,7 +249,7 @@ final class PHP_Depend_Util_Type
      */
     public static function isInternalType($typeName)
     {
-        self::_initTypeToExtension();
+        self::initTypeToExtension();
 
         $normalizedName = ltrim($typeName, '\\');
         $normalizedName = strtolower($normalizedName);
@@ -267,7 +267,7 @@ final class PHP_Depend_Util_Type
      */
     public static function getTypePackage($typeName)
     {
-        self::_initTypeToExtension();
+        self::initTypeToExtension();
 
         $normalizedName = ltrim($typeName, '\\');
         $normalizedName = strtolower($normalizedName);
@@ -285,7 +285,7 @@ final class PHP_Depend_Util_Type
     public static function getInternalPackages()
     {
         if (self::$_internalPackages === null) {
-            $extensions = array_values(self::_initTypeToExtension());
+            $extensions = array_values(self::initTypeToExtension());
             $extensions = array_unique($extensions);
 
             self::$_internalPackages = array_combine($extensions, $extensions);
@@ -389,7 +389,7 @@ final class PHP_Depend_Util_Type
      *
      * @return array(string=>string)
      */
-    private static function _initTypeToExtension()
+    private static function initTypeToExtension()
     {
         // Skip when already done.
         if (self::$_typeNameToExtension !== null) {

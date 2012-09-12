@@ -72,7 +72,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var array(PHP_Depend_Code_Property) $_properties
      */
-    private $_properties = null;
+    private $properties = null;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
@@ -103,8 +103,8 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getProperties()
     {
-        if ($this->_properties === null) {
-            $this->_properties = array();
+        if ($this->properties === null) {
+            $this->properties = array();
 
             $declarations = $this->findChildrenOfType(
                 PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
@@ -122,12 +122,12 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
                     $property->setDeclaringClass($this);
                     $property->setSourceFile($this->getSourceFile());
 
-                    $this->_properties[] = $property;
+                    $this->properties[] = $property;
                 }
             }
         }
 
-        return new PHP_Depend_Code_NodeIterator($this->_properties);
+        return new PHP_Depend_Code_NodeIterator($this->properties);
     }
 
     /**

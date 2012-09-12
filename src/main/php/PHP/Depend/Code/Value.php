@@ -76,14 +76,14 @@ class PHP_Depend_Code_Value
      *
      * @var boolean $_valueAvailable
      */
-    private $_valueAvailable = false;
+    private $valueAvailable = false;
 
     /**
      * The parsed PHP-value,
      *
      * @var mixed $_value
      */
-    private $_value = null;
+    private $value = null;
 
     /**
      * This method will return the parsed PHP value.
@@ -92,7 +92,7 @@ class PHP_Depend_Code_Value
      */
     public function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -106,9 +106,9 @@ class PHP_Depend_Code_Value
      */
     public function setValue($value)
     {
-        if ($this->_valueAvailable === false) {
-            $this->_value          = $value;
-            $this->_valueAvailable = true;
+        if ($this->valueAvailable === false) {
+            $this->value          = $value;
+            $this->valueAvailable = true;
         }
     }
 
@@ -119,7 +119,7 @@ class PHP_Depend_Code_Value
      */
     public function isValueAvailable()
     {
-        return $this->_valueAvailable;
+        return $this->valueAvailable;
     }
 }
 ?>

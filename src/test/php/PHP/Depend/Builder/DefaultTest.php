@@ -651,7 +651,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildASTClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
         $builder = $this->createBuilder();
-        $builder->buildASTClassOrInterfaceReference('Foo');
+        $builder->buildAstClassOrInterfaceReference('Foo');
 
         // Freeze object
         $builder->getClass('Foo');
@@ -661,7 +661,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
             'Cannot create new nodes, when internal state is frozen.'
         );
 
-        $builder->buildASTClassOrInterfaceReference('Bar');
+        $builder->buildAstClassOrInterfaceReference('Bar');
     }
 
     /**
@@ -695,7 +695,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildASTClassReferenceThrowsExpectedExceptionWhenStateIsFrozen()
     {
         $builder = $this->createBuilder();
-        $builder->buildASTClassReference('Foo');
+        $builder->buildAstClassReference('Foo');
 
         // Freeze object
         $builder->getClass('Foo');
@@ -705,7 +705,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
             'Cannot create new nodes, when internal state is frozen.'
         );
 
-        $builder->buildASTClassReference('Bar');
+        $builder->buildAstClassReference('Bar');
     }
 
     /**
@@ -783,7 +783,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTComment::CLAZZ,
-            $this->createBuilder()->buildASTComment('// Hello')
+            $this->createBuilder()->buildAstComment('// Hello')
         );
     }
 
@@ -796,7 +796,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTPrimitiveType::CLAZZ,
-            $this->createBuilder()->buildASTPrimitiveType('1')
+            $this->createBuilder()->buildAstPrimitiveType('1')
         );
     }
 
@@ -809,7 +809,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTypeArray::CLAZZ,
-            $this->createBuilder()->buildASTTypeArray()
+            $this->createBuilder()->buildAstTypeArray()
         );
     }
 
@@ -823,7 +823,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTypeCallable::CLAZZ,
-            $this->createBuilder()->buildASTTypeCallable()
+            $this->createBuilder()->buildAstTypeCallable()
         );
     }
 
@@ -836,7 +836,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTHeredoc::CLAZZ,
-            $this->createBuilder()->buildASTHeredoc()
+            $this->createBuilder()->buildAstHeredoc()
         );
     }
 
@@ -849,7 +849,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTIdentifier::CLAZZ,
-            $this->createBuilder()->buildASTIdentifier('ID')
+            $this->createBuilder()->buildAstIdentifier('ID')
         );
     }
 
@@ -862,7 +862,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTLiteral::CLAZZ,
-            $this->createBuilder()->buildASTLiteral('false')
+            $this->createBuilder()->buildAstLiteral('false')
         );
     }
 
@@ -875,7 +875,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTString::CLAZZ,
-            $this->createBuilder()->buildASTString()
+            $this->createBuilder()->buildAstString()
         );
     }
 
@@ -889,7 +889,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTArray::CLAZZ,
-            $this->createBuilder()->buildASTArray()
+            $this->createBuilder()->buildAstArray()
         );
     }
 
@@ -903,7 +903,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTArrayElement::CLAZZ,
-            $this->createBuilder()->buildASTArrayElement()
+            $this->createBuilder()->buildAstArrayElement()
         );
     }
 
@@ -916,7 +916,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTScope::CLAZZ,
-            $this->createBuilder()->buildASTScope()
+            $this->createBuilder()->buildAstScope()
         );
     }
 
@@ -929,7 +929,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTVariable::CLAZZ,
-            $this->createBuilder()->buildASTVariable('$name')
+            $this->createBuilder()->buildAstVariable('$name')
         );
     }
 
@@ -942,7 +942,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTVariableVariable::CLAZZ,
-            $this->createBuilder()->buildASTVariableVariable('$$x')
+            $this->createBuilder()->buildAstVariableVariable('$$x')
         );
     }
 
@@ -955,7 +955,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTCompoundVariable::CLAZZ,
-            $this->createBuilder()->buildASTCompoundVariable('${x}')
+            $this->createBuilder()->buildAstCompoundVariable('${x}')
         );
     }
 
@@ -968,7 +968,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTFieldDeclaration::CLAZZ,
-            $this->createBuilder()->buildASTFieldDeclaration()
+            $this->createBuilder()->buildAstFieldDeclaration()
         );
     }
 
@@ -981,7 +981,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTConstant::CLAZZ,
-            $this->createBuilder()->buildASTConstant('X')
+            $this->createBuilder()->buildAstConstant('X')
         );
     }
 
@@ -994,7 +994,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTConstantDeclarator::CLAZZ,
-            $this->createBuilder()->buildASTConstantDeclarator('X')
+            $this->createBuilder()->buildAstConstantDeclarator('X')
         );
     }
 
@@ -1007,7 +1007,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTConstantDefinition::CLAZZ,
-            $this->createBuilder()->buildASTConstantDefinition('X')
+            $this->createBuilder()->buildAstConstantDefinition('X')
         );
     }
 
@@ -1020,7 +1020,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTConstantPostfix::CLAZZ,
-            $this->createBuilder()->buildASTConstantPostfix('X')
+            $this->createBuilder()->buildAstConstantPostfix('X')
         );
     }
 
@@ -1033,7 +1033,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTAssignmentExpression::CLAZZ,
-            $this->createBuilder()->buildASTAssignmentExpression('=')
+            $this->createBuilder()->buildAstAssignmentExpression('=')
         );
     }
 
@@ -1047,7 +1047,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTShiftLeftExpression::CLAZZ,
-            $this->createBuilder()->buildASTShiftLeftExpression()
+            $this->createBuilder()->buildAstShiftLeftExpression()
         );
     }
 
@@ -1061,7 +1061,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTShiftRightExpression::CLAZZ,
-            $this->createBuilder()->buildASTShiftRightExpression()
+            $this->createBuilder()->buildAstShiftRightExpression()
         );
     }
 
@@ -1074,7 +1074,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTBooleanAndExpression::CLAZZ,
-            $this->createBuilder()->buildASTBooleanAndExpression()
+            $this->createBuilder()->buildAstBooleanAndExpression()
         );
     }
 
@@ -1087,7 +1087,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTBooleanOrExpression::CLAZZ,
-            $this->createBuilder()->buildASTBooleanOrExpression()
+            $this->createBuilder()->buildAstBooleanOrExpression()
         );
     }
 
@@ -1100,7 +1100,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTCastExpression::CLAZZ,
-            $this->createBuilder()->buildASTCastExpression('(boolean)')
+            $this->createBuilder()->buildAstCastExpression('(boolean)')
         );
     }
 
@@ -1113,7 +1113,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTCloneExpression::CLAZZ,
-            $this->createBuilder()->buildASTCloneExpression('clone')
+            $this->createBuilder()->buildAstCloneExpression('clone')
         );
     }
 
@@ -1126,7 +1126,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTCompoundExpression::CLAZZ,
-            $this->createBuilder()->buildASTCompoundExpression()
+            $this->createBuilder()->buildAstCompoundExpression()
         );
     }
 
@@ -1139,7 +1139,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTConditionalExpression::CLAZZ,
-            $this->createBuilder()->buildASTConditionalExpression()
+            $this->createBuilder()->buildAstConditionalExpression()
         );
     }
 
@@ -1152,7 +1152,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTEvalExpression::CLAZZ,
-            $this->createBuilder()->buildASTEvalExpression('eval')
+            $this->createBuilder()->buildAstEvalExpression('eval')
         );
     }
 
@@ -1165,7 +1165,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTExitExpression::CLAZZ,
-            $this->createBuilder()->buildASTExitExpression('exit')
+            $this->createBuilder()->buildAstExitExpression('exit')
         );
     }
 
@@ -1178,7 +1178,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTExpression::CLAZZ,
-            $this->createBuilder()->buildASTExpression()
+            $this->createBuilder()->buildAstExpression()
         );
     }
 
@@ -1191,7 +1191,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTIncludeExpression::CLAZZ,
-            $this->createBuilder()->buildASTIncludeExpression()
+            $this->createBuilder()->buildAstIncludeExpression()
         );
     }
 
@@ -1204,7 +1204,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTInstanceOfExpression::CLAZZ,
-            $this->createBuilder()->buildASTInstanceOfExpression('instanceof')
+            $this->createBuilder()->buildAstInstanceOfExpression('instanceof')
         );
     }
 
@@ -1217,7 +1217,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTIssetExpression::CLAZZ,
-            $this->createBuilder()->buildASTIssetExpression()
+            $this->createBuilder()->buildAstIssetExpression()
         );
     }
 
@@ -1230,7 +1230,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTListExpression::CLAZZ,
-            $this->createBuilder()->buildASTListExpression('list')
+            $this->createBuilder()->buildAstListExpression('list')
         );
     }
 
@@ -1243,7 +1243,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTLogicalAndExpression::CLAZZ,
-            $this->createBuilder()->buildASTLogicalAndExpression('AND')
+            $this->createBuilder()->buildAstLogicalAndExpression('AND')
         );
     }
 
@@ -1256,7 +1256,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTLogicalOrExpression::CLAZZ,
-            $this->createBuilder()->buildASTLogicalOrExpression('OR')
+            $this->createBuilder()->buildAstLogicalOrExpression('OR')
         );
     }
 
@@ -1269,7 +1269,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTLogicalXorExpression::CLAZZ,
-            $this->createBuilder()->buildASTLogicalXorExpression('XOR')
+            $this->createBuilder()->buildAstLogicalXorExpression('XOR')
         );
     }
 
@@ -1282,7 +1282,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTRequireExpression::CLAZZ,
-            $this->createBuilder()->buildASTRequireExpression()
+            $this->createBuilder()->buildAstRequireExpression()
         );
     }
 
@@ -1295,7 +1295,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTStringIndexExpression::CLAZZ,
-            $this->createBuilder()->buildASTStringIndexExpression()
+            $this->createBuilder()->buildAstStringIndexExpression()
         );
     }
 
@@ -1308,7 +1308,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTUnaryExpression::CLAZZ,
-            $this->createBuilder()->buildASTUnaryExpression('+')
+            $this->createBuilder()->buildAstUnaryExpression('+')
         );
     }
 
@@ -1321,7 +1321,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTBreakStatement::CLAZZ,
-            $this->createBuilder()->buildASTBreakStatement('break')
+            $this->createBuilder()->buildAstBreakStatement('break')
         );
     }
 
@@ -1334,7 +1334,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTCatchStatement::CLAZZ,
-            $this->createBuilder()->buildASTCatchStatement('catch')
+            $this->createBuilder()->buildAstCatchStatement('catch')
         );
     }
 
@@ -1347,7 +1347,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTDeclareStatement::CLAZZ,
-            $this->createBuilder()->buildASTDeclareStatement()
+            $this->createBuilder()->buildAstDeclareStatement()
         );
     }
 
@@ -1360,7 +1360,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTIfStatement::CLAZZ,
-            $this->createBuilder()->buildASTIfStatement('if')
+            $this->createBuilder()->buildAstIfStatement('if')
         );
     }
 
@@ -1373,7 +1373,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTElseIfStatement::CLAZZ,
-            $this->createBuilder()->buildASTElseIfStatement('elseif')
+            $this->createBuilder()->buildAstElseIfStatement('elseif')
         );
     }
 
@@ -1386,7 +1386,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTContinueStatement::CLAZZ,
-            $this->createBuilder()->buildASTContinueStatement('continue')
+            $this->createBuilder()->buildAstContinueStatement('continue')
         );
     }
 
@@ -1399,7 +1399,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTDoWhileStatement::CLAZZ,
-            $this->createBuilder()->buildASTDoWhileStatement('while')
+            $this->createBuilder()->buildAstDoWhileStatement('while')
         );
     }
 
@@ -1412,7 +1412,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTForStatement::CLAZZ,
-            $this->createBuilder()->buildASTForStatement('for')
+            $this->createBuilder()->buildAstForStatement('for')
         );
     }
 
@@ -1425,7 +1425,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTForInit::CLAZZ,
-            $this->createBuilder()->buildASTForInit()
+            $this->createBuilder()->buildAstForInit()
         );
     }
 
@@ -1438,7 +1438,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTForUpdate::CLAZZ,
-            $this->createBuilder()->buildASTForUpdate()
+            $this->createBuilder()->buildAstForUpdate()
         );
     }
 
@@ -1451,7 +1451,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTForeachStatement::CLAZZ,
-            $this->createBuilder()->buildASTForeachStatement('foreach')
+            $this->createBuilder()->buildAstForeachStatement('foreach')
         );
     }
 
@@ -1464,7 +1464,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTFormalParameters::CLAZZ,
-            $this->createBuilder()->buildASTFormalParameters()
+            $this->createBuilder()->buildAstFormalParameters()
         );
     }
 
@@ -1477,7 +1477,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTFormalParameter::CLAZZ,
-            $this->createBuilder()->buildASTFormalParameter()
+            $this->createBuilder()->buildAstFormalParameter()
         );
     }
 
@@ -1490,7 +1490,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTGlobalStatement::CLAZZ,
-            $this->createBuilder()->buildASTGlobalStatement()
+            $this->createBuilder()->buildAstGlobalStatement()
         );
     }
 
@@ -1503,7 +1503,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTGotoStatement::CLAZZ,
-            $this->createBuilder()->buildASTGotoStatement('goto')
+            $this->createBuilder()->buildAstGotoStatement('goto')
         );
     }
 
@@ -1516,7 +1516,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTLabelStatement::CLAZZ,
-            $this->createBuilder()->buildASTLabelStatement('LABEL')
+            $this->createBuilder()->buildAstLabelStatement('LABEL')
         );
     }
 
@@ -1529,7 +1529,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTReturnStatement::CLAZZ,
-            $this->createBuilder()->buildASTReturnStatement('return')
+            $this->createBuilder()->buildAstReturnStatement('return')
         );
     }
 
@@ -1542,7 +1542,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTScopeStatement::CLAZZ,
-            $this->createBuilder()->buildASTScopeStatement()
+            $this->createBuilder()->buildAstScopeStatement()
         );
     }
 
@@ -1555,7 +1555,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTStatement::CLAZZ,
-            $this->createBuilder()->buildASTStatement()
+            $this->createBuilder()->buildAstStatement()
         );
     }
 
@@ -1569,7 +1569,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTraitUseStatement::CLAZZ,
-            $this->createBuilder()->buildASTTraitUseStatement()
+            $this->createBuilder()->buildAstTraitUseStatement()
         );
     }
 
@@ -1583,7 +1583,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTraitAdaptation::CLAZZ,
-            $this->createBuilder()->buildASTTraitAdaptation()
+            $this->createBuilder()->buildAstTraitAdaptation()
         );
     }
 
@@ -1597,7 +1597,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTraitAdaptationAlias::CLAZZ,
-            $this->createBuilder()->buildASTTraitAdaptationAlias(__CLASS__)
+            $this->createBuilder()->buildAstTraitAdaptationAlias(__CLASS__)
         );
     }
 
@@ -1611,7 +1611,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTraitAdaptationPrecedence::CLAZZ,
-            $this->createBuilder()->buildASTTraitAdaptationPrecedence(__CLASS__)
+            $this->createBuilder()->buildAstTraitAdaptationPrecedence(__CLASS__)
         );
     }
 
@@ -1624,7 +1624,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTSwitchStatement::CLAZZ,
-            $this->createBuilder()->buildASTSwitchStatement()
+            $this->createBuilder()->buildAstSwitchStatement()
         );
     }
 
@@ -1637,7 +1637,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTThrowStatement::CLAZZ,
-            $this->createBuilder()->buildASTThrowStatement('throw')
+            $this->createBuilder()->buildAstThrowStatement('throw')
         );
     }
 
@@ -1650,7 +1650,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTryStatement::CLAZZ,
-            $this->createBuilder()->buildASTTryStatement('try')
+            $this->createBuilder()->buildAstTryStatement('try')
         );
     }
 
@@ -1663,7 +1663,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTUnsetStatement::CLAZZ,
-            $this->createBuilder()->buildASTUnsetStatement()
+            $this->createBuilder()->buildAstUnsetStatement()
         );
     }
 
@@ -1676,7 +1676,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTWhileStatement::CLAZZ,
-            $this->createBuilder()->buildASTWhileStatement('while')
+            $this->createBuilder()->buildAstWhileStatement('while')
         );
     }
 
@@ -1689,7 +1689,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTArrayIndexExpression::CLAZZ,
-            $this->createBuilder()->buildASTArrayIndexExpression()
+            $this->createBuilder()->buildAstArrayIndexExpression()
         );
     }
 
@@ -1702,7 +1702,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTClosure::CLAZZ,
-            $this->createBuilder()->buildASTClosure()
+            $this->createBuilder()->buildAstClosure()
         );
     }
 
@@ -1715,8 +1715,8 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTParentReference::CLAZZ,
-            $this->createBuilder()->buildASTParentReference(
-                $this->createBuilder()->buildASTClassOrInterfaceReference(__CLASS__)
+            $this->createBuilder()->buildAstParentReference(
+                $this->createBuilder()->buildAstClassOrInterfaceReference(__CLASS__)
             )
         );
     }
@@ -1730,7 +1730,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTSelfReference::CLAZZ,
-            $this->createBuilder()->buildASTSelfReference(
+            $this->createBuilder()->buildAstSelfReference(
                 $this->createBuilder()->buildClass(__CLASS__)
             )
         );
@@ -1745,7 +1745,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTStaticReference::CLAZZ,
-            $this->createBuilder()->buildASTStaticReference(
+            $this->createBuilder()->buildAstStaticReference(
                 $this->createBuilder()->buildClass(__CLASS__)
             )
         );
@@ -1761,7 +1761,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTTraitReference::CLAZZ,
-            $this->createBuilder()->buildASTTraitReference(__CLASS__)
+            $this->createBuilder()->buildAstTraitReference(__CLASS__)
         );
     }
 
@@ -1774,7 +1774,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
-            $this->createBuilder()->buildASTClassOrInterfaceReference(__CLASS__)
+            $this->createBuilder()->buildAstClassOrInterfaceReference(__CLASS__)
         );
     }
 
@@ -1787,7 +1787,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTClassReference::CLAZZ,
-            $this->createBuilder()->buildASTClassReference(__CLASS__)
+            $this->createBuilder()->buildAstClassReference(__CLASS__)
         );
     }
 
@@ -1799,7 +1799,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType()
     {
         $builder  = $this->createBuilder();
-        $instance = $builder->buildASTPrimitiveType(__FUNCTION__);
+        $instance = $builder->buildAstPrimitiveType(__FUNCTION__);
 
         $this->assertInstanceOf(PHP_Depend_Code_ASTPrimitiveType::CLAZZ, $instance);
     }
@@ -1812,7 +1812,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     public function testBuildASTAllocationExpressionReturnsExpectedType()
     {
         $object = $this->createBuilder()
-            ->buildASTAllocationExpression(__FUNCTION__);
+            ->buildAstAllocationExpression(__FUNCTION__);
 
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTAllocationExpression::CLAZZ,
@@ -1829,7 +1829,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTArguments::CLAZZ,
-            $this->createBuilder()->buildASTArguments()
+            $this->createBuilder()->buildAstArguments()
         );
     }
 
@@ -1842,7 +1842,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTSwitchLabel::CLAZZ,
-            $this->createBuilder()->buildASTSwitchLabel('m')
+            $this->createBuilder()->buildAstSwitchLabel('m')
         );
     }
 
@@ -1855,7 +1855,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTEchoStatement::CLAZZ,
-            $this->createBuilder()->buildASTEchoStatement('echo')
+            $this->createBuilder()->buildAstEchoStatement('echo')
         );
     }
 
@@ -1868,7 +1868,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ,
-            $this->createBuilder()->buildASTVariableDeclarator('foo')
+            $this->createBuilder()->buildAstVariableDeclarator('foo')
         );
     }
 
@@ -1881,7 +1881,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTStaticVariableDeclaration::CLAZZ,
-            $this->createBuilder()->buildASTStaticVariableDeclaration('$foo')
+            $this->createBuilder()->buildAstStaticVariableDeclaration('$foo')
         );
     }
 
@@ -1894,7 +1894,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTPostfixExpression::CLAZZ,
-            $this->createBuilder()->buildASTPostfixExpression('++')
+            $this->createBuilder()->buildAstPostfixExpression('++')
         );
     }
 
@@ -1907,7 +1907,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTPreDecrementExpression::CLAZZ,
-            $this->createBuilder()->buildASTPreDecrementExpression()
+            $this->createBuilder()->buildAstPreDecrementExpression()
         );
     }
 
@@ -1920,7 +1920,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTPreIncrementExpression::CLAZZ,
-            $this->createBuilder()->buildASTPreIncrementExpression()
+            $this->createBuilder()->buildAstPreIncrementExpression()
         );
     }
 
@@ -1934,7 +1934,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-            $this->createBuilder()->buildASTMemberPrimaryPrefix('::')
+            $this->createBuilder()->buildAstMemberPrimaryPrefix('::')
         );
     }
 
@@ -1948,7 +1948,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-            $this->createBuilder()->buildASTMethodPostfix('foo')
+            $this->createBuilder()->buildAstMethodPostfix('foo')
         );
     }
 
@@ -1961,7 +1961,7 @@ class PHP_Depend_Builder_DefaultTest extends PHP_Depend_AbstractTest
     {
         $this->assertInstanceOf(
             PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
-            $this->createBuilder()->buildASTFunctionPostfix('foo')
+            $this->createBuilder()->buildAstFunctionPostfix('foo')
         );
     }
 

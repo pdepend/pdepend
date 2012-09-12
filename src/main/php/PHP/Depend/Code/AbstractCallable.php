@@ -131,7 +131,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      *
      * @var PHP_Depend_Code_Parameter[]
      */
-    private $_parameters = null;
+    private $parameters = null;
 
     /**
      * Setter method for the currently used token cache, where this callable
@@ -352,10 +352,10 @@ abstract class PHP_Depend_Code_AbstractCallable
      */
     public function getParameters()
     {
-        if ($this->_parameters === null) {
-            $this->_initParameters();
+        if ($this->parameters === null) {
+            $this->initParameters();
         }
-        return $this->_parameters;
+        return $this->parameters;
     }
 
     /**
@@ -432,7 +432,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @return void
      * @since 0.9.6
      */
-    private function _initParameters()
+    private function initParameters()
     {
         $parameters = array();
 
@@ -462,7 +462,7 @@ abstract class PHP_Depend_Code_AbstractCallable
             $parameter->setOptional($optional);
         }
 
-        $this->_parameters = $parameters;
+        $this->parameters = $parameters;
     }
 
     /**

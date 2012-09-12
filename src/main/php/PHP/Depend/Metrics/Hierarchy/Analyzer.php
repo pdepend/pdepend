@@ -93,49 +93,49 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      *
      * @var integer $_fcs
      */
-    private $_fcs = 0;
+    private $fcs = 0;
 
     /**
      * Number of all analyzer methods.
      *
      * @var integer $_mts
      */
-    private $_mts = 0;
+    private $mts = 0;
 
     /**
      * Number of all analyzed classes.
      *
      * @var integer $_cls
      */
-    private $_cls = 0;
+    private $cls = 0;
 
     /**
      * Number of all analyzed abstract classes.
      *
      * @var integer $_clsa
      */
-    private $_clsa = 0;
+    private $clsa = 0;
 
     /**
      * Number of all analyzed interfaces.
      *
      * @var integer $_interfs
      */
-    private $_interfs = 0;
+    private $interfs = 0;
 
     /**
      * Number of all root classes within the analyzed source code.
      *
      * @var array(string=>boolean) $_roots
      */
-    private $_roots = array();
+    private $roots = array();
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
      * @var array(string=>boolean) $_noneLeafs
      */
-    private $_noneLeafs = array();
+    private $noneLeafs = array();
 
     /**
      * Hash with all calculated node metrics.
@@ -157,7 +157,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      *
      * @var array(string=>array) $_nodeMetrics
      */
-    private $_nodeMetrics = null;
+    private $nodeMetrics = null;
 
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -169,12 +169,12 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->_nodeMetrics === null) {
+        if ($this->nodeMetrics === null) {
 
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->_nodeMetrics = array();
+            $this->nodeMetrics = array();
 
             // Visit all nodes
             foreach ($packages as $package) {
@@ -193,13 +193,13 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function getProjectMetrics()
     {
         // Count none leaf classes
-        $noneLeafs = count($this->_noneLeafs);
+        $noneLeafs = count($this->noneLeafs);
 
         return array(
-            self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  $this->_clsa,
-            self::M_NUMBER_OF_CONCRETE_CLASSES  =>  $this->_cls - $this->_clsa,
-            self::M_NUMBER_OF_ROOT_CLASSES      =>  count($this->_roots),
-            self::M_NUMBER_OF_LEAF_CLASSES      =>  $this->_cls - $noneLeafs,
+            self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  $this->clsa,
+            self::M_NUMBER_OF_CONCRETE_CLASSES  =>  $this->cls - $this->clsa,
+            self::M_NUMBER_OF_ROOT_CLASSES      =>  count($this->roots),
+            self::M_NUMBER_OF_LEAF_CLASSES      =>  $this->cls - $noneLeafs,
         );
     }
 
@@ -214,8 +214,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            return $this->_nodeMetrics[$node->getUUID()];
+        if (isset($this->nodeMetrics[$node->getUuid()])) {
+            return $this->nodeMetrics[$node->getUuid()];
         }
         return array();
     }
@@ -236,22 +236,22 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
 
         $this->fireStartClass($class);
 
-        ++$this->_cls;
+        ++$this->cls;
 
         if ($class->isAbstract()) {
-            ++$this->_clsa;
+            ++$this->clsa;
         }
 
         $parentClass = $class->getParentClass();
         if ($parentClass !== null) {
             if ($parentClass->getParentClass() === null) {
-                $this->_roots[$parentClass->getUUID()] = true;
+                $this->roots[$parentClass->getUuid()] = true;
             }
-            $this->_noneLeafs[$parentClass->getUUID()] = true;
+            $this->noneLeafs[$parentClass->getUuid()] = true;
         }
 
         // Store node metric
-        $this->_nodeMetrics[$class->getUUID()] = array();
+        $this->nodeMetrics[$class->getUuid()] = array();
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -274,7 +274,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
         $this->fireStartFunction($function);
-        ++$this->_fcs;
+        ++$this->fcs;
         $this->fireEndFunction($function);
     }
 
@@ -290,7 +290,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     {
         $this->fireStartInterface($interface);
 
-        ++$this->_interfs;
+        ++$this->interfs;
 
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
@@ -310,7 +310,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         $this->fireStartMethod($method);
-        ++$this->_mts;
+        ++$this->mts;
         $this->fireEndMethod($method);
     }
 

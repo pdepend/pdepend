@@ -82,72 +82,72 @@ class PHP_Depend
     /**
      * List of source directories.
      *
-     * @var array(string) $_directories
+     * @var array(string)
      */
-    private $_directories = array();
+    private $directories = array();
 
     /**
      * List of source code file names.
      *
-     * @var array(string) $_files
+     * @var array(string)
      */
-    private $_files = array();
+    private $files = array();
 
     /**
      * The used code node builder.
      *
-     * @var PHP_Depend_BuilderI $_builder
+     * @var PHP_Depend_BuilderI
      */
-    private $_builder = null;
+    private $builder = null;
 
     /**
      * Generated {@link PHP_Depend_Code_Package} objects.
      *
-     * @var Iterator $_packages
+     * @var Iterator
      */
-    private $_packages = null;
+    private $packages = null;
 
     /**
      * List of all registered {@link PHP_Depend_Log_LoggerI} instances.
      *
-     * @var array(PHP_Depend_Log_LoggerI) $_loggers
+     * @var PHP_Depend_Log_LoggerI[]
      */
-    private $_loggers = array();
+    private $loggers = array();
 
     /**
      * A composite filter for input files.
      *
-     * @var PHP_Depend_Input_CompositeFilter $_fileFilter
+     * @var PHP_Depend_Input_CompositeFilter
      */
-    private $_fileFilter = null;
+    private $fileFilter = null;
 
     /**
      * A filter for source packages.
      *
-     * @var PHP_Depend_Code_FilterI $_codeFilter
+     * @var PHP_Depend_Code_FilterI
      */
-    private $_codeFilter = null;
+    private $codeFilter = null;
 
     /**
      * Should the parse ignore doc comment annotations?
      *
-     * @var boolean $_withoutAnnotations
+     * @var boolean
      */
-    private $_withoutAnnotations = false;
+    private $withoutAnnotations = false;
 
     /**
      * List or registered listeners.
      *
-     * @var array(PHP_Depend_ProcessListenerI) $_listeners
+     * @var PHP_Depend_ProcessListenerI[]
      */
-    private $_listeners = array();
+    private $listeners = array();
 
     /**
      * List of analyzer options.
      *
-     * @var array(string=>mixed) $_options
+     * @var array(string=>mixed)
      */
-    private $_options = array();
+    private $options = array();
 
     /**
      * List of all {@link PHP_Depend_Parser_Exception} that were caught during
@@ -155,7 +155,7 @@ class PHP_Depend
      *
      * @var PHP_Depend_Parser_Exception[]
      */
-    private $_parseExceptions = array();
+    private $parseExceptions = array();
 
     /**
      * The configured cache factory.
@@ -163,7 +163,7 @@ class PHP_Depend
      * @var PHP_Depend_Util_Cache_Factory
      * @since 1.0.0
      */
-    private $_cacheFactory;
+    private $cacheFactory;
 
     /**
      * Constructs a new php depend facade.
@@ -174,10 +174,10 @@ class PHP_Depend
     {
         $this->configuration = $configuration;
 
-        $this->_codeFilter = new PHP_Depend_Code_Filter_Null();
-        $this->_fileFilter = new PHP_Depend_Input_CompositeFilter();
+        $this->codeFilter = new PHP_Depend_Code_Filter_Null();
+        $this->fileFilter = new PHP_Depend_Input_CompositeFilter();
 
-        $this->_cacheFactory = new PHP_Depend_Util_Cache_Factory($configuration);
+        $this->cacheFactory = new PHP_Depend_Util_Cache_Factory($configuration);
     }
 
     /**
@@ -197,7 +197,7 @@ class PHP_Depend
             );
         }
 
-        $this->_directories[] = $dir;
+        $this->directories[] = $dir;
     }
 
     /**
@@ -217,7 +217,7 @@ class PHP_Depend
             );
         }
 
-        $this->_files[] = $fileName;
+        $this->files[] = $fileName;
     }
 
     /**
@@ -229,7 +229,7 @@ class PHP_Depend
      */
     public function addLogger(PHP_Depend_Log_LoggerI $logger)
     {
-        $this->_loggers[] = $logger;
+        $this->loggers[] = $logger;
     }
 
     /**
@@ -241,7 +241,7 @@ class PHP_Depend
      */
     public function addFileFilter(PHP_Depend_Input_FilterI $filter)
     {
-        $this->_fileFilter->append($filter);
+        $this->fileFilter->append($filter);
     }
 
     /**
@@ -254,7 +254,7 @@ class PHP_Depend
      */
     public function setCodeFilter(PHP_Depend_Code_FilterI $filter)
     {
-        $this->_codeFilter = $filter;
+        $this->codeFilter = $filter;
     }
 
     /**
@@ -266,7 +266,7 @@ class PHP_Depend
      */
     public function setOptions(array $options = array())
     {
-        $this->_options = $options;
+        $this->options = $options;
     }
 
     /**
@@ -276,7 +276,7 @@ class PHP_Depend
      */
     public function setWithoutAnnotations()
     {
-        $this->_withoutAnnotations = true;
+        $this->withoutAnnotations = true;
     }
 
     /**
@@ -288,8 +288,8 @@ class PHP_Depend
      */
     public function addProcessListener(PHP_Depend_ProcessListenerI $listener)
     {
-        if (in_array($listener, $this->_listeners, true) === false) {
-            $this->_listeners[] = $listener;
+        if (in_array($listener, $this->listeners, true) === false) {
+            $this->listeners[] = $listener;
         }
     }
 
@@ -301,26 +301,26 @@ class PHP_Depend
      */
     public function analyze()
     {
-        $this->_builder = new PHP_Depend_Builder_Default();
+        $this->builder = new PHP_Depend_Builder_Default();
 
-        $this->_performParseProcess();
+        $this->performParseProcess();
 
         // Get global filter collection
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
-        $collection->setFilter($this->_codeFilter);
+        $collection->setFilter($this->codeFilter);
 
         $collection->setFilter();
 
-        $this->_performAnalyzeProcess();
+        $this->performAnalyzeProcess();
 
         // Set global filter for logging
-        $collection->setFilter($this->_codeFilter);
+        $collection->setFilter($this->codeFilter);
 
-        $packages = $this->_builder->getPackages();
+        $packages = $this->builder->getPackages();
 
         $this->fireStartLogProcess();
 
-        foreach ($this->_loggers as $logger) {
+        foreach ($this->loggers as $logger) {
             // Check for code aware loggers
             if ($logger instanceof PHP_Depend_Log_CodeAwareI) {
                 $logger->setCode($packages);
@@ -330,7 +330,7 @@ class PHP_Depend
 
         $this->fireEndLogProcess();
 
-        return ($this->_packages = $packages);
+        return ($this->packages = $packages);
     }
 
     /**
@@ -340,13 +340,13 @@ class PHP_Depend
      */
     public function countClasses()
     {
-        if ($this->_packages === null) {
+        if ($this->packages === null) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
 
         $classes = 0;
-        foreach ($this->_packages as $package) {
+        foreach ($this->packages as $package) {
             $classes += $package->getTypes()->count();
         }
         return $classes;
@@ -360,7 +360,7 @@ class PHP_Depend
      */
     public function getExceptions()
     {
-        return $this->_parseExceptions;
+        return $this->parseExceptions;
     }
 
     /**
@@ -370,13 +370,13 @@ class PHP_Depend
      */
     public function countPackages()
     {
-        if ($this->_packages === null) {
+        if ($this->packages === null) {
             $msg = 'countPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
 
         $count = 0;
-        foreach ($this->_packages as $package) {
+        foreach ($this->packages as $package) {
             if ($package->isUserDefined()) {
                 ++$count;
             }
@@ -393,11 +393,11 @@ class PHP_Depend
      */
     public function getPackage($name)
     {
-        if ($this->_packages === null) {
+        if ($this->packages === null) {
             $msg = 'getPackage() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
-        foreach ($this->_packages as $package) {
+        foreach ($this->packages as $package) {
             if ($package->getName() === $name) {
                 return $package;
             }
@@ -412,11 +412,11 @@ class PHP_Depend
      */
     public function getPackages()
     {
-        if ($this->_packages === null) {
+        if ($this->packages === null) {
             $msg = 'getPackages() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
-        return $this->_packages;
+        return $this->packages;
     }
 
     /**
@@ -428,7 +428,7 @@ class PHP_Depend
      */
     protected function fireStartParseProcess(PHP_Depend_BuilderI $builder)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startParseProcess($builder);
         }
     }
@@ -442,7 +442,7 @@ class PHP_Depend
      */
     protected function fireEndParseProcess(PHP_Depend_BuilderI $builder)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endParseProcess($builder);
         }
     }
@@ -456,7 +456,7 @@ class PHP_Depend
      */
     protected function fireStartFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startFileParsing($tokenizer);
         }
     }
@@ -470,7 +470,7 @@ class PHP_Depend
      */
     protected function fireEndFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endFileParsing($tokenizer);
         }
     }
@@ -482,7 +482,7 @@ class PHP_Depend
      */
     protected function fireStartAnalyzeProcess()
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startAnalyzeProcess();
         }
     }
@@ -494,7 +494,7 @@ class PHP_Depend
      */
     protected function fireEndAnalyzeProcess()
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endAnalyzeProcess();
         }
     }
@@ -506,7 +506,7 @@ class PHP_Depend
      */
     protected function fireStartLogProcess()
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startLogProcess();
         }
     }
@@ -518,7 +518,7 @@ class PHP_Depend
      */
     protected function fireEndLogProcess()
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endLogProcess();
         }
     }
@@ -530,27 +530,27 @@ class PHP_Depend
      *
      * @return void
      */
-    private function _performParseProcess()
+    private function performParseProcess()
     {
         // Reset list of thrown exceptions
-        $this->_parseExceptions = array();
+        $this->parseExceptions = array();
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
 
-        $this->fireStartParseProcess($this->_builder);
+        $this->fireStartParseProcess($this->builder);
 
-        foreach ($this->_createFileIterator() as $file) {
+        foreach ($this->createFileIterator() as $file) {
             $tokenizer->setSourceFile($file);
 
             $parser = new PHP_Depend_Parser_VersionAllParser(
                 $tokenizer,
-                $this->_builder,
-                $this->_cacheFactory->create()
+                $this->builder,
+                $this->cacheFactory->create()
             );
             $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
             // Disable annotation parsing?
-            if ($this->_withoutAnnotations === true) {
+            if ($this->withoutAnnotations === true) {
                 $parser->setIgnoreAnnotations();
             }
 
@@ -559,12 +559,12 @@ class PHP_Depend
             try {
                 $parser->parse();
             } catch (PHP_Depend_Parser_Exception $e) {
-                $this->_parseExceptions[] = $e;
+                $this->parseExceptions[] = $e;
             }
             $this->fireEndFileParsing($tokenizer);
         }
 
-        $this->fireEndParseProcess($this->_builder);
+        $this->fireEndParseProcess($this->builder);
     }
 
     /**
@@ -574,9 +574,9 @@ class PHP_Depend
      *
      * @return void
      */
-    private function _performAnalyzeProcess()
+    private function performAnalyzeProcess()
     {
-        $analyzerLoader = $this->_createAnalyzerLoader($this->_options);
+        $analyzerLoader = $this->createAnalyzerLoader($this->options);
 
         $collection = PHP_Depend_Code_Filter_Collection::getInstance();
 
@@ -587,15 +587,15 @@ class PHP_Depend
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware
             if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
-                $collection->setFilter($this->_codeFilter);
+                $collection->setFilter($this->codeFilter);
             }
 
-            $analyzer->analyze($this->_builder->getPackages());
+            $analyzer->analyze($this->builder->getPackages());
 
             // Remove filters if this analyzer is filter aware
             $collection->setFilter();
 
-            foreach ($this->_loggers as $logger) {
+            foreach ($this->loggers as $logger) {
                 $logger->log($analyzer);
             }
         }
@@ -614,12 +614,12 @@ class PHP_Depend
      *
      * @return PHP_Depend_Metrics_AnalyzerLoader
      */
-    private function _initAnalyseListeners(
+    private function initAnalyseListeners(
         PHP_Depend_Metrics_AnalyzerLoader $analyzerLoader
     ) {
         // Append all listeners
         foreach ($analyzerLoader as $analyzer) {
-            foreach ($this->_listeners as $listener) {
+            foreach ($this->listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
 
                 if ($analyzer instanceof PHP_Depend_VisitorI) {
@@ -637,22 +637,22 @@ class PHP_Depend
      *
      * @return Iterator
      */
-    private function _createFileIterator()
+    private function createFileIterator()
     {
-        if (count($this->_directories) === 0 && count($this->_files) === 0) {
+        if (count($this->directories) === 0 && count($this->files) === 0) {
             throw new RuntimeException('No source directory and file set.');
         }
 
         $fileIterator = new AppendIterator();
-        $fileIterator->append(new ArrayIterator($this->_files));
+        $fileIterator->append(new ArrayIterator($this->files));
 
-        foreach ($this->_directories as $directory) {
+        foreach ($this->directories as $directory) {
             $fileIterator->append(
                 new PHP_Depend_Input_Iterator(
                     new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator($directory . '/')
                     ),
-                    $this->_fileFilter,
+                    $this->fileFilter,
                     $directory
                 )
             );
@@ -686,11 +686,11 @@ class PHP_Depend
      *
      * @return PHP_Depend_Metrics_AnalyzerLoader
      */
-    private function _createAnalyzerLoader(array $options)
+    private function createAnalyzerLoader(array $options)
     {
         $analyzerSet = array();
 
-        foreach ($this->_loggers as $logger) {
+        foreach ($this->loggers as $logger) {
             foreach ($logger->getAcceptedAnalyzers() as $type) {
                 // Check for type existence
                 if (in_array($type, $analyzerSet) === false) {
@@ -699,16 +699,16 @@ class PHP_Depend
             }
         }
 
-        $cacheKey = md5(serialize($this->_files) . serialize($this->_directories));
+        $cacheKey = md5(serialize($this->files) . serialize($this->directories));
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(
             new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator(),
-            $this->_cacheFactory->create($cacheKey),
+            $this->cacheFactory->create($cacheKey),
             $analyzerSet,
             $options
         );
 
-        return $this->_initAnalyseListeners($loader);
+        return $this->initAnalyseListeners($loader);
     }
 
     // @codeCoverageIgnoreStart

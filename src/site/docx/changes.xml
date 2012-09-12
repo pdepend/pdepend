@@ -16,6 +16,9 @@
             <action date="806eaab" dev="mapi" type="fix" due-to="bahulneel">
                 Changed type of Node/Trait
             </action>
+            <action date="" dev="mapi" type="update">
+                Changed to PSR1 coding standard.
+            </action>
         </release>
 
         <release version="1.0.7"

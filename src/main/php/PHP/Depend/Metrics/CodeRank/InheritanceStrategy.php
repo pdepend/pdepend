@@ -67,7 +67,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      *
      * @var array(string=>array) $_nodes
      */
-    private $_nodes = array();
+    private $nodes = array();
 
     /**
      * Returns the collected nodes.
@@ -76,7 +76,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      */
     public function getCollectedNodes()
     {
-        return $this->_nodes;
+        return $this->nodes;
     }
 
     /**
@@ -134,13 +134,13 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
             $this->initNode($dep);
             $this->initNode($depPkg);
 
-            $this->_nodes[$type->getUUID()]['in'][] = $dep->getUUID();
-            $this->_nodes[$dep->getUUID()]['out'][] = $type->getUUID();
+            $this->nodes[$type->getUuid()]['in'][] = $dep->getUuid();
+            $this->nodes[$dep->getUuid()]['out'][] = $type->getUuid();
 
             // No self references
             if ($pkg !== $depPkg) {
-                $this->_nodes[$pkg->getUUID()]['in'][]     = $depPkg->getUUID();
-                $this->_nodes[$depPkg->getUUID()]['out'][] = $pkg->getUUID();
+                $this->nodes[$pkg->getUuid()]['in'][]     = $depPkg->getUuid();
+                $this->nodes[$depPkg->getUuid()]['out'][] = $pkg->getUuid();
             }
         }
     }
@@ -154,8 +154,8 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      */
     protected function initNode(PHP_Depend_Code_NodeI $node)
     {
-        if (!isset($this->_nodes[$node->getUUID()])) {
-            $this->_nodes[$node->getUUID()] = array(
+        if (!isset($this->nodes[$node->getUuid()])) {
+            $this->nodes[$node->getUuid()] = array(
                 'in'    =>  array(),
                 'out'   =>  array(),
                 'name'  =>  $node->getName(),

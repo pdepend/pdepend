@@ -97,7 +97,7 @@ class PHP_Depend_Code_CommonItemTest extends PHP_Depend_AbstractTest
     public function testGetUuidReturnsMd5HashByDefault()
     {
         $item = $this->getItemMock();
-        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getUUID());
+        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getUuid());
     }
 
     /**

@@ -381,7 +381,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      *
      * @var integer $_unknownTokenID
      */
-    private $_unknownTokenID = 1000;
+    private $unknownTokenID = 1000;
 
     /**
      * Returns the name of the source file.
@@ -414,7 +414,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      */
     public function next()
     {
-        $this->_tokenize();
+        $this->tokenize();
 
         if ($this->index < $this->count) {
             return $this->tokens[$this->index++];
@@ -430,7 +430,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      */
     public function peek()
     {
-        $this->_tokenize();
+        $this->tokenize();
 
         if (isset($this->tokens[$this->index])) {
             return $this->tokens[$this->index]->type;
@@ -447,7 +447,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      */
     public function peekNext()
     {
-        $this->_tokenize();
+        $this->tokenize();
         
         $offset = 0;
         do {
@@ -464,7 +464,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      */
     public function prev()
     {
-        $this->_tokenize();
+        $this->tokenize();
 
         if ($this->index > 1) {
             return $this->tokens[$this->index - 2]->type;
@@ -481,7 +481,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      *
      * @return array(array)
      */
-    private function _substituteTokens(array $tokens)
+    private function substituteTokens(array $tokens)
     {
         $result = array();
         foreach ($tokens as $token) {
@@ -504,7 +504,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      *
      * @return void
      */
-    private function _tokenize()
+    private function tokenize()
     {
         if ($this->tokens) {
             return;
@@ -529,7 +529,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
             $tokens = token_get_all($source);
         }
 
-        $tokens = $this->_substituteTokens($tokens);
+        $tokens = $this->substituteTokens($tokens);
 
         // Is the current token between an opening and a closing php tag?
         $inTag = false;
@@ -564,7 +564,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
                 $inTag = false;
             } else if ($inTag === false) {
                 $type  = self::T_NO_PHP;
-                $image = $this->_consumeNonePhpTokens($tokens);
+                $image = $this->consumeNonePhpTokens($tokens);
             } else if ($token[0] === T_WHITESPACE) {
                 // Count newlines in token
                 $lines = substr_count($token[1], "\n");
@@ -599,7 +599,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
-                    list($type, $image) = $this->_generateUnknownToken($token[1]);
+                    list($type, $image) = $this->generateUnknownToken($token[1]);
                     // @codeCoverageIgnoreEnd
                 }
             }
@@ -662,7 +662,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      *
      * @return string
      */
-    private function _consumeNonePhpTokens(array &$tokens)
+    private function consumeNonePhpTokens(array &$tokens)
     {
         // The collected token content
         $content = null;
@@ -695,8 +695,8 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
      *
      * @return array(integer => mixed)
      */
-    private function _generateUnknownToken($token)
+    private function generateUnknownToken($token)
     {
-        return array($this->_unknownTokenID++, $token);
+        return array($this->unknownTokenID++, $token);
     }
 }

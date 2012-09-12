@@ -71,7 +71,7 @@ class PHP_Depend_Util_Coverage_CloverReport
      *
      * @var array(string=>array)
      */
-    private $_fileLineCoverage = array();
+    private $fileLineCoverage = array();
 
     /**
      * Constructs a new clover report instance.
@@ -80,7 +80,7 @@ class PHP_Depend_Util_Coverage_CloverReport
      */
     public function __construct(SimpleXMLElement $sxml)
     {
-        $this->_readProjectCoverage($sxml->project);
+        $this->readProjectCoverage($sxml->project);
     }
 
     /**
@@ -90,11 +90,11 @@ class PHP_Depend_Util_Coverage_CloverReport
      *
      * @return void
      */
-    private function _readProjectCoverage(SimpleXMLElement $sxml)
+    private function readProjectCoverage(SimpleXMLElement $sxml)
     {
-        $this->_readFileCoverage($sxml);
+        $this->readFileCoverage($sxml);
         foreach ($sxml->package as $package) {
-            $this->_readFileCoverage($package);
+            $this->readFileCoverage($package);
         }
     }
 
@@ -106,14 +106,14 @@ class PHP_Depend_Util_Coverage_CloverReport
      *
      * @return void
      */
-    private function _readFileCoverage(SimpleXMLElement $sxml)
+    private function readFileCoverage(SimpleXMLElement $sxml)
     {
         foreach ($sxml->file as $file) {
             $lines = array();
             foreach ($file->line as $line) {
                 $lines[(int) $line['num']] = (0 < (int) $line['count']);
             }
-            $this->_fileLineCoverage[(string) $file['name']] = $lines;
+            $this->fileLineCoverage[(string) $file['name']] = $lines;
         }
     }
 
@@ -126,7 +126,7 @@ class PHP_Depend_Util_Coverage_CloverReport
      */
     public function getCoverage(PHP_Depend_Code_AbstractItem $item)
     {
-        $lines = $this->_getLines((string) $item->getSourceFile());
+        $lines = $this->getLines((string) $item->getSourceFile());
 
         $startLine = $item->getStartLine();
         $endLine   = $item->getEndLine();
@@ -155,10 +155,10 @@ class PHP_Depend_Util_Coverage_CloverReport
      *
      * @return array(boolean)
      */
-    private function _getLines($fileName)
+    private function getLines($fileName)
     {
-        if (isset($this->_fileLineCoverage[$fileName])) {
-            return $this->_fileLineCoverage[$fileName];
+        if (isset($this->fileLineCoverage[$fileName])) {
+            return $this->fileLineCoverage[$fileName];
         }
         return array();
     }

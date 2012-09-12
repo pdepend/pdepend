@@ -78,7 +78,7 @@ class PHP_Depend_Metrics_Cohesion_Analyzer
      *
      * @var array
      */
-    private $_nodeMetrics = array();
+    private $nodeMetrics = array();
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -99,8 +99,8 @@ class PHP_Depend_Metrics_Cohesion_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            return $this->_nodeMetrics[$node->getUUID()];
+        if (isset($this->nodeMetrics[$node->getUuid()])) {
+            return $this->nodeMetrics[$node->getUuid()];
         }
         return array();
     }

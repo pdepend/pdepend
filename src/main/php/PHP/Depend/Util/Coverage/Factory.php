@@ -73,7 +73,7 @@ class PHP_Depend_Util_Coverage_Factory
      */
     public function create($pathName)
     {
-        $sxml = $this->_loadXml($pathName);
+        $sxml = $this->loadXml($pathName);
         if ($sxml->project) {
             include_once 'PHP/Depend/Util/Coverage/CloverReport.php';
 
@@ -92,7 +92,7 @@ class PHP_Depend_Util_Coverage_Factory
      * @throws RuntimeException When the given path name does not point to a
      *         valid xml file.
      */
-    private function _loadXml($pathName)
+    private function loadXml($pathName)
     {
         $mode = libxml_use_internal_errors(true);
         $sxml = simplexml_load_file($pathName);

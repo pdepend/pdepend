@@ -67,7 +67,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      *
      * @var array(PHP_Depend_Visitor_ListenerI) $_listeners
      */
-    private $_listeners = array();
+    private $listeners = array();
 
     /**
      * Returns an iterator with all registered visit listeners.
@@ -76,7 +76,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     public function getVisitListeners()
     {
-        return new ArrayIterator($this->_listeners);
+        return new ArrayIterator($this->listeners);
     }
 
     /**
@@ -88,8 +88,8 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     public function addVisitListener(PHP_Depend_Visitor_ListenerI $listener)
     {
-        if (in_array($listener, $this->_listeners, true) === false) {
-            $this->_listeners[] = $listener;
+        if (in_array($listener, $this->listeners, true) === false) {
+            $this->listeners[] = $listener;
         }
     }
 
@@ -275,7 +275,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartClass(PHP_Depend_Code_Class $class)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitClass($class);
         }
     }
@@ -289,7 +289,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndClass(PHP_Depend_Code_Class $class)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitClass($class);
         }
     }
@@ -303,7 +303,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartTrait(PHP_Depend_Code_Trait $trait)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitTrait($trait);
         }
     }
@@ -317,7 +317,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndTrait(PHP_Depend_Code_Trait $trait)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitTrait($trait);
         }
     }
@@ -331,7 +331,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartFile(PHP_Depend_Code_File $file)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitFile($file);
         }
     }
@@ -345,7 +345,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndFile(PHP_Depend_Code_File $file)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitFile($file);
         }
     }
@@ -359,7 +359,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartFunction(PHP_Depend_Code_Function $function)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitFunction($function);
         }
     }
@@ -373,7 +373,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndFunction(PHP_Depend_Code_Function $function)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitFunction($function);
         }
     }
@@ -387,7 +387,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartInterface(PHP_Depend_Code_Interface $interface)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitInterface($interface);
         }
     }
@@ -401,7 +401,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndInterface(PHP_Depend_Code_Interface $interface)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitInterface($interface);
         }
     }
@@ -415,7 +415,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartMethod(PHP_Depend_Code_Method $method)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitMethod($method);
         }
     }
@@ -429,7 +429,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndMethod(PHP_Depend_Code_Method $method)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitMethod($method);
         }
     }
@@ -443,7 +443,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartPackage(PHP_Depend_Code_Package $package)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitPackage($package);
         }
     }
@@ -457,7 +457,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndPackage(PHP_Depend_Code_Package $package)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitPackage($package);
         }
     }
@@ -471,7 +471,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartParameter(PHP_Depend_Code_Parameter $parameter)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitParameter($parameter);
         }
     }
@@ -485,7 +485,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndParameter(PHP_Depend_Code_Parameter $parameter)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitParameter($parameter);
         }
     }
@@ -499,7 +499,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireStartProperty(PHP_Depend_Code_Property $property)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->startVisitProperty($property);
         }
     }
@@ -513,7 +513,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      */
     protected function fireEndProperty(PHP_Depend_Code_Property $property)
     {
-        foreach ($this->_listeners as $listener) {
+        foreach ($this->listeners as $listener) {
             $listener->endVisitProperty($property);
         }
     }

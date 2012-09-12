@@ -102,7 +102,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      *
      * @var boolean
      */
-    private $_userDefined = null;
+    private $userDefined = null;
 
     /**
      * Constructs a new package for the given <b>$name</b>
@@ -130,7 +130,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      *
      * @return string
      */
-    public function getUUID()
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -145,10 +145,10 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function isUserDefined()
     {
-        if ($this->_userDefined === null) {
-            $this->_userDefined = $this->_isUserDefined();
+        if ($this->userDefined === null) {
+            $this->userDefined = $this->checkUserDefined();
         }
-        return $this->_userDefined;
+        return $this->userDefined;
     }
 
     /**
@@ -159,7 +159,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * @return boolean
      * @since 0.9.10
      */
-    private function _isUserDefined()
+    private function checkUserDefined()
     {
         foreach ($this->types as $type) {
             if ($type->isUserDefined()) {
@@ -178,7 +178,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getTraits()
     {
-        return $this->_getTypesOfType(PHP_Depend_Code_Trait::CLAZZ);
+        return $this->getTypesOfType(PHP_Depend_Code_Trait::CLAZZ);
     }
 
     /**
@@ -189,7 +189,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getClasses()
     {
-        return $this->_getTypesOfType(PHP_Depend_Code_Class::CLAZZ);
+        return $this->getTypesOfType(PHP_Depend_Code_Class::CLAZZ);
     }
 
     /**
@@ -200,7 +200,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      */
     public function getInterfaces()
     {
-        return $this->_getTypesOfType(PHP_Depend_Code_Interface::CLAZZ);
+        return $this->getTypesOfType(PHP_Depend_Code_Interface::CLAZZ);
     }
 
     /**
@@ -212,7 +212,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * @return PHP_Depend_Code_NodeIterator
      * @since 1.0.0
      */
-    private function _getTypesOfType($className)
+    private function getTypesOfType($className)
     {
         $types = array();
         foreach ($this->types as $type) {
@@ -255,7 +255,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as class package
         $type->setPackage($this);
         // Append class to internal list
-        $this->types[$type->getUUID()] = $type;
+        $this->types[$type->getUuid()] = $type;
 
         return $type;
     }
@@ -303,7 +303,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
         // Set this as function package
         $function->setPackage($this);
         // Append function to internal list
-        $this->functions[$function->getUUID()] = $function;
+        $this->functions[$function->getUuid()] = $function;
 
         return $function;
     }

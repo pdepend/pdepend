@@ -74,7 +74,7 @@ interface PHP_Depend_Code_NodeI
      *
      * @return string
      */
-    function getUUID();
+    function getUuid();
     
     /**
      * Visitor method for node tree traversal.

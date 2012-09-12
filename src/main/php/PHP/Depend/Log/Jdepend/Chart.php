@@ -73,21 +73,21 @@ class PHP_Depend_Log_Jdepend_Chart
      *
      * @var string $_logFile
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The context source code.
      *
      * @var PHP_Depend_Code_NodeIterator $_code
      */
-    private $_code = null;
+    private $code = null;
 
     /**
      * The context analyzer instance.
      *
      * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
      */
-    private $_analyzer = null;
+    private $analyzer = null;
 
     /**
      * Sets the output log file.
@@ -98,7 +98,7 @@ class PHP_Depend_Log_Jdepend_Chart
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -121,7 +121,7 @@ class PHP_Depend_Log_Jdepend_Chart
      */
     public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
-        $this->_code = $code;
+        $this->code = $code;
     }
 
     /**
@@ -135,7 +135,7 @@ class PHP_Depend_Log_Jdepend_Chart
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if ($analyzer instanceof PHP_Depend_Metrics_Dependency_Analyzer) {
-            $this->_analyzer = $analyzer;
+            $this->analyzer = $analyzer;
 
             return true;
         }
@@ -151,7 +151,7 @@ class PHP_Depend_Log_Jdepend_Chart
     public function close()
     {
         // Check for configured log file
-        if ($this->_logFile === null) {
+        if ($this->logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
 
@@ -168,13 +168,13 @@ class PHP_Depend_Log_Jdepend_Chart
         $min = 0;
 
         $items = array();
-        foreach ($this->_code as $package) {
+        foreach ($this->code as $package) {
 
             if (!$package->isUserDefined()) {
                 continue;
             }
 
-            $metrics = $this->_analyzer->getStats($package);
+            $metrics = $this->analyzer->getStats($package);
 
             if (count($metrics) === 0) {
                 continue;
@@ -236,7 +236,7 @@ class PHP_Depend_Log_Jdepend_Chart
         $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
 
-        PHP_Depend_Util_ImageConvert::convert($temp, $this->_logFile);
+        PHP_Depend_Util_ImageConvert::convert($temp, $this->logFile);
 
         // Remove temp file
         unlink($temp);

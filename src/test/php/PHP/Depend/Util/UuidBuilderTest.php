@@ -105,7 +105,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForClass()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID('FooBar');
+        $file->setUuid('FooBar');
 
         $class = new PHP_Depend_Code_Class(__FUNCTION__);
         $class->setSourceFile($file);
@@ -123,7 +123,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID('FooBar');
+        $file->setUuid('FooBar');
 
         $class = new PHP_Depend_Code_Class(__FUNCTION__);
         $class->setSourceFile($file);
@@ -142,7 +142,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForSecondClass()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID('FooBar');
+        $file->setUuid('FooBar');
 
         $class1 = new PHP_Depend_Code_Class(__FUNCTION__);
         $class1->setSourceFile($file);
@@ -164,7 +164,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesCaseInSensitiveClassIdentifiers()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
         
         $class0 = new PHP_Depend_Code_Class(__FUNCTION__);
         $class0->setSourceFile($file);
@@ -189,7 +189,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
 
         $interface0 = new PHP_Depend_Code_Interface(__FUNCTION__);
         $interface0->setSourceFile($file);
@@ -214,7 +214,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForFunction()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID('FooBar');
+        $file->setUuid('FooBar');
 
         $function = new PHP_Depend_Code_Function(__FUNCTION__);
         $function->setSourceFile($file);
@@ -232,7 +232,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
 
         $function0 = new PHP_Depend_Code_Function(__FUNCTION__);
         $function0->setSourceFile($file);
@@ -257,7 +257,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForMethod()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setUUID('FooBar');
+        $class->setUuid('FooBar');
 
         $method = new PHP_Depend_Code_Method(__FUNCTION__);
         $method->setParent($class);
@@ -275,7 +275,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID('FooBar');
+        $file->setUuid('FooBar');
 
         $function = new PHP_Depend_Code_Function(__FUNCTION__);
         $function->setSourceFile($file);
@@ -294,7 +294,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesExpectedIdentifierForSecondFunction()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID('FooBar');
+        $file->setUuid('FooBar');
 
         $function1 = new PHP_Depend_Code_Function(__FUNCTION__);
         $function1->setSourceFile($file);
@@ -316,7 +316,7 @@ class PHP_Depend_Util_UuidBuilderTest extends PHP_Depend_AbstractTest
     public function testBuilderCreatesCaseInSensitiveMethodIdentifiers()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
 
         $class = new PHP_Depend_Code_Class(__FUNCTION__);
         $class->setSourceFile($file);

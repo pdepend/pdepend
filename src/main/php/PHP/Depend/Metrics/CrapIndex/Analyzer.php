@@ -85,7 +85,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @var array(string=>array)
      */
-    private $_metrics = null;
+    private $metrics = null;
 
     /**
      * The coverage report instance representing the supplied coverage report
@@ -93,13 +93,13 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @var PHP_Depend_Util_Coverage_Report
      */
-    private $_report = null;
+    private $report = null;
 
     /**
      *
      * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
-    private $_ccnAnalyzer = array();
+    private $ccnAnalyzer = array();
 
     /**
      * Returns <b>true</b> when this analyzer is enabled.
@@ -121,8 +121,8 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->_metrics[$node->getUUID()])) {
-            return $this->_metrics[$node->getUUID()];
+        if (isset($this->metrics[$node->getUuid()])) {
+            return $this->metrics[$node->getUuid()];
         }
         return array();
     }
@@ -148,7 +148,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      */
     public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $this->_ccnAnalyzer = $analyzer;
+        $this->ccnAnalyzer = $analyzer;
     }
 
     /**
@@ -160,8 +160,8 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->isEnabled() && $this->_metrics === null) {
-            $this->_analyze($packages);
+        if ($this->isEnabled() && $this->metrics === null) {
+            $this->doAnalyze($packages);
         }
     }
 
@@ -172,11 +172,11 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @return void
      */
-    private function _analyze(PHP_Depend_Code_NodeIterator $packages)
+    private function doAnalyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        $this->_metrics = array();
+        $this->metrics = array();
         
-        $this->_ccnAnalyzer->analyze($packages);
+        $this->ccnAnalyzer->analyze($packages);
 
         $this->fireStartAnalyzer();
 
@@ -197,7 +197,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
         if ($method->isAbstract() === false) {
-            $this->_visitCallable($method);
+            $this->visitCallable($method);
         }
     }
 
@@ -210,7 +210,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
-        $this->_visitCallable($function);
+        $this->visitCallable($function);
     }
 
     /**
@@ -220,10 +220,10 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @return void
      */
-    private function _visitCallable(PHP_Depend_Code_AbstractCallable $callable)
+    private function visitCallable(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $this->_metrics[$callable->getUUID()] = array(
-            self::M_CRAP_INDEX => $this->_calculateCrapIndex($callable)
+        $this->metrics[$callable->getUuid()] = array(
+            self::M_CRAP_INDEX => $this->calculateCrapIndex($callable)
         );
     }
 
@@ -234,11 +234,11 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @return float
      */
-    private function _calculateCrapIndex(PHP_Depend_Code_AbstractCallable $callable)
+    private function calculateCrapIndex(PHP_Depend_Code_AbstractCallable $callable)
     {
-        $report = $this->_createOrReturnCoverageReport();
+        $report = $this->createOrReturnCoverageReport();
 
-        $complexity = $this->_ccnAnalyzer->getCCN2($callable);
+        $complexity = $this->ccnAnalyzer->getCcn2($callable);
         $coverage   = $report->getCoverage($callable);
 
         if ($coverage == 0) {
@@ -255,12 +255,12 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @return PHP_Depend_Util_Coverage_Report
      */
-    private function _createOrReturnCoverageReport()
+    private function createOrReturnCoverageReport()
     {
-        if ($this->_report === null) {
-            $this->_report = $this->_createCoverageReport();
+        if ($this->report === null) {
+            $this->report = $this->createCoverageReport();
         }
-        return $this->_report;
+        return $this->report;
     }
 
     /**
@@ -268,7 +268,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      *
      * @return PHP_Depend_Util_Coverage_Report
      */
-    private function _createCoverageReport()
+    private function createCoverageReport()
     {
         $factory = new PHP_Depend_Util_Coverage_Factory();
         return $factory->create($this->options['coverage-report']);

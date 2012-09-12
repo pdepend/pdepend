@@ -275,19 +275,19 @@ class PHP_Depend_Log_Summary_XmlTest extends PHP_Depend_AbstractTest
         $metricsOne = array();
         $metricsTwo = array();
         foreach ($this->packages as $package) {
-            $metricsOne[$package->getUUID()] = array_shift($input);
-            $metricsTwo[$package->getUUID()] = array_shift($input);
+            $metricsOne[$package->getUuid()] = array_shift($input);
+            $metricsTwo[$package->getUuid()] = array_shift($input);
             foreach ($package->getClasses() as $class) {
-                $metricsOne[$class->getUUID()] = array_shift($input);
-                $metricsTwo[$class->getUUID()] = array_shift($input);
+                $metricsOne[$class->getUuid()] = array_shift($input);
+                $metricsTwo[$class->getUuid()] = array_shift($input);
                 foreach ($class->getMethods() as $method) {
-                    $metricsOne[$method->getUUID()] = array_shift($input);
-                    $metricsTwo[$method->getUUID()] = array_shift($input);
+                    $metricsOne[$method->getUuid()] = array_shift($input);
+                    $metricsTwo[$method->getUuid()] = array_shift($input);
                 }
             }
             foreach ($package->getFunctions() as $function) {
-                $metricsOne[$function->getUUID()] = array_shift($input);
-                $metricsTwo[$function->getUUID()] = array_shift($input);
+                $metricsOne[$function->getUuid()] = array_shift($input);
+                $metricsTwo[$function->getUuid()] = array_shift($input);
             }
         }
 

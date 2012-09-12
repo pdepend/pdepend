@@ -118,9 +118,9 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         $metric = array();
-        if (isset($this->metrics[$node->getUUID()])) {
+        if (isset($this->metrics[$node->getUuid()])) {
             $metric = array(
-                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$node->getUUID()]
+                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$node->getUuid()]
             );
         }
         return $metric;
@@ -192,7 +192,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             $npath = PHP_Depend_Util_MathUtil::mul($npath, $stmt);
         }
 
-        $this->metrics[$callable->getUUID()] = $npath;
+        $this->metrics[$callable->getUuid()] = $npath;
     }
 
     /**

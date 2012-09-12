@@ -73,7 +73,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      * @var PHP_Depend_Code_Package
      * @since 0.10.0
      */
-    private $_package = null;
+    private $package = null;
 
     /**
      * The currently used builder context.
@@ -112,7 +112,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
      */
     public function getPackage()
     {
-        return $this->_package;
+        return $this->package;
     }
 
     /**
@@ -125,7 +125,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     public function setPackage(PHP_Depend_Code_Package $package)
     {
         $this->packageName = $package->getName();
-        $this->_package    = $package;
+        $this->package    = $package;
     }
 
     /**
@@ -137,7 +137,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     public function unsetPackage()
     {
         $this->packageName = null;
-        $this->_package    = null;
+        $this->package    = null;
     }
 
     /**

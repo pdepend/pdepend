@@ -147,7 +147,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      *
      * @return string
      */
-    public function getUUID()
+    public function getUuid()
     {
         if ($this->uuid === null) {
             $this->uuid = md5(microtime());
@@ -163,7 +163,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      * @return void
      * @since 0.9.12
      */
-    public function setUUID($uuid)
+    public function setUuid($uuid)
     {
         $this->uuid = $uuid;
     }

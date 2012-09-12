@@ -87,42 +87,42 @@ class PHP_Depend_Code_Parameter
      *
      * @var string
      */
-    private $_uuid = null;
+    private $uuid = null;
 
     /**
      * The parent function or method instance.
      *
      * @var PHP_Depend_Code_AbstractCallable
      */
-    private $_declaringFunction = null;
+    private $declaringFunction = null;
 
     /**
      * The parameter position.
      *
      * @var integer
      */
-    private $_position = 0;
+    private $position = 0;
 
     /**
      * Is this parameter optional or mandatory?
      *
      * @var boolean
      */
-    private $_optional = false;
+    private $optional = false;
 
     /**
      * The wrapped formal parameter instance.
      *
      * @var PHP_Depend_Code_ASTFormalParameter
      */
-    private $_formalParameter = null;
+    private $formalParameter = null;
 
     /**
      * The wrapped variable declarator instance.
      *
      * @var PHP_Depend_Code_ASTVariableDeclarator
      */
-    private $_variableDeclarator = null;
+    private $variableDeclarator = null;
 
     /**
      * Constructs a new parameter instance for the given AST node.
@@ -132,12 +132,12 @@ class PHP_Depend_Code_Parameter
      */
     public function __construct(PHP_Depend_Code_ASTFormalParameter $formalParameter)
     {
-        $this->_formalParameter    = $formalParameter;
-        $this->_variableDeclarator = $formalParameter->getFirstChildOfType(
+        $this->formalParameter    = $formalParameter;
+        $this->variableDeclarator = $formalParameter->getFirstChildOfType(
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
 
-        $this->_uuid = spl_object_hash($this);
+        $this->uuid = spl_object_hash($this);
     }
 
     /**
@@ -147,7 +147,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getName()
     {
-        return $this->_variableDeclarator->getImage();
+        return $this->variableDeclarator->getImage();
     }
 
     /**
@@ -155,9 +155,9 @@ class PHP_Depend_Code_Parameter
      *
      * @return string
      */
-    public function getUUID()
+    public function getUuid()
     {
-        return $this->_uuid;
+        return $this->uuid;
     }
 
     /**
@@ -167,7 +167,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getStartLine()
     {
-        return $this->_formalParameter->getStartLine();
+        return $this->formalParameter->getStartLine();
     }
 
     /**
@@ -177,7 +177,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getEndLine()
     {
-        return $this->_formalParameter->getEndLine();
+        return $this->formalParameter->getEndLine();
     }
 
     /**
@@ -188,7 +188,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getDeclaringFunction()
     {
-        return $this->_declaringFunction;
+        return $this->declaringFunction;
     }
 
     /**
@@ -201,7 +201,7 @@ class PHP_Depend_Code_Parameter
      */
     public function setDeclaringFunction(PHP_Depend_Code_AbstractCallable $function)
     {
-        $this->_declaringFunction = $function;
+        $this->declaringFunction = $function;
     }
 
     /**
@@ -214,8 +214,8 @@ class PHP_Depend_Code_Parameter
     public function getDeclaringClass()
     {
         // TODO: Review this for refactoring, maybe create a empty getParent()?
-        if ($this->_declaringFunction instanceof PHP_Depend_Code_Method) {
-            return $this->_declaringFunction->getParent();
+        if ($this->declaringFunction instanceof PHP_Depend_Code_Method) {
+            return $this->declaringFunction->getParent();
         }
         return null;
     }
@@ -227,7 +227,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getPosition()
     {
-        return $this->_position;
+        return $this->position;
     }
 
     /**
@@ -239,7 +239,7 @@ class PHP_Depend_Code_Parameter
      */
     public function setPosition($position)
     {
-        $this->_position = $position;
+        $this->position = $position;
     }
 
     /**
@@ -251,7 +251,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getClass()
     {
-        $classReference = $this->_formalParameter->getFirstChildOfType(
+        $classReference = $this->formalParameter->getFirstChildOfType(
             PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ
         );
         if ($classReference === null) {
@@ -269,7 +269,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isPassedByReference()
     {
-        return $this->_formalParameter->isPassedByReference();
+        return $this->formalParameter->isPassedByReference();
     }
 
     /**
@@ -281,7 +281,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isArray()
     {
-        $node = $this->_formalParameter->getChild(0);
+        $node = $this->formalParameter->getChild(0);
         return ($node instanceof PHP_Depend_Code_ASTTypeArray);
     }
 
@@ -315,7 +315,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isOptional()
     {
-        return $this->_optional;
+        return $this->optional;
     }
 
     /**
@@ -331,7 +331,7 @@ class PHP_Depend_Code_Parameter
      */
     public function setOptional($optional)
     {
-        $this->_optional = (boolean) $optional;
+        $this->optional = (boolean) $optional;
     }
 
     /**
@@ -343,7 +343,7 @@ class PHP_Depend_Code_Parameter
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->_variableDeclarator->getValue();
+        $value = $this->variableDeclarator->getValue();
         if ($value === null) {
             return false;
         }
@@ -362,7 +362,7 @@ class PHP_Depend_Code_Parameter
      */
     public function getDefaultValue()
     {
-        $value = $this->_variableDeclarator->getValue();
+        $value = $this->variableDeclarator->getValue();
         if ($value === null) {
             return null;
         }
@@ -421,7 +421,7 @@ class PHP_Depend_Code_Parameter
 
         return sprintf(
             'Parameter #%d [ <%s>%s %s%s%s ]',
-            $this->_position,
+            $this->position,
             $required,
             $typeHint,
             $reference,

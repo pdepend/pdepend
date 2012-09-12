@@ -242,14 +242,14 @@ class PHP_Depend_Log_Jdepend_ChartTest extends PHP_Depend_AbstractTest
 
         $analyzer = new PHP_Depend_Log_Jdepend_DependencyAnalyzer();
         $analyzer->stats = array(
-            $nodes[0]->getUUID()  =>  array(
+            $nodes[0]->getUuid()  =>  array(
                 'a'   =>  0,
                 'i'   =>  0,
                 'd'   =>  0,
                 'cc'  =>  250,
                 'ac'  =>  250
             ),
-            $nodes[1]->getUUID()  =>  array(
+            $nodes[1]->getUuid()  =>  array(
                 'a'   =>  0,
                 'i'   =>  0,
                 'd'   =>  0,

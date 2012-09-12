@@ -67,21 +67,21 @@ class PHP_Depend_Parser_TokenStack
      *
      * @var array(PHP_Depend_Token) $_tokens
      */
-    private $_tokens = array();
+    private $tokens = array();
 
     /**
      * Stack with token scopes.
      *
      * @var array(array) $_stack
      */
-    private $_stack = array();
+    private $stack = array();
 
     /**
      * The current stack offset.
      *
      * @var integer
      */
-    private $_offset = 0;
+    private $offset = 0;
 
     /**
      * This method will push a new token scope onto the stack,
@@ -90,8 +90,8 @@ class PHP_Depend_Parser_TokenStack
      */
     public function push()
     {
-        $this->_stack[$this->_offset++] = $this->_tokens;
-        $this->_tokens                  = array();
+        $this->stack[$this->offset++] = $this->tokens;
+        $this->tokens                  = array();
     }
 
     /**
@@ -103,13 +103,13 @@ class PHP_Depend_Parser_TokenStack
      */
     public function pop()
     {
-        $tokens        = $this->_tokens;
-        $this->_tokens = $this->_stack[--$this->_offset];
+        $tokens        = $this->tokens;
+        $this->tokens = $this->stack[--$this->offset];
 
-        unset($this->_stack[$this->_offset]);
+        unset($this->stack[$this->offset]);
 
         foreach ($tokens as $token) {
-            $this->_tokens[] = $token;
+            $this->tokens[] = $token;
         }
         return $tokens;
     }
@@ -123,6 +123,6 @@ class PHP_Depend_Parser_TokenStack
      */
     public function add(PHP_Depend_Token $token)
     {
-        return ($this->_tokens[] = $token);
+        return ($this->tokens[] = $token);
     }
 }

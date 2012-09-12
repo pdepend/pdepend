@@ -76,10 +76,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIteratorTest extends PHP_Depend_A
     public function testIteratorReturnsExpectedClasses()
     {
         $class1 = new PHP_Depend_Code_Class('c1');
-        $class1->setUUID(md5(23));
+        $class1->setUuid(md5(23));
 
         $class2 = new PHP_Depend_Code_Class('c2');
-        $class2->setUUID(md5(42));
+        $class2->setUuid(md5(42));
 
         $reference1 = $this->getMockBuilder(PHP_Depend_Code_ASTSelfReference::CLAZZ)
             ->disableOriginalConstructor()
@@ -100,10 +100,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIteratorTest extends PHP_Depend_A
         $refs  = new PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
         $types = array();
         foreach ($refs as $type) {
-            $types[] = $type->getUUID();
+            $types[] = $type->getUuid();
         }
 
-        $this->assertEquals(array($class1->getUUID(), $class2->getUUID()), $types);
+        $this->assertEquals(array($class1->getUuid(), $class2->getUuid()), $types);
     }
 
     /**
@@ -114,10 +114,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIteratorTest extends PHP_Depend_A
     public function testIteratorReturnsSameClassOnlyOnce()
     {
         $class1 = new PHP_Depend_Code_Class('c1');
-        $class1->setUUID(md5(23));
+        $class1->setUuid(md5(23));
 
         $class2 = new PHP_Depend_Code_Class('c2');
-        $class2->setUUID(md5(23));
+        $class2->setUuid(md5(23));
 
         $reference1 = $this->getMockBuilder(PHP_Depend_Code_ASTSelfReference::CLAZZ)
             ->disableOriginalConstructor()
@@ -138,9 +138,9 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIteratorTest extends PHP_Depend_A
         $refs  = new PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
         $types = array();
         foreach ($refs as $type) {
-            $types[] = $type->getUUID();
+            $types[] = $type->getUuid();
         }
 
-        $this->assertEquals(array($class1->getUUID()), $types);
+        $this->assertEquals(array($class1->getUuid()), $types);
     }
 }

@@ -103,7 +103,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      * @var string
      * @since 1.0.0
      */
-    private $_cacheKey;
+    private $cacheKey;
 
     /**
      * This method constructs a new file cache instance for the given root
@@ -117,7 +117,7 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
         $this->directory = new PHP_Depend_Util_Cache_Driver_File_Directory($root);
         $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
 
-        $this->_cacheKey = $cacheKey;
+        $this->cacheKey = $cacheKey;
     }
 
     /**
@@ -284,8 +284,8 @@ class PHP_Depend_Util_Cache_Driver_File implements PHP_Depend_Util_Cache_Driver
      */
     protected function getCacheFileWithoutExtension($key)
     {
-        if (is_string($this->_cacheKey)) {
-            $key = md5($key . $this->_cacheKey);
+        if (is_string($this->cacheKey)) {
+            $key = md5($key . $this->cacheKey);
         }
 
         $path = $this->directory->createCacheDirectory($key);

@@ -696,7 +696,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
     public function testAnalyzerIgnoresFilesWithoutFileName()
     {
         $file = new PHP_Depend_Code_File(null);
-        $file->setUUID(42);
+        $file->setUuid(42);
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->visitFile($file);

@@ -199,7 +199,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
 
         case self::T_CALLABLE:
             $this->consumeToken(self::T_CALLABLE);
-            $type = $this->builder->buildASTTypeCallable();
+            $type = $this->builder->buildAstTypeCallable();
             break;
 
         case self::T_STRING:
@@ -208,9 +208,9 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             $name = $this->parseQualifiedName();
 
             if (0 === strcasecmp('callable', $name)) {
-                $type = $this->builder->buildASTTypeCallable();
+                $type = $this->builder->buildAstTypeCallable();
             } else {
-                $type = $this->builder->buildASTClassOrInterfaceReference($name);
+                $type = $this->builder->buildAstClassOrInterfaceReference($name);
             }
             break;
         }
@@ -243,7 +243,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             }
         }
 
-        $literal = $this->builder->buildASTLiteral($token->image);
+        $literal = $this->builder->buildAstLiteral($token->image);
         $literal->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,

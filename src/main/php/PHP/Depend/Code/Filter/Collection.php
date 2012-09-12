@@ -95,7 +95,7 @@ final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
      *
      * @var PHP_Depend_Code_FilterI
      */
-    private $_filter = null;
+    private $filter = null;
 
     /**
      * Sets the used filter instance.
@@ -107,7 +107,7 @@ final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
      */
     public function setFilter(PHP_Depend_Code_FilterI $filter = null)
     {
-        $this->_filter = $filter;
+        $this->filter = $filter;
     }
 
     /**
@@ -120,9 +120,9 @@ final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
      */
     public function accept(PHP_Depend_Code_NodeI $node)
     {
-        if ($this->_filter === null) {
+        if ($this->filter === null) {
             return true;
         }
-        return $this->_filter->accept($node);
+        return $this->filter->accept($node);
     }
 }

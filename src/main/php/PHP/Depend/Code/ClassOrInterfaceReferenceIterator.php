@@ -90,10 +90,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
         foreach ($references as $reference) {
             $classOrInterface = $reference->getType();
 
-            if (isset($classesAndInterfaces[$classOrInterface->getUUID()])) {
+            if (isset($classesAndInterfaces[$classOrInterface->getUuid()])) {
                 continue;
             }
-            $classesAndInterfaces[$classOrInterface->getUUID()] = $classOrInterface;
+            $classesAndInterfaces[$classOrInterface->getUuid()] = $classOrInterface;
         }
 
         return $classesAndInterfaces;

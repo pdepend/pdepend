@@ -81,7 +81,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      *
      * @var PHP_Depend_Code_Package
      */
-    private $_package = null;
+    private $package = null;
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
@@ -141,7 +141,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * @var PHP_Depend_Code_Method[]
      * @since 1.0.2
      */
-    private $_methods = array();
+    private $methods = array();
 
 
     /**
@@ -280,13 +280,13 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getMethods()
     {
-        if (is_array($this->_methods)) {
-            return new PHP_Depend_Code_NodeIterator($this->_methods);
+        if (is_array($this->methods)) {
+            return new PHP_Depend_Code_NodeIterator($this->methods);
         }
 
         $methods = (array) $this->cache
             ->type('methods')
-            ->restore($this->getUUID());
+            ->restore($this->getUuid());
 
         foreach ($methods as $method) {
             $method->sourceFile = $this->sourceFile;
@@ -307,7 +307,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     {
         $method->setParent($this);
 
-        $this->_methods[] = $method;
+        $this->methods[] = $method;
 
         return $method;
     }
@@ -414,7 +414,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function getPackage()
     {
-        return $this->_package;
+        return $this->package;
     }
 
     /**
@@ -426,7 +426,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function setPackage(PHP_Depend_Code_Package $package)
     {
-        $this->_package    = $package;
+        $this->package    = $package;
         $this->packageName = $package->getName();
     }
 
@@ -437,7 +437,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function unsetPackage()
     {
-        $this->_package    = null;
+        $this->package    = null;
         $this->packageName = null;
     }
 
@@ -481,12 +481,12 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function __sleep()
     {
-        if (is_array($this->_methods)) {
+        if (is_array($this->methods)) {
             $this->cache
                 ->type('methods')
-                ->store($this->uuid, $this->_methods);
+                ->store($this->uuid, $this->methods);
 
-            $this->_methods = null;
+            $this->methods = null;
         }
 
         return array(
@@ -515,6 +515,6 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      */
     public function __wakeup()
     {
-        $this->_methods = null;
+        $this->methods = null;
     }
 }

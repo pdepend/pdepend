@@ -66,7 +66,7 @@ class PHP_Depend_Code_Filter_Package
      *
      * @var string $_pattern
      */
-    private $_pattern = '';
+    private $pattern = '';
 
     /**
      * Constructs a new package filter for the given list of package names.
@@ -79,7 +79,7 @@ class PHP_Depend_Code_Filter_Package
         foreach ($packages as $package) {
             $patterns[] = str_replace('\*', '\S*', preg_quote($package));
         }
-        $this->_pattern = '#^(' . join('|', $patterns) . ')$#D';
+        $this->pattern = '#^(' . join('|', $patterns) . ')$#D';
     }
 
     /**
@@ -104,6 +104,6 @@ class PHP_Depend_Code_Filter_Package
             $package = $node->getName();
         }
 
-        return (preg_match($this->_pattern, $package) === 0);
+        return (preg_match($this->pattern, $package) === 0);
     }
 }
