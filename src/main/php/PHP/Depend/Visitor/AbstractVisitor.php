@@ -217,9 +217,7 @@ abstract class PHP_Depend_Visitor_AbstractVisitor
      * Visits a package node.
      *
      * @param PHP_Depend_Code_Class $package The package class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
