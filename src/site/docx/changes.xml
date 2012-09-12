@@ -9,6 +9,15 @@
     </properties>
 
 	<body>
+        <release version="1.1.0"
+                 date="2012/09/12"
+                 description="This release closes a critical issue in the context
+                              of traits handling.">
+            <action date="806eaab" dev="mapi" type="fix" due-to="bahulneel">
+                Changed type of Node/Trait
+            </action>
+        </release>
+
         <release version="1.0.7"
                  date="2012/04/29"
                  description="This release closes a minor bug within the parsing
