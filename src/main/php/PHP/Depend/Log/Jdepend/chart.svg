@@ -529,12 +529,6 @@
          y="247.85966">Abstraction</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;"
-       x="195.05258"
-       y="120.85966"
-       xml:id="jdepend.legend">Package</text>
-    <text
-       xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;"
        x="-126.09961"
        y="10.589844"
@@ -581,5 +575,13 @@
        cy="15"
        cx="15"
        transform="matrix(0.6,0,0,0.6,41,10)" />
+  </g>
+  <g>
+    <text
+       xml:space="preserve"
+       style="font-size:2px;font-family:Arial;fill:#2e3436;"
+       x="195.05258"
+       y="120.85966"
+       xml:id="jdepend.legend">Package</text>
   </g>
 </svg>

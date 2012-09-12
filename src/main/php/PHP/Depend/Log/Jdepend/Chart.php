@@ -231,11 +231,13 @@ class PHP_Depend_Log_Jdepend_Chart
 
             $result = preg_match('#\\\\([^\\\\]+)$#', $item['name'], $found);
             if ($result && count($found)) {
+                $angle = rand(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
-                $legend->setAttribute('x', $e);
-                $legend->setAttribute('y', $f);
+                $legend->removeAttribute('xml:id');
+                $legend->setAttribute('x', $e + $r * (1 + cos($angle)));
+                $legend->setAttribute('y', $f + $r * (1 + sin($angle)));
                 $legend->nodeValue = $found[1];
-                $layer->appendChild($legend);
+                $legendTemplate->parentNode->appendChild($legend);
             }
 
         }
