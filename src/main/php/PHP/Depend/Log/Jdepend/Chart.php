@@ -163,6 +163,7 @@ class PHP_Depend_Log_Jdepend_Chart
         $bad   = $svg->getElementById('jdepend.bad');
         $good  = $svg->getElementById('jdepend.good');
         $layer = $svg->getElementById('jdepend.layer');
+        $legendTemplate = $svg->getElementById('jdepend.legend');
 
         $max = 0;
         $min = 0;
@@ -227,6 +228,12 @@ class PHP_Depend_Log_Jdepend_Chart
             $ellipse->setAttribute('transform', $transform);
 
             $layer->appendChild($ellipse);
+
+            $legend = $legendTemplate->cloneNode(true);
+            $legend->setAttribute('x', $e);
+            $legend->setAttribute('y', $f);
+            $layer->appendChild($legend);
+
         }
 
         $bad->parentNode->removeChild($bad);
