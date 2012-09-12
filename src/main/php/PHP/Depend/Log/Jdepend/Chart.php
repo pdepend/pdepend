@@ -229,15 +229,20 @@ class PHP_Depend_Log_Jdepend_Chart
 
             $layer->appendChild($ellipse);
 
-            $legend = $legendTemplate->cloneNode(true);
-            $legend->setAttribute('x', $e);
-            $legend->setAttribute('y', $f);
-            $layer->appendChild($legend);
+            $result = preg_match('#\\\\([^\\\\]+)$#', $item['name'], $found);
+            if ($result && count($found)) {
+                $legend = $legendTemplate->cloneNode(true);
+                $legend->setAttribute('x', $e);
+                $legend->setAttribute('y', $f);
+                $legend->nodeValue = $found[1];
+                $layer->appendChild($legend);
+            }
 
         }
 
         $bad->parentNode->removeChild($bad);
         $good->parentNode->removeChild($good);
+        $legendTemplate->parentNode->removeChild($legendTemplate);
 
         $temp  = PHP_Depend_Util_FileUtil::getSysTempDir();
         $temp .= '/' . uniqid('pdepend_') . '.svg';
