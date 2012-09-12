@@ -230,9 +230,12 @@ class PHP_Depend_TextUI_Command
 
             return $result;
         } catch (RuntimeException $e) {
-            // Print error message
-            echo $e->getMessage(), PHP_EOL;
-            // Return exit code
+
+            echo PHP_EOL, PHP_EOL,
+                 'Critical error: ', PHP_EOL,
+                 '=============== ', PHP_EOL,
+                  $e->getMessage(),  PHP_EOL;
+
             return $e->getCode();
         }
     }
