@@ -216,7 +216,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     {
         $types = array();
         foreach ($this->types as $type) {
-            if ($type instanceof $className) {
+            if (get_class($type) === $className) {
                 $types[] = $type;
             }
         }
