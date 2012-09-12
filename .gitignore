@@ -6,3 +6,5 @@ build_number_*.build
 PHP_Depend-*.tgz
 .build
 .pear
+vendor
+composer.phar
