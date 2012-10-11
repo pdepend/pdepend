@@ -579,7 +579,7 @@
   <g>
     <text
        xml:space="preserve"
-       style="font-size:2px;font-family:Arial;fill:#2e3436;"
+       style="font-size:4px;font-family:Arial;fill:#2e3436;"
        x="195.05258"
        y="120.85966"
        xml:id="jdepend.legend">Package</text>
