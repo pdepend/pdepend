@@ -96,7 +96,7 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
         set_include_path($this->includePath);
 
         foreach (spl_autoload_functions() as $callback) {
-            if ($callback[0] instanceof PHP_Depend_Autoload) {
+            if (is_array($callback) && $callback[0] instanceof PHP_Depend_Autoload) {
                 spl_autoload_unregister($callback);
             }
         }
