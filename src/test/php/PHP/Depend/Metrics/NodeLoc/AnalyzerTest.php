@@ -348,11 +348,11 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
 
         $actual   = $analyzer->getProjectMetrics();
         $expected = array(
-            'loc'    =>  260,
+            'loc'    =>  261,
             'cloc'   =>  144,
             'eloc'   =>  89,
             'lloc'   =>  40,
-            'ncloc'  =>  116
+            'ncloc'  =>  117
         );
 
         self::assertEquals($expected, $actual);
