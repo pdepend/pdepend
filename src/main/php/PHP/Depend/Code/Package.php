@@ -70,14 +70,14 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
     /**
      * The package name.
      *
-     * @var string $name
+     * @var string
      */
     protected $name = '';
 
     /**
      * The unique identifier for this function.
      *
-     * @var string $uuid
+     * @var string
      */
     protected $uuid = null;
 

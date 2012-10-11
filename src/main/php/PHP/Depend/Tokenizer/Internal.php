@@ -65,7 +65,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @var array(integer=>integer) $tokenMap
+     * @var array(integer=>integer)
      */
     protected static $tokenMap = array(
         T_AS                        =>  self::T_AS,
@@ -198,7 +198,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
-     * @var array(string=>integer) $literalMap
+     * @var array(string=>integer)
      */
     protected static $literalMap = array(
         '@'              =>  self::T_AT,
@@ -257,7 +257,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
     /**
      * Context sensitive alternative mappings.
      *
-     * @var array(integer=>array) $alternativeMap
+     * @var array(integer=>array)
      */
     protected static $alternativeMap = array(
         self::T_USE => array(
@@ -351,21 +351,21 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
     /**
      * The source file instance.
      *
-     * @var PHP_Depend_Code_File $sourceFile
+     * @var PHP_Depend_Code_File
      */
     protected $sourceFile = '';
 
     /**
      * Count of all tokens.
      *
-     * @var integer $count
+     * @var integer
      */
     protected $count = 0;
 
     /**
      * Internal stream pointer index.
      *
-     * @var integer $index
+     * @var integer
      */
     protected $index = 0;
 
@@ -379,7 +379,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
     /**
      * The next free identifier for unknown string tokens.
      *
-     * @var integer $_unknownTokenID
+     * @var integer
      */
     private $unknownTokenID = 1000;
 

@@ -172,7 +172,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The symbol table used to handle PHP 5.3 use statements.
      *
-     * @var PHP_Depend_Parser_SymbolTable $_useSymbolTable
+     * @var PHP_Depend_Parser_SymbolTable
      */
     private $useSymbolTable;
 

@@ -87,13 +87,6 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
     const IMAGE = __CLASS__;
 
     /**
-     * Defined modifiers for this field node.
-     *
-     * @var integer $modifiers
-     */
-    //protected $modifiers = 0;
-
-    /**
      * Constructs a new field declaration.
      */
     public function __construct()
@@ -110,7 +103,6 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
     public function getModifiers()
     {
         return $this->getMetadataInteger(5);
-        //return $this->modifiers;
     }
 
     /**
@@ -141,7 +133,6 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
         }
 
         $this->setMetadataInteger(5, $modifiers);
-        //$this->modifiers = $modifiers;
     }
 
     /**

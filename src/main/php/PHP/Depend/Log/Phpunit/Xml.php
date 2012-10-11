@@ -72,21 +72,21 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * The log output file.
      *
-     * @var string $_logFile
+     * @var string
      */
     private $logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
      *
-     * @var PHP_Depend_Code_NodeIterator $code
+     * @var PHP_Depend_Code_NodeIterator
      */
     protected $code = null;
 
     /**
      * List of all generated project metrics.
      *
-     * @var array(string=>mixed) $projectMetrics
+     * @var array(string=>mixed)
      */
     protected $projectMetrics = array();
 
@@ -101,21 +101,21 @@ class PHP_Depend_Log_Phpunit_Xml
     /**
      * The internal used xml stack.
      *
-     * @var array(DOMElement) $_xmlStack
+     * @var DOMElement[]
      */
     private $xmlStack = array();
 
     /**
      * Number of visited files.
      *
-     * @var integer $_files
+     * @var integer
      */
     private $files = 0;
 
     /**
      * This property contains some additional metrics for the file-DOMElement.
      *
-     * @var array(string=>integer) $_additionalFileMetrics
+     * @var array(string=>integer)
      */
     private $additionalFileMetrics = array(
         'classes'    =>  0,

@@ -95,7 +95,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Default source file that acts as a dummy.
      *
-     * @var PHP_Depend_Code_File $defaultFile
+     * @var PHP_Depend_Code_File
      */
     protected $defaultFile = null;
 
@@ -109,35 +109,35 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * All generated {@link PHP_Depend_Code_Class} objects
      *
-     * @var array(string=>PHP_Depend_Code_Class) $_classes
+     * @var PHP_Depend_Code_Class[]
      */
     private $classes = array();
 
     /**
      * All generated {@link PHP_Depend_Code_Interface} instances.
      *
-     * @var array(string=>PHP_Depend_Code_Interface) $_interfaces
+     * @var PHP_Depend_Code_Interface[]
      */
     private $interfaces = array();
 
     /**
      * All generated {@link PHP_Depend_Code_Package} objects
      *
-     * @var array(string=>PHP_Depend_Code_Package) $_packages
+     * @var PHP_Depend_Code_Package[]
      */
     private $packages = array();
 
     /**
      * Internal status flag used to check that a build request is internal.
      *
-     * @var boolean $_internal
+     * @var boolean
      */
     private $internal = false;
 
     /**
      * Internal used flag that marks the parsing process as frozen.
      *
-     * @var boolean $_frozen
+     * @var boolean
      */
     private $frozen = false;
 

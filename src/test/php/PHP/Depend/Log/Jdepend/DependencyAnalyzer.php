@@ -64,7 +64,7 @@ class PHP_Depend_Log_Jdepend_DependencyAnalyzer
     /**
      * Dummy package statistics
      *
-     * @var array(string=>array) $stats
+     * @var array(string=>array)
      */
     public $stats = array();
 

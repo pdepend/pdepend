@@ -78,14 +78,14 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
     /**
      * The default strategy.
      *
-     * @var string $_defaultStrategy
+     * @var string
      */
     private $defaultStrategy = self::STRATEGY_INHERITANCE;
 
     /**
      * List of all valid properties.
      *
-     * @var array(string) $_validStrategies
+     * @var array(string)
      */
     private $validStrategies = array(
         self::STRATEGY_INHERITANCE,

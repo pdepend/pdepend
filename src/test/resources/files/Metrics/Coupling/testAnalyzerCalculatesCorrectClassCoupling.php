@@ -48,28 +48,28 @@ class MyCouplingClass
     /**
      * Simple test comment.
      *
-     * @var SplObjectStorage $_objects
+     * @var SplObjectStorage
      */
     private $_objects = null;
 
     /**
      * Simple test comment.
      *
-     * @var array(integer => MyObjectItem) $items
+     * @var array(integer => MyObjectItem)
      */
     protected $items = array();
 
     /**
      * Simple test comment.
      *
-     * @var Iterator $_iterator
+     * @var Iterator
      */
     private $_iterator = null;
 
     /**
      * Simple test comment.
      *
-     * @var integer $index
+     * @var integer
      */
     public $index = 0;
 

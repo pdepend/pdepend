@@ -73,28 +73,28 @@ class PHP_Depend_TextUI_Command
     /**
      * Collected log options.
      *
-     * @var array(string=>string) $_logOptions
+     * @var array(string=>string)
      */
     private $logOptions = null;
 
     /**
      * Collected analyzer options.
      *
-     * @var array(string=>string) $_analyzerOptions
+     * @var array(string=>string)
      */
     private $analyzerOptions = null;
 
     /**
      * The recieved cli options
      *
-     * @var array(string=>mixed) $_options
+     * @var array(string=>mixed)
      */
     private $options = array();
 
     /**
      * The used text ui runner.
      *
-     * @var PHP_Depend_TextUI_Runner $_runner
+     * @var PHP_Depend_TextUI_Runner
      */
     private $runner = null;
 

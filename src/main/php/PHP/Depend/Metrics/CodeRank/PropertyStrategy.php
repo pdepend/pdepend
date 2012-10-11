@@ -65,7 +65,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * All found nodes.
      *
-     * @var array(string=>array) $_nodes
+     * @var array(string=>array)
      */
     private $nodes = array();
 

@@ -71,7 +71,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      * The modifiers for this interface instance, by default an interface is
      * always abstract.
      *
-     * @var integer $_modifiers
+     * @var integer
      */
     protected $modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
 

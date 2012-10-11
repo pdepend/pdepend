@@ -64,7 +64,7 @@ class PHP_Depend_Code_Filter_Package
     /**
      * Regexp with ignorable package names and package name fragments.
      *
-     * @var string $_pattern
+     * @var string
      */
     private $pattern = '';
 

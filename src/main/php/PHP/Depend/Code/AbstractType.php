@@ -131,7 +131,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * The modifiers for this class instance.
      *
-     * @var integer $_modifiers
+     * @var integer
      */
     protected $modifiers = 0;
 

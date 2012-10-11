@@ -82,7 +82,7 @@ class PHP_Depend_TextUI_Runner
      * List of allowed file extensions. Default file extensions are <b>php</b>
      * and <p>php5</b>.
      *
-     * @var array(string) $_extensions
+     * @var array(string)
      */
     private $extensions = array('php', 'php5');
 
@@ -90,42 +90,42 @@ class PHP_Depend_TextUI_Runner
      * List of exclude directories. Default exclude dirs are <b>.svn</b> and
      * <b>CVS</b>.
      *
-     * @var array(string) $_excludeDirectories
+     * @var array(string)
      */
     private $excludeDirectories = array('.git', '.svn', 'CVS');
 
     /**
      * List of exclude packages.
      *
-     * @var array(string) $_excludePackages
+     * @var array(string)
      */
     private $excludePackages = array();
 
     /**
      * List of source code directories and files.
      *
-     * @var array(string) $_sourceArguments
+     * @var array(string)
      */
     private $sourceArguments = array();
 
     /**
      * Should the parse ignore doc comment annotations?
      *
-     * @var boolean $_withoutAnnotations
+     * @var boolean
      */
     private $withoutAnnotations = false;
 
     /**
      * List of log identifiers and log files.
      *
-     * @var array(string=>string) $_loggers
+     * @var array(string=>string)
      */
     private $loggerMap = array();
 
     /**
      * List of cli options for loggers or analyzers.
      *
-     * @var array(string=>mixed) $_options
+     * @var array(string=>mixed)
      */
     private $options = array();
 
@@ -140,7 +140,7 @@ class PHP_Depend_TextUI_Runner
     /**
      * List of error messages for all parsing errors.
      *
-     * @var array(string) $_parseErrors
+     * @var array(string)
      */
     private $parseErrors = array();
 

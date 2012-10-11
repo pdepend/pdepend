@@ -70,14 +70,14 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     /**
      * Expected output of the --version option.
      *
-     * @var string $_versionOutput
+     * @var string
      */
     private $_versionOutput = "PHP_Depend @package_version@ by Manuel Pichler\n\n";
 
     /**
      * Expected output of the --usage option.
      *
-     * @var string $_usageOutput
+     * @var string
      */
     private $_usageOutput = "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";
 

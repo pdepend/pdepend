@@ -63,14 +63,14 @@ class PHP_Depend_Parser_SymbolTable
     /**
      * Stack with all active scopes.
      *
-     * @var array(array) $_scopeStack
+     * @var array(array)
      */
     private $scopeStack = array();
 
     /**
      * The currently active scope.
      *
-     * @var array(string=>string) $_scope
+     * @var array(string=>string)
      */
     private $scope = array();
 

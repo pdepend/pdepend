@@ -96,7 +96,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * )
      * </code>
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
     private $nodeMetrics = null;
 
@@ -122,7 +122,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * )
      * </code>
      *
-     * @var array(string=>array) $_collectedCycles
+     * @var array(string=>array)
      */
     private $collectedCycles = array();
 

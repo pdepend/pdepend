@@ -87,7 +87,7 @@ abstract class PHP_Depend_Code_ASTNode
     /**
      * An optional doc comment for this node.
      *
-     * @var string $comment
+     * @var string
      */
     protected $comment = null;
 

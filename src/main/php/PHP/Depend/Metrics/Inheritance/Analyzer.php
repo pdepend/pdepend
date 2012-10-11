@@ -99,7 +99,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
      *
-     * @var integer $_maxDIT
+     * @var integer
      */
     private $maxDIT = 0;
 

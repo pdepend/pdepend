@@ -72,7 +72,7 @@ class PHP_Depend_Parser_TokenStack
     /**
      * Stack with token scopes.
      *
-     * @var array(array) $_stack
+     * @var PHP_Depend_Token[][]
      */
     private $stack = array();
 

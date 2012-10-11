@@ -66,14 +66,14 @@ class PHP_Depend_Log_Dummy_Logger
     /**
      * The output file name.
      *
-     * @var string $_logFile
+     * @var string
      */
     private $_logFile = null;
 
     /**
      * The logger input data.
      *
-     * @var array(string=>mixed) $_input
+     * @var array(string=>mixed)
      */
     private $_input = array(
         'code'       =>  null,

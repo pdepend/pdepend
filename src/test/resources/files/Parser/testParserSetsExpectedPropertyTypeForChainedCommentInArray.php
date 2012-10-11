@@ -1,7 +1,7 @@
 <?php
 class Parser {
     /**
-     * @var array(string=>Session|Runtime) $runtime
+     * @var array(string=>Session|Runtime)
      */
     protected $runtime;
 }

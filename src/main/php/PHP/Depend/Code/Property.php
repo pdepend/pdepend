@@ -72,21 +72,21 @@ class PHP_Depend_Code_Property
     /**
      * The unique identifier for this function.
      *
-     * @var string $_uuid
+     * @var string
      */
     private $uuid = null;
 
     /**
      * The source file for this item.
      *
-     * @var PHP_Depend_Code_File $_sourceFile
+     * @var PHP_Depend_Code_File
      */
     private $sourceFile = null;
     
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_Class $_declaringClass
+     * @var PHP_Depend_Code_Class
      */
     private $declaringClass = null;
 

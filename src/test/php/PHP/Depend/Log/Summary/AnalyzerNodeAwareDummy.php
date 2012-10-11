@@ -65,7 +65,7 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
     /**
      * Dummy node metrics.
      *
-     * @var array(string=>array) $nodeMetrics
+     * @var array(string=>array)
      */
     protected $nodeMetrics = null;
 

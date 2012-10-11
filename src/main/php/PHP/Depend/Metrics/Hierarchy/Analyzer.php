@@ -91,49 +91,49 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Number of all analyzed functions.
      *
-     * @var integer $_fcs
+     * @var integer
      */
     private $fcs = 0;
 
     /**
      * Number of all analyzer methods.
      *
-     * @var integer $_mts
+     * @var integer
      */
     private $mts = 0;
 
     /**
      * Number of all analyzed classes.
      *
-     * @var integer $_cls
+     * @var integer
      */
     private $cls = 0;
 
     /**
      * Number of all analyzed abstract classes.
      *
-     * @var integer $_clsa
+     * @var integer
      */
     private $clsa = 0;
 
     /**
      * Number of all analyzed interfaces.
      *
-     * @var integer $_interfs
+     * @var integer
      */
     private $interfs = 0;
 
     /**
      * Number of all root classes within the analyzed source code.
      *
-     * @var array(string=>boolean) $_roots
+     * @var array(string=>boolean)
      */
     private $roots = array();
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
-     * @var array(string=>boolean) $_noneLeafs
+     * @var array(string=>boolean)
      */
     private $noneLeafs = array();
 
@@ -155,7 +155,7 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * )
      * </code>
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
     private $nodeMetrics = null;
 

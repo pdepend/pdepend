@@ -71,42 +71,42 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
     /**
      * The output file name.
      *
-     * @var string $_logFile
+     * @var string
      */
     private $logFile = null;
 
     /**
      * The used coupling analyzer.
      *
-     * @var PHP_Depend_Metrics_Coupling_Analyzer $_coupling
+     * @var PHP_Depend_Metrics_Coupling_Analyzer
      */
     private $coupling = null;
 
     /**
      * The used cyclomatic complexity analyzer.
      *
-     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer $_cyclomaticComplexity
+     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
      */
     private $cyclomaticComplexity = null;
 
     /**
      * The used inheritance analyzer.
      *
-     * @var PHP_Depend_Metrics_Inheritance_Analyzer $_inheritance
+     * @var PHP_Depend_Metrics_Inheritance_Analyzer
      */
     private $inheritance = null;
 
     /**
      * The used node count analyzer.
      *
-     * @var PHP_Depend_Metrics_NodeCount_Analyzer $_nodeCount
+     * @var PHP_Depend_Metrics_NodeCount_Analyzer
      */
     private $nodeCount = null;
 
     /**
      * The used node loc analyzer.
      *
-     * @var PHP_Depend_Metrics_NodeLoc_Analyzer $_nodeLoc
+     * @var PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     private $nodeLoc = null;
 
@@ -114,7 +114,7 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
      * Holds defined thresholds for the computed proportions. This set is based
      * on java thresholds, we should find better values for php projects.
      *
-     * @var array(string => array) $_thresholds
+     * @var array(string => array)
      */
     private $thresholds = array(
         'cyclo-loc'     =>  array(0.16, 0.20, 0.24),

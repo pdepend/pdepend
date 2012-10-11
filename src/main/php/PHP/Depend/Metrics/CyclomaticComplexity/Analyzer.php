@@ -81,14 +81,14 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * The project Cyclomatic Complexity Number.
      *
-     * @var integer $_ccn
+     * @var integer
      */
     private $ccn = 0;
 
     /**
      * Extended Cyclomatic Complexity Number(CCN2) for the project.
      *
-     * @var integer $_ccn2
+     * @var integer
      */
     private $ccn2 = 0;
 

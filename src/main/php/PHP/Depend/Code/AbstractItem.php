@@ -70,42 +70,42 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     /**
      * The name for this item.
      *
-     * @var string $name
+     * @var string
      */
     protected $name = '';
 
     /**
      * The unique identifier for this function.
      *
-     * @var string $uuid
+     * @var string
      */
     protected $uuid = null;
 
     /**
      * The line number where the item declaration starts.
      *
-     * @var integer $startLine
+     * @var integer
      */
     protected $startLine = 0;
 
     /**
      * The line number where the item declaration ends.
      *
-     * @var integer $endLine
+     * @var integer
      */
     protected $endLine = 0;
 
     /**
      * The source file for this item.
      *
-     * @var PHP_Depend_Code_File $sourceFile
+     * @var PHP_Depend_Code_File
      */
     protected $sourceFile = null;
 
     /**
      * The comment for this type.
      *
-     * @var string $docComment
+     * @var string
      */
     protected $docComment = null;
 

@@ -65,7 +65,7 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * Global options array.
      *
-     * @var array(string=>mixed) $options
+     * @var array(string=>mixed)
      */
     protected $options = array();
 

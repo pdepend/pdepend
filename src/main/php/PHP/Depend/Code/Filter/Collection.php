@@ -64,9 +64,9 @@ final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
     /**
      * Singleton instance of this filter.
      *
-     * @var PHP_Depend_Code_Filter_Collection $_instance
+     * @var PHP_Depend_Code_Filter_Collection
      */
-    private static $_instance = null;
+    private static $instance = null;
 
     /**
      * Singleton method for this filter class.
@@ -75,10 +75,10 @@ final class PHP_Depend_Code_Filter_Collection implements PHP_Depend_Code_FilterI
      */
     public static function getInstance()
     {
-        if (self::$_instance === null) {
-            self::$_instance = new PHP_Depend_Code_Filter_Collection();
+        if (self::$instance === null) {
+            self::$instance = new PHP_Depend_Code_Filter_Collection();
         }
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**

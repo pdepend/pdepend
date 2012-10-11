@@ -131,7 +131,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * Normalized code in this file.
      *
-     * @var string $_source
+     * @var string
      */
     private $source = null;
 

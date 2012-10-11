@@ -66,14 +66,14 @@ class PHP_Depend_Log_DummyAnalyzer
     /**
      * Test project metrics
      *
-     * @var array $projectMetrics
+     * @var array
      */
     public $projectMetrics = array();
     
     /**
      * Test node metrics.
      *
-     * @var array $nodeMetrics
+     * @var array
      */
     public $nodeMetrics = array();
     

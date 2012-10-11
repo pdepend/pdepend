@@ -1,7 +1,7 @@
 <?php
 class testCalculateNpmMetricForClassWithPrivateMethod
 {
-    private function _foo()
+    private function foo()
     {
         
     }

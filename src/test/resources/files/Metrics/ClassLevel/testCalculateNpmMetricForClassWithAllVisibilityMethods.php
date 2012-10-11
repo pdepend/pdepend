@@ -1,7 +1,7 @@
 <?php
 class testCalculateNpmMetricForClassWithAllVisibilityMethods
 {
-    private function _foo()
+    private function foo()
     {
 
     }

@@ -83,42 +83,42 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Packages.
      *
-     * @var integer $_nop
+     * @var integer
      */
     private $nop = 0;
 
     /**
      * Number Of Classes.
      *
-     * @var integer $_noc
+     * @var integer
      */
     private $noc = 0;
 
     /**
      * Number Of Interfaces.
      *
-     * @var integer $_noi
+     * @var integer
      */
     private $noi = 0;
 
     /**
      * Number Of Methods.
      *
-     * @var integer $_nom
+     * @var integer
      */
     private $nom = 0;
 
     /**
      * Number Of Functions.
      *
-     * @var integer $_nof
+     * @var integer
      */
     private $nof = 0;
 
     /**
      * Collected node metrics
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
     private $nodeMetrics = null;
 

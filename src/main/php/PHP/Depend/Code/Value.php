@@ -74,14 +74,14 @@ class PHP_Depend_Code_Value
     /**
      * Boolean flag that is <b>true</b> when a PHP-value was set.
      *
-     * @var boolean $_valueAvailable
+     * @var boolean
      */
     private $valueAvailable = false;
 
     /**
      * The parsed PHP-value,
      *
-     * @var mixed $_value
+     * @var mixed
      */
     private $value = null;
 
