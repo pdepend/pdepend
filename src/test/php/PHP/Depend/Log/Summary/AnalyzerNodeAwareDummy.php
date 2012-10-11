@@ -65,7 +65,7 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
     /**
      * Dummy node metrics.
      *
-     * @var array(string=>array) $nodeMetrics
+     * @var array(string=>array)
      */
     protected $nodeMetrics = null;
 
@@ -132,8 +132,8 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAwareDummy
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->nodeMetrics[$node->getUUID()])) {
-            return $this->nodeMetrics[$node->getUUID()];
+        if (isset($this->nodeMetrics[$node->getUuid()])) {
+            return $this->nodeMetrics[$node->getUuid()];
         }
         return array();
     }

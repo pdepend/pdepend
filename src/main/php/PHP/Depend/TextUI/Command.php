@@ -73,30 +73,30 @@ class PHP_Depend_TextUI_Command
     /**
      * Collected log options.
      *
-     * @var array(string=>string) $_logOptions
+     * @var array(string=>string)
      */
-    private $_logOptions = null;
+    private $logOptions = null;
 
     /**
      * Collected analyzer options.
      *
-     * @var array(string=>string) $_analyzerOptions
+     * @var array(string=>string)
      */
-    private $_analyzerOptions = null;
+    private $analyzerOptions = null;
 
     /**
      * The recieved cli options
      *
-     * @var array(string=>mixed) $_options
+     * @var array(string=>mixed)
      */
-    private $_options = array();
+    private $options = array();
 
     /**
      * The used text ui runner.
      *
-     * @var PHP_Depend_TextUI_Runner $_runner
+     * @var PHP_Depend_TextUI_Runner
      */
-    private $_runner = null;
+    private $runner = null;
 
     /**
      * Performs the main cli process and returns the exit code.
@@ -106,8 +106,8 @@ class PHP_Depend_TextUI_Command
     public function run()
     {
         // Create a new text ui runner
-        $this->_runner = new PHP_Depend_TextUI_Runner();
-        $this->_runner->addProcessListener(new PHP_Depend_TextUI_ResultPrinter());
+        $this->runner = new PHP_Depend_TextUI_Runner();
+        $this->runner->addProcessListener(new PHP_Depend_TextUI_ResultPrinter());
 
         try {
             if ($this->handleArguments() === false) {
@@ -121,21 +121,21 @@ class PHP_Depend_TextUI_Command
             return self::CLI_ERROR;
         }
 
-        if (isset($this->_options['--help'])) {
+        if (isset($this->options['--help'])) {
             $this->printHelp();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
         }
-        if (isset($this->_options['--usage'])) {
+        if (isset($this->options['--usage'])) {
             $this->printUsage();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
         }
-        if (isset($this->_options['--version'])) {
+        if (isset($this->options['--version'])) {
             $this->printVersion();
             return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
         }
 
         // Get a copy of all options
-        $options = $this->_options;
+        $options = $this->options;
 
         // Get an array with all available log options
         $logOptions = $this->collectLogOptions();
@@ -148,7 +148,7 @@ class PHP_Depend_TextUI_Command
                 // Reduce recieved option list
                 unset($options[$option]);
                 // Register logger
-                $this->_runner->addLogger(substr($option, 2), $value);
+                $this->runner->addLogger(substr($option, 2), $value);
             } else if (isset($analyzerOptions[$option])) {
                 // Reduce recieved option list
                 unset($options[$option]);
@@ -166,13 +166,13 @@ class PHP_Depend_TextUI_Command
                 } else if ($analyzerOptions[$option]['value'] === '*') {
                     $value = array_map('trim', explode(',', $value));
                 }
-                $this->_runner->addOption(substr($option, 2), $value);
+                $this->runner->addOption(substr($option, 2), $value);
             }
         }
 
         if (isset($options['--without-annotations'])) {
             // Disable annotation parsing
-            $this->_runner->setWithoutAnnotations();
+            $this->runner->setWithoutAnnotations();
             // Remove option
             unset($options['--without-annotations']);
         }
@@ -185,7 +185,7 @@ class PHP_Depend_TextUI_Command
         }
 
         if (isset($options['--notify-me'])) {
-            $this->_runner->addProcessListener(
+            $this->runner->addProcessListener(
                 new PHP_Depend_DbusUI_ResultPrinter()
             );
             unset($options['--notify-me']);
@@ -203,10 +203,10 @@ class PHP_Depend_TextUI_Command
 
             $startTime = time();
 
-            $result = $this->_runner->run();
+            $result = $this->runner->run();
 
-            if ($this->_runner->hasParseErrors() === true) {
-                $errors = $this->_runner->getParseErrors();
+            if ($this->runner->hasParseErrors() === true) {
+                $errors = $this->runner->getParseErrors();
 
                 printf(
                     '%sThe following error%s occured:%s',
@@ -230,9 +230,12 @@ class PHP_Depend_TextUI_Command
 
             return $result;
         } catch (RuntimeException $e) {
-            // Print error message
-            echo $e->getMessage(), PHP_EOL;
-            // Return exit code
+
+            echo PHP_EOL, PHP_EOL,
+                 'Critical error: ', PHP_EOL,
+                 '=============== ', PHP_EOL,
+                  $e->getMessage(),  PHP_EOL;
+
             return $e->getCode();
         }
     }
@@ -267,7 +270,7 @@ class PHP_Depend_TextUI_Command
 
         // Last argument must be a list of source directories
         if (strpos(end($argv), '--') !== 0) {
-            $this->_runner->setSourceArguments(explode(',', array_pop($argv)));
+            $this->runner->setSourceArguments(explode(',', array_pop($argv)));
         }
 
         for ($i = 0, $c = count($argv); $i < $c; ++$i) {
@@ -282,59 +285,59 @@ class PHP_Depend_TextUI_Command
                     ini_set($key, $value);
                 }
             } else if (strpos($argv[$i], '=') === false) {
-                $this->_options[$argv[$i]] = true;
+                $this->options[$argv[$i]] = true;
             } else {
                 list($key, $value) = explode('=', $argv[$i]);
 
-                $this->_options[$key] = $value;
+                $this->options[$key] = $value;
             }
         }
 
         // Check for suffix option
-        if (isset($this->_options['--suffix'])) {
+        if (isset($this->options['--suffix'])) {
             // Get file extensions
-            $extensions = explode(',', $this->_options['--suffix']);
+            $extensions = explode(',', $this->options['--suffix']);
             // Set allowed file extensions
-            $this->_runner->setFileExtensions($extensions);
+            $this->runner->setFileExtensions($extensions);
 
-            unset($this->_options['--suffix']);
+            unset($this->options['--suffix']);
         }
 
         // Check for ignore option
-        if (isset($this->_options['--ignore'])) {
+        if (isset($this->options['--ignore'])) {
             // Get exclude directories
-            $directories = explode(',', $this->_options['--ignore']);
+            $directories = explode(',', $this->options['--ignore']);
             // Set exclude directories
-            $this->_runner->setExcludeDirectories($directories);
+            $this->runner->setExcludeDirectories($directories);
 
-            unset($this->_options['--ignore']);
+            unset($this->options['--ignore']);
         }
 
         // Check for exclude package option
-        if (isset($this->_options['--exclude'])) {
+        if (isset($this->options['--exclude'])) {
             // Get exclude directories
-            $packages = explode(',', $this->_options['--exclude']);
+            $packages = explode(',', $this->options['--exclude']);
             // Set exclude packages
-            $this->_runner->setExcludePackages($packages);
+            $this->runner->setExcludePackages($packages);
 
-            unset($this->_options['--exclude']);
+            unset($this->options['--exclude']);
         }
 
         // Check for the bad documentation option
-        if (isset($this->_options['--bad-documentation'])) {
+        if (isset($this->options['--bad-documentation'])) {
             echo "Option --bad-documentation is ambiguous.", PHP_EOL;
 
-            unset($this->_options['--bad-documentation']);
+            unset($this->options['--bad-documentation']);
         }
 
         $configurationFactory = new PHP_Depend_Util_Configuration_Factory();
 
         // Check for configuration option
-        if (isset($this->_options['--configuration'])) {
+        if (isset($this->options['--configuration'])) {
             // Get config file
-            $configFile = $this->_options['--configuration'];
+            $configFile = $this->options['--configuration'];
 
-            unset($this->_options['--configuration']);
+            unset($this->options['--configuration']);
 
             $configuration = $configurationFactory->create($configFile);
         } else {
@@ -343,10 +346,10 @@ class PHP_Depend_TextUI_Command
         // Store in config registry
         PHP_Depend_Util_ConfigurationInstance::set($configuration);
 
-        $this->_runner->setConfiguration($configuration);
+        $this->runner->setConfiguration($configuration);
 
-        if (isset($this->_options['--debug'])) {
-            unset($this->_options['--debug']);
+        if (isset($this->options['--debug'])) {
+            unset($this->options['--debug']);
 
             PHP_Depend_Util_Log::setSeverity(PHP_Depend_Util_Log::DEBUG);
         }
@@ -387,44 +390,44 @@ class PHP_Depend_TextUI_Command
         $length = $this->printLogOptions();
         $length = $this->printAnalyzerOptions($length);
 
-        $this->_printOption(
+        $this->printOption(
             '--configuration=<file>',
             'Optional PHP_Depend configuration file.',
             $length
         );
         echo PHP_EOL;
 
-        $this->_printOption(
+        $this->printOption(
             '--suffix=<ext[,...]>',
             'List of valid PHP file extensions.',
             $length
         );
-        $this->_printOption(
+        $this->printOption(
             '--ignore=<dir[,...]>',
             'List of exclude directories.',
             $length
         );
-        $this->_printOption(
+        $this->printOption(
             '--exclude=<pkg[,...]>',
             'List of exclude packages.',
             $length
         );
         echo PHP_EOL;
 
-        $this->_printOption(
+        $this->printOption(
             '--without-annotations',
             'Do not parse doc comment annotations.',
             $length
         );
         echo PHP_EOL;
 
-        $this->_printOption('--debug', 'Prints debugging information.', $length);
-        $this->_printOption('--help', 'Print this help text.', $length);
-        $this->_printOption('--version', 'Print the current version.', $length);
+        $this->printOption('--debug', 'Prints debugging information.', $length);
+        $this->printOption('--help', 'Print this help text.', $length);
+        $this->printOption('--version', 'Print the current version.', $length);
 
-        $this->_printDbusOption($length);
+        $this->printDbusOption($length);
 
-        $this->_printOption('-d key[=value]', 'Sets a php.ini value.', $length);
+        $this->printOption('-d key[=value]', 'Sets a php.ini value.', $length);
         echo PHP_EOL;
     }
 
@@ -461,7 +464,7 @@ class PHP_Depend_TextUI_Command
             }
             $last = $current;
 
-            $this->_printOption($option, $message, $maxLength);
+            $this->printOption($option, $message, $maxLength);
         }
         echo PHP_EOL;
 
@@ -475,11 +478,11 @@ class PHP_Depend_TextUI_Command
      */
     protected function collectLogOptions()
     {
-        if ($this->_logOptions !== null) {
-            return $this->_logOptions;
+        if ($this->logOptions !== null) {
+            return $this->logOptions;
         }
 
-        $this->_logOptions = array();
+        $this->logOptions = array();
 
         // Get all include paths
         $paths   = explode(PATH_SEPARATOR, get_include_path());
@@ -512,11 +515,11 @@ class PHP_Depend_TextUI_Command
                     $option = '--' . strtolower($dir->getFilename())
                             . '-' . strtolower(substr($file->getFilename(), 0, -4));
 
-                    $this->_logOptions[$option] = $file->getPathname();
+                    $this->logOptions[$option] = $file->getPathname();
                 }
             }
         }
-        return $this->_logOptions;
+        return $this->logOptions;
     }
 
     /**
@@ -547,7 +550,7 @@ class PHP_Depend_TextUI_Command
                 }
             }
 
-            $this->_printOption($option, $info['message'], $length);
+            $this->printOption($option, $info['message'], $length);
         }
         echo PHP_EOL;
 
@@ -561,10 +564,10 @@ class PHP_Depend_TextUI_Command
      */
     protected function collectAnalyzerOptions()
     {
-        if ($this->_analyzerOptions !== null) {
-            return $this->_analyzerOptions;
+        if ($this->analyzerOptions !== null) {
+            return $this->analyzerOptions;
         }
-        $this->_analyzerOptions = array();
+        $this->analyzerOptions = array();
 
         // Get all include paths
         $paths   = explode(PATH_SEPARATOR, get_include_path());
@@ -604,14 +607,14 @@ class PHP_Depend_TextUI_Command
                         $value = (string) $option['value'];
                     }
 
-                    $this->_analyzerOptions[$identifier] = array(
+                    $this->analyzerOptions[$identifier] = array(
                         'message'  =>  $message,
                         'value'    =>  $value
                     );
                 }
             }
         }
-        return $this->_analyzerOptions;
+        return $this->analyzerOptions;
     }
 
     /**
@@ -623,7 +626,7 @@ class PHP_Depend_TextUI_Command
      *
      * @return void
      */
-    private function _printOption($option, $message, $length)
+    private function printOption($option, $message, $length)
     {
         // Ignore the phpunit xml option
         if (0 === strpos($option, '--phpunit-xml=')) {
@@ -653,7 +656,7 @@ class PHP_Depend_TextUI_Command
      *
      * @return void
      */
-    private function _printDbusOption($length)
+    private function printDbusOption($length)
     {
         if (extension_loaded("dbus") === false) {
             return;
@@ -662,7 +665,7 @@ class PHP_Depend_TextUI_Command
         $option  = '--notify-me';
         $message = 'Show a notification after analysis.';
 
-        $this->_printOption($option, $message, $length);
+        $this->printOption($option, $message, $length);
     }
 
     /**

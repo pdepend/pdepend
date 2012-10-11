@@ -100,7 +100,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      *
      * @var array(string=>integer)
      */
-    private $_projectMetrics = array(
+    private $projectMetrics = array(
         self::M_LINES_OF_CODE              =>  0,
         self::M_COMMENT_LINES_OF_CODE      =>  0,
         self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
@@ -115,7 +115,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @var integer
      * @since 0.9.12
      */
-    private $_classExecutableLines = 0;
+    private $classExecutableLines = 0;
 
     /**
      * Logical lines of code in a class. The method calculation increases this
@@ -124,7 +124,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * @var integer
      * @since 0.9.13
      */
-    private $_classLogicalLines = 0;
+    private $classLogicalLines = 0;
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -147,8 +147,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         $metrics = array();
-        if (isset($this->metrics[$node->getUUID()])) {
-            $metrics = $this->metrics[$node->getUUID()];
+        if (isset($this->metrics[$node->getUuid()])) {
+            $metrics = $this->metrics[$node->getUuid()];
         }
         return $metrics;
     }
@@ -168,7 +168,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      */
     public function getProjectMetrics()
     {
-        return $this->_projectMetrics;
+        return $this->projectMetrics;
     }
 
     /**
@@ -208,8 +208,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $class->getSourceFile()->accept($this);
 
-        $this->_classExecutableLines = 0;
-        $this->_classLogicalLines    = 0;
+        $this->classExecutableLines = 0;
+        $this->classLogicalLines    = 0;
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -219,16 +219,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             return $this->fireEndClass($class);
         }
 
-        list($cloc) = $this->_linesOfCode($class->getTokens(), true);
+        list($cloc) = $this->linesOfCode($class->getTokens(), true);
 
         $loc   = $class->getEndLine() - $class->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$class->getUUID()] = array(
+        $this->metrics[$class->getUuid()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $this->_classExecutableLines,
-            self::M_LOGICAL_LINES_OF_CODE      =>  $this->_classLogicalLines,
+            self::M_EXECUTABLE_LINES_OF_CODE   =>  $this->classExecutableLines,
+            self::M_LOGICAL_LINES_OF_CODE      =>  $this->classLogicalLines,
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
 
@@ -250,7 +250,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             return;
         }
         // Check for initial file
-        $uuid = $file->getUUID();
+        $uuid = $file->getUuid();
         if (isset($this->metrics[$uuid])) {
             return;
         }
@@ -258,11 +258,11 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $this->fireStartFile($file);
 
         if ($this->restoreFromCache($file)) {
-            $this->_updateProjectMetrics($uuid);
+            $this->updateProjectMetrics($uuid);
             return $this->fireEndFile($file);
         }
 
-        list($cloc, $eloc, $lloc) = $this->_linesOfCode($file->getTokens());
+        list($cloc, $eloc, $lloc) = $this->linesOfCode($file->getTokens());
 
         $loc   = $file->getEndLine();
         $ncloc = $loc - $cloc;
@@ -275,7 +275,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
-        $this->_updateProjectMetrics($uuid);
+        $this->updateProjectMetrics($uuid);
 
         $this->fireEndFile($file);
     }
@@ -298,7 +298,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             return $this->fireEndFunction($function);
         }
 
-        list($cloc, $eloc, $lloc) = $this->_linesOfCode(
+        list($cloc, $eloc, $lloc) = $this->linesOfCode(
             $function->getTokens(),
             true
         );
@@ -306,7 +306,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$function->getUUID()] = array(
+        $this->metrics[$function->getUuid()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -338,12 +338,12 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             return $this->fireEndInterface($interface);
         }
 
-        list($cloc) = $this->_linesOfCode($interface->getTokens(), true);
+        list($cloc) = $this->linesOfCode($interface->getTokens(), true);
 
         $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$interface->getUUID()] = array(
+        $this->metrics[$interface->getUuid()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
@@ -374,7 +374,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             $eloc = 0;
             $lloc = 0;
         } else {
-            list($cloc, $eloc, $lloc) = $this->_linesOfCode(
+            list($cloc, $eloc, $lloc) = $this->linesOfCode(
                 $method->getTokens(),
                 true
             );
@@ -382,7 +382,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$method->getUUID()] = array(
+        $this->metrics[$method->getUuid()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -390,8 +390,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
-        $this->_classExecutableLines += $eloc;
-        $this->_classLogicalLines    += $lloc;
+        $this->classExecutableLines += $eloc;
+        $this->classLogicalLines    += $lloc;
 
         $this->fireEndMethod($method);
     }
@@ -404,10 +404,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      *
      * @return void
      */
-    private function _updateProjectMetrics($uuid)
+    private function updateProjectMetrics($uuid)
     {
         foreach ($this->metrics[$uuid] as $metric => $value) {
-            $this->_projectMetrics[$metric] += $value;
+            $this->projectMetrics[$metric] += $value;
         }
     }
 
@@ -429,7 +429,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      *
      * @return array
      */
-    private function _linesOfCode(array $tokens, $search = false)
+    private function linesOfCode(array $tokens, $search = false)
     {
         $clines = array();
         $elines = array();

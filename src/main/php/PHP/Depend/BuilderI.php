@@ -99,7 +99,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
-    function buildASTClassOrInterfaceReference($qualifiedName);
+    function buildAstClassOrInterfaceReference($qualifiedName);
 
     /**
      * Builds a new php trait instance.
@@ -172,7 +172,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTClassReference
      * @since 0.9.5
      */
-    function buildASTClassReference($qualifiedName);
+    function buildAstClassReference($qualifiedName);
 
     /**
      * Builds a new new interface instance.
@@ -241,7 +241,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTSelfReference
      * @since 0.9.6
      */
-    function buildASTSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
+    function buildAstSelfReference(PHP_Depend_Code_AbstractClassOrInterface $type);
 
     /**
      * Builds a new parent reference instance.
@@ -252,7 +252,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTParentReference
      * @since 0.9.6
      */
-    function buildASTParentReference(
+    function buildAstParentReference(
         PHP_Depend_Code_ASTClassOrInterfaceReference $reference
     );
 
@@ -265,7 +265,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTStaticReference
      * @since 0.9.6
      */
-    function buildASTStaticReference(
+    function buildAstStaticReference(
         PHP_Depend_Code_AbstractClassOrInterface $owner
     );
 
@@ -275,7 +275,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
-    function buildASTFieldDeclaration();
+    function buildAstFieldDeclaration();
 
     /**
      * Builds a new variable declarator node.
@@ -285,7 +285,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTVariableDeclarator
      * @since 0.9.6
      */
-    function buildASTVariableDeclarator($image);
+    function buildAstVariableDeclarator($image);
 
     /**
      * Builds a new constant node.
@@ -295,7 +295,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTConstant
      * @since 0.9.6
      */
-    function buildASTConstant($image);
+    function buildAstConstant($image);
 
     /**
      * Builds a new variable node.
@@ -305,7 +305,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTVariable
      * @since 0.9.6
      */
-    function buildASTVariable($image);
+    function buildAstVariable($image);
 
     /**
      * Builds a new variable variable node.
@@ -315,7 +315,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTVariableVariable
      * @since 0.9.6
      */
-    function buildASTVariableVariable($image);
+    function buildAstVariableVariable($image);
 
     /**
      * Builds a new compound variable node.
@@ -325,7 +325,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTCompoundVariable
      * @since 0.9.6
      */
-    function buildASTCompoundVariable($image);
+    function buildAstCompoundVariable($image);
 
     /**
      * Builds a new compound expression node.
@@ -333,7 +333,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTCompoundExpression
      * @since 0.9.6
      */
-    function buildASTCompoundExpression();
+    function buildAstCompoundExpression();
 
     /**
      * Builds a new static variable declaration node.
@@ -343,7 +343,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
-    function buildASTStaticVariableDeclaration($image);
+    function buildAstStaticVariableDeclaration($image);
 
     /**
      * Builds a new closure node.
@@ -351,7 +351,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTClosure
      * @since 0.9.12
      */
-    function buildASTClosure();
+    function buildAstClosure();
 
     /**
      * Builds a new formal parameters node.
@@ -359,7 +359,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTFormalParameters
      * @since 0.9.6
      */
-    function buildASTFormalParameters();
+    function buildAstFormalParameters();
 
     /**
      * Builds a new formal parameter node.
@@ -367,7 +367,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
-    function buildASTFormalParameter();
+    function buildAstFormalParameter();
 
     /**
      * Builds a new expression node.
@@ -375,7 +375,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTExpression
      * @since 0.9.8
      */
-    function buildASTExpression();
+    function buildAstExpression();
 
     /**
      * Builds a new assignment expression node.
@@ -385,7 +385,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTAssignmentExpression
      * @since 0.9.8
      */
-    function buildASTAssignmentExpression($image);
+    function buildAstAssignmentExpression($image);
 
     /**
      * Builds a new allocation expression node.
@@ -395,7 +395,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTAllocationExpression
      * @since 0.9.6
      */
-    function buildASTAllocationExpression($image);
+    function buildAstAllocationExpression($image);
 
     /**
      * Builds a new eval-expression node.
@@ -405,7 +405,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTEvalExpression
      * @since 0.9.12
      */
-    function buildASTEvalExpression($image);
+    function buildAstEvalExpression($image);
 
     /**
      * Builds a new exit-expression instance.
@@ -415,7 +415,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTExitExpression
      * @since 0.9.12
      */
-    function buildASTExitExpression($image);
+    function buildAstExitExpression($image);
 
     /**
      * Builds a new clone-expression node.
@@ -425,7 +425,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTCloneExpression
      * @since 0.9.12
      */
-    function buildASTCloneExpression($image);
+    function buildAstCloneExpression($image);
 
     /**
      * Builds a new list-expression node.
@@ -436,7 +436,7 @@ interface PHP_Depend_BuilderI
      * @author Joey Mazzarelli
      * @since 0.9.12
      */
-    function buildASTListExpression($image);
+    function buildAstListExpression($image);
 
     /**
      * Builds a new include- or include_once-expression.
@@ -444,7 +444,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTIncludeExpression
      * @since 0.9.12
      */
-    function buildASTIncludeExpression();
+    function buildAstIncludeExpression();
 
     /**
      * Builds a new require- or require_once-expression.
@@ -452,7 +452,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTRequireExpression
      * @since 0.9.12
      */
-    function buildASTRequireExpression();
+    function buildAstRequireExpression();
 
     /**
      * Builds a new array-expression node.
@@ -460,7 +460,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTArrayIndexExpression
      * @since 0.9.12
      */
-    function buildASTArrayIndexExpression();
+    function buildAstArrayIndexExpression();
 
     /**
      * Builds a new string-expression node.
@@ -474,7 +474,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTStringIndexExpression
      * @since 0.9.12
      */
-    function buildASTStringIndexExpression();
+    function buildAstStringIndexExpression();
 
     /**
      * Builds a new instanceof-expression node.
@@ -484,7 +484,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTInstanceOfExpression
      * @since 0.9.6
      */
-    function buildASTInstanceOfExpression($image);
+    function buildAstInstanceOfExpression($image);
 
     /**
      * Builds a new isset-expression node.
@@ -504,7 +504,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTIssetExpression
      * @since 0.9.12
      */
-    function buildASTIssetExpression();
+    function buildAstIssetExpression();
 
     /**
      * Builds a new boolean conditional-expression.
@@ -518,7 +518,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTConditionalExpression
      * @since 0.9.8
      */
-    function buildASTConditionalExpression();
+    function buildAstConditionalExpression();
 
     /**
      * Build a new shift left expression.
@@ -526,7 +526,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTShiftLeftExpression
      * @since 1.0.1
      */
-    function buildASTShiftLeftExpression();
+    function buildAstShiftLeftExpression();
 
     /**
      * Build a new shift right expression.
@@ -534,7 +534,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTShiftRightExpression
      * @since 1.0.1
      */
-    function buildASTShiftRightExpression();
+    function buildAstShiftRightExpression();
 
     /**
      * Builds a new boolean and-expression.
@@ -542,7 +542,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTBooleanAndExpression
      * @since 0.9.8
      */
-    function buildASTBooleanAndExpression();
+    function buildAstBooleanAndExpression();
 
     /**
      * Builds a new boolean or-expression.
@@ -550,7 +550,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTBooleanOrExpression
      * @since 0.9.8
      */
-    function buildASTBooleanOrExpression();
+    function buildAstBooleanOrExpression();
 
     /**
      * Builds a new logical <b>and</b>-expression.
@@ -558,7 +558,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTLogicalAndExpression
      * @since 0.9.8
      */
-    function buildASTLogicalAndExpression();
+    function buildAstLogicalAndExpression();
 
     /**
      * Builds a new logical <b>or</b>-expression.
@@ -566,7 +566,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTLogicalOrExpression
      * @since 0.9.8
      */
-    function buildASTLogicalOrExpression();
+    function buildAstLogicalOrExpression();
 
     /**
      * Builds a new logical <b>xor</b>-expression.
@@ -574,7 +574,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTLogicalXorExpression
      * @since 0.9.8
      */
-    function buildASTLogicalXorExpression();
+    function buildAstLogicalXorExpression();
 
     /**
      * Builds a new trait use-statement node.
@@ -582,7 +582,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTraitUseStatement
      * @since 1.0.0
      */
-    function buildASTTraitUseStatement();
+    function buildAstTraitUseStatement();
 
     /**
      * Builds a new trait adaptation scope.
@@ -590,7 +590,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTraitAdaptation
      * @since 1.0.0
      */
-    function buildASTTraitAdaptation();
+    function buildAstTraitAdaptation();
 
     /**
      * Builds a new trait adaptation alias statement.
@@ -600,7 +600,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias
      * @since 1.0.0
      */
-    function buildASTTraitAdaptationAlias($image);
+    function buildAstTraitAdaptationAlias($image);
 
     /**
      * Builds a new trait adaptation precedence statement.
@@ -610,7 +610,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
      * @since 1.0.0
      */
-    function buildASTTraitAdaptationPrecedence($image);
+    function buildAstTraitAdaptationPrecedence($image);
 
     /**
      * Builds a new trait reference node.
@@ -620,7 +620,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTraitReference
      * @since 1.0.0
      */
-    function buildASTTraitReference($qualifiedName);
+    function buildAstTraitReference($qualifiedName);
 
     /**
      * Builds a new switch-statement-node.
@@ -628,7 +628,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTSwitchStatement
      * @since 0.9.8
      */
-    function buildASTSwitchStatement();
+    function buildAstSwitchStatement();
 
     /**
      * Builds a new switch-label node.
@@ -638,7 +638,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTSwitchLabel
      * @since 0.9.8
      */
-    function buildASTSwitchLabel($image);
+    function buildAstSwitchLabel($image);
 
     /**
      * Builds a new catch-statement node.
@@ -648,7 +648,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTCatchStatement
      * @since 0.9.8
      */
-    function buildASTCatchStatement($image);
+    function buildAstCatchStatement($image);
 
     /**
      * Builds a new if statement node.
@@ -658,7 +658,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTIfStatement
      * @since 0.9.8
      */
-    function buildASTIfStatement($image);
+    function buildAstIfStatement($image);
 
     /**
      * Builds a new elseif-statement node.
@@ -668,7 +668,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTElseIfStatement
      * @since 0.9.8
      */
-    function buildASTElseIfStatement($image);
+    function buildAstElseIfStatement($image);
 
     /**
      * Builds a new for-statement node.
@@ -678,7 +678,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTForStatement
      * @since 0.9.8
      */
-    function buildASTForStatement($image);
+    function buildAstForStatement($image);
 
     /**
      * Builds a new for-init node.
@@ -692,7 +692,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTForInit
      * @since 0.9.8
      */
-    function buildASTForInit();
+    function buildAstForInit();
 
     /**
      * Builds a new for-update node.
@@ -706,7 +706,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTForUpdate
      * @since 0.9.12
      */
-    function buildASTForUpdate();
+    function buildAstForUpdate();
 
     /**
      * Builds a new foreach-statement node.
@@ -716,7 +716,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTForeachStatement
      * @since 0.9.8
      */
-    function buildASTForeachStatement($image);
+    function buildAstForeachStatement($image);
 
     /**
      * Builds a new while-statement node.
@@ -726,7 +726,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTWhileStatement
      * @since 0.9.8
      */
-    function buildASTWhileStatement($image);
+    function buildAstWhileStatement($image);
 
     /**
      * Builds a new do/while-statement node.
@@ -736,7 +736,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTDoWhileStatement
      * @since 0.9.12
      */
-    function buildASTDoWhileStatement($image);
+    function buildAstDoWhileStatement($image);
 
     /**
      * Builds a new declare-statement node.
@@ -762,7 +762,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTDeclareStatement
      * @since 0.10.0
      */
-    function buildASTDeclareStatement();
+    function buildAstDeclareStatement();
 
     /**
      * Builds a new member primary expression node.
@@ -790,7 +790,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
      * @since 0.9.6
      */
-    function buildASTMemberPrimaryPrefix($image);
+    function buildAstMemberPrimaryPrefix($image);
 
     /**
      * Builds a new identifier node.
@@ -800,7 +800,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTIdentifier
      * @since 0.9.6
      */
-    function buildASTIdentifier($image);
+    function buildAstIdentifier($image);
 
     /**
      * Builds a new function postfix expression.
@@ -820,7 +820,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTFunctionPostfix
      * @since 0.9.6
      */
-    function buildASTFunctionPostfix($image);
+    function buildAstFunctionPostfix($image);
 
     /**
      * Builds a new method postfix expression.
@@ -840,7 +840,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTMethodPostfix
      * @since 0.9.6
      */
-    function buildASTMethodPostfix($image);
+    function buildAstMethodPostfix($image);
 
     /**
      * Builds a new constant postfix expression.
@@ -856,7 +856,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTConstantPostfix
      * @since 0.9.6
      */
-    function buildASTConstantPostfix($image);
+    function buildAstConstantPostfix($image);
 
     /**
      * Builds a new property postfix expression.
@@ -876,7 +876,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTPropertyPostfix
      * @since 0.9.6
      */
-    function buildASTPropertyPostfix($image);
+    function buildAstPropertyPostfix($image);
 
     /**
      * Builds a new arguments list.
@@ -894,7 +894,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTArguments
      * @since 0.9.6
      */
-    function buildASTArguments();
+    function buildAstArguments();
 
     /**
      * Builds a new array type node.
@@ -902,7 +902,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTypeArray
      * @since 0.9.6
      */
-    function buildASTTypeArray();
+    function buildAstTypeArray();
 
     /**
      * Builds a new node for the callable type.
@@ -910,7 +910,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTypeCallable
      * @since 1.0.0
      */
-    function buildASTTypeCallable();
+    function buildAstTypeCallable();
 
     /**
      * Builds a new primitive type node.
@@ -920,7 +920,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTPrimitiveType
      * @since 0.9.6
      */
-    function buildASTPrimitiveType($image);
+    function buildAstPrimitiveType($image);
 
     /**
      * Builds a new literal node.
@@ -930,7 +930,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTLiteral
      * @since 0.9.6
      */
-    function buildASTLiteral($image);
+    function buildAstLiteral($image);
 
     /**
      * Builds a new php string node.
@@ -950,7 +950,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTString
      * @since 0.9.10
      */
-    function buildASTString();
+    function buildAstString();
 
     /**
      * Builds a new php array node.
@@ -958,7 +958,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
-    function buildASTArray();
+    function buildAstArray();
 
     /**
      * Builds a new array element node.
@@ -966,7 +966,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTArrayElement
      * @since 1.0.0
      */
-    function buildASTArrayElement();
+    function buildAstArrayElement();
 
     /**
      * Builds a new heredoc node.
@@ -974,7 +974,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTHeredoc
      * @since 0.9.12
      */
-    function buildASTHeredoc();
+    function buildAstHeredoc();
 
     /**
      * Builds a new constant definition node.
@@ -993,7 +993,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTConstantDefinition
      * @since 0.9.6
      */
-    function buildASTConstantDefinition($image);
+    function buildAstConstantDefinition($image);
 
     /**
      * Builds a new constant declarator node.
@@ -1031,7 +1031,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTConstantDeclarator
      * @since 0.9.6
      */
-    function buildASTConstantDeclarator($image);
+    function buildAstConstantDeclarator($image);
 
     /**
      * Builds a new comment node instance.
@@ -1041,7 +1041,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTComment
      * @since 0.9.8
      */
-    function buildASTComment($cdata);
+    function buildAstComment($cdata);
 
     /**
      * Builds a new unary expression node instance.
@@ -1051,7 +1051,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTUnaryExpression
      * @since 0.9.11
      */
-    function buildASTUnaryExpression($image);
+    function buildAstUnaryExpression($image);
 
     /**
      * Builds a new cast-expression node instance.
@@ -1061,7 +1061,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTCastExpression
      * @since 0.10.0
      */
-    function buildASTCastExpression($image);
+    function buildAstCastExpression($image);
 
     /**
      * Builds a new postfix-expression node instance.
@@ -1071,7 +1071,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTPostfixExpression
      * @since 0.10.0
      */
-    function buildASTPostfixExpression($image);
+    function buildAstPostfixExpression($image);
 
     /**
      * Builds a new pre-increment-expression node instance.
@@ -1079,7 +1079,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTPreIncrementExpression
      * @since 0.10.0
      */
-    function buildASTPreIncrementExpression();
+    function buildAstPreIncrementExpression();
 
     /**
      * Builds a new pre-decrement-expression node instance.
@@ -1087,7 +1087,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTPreDecrementExpression
      * @since 0.10.0
      */
-    function buildASTPreDecrementExpression();
+    function buildAstPreDecrementExpression();
 
     /**
      * Builds a new function/method scope instance.
@@ -1095,7 +1095,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTScope
      * @since 0.9.12
      */
-    function buildASTScope();
+    function buildAstScope();
 
     /**
      * Builds a new statement instance.
@@ -1103,7 +1103,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTStatement
      * @since 0.9.12
      */
-    function buildASTStatement();
+    function buildAstStatement();
 
     /**
      * Builds a new return-statement node instance.
@@ -1113,7 +1113,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTReturnStatement
      * @since 0.9.12
      */
-    function buildASTReturnStatement($image);
+    function buildAstReturnStatement($image);
 
     /**
      * Builds a new break-statement node instance.
@@ -1123,7 +1123,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTBreakStatement
      * @since 0.9.12
      */
-    function buildASTBreakStatement($image);
+    function buildAstBreakStatement($image);
 
     /**
      * Builds a new continue-statement node instance.
@@ -1133,7 +1133,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTContinueStatement
      * @since 0.9.12
      */
-    function buildASTContinueStatement($image);
+    function buildAstContinueStatement($image);
 
     /**
      * Builds a new scope-statement instance.
@@ -1141,7 +1141,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTScopeStatement
      * @since 0.9.12
      */
-    function buildASTScopeStatement();
+    function buildAstScopeStatement();
 
     /**
      * Builds a new try-statement instance.
@@ -1151,7 +1151,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTTryStatement
      * @since 0.9.12
      */
-    function buildASTTryStatement($image);
+    function buildAstTryStatement($image);
 
     /**
      * Builds a new throw-statement instance.
@@ -1161,7 +1161,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTThrowStatement
      * @since 0.9.12
      */
-    function buildASTThrowStatement($image);
+    function buildAstThrowStatement($image);
 
     /**
      * Builds a new goto-statement instance.
@@ -1171,7 +1171,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTGotoStatement
      * @since 0.9.12
      */
-    function buildASTGotoStatement($image);
+    function buildAstGotoStatement($image);
 
     /**
      * Builds a new label-statement instance.
@@ -1181,7 +1181,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTLabelStatement
      * @since 0.9.12
      */
-    function buildASTLabelStatement($image);
+    function buildAstLabelStatement($image);
 
     /**
      * Builds a new global-statement instance.
@@ -1189,7 +1189,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTGlobalStatement
      * @since 0.9.12
      */
-    function buildASTGlobalStatement();
+    function buildAstGlobalStatement();
 
     /**
      * Builds a new unset-statement instance.
@@ -1197,7 +1197,7 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTUnsetStatement
      * @since 0.9.12
      */
-    function buildASTUnsetStatement();
+    function buildAstUnsetStatement();
 
     /**
      * Builds a new exit-statement instance.
@@ -1207,5 +1207,5 @@ interface PHP_Depend_BuilderI
      * @return PHP_Depend_Code_ASTEchoStatement
      * @since 0.9.12
      */
-    function buildASTEchoStatement($image);
+    function buildAstEchoStatement($image);
 }

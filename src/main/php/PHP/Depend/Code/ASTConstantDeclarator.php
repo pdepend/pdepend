@@ -97,7 +97,7 @@ class PHP_Depend_Code_ASTConstantDeclarator extends PHP_Depend_Code_ASTNode
     /**
      * The initial declaration value for this node or <b>null</b>.
      *
-     * @var PHP_Depend_Code_Value $value
+     * @var PHP_Depend_Code_Value
      */
     protected $value = null;
 

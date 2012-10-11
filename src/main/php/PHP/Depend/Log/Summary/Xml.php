@@ -74,7 +74,7 @@ class PHP_Depend_Log_Summary_Xml
      *
      * @var string
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
@@ -96,7 +96,7 @@ class PHP_Depend_Log_Summary_Xml
      *
      * @var PHP_Depend_Metrics_AnalyzerI[]
      */
-    private $_nodeAwareAnalyzers = array();
+    private $nodeAwareAnalyzers = array();
 
     /**
      * List of all analyzers that implement the node aware interface
@@ -104,14 +104,14 @@ class PHP_Depend_Log_Summary_Xml
      *
      * @var PHP_Depend_Metrics_ProjectAwareI[]
      */
-    private $_projectAwareAnalyzers = array();
+    private $projectAwareAnalyzers = array();
 
     /**
      * The internal used xml stack.
      *
      * @var DOMElement[]
      */
-    private $_xmlStack = array();
+    private $xmlStack = array();
 
     /**
      * Sets the output log file.
@@ -122,7 +122,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -163,12 +163,12 @@ class PHP_Depend_Log_Summary_Xml
     {
         $accepted = false;
         if ($analyzer instanceof PHP_Depend_Metrics_ProjectAwareI) {
-            $this->_projectAwareAnalyzers[] = $analyzer;
+            $this->projectAwareAnalyzers[] = $analyzer;
 
             $accepted = true;
         }
         if ($analyzer instanceof PHP_Depend_Metrics_NodeAwareI) {
-            $this->_nodeAwareAnalyzers[] = $analyzer;
+            $this->nodeAwareAnalyzers[] = $analyzer;
 
             $accepted = true;
         }
@@ -183,7 +183,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function close()
     {
-        if ($this->_logFile === null) {
+        if ($this->logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
 
@@ -195,11 +195,11 @@ class PHP_Depend_Log_Summary_Xml
         $metrics->setAttribute('generated', date('Y-m-d\TH:i:s'));
         $metrics->setAttribute('pdepend', '@package_version@');
 
-        foreach ($this->_getProjectMetrics() as $name => $value) {
+        foreach ($this->getProjectMetrics() as $name => $value) {
             $metrics->setAttribute($name, $value);
         }
 
-        array_push($this->_xmlStack, $metrics);
+        array_push($this->xmlStack, $metrics);
 
         foreach ($this->code as $node) {
             $node->accept($this);
@@ -220,7 +220,7 @@ class PHP_Depend_Log_Summary_Xml
 
         $dom->appendChild($metrics);
 
-        $dom->save($this->_logFile);
+        $dom->save($this->logFile);
     }
 
     /**
@@ -229,10 +229,10 @@ class PHP_Depend_Log_Summary_Xml
      * @return array(string=>mixed)
      * @since 0.9.10
      */
-    private function _getProjectMetrics()
+    private function getProjectMetrics()
     {
         $projectMetrics = array();
-        foreach ($this->_projectAwareAnalyzers as $analyzer) {
+        foreach ($this->projectAwareAnalyzers as $analyzer) {
             $projectMetrics = array_merge(
                 $projectMetrics,
                 $analyzer->getProjectMetrics()
@@ -256,7 +256,7 @@ class PHP_Depend_Log_Summary_Xml
             return;
         }
 
-        $xml = end($this->_xmlStack);
+        $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
 
         $classXml = $doc->createElement('class');
@@ -267,7 +267,7 @@ class PHP_Depend_Log_Summary_Xml
 
         $xml->appendChild($classXml);
 
-        array_push($this->_xmlStack, $classXml);
+        array_push($this->xmlStack, $classXml);
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -276,7 +276,7 @@ class PHP_Depend_Log_Summary_Xml
             $property->accept($this);
         }
 
-        array_pop($this->_xmlStack);
+        array_pop($this->xmlStack);
     }
 
     /**
@@ -288,7 +288,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
-        $xml = end($this->_xmlStack);
+        $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
 
         $functionXml = $doc->createElement('function');
@@ -322,7 +322,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
-        $xml = end($this->_xmlStack);
+        $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
 
         $methodXml = $doc->createElement('method');
@@ -342,7 +342,7 @@ class PHP_Depend_Log_Summary_Xml
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {
-        $xml = end($this->_xmlStack);
+        $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
 
         $packageXml = $doc->createElement('package');
@@ -350,7 +350,7 @@ class PHP_Depend_Log_Summary_Xml
 
         $this->writeNodeMetrics($packageXml, $package);
 
-        array_push($this->_xmlStack, $packageXml);
+        array_push($this->xmlStack, $packageXml);
 
         foreach ($package->getTypes() as $type) {
             $type->accept($this);
@@ -359,7 +359,7 @@ class PHP_Depend_Log_Summary_Xml
             $function->accept($this);
         }
 
-        array_pop($this->_xmlStack);
+        array_pop($this->xmlStack);
 
         if ($packageXml->firstChild === null) {
             return;
@@ -380,7 +380,7 @@ class PHP_Depend_Log_Summary_Xml
     protected function writeNodeMetrics(DOMElement $xml, PHP_Depend_Code_NodeI $node)
     {
         $metrics = array();
-        foreach ($this->_nodeAwareAnalyzers as $analyzer) {
+        foreach ($this->nodeAwareAnalyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
         }
         ksort($metrics);

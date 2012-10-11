@@ -70,42 +70,42 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     /**
      * The name for this item.
      *
-     * @var string $name
+     * @var string
      */
     protected $name = '';
 
     /**
      * The unique identifier for this function.
      *
-     * @var string $uuid
+     * @var string
      */
     protected $uuid = null;
 
     /**
      * The line number where the item declaration starts.
      *
-     * @var integer $startLine
+     * @var integer
      */
     protected $startLine = 0;
 
     /**
      * The line number where the item declaration ends.
      *
-     * @var integer $endLine
+     * @var integer
      */
     protected $endLine = 0;
 
     /**
      * The source file for this item.
      *
-     * @var PHP_Depend_Code_File $sourceFile
+     * @var PHP_Depend_Code_File
      */
     protected $sourceFile = null;
 
     /**
      * The comment for this type.
      *
-     * @var string $docComment
+     * @var string
      */
     protected $docComment = null;
 
@@ -147,7 +147,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      *
      * @return string
      */
-    public function getUUID()
+    public function getUuid()
     {
         if ($this->uuid === null) {
             $this->uuid = md5(microtime());
@@ -163,7 +163,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
      * @return void
      * @since 0.9.12
      */
-    public function setUUID($uuid)
+    public function setUuid($uuid)
     {
         $this->uuid = $uuid;
     }

@@ -66,11 +66,11 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      *
      * @var PHP_Depend_Metrics_AnalyzerI[]
      */
-    private $_analyzers;
+    private $analyzers;
     
-    private $_acceptedTypes;
+    private $acceptedTypes;
 
-    private $_options;
+    private $options;
 
     /**
      * The system wide used cache.
@@ -78,14 +78,14 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @var PHP_Depend_Util_Cache_Driver
      * @since 1.0.0
      */
-    private $_cache;
+    private $cache;
 
     /**
      * Used locator for installed analyzer classes.
      *
      * @var PHP_Depend_Metrics_AnalyzerClassLocator
      */
-    private $_classLocator;
+    private $classLocator;
 
     /**
      * Constructs a new analyzer loader.
@@ -105,11 +105,11 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
         array $acceptedTypes,
         array $options = array()
     ) {
-        $this->_cache        = $cache;
-        $this->_classLocator = $classLocator;
+        $this->cache        = $cache;
+        $this->classLocator = $classLocator;
 
-        $this->_options       = $options;
-        $this->_acceptedTypes = $acceptedTypes;
+        $this->options       = $options;
+        $this->acceptedTypes = $acceptedTypes;
     }
 
     /**
@@ -120,10 +120,10 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      */
     public function getIterator()
     {
-        if ($this->_analyzers === null) {
-            $this->_initAnalyzers();
+        if ($this->analyzers === null) {
+            $this->initAnalyzers();
         }
-        return new PHP_Depend_Metrics_AnalyzerIterator($this->_analyzers);
+        return new PHP_Depend_Metrics_AnalyzerIterator($this->analyzers);
     }
 
     /**
@@ -132,10 +132,10 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @return void
      * @since 0.9.10
      */
-    private function _initAnalyzers()
+    private function initAnalyzers()
     {
-        $this->_analyzers = array();
-        $this->_loadAcceptedAnalyzers($this->_acceptedTypes);
+        $this->analyzers = array();
+        $this->loadAcceptedAnalyzers($this->acceptedTypes);
     }
 
     /**
@@ -145,12 +145,12 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      *
      * @return PHP_Depend_Metrics_AnalyzerI
      */
-    private function _loadAcceptedAnalyzers(array $acceptedTypes)
+    private function loadAcceptedAnalyzers(array $acceptedTypes)
     {
         $analyzers = array();
-        foreach ($this->_classLocator->findAll() as $reflection) {
-            if ($this->_isInstanceOf($reflection, $acceptedTypes)) {
-                $analyzers[] = $this->_createOrReturnAnalyzer($reflection);
+        foreach ($this->classLocator->findAll() as $reflection) {
+            if ($this->isInstanceOf($reflection, $acceptedTypes)) {
+                $analyzers[] = $this->createOrReturnAnalyzer($reflection);
             }
         }
         return $analyzers;
@@ -166,7 +166,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @return boolean
      * @since 0.9.10
      */
-    private function _isInstanceOf(ReflectionClass $reflection, array $expectedTypes)
+    private function isInstanceOf(ReflectionClass $reflection, array $expectedTypes)
     {
         foreach ($expectedTypes as $type) {
             if (interface_exists($type) && $reflection->implementsInterface($type)) {
@@ -191,13 +191,13 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @return PHP_Depend_Metrics_AnalyzerI
      * @since 0.9.10
      */
-    private function _createOrReturnAnalyzer(ReflectionClass $reflection)
+    private function createOrReturnAnalyzer(ReflectionClass $reflection)
     {
         $name = $reflection->getName();
-        if (!isset($this->_analyzers[$name])) {
-            $this->_analyzers[$name] = $this->_createAndConfigure($reflection);
+        if (!isset($this->analyzers[$name])) {
+            $this->analyzers[$name] = $this->createAndConfigure($reflection);
         }
-        return $this->_analyzers[$name];
+        return $this->analyzers[$name];
     }
 
     /**
@@ -208,14 +208,14 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @return PHP_Depend_Metrics_AnalyzerI
      * @since 0.9.10
      */
-    private function _createAndConfigure(ReflectionClass $reflection)
+    private function createAndConfigure(ReflectionClass $reflection)
     {
         if ($reflection->getConstructor()) {
-            $analyzer = $reflection->newInstance($this->_options);
+            $analyzer = $reflection->newInstance($this->options);
         } else {
             $analyzer = $reflection->newInstance();
         }
-        return $this->_configure($analyzer);
+        return $this->configure($analyzer);
     }
 
     /**
@@ -226,17 +226,17 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * @return PHP_Depend_Metrics_AnalyzerI
      * @since 0.9.10
      */
-    private function _configure(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    private function configure(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         if ($analyzer instanceof PHP_Depend_Metrics_CacheAware) {
-            $analyzer->setCache($this->_cache);
+            $analyzer->setCache($this->cache);
         }
 
         if (!($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI)) {
             return $analyzer;
         }
         
-        $required = $this->_loadAcceptedAnalyzers($analyzer->getRequiredAnalyzers());
+        $required = $this->loadAcceptedAnalyzers($analyzer->getRequiredAnalyzers());
         foreach ($required as $requiredAnalyzer) {
             $analyzer->addAnalyzer($requiredAnalyzer);
         }

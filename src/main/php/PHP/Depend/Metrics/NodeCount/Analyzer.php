@@ -83,44 +83,44 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Number Of Packages.
      *
-     * @var integer $_nop
+     * @var integer
      */
-    private $_nop = 0;
+    private $nop = 0;
 
     /**
      * Number Of Classes.
      *
-     * @var integer $_noc
+     * @var integer
      */
-    private $_noc = 0;
+    private $noc = 0;
 
     /**
      * Number Of Interfaces.
      *
-     * @var integer $_noi
+     * @var integer
      */
-    private $_noi = 0;
+    private $noi = 0;
 
     /**
      * Number Of Methods.
      *
-     * @var integer $_nom
+     * @var integer
      */
-    private $_nom = 0;
+    private $nom = 0;
 
     /**
      * Number Of Functions.
      *
-     * @var integer $_nof
+     * @var integer
      */
-    private $_nof = 0;
+    private $nof = 0;
 
     /**
      * Collected node metrics
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
-    private $_nodeMetrics = null;
+    private $nodeMetrics = null;
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -142,8 +142,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         $metrics = array();
-        if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            $metrics = $this->_nodeMetrics[$node->getUUID()];
+        if (isset($this->nodeMetrics[$node->getUuid()])) {
+            $metrics = $this->nodeMetrics[$node->getUuid()];
         }
         return $metrics;
     }
@@ -166,11 +166,11 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     public function getProjectMetrics()
     {
         return array(
-            self::M_NUMBER_OF_PACKAGES    =>  $this->_nop,
-            self::M_NUMBER_OF_CLASSES     =>  $this->_noc,
-            self::M_NUMBER_OF_INTERFACES  =>  $this->_noi,
-            self::M_NUMBER_OF_METHODS     =>  $this->_nom,
-            self::M_NUMBER_OF_FUNCTIONS   =>  $this->_nof
+            self::M_NUMBER_OF_PACKAGES    =>  $this->nop,
+            self::M_NUMBER_OF_CLASSES     =>  $this->noc,
+            self::M_NUMBER_OF_INTERFACES  =>  $this->noi,
+            self::M_NUMBER_OF_METHODS     =>  $this->nom,
+            self::M_NUMBER_OF_FUNCTIONS   =>  $this->nof
         );
     }
 
@@ -184,12 +184,12 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
         // Check for previous run
-        if ($this->_nodeMetrics === null) {
+        if ($this->nodeMetrics === null) {
 
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->_nodeMetrics = array();
+            $this->nodeMetrics = array();
 
             // Process all packages
             foreach ($packages as $package) {
@@ -217,13 +217,13 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         $this->fireStartClass($class);
 
         // Update global class count
-        ++$this->_noc;
+        ++$this->noc;
 
         // Update parent package
-        $packageUUID = $class->getPackage()->getUUID();
-        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_CLASSES];
+        $packageUUID = $class->getPackage()->getUuid();
+        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_CLASSES];
 
-        $this->_nodeMetrics[$class->getUUID()] = array(
+        $this->nodeMetrics[$class->getUuid()] = array(
             self::M_NUMBER_OF_METHODS  =>  0
         );
 
@@ -247,11 +247,11 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         $this->fireStartFunction($function);
 
         // Update global function count
-        ++$this->_nof;
+        ++$this->nof;
 
         // Update parent package
-        $packageUUID = $function->getPackage()->getUUID();
-        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_FUNCTIONS];
+        $packageUUID = $function->getPackage()->getUuid();
+        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
     }
@@ -273,13 +273,13 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         $this->fireStartInterface($interface);
 
         // Update global class count
-        ++$this->_noi;
+        ++$this->noi;
 
         // Update parent package
-        $packageUUID = $interface->getPackage()->getUUID();
-        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_INTERFACES];
+        $packageUUID = $interface->getPackage()->getUuid();
+        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_INTERFACES];
 
-        $this->_nodeMetrics[$interface->getUUID()] = array(
+        $this->nodeMetrics[$interface->getUuid()] = array(
             self::M_NUMBER_OF_METHODS  =>  0
         );
 
@@ -303,17 +303,17 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         $this->fireStartMethod($method);
 
         // Update global method count
-        ++$this->_nom;
+        ++$this->nom;
 
         $parent = $method->getParent();
 
         // Update parent class or interface
-        $parentUUID = $parent->getUUID();
-        ++$this->_nodeMetrics[$parentUUID][self::M_NUMBER_OF_METHODS];
+        $parentUUID = $parent->getUuid();
+        ++$this->nodeMetrics[$parentUUID][self::M_NUMBER_OF_METHODS];
 
         // Update parent package
-        $packageUUID = $parent->getPackage()->getUUID();
-        ++$this->_nodeMetrics[$packageUUID][self::M_NUMBER_OF_METHODS];
+        $packageUUID = $parent->getPackage()->getUuid();
+        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
     }
@@ -331,9 +331,9 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         $this->fireStartPackage($package);
 
         // Update package count
-        ++$this->_nop;
+        ++$this->nop;
 
-        $this->_nodeMetrics[$package->getUUID()] = array(
+        $this->nodeMetrics[$package->getUuid()] = array(
             self::M_NUMBER_OF_CLASSES     =>  0,
             self::M_NUMBER_OF_INTERFACES  =>  0,
             self::M_NUMBER_OF_METHODS     =>  0,

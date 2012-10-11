@@ -65,7 +65,7 @@ class PHP_Depend_Log_Summary_AnalyzerProjectAwareDummy
     /**
      * Dummy project metrics.
      *
-     * @var array(string=>mixed) $projectMetrics
+     * @var array(string=>mixed)
      */
     protected $projectMetrics = null;
 

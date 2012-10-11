@@ -72,21 +72,21 @@ class PHP_Depend_Log_Jdepend_XmlTest extends PHP_Depend_AbstractTest
     /**
      * Test code structure.
      *
-     * @var PHP_Depend_Code_NodeIterator $packages
+     * @var PHP_Depend_Code_NodeIterator
      */
     protected $packages = null;
 
     /**
      * Test dependency analyzer.
      *
-     * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
+     * @var PHP_Depend_Metrics_Dependency_Analyzer
      */
     protected $analyzer = null;
 
     /**
      * The temporary file name for the logger result.
      *
-     * @var string $resultFile
+     * @var string
      */
     protected $resultFile = null;
 

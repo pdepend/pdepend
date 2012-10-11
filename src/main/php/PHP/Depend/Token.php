@@ -68,42 +68,42 @@ class PHP_Depend_Token
     /**
      * The token type identifier.
      *
-     * @var integer $type
+     * @var integer
      */
     public $type = null;
 
     /**
      * The token image/textual representation.
      *
-     * @var string $image
+     * @var string
      */
     public $image = null;
 
     /**
      * The start line number for this token.
      *
-     * @var integer $startLine
+     * @var integer
      */
     public $startLine = null;
 
     /**
      * The end line number for this token.
      *
-     * @var integer $endLine
+     * @var integer
      */
     public $endLine = null;
 
     /**
      * The start column number for this token.
      *
-     * @var integer $startColumn
+     * @var integer
      */
     public $startColumn = null;
 
     /**
      * The end column number for this token.
      *
-     * @var integer $endColumn
+     * @var integer
      */
     public $endColumn = null;
 

@@ -64,7 +64,7 @@ class PHP_Depend_Log_Jdepend_DependencyAnalyzer
     /**
      * Dummy package statistics
      *
-     * @var array(string=>array) $stats
+     * @var array(string=>array)
      */
     public $stats = array();
 
@@ -77,8 +77,8 @@ class PHP_Depend_Log_Jdepend_DependencyAnalyzer
      */
     public function getStats(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->stats[$node->getUUID()])) {
-            return $this->stats[$node->getUUID()];
+        if (isset($this->stats[$node->getUuid()])) {
+            return $this->stats[$node->getUuid()];
         }
         return array();
     }

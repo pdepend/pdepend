@@ -67,7 +67,7 @@ class PDepend_CodeRank_ClassC
     /**
      * Property comment.
      *
-     * @var string $_literal
+     * @var string
      */
     private $_literal = '';
     

@@ -113,7 +113,7 @@ class PHP_Depend_Util_UuidBuilder
      */
     protected function forOffsetItem(PHP_Depend_Code_AbstractItem $item, $prefix)
     {
-        $fileHash = $item->getSourceFile()->getUUID();
+        $fileHash = $item->getSourceFile()->getUuid();
         $itemHash = $this->hash($prefix . ':' . strtolower($item->getName()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);
@@ -132,7 +132,7 @@ class PHP_Depend_Util_UuidBuilder
     {
         return sprintf(
             '%s-%s',
-            $method->getParent()->getUUID(),
+            $method->getParent()->getUuid(),
             $this->hash(strtolower($method->getName()))
         );
     }
@@ -160,14 +160,14 @@ class PHP_Depend_Util_UuidBuilder
      */
     protected function getOffsetInFile($file, $string)
     {
-        if (isset($this->_offsetInFile[$file][$string])) {
-            $this->_offsetInFile[$file][$string]++;
+        if (isset($this->offsetInFile[$file][$string])) {
+            $this->offsetInFile[$file][$string]++;
         } else {
-            $this->_offsetInFile[$file][$string] = 0;
+            $this->offsetInFile[$file][$string] = 0;
         }
         return sprintf(
             '%02s',
-            base_convert($this->_offsetInFile[$file][$string], 10, 36)
+            base_convert($this->offsetInFile[$file][$string], 10, 36)
         );
     }
 }

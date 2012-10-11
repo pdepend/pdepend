@@ -63,7 +63,7 @@ class PHP_Depend_Input_Iterator extends FilterIterator
     /**
      * The associated filter object.
      *
-     * @var PHP_Depend_Input_FilterI $filter
+     * @var PHP_Depend_Input_FilterI
      */
     protected $filter = null;
 

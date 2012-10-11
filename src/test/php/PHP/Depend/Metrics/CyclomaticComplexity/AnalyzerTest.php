@@ -96,7 +96,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     public function testGetCCNReturnsZeroForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        self::assertEquals(0, $analyzer->getCCN($this->getMock('PHP_Depend_Code_NodeI')));
+        self::assertEquals(0, $analyzer->getCcn($this->getMock('PHP_Depend_Code_NodeI')));
     }
 
     /**
@@ -107,7 +107,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     public function testGetCCN2ReturnsZeroForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        self::assertEquals(0, $analyzer->getCCN2($this->getMock('PHP_Depend_Code_NodeI')));
+        self::assertEquals(0, $analyzer->getCcn2($this->getMock('PHP_Depend_Code_NodeI')));
     }
 
     /**
@@ -219,7 +219,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        self::assertEquals(3, $analyzer->getCCN($function));
+        self::assertEquals(3, $analyzer->getCcn($function));
     }
 
     /**
@@ -237,7 +237,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        self::assertEquals(3, $analyzer->getCCN2($function));
+        self::assertEquals(3, $analyzer->getCcn2($function));
     }
 
     /**

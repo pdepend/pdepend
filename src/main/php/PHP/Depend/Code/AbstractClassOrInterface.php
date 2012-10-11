@@ -72,7 +72,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of all interfaces implemented/extended by the this type.
      *
-     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference[]
      */
     protected $interfaceReferences = array();
 
@@ -229,7 +229,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function getConstants()
     {
         if ($this->constants === null) {
-            $this->_initConstants();
+            $this->initConstants();
         }
         return $this->constants;
     }
@@ -246,7 +246,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     public function hasConstant($name)
     {
         if ($this->constants === null) {
-            $this->_initConstants();
+            $this->initConstants();
         }
         return array_key_exists($name, $this->constants);
     }
@@ -336,7 +336,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
      * @return void
      * @since 0.9.6
      */
-    private function _initConstants()
+    private function initConstants()
     {
         $this->constants = array();
         if (($parentClass = $this->getParentClass()) !== null) {

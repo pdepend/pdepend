@@ -70,9 +70,9 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Number of processed items.
      *
-     * @var integer $_count
+     * @var integer
      */
-    private $_count = 0;
+    private $count = 0;
 
     /**
      * Is called when PDepend starts the file parsing process.
@@ -83,7 +83,7 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     public function startParseProcess(PHP_Depend_BuilderI $builder)
     {
-        $this->_count = 0;
+        $this->count = 0;
 
         echo "Parsing source files:\n";
     }
@@ -173,7 +173,7 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     public function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $this->_count = 0;
+        $this->count = 0;
 
         $name = substr(get_class($analyzer), 19, -9);
         echo "Executing {$name}-Analyzer:\n";
@@ -213,13 +213,13 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     protected function step($size = 1)
     {
-        if ($this->_count > 0 && $this->_count % $size === 0) {
+        if ($this->count > 0 && $this->count % $size === 0) {
             echo '.';
         }
-        if ($this->_count > 0 && $this->_count % ($size * 60) === 0) {
-            printf("% 6s\n", $this->_count);
+        if ($this->count > 0 && $this->count % ($size * 60) === 0) {
+            printf("% 6s\n", $this->count);
         }
-        ++$this->_count;
+        ++$this->count;
     }
 
     /**
@@ -231,16 +231,16 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     protected function finish($size = 1)
     {
-        $diff = ($this->_count % ($size * 60));
+        $diff = ($this->count % ($size * 60));
 
         if ($diff === 0) {
-            printf(".% 6s\n\n", $this->_count);
+            printf(".% 6s\n\n", $this->count);
         } else if ($size === 1) {
             $indent = 66 - ceil($diff / $size);
-            printf(".% {$indent}s\n\n", $this->_count);
+            printf(".% {$indent}s\n\n", $this->count);
         } else {
             $indent = 66 - ceil($diff / $size) + 1;
-            printf("% {$indent}s\n\n", $this->_count);
+            printf("% {$indent}s\n\n", $this->count);
         }
     }
 }

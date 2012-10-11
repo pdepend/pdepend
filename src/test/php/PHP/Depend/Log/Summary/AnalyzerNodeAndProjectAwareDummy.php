@@ -66,14 +66,14 @@ class PHP_Depend_Log_Summary_AnalyzerNodeAndProjectAwareDummy
     /**
      * Dummy project metrics.
      *
-     * @var array(string=>mixed) $projectMetrics
+     * @var array(string=>mixed)
      */
     protected $projectMetrics = null;
 
     /**
      * Dummy node metrics.
      *
-     * @var array(string=>array) $nodeMetrics
+     * @var array(string=>array)
      */
     protected $nodeMetrics = null;
 

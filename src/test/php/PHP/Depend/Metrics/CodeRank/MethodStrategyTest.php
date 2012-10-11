@@ -88,10 +88,10 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
         foreach ($packages as $package) {
             foreach ($package->getClasses() as $class) {
                 self::assertArrayHasKey($class->getName(), $uuidMap);
-                $uuidMap[$class->getName()] = $class->getUUID();
+                $uuidMap[$class->getName()] = $class->getUuid();
             }
             if (array_key_exists($package->getName(), $uuidMap)) {
-                $uuidMap[$package->getName()] = $package->getUUID();
+                $uuidMap[$package->getName()] = $package->getUuid();
             }
         }
 

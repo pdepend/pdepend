@@ -82,67 +82,67 @@ class PHP_Depend_TextUI_Runner
      * List of allowed file extensions. Default file extensions are <b>php</b>
      * and <p>php5</b>.
      *
-     * @var array(string) $_extensions
+     * @var array(string)
      */
-    private $_extensions = array('php', 'php5');
+    private $extensions = array('php', 'php5');
 
     /**
      * List of exclude directories. Default exclude dirs are <b>.svn</b> and
      * <b>CVS</b>.
      *
-     * @var array(string) $_excludeDirectories
+     * @var array(string)
      */
-    private $_excludeDirectories = array('.git', '.svn', 'CVS');
+    private $excludeDirectories = array('.git', '.svn', 'CVS');
 
     /**
      * List of exclude packages.
      *
-     * @var array(string) $_excludePackages
+     * @var array(string)
      */
-    private $_excludePackages = array();
+    private $excludePackages = array();
 
     /**
      * List of source code directories and files.
      *
-     * @var array(string) $_sourceArguments
+     * @var array(string)
      */
-    private $_sourceArguments = array();
+    private $sourceArguments = array();
 
     /**
      * Should the parse ignore doc comment annotations?
      *
-     * @var boolean $_withoutAnnotations
+     * @var boolean
      */
-    private $_withoutAnnotations = false;
+    private $withoutAnnotations = false;
 
     /**
      * List of log identifiers and log files.
      *
-     * @var array(string=>string) $_loggers
+     * @var array(string=>string)
      */
-    private $_loggerMap = array();
+    private $loggerMap = array();
 
     /**
      * List of cli options for loggers or analyzers.
      *
-     * @var array(string=>mixed) $_options
+     * @var array(string=>mixed)
      */
-    private $_options = array();
+    private $options = array();
 
     /**
      * This of process listeners that will be hooked into PHP_Depend's analyzing
      * process.
      *
-     * @var array(PHP_Depend_ProcessListenerI) $_processListeners
+     * @var PHP_Depend_ProcessListenerI[]
      */
-    private $_processListeners = array();
+    private $processListeners = array();
 
     /**
      * List of error messages for all parsing errors.
      *
-     * @var array(string) $_parseErrors
+     * @var array(string)
      */
-    private $_parseErrors = array();
+    private $parseErrors = array();
 
     /**
      * Sets the system configuration.
@@ -168,7 +168,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function setFileExtensions(array $extensions)
     {
-        $this->_extensions = $extensions;
+        $this->extensions = $extensions;
     }
 
     /**
@@ -182,7 +182,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function setExcludeDirectories(array $excludeDirectories)
     {
-        $this->_excludeDirectories = $excludeDirectories;
+        $this->excludeDirectories = $excludeDirectories;
     }
 
     /**
@@ -194,7 +194,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function setExcludePackages(array $excludePackages)
     {
-        $this->_excludePackages = $excludePackages;
+        $this->excludePackages = $excludePackages;
     }
 
     /**
@@ -206,7 +206,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function setSourceArguments(array $sourceArguments)
     {
-        $this->_sourceArguments = $sourceArguments;
+        $this->sourceArguments = $sourceArguments;
     }
 
     /**
@@ -216,7 +216,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function setWithoutAnnotations()
     {
-        $this->_withoutAnnotations = true;
+        $this->withoutAnnotations = true;
     }
 
     /**
@@ -229,7 +229,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function addLogger($loggerID, $logFileName)
     {
-        $this->_loggerMap[$loggerID] = $logFileName;
+        $this->loggerMap[$loggerID] = $logFileName;
     }
 
     /**
@@ -242,7 +242,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function addOption($identifier, $value)
     {
-        $this->_options[$identifier] = $value;
+        $this->options[$identifier] = $value;
     }
 
     /**
@@ -255,7 +255,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function addProcessListener(PHP_Depend_ProcessListenerI $processListener)
     {
-        $this->_processListeners[] = $processListener;
+        $this->processListeners[] = $processListener;
     }
 
     /**
@@ -269,32 +269,32 @@ class PHP_Depend_TextUI_Runner
     public function run()
     {
         $pdepend = new PHP_Depend($this->configuration);
-        $pdepend->setOptions($this->_options);
+        $pdepend->setOptions($this->options);
 
-        if (count($this->_extensions) > 0) {
-            $filter = new PHP_Depend_Input_ExtensionFilter($this->_extensions);
+        if (count($this->extensions) > 0) {
+            $filter = new PHP_Depend_Input_ExtensionFilter($this->extensions);
             $pdepend->addFileFilter($filter);
         }
 
-        if (count($this->_excludeDirectories) > 0) {
-            $exclude = $this->_excludeDirectories;
+        if (count($this->excludeDirectories) > 0) {
+            $exclude = $this->excludeDirectories;
             $filter  = new PHP_Depend_Input_ExcludePathFilter($exclude);
             $pdepend->addFileFilter($filter);
         }
 
-        if (count($this->_excludePackages) > 0) {
-            $exclude = $this->_excludePackages;
+        if (count($this->excludePackages) > 0) {
+            $exclude = $this->excludePackages;
             $filter  = new PHP_Depend_Code_Filter_Package($exclude);
             $pdepend->setCodeFilter($filter);
         }
 
-        if ($this->_withoutAnnotations === true) {
+        if ($this->withoutAnnotations === true) {
             $pdepend->setWithoutAnnotations();
         }
 
         // Try to set all source directories.
         try {
-            foreach ($this->_sourceArguments as $sourceArgument) {
+            foreach ($this->sourceArguments as $sourceArgument) {
                 if (is_file($sourceArgument)) {
                     $pdepend->addFile($sourceArgument);
                 } else {
@@ -305,7 +305,7 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
-        if (count($this->_loggerMap) === 0) {
+        if (count($this->loggerMap) === 0) {
             throw new RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
@@ -313,7 +313,7 @@ class PHP_Depend_TextUI_Runner
 
         // To append all registered loggers.
         try {
-            foreach ($this->_loggerMap as $loggerID => $logFileName) {
+            foreach ($this->loggerMap as $loggerID => $logFileName) {
                 // Create a new logger
                 $logger = $loggerFactory->createLogger($loggerID, $logFileName);
 
@@ -323,7 +323,7 @@ class PHP_Depend_TextUI_Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
-        foreach ($this->_processListeners as $processListener) {
+        foreach ($this->processListeners as $processListener) {
             $pdepend->addProcessListener($processListener);
         }
 
@@ -331,7 +331,7 @@ class PHP_Depend_TextUI_Runner
             $pdepend->analyze();
 
             foreach ($pdepend->getExceptions() as $exception) {
-                $this->_parseErrors[] = $exception->getMessage();
+                $this->parseErrors[] = $exception->getMessage();
             }
         } catch (Exception $e) {
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
@@ -348,7 +348,7 @@ class PHP_Depend_TextUI_Runner
      */
     public function hasParseErrors()
     {
-        return (count($this->_parseErrors) > 0);
+        return (count($this->parseErrors) > 0);
     }
 
     /**
@@ -359,6 +359,6 @@ class PHP_Depend_TextUI_Runner
      */
     public function getParseErrors()
     {
-        return $this->_parseErrors;
+        return $this->parseErrors;
     }
 }

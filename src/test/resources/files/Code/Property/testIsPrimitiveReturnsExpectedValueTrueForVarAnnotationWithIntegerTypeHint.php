@@ -2,7 +2,7 @@
 class Foo
 {
     /**
-     * @var Integer $baz
+     * @var Integer
      */
     protected $baz;
 }

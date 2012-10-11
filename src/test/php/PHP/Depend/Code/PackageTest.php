@@ -75,7 +75,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testGetUUIDReturnsExpectedObjectHash()
     {
         $package = new PHP_Depend_Code_Package(__FUNCTION__);
-        $this->assertEquals(spl_object_hash($package), $package->getUUID());
+        $this->assertEquals(spl_object_hash($package), $package->getUuid());
     }
 
     /**

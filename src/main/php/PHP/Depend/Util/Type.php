@@ -136,7 +136,7 @@ final class PHP_Depend_Util_Type
      * This property contains a mapping between a unified lower case type name
      * and the corresponding PHP extension that declares this type.
      *
-     * @var array(string=>string) $_typeNameToExtension
+     * @var array(string=>string)
      */
     private static $_typeNameToExtension = null;
 
@@ -152,7 +152,7 @@ final class PHP_Depend_Util_Type
     /**
      * List of scalar php types.
      *
-     * @var array(string) $_scalarTypes
+     * @var array(string)
      */
     private static $_scalarTypes = array(
         self::IMAGE_ARRAY                   =>  true,
@@ -208,7 +208,7 @@ final class PHP_Depend_Util_Type
     /**
      * List of primitive php types.
      *
-     * @var array(string=>string) $_primitiveTypes
+     * @var array(string=>string)
      */
     private static $_primitiveTypes = array(
         self::IMAGE_BOOL               =>  self::PHP_TYPE_BOOLEAN,
@@ -249,7 +249,7 @@ final class PHP_Depend_Util_Type
      */
     public static function isInternalType($typeName)
     {
-        self::_initTypeToExtension();
+        self::initTypeToExtension();
 
         $normalizedName = ltrim($typeName, '\\');
         $normalizedName = strtolower($normalizedName);
@@ -267,7 +267,7 @@ final class PHP_Depend_Util_Type
      */
     public static function getTypePackage($typeName)
     {
-        self::_initTypeToExtension();
+        self::initTypeToExtension();
 
         $normalizedName = ltrim($typeName, '\\');
         $normalizedName = strtolower($normalizedName);
@@ -285,7 +285,7 @@ final class PHP_Depend_Util_Type
     public static function getInternalPackages()
     {
         if (self::$_internalPackages === null) {
-            $extensions = array_values(self::_initTypeToExtension());
+            $extensions = array_values(self::initTypeToExtension());
             $extensions = array_unique($extensions);
 
             self::$_internalPackages = array_combine($extensions, $extensions);
@@ -389,7 +389,7 @@ final class PHP_Depend_Util_Type
      *
      * @return array(string=>string)
      */
-    private static function _initTypeToExtension()
+    private static function initTypeToExtension()
     {
         // Skip when already done.
         if (self::$_typeNameToExtension !== null) {

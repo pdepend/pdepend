@@ -63,16 +63,16 @@ class PHP_Depend_Parser_SymbolTable
     /**
      * Stack with all active scopes.
      *
-     * @var array(array) $_scopeStack
+     * @var array(array)
      */
-    private $_scopeStack = array();
+    private $scopeStack = array();
 
     /**
      * The currently active scope.
      *
-     * @var array(string=>string) $_scope
+     * @var array(string=>string)
      */
-    private $_scope = array();
+    private $scope = array();
 
     /**
      * This method creates a new scope.
@@ -82,7 +82,7 @@ class PHP_Depend_Parser_SymbolTable
     public function createScope()
     {
         // Add copy of last scope as new scope
-        array_push($this->_scopeStack, $this->_scope);
+        array_push($this->scopeStack, $this->scope);
     }
 
     /**
@@ -93,10 +93,10 @@ class PHP_Depend_Parser_SymbolTable
     public function destroyScope()
     {
         // Remove scope from stack
-        array_pop($this->_scopeStack);
+        array_pop($this->scopeStack);
 
         // Update current scope to latest in stack
-        $this->_scope = end($this->_scopeStack);
+        $this->scope = end($this->scopeStack);
     }
 
     /**
@@ -109,10 +109,10 @@ class PHP_Depend_Parser_SymbolTable
      */
     public function add($key, $value)
     {
-        if (is_array($this->_scope) === false) {
+        if (is_array($this->scope) === false) {
             throw new UnderflowException('No active scope.');
         }
-        $this->_scope[strtolower($key)] = $value;
+        $this->scope[strtolower($key)] = $value;
     }
 
     /**
@@ -122,10 +122,10 @@ class PHP_Depend_Parser_SymbolTable
      */
     public function resetScope()
     {
-        if (is_array($this->_scope) === false) {
+        if (is_array($this->scope) === false) {
             throw new UnderflowException('No active scope.');
         }
-        $this->_scope = array();
+        $this->scope = array();
     }
 
     /**
@@ -139,13 +139,13 @@ class PHP_Depend_Parser_SymbolTable
      */
     public function lookup($key)
     {
-        if (is_array($this->_scope) === false) {
+        if (is_array($this->scope) === false) {
             throw new UnderflowException('No active scope.');
         }
 
         $key = strtolower($key);
-        if (isset($this->_scope[$key])) {
-            return $this->_scope[$key];
+        if (isset($this->scope[$key])) {
+            return $this->scope[$key];
         }
         return null;
     }

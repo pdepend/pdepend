@@ -65,9 +65,9 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     /**
      * All found nodes.
      *
-     * @var array(string=>array) $_nodes
+     * @var array(string=>array)
      */
-    private $_nodes = array();
+    private $nodes = array();
 
     /**
      * Returns the collected nodes.
@@ -76,7 +76,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      */
     public function getCollectedNodes()
     {
-        return $this->_nodes;
+        return $this->nodes;
     }
 
     /**
@@ -95,13 +95,13 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
         $type = $method->getParent();
 
         if (($depType = $method->getReturnClass()) !== null) {
-            $this->_processType($type, $depType);
+            $this->processType($type, $depType);
         }
         foreach ($method->getExceptionClasses() as $depType) {
-            $this->_processType($type, $depType);
+            $this->processType($type, $depType);
         }
         foreach ($method->getDependencies() as $depType) {
-            $this->_processType($type, $depType);
+            $this->processType($type, $depType);
         }
 
         $this->fireEndMethod($method);
@@ -116,27 +116,27 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      *
      * @return void
      */
-    private function _processType(
+    private function processType(
         PHP_Depend_Code_AbstractClassOrInterface $type,
         PHP_Depend_Code_AbstractClassOrInterface $depType
     ) {
         if ($type !== $depType) {
-            $this->_initNode($type);
-            $this->_initNode($depType);
+            $this->initNode($type);
+            $this->initNode($depType);
 
-            $this->_nodes[$type->getUUID()]['in'][]     = $depType->getUUID();
-            $this->_nodes[$depType->getUUID()]['out'][] = $type->getUUID();
+            $this->nodes[$type->getUuid()]['in'][]     = $depType->getUuid();
+            $this->nodes[$depType->getUuid()]['out'][] = $type->getUuid();
         }
 
         $package    = $type->getPackage();
         $depPackage = $depType->getPackage();
 
         if ($package !== $depPackage) {
-            $this->_initNode($package);
-            $this->_initNode($depPackage);
+            $this->initNode($package);
+            $this->initNode($depPackage);
 
-            $this->_nodes[$package->getUUID()]['in'][]     = $depPackage->getUUID();
-            $this->_nodes[$depPackage->getUUID()]['out'][] = $package->getUUID();
+            $this->nodes[$package->getUuid()]['in'][]     = $depPackage->getUuid();
+            $this->nodes[$depPackage->getUuid()]['out'][] = $package->getUuid();
         }
     }
 
@@ -147,10 +147,10 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      *
      * @return void
      */
-    private function _initNode(PHP_Depend_Code_NodeI $node)
+    private function initNode(PHP_Depend_Code_NodeI $node)
     {
-        if (!isset($this->_nodes[$node->getUUID()])) {
-            $this->_nodes[$node->getUUID()] = array(
+        if (!isset($this->nodes[$node->getUuid()])) {
+            $this->nodes[$node->getUuid()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),

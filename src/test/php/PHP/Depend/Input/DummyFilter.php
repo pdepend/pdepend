@@ -63,14 +63,14 @@ class PHP_Depend_Input_DummyFilter implements PHP_Depend_Input_FilterI
     /**
      * The return value for this filter.
      *
-     * @var boolean $returnValue
+     * @var boolean
      */
     public $returnValue = false;
 
     /**
      * Was this filter invoked?
      *
-     * @var boolean $invoked
+     * @var boolean
      */
     public $invoked = false;
 

@@ -65,9 +65,9 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * All found nodes.
      *
-     * @var array(string=>array) $_nodes
+     * @var array(string=>array)
      */
-    private $_nodes = array();
+    private $nodes = array();
 
     /**
      * Returns the collected nodes.
@@ -76,7 +76,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
      */
     public function getCollectedNodes()
     {
-        return $this->_nodes;
+        return $this->nodes;
     }
 
     /**
@@ -105,16 +105,16 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
             $this->initNode($class);
             $this->initNode($depClass);
 
-            $this->_nodes[$class->getUUID()]['in'][]     = $depClass->getUUID();
-            $this->_nodes[$depClass->getUUID()]['out'][] = $class->getUUID();
+            $this->nodes[$class->getUuid()]['in'][]     = $depClass->getUuid();
+            $this->nodes[$depClass->getUuid()]['out'][] = $class->getUuid();
         }
 
         if ($depPackage !== $package) {
             $this->initNode($package);
             $this->initNode($depPackage);
 
-            $this->_nodes[$package->getUUID()]['in'][]     = $depPackage->getUUID();
-            $this->_nodes[$depPackage->getUUID()]['out'][] = $package->getUUID();
+            $this->nodes[$package->getUuid()]['in'][]     = $depPackage->getUuid();
+            $this->nodes[$depPackage->getUuid()]['out'][] = $package->getUuid();
         }
 
         $this->fireEndProperty($property);
@@ -129,8 +129,8 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
      */
     protected function initNode(PHP_Depend_Code_NodeI $node)
     {
-        if (!isset($this->_nodes[$node->getUUID()])) {
-            $this->_nodes[$node->getUUID()] = array(
+        if (!isset($this->nodes[$node->getUuid()])) {
+            $this->nodes[$node->getUuid()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),

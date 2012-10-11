@@ -118,9 +118,9 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
         $metric = array();
-        if (isset($this->metrics[$node->getUUID()])) {
+        if (isset($this->metrics[$node->getUuid()])) {
             $metric = array(
-                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$node->getUUID()]
+                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$node->getUuid()]
             );
         }
         return $metric;
@@ -192,7 +192,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
             $npath = PHP_Depend_Util_MathUtil::mul($npath, $stmt);
         }
 
-        $this->metrics[$callable->getUUID()] = $npath;
+        $this->metrics[$callable->getUuid()] = $npath;
     }
 
     /**
@@ -224,7 +224,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -262,7 +262,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(do) = NP(<do-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -300,7 +300,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -335,7 +335,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(for) = NP(<for-range>) + NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -369,7 +369,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(foreach) = NP(<foreach-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -411,7 +411,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -445,7 +445,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(return) = NP(<expr>) --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -473,7 +473,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(switch) = NP(<expr>) + NP(<default-range>) +  NP(<case-range1>) ... --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -515,7 +515,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(try) = NP(<try-range>) + NP(<catch-range1>) + NP(<catch-range2>) ... --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -545,7 +545,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(while) = NP(<while-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -565,7 +565,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     /**
      * Calculates the expression sum of the given node.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      *
      * @return string
      * @since 0.9.12

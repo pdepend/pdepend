@@ -70,7 +70,7 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
     /**
      * @var PHP_Depend_Code_Method[]
      */
-    private $_allMethods;
+    private $allMethods;
 
     /**
      * Returns an array with all aliased or directly imported methods.
@@ -79,15 +79,15 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      */
     public function getAllMethods()
     {
-        if (false === is_array($this->_allMethods)) {
-            $this->_allMethods = array();
+        if (false === is_array($this->allMethods)) {
+            $this->allMethods = array();
             foreach ($this->nodes as $node) {
                 if ($node instanceof PHP_Depend_Code_ASTTraitReference) {
-                    $this->_collectMethods($node);
+                    $this->collectMethods($node);
                 }
             }
         }
-        return $this->_allMethods;
+        return $this->allMethods;
     }
 
     /**
@@ -131,11 +131,11 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      *
      * @return void
      */
-    private function _collectMethods(PHP_Depend_Code_ASTTraitReference $reference)
+    private function collectMethods(PHP_Depend_Code_ASTTraitReference $reference)
     {
         foreach ($reference->getType()->getAllMethods() as $method) {
-            foreach ($this->_getAliasesFor($method) as $alias) {
-                $this->_allMethods[] = $alias;
+            foreach ($this->getAliasesFor($method) as $alias) {
+                $this->allMethods[] = $alias;
             }
         }
     }
@@ -149,12 +149,12 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      *
      * @return PHP_Depend_Code_Method[]
      */
-    private function _getAliasesFor(PHP_Depend_Code_Method $method)
+    private function getAliasesFor(PHP_Depend_Code_Method $method)
     {
         $name = strtolower($method->getName());
 
         $newNames = array();
-        foreach ($this->_getAliases() as $alias) {
+        foreach ($this->getAliases() as $alias) {
             $name2 = strtolower($alias->getImage());
             if ($name2 !== $name) {
                 continue;
@@ -207,7 +207,7 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      *
      * @return PHP_Depend_Code_ASTTraitAdaptationAlias[]
      */
-    private function _getAliases()
+    private function getAliases()
     {
         return $this->findChildrenOfType(
             PHP_Depend_Code_ASTTraitAdaptationAlias::CLAZZ

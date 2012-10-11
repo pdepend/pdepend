@@ -9,6 +9,35 @@
     </properties>
 
 	<body>
+        <release version="1.1.1"
+                 date=""
+                 description="">
+
+            <action date="f6ee217" dev="mapi" type="fix" due-to="Karol" issue="95" system="github">
+                PHP 5.4 array syntax is not supported in property initialization.
+            </action>
+
+            <action date="87a1b5e" dev="mapi" type="fix" due-to="Remy Alidarso" issue="97" system="github">
+                protected property PHP_Depend_Code_Method::$parent
+            </action>
+
+            <action date="d731fa6" dev="mapi" type="fix" due-to="Tyler Stroud" issue="104" system="github">
+                Syntax errors reported when PHP 5.4 short array syntax is used in method signatures or class variable definitions.
+            </action>
+        </release>
+
+        <release version="1.1.0"
+                 date="2012/09/12"
+                 description="This release closes a critical issue in the context
+                              of traits handling.">
+            <action date="806eaab" dev="mapi" type="fix" due-to="bahulneel">
+                Changed type of Node/Trait
+            </action>
+            <action date="" dev="mapi" type="update">
+                Changed to PSR1 coding standard.
+            </action>
+        </release>
+
         <release version="1.0.7"
                  date="2012/04/29"
                  description="This release closes a minor bug within the parsing

@@ -92,16 +92,16 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * All found nodes.
      *
-     * @var array(string=>array) $_nodes
+     * @var array(string=>array)
      */
-    private $_nodes = array();
+    private $nodes = array();
 
     /**
      * List of node collect strategies.
      *
-     * @var array(PHP_Depend_Metrics_CodeRank_CodeRankStrategyI) $_strategies
+     * @var PHP_Depend_Metrics_CodeRank_CodeRankStrategyI[]
      */
-    private $_strategies = array();
+    private $strategies = array();
 
     /**
      * Hash with all calculated node metrics.
@@ -121,9 +121,9 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      * )
      * </code>
      *
-     * @var array(string=>array) $_nodeMetrics
+     * @var array(string=>array)
      */
-    private $_nodeMetrics = null;
+    private $nodeMetrics = null;
 
     /**
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
@@ -134,22 +134,22 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
-        if ($this->_nodeMetrics === null) {
+        if ($this->nodeMetrics === null) {
 
             $this->fireStartAnalyzer();
 
             $factory = new PHP_Depend_Metrics_CodeRank_StrategyFactory();
             if (isset($this->options[self::STRATEGY_OPTION])) {
                 foreach ($this->options[self::STRATEGY_OPTION] as $identifier) {
-                    $this->_strategies[] = $factory->createStrategy($identifier);
+                    $this->strategies[] = $factory->createStrategy($identifier);
                 }
             } else {
-                $this->_strategies[] = $factory->createDefaultStrategy();
+                $this->strategies[] = $factory->createDefaultStrategy();
             }
 
             // Register all listeners
             foreach ($this->getVisitListeners() as $listener) {
-                foreach ($this->_strategies as $strategy) {
+                foreach ($this->strategies as $strategy) {
                     $strategy->addVisitListener($listener);
                 }
             }
@@ -157,19 +157,19 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
             // First traverse package tree
             foreach ($packages as $package) {
                 // Traverse all strategies
-                foreach ($this->_strategies as $strategy) {
+                foreach ($this->strategies as $strategy) {
                     $package->accept($strategy);
                 }
             }
 
             // Collect all nodes
-            foreach ($this->_strategies as $strategy) {
+            foreach ($this->strategies as $strategy) {
                 $collected    = $strategy->getCollectedNodes();
-                $this->_nodes = array_merge_recursive($collected, $this->_nodes);
+                $this->nodes = array_merge_recursive($collected, $this->nodes);
             }
 
             // Init node metrics
-            $this->_nodeMetrics = array();
+            $this->nodeMetrics = array();
 
             // Calculate code rank metrics
             $this->buildCodeRankMetrics();
@@ -189,8 +189,8 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
     {
-        if (isset($this->_nodeMetrics[$node->getUUID()])) {
-            return $this->_nodeMetrics[$node->getUUID()];
+        if (isset($this->nodeMetrics[$node->getUuid()])) {
+            return $this->nodeMetrics[$node->getUuid()];
         }
         return array();
     }
@@ -202,17 +202,17 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
      */
     protected function buildCodeRankMetrics()
     {
-        foreach (array_keys($this->_nodes) as $uuid) {
-            $this->_nodeMetrics[$uuid] = array(
+        foreach (array_keys($this->nodes) as $uuid) {
+            $this->nodeMetrics[$uuid] = array(
                 self::M_CODE_RANK          =>  0,
                 self::M_REVERSE_CODE_RANK  =>  0
             );
         }
         foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
-            $this->_nodeMetrics[$uuid][self::M_CODE_RANK] = $rank;
+            $this->nodeMetrics[$uuid][self::M_CODE_RANK] = $rank;
         }
         foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
-            $this->_nodeMetrics[$uuid][self::M_REVERSE_CODE_RANK] = $rank;
+            $this->nodeMetrics[$uuid][self::M_REVERSE_CODE_RANK] = $rank;
         }
     }
 
@@ -230,16 +230,16 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
 
         $ranks = array();
 
-        foreach (array_keys($this->_nodes) as $name) {
+        foreach (array_keys($this->nodes) as $name) {
             $ranks[$name] = 1;
         }
 
         for ($i = 0; $i < self::ALGORITHM_LOOPS; $i++) {
-            foreach ($this->_nodes as $name => $info) {
+            foreach ($this->nodes as $name => $info) {
                 $rank = 0;
                 foreach ($info[$id1] as $ref) {
                     $previousRank = $ranks[$ref];
-                    $refCount     = count($this->_nodes[$ref][$id2]);
+                    $refCount     = count($this->nodes[$ref][$id2]);
 
                     $rank += ($previousRank / $refCount);
                 }

@@ -1,7 +1,7 @@
 <?php
 class Parser {
     /**
-     * @var false|null|Runtime $runtime
+     * @var false|null|Runtime
      */
     protected $runtime;
 }

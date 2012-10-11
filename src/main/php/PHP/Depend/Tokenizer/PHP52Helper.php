@@ -92,7 +92,7 @@ final class PHP_Depend_Tokenizer_PHP52Helper
             $source
         );
 
-        $tokens = self::_tokenize($source);
+        $tokens = self::doTokenize($source);
 
         $result = array();
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
@@ -121,7 +121,7 @@ final class PHP_Depend_Tokenizer_PHP52Helper
      * @return array
      * @todo Exception should be moved into a general package.
      */
-    private static function _tokenize($source)
+    private static function doTokenize($source)
     {
         ini_set('track_errors', 'on');
         $php_errormsg = null;

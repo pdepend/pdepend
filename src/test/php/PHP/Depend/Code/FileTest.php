@@ -106,7 +106,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     public function testGetUuidReturnsInjectedUuidValue()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
 
         self::assertEquals(__FUNCTION__, $file->getUuid());
     }
@@ -153,7 +153,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
 
         $file = new PHP_Depend_Code_File(null);
         $file->setCache($cache);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
 
         $file->getTokens();
     }
@@ -176,7 +176,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
 
         $file = new PHP_Depend_Code_File(null);
         $file->setCache($cache);
-        $file->setUUID(__FUNCTION__);
+        $file->setUuid(__FUNCTION__);
 
         $file->setTokens(array(1, 2, 3));
     }

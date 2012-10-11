@@ -64,7 +64,7 @@ class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
     /**
      * List of aggregated {@link PHP_Depend_Input_FilterI} objects.
      *
-     * @var array(PHP_Depend_Input_FilterI) $filters.
+     * @var PHP_Depend_Input_FilterI[]
      */
     protected $filters = array();
 

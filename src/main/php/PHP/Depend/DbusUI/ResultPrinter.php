@@ -70,14 +70,14 @@ class PHP_Depend_DbusUI_ResultPrinter
      *
      * @var integer
      */
-    private $_startTime = 0;
+    private $startTime = 0;
 
     /**
      * Number of parsed/analyzed files.
      *
      * @var integer
      */
-    private $_parsedFiles = 0;
+    private $parsedFiles = 0;
 
     /**
      * Is called when PDepend starts the file parsing process.
@@ -88,7 +88,7 @@ class PHP_Depend_DbusUI_ResultPrinter
      */
     public function startParseProcess(PHP_Depend_BuilderI $builder)
     {
-        $this->_startTime = time();
+        $this->startTime = time();
     }
 
     /**
@@ -122,7 +122,7 @@ class PHP_Depend_DbusUI_ResultPrinter
      */
     public function endFileParsing(PHP_Depend_TokenizerI $tokenizer)
     {
-        ++$this->_parsedFiles;
+        ++$this->parsedFiles;
     }
 
     /**
@@ -176,8 +176,8 @@ class PHP_Depend_DbusUI_ResultPrinter
             'PHP_Depend',
             sprintf(
                 '%d files analyzed in %s minutes...',
-                $this->_parsedFiles,
-                (date('i:s', time() - $this->_startTime))
+                $this->parsedFiles,
+                (date('i:s', time() - $this->startTime))
             ),
             new DBusArray(DBus::STRING, array()),
             new DBusDict(DBus::VARIANT, array()),

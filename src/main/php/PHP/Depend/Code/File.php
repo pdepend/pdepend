@@ -115,7 +115,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * List of classes, interfaces and functions that parsed from this file.
      *
-     * @var array(PHP_Depend_Code_AbstractItem)
+     * @var PHP_Depend_Code_AbstractItem[]
      * @since 0.10.0
      */
     protected $childNodes = array();
@@ -131,9 +131,9 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * Normalized code in this file.
      *
-     * @var string $_source
+     * @var string
      */
-    private $_source = null;
+    private $source = null;
 
     /**
      * Constructs a new source file instance.
@@ -172,7 +172,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      *
      * @return string
      */
-    public function getUUID()
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -185,7 +185,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      * @return void
      * @since 0.9.12
      */
-    public function setUUID($uuid)
+    public function setUuid($uuid)
     {
         $this->uuid = $uuid;
     }
@@ -212,7 +212,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     public function getSource()
     {
         $this->readSource();
-        return $this->_source;
+        return $this->source;
     }
 
     /**
@@ -224,7 +224,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->getUUID());
+            ->restore($this->getUuid());
     }
 
     /**
@@ -238,7 +238,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     {
         return $this->cache
             ->type('tokens')
-            ->store($this->getUUID(), $tokens);
+            ->store($this->getUuid(), $tokens);
     }
 
     /**
@@ -273,7 +273,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     public function addChild(PHP_Depend_Code_AbstractItem $item)
     {
-        $this->childNodes[$item->getUUID()] = $item;
+        $this->childNodes[$item->getUuid()] = $item;
     }
 
     /**
@@ -391,13 +391,13 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
      */
     protected function readSource()
     {
-        if ($this->_source === null && file_exists($this->fileName)) {
+        if ($this->source === null && file_exists($this->fileName)) {
             $source = file_get_contents($this->fileName);
 
-            $this->_source = str_replace(array("\r\n", "\r"), "\n", $source);
+            $this->source = str_replace(array("\r\n", "\r"), "\n", $source);
 
             $this->startLine = 1;
-            $this->endLine   = substr_count($this->_source, "\n") + 1;
+            $this->endLine   = substr_count($this->source, "\n") + 1;
         }
     }
     

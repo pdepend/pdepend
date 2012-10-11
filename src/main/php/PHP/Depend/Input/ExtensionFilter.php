@@ -63,7 +63,7 @@ class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
     /**
      * Whitelist of accepted file extensions.
      *
-     * @var array(string) $extensions
+     * @var array(string)
      */
     protected $extensions = array();
 

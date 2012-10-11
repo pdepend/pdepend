@@ -72,70 +72,70 @@ class PHP_Depend_Log_Jdepend_Xml
     /**
      * The output log file.
      *
-     * @var string $_logFile
+     * @var string
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The raw {@link PHP_Depend_Code_Package} instances.
      *
-     * @var PHP_Depend_Code_NodeIterator $code
+     * @var PHP_Depend_Code_NodeIterator
      */
     protected $code = null;
 
     /**
      * Set of all analyzed files.
      *
-     * @var array(string=>PHP_Depend_Code_File) $fileSet
+     * @var PHP_Depend_Code_File[]
      */
     protected $fileSet = array();
 
     /**
      * List of all generated project metrics.
      *
-     * @var array(string=>mixed) $projectMetrics
+     * @var array(string=>mixed)
      */
     protected $projectMetrics = array();
 
     /**
      * List of all collected node metrics.
      *
-     * @var array(string=>array) $nodeMetrics
+     * @var array(string=>array)
      */
     protected $nodeMetrics = array();
 
     /**
      * The depedency result set.
      *
-     * @var PHP_Depend_Metrics_Dependency_Analyzer $analyzer
+     * @var PHP_Depend_Metrics_Dependency_Analyzer
      */
     protected $analyzer = null;
 
     /**
      * The Packages dom element.
      *
-     * @var DOMElement $packages
+     * @var DOMElement
      */
     protected $packages = null;
 
     /**
      * The Cycles dom element.
      *
-     * @var DOMElement $cycles
+     * @var DOMElement
      */
     protected $cycles = null;
 
     /**
      * The concrete classes element for the current package.
      *
-     * @var DOMElement $concreteClasses
+     * @var DOMElement
      */
     protected $concreteClasses = null;
 
     /**
      * The abstract classes element for the current package.
      *
-     * @var DOMElement $abstractClasses
+     * @var DOMElement
      */
     protected $abstractClasses = null;
 
@@ -148,7 +148,7 @@ class PHP_Depend_Log_Jdepend_Xml
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -201,7 +201,7 @@ class PHP_Depend_Log_Jdepend_Xml
     public function close()
     {
         // Check for configured output
-        if ($this->_logFile === null) {
+        if ($this->logFile === null) {
             throw new PHP_Depend_Log_NoLogOutputException($this);
         }
 
@@ -219,7 +219,7 @@ class PHP_Depend_Log_Jdepend_Xml
         }
 
         $dom->appendChild($jdepend);
-        $dom->save($this->_logFile);
+        $dom->save($this->logFile);
     }
 
     /**
