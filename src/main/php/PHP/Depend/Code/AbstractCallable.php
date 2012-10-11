@@ -105,7 +105,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * List of all parsed child nodes.
      *
-     * @var PHP_Depend_Code_ASTNodeI[]
+     * @var PHP_Depend_Code_ASTNode[]
      * @since 0.9.6
      */
     protected $nodes = array();
@@ -151,13 +151,13 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Adds a parsed child node to this node.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
+     * @param PHP_Depend_Code_ASTNode $node A parsed child node instance.
      *
      * @return void
      * @access private
      * @since 0.9.6
      */
-    public function addChild(PHP_Depend_Code_ASTNodeI $node)
+    public function addChild(PHP_Depend_Code_ASTNode $node)
     {
         $this->nodes[] = $node;
     }
@@ -165,7 +165,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Returns all child nodes of this method.
      *
-     * @return PHP_Depend_Code_ASTNodeI[]
+     * @return PHP_Depend_Code_ASTNode[]
      * @since 0.9.8
      */
     public function getChildren()
@@ -180,7 +180,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return PHP_Depend_Code_ASTNodeI
+     * @return PHP_Depend_Code_ASTNode
      * @access private
      * @since 0.9.6
      */
@@ -203,7 +203,7 @@ abstract class PHP_Depend_Code_AbstractCallable
      * @param string $targetType The target class or interface type.
      * @param array  &$results   The found children.
      *
-     * @return PHP_Depend_Code_ASTNodeI[]
+     * @return PHP_Depend_Code_ASTNode[]
      * @access private
      * @since 0.9.6
      */

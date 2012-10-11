@@ -602,20 +602,20 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
@@ -637,29 +637,29 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
@@ -681,20 +681,20 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNodeI',
+            'PHP_Depend_Code_ASTNode',
             array(),
             array(),
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
@@ -706,7 +706,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class->addChild($node2);
 
         $child = $class->getFirstChildOfType(
-            'PHP_Depend_Code_ASTNodeI_' . md5(microtime())
+            'PHP_Depend_Code_ASTNode_' . md5(microtime())
         );
         self::assertNull($child);
     }

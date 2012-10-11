@@ -290,7 +290,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a boolean AND-expression.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -305,7 +305,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a boolean OR-expression.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -320,7 +320,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a switch label.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -338,7 +338,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a catch statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -355,7 +355,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits an elseif statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -372,7 +372,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a for statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -389,7 +389,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a foreach statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -406,7 +406,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits an if statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -423,7 +423,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a logical AND expression.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -438,7 +438,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a logical OR expression.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -453,7 +453,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a ternary operator.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -470,7 +470,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a while-statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
@@ -487,7 +487,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
     /**
      * Visits a do/while-statement.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The currently visited node.
+     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
      * @param array(string=>integer)   $data The previously calculated ccn values.
      *
      * @return array(string=>integer)

@@ -2999,7 +2999,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 $statement = $this->parseOptionalStatement();
                 if ($statement === null) {
                     $this->consumeToken($tokenType);
-                } else if ($statement instanceof PHP_Depend_Code_ASTNodeI) {
+                } else if ($statement instanceof PHP_Depend_Code_ASTNode) {
                     $label->addChild($statement);
                 }
                 // TODO: Change the <else if> into and <else> when the ast
@@ -5450,7 +5450,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         while (($stmt = $this->parseOptionalStatement()) !== null) {
             // TODO: Remove if-statement once, we have translated functions and
             //       closures into ast-nodes
-            if ($stmt instanceof PHP_Depend_Code_ASTNodeI) {
+            if ($stmt instanceof PHP_Depend_Code_ASTNode) {
                 $scope->addChild($stmt);
             }
         }

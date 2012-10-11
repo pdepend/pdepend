@@ -102,7 +102,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * List of all parsed child nodes.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI)
+     * @var array(PHP_Depend_Code_ASTNode)
      */
     protected $nodes = array();
 
@@ -174,12 +174,12 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Adds a parsed child node to this node.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node A parsed child node instance.
+     * @param PHP_Depend_Code_ASTNode $node A parsed child node instance.
      *
      * @return void
      * @access private
      */
-    public function addChild(PHP_Depend_Code_ASTNodeI $node)
+    public function addChild(PHP_Depend_Code_ASTNode $node)
     {
         $this->nodes[] = $node;
     }
@@ -187,7 +187,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Returns all child nodes of this class.
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return array(PHP_Depend_Code_ASTNode)
      */
     public function getChildren()
     {
@@ -201,7 +201,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return PHP_Depend_Code_ASTNodeI
+     * @return PHP_Depend_Code_ASTNode
      * @access private
      * @todo Refactor $_methods property to getAllMethods() when it exists.
      */
@@ -231,7 +231,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * @param string $targetType The target class or interface type.
      * @param array  &$results   The found children.
      *
-     * @return PHP_Depend_Code_ASTNodeI[]
+     * @return PHP_Depend_Code_ASTNode[]
      * @access private
      * @todo Refactor $_methods property to getAllMethods() when it exists.
      */

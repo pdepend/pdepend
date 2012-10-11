@@ -60,7 +60,7 @@
  * @link       http://www.pdepend.org/
  * @since      0.9.6
  */
-abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
+abstract class PHP_Depend_Code_ASTNode
 {
     /**
      * The type of this class.
@@ -72,7 +72,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     /**
      * Parsed child nodes of this node.
      *
-     * @var array(PHP_Depend_Code_ASTNodeI)
+     * @var array(PHP_Depend_Code_ASTNode)
      */
     protected $nodes = array();
 
@@ -80,7 +80,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var PHP_Depend_Code_ASTNodeI
+     * @var PHP_Depend_Code_ASTNode
      */
     protected $parent = null;
 
@@ -356,7 +356,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @param integer $index Index of the requested node.
      *
-     * @return PHP_Depend_Code_ASTNodeI
+     * @return PHP_Depend_Code_ASTNode
      * @throws OutOfBoundsException When no node exists at the given index.
      */
     public function getChild($index)
@@ -376,7 +376,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return PHP_Depend_Code_ASTNodeI[]
+     * @return PHP_Depend_Code_ASTNode[]
      */
     public function getChildren()
     {
@@ -390,7 +390,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return PHP_Depend_Code_ASTNodeI
+     * @return PHP_Depend_Code_ASTNode
      */
     public function getFirstChildOfType($targetType)
     {
@@ -414,7 +414,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * @param array  &$results   Already found node instances. This parameter
      *        is only for internal usage.
      *
-     * @return PHP_Depend_Code_ASTNodeI[]
+     * @return PHP_Depend_Code_ASTNode[]
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
@@ -430,12 +430,12 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     /**
      * This method adds a new child node at the first position of the children.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The new child node.
+     * @param PHP_Depend_Code_ASTNode $node The new child node.
      *
      * @return void
      * @since 0.10.2
      */
-    public function prependChild(PHP_Depend_Code_ASTNodeI $node)
+    public function prependChild(PHP_Depend_Code_ASTNode $node)
     {
         array_unshift($this->nodes, $node);
         $node->setParent($this);
@@ -444,11 +444,11 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     /**
      * This method adds a new child node to this node instance.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The new child node.
+     * @param PHP_Depend_Code_ASTNode $node The new child node.
      *
      * @return void
      */
-    public function addChild(PHP_Depend_Code_ASTNodeI $node)
+    public function addChild(PHP_Depend_Code_ASTNode $node)
     {
         $this->nodes[] = $node;
         $node->setParent($this);
@@ -458,7 +458,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return PHP_Depend_Code_ASTNodeI
+     * @return PHP_Depend_Code_ASTNode
      */
     public function getParent()
     {
@@ -471,7 +471,7 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
      *
      * @param string $parentType Class/interface type you are looking for,
      *
-     * @return array(PHP_Depend_Code_ASTNodeI)
+     * @return array(PHP_Depend_Code_ASTNode)
      */
     public function getParentsOfType($parentType)
     {
@@ -490,11 +490,11 @@ abstract class PHP_Depend_Code_ASTNode implements PHP_Depend_Code_ASTNodeI
     /**
      * Sets the parent node of this node.
      *
-     * @param PHP_Depend_Code_ASTNodeI $node The parent node of this node.
+     * @param PHP_Depend_Code_ASTNode $node The parent node of this node.
      *
      * @return void
      */
-    public function setParent(PHP_Depend_Code_ASTNodeI $node)
+    public function setParent(PHP_Depend_Code_ASTNode $node)
     {
         $this->parent = $node;
     }
