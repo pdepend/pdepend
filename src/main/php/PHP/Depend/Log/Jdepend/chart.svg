@@ -576,4 +576,12 @@
        cx="15"
        transform="matrix(0.6,0,0,0.6,41,10)" />
   </g>
+  <g>
+    <text
+       xml:space="preserve"
+       style="font-size:2px;font-family:Arial;fill:#2e3436;"
+       x="195.05258"
+       y="120.85966"
+       xml:id="jdepend.legend">Package</text>
+  </g>
 </svg>
