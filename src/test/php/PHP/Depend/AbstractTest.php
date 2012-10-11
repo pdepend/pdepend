@@ -80,7 +80,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             mkdir($run, 0755);
         }
 
-        $this->_clearRunResources($run);
+        $this->clearRunResources($run);
 
         include_once 'PHP/Depend.php';
 
@@ -98,7 +98,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         PHP_Depend_Code_Filter_Collection::getInstance()->setFilter();
 
-        $this->_clearRunResources();
+        $this->clearRunResources();
         $this->resetWorkingDirectory();
 
         parent::tearDown();
@@ -391,7 +391,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    private function _clearRunResources($dir = null)
+    private function clearRunResources($dir = null)
     {
         if ($dir === null) {
             $dir = dirname(__FILE__) . '/_run';
@@ -403,7 +403,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             }
             $pathName = realpath($file->getPathname());
             if ($file->isDir()) {
-                $this->_clearRunResources($pathName);
+                $this->clearRunResources($pathName);
                 rmdir($pathName);
             } else {
                 unlink($pathName);
