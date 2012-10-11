@@ -45,6 +45,7 @@
  * @version    SVN: $Id$
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
+ * @since      1.1.1
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
@@ -61,6 +62,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
  * @version    Release: @package_version@
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
+ * @since      1.1.1
  *
  * @ticket 104
  * @ticket 95
@@ -78,6 +80,16 @@ class PHP_Depend_Bugs_ShortArraySyntaxInitializerBug00000104Test extends PHP_Dep
      */
     public function testPropertyDefaultValue()
     {
-        $this->parseCodeResourceForTest();
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * testPropertyDefaultValue
+     *
+     * @return void
+     */
+    public function testParameterDefaultValue()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 }

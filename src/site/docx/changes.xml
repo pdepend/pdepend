@@ -13,8 +13,12 @@
                  date=""
                  description="">
 
-            <action date="2b23ff9" dev="mapi" type="fix" due-to="Karol" issue="95" system="github">
+            <action date="f6ee217" dev="mapi" type="fix" due-to="Karol" issue="95" system="github">
                 PHP 5.4 array syntax is not supported in property initialization.
+            </action>
+
+            <action date="" dev="mapi" type="fix" due-to="Tyler Stroud" issue="104" system="github">
+                Syntax errors reported when PHP 5.4 short array syntax is used in method signatures or class variable definitions.
             </action>
         </release>
 
