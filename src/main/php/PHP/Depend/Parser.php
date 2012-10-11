@@ -430,12 +430,21 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
+     * Tests if the given token type is a reserved keyword in the supported PHP
+     * version.
+     *
+     * @param $tokenType
+     * @return boolean
+     * @since 1.1.1
+     */
+    abstract protected function isKeyword($tokenType);
+
+    /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
      * name part.
      *
      * @param integer $tokenType The type of a parsed token.
-     *
-     * @return string
+     * @return boolean
      * @since 0.10.6
      */
     protected abstract function isClassName($tokenType);
@@ -4818,13 +4827,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
-    private function doParseArray()
+    private function doParseArray($static = false)
     {
         $this->tokenStack->push();
 
         return $this->setNodePositionsAndReturn(
             $this->parseArray(
-                $this->builder->buildAstArray()
+                $this->builder->buildAstArray(),
+                $static
             )
         );
     }
@@ -4841,29 +4851,32 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Parses a php array declaration.
      *
-     * @param PHP_Depend_Code_ASTArray $array The context array node.
+     * @param PHP_Depend_Code_ASTArray $array
+     * @param boolean $static
      *
      * @return PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
-    protected abstract function parseArray(PHP_Depend_Code_ASTArray $array);
+    protected abstract function parseArray(PHP_Depend_Code_ASTArray $array, $static = false);
 
     /**
      * Parses all elements in an array.
      *
-     * @param PHP_Depend_Code_ASTArray $array        The context array node.
-     * @param integer                  $endDelimiter The version specific delimiter.
+     * @param PHP_Depend_Code_ASTArray $array
+     * @param integer $endDelimiter
+     * @param boolean $static
      *
      * @return PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
     protected function parseArrayElements(
         PHP_Depend_Code_ASTArray $array,
-        $endDelimiter
+        $endDelimiter,
+        $static = false
     ) {
         $this->consumeComments();
         while ($endDelimiter !== $this->tokenizer->peek()) {
-            $array->addChild($this->parseArrayElement());
+            $array->addChild($this->parseArrayElement($static));
 
             $this->consumeComments();
             if (self::T_COMMA === $this->tokenizer->peek()) {
@@ -4880,10 +4893,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * An array element can have a simple value, a key/value pair, a value by
      * reference or a key/value pair with a referenced value.
      *
+     * @param boolean $static
      * @return PHP_Depend_Code_ASTArrayElement
      * @since 1.0.0
      */
-    protected function parseArrayElement()
+    protected function parseArrayElement($static = false)
     {
         $this->consumeComments();
 
@@ -4891,8 +4905,27 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $element = $this->builder->buildAstArrayElement();
         if ($this->parseOptionalByReference()) {
+
+            if ($static) {
+                $tokens = $this->tokenStack->pop();
+
+                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                    end($tokens),
+                    $this->sourceFile->getFileName()
+                );
+            }
+
             $element->setByReference();
         }
+
+        $this->consumeComments();
+        if ($this->isKeyword($this->tokenizer->peek())) {
+            throw new PHP_Depend_Parser_UnexpectedTokenException(
+                $this->tokenizer->next(),
+                $this->sourceFile->getFileName()
+            );
+        }
+
         $element->addChild($this->parseExpression());
 
         $this->consumeComments();
@@ -6182,8 +6215,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     private function parseStaticValueOrStaticArray()
     {
         $this->consumeComments();
-        if ($this->tokenizer->peek() === self::T_ARRAY) {
-            return $this->parseStaticArray();
+        if ($this->isArrayStartDelimiter()) {
+            // TODO: Use default value as value!
+            $defaultValue = $this->doParseArray(true);
+
+            $value = new PHP_Depend_Code_Value();
+            $value->setValue(array());
+
+            return $value;
         }
         return $this->parseStaticValue();
     }
@@ -6302,95 +6341,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         // We should never reach this, so throw an exception
         throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
-    }
-
-    /**
-     * This method parses an array as it is used for for parameter or property
-     * default values.
-     *
-     * Note: At the moment the implementation of this method only returns an
-     *       empty array, but consumes all tokens that belong to the array
-     *       declaration.
-     *
-     * TODO: Implement array content/value handling, but how should we handle
-     *       constant values like array(self::FOO, FOOBAR)?
-     *
-     * @return array
-     * @since 0.9.5
-     */
-    private function parseStaticArray()
-    {
-        $staticValue = array();
-
-        // Fetch all tokens that belong to this array
-        $this->consumeToken(self::T_ARRAY);
-        $this->consumeComments();
-        $this->consumeToken(self::T_PARENTHESIS_OPEN);
-
-        $parenthesis = 1;
-
-        $tokenType = $this->tokenizer->peek();
-        while ($tokenType !== self::T_EOF) {
-
-            switch ($tokenType) {
-
-            case self::T_PARENTHESIS_CLOSE:
-                if (--$parenthesis === 0) {
-                    break 2;
-                }
-                $this->consumeToken(self::T_PARENTHESIS_CLOSE);
-                break;
-
-            case self::T_PARENTHESIS_OPEN:
-                $this->consumeToken(self::T_PARENTHESIS_OPEN);
-                ++$parenthesis;
-                break;
-
-            case self::T_DIR:
-            case self::T_NULL:
-            case self::T_TRUE:
-            case self::T_FILE:
-            case self::T_LINE:
-            case self::T_NS_C:
-            case self::T_PLUS:
-            case self::T_SELF:
-            case self::T_ARRAY:
-            case self::T_FALSE:
-            case self::T_EQUAL:
-            case self::T_COMMA:
-            case self::T_MINUS:
-            case self::T_COMMENT:
-            case self::T_DOC_COMMENT:
-            case self::T_DOUBLE_COLON:
-            case self::T_STRING:
-            case self::T_BACKSLASH:
-            case self::T_DNUMBER:
-            case self::T_LNUMBER:
-            case self::T_FUNC_C:
-            case self::T_CLASS_C:
-            case self::T_METHOD_C:
-            case self::T_STATIC:
-            case self::T_PARENT:
-            case self::T_NUM_STRING:
-            case self::T_DOUBLE_ARROW:
-            case self::T_CONSTANT_ENCAPSED_STRING:
-                $this->consumeToken($tokenType);
-                break;
-
-            default:
-                break 2;
-            }
-
-            $tokenType = $this->tokenizer->peek();
-        }
-
-        // Read closing parenthesis
-        $this->consumeToken(self::T_PARENTHESIS_CLOSE);
-
-        $defaultValue = new PHP_Depend_Code_Value();
-        $defaultValue->setValue($staticValue);
-
-        return $defaultValue;
     }
 
     /**

@@ -64,6 +64,24 @@
  */
 class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
 {
+    /**
+     * Tests if the given token type is a reserved keyword in the supported PHP
+     * version.
+     *
+     * @param $tokenType
+     * @return boolean
+     * @since 1.1.1
+     */
+    protected function isKeyword($tokenType)
+    {
+        switch ($tokenType) {
+            case self::T_CLASS:
+            case self::T_INTERFACE:
+            case self::T_FUNCTION:
+                return true;
+        }
+        return false;
+    }
 
     /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
@@ -77,21 +95,20 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     protected function isClassName($tokenType)
     {
         switch ($tokenType) {
-
-        case self::T_DIR:
-        case self::T_USE:
-        case self::T_GOTO:
-        case self::T_NULL:
-        case self::T_NS_C:
-        case self::T_TRUE:
-        case self::T_CLONE:
-        case self::T_FALSE:
-        case self::T_TRAIT:
-        case self::T_STRING:
-        case self::T_TRAIT_C:
-        case self::T_INSTEADOF:
-        case self::T_NAMESPACE:
-            return true;
+            case self::T_DIR:
+            case self::T_USE:
+            case self::T_GOTO:
+            case self::T_NULL:
+            case self::T_NS_C:
+            case self::T_TRUE:
+            case self::T_CLONE:
+            case self::T_FALSE:
+            case self::T_TRAIT:
+            case self::T_STRING:
+            case self::T_TRAIT_C:
+            case self::T_INSTEADOF:
+            case self::T_NAMESPACE:
+                return true;
         }
         return false;
     }
@@ -324,12 +341,12 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     /**
      * Parses a php array declaration.
      *
-     * @param PHP_Depend_Code_ASTArray $array The context array node.
-     *
+     * @param PHP_Depend_Code_ASTArray $array
+     * @param boolean $static
      * @return PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
-    protected function parseArray(PHP_Depend_Code_ASTArray $array)
+    protected function parseArray(PHP_Depend_Code_ASTArray $array, $static = false)
     {
         switch ($this->tokenizer->peek()) {
 
@@ -337,13 +354,13 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             $this->consumeToken(self::T_ARRAY);
             $this->consumeComments();
             $this->consumeToken(self::T_PARENTHESIS_OPEN);
-            $this->parseArrayElements($array, self::T_PARENTHESIS_CLOSE);
+            $this->parseArrayElements($array, self::T_PARENTHESIS_CLOSE, $static);
             $this->consumeToken(self::T_PARENTHESIS_CLOSE);
             break;
 
         default:
             $this->consumeToken(self::T_SQUARED_BRACKET_OPEN);
-            $this->parseArrayElements($array, self::T_SQUARED_BRACKET_CLOSE);
+            $this->parseArrayElements($array, self::T_SQUARED_BRACKET_CLOSE, $static);
             $this->consumeToken(self::T_SQUARED_BRACKET_CLOSE);
             break;
         }

@@ -9,6 +9,15 @@
     </properties>
 
 	<body>
+        <release version="1.1.1"
+                 date=""
+                 description="">
+
+            <action date="2b23ff9" dev="mapi" type="fix" due-to="Karol" issue="95" system="github">
+                PHP 5.4 array syntax is not supported in property initialization.
+            </action>
+        </release>
+
         <release version="1.1.0"
                  date="2012/09/12"
                  description="This release closes a critical issue in the context
