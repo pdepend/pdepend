@@ -72,7 +72,7 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * List or registered listeners.
      *
-     * @var array(PHP_Depend_Metrics_ListenerI) $_listeners
+     * @var PHP_Depend_Metrics_ListenerI[]
      */
     private $listeners = array();
 

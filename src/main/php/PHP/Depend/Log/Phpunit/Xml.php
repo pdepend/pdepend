@@ -94,7 +94,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * List of all analyzers that implement the node aware interface
      * {@link PHP_Depend_Metrics_NodeAwareI}.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI) $_nodeAwareAnalyzers
+     * @var PHP_Depend_Metrics_AnalyzerI[]
      */
     private $nodeAwareAnalyzers = array();
 

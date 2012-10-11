@@ -72,7 +72,7 @@ abstract class PHP_Depend_Code_ASTNode
     /**
      * Parsed child nodes of this node.
      *
-     * @var array(PHP_Depend_Code_ASTNode)
+     * @var PHP_Depend_Code_ASTNode[]
      */
     protected $nodes = array();
 
@@ -471,7 +471,7 @@ abstract class PHP_Depend_Code_ASTNode
      *
      * @param string $parentType Class/interface type you are looking for,
      *
-     * @return array(PHP_Depend_Code_ASTNode)
+     * @return PHP_Depend_Code_ASTNode[]
      */
     public function getParentsOfType($parentType)
     {

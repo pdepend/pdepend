@@ -59,13 +59,12 @@
  * @version    Release: @package_version@
  * @link       http://pdepend.org/
  */
-abstract class PHP_Depend_Visitor_AbstractVisitor
-    implements PHP_Depend_VisitorI
+abstract class PHP_Depend_Visitor_AbstractVisitor implements PHP_Depend_VisitorI
 {
     /**
      * List of all registered listeners.
      *
-     * @var array(PHP_Depend_Visitor_ListenerI) $_listeners
+     * @var PHP_Depend_Visitor_ListenerI[]
      */
     private $listeners = array();
 

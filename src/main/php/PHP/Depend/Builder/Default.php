@@ -79,7 +79,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * This property holds all packages found during the parsing phase.
      *
-     * @param array(PHP_Depend_Code_Package)
+     * @param PHP_Depend_Code_Package[]
      * @since 0.9.12
      */
     private $preparedPackages = null;
@@ -88,7 +88,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Default package which contains all functions and classes with an unknown
      * scope.
      *
-     * @var PHP_Depend_Code_Package $defaultPackage
+     * @var PHP_Depend_Code_Package
      */
     protected $defaultPackage = null;
 
@@ -151,14 +151,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Cache of all classes created during the regular parsing process.
      *
-     * @var array(PHP_Depend_Code_Class) $_frozenClasses
+     * @var PHP_Depend_Code_Class[]
      */
     private $frozenClasses = array();
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
-     * @var array(PHP_Depend_Code_Interface) $_frozenInterfaces
+     * @var PHP_Depend_Code_Interface[]
      */
     private $frozenInterfaces = array();
 

@@ -70,7 +70,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of associated properties.
      *
-     * @var array(PHP_Depend_Code_Property) $_properties
+     * @var PHP_Depend_Code_Property[]
      */
     private $properties = null;
 

@@ -99,7 +99,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer
     /**
      * List of node collect strategies.
      *
-     * @var array(PHP_Depend_Metrics_CodeRank_CodeRankStrategyI) $_strategies
+     * @var PHP_Depend_Metrics_CodeRank_CodeRankStrategyI[]
      */
     private $strategies = array();
 

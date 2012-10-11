@@ -175,8 +175,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Returns an array of all afferent nodes.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return array(PHP_Depend_Code_NodeI)
+     * @return PHP_Depend_Code_NodeI[]
      */
     public function getAfferents(PHP_Depend_Code_NodeI $node)
     {
@@ -191,8 +190,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Returns an array of all efferent nodes.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return array(PHP_Depend_Code_NodeI)
+     * @return PHP_Depend_Code_NodeI[]
      */
     public function getEfferents(PHP_Depend_Code_NodeI $node)
     {
@@ -208,8 +206,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * returns <b>null</b> if no cycle exists .
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
-     * @return array(PHP_Depend_Code_NodeI)
+     * @return PHP_Depend_Code_NodeI[]
      */
     public function getCycle(PHP_Depend_Code_NodeI $node)
     {
@@ -475,9 +472,8 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Collects a single cycle that is reachable by this package. All packages
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param array(PHP_Depend_Code_Package) &$list   Already visited packages.
-     * @param PHP_Depend_Code_Package        $package The context code package.
-     *
+     * @param PHP_Depend_Code_Package[] &$list
+     * @param PHP_Depend_Code_Package $package
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */

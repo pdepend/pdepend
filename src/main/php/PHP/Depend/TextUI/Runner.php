@@ -133,7 +133,7 @@ class PHP_Depend_TextUI_Runner
      * This of process listeners that will be hooked into PHP_Depend's analyzing
      * process.
      *
-     * @var array(PHP_Depend_ProcessListenerI) $_processListeners
+     * @var PHP_Depend_ProcessListenerI[]
      */
     private $processListeners = array();
 

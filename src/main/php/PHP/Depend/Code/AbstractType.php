@@ -102,7 +102,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * List of all parsed child nodes.
      *
-     * @var array(PHP_Depend_Code_ASTNode)
+     * @var PHP_Depend_Code_ASTNode[]
      */
     protected $nodes = array();
 
@@ -187,7 +187,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Returns all child nodes of this class.
      *
-     * @return array(PHP_Depend_Code_ASTNode)
+     * @return PHP_Depend_Code_ASTNode[]
      */
     public function getChildren()
     {
@@ -456,7 +456,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Returns a list of all methods provided by this type or one of its parents.
      *
-     * @return array(PHP_Depend_Code_Method)
+     * @return PHP_Depend_Code_Method[]
      */
     public abstract function getAllMethods();
 

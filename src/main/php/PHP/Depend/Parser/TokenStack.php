@@ -65,7 +65,7 @@ class PHP_Depend_Parser_TokenStack
     /**
      * The actual token scope.
      *
-     * @var array(PHP_Depend_Token) $_tokens
+     * @var PHP_Depend_Token[]
      */
     private $tokens = array();
 
@@ -99,7 +99,7 @@ class PHP_Depend_Parser_TokenStack
      * array with all collected tokens. Additionally this method will add all
      * tokens of the removed scope onto the next token scope.
      *
-     * @return array(PHP_Depend_Token)
+     * @return PHP_Depend_Token[]
      */
     public function pop()
     {

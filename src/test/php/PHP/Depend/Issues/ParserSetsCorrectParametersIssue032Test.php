@@ -177,7 +177,7 @@ class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
     /**
      * Returns the parameters of the first method in the test case file.
      *
-     * @return array(PHP_Depend_Code_Parameter)
+     * @return PHP_Depend_Code_Parameter[]
      */
     private function _getParametersOfFirstMethod()
     {

@@ -72,7 +72,7 @@ abstract class PHP_Depend_Code_AbstractClassOrInterface
     /**
      * List of all interfaces implemented/extended by the this type.
      *
-     * @var array(PHP_Depend_Code_ASTClassOrInterfaceReference)
+     * @var PHP_Depend_Code_ASTClassOrInterfaceReference[]
      */
     protected $interfaceReferences = array();
 

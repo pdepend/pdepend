@@ -85,7 +85,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * List of all {@link PHP_Depend_Code_AbstractClassOrInterface} objects for
      * this package.
      *
-     * @var array(PHP_Depend_Code_AbstractClassOrInterface) $types
+     * @var PHP_Depend_Code_AbstractClassOrInterface[]
      */
     protected $types = array();
 
@@ -93,7 +93,7 @@ class PHP_Depend_Code_Package implements PHP_Depend_Code_NodeI
      * List of all standalone {@link PHP_Depend_Code_Function} objects in this
      * package.
      *
-     * @var array(PHP_Depend_Code_Function)
+     * @var PHP_Depend_Code_Function[]
      */
     protected $functions = array();
 

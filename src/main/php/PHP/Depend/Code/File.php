@@ -115,7 +115,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * List of classes, interfaces and functions that parsed from this file.
      *
-     * @var array(PHP_Depend_Code_AbstractItem)
+     * @var PHP_Depend_Code_AbstractItem[]
      * @since 0.10.0
      */
     protected $childNodes = array();

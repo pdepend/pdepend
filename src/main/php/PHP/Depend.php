@@ -356,7 +356,7 @@ class PHP_Depend
      * Returns an <b>array</b> with all {@link PHP_Depend_Parser_Exception} that
      * were caught during the parsing process.
      *
-     * @return array(PHP_Depend_Parser_Exception)
+     * @return PHP_Depend_Parser_Exception[]
      */
     public function getExceptions()
     {

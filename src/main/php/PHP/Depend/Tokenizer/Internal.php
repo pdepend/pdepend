@@ -372,7 +372,7 @@ class PHP_Depend_Tokenizer_Internal implements PHP_Depend_TokenizerI
     /**
      * Prepared token list.
      *
-     * @var array(PHP_Depend_Token) $tokens
+     * @var PHP_Depend_Token[]
      */
     protected $tokens = null;
 

@@ -63,7 +63,7 @@ class PHP_Depend_Code_NodeIterator implements ArrayAccess, Iterator, Countable
     /**
      * List of {@link PHP_Depend_Code_NodeI} objects in this iterator.
      *
-     * @var array(PHP_Depend_Code_NodeI) $_nodes
+     * @var PHP_Depend_Code_NodeI[]
      */
     private $nodes = array();
 
