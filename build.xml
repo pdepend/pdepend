@@ -12,6 +12,15 @@
     <import file="${basedir}/setup/src/main/xml/base.xml" />
 
     <!--
+        Updates the internal used case version number.
+    -->
+    <target name="pdepend:update-version">
+        <exec executable="${commons.executable.php}" failonerror="true">
+            <arg value="${basedir}/scripts/update-version.php" />
+        </exec>
+    </target>
+
+    <!--
         We use the phar archive after hook to validate that a newly created
         phar archive works as expected.
 
@@ -62,5 +71,17 @@
             <arg value="PHP/Depend/Code" />
         </exec>
     </target>
+
+    <!--
+        UTILIZED EXTENSION POINTS
+    -->
+
+    <!--
+        This extension of the initialize phase triggers an update of the
+        internally used case identifier.
+    -->
+    <target name="-pdepend:initialize:main~hooked"
+            depends="pdepend:update-version"
+            extensionOf="-initialize:main~hook" />
 
 </project>
