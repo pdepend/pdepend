@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
 <phpunit>
+    <php>
+        <ini name="date.timezone" value="UTC" />
+	</php>
+
     <testsuites>
         <testsuite name="PHP Depends Test Suite">
             <directory suffix="Test.php">src/test/php</directory>
             <directory suffix=".phpt">src/test/php</directory>
         </testsuite>
-    </testsuites>
+	</testsuites>
+
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/main/php/PHP</directory>
