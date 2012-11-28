@@ -2,10 +2,10 @@
 Downloads
 =========
 
-PEAR Installer
-==============
+With Composer
+=============
 
-.. include:: ../documentation/handbook/installation/parts/pear-abstract.rst
+.. include:: ../documentation/handbook/installation/parts/composer-abstract.rst
 
 From the github repository
 ==========================
@@ -16,6 +16,11 @@ The PHAR archive
 ================
 
 .. include:: ../documentation/handbook/installation/parts/phar-abstract.rst
+
+PEAR Installer
+==============
+
+.. include:: ../documentation/handbook/installation/parts/pear-abstract.rst
 
 Releases
 ========

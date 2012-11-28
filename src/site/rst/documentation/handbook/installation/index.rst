@@ -2,14 +2,10 @@
 Installation
 ============
 
-PEAR Installer
-==============
+Composer
+========
 
-.. include:: parts/pear-abstract.rst
-
-`Read more`__
-
-__ /documentation/handbook/installation/pear-installer.html
+.. include:: parts/composer-abstract.rst
 
 Phar Archive
 ============
@@ -20,6 +16,15 @@ GitHub Repository
 =================
 
 .. include:: parts/github-abstract.rst
+
+PEAR Installer
+==============
+
+.. include:: parts/pear-abstract.rst
+
+`Read more`__
+
+__ /documentation/handbook/installation/pear-installer.html
 
 .. class:: prev
 

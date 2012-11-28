@@ -6,7 +6,7 @@ single PHAR archive.
 
 ::
 
-  ~ $ wget http://pdepend.org/download/release/latest/pdepend.phar
+  ~ $ wget http://static.pdepend.org/php/latest/pdepend.phar
   ..
   ~ $ chmod +x pdepend.phar
 

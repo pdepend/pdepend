@@ -22,11 +22,19 @@ PHP_Depend, just add PHP_Depend as a dependency to your ``composer.json`` ::
   }
 
 Then install Composer in your project (or `download the composer.phar`__
-directly): ::
+directly):
+
+.. class:: shell
+
+::
 
   ~ $ curl -s http://getcomposer.org/installer | php
 
-And finally let Composer install the project dependencies: ::
+And finally let Composer install the project dependencies:
+
+.. class:: shell
+
+::
 
   ~ $ php composer.phar install
 
@@ -39,6 +47,6 @@ dependency or through PHP_Depend's `PEAR Channel Server`__.
 __ /download/release/1.1.0/changelog.html
 __ http://getcomposer.org
 __ http://getcomposer.org/composer.phar
-__ /download/release/1.1.0/pdepend.phar
+__ http://static.pdepend.org/php/1.1.0/pdepend.phar
 __ http://packagist.org/packages/pdepend/pdepend
 __ http://pear.pdepend.org

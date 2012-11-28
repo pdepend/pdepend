@@ -17,12 +17,10 @@
 			- polaroid (width, height, shadow, background)
 			- mirrored (width, height, background)
 		-->
-		<thumbnailer type="mirrored">
+		<thumbnailer type="polaroid">
 			<width>240</width>
 			<height>300</height>
-            <!--
 			<shadow>#2e3436</shadow>
-            -->
 			<background>#ffffff</background>
 		</thumbnailer>
 
