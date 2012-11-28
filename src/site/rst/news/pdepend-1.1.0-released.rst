@@ -16,7 +16,8 @@ PHP_Depend, just add PHP_Depend as a dependency to your ``composer.json`` ::
 
   {
       "require": {
-          "pdepend/pdepend": "1.1.0"
+
+          "pdepend/pdepend" : "1.1.0"
       }
   }
 
