@@ -177,6 +177,12 @@ class PHP_Depend_TextUI_Command
             unset($options['--without-annotations']);
         }
 
+        if (isset($options['--exclude-getters-setters'])) {
+            // Exclude getter/setters
+            $this->runner->setExcludeGetterSetters();
+            unset($options['--exclude-getters-setters']);
+        }
+
         if (isset($options['--optimization'])) {
             // This option is deprecated.
             echo 'Option --optimization is ambiguous.', PHP_EOL;
@@ -417,6 +423,13 @@ class PHP_Depend_TextUI_Command
         $this->printOption(
             '--without-annotations',
             'Do not parse doc comment annotations.',
+            $length
+        );
+        echo PHP_EOL;
+
+        $this->printOption(
+            '--exclude-getters-setters',
+            'Exclude getters/setters from affecting the results.',
             $length
         );
         echo PHP_EOL;

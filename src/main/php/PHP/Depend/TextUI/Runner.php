@@ -116,6 +116,13 @@ class PHP_Depend_TextUI_Runner
     private $withoutAnnotations = false;
 
     /**
+     * Should getter/setters be excluded from the node iteration.
+     *
+     * @var boolean
+     */
+    private $excludeGetterSetters = false;
+
+    /**
      * List of log identifiers and log files.
      *
      * @var array(string=>string)
@@ -220,6 +227,16 @@ class PHP_Depend_TextUI_Runner
     }
 
     /**
+     * Should the node iterator skip getter/setter methods?
+     *
+     * @return void
+     */
+    public function setExcludeGetterSetters()
+    {
+        $this->excludeGetterSetters = true;
+    }
+
+    /**
      * Adds a logger to this runner.
      *
      * @param string $loggerID    The logger identifier.
@@ -285,6 +302,11 @@ class PHP_Depend_TextUI_Runner
         if (count($this->excludePackages) > 0) {
             $exclude = $this->excludePackages;
             $filter  = new PHP_Depend_Code_Filter_Package($exclude);
+            $pdepend->setCodeFilter($filter);
+        }
+
+        if ($this->excludeGetterSetters) {
+            $filter = new PHP_Depend_Code_Filter_GetterSetter();
             $pdepend->setCodeFilter($filter);
         }
 
