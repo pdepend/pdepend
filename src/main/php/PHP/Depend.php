@@ -174,7 +174,7 @@ class PHP_Depend
     {
         $this->configuration = $configuration;
 
-        $this->codeFilter = new PHP_Depend_Code_Filter_Null();
+        $this->codeFilter = new PHP_Depend_Code_Filter_GetterSetter();
         $this->fileFilter = new PHP_Depend_Input_CompositeFilter();
 
         $this->cacheFactory = new PHP_Depend_Util_Cache_Factory($configuration);
