@@ -1,6 +1,6 @@
 <?php
 
-class PHP_Depend_Code_Filter_GetterSetterFilter
+class PHP_Depend_Code_Filter_GetterSetter
     implements PHP_Depend_Code_FilterI
 {
     /**
@@ -33,7 +33,37 @@ class PHP_Depend_Code_Filter_GetterSetterFilter
 
     private function containsSimpleReturn(PHP_Depend_Code_Method $method)
     {
-        return false;
+        $scope = $method->getFirstChildOfType('PHP_Depend_Code_ASTScope');
+
+        if (!$scope) {
+            return false;
+        }
+
+        $children = $scope->getChildren();
+
+        if (count($children) != 1) {
+            return false;
+        }
+
+        if (!($children[0] instanceof PHP_Depend_Code_ASTReturnStatement)) {
+            return false;
+        }
+
+        $returnChildren = $children[0]->getChildren();
+
+        if (count($returnChildren) != 1 || !($returnChildren[0] instanceof PHP_Depend_Code_ASTMemberPrimaryPrefix)) {
+            return false;
+        }
+
+        $memberPrimaryPrefix = $returnChildren[0]->getChildren();
+
+        if (count($memberPrimaryPrefix) != 2) {
+            return false;
+        }
+
+        return $memberPrimaryPrefix[0] instanceof PHP_Depend_Code_ASTVariable &&
+               $memberPrimaryPrefix[0]->getImage() === '$this' &&
+               $memberPrimaryPrefix[1] instanceof PHP_Depend_Code_ASTPropertyPostfix;
     }
 
     private function containsSimpleAssignment(PHP_Depend_Code_Method $method)
