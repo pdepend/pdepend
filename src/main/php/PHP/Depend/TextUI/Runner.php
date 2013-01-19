@@ -302,12 +302,12 @@ class PHP_Depend_TextUI_Runner
         if (count($this->excludePackages) > 0) {
             $exclude = $this->excludePackages;
             $filter  = new PHP_Depend_Code_Filter_Package($exclude);
-            $pdepend->setCodeFilter($filter);
+            $pdepend->addCodeFilter($filter);
         }
 
         if ($this->excludeGetterSetters) {
             $filter = new PHP_Depend_Code_Filter_GetterSetter();
-            $pdepend->setCodeFilter($filter);
+            $pdepend->addCodeFilter($filter);
         }
 
         if ($this->withoutAnnotations === true) {
