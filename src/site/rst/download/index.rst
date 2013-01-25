@@ -7,7 +7,7 @@ With Composer
 
 .. include:: ../documentation/handbook/installation/parts/composer-abstract.rst
 
-From the github repository
+From the GitHub repository
 ==========================
 
 .. include:: ../documentation/handbook/installation/parts/github-abstract.rst

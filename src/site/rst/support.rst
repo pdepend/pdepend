@@ -8,7 +8,7 @@ in helping to improve this software, by writing patches, extensions or just
 providing new ideas, you should feel free to join PHP Depend's `IRC channel`__
 or send a message to the users@pdepend.org mailinglist.
 
-__ irc://irc.euirc.net/#pdepend
+__ irc://irc.freenode.net/#pdepend
 
 Mailinglists
 ============
@@ -38,7 +38,7 @@ Issue-Tracker
 - You can file a ticket in PHP Depend's `Issue tracker`__ when you think you
   found a bug or you have a feature request for PHP Depend.
 
-__ https://www.pivotaltracker.com/projects/146589
+__ https://github.com/pdepend/pdepend/issues
 
 Commercial support
 ==================

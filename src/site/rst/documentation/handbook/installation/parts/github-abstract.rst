@@ -5,7 +5,7 @@ use `PHP_Depend's`__ GitHub mirror to fork and contribute to the project.
 
 ::
 
-  ~ $ git clone git://github.com/manuelpichler/pdepend.git
+  ~ $ git clone git://github.com/pdepend/pdepend.git
 
 __ http://github.com
-__ http://github.com/manuelpichler/pdepend
+__ http://github.com/pdepend/pdepend
