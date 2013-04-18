@@ -88,7 +88,20 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
     public function testExtensionFilterAcceptsMultipleFileExtensions()
     {
         $actual   = $this->createFilteredFileList(array('inc', 'php'));
-        $expected = array('file1.inc', 'file2.php');
+        $expected = array('file1.inc', 'file2.php', 'file6.class.inc');
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * testExtensionFilterAcceptsMultipleExtensions
+     *
+     * @return void
+     */
+    public function testExtensionFilterAcceptsMultipleExtensions()
+    {
+        $actual   = $this->createFilteredFileList(array('class.inc'));
+        $expected = array('file6.class.inc');
 
         self::assertEquals($expected, $actual);
     }
@@ -114,7 +127,7 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
         $actual = array();
         foreach ($files as $file) {
             if ($filter->accept($file, $file)
-                && $file->isFile() 
+                && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')
             ) {
                 $actual[] = $file->getFilename();

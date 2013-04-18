@@ -90,6 +90,17 @@ class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
     {
         $extension = pathinfo($relative, PATHINFO_EXTENSION);
 
-        return in_array($extension, $this->extensions);
+        if (in_array($extension, $this->extensions)) {
+            return true;
+        }
+
+        foreach ($this->extensions as $allowed) {
+            $allowed = '.' . $allowed;
+            if (substr($relative, strlen($allowed) * -1) == $allowed) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
