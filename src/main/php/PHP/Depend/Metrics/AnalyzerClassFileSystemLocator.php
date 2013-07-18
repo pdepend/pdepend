@@ -139,6 +139,9 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
                     $className = $this->createClassNameFromPath(
                         $dir, $file->getPathname()
                     );
+                    if (strpos($className, '.') !== false) {
+                        continue;
+                    }
                     if (!class_exists($className)) {
                         include_once $file->getPathname();
                     }
