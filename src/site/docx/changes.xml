@@ -10,9 +10,11 @@
 
 	<body>
         <release version="1.1.1"
-                 date=""
-                 description="">
-
+                 date="2013/07/25"
+                 description="Closes several PHP 5.4 issues.">
+            <action date="cbfddaa" dev="brandonsavage" type="fix" issue="116" system="github">
+                Adding a fix for PHP 5.4 style arrays.
+            </action>
             <action date="f6ee217" dev="mapi" type="fix" due-to="Karol" issue="95" system="github">
                 PHP 5.4 array syntax is not supported in property initialization.
             </action>
