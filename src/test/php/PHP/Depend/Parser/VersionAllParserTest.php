@@ -657,6 +657,24 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     }
 
     /**
+     * @return void
+     * @since 1.1.1
+     */
+    public function testParserHandlesShortArraySyntaxForFormalParameter()
+    {
+        $this->assertNotNull($this->getFirstMethodForTestCase());
+    }
+
+    /**
+     * @return void
+     * @since 1.1.1
+     */
+    public function testParserHandlesShortArraySyntaxForFieldDeclaration()
+    {
+        $this->assertNotNull($this->getFirstPropertyForTestCase());
+    }
+
+    /**
      * testParserAcceptsGotoAsFunctionName
      *
      * @return void
@@ -776,6 +794,19 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     {
         return $this->getFirstTypeForTestCase()
             ->getMethods()
+            ->current();
+    }
+
+    /**
+     * Returns the first property that could be found in the code under test for
+     * the calling test case.
+     *
+     * @return PHP_Depend_Code_Method
+     */
+    protected function getFirstPropertyForTestCase()
+    {
+        return $this->getFirstTypeForTestCase()
+            ->getProperties()
             ->current();
     }
 }

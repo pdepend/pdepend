@@ -714,7 +714,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a class/interface/trait body.
      *
      * @param PHP_Depend_Code_AbstractType $type Context class, trait or interface
-     *
      * @return PHP_Depend_Code_AbstractType
      */
     private function parseTypeBody(PHP_Depend_Code_AbstractType $type)
@@ -5110,7 +5109,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @return PHP_Depend_Code_ASTLiteral
      * @since 0.9.10
      */
-    private function parseLiteral()
+    protected function parseLiteral()
     {
         $token = $this->consumeToken($this->tokenizer->peek());
 
