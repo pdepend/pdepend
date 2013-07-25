@@ -6315,7 +6315,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             case self::T_CLASS_C:
             case self::T_METHOD_C:
             case self::T_BACKSLASH:
-
+            case self::T_SQUARED_BRACKET_OPEN:
+            case self::T_SQUARED_BRACKET_CLOSE:
                 // There is a default value but we don't handle it at the moment.
                 $defaultValue->setValue(null);
                 $this->consumeToken($tokenType);
