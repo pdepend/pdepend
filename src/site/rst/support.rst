@@ -10,19 +10,6 @@ or send a message to the users@pdepend.org mailinglist.
 
 __ irc://irc.freenode.net/#pdepend
 
-Mailinglists
-============
-
-- commits@pdepend.org is the list to which automatically generated mails with
-  information about repository checkins are sent.
-
-  Sent an empty mail to commits-join@pdepend.org, to subscribe to this list.
-
-- users@pdepend.org is the list where you will find help on PHP Depend related
-  topics.
-
-  Sent an empty mail to users-join@pdepend.org, to subscribe to this list.
-
 IRC
 ===
 
