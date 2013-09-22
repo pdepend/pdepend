@@ -79,7 +79,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      * The coverage report instance representing the supplied coverage report
      * file.
      *
-     * @var PHP_Depend_Util_Coverage_Report
+     * @var \PHP\Depend\Util\Coverage\Report
      */
     private $report = null;
 
@@ -241,7 +241,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
      * Returns a previously created report instance or creates a new report
      * instance.
      *
-     * @return PHP_Depend_Util_Coverage_Report
+     * @return \PHP\Depend\Util\Coverage\Report
      */
     private function createOrReturnCoverageReport()
     {
@@ -254,11 +254,11 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
     /**
      * Creates a new coverage report instance.
      *
-     * @return PHP_Depend_Util_Coverage_Report
+     * @return \PHP\Depend\Util\Coverage\Report
      */
     private function createCoverageReport()
     {
-        $factory = new PHP_Depend_Util_Coverage_Factory();
+        $factory = new \PHP\Depend\Util\Coverage\Factory();
         return $factory->create($this->options['coverage-report']);
     }
 }

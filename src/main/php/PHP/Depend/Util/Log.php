@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * Simple logging class for debug messages and extended information.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-final class PHP_Depend_Util_Log
+final class Log
 {
     /**
      * Log debug messages.

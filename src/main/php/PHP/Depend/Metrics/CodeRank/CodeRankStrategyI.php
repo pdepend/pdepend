@@ -40,14 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * The code rank strategy provides an interface for dependency collection. 
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
-    extends PHP_Depend_VisitorI
+interface PHP_Depend_Metrics_CodeRank_CodeRankStrategyI extends TreeVisitor
 {
     /**
      * Returns the collected nodes.

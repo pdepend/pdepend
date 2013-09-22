@@ -40,7 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+use PHP\Depend\Builder\Context;
+use PHP\Depend\Util\Cache\Driver\Memory;
 
 /**
  * Test case for the code interface class.
@@ -540,7 +541,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -562,7 +563,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $tokens = array(new PHP_Depend_Token(1, 'a', 23, 42, 13, 17));
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -594,7 +595,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -748,7 +749,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -892,7 +893,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $interface = $this->createItem();
 
-        $context = $this->getMock('PHP_Depend_Builder_Context');
+        $context = $this->getMock(Context::CLAZZ);
         $context->expects($this->once())
             ->method('registerInterface')
             ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
@@ -907,7 +908,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testAcceptInvokesVisitInterfaceOnGivenVisitor()
     {
-        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitor');
         $visitor->expects($this->once())
             ->method('visitInterface')
             ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
@@ -925,8 +926,8 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $interface = new PHP_Depend_Code_Interface(__CLASS__);
         $interface->setSourceFile(new PHP_Depend_Code_File(__FILE__));
-        $interface->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
-        $interface->setContext($this->getMock('PHP_Depend_Builder_Context'));
+        $interface->setCache(new Memory());
+        $interface->setContext($this->getMock(Context::CLAZZ));
 
         return $interface;
     }

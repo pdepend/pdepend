@@ -41,6 +41,11 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util\Configuration;
+
+use PHP\Depend\Util\Configuration;
+use PHP\Depend\Util\FileUtil;
+
 /**
  * This class provides the default factory for configuration creation.
  *
@@ -49,7 +54,7 @@
  * takes a file name as argument. It takes the settings defined in the given
  * file and merges the with the system's default settings.
  *
- * The second serivce method method <em>createDefault()</em> creates a default
+ * The second service method method <em>createDefault()</em> creates a default
  * configuration instance. Additionally it checks for default configuration files
  * within the current working directory. These files are <em>pdepend.xml.dist</em>
  * and <em>pdepend.xml</em>. If one or both files are present the factory reads
@@ -59,19 +64,19 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Util_Configuration_Factory
+class Factory
 {
     /**
      * The used configuration parser.
      *
-     * @var PHP_Depend_Util_Configuration_Parser
+     * @var \PHP\Depend\Util\Configuration\Parser
      */
     protected $parser = null;
 
     /**
      * The default configuration values.
      *
-     * @var stdClass
+     * @var \stdClass
      */
     protected $default = null;
 
@@ -80,19 +85,19 @@ class PHP_Depend_Util_Configuration_Factory
      */
     public function __construct()
     {
-        $home = PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir();
+        $home = FileUtil::getUserHomeDirOrSysTempDir();
 
-        $this->default = new stdClass();
+        $this->default = new \stdClass();
 
-        $this->default->cache           = new stdClass();
+        $this->default->cache           = new \stdClass();
         $this->default->cache->driver   = 'file';
         $this->default->cache->location = $home . '/.pdepend';
 
-        $this->default->imageConvert             = new stdClass();
+        $this->default->imageConvert             = new \stdClass();
         $this->default->imageConvert->fontSize   = '11';
         $this->default->imageConvert->fontFamily = 'Arial';
 
-        $this->default->parser          = new stdClass();
+        $this->default->parser          = new \stdClass();
         $this->default->parser->nesting = 8192;
     }
 
@@ -101,19 +106,18 @@ class PHP_Depend_Util_Configuration_Factory
      * declared in the given configuration file.
      *
      * @param string $file The configuration file name.
-     *
-     * @return PHP_Depend_Util_Configuration
-     * @throws InvalidArgumentException If the given file does not point to an
+     * @return \PHP\Depend\Util\Configuration
+     * @throws \InvalidArgumentException If the given file does not point to an
      *         existing configuration file.
      */
     public function create($file)
     {
         if (false === file_exists($file)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 sprintf('The configuration file "%s" doesn\'t exist.', $file)
             );
         }
-        return new PHP_Depend_Util_Configuration($this->read($file));
+        return new Configuration($this->read($file));
     }
 
     /**
@@ -129,7 +133,7 @@ class PHP_Depend_Util_Configuration_Factory
      * and will overwrite all previous settings with those declared in this
      * file.
      *
-     * @return PHP_Depend_Util_Configuration
+     * @return \PHP\Depend\Util\Configuration
      */
     public function createDefault()
     {
@@ -140,7 +144,7 @@ class PHP_Depend_Util_Configuration_Factory
         if (file_exists($fileName)) {
             $this->read($fileName);
         }
-        return new PHP_Depend_Util_Configuration($this->default);
+        return new Configuration($this->default);
     }
 
     /**
@@ -148,8 +152,7 @@ class PHP_Depend_Util_Configuration_Factory
      * existing settings.
      *
      * @param string $file A configuration source file.
-     *
-     * @return stdClass
+     * @return \stdClass
      */
     protected function read($file)
     {
@@ -163,12 +166,12 @@ class PHP_Depend_Util_Configuration_Factory
      * This method will create a new configuration parser or return a previously
      * created instance.
      *
-     * @return PHP_Depend_Util_Configuration_Parser
+     * @return \PHP\Depend\Util\Configuration\Parser
      */
     protected function createOrReturnParser()
     {
         if (null === $this->parser) {
-            $this->parser = new PHP_Depend_Util_Configuration_Parser($this->default);
+            $this->parser = new Parser($this->default);
         }
         return $this->parser;
     }

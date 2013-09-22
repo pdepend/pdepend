@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for bug 102. The current parser implementation does not handle
  * the <b>namespace</b> keyword in parameter type hints.

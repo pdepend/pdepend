@@ -72,6 +72,8 @@ class PHP_Depend_Autoload
     {
         if (strpos($className, 'PHP_Depend') === 0) {
             include strtr($className, '_', DIRECTORY_SEPARATOR) . '.php';
+        } else if (strpos($className, 'PHP\\Depend') === 0) {
+            include strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
         }
     }
 }

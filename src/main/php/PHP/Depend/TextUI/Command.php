@@ -40,13 +40,19 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TextUI;
+
+use PHP\Depend\Util\Configuration\Factory;
+use PHP\Depend\Util\ConfigurationInstance;
+use PHP\Depend\Util\Log;
+
 /**
  * Handles the command line stuff and starts the text ui runner.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_TextUI_Command
+class Command
 {
     /**
      * Marks a cli error exit.
@@ -82,7 +88,7 @@ class PHP_Depend_TextUI_Command
     /**
      * The used text ui runner.
      *
-     * @var PHP_Depend_TextUI_Runner
+     * @var \PHP\Depend\TextUI\Runner
      */
     private $runner = null;
 
@@ -94,15 +100,15 @@ class PHP_Depend_TextUI_Command
     public function run()
     {
         // Create a new text ui runner
-        $this->runner = new PHP_Depend_TextUI_Runner();
-        $this->runner->addProcessListener(new PHP_Depend_TextUI_ResultPrinter());
+        $this->runner = new Runner();
+        $this->runner->addProcessListener(new ResultPrinter());
 
         try {
             if ($this->handleArguments() === false) {
                 $this->printHelp();
                 return self::CLI_ERROR;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
             $this->printHelp();
@@ -111,15 +117,15 @@ class PHP_Depend_TextUI_Command
 
         if (isset($this->options['--help'])) {
             $this->printHelp();
-            return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
+            return Runner::SUCCESS_EXIT;
         }
         if (isset($this->options['--usage'])) {
             $this->printUsage();
-            return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
+            return Runner::SUCCESS_EXIT;
         }
         if (isset($this->options['--version'])) {
             $this->printVersion();
-            return PHP_Depend_TextUI_Runner::SUCCESS_EXIT;
+            return Runner::SUCCESS_EXIT;
         }
 
         // Get a copy of all options
@@ -174,7 +180,7 @@ class PHP_Depend_TextUI_Command
 
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
-                new PHP_Depend_DbusUI_ResultPrinter()
+                new \PHP_Depend_DbusUI_ResultPrinter()
             );
             unset($options['--notify-me']);
         }
@@ -217,7 +223,7 @@ class PHP_Depend_TextUI_Command
             echo PHP_EOL;
 
             return $result;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
 
             echo PHP_EOL, PHP_EOL,
                  'Critical error: ', PHP_EOL,
@@ -318,7 +324,7 @@ class PHP_Depend_TextUI_Command
             unset($this->options['--bad-documentation']);
         }
 
-        $configurationFactory = new PHP_Depend_Util_Configuration_Factory();
+        $configurationFactory = new Factory();
 
         // Check for configuration option
         if (isset($this->options['--configuration'])) {
@@ -332,14 +338,14 @@ class PHP_Depend_TextUI_Command
             $configuration = $configurationFactory->createDefault();
         }
         // Store in config registry
-        PHP_Depend_Util_ConfigurationInstance::set($configuration);
+        ConfigurationInstance::set($configuration);
 
         $this->runner->setConfiguration($configuration);
 
         if (isset($this->options['--debug'])) {
             unset($this->options['--debug']);
 
-            PHP_Depend_Util_Log::setSeverity(PHP_Depend_Util_Log::DEBUG);
+            Log::setSeverity(Log::DEBUG);
         }
 
         return true;
@@ -484,14 +490,14 @@ class PHP_Depend_TextUI_Command
                 continue;
             }
 
-            $dirs = new DirectoryIterator($path);
+            $dirs = new \DirectoryIterator($path);
 
             foreach ($dirs as $dir) {
                 if (!$dir->isDir() || substr($dir->getFilename(), 0, 1) === '.') {
                     continue;
                 }
 
-                $files = new DirectoryIterator($dir->getPathname());
+                $files = new \DirectoryIterator($dir->getPathname());
                 foreach ($files as $file) {
                     if (!$file->isFile()) {
                         continue;
@@ -569,7 +575,7 @@ class PHP_Depend_TextUI_Command
                 continue;
             }
 
-            foreach (new DirectoryIterator($path) as $dir) {
+            foreach (new \DirectoryIterator($path) as $dir) {
 
                 // Create analyzer xml config filename
                 $file = $dir->getPathname() . '/Analyzer.xml';
@@ -663,7 +669,7 @@ class PHP_Depend_TextUI_Command
      */
     public static function main()
     {
-        $command = new PHP_Depend_TextUI_Command();
+        $command = new Command();
         return $command->run();
     }
 }

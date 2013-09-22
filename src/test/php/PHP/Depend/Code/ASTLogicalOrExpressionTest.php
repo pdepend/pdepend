@@ -41,8 +41,6 @@
  * @since     0.9.8
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTLogicalOrExpression} class.
  *

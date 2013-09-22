@@ -192,9 +192,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -226,9 +224,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -248,9 +244,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -281,10 +275,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     *
+     * @param PHP_Depend_Code_Method $method The method class node.
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -309,10 +301,8 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a package node.
      *
-     * @param PHP_Depend_Code_Class $package The package class node.
-     *
+     * @param PHP_Depend_Code_Package $package The package class node.
      * @return void
-     * @see PHP_Depend_VisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {

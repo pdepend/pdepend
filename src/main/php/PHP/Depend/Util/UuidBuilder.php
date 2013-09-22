@@ -41,6 +41,8 @@
  * @since     0.9.12
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * This class provides methods to generate unique, but reproducable identifiers
  * for nodes generated during the parsing process.
@@ -49,16 +51,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.12
  */
-class PHP_Depend_Util_UuidBuilder
+class UuidBuilder
 {
     /**
      * Generates an identifier for the given file instance.
      *
-     * @param PHP_Depend_Code_File $file The context source file instance.
-     *
+     * @param \PHP_Depend_Code_File $file The context source file instance.
      * @return string
      */
-    public function forFile(PHP_Depend_Code_File $file)
+    public function forFile(\PHP_Depend_Code_File $file)
     {
         return $this->hash($file->getFileName());
     }
@@ -66,11 +67,10 @@ class PHP_Depend_Util_UuidBuilder
     /**
      * Generates an identifier for the given function instance.
      *
-     * @param PHP_Depend_Code_Function $function The context function instance.
-     *
+     * @param \PHP_Depend_Code_Function $function The context function instance.
      * @return string
      */
-    public function forFunction(PHP_Depend_Code_Function $function)
+    public function forFunction(\PHP_Depend_Code_Function $function)
     {
         return $this->forOffsetItem($function, 'function');
     }
@@ -78,11 +78,10 @@ class PHP_Depend_Util_UuidBuilder
     /**
      * Generates an identifier for the given class, interface or trait instance.
      *
-     * @param PHP_Depend_Code_AbstractType $type A class instance.
-     *
+     * @param \PHP_Depend_Code_AbstractType $type A class instance.
      * @return string
      */
-    public function forClassOrInterface(PHP_Depend_Code_AbstractType $type)
+    public function forClassOrInterface(\PHP_Depend_Code_AbstractType $type)
     {
 
         return $this->forOffsetItem(
@@ -94,12 +93,11 @@ class PHP_Depend_Util_UuidBuilder
     /**
      * Generates an identifier for the given source item.
      *
-     * @param PHP_Depend_Code_AbstractItem $item   The context source item.
-     * @param string                       $prefix The item type identifier.
-     *
+     * @param \PHP_Depend_Code_AbstractItem $item The context source item.
+     * @param string $prefix The item type identifier.
      * @return string
      */
-    protected function forOffsetItem(PHP_Depend_Code_AbstractItem $item, $prefix)
+    protected function forOffsetItem(\PHP_Depend_Code_AbstractItem $item, $prefix)
     {
         $fileHash = $item->getSourceFile()->getUuid();
         $itemHash = $this->hash($prefix . ':' . strtolower($item->getName()));
@@ -112,11 +110,10 @@ class PHP_Depend_Util_UuidBuilder
     /**
      * Generates an identifier for the given method instance.
      *
-     * @param PHP_Depend_Code_Method $method A method instance.
-     *
+     * @param \PHP_Depend_Code_Method $method A method instance.
      * @return string
      */
-    public function forMethod(PHP_Depend_Code_Method $method)
+    public function forMethod(\PHP_Depend_Code_Method $method)
     {
         return sprintf(
             '%s-%s',
@@ -129,7 +126,6 @@ class PHP_Depend_Util_UuidBuilder
      * Creates a base 36 hash for the given string.
      *
      * @param string $string The raw input identifier/string.
-     *
      * @return string
      */
     protected function hash($string)
@@ -141,9 +137,8 @@ class PHP_Depend_Util_UuidBuilder
      * Returns the node offset/occurence of the given <b>$string</b> within a
      * file.
      *
-     * @param string $file   The file identifier.
+     * @param string $file The file identifier.
      * @param string $string The node identifier.
-     *
      * @return string
      */
     protected function getOffsetInFile($file, $string)

@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the class level analyzer.
  *
@@ -488,7 +486,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $package  = $packages->current();
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -682,7 +680,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $package  = $packages->current();
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);

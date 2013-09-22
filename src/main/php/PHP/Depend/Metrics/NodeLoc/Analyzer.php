@@ -129,7 +129,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * </code>
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
      * @return array
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
@@ -163,7 +162,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
@@ -186,9 +184,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -227,9 +223,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
-     *
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
@@ -272,9 +266,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     *
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -309,7 +301,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
@@ -346,7 +337,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * Visits a method node.
      *
      * @param PHP_Depend_Code_Method $method The method class node.
-     *
      * @return void
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
@@ -389,7 +379,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * given <b>$uuid</b>.
      *
      * @param string $uuid The unique identifier of a node.
-     *
      * @return void
      */
     private function updateProjectMetrics($uuid)
@@ -414,7 +403,6 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      *
      * @param array   $tokens The raw token stream.
      * @param boolean $search Optional boolean flag, search start.
-     *
      * @return array
      */
     private function linesOfCode(array $tokens, $search = false)

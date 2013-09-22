@@ -47,7 +47,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 abstract class PHP_Depend_Metrics_AbstractAnalyzer
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Metrics_AnalyzerI
 {
     /**

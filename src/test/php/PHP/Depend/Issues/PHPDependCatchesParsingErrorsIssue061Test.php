@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for the catch error ticket #61.
  *
@@ -79,15 +77,15 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     }
 
     /**
-     * Tests that the {@link PHP_Depend_TextUI_Runner::hasErrors()} method will
+     * Tests that the {@link \PHP\Depend\TextUI\Runner::hasErrors()} method will
      * return <b>false</b> when not parsing error occured.
      *
      * @return void
-     * @covers PHP_Depend_TextUI_Runner
+     * @covers \PHP\Depend\TextUI\Runner
      */
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
-        $runner = new PHP_Depend_TextUI_Runner();
+        $runner = new \PHP\Depend\TextUI\Runner();
         $runner->setConfiguration($this->createConfigurationFixture());
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
@@ -97,15 +95,15 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     }
 
     /**
-     * Tests that the {@link PHP_Depend_TextUI_Runner::hasErrors()} method will
+     * Tests that the {@link \PHP\Depend\TextUI\Runner::hasErrors()} method will
      * return <b>true</b> when a parsing error occured.
      *
      * @return void
-     * @covers PHP_Depend_TextUI_Runner
+     * @covers \PHP\Depend\TextUI\Runner
      */
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
-        $runner = new PHP_Depend_TextUI_Runner();
+        $runner = new \PHP\Depend\TextUI\Runner();
         $runner->setConfiguration($this->createConfigurationFixture());
         $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
@@ -119,7 +117,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * process was successful.
      *
      * @return void
-     * @covers PHP_Depend_TextUI_Command
+     * @covers \PHP\Depend\TextUI\Command
      */
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess()
     {
@@ -139,7 +137,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      * testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess
      *
      * @return void
-     * @covers PHP_Depend_TextUI_Command
+     * @covers \PHP\Depend\TextUI\Command
      */
     public function testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess()
     {
@@ -176,7 +174,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
      */
     protected function runTextUICommand()
     {
-        $command = new PHP_Depend_TextUI_Command();
+        $command = new \PHP\Depend\TextUI\Command();
 
         ob_start();
         $exitCode = $command->run();

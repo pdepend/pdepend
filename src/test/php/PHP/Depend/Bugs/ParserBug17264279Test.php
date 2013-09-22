@@ -41,8 +41,6 @@
  * @link       https://www.pivotaltracker.com/story/show/17264279
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for bug #17264279.
  *

@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * Represents a php method node.
  *
@@ -214,14 +216,12 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
     }
 
     /**
-     * Visitor method for node tree traversal.
+     * TreeVisitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
-     *
+     * @param \PHP\Depend\TreeVisitor $visitor
      * @return void
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function accept(TreeVisitor $visitor)
     {
         $visitor->visitMethod($this);
     }

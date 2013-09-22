@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
@@ -47,14 +49,13 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers PHP_Depend_Util_ImageConvert
+ * @covers \PHP\Depend\Util\ImageConvert
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::imagick
  * @group unittest
  */
-class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
+class ImageConvertTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Tests the copy behaviour for same mime types.
@@ -66,7 +67,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $input  = self::createInputSvg();
         $output = self::createRunResourceURI('pdepend.out.svg');
 
-        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        ImageConvert::convert($input, $output);
         self::assertFileEquals($input, $output);
     }
 
@@ -84,7 +85,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $input  = self::createInputSvg();
         $output = self::createRunResourceURI('pdepend.out.png');
 
-        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        ImageConvert::convert($input, $output);
         self::assertFileExists($output);
     }
 
@@ -102,7 +103,7 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
         $input  = self::createInputSvg();
         $output = self::createRunResourceURI('pdepend');
 
-        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        ImageConvert::convert($input, $output);
         self::assertFileExists("{$output}.svg");
     }
 
@@ -125,17 +126,17 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      */
     public function testConvertRecognizesFontFamilyInConfiguration()
     {
-        $settings                           = new stdClass();
-        $settings->imageConvert             = new stdClass();
+        $settings                           = new \stdClass();
+        $settings->imageConvert             = new \stdClass();
         $settings->imageConvert->fontFamily = 'Verdana';
 
-        $config = new PHP_Depend_Util_Configuration($settings);
-        PHP_Depend_Util_ConfigurationInstance::set($config);
+        $config = new Configuration($settings);
+        ConfigurationInstance::set($config);
 
         $input  = self::createInputSvg();
         $output = self::createRunResourceURI('pdepend.svg');
 
-        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        ImageConvert::convert($input, $output);
 
         $svg = file_get_contents($output);
         self::assertEquals(25, substr_count($svg, 'font-family:Verdana'));
@@ -160,17 +161,17 @@ class PHP_Depend_Util_ImageConvertTest extends PHP_Depend_AbstractTest
      */
     public function testConvertRecognizesFontSizeInConfiguration()
     {
-        $settings                         = new stdClass();
-        $settings->imageConvert           = new stdClass();
+        $settings                         = new \stdClass();
+        $settings->imageConvert           = new \stdClass();
         $settings->imageConvert->fontSize = 14;
 
-        $config = new PHP_Depend_Util_Configuration($settings);
-        PHP_Depend_Util_ConfigurationInstance::set($config);
+        $config = new Configuration($settings);
+        ConfigurationInstance::set($config);
 
         $input  = self::createInputSvg();
         $output = self::createRunResourceURI('pdepend.svg');
 
-        PHP_Depend_Util_ImageConvert::convert($input, $output);
+        ImageConvert::convert($input, $output);
 
         $svg = file_get_contents($output);
         self::assertEquals(25, substr_count($svg, 'font-size:14px'));

@@ -40,21 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+namespace PHP\Depend\Util\Coverage;
 
 /**
- * Test case for the {@link PHP_Depend_Util_Coverage_Factory} class.
+ * Test case for the {@link \PHP\Depend\Util\Coverage\Factory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Util_Coverage_Factory
+ * @covers \PHP\Depend\Util\Coverage\Factory
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::coverage
  * @group unittest
  */
-class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
+class FactoryTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testCreateReturnsCloverReportInstanceForCloverInputFile
@@ -63,21 +63,21 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      */
     public function testCreateReturnsCloverReportInstanceForCloverInputFile()
     {
-        $factory = new PHP_Depend_Util_Coverage_Factory();
+        $factory = new Factory();
         $report  = $factory->create(dirname(__FILE__) . '/_files/clover.xml');
 
-        $this->assertInstanceOf(PHP_Depend_Util_Coverage_CloverReport::CLAZZ, $report);
+        $this->assertInstanceOf(CloverReport::CLAZZ, $report);
     }
 
     /**
      * testCreateMethodThrowsExceptionWhenFileDoesNotExist
      *
      * @return void
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testCreateMethodThrowsExceptionWhenFileDoesNotExist()
     {
-        $factory = new PHP_Depend_Util_Coverage_Factory();
+        $factory = new Factory();
         $factory->create(__FUNCTION__);
     }
 
@@ -85,11 +85,11 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateMethodThrowsExceptionWhenFileIsNotValidXml
      *
      * @return void
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testCreateMethodThrowsExceptionWhenFileIsNotValidXml()
     {
-        $factory = new PHP_Depend_Util_Coverage_Factory();
+        $factory = new Factory();
         $factory->create(__FILE__);
     }
 
@@ -97,11 +97,11 @@ class PHP_Depend_Util_Coverage_FactoryTest extends PHP_Depend_AbstractTest
      * testCreateMethodThrowsExceptionForUnsupportedReportFormat
      *
      * @return void
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testCreateMethodThrowsExceptionForUnsupportedReportFormat()
     {
-        $factory = new PHP_Depend_Util_Coverage_Factory();
+        $factory = new Factory();
         $factory->create(dirname(__FILE__) . '/_files/fail.xml');
     }
 }

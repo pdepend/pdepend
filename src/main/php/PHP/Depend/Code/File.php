@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * This class provides an interface to a single source file.
  *
@@ -58,7 +60,7 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * The internal used cache instance.
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -181,12 +183,11 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     /**
      * Setter method for the used parser and token cache.
      *
-     * @param PHP_Depend_Util_Cache_Driver $cache A cache driver instance.
-     *
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      * @return PHP_Depend_Code_File
      * @since 0.10.0
      */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    public function setCache(\PHP\Depend\Util\Cache\Driver $cache)
     {
         $this->cache = $cache;
         return $this;
@@ -310,14 +311,12 @@ class PHP_Depend_Code_File implements PHP_Depend_Code_NodeI
     }
 
     /**
-     * Visitor method for node tree traversal.
+     * TreeVisitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor
-     *                                              implementation.
-     *
+     * @param \PHP\Depend\TreeVisitor $visitor
      * @return void
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function accept(TreeVisitor $visitor)
     {
         $visitor->visitFile($this);
     }

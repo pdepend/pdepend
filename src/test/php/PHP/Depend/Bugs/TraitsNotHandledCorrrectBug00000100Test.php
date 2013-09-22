@@ -41,8 +41,6 @@
  * @link       https://github.com/pdepend/pdepend/issues/100
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case issue 00000100.
  *

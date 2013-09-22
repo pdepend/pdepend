@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Util\FileUtil;
+use PHP\Depend\Util\ImageConvert;
 
 /**
  * Generates a chart with the aggregated metrics.
@@ -47,7 +49,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Log_Jdepend_Chart
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
@@ -234,11 +236,11 @@ class PHP_Depend_Log_Jdepend_Chart
         $good->parentNode->removeChild($good);
         $legendTemplate->parentNode->removeChild($legendTemplate);
 
-        $temp  = PHP_Depend_Util_FileUtil::getSysTempDir();
+        $temp  = FileUtil::getSysTempDir();
         $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
 
-        PHP_Depend_Util_ImageConvert::convert($temp, $this->logFile);
+        ImageConvert::convert($temp, $this->logFile);
 
         // Remove temp file
         unlink($temp);

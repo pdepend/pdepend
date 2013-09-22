@@ -40,7 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+use PHP\Depend\Builder\DefaultBuilder;
+use PHP\Depend\Util\Cache\Driver\Memory;
 
 /**
  * Test case implementation for the PHP_Depend code parser.
@@ -68,8 +69,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
 
         ini_set('xdebug.max_nesting_level', '100');
 
-        $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
-        $builder = new PHP_Depend_Builder_Default();
+        $cache   = new Memory();
+        $builder = new DefaultBuilder();
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
@@ -87,10 +88,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParseMixedCode()
     {
         $expected = array(
-            'pkg1'                                =>  true,
-            'pkg2'                                =>  true,
-            'pkg3'                                =>  true,
-            PHP_Depend_BuilderI::DEFAULT_PACKAGE  =>  true
+            'pkg1'                               =>  true,
+            'pkg2'                               =>  true,
+            'pkg3'                               =>  true,
+            \PHP\Depend\Builder::DEFAULT_PACKAGE  =>  true
         );
 
         $tmp = self::parseCodeResourceForTest();
@@ -1382,12 +1383,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStopsProcessingWhenCacheContainsValidResult()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile(__FILE__);
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('restore')
             ->will(self::returnValue(true));

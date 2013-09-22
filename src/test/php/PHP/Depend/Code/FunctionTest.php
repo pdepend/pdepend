@@ -40,8 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
-require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
+use PHP\Depend\Builder\Context;
+use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
  * Test case implementation for the PHP_Depend_Code_Function class.
@@ -286,7 +286,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     {
         $tokens = array(new PHP_Depend_Token(1, '$foo', 3, 3, 0, 0));
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -306,7 +306,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetTokensDelegatesToCacheRestoreMethod()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -327,7 +327,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -634,7 +634,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     public function testVisitorAccept()
     {
         $function = $this->createItem();
-        $visitor  = new PHP_Depend_Visitor_TestNodeVisitor();
+        $visitor  = new TestNodeVisitor();
 
         $function->accept($visitor);
         self::assertSame($function, $visitor->function);
@@ -663,7 +663,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
     {
         $function = new PHP_Depend_Code_Function(__FUNCTION__);
         $function->setSourceFile(new PHP_Depend_Code_File(__FILE__));
-        $function->setContext($this->getMock('PHP_Depend_Builder_Context'));
+        $function->setContext($this->getMock(Context::CLAZZ));
 
         return $function;
     }

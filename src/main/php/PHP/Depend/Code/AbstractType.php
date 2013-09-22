@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Builder\Context;
 
 /**
  * Represents any valid complex php type.
@@ -53,14 +54,14 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * The internal used cache instance.
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      */
     protected $cache = null;
 
     /**
      * The currently used builder context.
      *
-     * @var PHP_Depend_Builder_Context
+     * @var Context
      */
     protected $context = null;
 
@@ -136,11 +137,10 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
      * Setter method for the currently used token cache, where this class or
      * interface instance can store the associated tokens.
      *
-     * @param PHP_Depend_Util_Cache_Driver $cache The currently used cache instance.
-     *
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      * @return PHP_Depend_Code_AbstractType
      */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    public function setCache(\PHP\Depend\Util\Cache\Driver $cache)
     {
         $this->cache = $cache;
         return $this;
@@ -149,11 +149,10 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Sets the currently active builder context.
      *
-     * @param PHP_Depend_Builder_Context $context Current builder context.
-     *
+     * @param \PHP\Depend\Builder\Context $context Current builder context.
      * @return PHP_Depend_Code_AbstractType
      */
-    public function setContext(PHP_Depend_Builder_Context $context)
+    public function setContext(Context $context)
     {
         $this->context = $context;
         return $this;

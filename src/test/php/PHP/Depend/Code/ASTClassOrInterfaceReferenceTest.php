@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
  * description
  *
@@ -316,10 +314,10 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest
     /**
      * Returns a mocked builder context instance.
      *
-     * @return PHP_Depend_Builder_Context
+     * @return \PHP\Depend\Builder\Context
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock('PHP_Depend_Builder_Context');
+        return $this->getMock('\\PHP\\Depend\\Builder\\Context');
     }
 }

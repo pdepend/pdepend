@@ -41,7 +41,8 @@
   * @since     1.0.0
  */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
+use PHP\Depend\Builder\Context;
+use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
  * Test case for the {@link PHP_Depend_Code_Trait} class.
@@ -345,7 +346,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testAcceptInvokesVisitTraitOnGivenVisitor()
     {
-        $visitor = $this->getMockBuilder(PHP_Depend_VisitorI::CLAZZ)
+        $visitor = $this->getMockBuilder(TreeVisitor::CLAZZ)
             ->disableOriginalClone()
             ->getMock();
         $visitor->expects($this->once())
@@ -363,7 +364,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testMagicWakeupCallsRegisterTraitOnBuilderContext()
     {
-        $context = $this->getMockBuilder(PHP_Depend_Builder_Context::CLAZZ)
+        $context = $this->getMockBuilder(Context::CLAZZ)
             ->disableOriginalClone()
             ->getMock();
         $context->expects($this->once())

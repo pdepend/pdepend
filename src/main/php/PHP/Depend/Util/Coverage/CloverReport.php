@@ -40,14 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util\Coverage;
+
 /**
  * Coverage report implementation for clover formatted xml files.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Util_Coverage_CloverReport
-    implements PHP_Depend_Util_Coverage_Report
+class CloverReport implements Report
 {
     /**
      * The type of this class.
@@ -64,9 +65,9 @@ class PHP_Depend_Util_Coverage_CloverReport
     /**
      * Constructs a new clover report instance.
      *
-     * @param SimpleXMLElement $sxml The context simple xml element.
+     * @param \SimpleXMLElement $sxml The context simple xml element.
      */
-    public function __construct(SimpleXMLElement $sxml)
+    public function __construct(\SimpleXMLElement $sxml)
     {
         $this->readProjectCoverage($sxml->project);
     }
@@ -74,11 +75,10 @@ class PHP_Depend_Util_Coverage_CloverReport
     /**
      * Reads the coverage information for a project.
      *
-     * @param SimpleXMLElement $sxml Element representing the clover project tag.
-     *
+     * @param \SimpleXMLElement $sxml Element representing the clover project tag.
      * @return void
      */
-    private function readProjectCoverage(SimpleXMLElement $sxml)
+    private function readProjectCoverage(\SimpleXMLElement $sxml)
     {
         $this->readFileCoverage($sxml);
         foreach ($sxml->package as $package) {
@@ -90,11 +90,10 @@ class PHP_Depend_Util_Coverage_CloverReport
      * Reads the coverage information for all file elements under the given
      * parent.
      *
-     * @param SimpleXMLElement $sxml Element representing a file parent element.
-     *
+     * @param \SimpleXMLElement $sxml Element representing a file parent element.
      * @return void
      */
-    private function readFileCoverage(SimpleXMLElement $sxml)
+    private function readFileCoverage(\SimpleXMLElement $sxml)
     {
         foreach ($sxml->file as $file) {
             $lines = array();
@@ -108,11 +107,10 @@ class PHP_Depend_Util_Coverage_CloverReport
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param PHP_Depend_Code_AbstractItem $item The context code item.
-     *
+     * @param \PHP_Depend_Code_AbstractItem $item The context code item.
      * @return float
      */
-    public function getCoverage(PHP_Depend_Code_AbstractItem $item)
+    public function getCoverage(\PHP_Depend_Code_AbstractItem $item)
     {
         $lines = $this->getLines((string) $item->getSourceFile());
 
@@ -140,7 +138,6 @@ class PHP_Depend_Util_Coverage_CloverReport
      * Returns the lines of the covered file.
      *
      * @param string $fileName The source file name.
-     *
      * @return array(boolean)
      */
     private function getLines($fileName)

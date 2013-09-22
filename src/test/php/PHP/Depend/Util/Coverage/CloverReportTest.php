@@ -40,21 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+namespace PHP\Depend\Util\Coverage;
 
 /**
- * Test case for the {@link PHP_Depend_Util_Coverage_CloverReport} class.
+ * Test case for the {@link \PHP\Depend\Util\Coverage\CloverReport} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Util_Coverage_CloverReport
+ * @covers \PHP\Depend\Util\Coverage\CloverReport
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::coverage
  * @group unittest
  */
-class PHP_Depend_Util_Coverage_CloverReportTest extends PHP_Depend_AbstractTest
+class CloverReportTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testReportReturnsExpected0PercentCoverage
@@ -150,23 +150,23 @@ class PHP_Depend_Util_Coverage_CloverReportTest extends PHP_Depend_AbstractTest
     /**
      * Creates a clover coverage report instance.
      *
-     * @return PHP_Depend_Util_Coverage_CloverReport
+     * @return \PHP\Depend\Util\Coverage\CloverReport
      */
     private function _createCloverReport()
     {
         $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover.xml');
-        return new PHP_Depend_Util_Coverage_CloverReport($sxml);
+        return new CloverReport($sxml);
     }
 
     /**
      * Creates a clover coverage report instance.
      *
-     * @return PHP_Depend_Util_Coverage_CloverReport
+     * @return \PHP\Depend\Util\Coverage\CloverReport
      */
     private function _createNamespacedCloverReport()
     {
         $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover-namespaced.xml');
-        return new PHP_Depend_Util_Coverage_CloverReport($sxml);
+        return new CloverReport($sxml);
     }
 
     /**

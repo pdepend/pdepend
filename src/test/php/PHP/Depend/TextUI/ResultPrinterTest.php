@@ -40,6 +40,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TextUI;
+
+use PHP\Depend\Builder\DefaultBuilder;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
@@ -48,9 +52,9 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_TextUI_ResultPrinter
+ * @covers \PHP\Depend\TextUI\ResultPrinter
  */
-class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
+class ResultPrinterTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Tests the output for a single file entry.
@@ -60,11 +64,11 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterOutputForSingleEntry()
     {
         // Create dummy objects
-        $builder   = new PHP_Depend_Builder_Default();
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $builder   = new DefaultBuilder();
+        $tokenizer = new \PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile(__FILE__);
 
-        $printer = new PHP_Depend_TextUI_ResultPrinter();
+        $printer = new ResultPrinter();
 
         ob_start();
         $printer->startFileParsing($tokenizer);
@@ -85,11 +89,11 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterOutputForMultipleEntries()
     {
         // Create dummy objects
-        $builder   = new PHP_Depend_Builder_Default();
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $builder   = new DefaultBuilder();
+        $tokenizer = new \PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile(__FILE__);
 
-        $printer = new PHP_Depend_TextUI_ResultPrinter();
+        $printer = new ResultPrinter();
 
         ob_start();
         for ($i = 0; $i < 73; ++$i) {
@@ -113,10 +117,10 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterForMultipleEntries()
     {
         // Create dummy objects
-        $method   = new PHP_Depend_Code_Method('method');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $method   = new \PHP_Depend_Code_Method('method');
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
 
-        $printer = new PHP_Depend_TextUI_ResultPrinter();
+        $printer = new ResultPrinter();
 
         ob_start();
         for ($i = 0; $i < 1401; ++$i) {
@@ -140,10 +144,10 @@ class PHP_Depend_TextUI_ResultPrinterTest extends PHP_Depend_AbstractTest
     public function testResultPrinterForCompleteLine()
     {
         // Create dummy objects
-        $method   = new PHP_Depend_Code_Method('method');
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $method   = new \PHP_Depend_Code_Method('method');
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
 
-        $printer = new PHP_Depend_TextUI_ResultPrinter();
+        $printer = new ResultPrinter();
 
         ob_start();
         for ($i = 0; $i < 2400; ++$i) {

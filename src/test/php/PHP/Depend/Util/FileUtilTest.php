@@ -40,20 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Util_FileUtil} class.
+ * Test case for the {@link \PHP\Depend\Util\FileUtil} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers PHP_Depend_Util_FileUtil
+ * @covers \PHP\Depend\Util\FileUtil
  * @group pdepend
  * @group pdepend::util
  * @group unittest
  */
-class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
+class FileUtilTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testGetSysTempDirReturnsExpectedDirectory
@@ -64,7 +65,7 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
     {
         self::assertEquals(
             sys_get_temp_dir(),
-            PHP_Depend_Util_FileUtil::getSysTempDir()
+            FileUtil::getSysTempDir()
         );
     }
 
@@ -77,7 +78,7 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
     {
         self::assertEquals(
             getenv('HOME'),
-            PHP_Depend_Util_FileUtil::getUserHomeDir()
+            FileUtil::getUserHomeDir()
         );
     }
 
@@ -90,7 +91,7 @@ class PHP_Depend_Util_FileUtilTest extends PHP_Depend_AbstractTest
     {
         self::assertEquals(
             getenv('HOME'),
-            PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir()
+            FileUtil::getUserHomeDirOrSysTempDir()
         );
     }
 

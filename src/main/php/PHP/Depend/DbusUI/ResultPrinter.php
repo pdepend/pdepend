@@ -42,6 +42,8 @@
 
 // This is just fun and it is not really testable
 // @codeCoverageIgnoreStart
+use PHP\Depend\Builder;
+use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
 
 /**
  * Fun result printer that uses dbus to show a notification window.
@@ -50,7 +52,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_DbusUI_ResultPrinter
-       extends PHP_Depend_Visitor_AbstractListener
+       extends AbstractTreeVisitListener
     implements PHP_Depend_ProcessListenerI
 {
     /**
@@ -70,11 +72,10 @@ class PHP_Depend_DbusUI_ResultPrinter
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     *
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    public function startParseProcess(PHP_Depend_BuilderI $builder)
+    public function startParseProcess(Builder $builder)
     {
         $this->startTime = time();
     }
@@ -82,11 +83,10 @@ class PHP_Depend_DbusUI_ResultPrinter
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     *
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    public function endParseProcess(PHP_Depend_BuilderI $builder)
+    public function endParseProcess(Builder $builder)
     {
     }
 

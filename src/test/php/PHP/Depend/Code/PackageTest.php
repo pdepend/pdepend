@@ -40,8 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
+use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
  * Test case implementation for the PHP_Depend_Code_Package class.
@@ -401,7 +400,7 @@ class PHP_Depend_Code_PackageTest extends PHP_Depend_AbstractTest
     public function testVisitorAccept()
     {
         $package = new PHP_Depend_Code_Package('package1');
-        $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
+        $visitor = new TestNodeVisitor();
         
         $package->accept($visitor);
         self::assertSame($package, $visitor->package);

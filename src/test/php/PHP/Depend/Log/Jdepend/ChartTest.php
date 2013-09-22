@@ -40,10 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-require_once dirname(__FILE__) . '/../DummyAnalyzer.php';
-require_once dirname(__FILE__) . '/DependencyAnalyzer.php';
-
 /**
  * Test case for the jdepend chart logger.
  *

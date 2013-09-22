@@ -48,7 +48,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Log_Summary_Xml
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
@@ -292,9 +292,7 @@ class PHP_Depend_Log_Summary_Xml
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -305,7 +303,6 @@ class PHP_Depend_Log_Summary_Xml
      * Visits a method node.
      *
      * @param PHP_Depend_Code_Method $method The method class node.
-     *
      * @return void
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
@@ -324,8 +321,7 @@ class PHP_Depend_Log_Summary_Xml
     /**
      * Visits a package node.
      *
-     * @param PHP_Depend_Code_Class $package The package class node.
-     *
+     * @param PHP_Depend_Code_Package $package The package class node.
      * @return void
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
@@ -362,7 +358,6 @@ class PHP_Depend_Log_Summary_Xml
      *
      * @param DOMElement            $xml  DOM Element that represents <b>$node</b>.
      * @param PHP_Depend_Code_NodeI $node The context code node instance.
-     *
      * @return void
      */
     protected function writeNodeMetrics(DOMElement $xml, PHP_Depend_Code_NodeI $node)

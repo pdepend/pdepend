@@ -42,8 +42,6 @@
  * @since     1.0.0
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for bug #18459091.
  *
@@ -83,7 +81,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
         set_time_limit(5);
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -102,7 +100,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
         set_time_limit(5);
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -120,7 +118,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
         set_time_limit(5);
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -138,7 +136,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
         set_time_limit(5);
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -218,7 +216,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
 
         ob_start();
 
-        $command = new PHP_Depend_TextUI_Command();
+        $command = new \PHP\Depend\TextUI\Command();
         $command->run();
 
         $output = ob_get_clean();

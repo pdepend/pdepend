@@ -40,18 +40,24 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Builder;
+
+use PHP\Depend\Builder;
+use PHP\Depend\Util\Log;
+use PHP\Depend\Util\Type;
+
 /**
  * Default code tree builder implementation.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
+class DefaultBuilder implements Builder
 {
     /**
      * The internal used cache instance.
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -59,7 +65,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * The ast builder context.
      *
-     * @var PHP_Depend_Builder_Context
+     * @var \PHP\Depend\Builder\Context
      * @since 0.10.0
      */
     protected $context = null;
@@ -67,7 +73,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * This property holds all packages found during the parsing phase.
      *
-     * @param PHP_Depend_Code_Package[]
+     * @param \PHP_Depend_Code_Package[]
      * @since 0.9.12
      */
     private $preparedPackages = null;
@@ -76,42 +82,42 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Default package which contains all functions and classes with an unknown
      * scope.
      *
-     * @var PHP_Depend_Code_Package
+     * @var \PHP_Depend_Code_Package
      */
     protected $defaultPackage = null;
 
     /**
      * Default source file that acts as a dummy.
      *
-     * @var PHP_Depend_Code_File
+     * @var \PHP_Depend_Code_File
      */
     protected $defaultFile = null;
 
     /**
-     * All generated {@link PHP_Depend_Code_Trait} objects
+     * All generated {@link \PHP_Depend_Code_Trait} objects
      *
      * @var array
      */
     private $traits = array();
 
     /**
-     * All generated {@link PHP_Depend_Code_Class} objects
+     * All generated {@link \PHP_Depend_Code_Class} objects
      *
-     * @var PHP_Depend_Code_Class[]
+     * @var \PHP_Depend_Code_Class[]
      */
     private $classes = array();
 
     /**
-     * All generated {@link PHP_Depend_Code_Interface} instances.
+     * All generated {@link \PHP_Depend_Code_Interface} instances.
      *
-     * @var PHP_Depend_Code_Interface[]
+     * @var \PHP_Depend_Code_Interface[]
      */
     private $interfaces = array();
 
     /**
-     * All generated {@link PHP_Depend_Code_Package} objects
+     * All generated {@link \PHP_Depend_Code_Package} objects
      *
-     * @var PHP_Depend_Code_Package[]
+     * @var \PHP_Depend_Code_Package[]
      */
     private $packages = array();
 
@@ -139,14 +145,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Cache of all classes created during the regular parsing process.
      *
-     * @var PHP_Depend_Code_Class[]
+     * @var \PHP_Depend_Code_Class[]
      */
     private $frozenClasses = array();
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
-     * @var PHP_Depend_Code_Interface[]
+     * @var \PHP_Depend_Code_Interface[]
      */
     private $frozenInterfaces = array();
 
@@ -155,23 +161,22 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      */
     public function __construct()
     {
-        $this->defaultPackage = new PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
-        $this->defaultFile    = new PHP_Depend_Code_File(null);
+        $this->defaultPackage = new \PHP_Depend_Code_Package(self::DEFAULT_PACKAGE);
+        $this->defaultFile    = new \PHP_Depend_Code_File(null);
 
         $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
 
-        $this->context = new PHP_Depend_Builder_Context_GlobalStatic($this);
+        $this->context = new \PHP\Depend\Builder\Context\GlobalStatic($this);
     }
 
     /**
      * Setter method for the currently used token cache.
      *
-     * @param PHP_Depend_Util_Cache_Driver $cache Used token cache instance.
-     *
-     * @return PHP_Depend_Builder_Default
+     * @param \PHP\Depend\Util\Cache\Driver $cache
+     * @return \PHP\Depend\Builder\DefaultBuilder
      * @since 0.10.0
      */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    public function setCache(\PHP\Depend\Util\Cache\Driver $cache)
     {
         $this->cache = $cache;
         return $this;
@@ -182,7 +187,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @return \PHP_Depend_Code_ASTClassOrInterfaceReference
      * @since 0.9.5
      */
     public function buildAstClassOrInterfaceReference($qualifiedName)
@@ -190,13 +195,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug method creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTClassOrInterfaceReference(' .
+        Log::debug(
+            'Creating: \PHP_Depend_Code_ASTClassOrInterfaceReference(' .
             $qualifiedName .
             ')'
         );
 
-        return new PHP_Depend_Code_ASTClassOrInterfaceReference(
+        return new \PHP_Depend_Code_ASTClassOrInterfaceReference(
             $this->context,
             $qualifiedName
         );
@@ -204,12 +209,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link PHP_Depend_Code_Class}
+     * qualified name. It will create a new {@link \PHP_Depend_Code_Class}
      * instance when no matching type exists.
      *
      * @param string $qualifiedName The full qualified type identifier.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP_Depend_Code_AbstractClassOrInterface
      * @since 0.9.5
      */
     public function getClassOrInterface($qualifiedName)
@@ -231,14 +236,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The full qualified trait name.
      *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP_Depend_Code_Trait
      * @since 1.0.0
      */
     public function buildTrait($qualifiedName)
     {
         $this->checkBuilderState();
 
-        $trait = new PHP_Depend_Code_Trait($this->extractTypeName($qualifiedName));
+        $trait = new \PHP_Depend_Code_Trait($this->extractTypeName($qualifiedName));
         $trait->setCache($this->cache)
             ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
@@ -248,12 +253,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link PHP_Depend_Code_Trait}
+     * qualified name. It will create a new {@link \PHP_Depend_Code_Trait}
      * instance when no matching type exists.
      *
      * @param string $qualifiedName The full qualified type identifier.
      *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP_Depend_Code_Trait
      * @since 1.0.0
      */
     public function getTrait($qualifiedName)
@@ -270,18 +275,18 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The full qualified trait name.
      *
-     * @return PHP_Depend_Code_ASTTraitReference
+     * @return \PHP_Depend_Code_ASTTraitReference
      * @since 1.0.0
      */
     public function buildAstTraitReference($qualifiedName)
     {
         $this->checkBuilderState();
 
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTTraitReference(' . $qualifiedName . ')'
+        Log::debug(
+            'Creating: \PHP_Depend_Code_ASTTraitReference(' . $qualifiedName . ')'
         );
 
-        return new PHP_Depend_Code_ASTTraitReference($this->context, $qualifiedName);
+        return new \PHP_Depend_Code_ASTTraitReference($this->context, $qualifiedName);
     }
 
     /**
@@ -310,13 +315,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $name The class name.
      *
-     * @return PHP_Depend_Code_Class The created class object.
+     * @return \PHP_Depend_Code_Class The created class object.
      */
     public function buildClass($name)
     {
         $this->checkBuilderState();
         
-        $class = new PHP_Depend_Code_Class($this->extractTypeName($name));
+        $class = new \PHP_Depend_Code_Class($this->extractTypeName($name));
         $class->setCache($this->cache)
             ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
@@ -326,12 +331,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link PHP_Depend_Code_Class}
+     * qualified name. It will create a new {@link \PHP_Depend_Code_Class}
      * instance when no matching type exists.
      *
      * @param string $qualifiedName The full qualified type identifier.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP_Depend_Code_Class
      * @since 0.9.5
      */
     public function getClass($qualifiedName)
@@ -348,7 +353,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return PHP_Depend_Code_ASTClassReference
+     * @return \PHP_Depend_Code_ASTClassReference
      * @since 0.9.5
      */
     public function buildAstClassReference($qualifiedName)
@@ -356,11 +361,11 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
         $this->checkBuilderState();
 
         // Debug method creation
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTClassReference(' . $qualifiedName . ')'
+        Log::debug(
+            'Creating: \PHP_Depend_Code_ASTClassReference(' . $qualifiedName . ')'
         );
 
-        return new PHP_Depend_Code_ASTClassReference($this->context, $qualifiedName);
+        return new \PHP_Depend_Code_ASTClassReference($this->context, $qualifiedName);
     }
 
     /**
@@ -395,13 +400,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $name The interface name.
      *
-     * @return PHP_Depend_Code_Interface The created interface object.
+     * @return \PHP_Depend_Code_Interface The created interface object.
      */
     public function buildInterface($name)
     {
         $this->checkBuilderState();
         
-        $interface = new PHP_Depend_Code_Interface($this->extractTypeName($name));
+        $interface = new \PHP_Depend_Code_Interface($this->extractTypeName($name));
         $interface->setCache($this->cache)
             ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
@@ -411,12 +416,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link PHP_Depend_Code_Interface}
+     * qualified name. It will create a new {@link \PHP_Depend_Code_Interface}
      * instance when no matching type exists.
      *
      * @param string $qualifiedName The full qualified type identifier.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP_Depend_Code_Interface
      * @since 0.9.5
      */
     public function getInterface($qualifiedName)
@@ -433,17 +438,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $name The method name.
      *
-     * @return PHP_Depend_Code_Method The created class method object.
+     * @return \PHP_Depend_Code_Method The created class method object.
      */
     public function buildMethod($name)
     {
         $this->checkBuilderState();
 
         // Debug method creation
-        PHP_Depend_Util_Log::debug("Creating: PHP_Depend_Code_Method({$name})");
+        Log::debug("Creating: \\PHP_Depend_Code_Method({$name})");
 
         // Create a new method instance
-        $method = new PHP_Depend_Code_Method($name);
+        $method = new \PHP_Depend_Code_Method($name);
         $method->setCache($this->cache);
 
         return $method;
@@ -454,17 +459,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $name The package name.
      *
-     * @return PHP_Depend_Code_Package The created package object.
+     * @return \PHP_Depend_Code_Package The created package object.
      */
     public function buildPackage($name)
     {
         if (!isset($this->packages[$name])) {
             // Debug package creation
-            PHP_Depend_Util_Log::debug(
-                'Creating: PHP_Depend_Code_Package(' . $name . ')'
+            Log::debug(
+                'Creating: \PHP_Depend_Code_Package(' . $name . ')'
             );
 
-            $this->packages[$name] = new PHP_Depend_Code_Package($name);
+            $this->packages[$name] = new \PHP_Depend_Code_Package($name);
         }
         return $this->packages[$name];
     }
@@ -474,17 +479,17 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $name The function name.
      *
-     * @return PHP_Depend_Code_Function The function instance.
+     * @return \PHP_Depend_Code_Function The function instance.
      */
     public function buildFunction($name)
     {
         $this->checkBuilderState();
 
         // Debug function creation
-        PHP_Depend_Util_Log::debug("Creating: PHP_Depend_Code_Function({$name})");
+        Log::debug("Creating: \\PHP_Depend_Code_Function({$name})");
 
         // Create new function
-        $function = new PHP_Depend_Code_Function($name);
+        $function = new \PHP_Depend_Code_Function($name);
         $function->setCache($this->cache)
             ->setContext($this->context)
             ->setSourceFile($this->defaultFile);
@@ -495,64 +500,64 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new self reference instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance
+     * @param \PHP_Depend_Code_AbstractClassOrInterface $type The type instance
      *        that reference the concrete target of self.
      *
-     * @return PHP_Depend_Code_ASTSelfReference
+     * @return \PHP_Depend_Code_ASTSelfReference
      * @since 0.9.6
      */
     public function buildAstSelfReference(
-        PHP_Depend_Code_AbstractClassOrInterface $type
+        \PHP_Depend_Code_AbstractClassOrInterface $type
     ) {
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTSelfReference(' . $type->getName() . ')'
+        Log::debug(
+            'Creating: \PHP_Depend_Code_ASTSelfReference(' . $type->getName() . ')'
         );
 
-        return new PHP_Depend_Code_ASTSelfReference($this->context, $type);
+        return new \PHP_Depend_Code_ASTSelfReference($this->context, $type);
     }
 
     /**
      * Builds a new parent reference instance.
      *
-     * @param PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type
+     * @param \PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type
      *        instance that reference the concrete target of parent.
      *
-     * @return PHP_Depend_Code_ASTParentReference
+     * @return \PHP_Depend_Code_ASTParentReference
      * @since 0.9.6
      */
     public function buildAstParentReference(
-        PHP_Depend_Code_ASTClassOrInterfaceReference $reference
+        \PHP_Depend_Code_ASTClassOrInterfaceReference $reference
     ) {
         include_once 'PHP/Depend/Code/ASTParentReference.php';
 
-        PHP_Depend_Util_Log::debug(
-            'Creating: PHP_Depend_Code_ASTParentReference()'
+        Log::debug(
+            'Creating: \PHP_Depend_Code_ASTParentReference()'
         );
 
-        return new PHP_Depend_Code_ASTParentReference($reference);
+        return new \PHP_Depend_Code_ASTParentReference($reference);
     }
 
     /**
      * Builds a new static reference instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $owner The owning instance
+     * @param \PHP_Depend_Code_AbstractClassOrInterface $owner The owning instance
      *        that reference the concrete target of static.
      *
-     * @return PHP_Depend_Code_ASTStaticReference
+     * @return \PHP_Depend_Code_ASTStaticReference
      * @since 0.9.6
      */
     public function buildAstStaticReference(
-        PHP_Depend_Code_AbstractClassOrInterface $owner
+        \PHP_Depend_Code_AbstractClassOrInterface $owner
     ) {
-        PHP_Depend_Util_Log::debug('Creating: PHP_Depend_Code_ASTStaticReference()');
+        Log::debug('Creating: \PHP_Depend_Code_ASTStaticReference()');
 
-        return new PHP_Depend_Code_ASTStaticReference($this->context, $owner);
+        return new \PHP_Depend_Code_ASTStaticReference($this->context, $owner);
     }
 
     /**
      * Builds a new field declaration node.
      *
-     * @return PHP_Depend_Code_ASTFieldDeclaration
+     * @return \PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
     public function buildAstFieldDeclaration()
@@ -565,7 +570,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the variable declarator.
      *
-     * @return PHP_Depend_Code_ASTVariableDeclarator
+     * @return \PHP_Depend_Code_ASTVariableDeclarator
      * @since 0.9.6
      */
     public function buildAstVariableDeclarator($image)
@@ -578,7 +583,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the statuc declaration.
      *
-     * @return PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @return \PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
     public function buildAstStaticVariableDeclaration($image)
@@ -591,7 +596,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the constant.
      *
-     * @return PHP_Depend_Code_ASTConstant
+     * @return \PHP_Depend_Code_ASTConstant
      * @since 0.9.6
      */
     public function buildAstConstant($image)
@@ -604,7 +609,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the variable.
      *
-     * @return PHP_Depend_Code_ASTVariable
+     * @return \PHP_Depend_Code_ASTVariable
      * @since 0.9.6
      */
     public function buildAstVariable($image)
@@ -617,7 +622,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the variable variable.
      *
-     * @return PHP_Depend_Code_ASTVariableVariable
+     * @return \PHP_Depend_Code_ASTVariableVariable
      * @since 0.9.6
      */
     public function buildAstVariableVariable($image)
@@ -630,7 +635,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the compound variable.
      *
-     * @return PHP_Depend_Code_ASTCompoundVariable
+     * @return \PHP_Depend_Code_ASTCompoundVariable
      * @since 0.9.6
      */
     public function buildAstCompoundVariable($image)
@@ -641,7 +646,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new compound expression node.
      *
-     * @return PHP_Depend_Code_ASTCompoundExpression
+     * @return \PHP_Depend_Code_ASTCompoundExpression
      * @since 0.9.6
      */
     public function buildAstCompoundExpression()
@@ -652,7 +657,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new closure node.
      *
-     * @return PHP_Depend_Code_ASTClosure
+     * @return \PHP_Depend_Code_ASTClosure
      * @since 0.9.12
      */
     public function buildAstClosure()
@@ -663,7 +668,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new formal parameters node.
      *
-     * @return PHP_Depend_Code_ASTFormalParameters
+     * @return \PHP_Depend_Code_ASTFormalParameters
      * @since 0.9.6
      */
     public function buildAstFormalParameters()
@@ -674,7 +679,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new formal parameter node.
      *
-     * @return PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP_Depend_Code_ASTFormalParameter
      * @since 0.9.6
      */
     public function buildAstFormalParameter()
@@ -685,7 +690,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new expression node.
      *
-     * @return PHP_Depend_Code_ASTExpression
+     * @return \PHP_Depend_Code_ASTExpression
      * @since 0.9.8
      */
     public function buildAstExpression()
@@ -698,7 +703,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The assignment operator.
      *
-     * @return PHP_Depend_Code_ASTAssignmentExpression
+     * @return \PHP_Depend_Code_ASTAssignmentExpression
      * @since 0.9.8
      */
     public function buildAstAssignmentExpression($image)
@@ -711,7 +716,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this expression.
      *
-     * @return PHP_Depend_Code_ASTAllocationExpression
+     * @return \PHP_Depend_Code_ASTAllocationExpression
      * @since 0.9.6
      */
     public function buildAstAllocationExpression($image)
@@ -724,7 +729,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this expression.
      *
-     * @return PHP_Depend_Code_ASTEvalExpression
+     * @return \PHP_Depend_Code_ASTEvalExpression
      * @since 0.9.12
      */
     public function buildAstEvalExpression($image)
@@ -737,7 +742,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTExitExpression
+     * @return \PHP_Depend_Code_ASTExitExpression
      * @since 0.9.12
      */
     public function buildAstExitExpression($image)
@@ -750,7 +755,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this expression.
      *
-     * @return PHP_Depend_Code_ASTCloneExpression
+     * @return \PHP_Depend_Code_ASTCloneExpression
      * @since 0.9.12
      */
     public function buildAstCloneExpression($image)
@@ -763,7 +768,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this expression.
      *
-     * @return PHP_Depend_Code_ASTListExpression
+     * @return \PHP_Depend_Code_ASTListExpression
      * @since 0.9.12
      */
     public function buildAstListExpression($image)
@@ -774,7 +779,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new include- or include_once-expression.
      *
-     * @return PHP_Depend_Code_ASTIncludeExpression
+     * @return \PHP_Depend_Code_ASTIncludeExpression
      * @since 0.9.12
      */
     public function buildAstIncludeExpression()
@@ -785,7 +790,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new require- or require_once-expression.
      *
-     * @return PHP_Depend_Code_ASTRequireExpression
+     * @return \PHP_Depend_Code_ASTRequireExpression
      * @since 0.9.12
      */
     public function buildAstRequireExpression()
@@ -796,7 +801,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new array-expression node.
      *
-     * @return PHP_Depend_Code_ASTArrayIndexExpression
+     * @return \PHP_Depend_Code_ASTArrayIndexExpression
      * @since 0.9.12
      */
     public function buildAstArrayIndexExpression()
@@ -813,7 +818,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * //     --------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTStringIndexExpression
+     * @return \PHP_Depend_Code_ASTStringIndexExpression
      * @since 0.9.12
      */
     public function buildAstStringIndexExpression()
@@ -824,7 +829,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new php array node.
      *
-     * @return PHP_Depend_Code_ASTArray
+     * @return \PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
     public function buildAstArray()
@@ -835,7 +840,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new array element node.
      *
-     * @return PHP_Depend_Code_ASTArrayElement
+     * @return \PHP_Depend_Code_ASTArrayElement
      * @since 1.0.0
      */
     public function buildAstArrayElement()
@@ -849,7 +854,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this expression.
      *
-     * @return PHP_Depend_Code_ASTInstanceOfExpression
+     * @return \PHP_Depend_Code_ASTInstanceOfExpression
      * @since 0.9.6
      */
     public function buildAstInstanceOfExpression($image)
@@ -872,7 +877,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * }
      * </code>
      *
-     * @return PHP_Depend_Code_ASTIssetExpression
+     * @return \PHP_Depend_Code_ASTIssetExpression
      * @since 0.9.12
      */
     public function buildAstIssetExpression()
@@ -889,7 +894,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *         --------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTConditionalExpression
+     * @return \PHP_Depend_Code_ASTConditionalExpression
      * @since 0.9.8
      */
     public function buildAstConditionalExpression()
@@ -900,7 +905,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Build a new shift left expression.
      *
-     * @return PHP_Depend_Code_ASTShiftLeftExpression
+     * @return \PHP_Depend_Code_ASTShiftLeftExpression
      * @since 1.0.1
      */
     public function buildAstShiftLeftExpression()
@@ -911,7 +916,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Build a new shift right expression.
      *
-     * @return PHP_Depend_Code_ASTShiftRightExpression
+     * @return \PHP_Depend_Code_ASTShiftRightExpression
      * @since 1.0.1
      */
     public function buildAstShiftRightExpression()
@@ -922,7 +927,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new boolean and-expression.
      *
-     * @return PHP_Depend_Code_ASTBooleanAndExpression
+     * @return \PHP_Depend_Code_ASTBooleanAndExpression
      * @since 0.9.8
      */
     public function buildAstBooleanAndExpression()
@@ -933,7 +938,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new boolean or-expression.
      *
-     * @return PHP_Depend_Code_ASTBooleanOrExpression
+     * @return \PHP_Depend_Code_ASTBooleanOrExpression
      * @since 0.9.8
      */
     public function buildAstBooleanOrExpression()
@@ -944,7 +949,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new logical <b>and</b>-expression.
      *
-     * @return PHP_Depend_Code_ASTLogicalAndExpression
+     * @return \PHP_Depend_Code_ASTLogicalAndExpression
      * @since 0.9.8
      */
     public function buildAstLogicalAndExpression()
@@ -955,7 +960,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new logical <b>or</b>-expression.
      *
-     * @return PHP_Depend_Code_ASTLogicalOrExpression
+     * @return \PHP_Depend_Code_ASTLogicalOrExpression
      * @since 0.9.8
      */
     public function buildAstLogicalOrExpression()
@@ -966,7 +971,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
-     * @return PHP_Depend_Code_ASTLogicalXorExpression
+     * @return \PHP_Depend_Code_ASTLogicalXorExpression
      * @since 0.9.8
      */
     public function buildAstLogicalXorExpression()
@@ -977,7 +982,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new trait use-statement node.
      *
-     * @return PHP_Depend_Code_ASTTraitUseStatement
+     * @return \PHP_Depend_Code_ASTTraitUseStatement
      * @since 1.0.0
      */
     public function buildAstTraitUseStatement()
@@ -988,7 +993,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new trait adaptation scope
      *
-     * @return PHP_Depend_Code_ASTTraitAdaptation
+     * @return \PHP_Depend_Code_ASTTraitAdaptation
      * @since 1.0.0
      */
     public function buildAstTraitAdaptation()
@@ -1001,7 +1006,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The trait method name.
      *
-     * @return PHP_Depend_Code_ASTTraitAdaptationAlias
+     * @return \PHP_Depend_Code_ASTTraitAdaptationAlias
      * @since 1.0.0
      */
     public function buildAstTraitAdaptationAlias($image)
@@ -1014,7 +1019,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The trait method name.
      *
-     * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
+     * @return \PHP_Depend_Code_ASTTraitAdaptationPrecedence
      * @since 1.0.0
      */
     public function buildAstTraitAdaptationPrecedence($image)
@@ -1025,7 +1030,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new switch-statement-node.
      *
-     * @return PHP_Depend_Code_ASTSwitchStatement
+     * @return \PHP_Depend_Code_ASTSwitchStatement
      * @since 0.9.8
      */
     public function buildAstSwitchStatement()
@@ -1038,7 +1043,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this label.
      *
-     * @return PHP_Depend_Code_ASTSwitchLabel
+     * @return \PHP_Depend_Code_ASTSwitchLabel
      * @since 0.9.8
      */
     public function buildAstSwitchLabel($image)
@@ -1049,7 +1054,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new global-statement instance.
      *
-     * @return PHP_Depend_Code_ASTGlobalStatement
+     * @return \PHP_Depend_Code_ASTGlobalStatement
      * @since 0.9.12
      */
     public function buildAstGlobalStatement()
@@ -1060,7 +1065,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new unset-statement instance.
      *
-     * @return PHP_Depend_Code_ASTUnsetStatement
+     * @return \PHP_Depend_Code_ASTUnsetStatement
      * @since 0.9.12
      */
     public function buildAstUnsetStatement()
@@ -1073,7 +1078,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTCatchStatement
+     * @return \PHP_Depend_Code_ASTCatchStatement
      * @since 0.9.8
      */
     public function buildAstCatchStatement($image)
@@ -1086,7 +1091,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTIfStatement
+     * @return \PHP_Depend_Code_ASTIfStatement
      * @since 0.9.8
      */
     public function buildAstIfStatement($image)
@@ -1099,7 +1104,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTElseIfStatement
+     * @return \PHP_Depend_Code_ASTElseIfStatement
      * @since 0.9.8
      */
     public function buildAstElseIfStatement($image)
@@ -1112,7 +1117,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTForStatement
+     * @return \PHP_Depend_Code_ASTForStatement
      * @since 0.9.8
      */
     public function buildAstForStatement($image)
@@ -1129,7 +1134,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *      ------------------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTForInit
+     * @return \PHP_Depend_Code_ASTForInit
      * @since 0.9.8
      */
     public function buildAstForInit()
@@ -1146,7 +1151,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *                                        -------------------------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTForUpdate
+     * @return \PHP_Depend_Code_ASTForUpdate
      * @since 0.9.12
      */
     public function buildAstForUpdate()
@@ -1159,7 +1164,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTForeachStatement
+     * @return \PHP_Depend_Code_ASTForeachStatement
      * @since 0.9.8
      */
     public function buildAstForeachStatement($image)
@@ -1172,7 +1177,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTWhileStatement
+     * @return \PHP_Depend_Code_ASTWhileStatement
      * @since 0.9.8
      */
     public function buildAstWhileStatement($image)
@@ -1185,7 +1190,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this statement.
      *
-     * @return PHP_Depend_Code_ASTDoWhileStatement
+     * @return \PHP_Depend_Code_ASTDoWhileStatement
      * @since 0.9.12
      */
     public function buildAstDoWhileStatement($image)
@@ -1214,7 +1219,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * -----------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTDeclareStatement
+     * @return \PHP_Depend_Code_ASTDeclareStatement
      * @since 0.10.0
      */
     public function buildAstDeclareStatement()
@@ -1245,7 +1250,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image of this expression.
      *
-     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @return \PHP_Depend_Code_ASTMemberPrimaryPrefix
      * @since 0.9.6
      */
     public function buildAstMemberPrimaryPrefix($image)
@@ -1258,7 +1263,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The image of this identifier.
      *
-     * @return PHP_Depend_Code_ASTIdentifier
+     * @return \PHP_Depend_Code_ASTIdentifier
      * @since 0.9.6
      */
     public function buildAstIdentifier($image)
@@ -1281,7 +1286,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The image of this node.
      *
-     * @return PHP_Depend_Code_ASTFunctionPostfix
+     * @return \PHP_Depend_Code_ASTFunctionPostfix
      * @since 0.9.6
      */
     public function buildAstFunctionPostfix($image)
@@ -1304,7 +1309,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The image of this node.
      *
-     * @return PHP_Depend_Code_ASTMethodPostfix
+     * @return \PHP_Depend_Code_ASTMethodPostfix
      * @since 0.9.6
      */
     public function buildAstMethodPostfix($image)
@@ -1323,7 +1328,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The image of this node.
      *
-     * @return PHP_Depend_Code_ASTConstantPostfix
+     * @return \PHP_Depend_Code_ASTConstantPostfix
      * @since 0.9.6
      */
     public function buildAstConstantPostfix($image)
@@ -1346,7 +1351,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The image of this node.
      *
-     * @return PHP_Depend_Code_ASTPropertyPostfix
+     * @return \PHP_Depend_Code_ASTPropertyPostfix
      * @since 0.9.6
      */
     public function buildAstPropertyPostfix($image)
@@ -1367,7 +1372,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * //       ------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTArguments
+     * @return \PHP_Depend_Code_ASTArguments
      * @since 0.9.6
      */
     public function buildAstArguments()
@@ -1378,7 +1383,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new array type node.
      *
-     * @return PHP_Depend_Code_ASTTypeArray
+     * @return \PHP_Depend_Code_ASTTypeArray
      * @since 0.9.6
      */
     public function buildAstTypeArray()
@@ -1389,7 +1394,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new node for the callable type.
      *
-     * @return PHP_Depend_Code_ASTTypeCallable
+     * @return \PHP_Depend_Code_ASTTypeCallable
      * @since 1.0.0
      */
     public function buildAstTypeCallable()
@@ -1402,7 +1407,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the primitive type.
      *
-     * @return PHP_Depend_Code_ASTPrimitiveType
+     * @return \PHP_Depend_Code_ASTPrimitiveType
      * @since 0.9.6
      */
     public function buildAstPrimitiveType($image)
@@ -1415,7 +1420,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source image for the literal node.
      *
-     * @return PHP_Depend_Code_ASTLiteral
+     * @return \PHP_Depend_Code_ASTLiteral
      * @since 0.9.6
      */
     public function buildAstLiteral($image)
@@ -1429,7 +1434,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * <code>
      * $string = "Manuel $Pichler <{$email}>";
      *
-     * // PHP_Depend_Code_ASTString
+     * // \PHP_Depend_Code_ASTString
      * // |-- ASTLiteral             -  "Manuel ")
      * // |-- ASTVariable            -  $Pichler
      * // |-- ASTLiteral             -  " <"
@@ -1438,7 +1443,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * // |-- ASTLiteral             -  ">"
      * </code>
      *
-     * @return PHP_Depend_Code_ASTString
+     * @return \PHP_Depend_Code_ASTString
      * @since 0.9.10
      */
     public function buildAstString()
@@ -1449,7 +1454,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new heredoc node.
      *
-     * @return PHP_Depend_Code_ASTHeredoc
+     * @return \PHP_Depend_Code_ASTHeredoc
      * @since 0.9.12
      */
     public function buildAstHeredoc()
@@ -1471,7 +1476,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTConstantDefinition
+     * @return \PHP_Depend_Code_ASTConstantDefinition
      * @since 0.9.6
      */
     public function buildAstConstantDefinition($image)
@@ -1512,7 +1517,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTConstantDeclarator
+     * @return \PHP_Depend_Code_ASTConstantDeclarator
      * @since 0.9.6
      */
     public function buildAstConstantDeclarator($image)
@@ -1525,7 +1530,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $cdata The comment text.
      *
-     * @return PHP_Depend_Code_ASTComment
+     * @return \PHP_Depend_Code_ASTComment
      * @since 0.9.8
      */
     public function buildAstComment($cdata)
@@ -1538,7 +1543,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The unary expression image/character.
      *
-     * @return PHP_Depend_Code_ASTUnaryExpression
+     * @return \PHP_Depend_Code_ASTUnaryExpression
      * @since 0.9.11
      */
     public function buildAstUnaryExpression($image)
@@ -1551,7 +1556,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The cast-expression image/character.
      *
-     * @return PHP_Depend_Code_ASTCastExpression
+     * @return \PHP_Depend_Code_ASTCastExpression
      * @since 0.10.0
      */
     public function buildAstCastExpression($image)
@@ -1564,7 +1569,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The postfix-expression image/character.
      *
-     * @return PHP_Depend_Code_ASTPostfixExpression
+     * @return \PHP_Depend_Code_ASTPostfixExpression
      * @since 0.10.0
      */
     public function buildAstPostfixExpression($image)
@@ -1575,7 +1580,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new pre-increment-expression node instance.
      *
-     * @return PHP_Depend_Code_ASTPreIncrementExpression
+     * @return \PHP_Depend_Code_ASTPreIncrementExpression
      * @since 0.10.0
      */
     public function buildAstPreIncrementExpression()
@@ -1586,7 +1591,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new pre-decrement-expression node instance.
      *
-     * @return PHP_Depend_Code_ASTPreDecrementExpression
+     * @return \PHP_Depend_Code_ASTPreDecrementExpression
      * @since 0.10.0
      */
     public function buildAstPreDecrementExpression()
@@ -1597,7 +1602,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new function/method scope instance.
      *
-     * @return PHP_Depend_Code_ASTScope
+     * @return \PHP_Depend_Code_ASTScope
      * @since 0.9.12
      */
     public function buildAstScope()
@@ -1608,7 +1613,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new statement instance.
      *
-     * @return PHP_Depend_Code_ASTStatement
+     * @return \PHP_Depend_Code_ASTStatement
      * @since 0.9.12
      */
     public function buildAstStatement()
@@ -1621,7 +1626,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTReturnStatement
+     * @return \PHP_Depend_Code_ASTReturnStatement
      * @since 0.9.12
      */
     public function buildAstReturnStatement($image)
@@ -1634,7 +1639,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTBreakStatement
+     * @return \PHP_Depend_Code_ASTBreakStatement
      * @since 0.9.12
      */
     public function buildAstBreakStatement($image)
@@ -1647,7 +1652,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTContinueStatement
+     * @return \PHP_Depend_Code_ASTContinueStatement
      * @since 0.9.12
      */
     public function buildAstContinueStatement($image)
@@ -1658,7 +1663,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Builds a new scope-statement instance.
      *
-     * @return PHP_Depend_Code_ASTScopeStatement
+     * @return \PHP_Depend_Code_ASTScopeStatement
      * @since 0.9.12
      */
     public function buildAstScopeStatement()
@@ -1671,7 +1676,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTTryStatement
+     * @return \PHP_Depend_Code_ASTTryStatement
      * @since 0.9.12
      */
     public function buildAstTryStatement($image)
@@ -1684,7 +1689,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTThrowStatement
+     * @return \PHP_Depend_Code_ASTThrowStatement
      * @since 0.9.12
      */
     public function buildAstThrowStatement($image)
@@ -1697,7 +1702,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTGotoStatement
+     * @return \PHP_Depend_Code_ASTGotoStatement
      * @since 0.9.12
      */
     public function buildAstGotoStatement($image)
@@ -1710,7 +1715,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTLabelStatement
+     * @return \PHP_Depend_Code_ASTLabelStatement
      * @since 0.9.12
      */
     public function buildAstLabelStatement($image)
@@ -1723,7 +1728,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $image The source code image for this node.
      *
-     * @return PHP_Depend_Code_ASTEchoStatement
+     * @return \PHP_Depend_Code_ASTEchoStatement
      * @since 0.9.12
      */
     public function buildAstEchoStatement($image)
@@ -1732,10 +1737,10 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
-     * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
+     * Returns an iterator with all generated {@link \PHP_Depend_Code_Package}
      * objects.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP_Depend_Code_NodeIterator
      */
     public function getIterator()
     {
@@ -1743,24 +1748,24 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     }
 
     /**
-     * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
+     * Returns an iterator with all generated {@link \PHP_Depend_Code_Package}
      * objects.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP_Depend_Code_NodeIterator
      */
     public function getPackages()
     {
         if ($this->preparedPackages === null) {
             $this->preparedPackages = $this->getPreparedPackages();
         }
-        return new PHP_Depend_Code_NodeIterator($this->preparedPackages);
+        return new \PHP_Depend_Code_NodeIterator($this->preparedPackages);
     }
 
     /**
-     * Returns an iterator with all generated {@link PHP_Depend_Code_Package}
+     * Returns an iterator with all generated {@link \PHP_Depend_Code_Package}
      * objects.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP_Depend_Code_NodeIterator
      * @since 0.9.12
      */
     private function getPreparedPackages()
@@ -1803,7 +1808,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified trait name.
      *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP_Depend_Code_Trait
      * @since 0.9.5
      */
     protected function buildTraitInternal($qualifiedName)
@@ -1827,7 +1832,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified trait name.
      *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP_Depend_Code_Trait
      * @since 0.9.5
      */
     protected function findTrait($qualifiedName)
@@ -1877,7 +1882,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The full qualified interface name.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP_Depend_Code_Interface
      * @since 0.9.5
      */
     protected function buildInterfaceInternal($qualifiedName)
@@ -1901,7 +1906,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified interface name.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP_Depend_Code_Interface
      * @since 0.9.5
      */
     protected function findInterface($qualifiedName)
@@ -1948,7 +1953,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified class name.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP_Depend_Code_Class
      * @since 0.9.5
      */
     protected function buildClassInternal($qualifiedName)
@@ -1972,7 +1977,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string $qualifiedName The qualified class name.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP_Depend_Code_Class
      * @since 0.9.5
      */
     protected function findClass($qualifiedName)
@@ -1998,7 +2003,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param array  $instances     Map of already created instances.
      * @param string $qualifiedName The qualified interface or class name.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return \PHP_Depend_Code_AbstractType
      * @since 0.9.5
      */
     protected function findType(array $instances, $qualifiedName)
@@ -2076,12 +2081,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Restores a function within the internal type scope.
      *
-     * @param PHP_Depend_Code_Function $function A function instance.
+     * @param \PHP_Depend_Code_Function $function A function instance.
      *
      * @return void
      * @since 0.10.0
      */
-    public function restoreFunction(PHP_Depend_Code_Function $function)
+    public function restoreFunction(\PHP_Depend_Code_Function $function)
     {
         $this->buildPackage($function->getPackageName())
             ->addFunction($function);
@@ -2090,12 +2095,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Restores a trait within the internal type scope.
      *
-     * @param PHP_Depend_Code_Trait $trait A trait instance.
+     * @param \PHP_Depend_Code_Trait $trait A trait instance.
      *
      * @return void
      * @since 0.10.0
      */
-    public function restoreTrait(PHP_Depend_Code_Trait $trait)
+    public function restoreTrait(\PHP_Depend_Code_Trait $trait)
     {
         $this->storeTrait(
             $trait->getName(),
@@ -2107,12 +2112,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Restores a class within the internal type scope.
      *
-     * @param PHP_Depend_Code_Class $class A class instance.
+     * @param \PHP_Depend_Code_Class $class A class instance.
      *
      * @return void
      * @since 0.10.0
      */
-    public function restoreClass(PHP_Depend_Code_Class $class)
+    public function restoreClass(\PHP_Depend_Code_Class $class)
     {
         $this->storeClass(
             $class->getName(),
@@ -2124,12 +2129,12 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     /**
      * Restores an interface within the internal type scope.
      *
-     * @param PHP_Depend_Code_Interface $interface An interface instance.
+     * @param \PHP_Depend_Code_Interface $interface An interface instance.
      *
      * @return void
      * @since 0.10.0
      */
-    public function restoreInterface(PHP_Depend_Code_Interface $interface)
+    public function restoreInterface(\PHP_Depend_Code_Interface $interface)
     {
         $this->storeInterface(
             $interface->getName(),
@@ -2143,13 +2148,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string                $traitName   The local trait name.
      * @param string                $packageName The package name
-     * @param PHP_Depend_Code_Trait $trait       The context trait.
+     * @param \PHP_Depend_Code_Trait $trait       The context trait.
      *
      * @return void
      * @@since 1.0.0
      */
     protected function storeTrait(
-        $traitName, $packageName, PHP_Depend_Code_Trait $trait
+        $traitName, $packageName, \PHP_Depend_Code_Trait $trait
     ) {
         $traitName = strtolower($traitName);
         if (!isset($this->traits[$traitName][$packageName])) {
@@ -2166,13 +2171,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string                $className   The local class name.
      * @param string                $packageName The package name
-     * @param PHP_Depend_Code_Class $class       The context class.
+     * @param \PHP_Depend_Code_Class $class       The context class.
      *
      * @return void
      * @@since 0.9.5
      */
     protected function storeClass(
-        $className, $packageName, PHP_Depend_Code_Class $class
+        $className, $packageName, \PHP_Depend_Code_Class $class
     ) {
         $className = strtolower($className);
         if (!isset($this->classes[$className][$packageName])) {
@@ -2189,13 +2194,13 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      *
      * @param string                    $interfaceName The local interface name.
      * @param string                    $packageName   The package name
-     * @param PHP_Depend_Code_Interface $interface     The context interface.
+     * @param \PHP_Depend_Code_Interface $interface     The context interface.
      *
      * @return void
      * @@since 0.9.5
      */
     protected function storeInterface(
-        $interfaceName, $packageName, PHP_Depend_Code_Interface $interface
+        $interfaceName, $packageName, \PHP_Depend_Code_Interface $interface
     ) {
         $interfaceName = strtolower($interfaceName);
         if (!isset($this->interfaces[$interfaceName][$packageName])) {
@@ -2212,14 +2217,14 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Checks that the parser is not frozen or a request is flagged as internal.
      *
      * @param boolean $internal The new internal flag value.
-     *
      * @return void
+     * @throws \BadMethodCallException
      * @since 0.9.5
      */
     protected function checkBuilderState($internal = false)
     {
         if ($this->frozen === true && $this->internal === false) {
-            throw new BadMethodCallException(
+            throw new \BadMethodCallException(
                 'Cannot create new nodes, when internal state is frozen.'
             );
         }
@@ -2231,7 +2236,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * Returns <b>true</b> if the given package is the default package.
      *
      * @param string $packageName The package name.
-     *
      * @return boolean
      */
     protected function isDefault($packageName)
@@ -2287,19 +2291,19 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return ltrim(substr($qualifiedName, 0, $pos), '\\');
-        } else if (PHP_Depend_Util_Type::isInternalType($qualifiedName)) {
-            return PHP_Depend_Util_Type::getTypePackage($qualifiedName);
+        } else if (Type::isInternalType($qualifiedName)) {
+            return Type::getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE;
     }
 
     /**
-     * Creates a {@link PHP_Depend_Code_ASTNode} instance.
+     * Creates a {@link \PHP_Depend_Code_ASTNode} instance.
      *
      * @param string $className Local name of the ast node class.
      * @param string $image     Optional image for the created ast node.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP_Depend_Code_ASTNode
      * @since 0.9.12
      */
     private function buildAstNodeInstance($className, $image = null)
@@ -2309,7 +2313,7 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 
         include_once $fileName;
 
-        PHP_Depend_Util_Log::debug("Creating: {$className}({$image})");
+        Log::debug("Creating: {$className}({$image})");
 
         return new $className($image);
     }

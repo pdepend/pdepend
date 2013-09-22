@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for bug 95.
  *
@@ -71,7 +69,7 @@ class PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test extends PHP_
             ->current();
 
         $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
-        $analyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $analyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $analyzer->analyze($packages);
 
         self::assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));

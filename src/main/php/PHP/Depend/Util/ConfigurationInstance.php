@@ -40,25 +40,27 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * Registry class for the PHP_Depend configuration class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Util_ConfigurationInstance
+class ConfigurationInstance
 {
     /**
      * The unique configuration instance.
      *
-     * @var PHP_Depend_Util_Configuration
+     * @var \PHP\Depend\Util\Configuration
      */
     private static $_configuration = null;
 
     /**
      * Returns a configured config instance or <b>null</b>.
      *
-     * @return PHP_Depend_Util_Configuration
+     * @return \PHP\Depend\Util\Configuration
      */
     public static function get()
     {
@@ -68,11 +70,10 @@ class PHP_Depend_Util_ConfigurationInstance
     /**
      * Sets the configuration instance.
      *
-     * @param PHP_Depend_Util_Configuration $configuration The config instance.
-     *
+     * @param \PHP\Depend\Util\Configuration $configuration The config instance.
      * @return void
      */
-    public static function set(PHP_Depend_Util_Configuration $configuration = null)
+    public static function set(Configuration $configuration = null)
     {
         self::$_configuration = $configuration;
     }

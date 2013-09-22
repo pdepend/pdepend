@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * This is a simply utility class that will perform mathematical operations with
  * bcmath when the extension exists, otherwise it will use default math operations.
@@ -47,7 +49,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-final class PHP_Depend_Util_MathUtil
+final class MathUtil
 {
     /**
      * This method will multiply the two given operands with the bcmath extension

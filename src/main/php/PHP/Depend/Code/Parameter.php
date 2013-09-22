@@ -40,19 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * An instance of this class represents a function or method parameter within
  * the analyzed source code.
  *
  * <code>
  * <?php
- * class PHP_Depend_BuilderI
+ * class Builder
  * {
  *     public function buildNode($name, $line, PHP_Depend_Code_File $file) {
  *     }
  * }
  *
- * function parse(PHP_Depend_BuilderI $builder, $file) {
+ * function parse(Builder $builder, $file) {
  * }
  * </code>
  *
@@ -358,13 +360,12 @@ class PHP_Depend_Code_Parameter
     }
 
     /**
-     * Visitor method for node tree traversal.
+     * TreeVisitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
-     *
+     * @param \PHP\Depend\TreeVisitor $visitor
      * @return void
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function accept(TreeVisitor $visitor)
     {
         $visitor->visitParameter($this);
     }

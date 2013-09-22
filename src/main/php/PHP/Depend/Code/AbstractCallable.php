@@ -61,7 +61,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * The internal used cache instance.
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -125,12 +125,11 @@ abstract class PHP_Depend_Code_AbstractCallable
      * Setter method for the currently used token cache, where this callable
      * instance can store the associated tokens.
      *
-     * @param PHP_Depend_Util_Cache_Driver $cache The currently used cache instance.
-     *
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      * @return PHP_Depend_Code_AbstractCallable
      * @since 0.10.0
      */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    public function setCache(\PHP\Depend\Util\Cache\Driver $cache)
     {
         $this->cache = $cache;
         return $this;

@@ -40,6 +40,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+use PHP\Depend\Builder;
+use PHP\Depend\Util\Configuration;
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * PHP_Depend analyzes php class files and generates metrics.
  *
@@ -64,7 +68,7 @@ class PHP_Depend
     /**
      * The system configuration.
      *
-     * @var PHP_Depend_Util_Configuration
+     * @var \PHP\Depend\Util\Configuration
      * @since 0.10.0
      */
     protected $configuration = null;
@@ -86,7 +90,7 @@ class PHP_Depend
     /**
      * The used code node builder.
      *
-     * @var PHP_Depend_BuilderI
+     * @var Builder
      */
     private $builder = null;
 
@@ -150,7 +154,7 @@ class PHP_Depend
     /**
      * The configured cache factory.
      *
-     * @var PHP_Depend_Util_Cache_Factory
+     * @var \PHP\Depend\Util\Cache\Factory
      * @since 1.0.0
      */
     private $cacheFactory;
@@ -158,23 +162,22 @@ class PHP_Depend
     /**
      * Constructs a new php depend facade.
      *
-     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
+     * @param \PHP\Depend\Util\Configuration $configuration The system configuration.
      */
-    public function __construct(PHP_Depend_Util_Configuration $configuration)
+    public function __construct(Configuration $configuration)
     {
         $this->configuration = $configuration;
 
         $this->codeFilter = new PHP_Depend_Code_Filter_Null();
         $this->fileFilter = new PHP_Depend_Input_CompositeFilter();
 
-        $this->cacheFactory = new PHP_Depend_Util_Cache_Factory($configuration);
+        $this->cacheFactory = new \PHP\Depend\Util\Cache\Factory($configuration);
     }
 
     /**
      * Adds the specified directory to the list of directories to be analyzed.
      *
      * @param string $directory The php source directory.
-     *
      * @return void
      */
     public function addDirectory($directory)
@@ -182,7 +185,7 @@ class PHP_Depend
         $dir = realpath($directory);
 
         if (!is_dir($dir)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 "Invalid directory '{$directory}' added."
             );
         }
@@ -291,7 +294,7 @@ class PHP_Depend
      */
     public function analyze()
     {
-        $this->builder = new PHP_Depend_Builder_Default();
+        $this->builder = new \PHP\Depend\Builder\DefaultBuilder();
 
         $this->performParseProcess();
 
@@ -412,11 +415,10 @@ class PHP_Depend
     /**
      * Send the start parsing process event.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     *
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    protected function fireStartParseProcess(PHP_Depend_BuilderI $builder)
+    protected function fireStartParseProcess(Builder $builder)
     {
         foreach ($this->listeners as $listener) {
             $listener->startParseProcess($builder);
@@ -426,11 +428,10 @@ class PHP_Depend
     /**
      * Send the end parsing process event.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     *
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    protected function fireEndParseProcess(PHP_Depend_BuilderI $builder)
+    protected function fireEndParseProcess(Builder $builder)
     {
         foreach ($this->listeners as $listener) {
             $listener->endParseProcess($builder);
@@ -612,7 +613,7 @@ class PHP_Depend
             foreach ($this->listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
 
-                if ($analyzer instanceof PHP_Depend_VisitorI) {
+                if ($analyzer instanceof TreeVisitor) {
                     $analyzer->addVisitListener($listener);
                 }
             }

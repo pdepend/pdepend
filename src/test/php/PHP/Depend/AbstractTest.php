@@ -40,6 +40,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+use PHP\Depend\Builder\DefaultBuilder;
+use PHP\Depend\Util\Cache\Driver\Memory;
+use PHP\Depend\Util\Configuration\Factory;
+
 /**
  * Abstract test case implementation for the PHP_Depend package.
  *
@@ -404,12 +408,12 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Creates a test configuration instance.
      *
-     * @return PHP_Depend_Util_Configuration
+     * @return \PHP\Depend\Util\Configuration
      * @since 0.10.0
      */
     protected function createConfigurationFixture()
     {
-        $factory = new PHP_Depend_Util_Configuration_Factory();
+        $factory = new Factory();
         $config  = $factory->createDefault();
 
         return $config;
@@ -445,8 +449,8 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 
         $class = new PHP_Depend_Code_Class($name);
         $class->setSourceFile(new PHP_Depend_Code_File($GLOBALS['argv'][0]));
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
-        $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
+        $class->setCache(new Memory());
+        $class->setContext($this->getMock('\\PHP\\Depend\\Builder\\Context'));
 
         return $class;
     }
@@ -465,7 +469,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 
         $interface = new PHP_Depend_Code_Interface($name);
         $interface->setSourceFile(new PHP_Depend_Code_File($GLOBALS['argv'][0]));
-        $interface->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $interface->setCache(new Memory());
 
         return $interface;
     }
@@ -474,7 +478,6 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a ready to use trait fixture.
      *
      * @param string $name Optional trait name.
-     *
      * @return PHP_Depend_Code_Trait
      * @since 1.0.2
      */
@@ -483,7 +486,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $name = $name ? $name : get_class($this);
 
         $trait = new PHP_Depend_Code_Trait($name);
-        $trait->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $trait->setCache(new Memory());
 
         return $trait;
     }
@@ -502,7 +505,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 
         $function = new PHP_Depend_Code_Function($name);
         $function->setSourceFile(new PHP_Depend_Code_File($GLOBALS['argv'][0]));
-        $function->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $function->setCache(new Memory());
         $function->addChild(new PHP_Depend_Code_ASTFormalParameters());
 
         return $function;
@@ -512,7 +515,6 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a ready to use method fixture.
      *
      * @param string $name Optional method name.
-     *
      * @return PHP_Depend_Code_Method
      * @since 1.0.2
      */
@@ -521,7 +523,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $name = $name ? $name : get_class($this);
 
         $method = new PHP_Depend_Code_Method($name);
-        $method->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $method->setCache(new Memory());
         $method->addChild(new PHP_Depend_Code_ASTFormalParameters());
 
         return $method;
@@ -531,7 +533,6 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a temporary resource for the given file name.
      *
      * @param string $fileName Optional temporary local file name.
-     *
      * @return string
      */
     protected static function createRunResourceURI($fileName = null)
@@ -547,7 +548,6 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a code uri for the given file name.
      *
      * @param string $fileName The code file name.
-     *
      * @return string
      */
     protected static function createCodeResourceURI($fileName)
@@ -570,7 +570,10 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         list($class, $method) = explode('::', self::getCallingTestMethod());
 
-        $parts = explode('_', $class);
+        if (1 === count($parts = explode('_', $class))) {
+            $parts = explode('\\', $class);
+        }
+
 
         // Strip first two parts
         array_shift($parts);
@@ -644,7 +647,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function autoload($className)
     {
-        $file = strtr($className, '_', '/') . '.php';
+        $file = strtr($className, '_\\', '//') . '.php';
         if (is_file(dirname(__FILE__) . '/../../../../main/php/PHP/Depend.php')) {
             $file = dirname(__FILE__) . '/../../../../main/php/' . $file;
         }
@@ -747,8 +750,8 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
         sort($files);
 
-        $cache   = new PHP_Depend_Util_Cache_Driver_Memory();
-        $builder = new PHP_Depend_Builder_Default();
+        $cache   = new Memory();
+        $builder = new DefaultBuilder();
 
         foreach ($files as $file) {
             $tokenizer = new PHP_Depend_Tokenizer_Internal();

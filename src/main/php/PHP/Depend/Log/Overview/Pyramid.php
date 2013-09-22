@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Util\FileUtil;
+use PHP\Depend\Util\ImageConvert;
 
 /**
  * This logger generates a system overview pyramid, as described in the book
@@ -208,11 +210,11 @@ class PHP_Depend_Log_Overview_Pyramid implements PHP_Depend_Log_FileAwareI
             $rect->setAttribute('style', $style);
         }
 
-        $temp  = PHP_Depend_Util_FileUtil::getSysTempDir();
+        $temp  = FileUtil::getSysTempDir();
         $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
 
-        PHP_Depend_Util_ImageConvert::convert($temp, $this->logFile);
+        ImageConvert::convert($temp, $this->logFile);
 
         // Remove temp file
         unlink($temp);

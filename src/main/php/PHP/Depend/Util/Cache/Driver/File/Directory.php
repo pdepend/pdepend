@@ -41,6 +41,10 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util\Cache\Driver\File;
+
+use PHP\Depend\Util\Cache\Driver;
+
 /**
  * Directory helper for the file system based cache implementation.
  *
@@ -48,12 +52,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Util_Cache_Driver_File_Directory
+class Directory
 {
     /**
      * The current cache version/hash number.
      */
-    const VERSION = PHP_Depend_Util_Cache_Driver::VERSION;
+    const VERSION = Driver::VERSION;
 
     /**
      * The cache root directory.
@@ -81,7 +85,6 @@ class PHP_Depend_Util_Cache_Driver_File_Directory
      * full qualified path for that cache directory.
      *
      * @param string $key The cache for an entry.
-     *
      * @return string
      */
     public function createCacheDirectory($key)
@@ -95,7 +98,6 @@ class PHP_Depend_Util_Cache_Driver_File_Directory
      * the full qualified path for that cache directory.
      *
      * @param string $key The cache for an entry.
-     *
      * @return string
      */
     protected function createOrReturnCacheDirectory($key)
@@ -111,7 +113,6 @@ class PHP_Depend_Util_Cache_Driver_File_Directory
      * Ensures that the given <b>$cacheDir</b> really exists.
      *
      * @param string $cacheDir The cache root directory.
-     *
      * @return string
      */
     protected function ensureExists($cacheDir)
@@ -198,7 +199,7 @@ class PHP_Depend_Util_Cache_Driver_File_Directory
      */
     protected function flushDirectory($cacheDir)
     {
-        foreach (new DirectoryIterator($cacheDir) as $child) {
+        foreach (new \DirectoryIterator($cacheDir) as $child) {
             $this->flushEntry($child);
         }
     }
@@ -207,12 +208,10 @@ class PHP_Depend_Util_Cache_Driver_File_Directory
      * Flushes the cache record for the given file info instance, independent if
      * it is a file, directory or symlink.
      *
-     * @param SplFileInfo $file File info object that represents an entity
-     *        within the cache's file system.
-     *
+     * @param \SplFileInfo $file
      * @return void
      */
-    protected function flushEntry(SplFileInfo $file)
+    protected function flushEntry(\SplFileInfo $file)
     {
         $path = $file->getRealPath();
         if ($file->isDot()) {

@@ -41,8 +41,6 @@
  * @since     1.0.0
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTypeCallable} class.
  *

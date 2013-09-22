@@ -41,10 +41,12 @@
  * @since     1.0.0
  */
 
+use PHP\Depend\Util\Cache\Driver;
+
 /**
  * Simple marker interface that is used to mark an analyzer as cache aware. This
  * means that the loading infrastructure code will inject an instance of
- * {@link PHP_Depend_Util_Cache_Driver} into this analyzer.
+ * {@link \PHP\Depend\Util\Cache\Driver} into this analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -55,9 +57,8 @@ interface PHP_Depend_Metrics_CacheAware extends PHP_Depend_Metrics_AnalyzerI
     /**
      * Setter method for the system wide used cache.
      *
-     * @param PHP_Depend_Util_Cache_Driver $cache Used cache object.
-     *
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      * @return void
      */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache);
+    public function setCache(Driver $cache);
 }

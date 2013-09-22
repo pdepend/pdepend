@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the code parameter class.
  *
@@ -248,7 +246,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      */
     public function testAcceptInvokesVisitParameterOnSuppliedVisitor()
     {
-        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitor');
         $visitor->expects($this->once())
             ->method('visitParameter')
             ->with($this->isInstanceOf('PHP_Depend_Code_Parameter'));

@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the code property class.
  *
@@ -472,7 +470,7 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      */
     public function testAcceptCallsVisitorMethodVisitProperty()
     {
-        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitor');
         $visitor->expects($this->once())
             ->method('visitProperty');
 

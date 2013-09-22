@@ -40,20 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util\Coverage;
+
 /**
  * Base interface representing a coverage report.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface PHP_Depend_Util_Coverage_Report
+interface Report
 {
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param PHP_Depend_Code_AbstractItem $item The context code item.
-     *
+     * @param \PHP_Depend_Code_AbstractItem $item The context code item.
      * @return float
      */
-    function getCoverage(PHP_Depend_Code_AbstractItem $item);
+    function getCoverage(\PHP_Depend_Code_AbstractItem $item);
 }

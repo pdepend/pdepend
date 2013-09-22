@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTryStatement} class.
  *

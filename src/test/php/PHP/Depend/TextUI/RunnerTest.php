@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TextUI;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/../Log/Dummy/Logger.php';
 
@@ -48,20 +50,19 @@ require_once dirname(__FILE__) . '/../Log/Dummy/Logger.php';
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers PHP_Depend_TextUI_Runner
+ * @covers \PHP\Depend\TextUI\Runner
  * @group pdepend
  * @group pdepend::textui
  * @group unittest
  */
-class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
+class RunnerTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Tests that the runner exits with an exception for an invalud source
      * directory.
      *
      * @return void
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
@@ -74,7 +75,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * Tests that the runner stops processing if no logger is specified.
      *
      * @return void
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
@@ -237,7 +238,7 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
      * testRunnerThrowsExceptionForUndefinedLoggerClass
      *
      * @return void
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testRunnerThrowsExceptionForUndefinedLoggerClass()
     {
@@ -247,14 +248,14 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Creates a test fixture of the {@link PHP_Depend_TextUI_Runner} class.
+     * Creates a test fixture of the {@link \PHP\Depend\TextUI\Runner} class.
      *
-     * @return PHP_Depend_TextUI_Runner
+     * @return \PHP\Depend\TextUI\Runner
      * @since 0.10.0
      */
     protected function createTextUiRunnerFixture()
     {
-        $fixture = new PHP_Depend_TextUI_Runner();
+        $fixture = new Runner();
         $fixture->setConfiguration($this->createConfigurationFixture());
 
         return $fixture;
@@ -263,12 +264,11 @@ class PHP_Depend_TextUI_RunnerTest extends PHP_Depend_AbstractTest
     /**
      * Executes the runner class and returns an array with package statistics.
      *
-     * @param array  PHP_Depend_TextUI_Runner $runner   The runner instance.
-     * @param string                          $pathName The source path.
-     *
+     * @param \PHP\Depend\TextUI\Runner $runner The runner instance.
+     * @param $pathName The source path.
      * @return array
      */
-    private function _runRunnerAndReturnStatistics(PHP_Depend_TextUI_Runner $runner, $pathName)
+    private function _runRunnerAndReturnStatistics(Runner $runner, $pathName)
     {
         $logFile = self::createRunResourceURI();
 

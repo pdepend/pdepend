@@ -41,7 +41,7 @@
  * @since     1.0.0
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
+use PHP\Depend\Builder\Context;
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTraitReference} class.
@@ -65,7 +65,7 @@ class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testGetTraitDelegatesToContextGetTraitMethod()
     {
-        $context = $this->getMock(PHP_Depend_Builder_Context::CLAZZ);
+        $context = $this->getMock(Context::CLAZZ);
         $context->expects($this->once())
             ->method('getTrait')
             ->with($this->equalTo(__CLASS__));
@@ -169,10 +169,10 @@ class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a mocked builder context instance.
      *
-     * @return PHP_Depend_Builder_Context
+     * @return \PHP\Depend\Builder\Context
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock(PHP_Depend_Builder_Context::CLAZZ);
+        return $this->getMock(Context::CLAZZ);
     }
 }

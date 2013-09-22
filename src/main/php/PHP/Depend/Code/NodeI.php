@@ -41,6 +41,7 @@
  */
 
 // @codeCoverageIgnoreStart
+use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
  * Represents any possible code node.
@@ -65,14 +66,12 @@ interface PHP_Depend_Code_NodeI
     function getUuid();
     
     /**
-     * Visitor method for node tree traversal.
+     * TreeVisitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor 
-     *                                              implementation.
-     * 
+     * @param \PHP\Depend\TreeVisitor $visitor
      * @return void
      */
-    function accept(PHP_Depend_VisitorI $visitor);
+    function accept(TreeVisitor $visitor);
 }
 
 // @codeCoverageIgnoreEnd

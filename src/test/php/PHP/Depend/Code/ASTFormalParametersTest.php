@@ -41,8 +41,6 @@
  * @since     0.10.0
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTFormalParameterss} class.
  *

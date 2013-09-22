@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * Utility class that can be used to detect simpl scalars or internal types.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-final class PHP_Depend_Util_Type
+final class Type
 {
     /**
      * Constants for valid php data types.
@@ -390,7 +392,7 @@ final class PHP_Depend_Util_Type
         $extensionNames = array_map('strtolower', $extensionNames);
 
         foreach ($extensionNames as $extensionName) {
-            $extension = new ReflectionExtension($extensionName);
+            $extension = new \ReflectionExtension($extensionName);
 
             $classNames = $extension->getClassNames();
             $classNames = array_map('strtolower', $classNames);

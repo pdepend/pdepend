@@ -40,8 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/AbstractItemTest.php';
-require_once dirname(__FILE__) . '/../Visitor/TestNodeVisitor.php';
+use PHP\Depend\Builder\Context;
+use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
  * Test case implementation for the PHP_Depend_Code_Class class.
@@ -691,7 +691,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
             ->will($this->returnValue(null));
 
         $class = new PHP_Depend_Code_Class('Clazz');
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $class->addChild($node1);
         $class->addChild($node2);
 
@@ -951,7 +951,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetMethodsNodeIteratorIsEmptyByDefault()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         self::assertEquals(0, $class->getMethods()->count());
     }
@@ -965,7 +965,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testAddMethodStoresNewlyAddedMethodInCollection()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
         self::assertEquals(1, $class->getMethods()->count());
@@ -979,7 +979,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testAddMethodSetsParentOfNewlyAddedMethod()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $method = $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
@@ -1254,7 +1254,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testVisitorAccept()
     {
         $class   = new PHP_Depend_Code_Class(__CLASS__);
-        $visitor = new PHP_Depend_Visitor_TestNodeVisitor();
+        $visitor = new TestNodeVisitor();
 
         $class->accept($visitor);
         self::assertSame($class, $visitor->class);
@@ -1267,7 +1267,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -1289,7 +1289,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $tokens = array(new PHP_Depend_Token(1, 'a', 23, 42, 13, 17));
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -1321,7 +1321,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -1356,7 +1356,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -1566,7 +1566,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $class->setPackage(new PHP_Depend_Code_Package(__FUNCTION__));
 
         self::assertEquals(
@@ -1598,11 +1598,11 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testMagicWakeupSetsSourceFileOnChildMethods()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $method = new PHP_Depend_Code_Method(__FUNCTION__);
         $class->addMethod($method);
-        $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
+        $class->setContext($this->getMock(Context::CLAZZ));
 
         $file = new PHP_Depend_Code_File(__FILE__);
         $class->setSourceFile($file);
@@ -1620,7 +1620,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
 
-        $context = $this->getMock('PHP_Depend_Builder_Context');
+        $context = $this->getMock(Context::CLAZZ);
         $context->expects($this->once())
             ->method('registerClass')
             ->with(self::isInstanceOf(PHP_Depend_Code_Class::CLAZZ));
@@ -1637,8 +1637,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setSourceFile(new PHP_Depend_Code_File(__FILE__));
-        $class->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
-        $class->setContext($this->getMock('PHP_Depend_Builder_Context'));
+        $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
+        $class->setContext($this->getMock(Context::CLAZZ));
 
         return $class;
     }

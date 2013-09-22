@@ -40,13 +40,17 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TextUI;
+
+use PHP\Depend\Util\Configuration;
+
 /**
  * The command line runner starts a PDepend process.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_TextUI_Runner
+class Runner
 {
     /**
      * Marks the default success exit.
@@ -61,7 +65,7 @@ class PHP_Depend_TextUI_Runner
     /**
      * The system configuration.
      *
-     * @var PHP_Depend_Util_Configuration
+     * @var Configuration
      * @since 0.10.0
      */
     protected $configuration = null;
@@ -121,7 +125,7 @@ class PHP_Depend_TextUI_Runner
      * This of process listeners that will be hooked into PHP_Depend's analyzing
      * process.
      *
-     * @var PHP_Depend_ProcessListenerI[]
+     * @var \PHP_Depend_ProcessListenerI[]
      */
     private $processListeners = array();
 
@@ -135,12 +139,11 @@ class PHP_Depend_TextUI_Runner
     /**
      * Sets the system configuration.
      *
-     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
-     *
+     * @param \PHP\Depend\Util\Configuration $configuration The system configuration.
      * @return void
      * @since 0.10.0
      */
-    public function setConfiguration(PHP_Depend_Util_Configuration $configuration)
+    public function setConfiguration(Configuration $configuration)
     {
         $this->configuration = $configuration;
     }
@@ -151,7 +154,6 @@ class PHP_Depend_TextUI_Runner
      * NOTE: If you call this method, it will replace the default file extensions.
      *
      * @param array(string) $extensions List of file extensions.
-     *
      * @return void
      */
     public function setFileExtensions(array $extensions)
@@ -165,7 +167,6 @@ class PHP_Depend_TextUI_Runner
      * NOTE: If this method is called, it will overwrite the default settings.
      *
      * @param array(string) $excludeDirectories All exclude directories.
-     *
      * @return void
      */
     public function setExcludeDirectories(array $excludeDirectories)
@@ -177,7 +178,6 @@ class PHP_Depend_TextUI_Runner
      * Sets a list of exclude packages.
      *
      * @param array(string) $excludePackages Exclude packages.
-     *
      * @return void
      */
     public function setExcludePackages(array $excludePackages)
@@ -189,7 +189,6 @@ class PHP_Depend_TextUI_Runner
      * Sets a list of source directories and files.
      *
      * @param array(string) $sourceArguments The source directories.
-     *
      * @return void
      */
     public function setSourceArguments(array $sourceArguments)
@@ -210,9 +209,8 @@ class PHP_Depend_TextUI_Runner
     /**
      * Adds a logger to this runner.
      *
-     * @param string $loggerID    The logger identifier.
+     * @param string $loggerID The logger identifier.
      * @param string $logFileName The log file name.
-     *
      * @return void
      */
     public function addLogger($loggerID, $logFileName)
@@ -223,9 +221,8 @@ class PHP_Depend_TextUI_Runner
     /**
      * Adds a logger or analyzer option.
      *
-     * @param string       $identifier The option identifier.
-     * @param string|array $value      The option value.
-     *
+     * @param string $identifier The option identifier.
+     * @param string|array $value The option value.
      * @return void
      */
     public function addOption($identifier, $value)
@@ -237,11 +234,10 @@ class PHP_Depend_TextUI_Runner
      * Adds a process listener instance that will be hooked into PHP_Depends
      * analyzing process.
      *
-     * @param PHP_Depend_ProcessListenerI $processListener A process listener.
-     *
+     * @param \PHP_Depend_ProcessListenerI $processListener A process listener.
      * @return void
      */
-    public function addProcessListener(PHP_Depend_ProcessListenerI $processListener)
+    public function addProcessListener(\PHP_Depend_ProcessListenerI $processListener)
     {
         $this->processListeners[] = $processListener;
     }
@@ -251,28 +247,28 @@ class PHP_Depend_TextUI_Runner
      * execution.
      *
      * @return boolean
-     * @throws RuntimeException An exception with a readable error message and
+     * @throws \RuntimeException An exception with a readable error message and
      * an exit code.
      */
     public function run()
     {
-        $pdepend = new PHP_Depend($this->configuration);
+        $pdepend = new \PHP_Depend($this->configuration);
         $pdepend->setOptions($this->options);
 
         if (count($this->extensions) > 0) {
-            $filter = new PHP_Depend_Input_ExtensionFilter($this->extensions);
+            $filter = new \PHP_Depend_Input_ExtensionFilter($this->extensions);
             $pdepend->addFileFilter($filter);
         }
 
         if (count($this->excludeDirectories) > 0) {
             $exclude = $this->excludeDirectories;
-            $filter  = new PHP_Depend_Input_ExcludePathFilter($exclude);
+            $filter  = new \PHP_Depend_Input_ExcludePathFilter($exclude);
             $pdepend->addFileFilter($filter);
         }
 
         if (count($this->excludePackages) > 0) {
             $exclude = $this->excludePackages;
-            $filter  = new PHP_Depend_Code_Filter_Package($exclude);
+            $filter  = new \PHP_Depend_Code_Filter_Package($exclude);
             $pdepend->setCodeFilter($filter);
         }
 
@@ -289,15 +285,15 @@ class PHP_Depend_TextUI_Runner
                     $pdepend->addDirectory($sourceArgument);
                 }
             }
-        } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         if (count($this->loggerMap) === 0) {
-            throw new RuntimeException('No output specified.', self::EXCEPTION_EXIT);
+            throw new \RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
-        $loggerFactory = new PHP_Depend_Log_LoggerFactory();
+        $loggerFactory = new \PHP_Depend_Log_LoggerFactory();
 
         // To append all registered loggers.
         try {
@@ -307,8 +303,8 @@ class PHP_Depend_TextUI_Runner
 
                 $pdepend->addLogger($logger);
             }
-        } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         foreach ($this->processListeners as $processListener) {
@@ -321,8 +317,8 @@ class PHP_Depend_TextUI_Runner
             foreach ($pdepend->getExceptions() as $exception) {
                 $this->parseErrors[] = $exception->getMessage();
             }
-        } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         return self::SUCCESS_EXIT;

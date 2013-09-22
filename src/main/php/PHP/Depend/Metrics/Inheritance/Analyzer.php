@@ -132,7 +132,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * node, this method will return an empty <b>array</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
@@ -168,7 +167,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
@@ -187,7 +185,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * packages.
      *
      * @param PHP_Depend_Code_NodeIterator $packages The source packages.
-     *
      * @return void
      * @since 0.9.10
      */
@@ -210,9 +207,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -235,7 +230,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Calculates the number of derived classes.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
      * @since 0.9.5
      */
@@ -259,7 +253,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Calculates the maximum HIT for the given class.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     *
      * @return void
      * @since 0.9.10
      */
@@ -291,7 +284,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * overwritten methods.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     *
      * @return void
      * @since 0.9.10
      */
@@ -337,7 +329,6 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Initializes a empty metric container for the given class node.
      *
      * @param PHP_Depend_Code_Class $class The context class instance.
-     *
      * @return void
      * @since 0.9.10
      */

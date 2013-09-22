@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_AbstractCallable} class.
  *
@@ -164,7 +162,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -186,7 +184,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     {
         $tokens = array(new PHP_Depend_Token(1, 'a', 23, 42, 13, 17));
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -222,7 +220,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Token(2, 'b', 23, 42, 0, 0)
         );
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -257,7 +255,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
             new PHP_Depend_Token(2, 'b', 23, 42, 0, 0)
         );
 
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));

@@ -60,6 +60,6 @@ if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
     $autoload = new PHP_Depend_Autoload();
     $autoload->register();
 
-    exit(PHP_Depend_TextUI_Command::main($argv));
+    exit(\PHP\Depend\TextUI\Command::main($argv));
 }
 __HALT_COMPILER();

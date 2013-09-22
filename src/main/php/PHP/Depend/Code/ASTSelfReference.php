@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.6
  */
+use PHP\Depend\Builder\Context;
 
 /**
  * This is a special reference container that is used whenever the keyword
@@ -65,7 +66,7 @@ class PHP_Depend_Code_ASTSelfReference
     /**
      * The currently used builder context.
      *
-     * @var PHP_Depend_Builder_Context
+     * @var Context
      * @since 0.10.0
      */
     protected $context = null;
@@ -82,13 +83,11 @@ class PHP_Depend_Code_ASTSelfReference
     /**
      * Constructs a new type holder instance.
      *
-     * @param PHP_Depend_Builder_Context               $context The currently
-     *        used builder class or interface context.
-     * @param PHP_Depend_Code_AbstractClassOrInterface $target  The type instance
-     *        that reference the concrete target of self.
+     * @param \PHP\Depend\Builder\Context $context
+     * @param PHP_Depend_Code_AbstractClassOrInterface $target
      */
     public function __construct(
-        PHP_Depend_Builder_Context $context,
+        Context $context,
         PHP_Depend_Code_AbstractClassOrInterface $target
     ) {
         $this->context      = $context;

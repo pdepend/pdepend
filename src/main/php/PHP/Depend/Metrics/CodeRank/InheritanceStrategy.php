@@ -47,7 +47,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -71,10 +71,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * Visits a code class object.
      *
      * @param PHP_Depend_Code_Class $class The context code class.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitClass()
-     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -87,10 +84,7 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
-     * @see PHP_Depend_Metrics_CodeRank_Analyzer::visitType()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {

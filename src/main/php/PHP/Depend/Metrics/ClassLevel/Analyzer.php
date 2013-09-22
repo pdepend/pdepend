@@ -107,7 +107,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Processes all {@link PHP_Depend_Code_Package} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
@@ -151,7 +150,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Adds a required sub analyzer.
      *
      * @param PHP_Depend_Metrics_AnalyzerI $analyzer The sub analyzer instance.
-     *
      * @return void
      */
     public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
@@ -169,7 +167,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * node, this method will return an empty <b>array</b>.
      *
      * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
@@ -185,9 +182,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -224,9 +219,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -237,7 +230,6 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Visits a trait node.
      *
      * @param PHP_Depend_Code_Trait $trait The current trait node.
-     *
      * @return void
      * @since 1.0.0
      */
@@ -273,10 +265,8 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     *
+     * @param PHP_Depend_Code_Method $method The method class node.
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {
@@ -308,9 +298,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Visits a property node.
      *
      * @param PHP_Depend_Code_Property $property The property class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitProperty()
      */
     public function visitProperty(PHP_Depend_Code_Property $property)
     {

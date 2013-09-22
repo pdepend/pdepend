@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * Simple utility class that is used to create different image formats. This
  * class can use the ImageMagick cli tool <b>convert</b> and the pecl extension
@@ -48,14 +50,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Util_ImageConvert
+class ImageConvert
 {
     /**
      * Tries to converts the <b>$input</b> image into the <b>$output</b> format.
      *
-     * @param string $input  The input file.
+     * @param string $input The input file.
      * @param string $output The output file.
-     *
      * @return void
      */
     public static function convert($input, $output)
@@ -76,7 +77,7 @@ class PHP_Depend_Util_ImageConvert
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
         } else if (extension_loaded('imagick') === true) {
-            $imagick = new Imagick($input);
+            $imagick = new \Imagick($input);
             $imagick->setImageFormat($outputType);
             $imagick->writeImage($output);
 
@@ -134,13 +135,12 @@ class PHP_Depend_Util_ImageConvert
      * file.
      *
      * @param string $input The input svg file.
-     *
      * @return void
      */
     protected static function prepareSvg($input)
     {
         // Check for a configuration instance
-        if (($config = PHP_Depend_Util_ConfigurationInstance::get()) === null) {
+        if (($config = ConfigurationInstance::get()) === null) {
             return;
         }
 

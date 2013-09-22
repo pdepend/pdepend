@@ -41,10 +41,14 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util\Cache\Driver;
+
+use PHP\Depend\Util\Cache\Driver;
+
 /**
  * A memory based cache implementation.
  *
- * This class implements the {@link PHP_Depend_Util_Cache_Driver} interface based
+ * This class implements the {@link \PHP\Depend\Util\Cache\Driver} interface based
  * on an in memory data structure. This means that all cached entries will get
  * lost when the php process exits.
  *
@@ -52,7 +56,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Driver
+class Memory implements Driver
 {
     /**
      * The type of this class.
@@ -109,8 +113,7 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      * <em>store()</em>.
      *
      * @param string $type The name or object type for the next storage method call.
-     *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return \PHP\Depend\Util\Cache\Driver
      */
     public function type($type)
     {
@@ -128,8 +131,7 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      * @param string $key  The cache key for the given data.
      * @param mixed  $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return  void
+     * @return void
      */
     public function store($key, $data, $hash = null)
     {
@@ -145,7 +147,6 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      *
      * @param string $key  The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
-     *
      * @return mixed
      */
     public function restore($key, $hash = null)
@@ -164,7 +165,6 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      * nothing.
      *
      * @param string $pattern The cache key pattern.
-     *
      * @return void
      */
     public function remove($pattern)
@@ -182,7 +182,6 @@ class PHP_Depend_Util_Cache_Driver_Memory implements PHP_Depend_Util_Cache_Drive
      * type, so that it is only valid for a single call.
      *
      * @param string $key The concrete object key.
-     *
      * @return string
      */
     protected function getCacheKey($key)

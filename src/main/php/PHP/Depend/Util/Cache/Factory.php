@@ -41,6 +41,10 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util\Cache;
+
+use PHP\Depend\Util\Configuration;
+
 /**
  * Factory that encapsulates the creation of a concrete cache instance.
  *
@@ -48,28 +52,28 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Util_Cache_Factory
+class Factory
 {
     /**
      * The system configuration.
      *
-     * @var PHP_Depend_Util_Configuration
+     * @var \PHP\Depend\Util\Configuration
      */
     protected $configuration = null;
 
     /**
      * Singleton property that holds existing cache instances.
      *
-     * @var PHP_Depend_Util_Cache_Driver[]
+     * @var \PHP\Depend\Util\Cache\Driver[]
      */
     protected $caches = array();
 
     /**
      * Constructs a new cache factory instance for the given configuration.
      *
-     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
+     * @param \PHP\Depend\Util\Configuration $configuration The system configuration.
      */
-    public function __construct(PHP_Depend_Util_Configuration $configuration)
+    public function __construct(Configuration $configuration)
     {
         $this->configuration = $configuration;
     }
@@ -80,7 +84,7 @@ class PHP_Depend_Util_Cache_Factory
      *
      * @param string $cacheKey The name/identifier for the cache instance.
      *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return \PHP\Depend\Util\Cache\Driver
      */
     public function create($cacheKey = null)
     {
@@ -94,9 +98,8 @@ class PHP_Depend_Util_Cache_Factory
      * Creates a cache instance based on the supplied configuration.
      *
      * @param string $cacheKey The name/identifier for the cache instance.
-     *
-     * @return PHP_Depend_Util_Cache_Driver
-     * @throws InvalidArgumentException If the configured cache driver is unknown.
+     * @return \PHP\Depend\Util\Cache\Driver
+     * @throws \InvalidArgumentException If the configured cache driver is unknown.
      */
     protected function createCache($cacheKey)
     {
@@ -111,7 +114,7 @@ class PHP_Depend_Util_Cache_Factory
         case 'memory':
             return $this->createMemoryCache();
         }
-        throw new InvalidArgumentException(
+        throw new \InvalidArgumentException(
             "Unknown cache driver '{$this->configuration->cache->driver}' given."
         );
     }
@@ -121,21 +124,20 @@ class PHP_Depend_Util_Cache_Factory
      *
      * @param string $location Cache root directory.
      * @param string $cacheKey The name/identifier for the cache instance.
-     *
-     * @return PHP_Depend_Util_Cache_Driver_File
+     * @return \PHP\Depend\Util\Cache\Driver\File
      */
     protected function createFileCache($location, $cacheKey)
     {
-        return new PHP_Depend_Util_Cache_Driver_File($location, $cacheKey);
+        return new \PHP\Depend\Util\Cache\Driver\File($location, $cacheKey);
     }
 
     /**
      * Creates an in memory cache instance.
      *
-     * @return PHP_Depend_Util_Cache_Driver_Memory
+     * @return \PHP\Depend\Util\Cache\Driver\Memory
      */
     protected function createMemoryCache()
     {
-        return new PHP_Depend_Util_Cache_Driver_Memory();
+        return new \PHP\Depend\Util\Cache\Driver\Memory();
     }
 }

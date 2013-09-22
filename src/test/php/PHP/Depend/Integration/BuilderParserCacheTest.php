@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Tests the integration of parser and builder together with the cache component.
  *
@@ -118,19 +116,18 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
      * Parses the given test file and then returns the builder instance.
      *
      * @param string $file Relative path to a test file for the calling test.
-     *
-     * @return PHP_Depend_Builder_Default
+     * @return \PHP\Depend\Builder\DefaultBuilder
      */
     protected function parseSourceAndReturnBuilder($file)
     {
         copy(self::createCodeResourceUriForTest() . '/' . $file, $this->testFile);
 
-        $cache = new PHP_Depend_Util_Cache_Driver_File($this->cacheDir);
+        $cache = new \PHP\Depend\Util\Cache\Driver\File($this->cacheDir);
 
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($this->testFile);
 
-        $builder = new PHP_Depend_Builder_Default();
+        $builder = new \PHP\Depend\Builder\DefaultBuilder();
         $builder->setCache($cache);
 
         $parser = new PHP_Depend_Parser_VersionAllParser(

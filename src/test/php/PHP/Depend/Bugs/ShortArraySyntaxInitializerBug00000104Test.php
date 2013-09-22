@@ -43,8 +43,6 @@
  * @since     1.1.1
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for bug #104 and #95.
  *

@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
-
 /**
  * Test case for the {@link PHP_Depend_Code_ASTPreIncrementExpression} class.
  *
@@ -49,7 +47,7 @@ require_once dirname(__FILE__) . '/ASTNodeTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers PHP_Depend_Parser
- * @covers PHP_Depend_Builder_Default
+ * @covers \PHP\Depend\Builder\DefaultBuilder
  * @covers PHP_Depend_Code_ASTPreIncrementExpression
  * @group pdepend
  * @group pdepend::ast

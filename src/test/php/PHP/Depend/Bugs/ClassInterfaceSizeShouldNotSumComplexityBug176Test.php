@@ -41,8 +41,6 @@
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for ticket #176.
  *
@@ -72,7 +70,7 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
             ->current();
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -98,7 +96,7 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
             ->current();
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);

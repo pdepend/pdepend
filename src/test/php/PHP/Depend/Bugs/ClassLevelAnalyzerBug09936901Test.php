@@ -41,8 +41,6 @@
  * @link       https://www.pivotaltracker.com/story/show/9936901
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case related to bug #9936901.
  *
@@ -73,7 +71,7 @@ class PHP_Depend_Bugs_ClassLevelAnalyzerBug09936901Test
             ->current();
 
         $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
-        $ccnAnalyzer->setCache(new PHP_Depend_Util_Cache_Driver_Memory());
+        $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);

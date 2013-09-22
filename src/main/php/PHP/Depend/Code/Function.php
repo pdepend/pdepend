@@ -40,6 +40,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Builder\Context;
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * Represents a php function node.
  *
@@ -66,7 +69,7 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     /**
      * The currently used builder context.
      *
-     * @var PHP_Depend_Builder_Context
+     * @var Context
      * @since 0.10.0
      */
     protected $context = null;
@@ -82,12 +85,11 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     /**
      * Sets the currently active builder context.
      *
-     * @param PHP_Depend_Builder_Context $context Current builder context.
-     *
+     * @param \PHP\Depend\Builder\Context $context Current builder context.
      * @return PHP_Depend_Code_Function
      * @since 0.10.0
      */
-    public function setContext(PHP_Depend_Builder_Context $context)
+    public function setContext(Context $context)
     {
         $this->context = $context;
         return $this;
@@ -141,13 +143,12 @@ class PHP_Depend_Code_Function extends PHP_Depend_Code_AbstractCallable
     }
 
     /**
-     * Visitor method for node tree traversal.
+     * TreeVisitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
-     *
+     * @param \PHP\Depend\TreeVisitor $visitor
      * @return void
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function accept(TreeVisitor $visitor)
     {
         $visitor->visitFunction($this);
     }

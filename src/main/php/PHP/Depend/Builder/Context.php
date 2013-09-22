@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of PHP_Depend.
+ * This file is part of \PHP_Depend.
  *
  * PHP Version 5
  *
@@ -41,6 +41,8 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Builder;
+
 // @codeCoverageIgnoreStart
 
 /**
@@ -50,7 +52,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-interface PHP_Depend_Builder_Context
+interface Context
 {
     /**
      * The type of this interface
@@ -61,49 +63,44 @@ interface PHP_Depend_Builder_Context
      * This method can be used to register an existing function in the current
      * application context.
      * 
-     * @param PHP_Depend_Code_Function $function The function instance.
-     *
+     * @param \PHP_Depend_Code_Function $function The function instance.
      * @return void
      */
-    function registerFunction(PHP_Depend_Code_Function $function);
+    function registerFunction(\PHP_Depend_Code_Function $function);
 
     /**
      * This method can be used to register an existing trait in the current
      * class context.
      *
-     * @param PHP_Depend_Code_Trait $trait The trait instance.
-     *
+     * @param \PHP_Depend_Code_Trait $trait The trait instance.
      * @return void
      * @since 1.0.0
      */
-    function registerTrait(PHP_Depend_Code_Trait $trait);
+    function registerTrait(\PHP_Depend_Code_Trait $trait);
 
     /**
      * This method can be used to register an existing class in the current
      * class context.
      * 
-     * @param PHP_Depend_Code_Class $class The class instance.
-     *
+     * @param \PHP_Depend_Code_Class $class The class instance.
      * @return void
      */
-    function registerClass(PHP_Depend_Code_Class $class);
+    function registerClass(\PHP_Depend_Code_Class $class);
 
     /**
      * This method can be used to register an existing interface in the current
      * class context.
      *
-     * @param PHP_Depend_Code_Interface $interface The interface instance.
-     *
+     * @param \PHP_Depend_Code_Interface $interface The interface instance.
      * @return void
      */
-    function registerInterface(PHP_Depend_Code_Interface $interface);
+    function registerInterface(\PHP_Depend_Code_Interface $interface);
 
     /**
      * Returns the trait instance for the given qualified name.
      *
      * @param string $qualifiedName Full qualified trait name.
-     *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP_Depend_Code_Trait
      * @since 1.0.0
      */
     function getTrait($qualifiedName);
@@ -112,8 +109,7 @@ interface PHP_Depend_Builder_Context
      * Returns the class instance for the given qualified name.
      *
      * @param string $qualifiedName Full qualified class name.
-     *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP_Depend_Code_Class
      */
     function getClass($qualifiedName);
 
@@ -121,8 +117,7 @@ interface PHP_Depend_Builder_Context
      * Returns a class or an interface instance for the given qualified name.
      *
      * @param string $qualifiedName Full qualified class or interface name.
-     * 
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP_Depend_Code_AbstractClassOrInterface
      */
     function getClassOrInterface($qualifiedName);
 }

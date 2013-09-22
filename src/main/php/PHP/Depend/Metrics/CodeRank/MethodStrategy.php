@@ -47,7 +47,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_CodeRank_MethodStrategy
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
 {
     /**
@@ -70,10 +70,8 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     *
+     * @param PHP_Depend_Code_Method $method The method class node.
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {

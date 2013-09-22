@@ -41,22 +41,23 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Util_Configuration} class.
+ * Test case for the {@link \PHP\Depend\Util\Configuration} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
- *
- * @covers PHP_Depend_Util_Configuration
+ * @covers \PHP\Depend\Util\Configuration
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::configuration
  * @group unittest
  */
-class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
+class ConfigurationTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testPropertyAccessForExistingValue
@@ -65,10 +66,10 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      */
     public function testPropertyAccessForExistingValue()
     {
-        $settings      = new stdClass();
+        $settings      = new \stdClass();
         $settings->foo = 42;
 
-        $configuration = new PHP_Depend_Util_Configuration($settings);
+        $configuration = new Configuration($settings);
 
         self::assertEquals(42, $configuration->foo);
     }
@@ -77,14 +78,14 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertyAccessForNotExistingValueThrowsExpectedException
      *
      * @return void
-     * @expectedException OutOfRangeException
+     * @expectedException \OutOfRangeException
      */
     public function testPropertyAccessForNotExistingValueThrowsExpectedException()
     {
-        $settings      = new stdClass();
+        $settings      = new \stdClass();
         $settings->foo = 42;
 
-        $configuration = new PHP_Depend_Util_Configuration($settings);
+        $configuration = new Configuration($settings);
         echo $configuration->bar;
     }
 
@@ -92,11 +93,11 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
      *
      * @return void
-     * @expectedException OutOfRangeException
+     * @expectedException \OutOfRangeException
      */
     public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown()
     {
-        $configuration      = new PHP_Depend_Util_Configuration(new stdClass());
+        $configuration      = new Configuration(new \stdClass());
         $configuration->foo = 42;
     }
 
@@ -107,10 +108,10 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      */
     public function testIssetReturnsTrueForExistingValue()
     {
-        $settings      = new stdClass();
+        $settings      = new \stdClass();
         $settings->foo = 42;
 
-        $configuration = new PHP_Depend_Util_Configuration($settings);
+        $configuration = new Configuration($settings);
 
         self::assertTrue(isset($configuration->foo));
     }
@@ -122,10 +123,10 @@ class PHP_Depend_Util_ConfigurationTest extends PHP_Depend_AbstractTest
      */
     public function testIssetReturnsFalseForNotExistingValue()
     {
-        $settings      = new stdClass();
+        $settings      = new \stdClass();
         $settings->foo = 42;
 
-        $configuration = new PHP_Depend_Util_Configuration($settings);
+        $configuration = new Configuration($settings);
 
         self::assertFalse(isset($configuration->bar));
     }

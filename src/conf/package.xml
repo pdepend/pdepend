@@ -162,11 +162,11 @@ tests were run under ubuntu with PHP 5.2.17 and PHP 5.3.6.
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <dir name="Visitor">
+          <dir name="TreeVisitor">
             <file name="ListenerI.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="AbstractVisitor.php" role="php">
+            <file name="AbstractTreeVisitoritor.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
             <file name="AbstractListener.php" role="php">

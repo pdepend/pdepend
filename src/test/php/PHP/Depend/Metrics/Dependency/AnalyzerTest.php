@@ -59,7 +59,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The used node builder.
      *
-     * @var PHP_Depend_Builder_Default
+     * @var \PHP\Depend\Builder\DefaultBuilder
      */
     protected $builder = null;
 

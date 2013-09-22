@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TreeVisitor;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 
@@ -49,12 +51,12 @@ require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Visitor_AbstractVisitor
+ * @covers \PHP\Depend\TreeVisitor\AbstractVisitor
  * @group pdepend
  * @group pdepend::visitor
  * @group unittest
  */
-class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
+class DefaultVisitorTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Tests the execution order of the default visitor implementation.
@@ -65,7 +67,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
         
-        $visitor = new PHP_Depend_Visitor_DefaultVisitorDummy();        
+        $visitor = new DefaultVisitorDummy();
         foreach ($packages as $package) {
             $package->accept($visitor);
         }
@@ -101,7 +103,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitParameter'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('visitParameter'));
         $visitor->expects($this->exactly(2))
             ->method('visitParameter');
 
@@ -117,7 +119,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitParameter'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('visitParameter'));
         $visitor->expects($this->exactly(3))
             ->method('visitParameter');
 
@@ -133,11 +135,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
         
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->exactly(2))
             ->method('startVisitParameter');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -152,11 +154,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->exactly(3))
             ->method('endVisitParameter');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -171,11 +173,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->once())
             ->method('startVisitInterface');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -190,11 +192,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->once())
             ->method('endVisitInterface');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -209,11 +211,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->once())
             ->method('startVisitProperty');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -228,11 +230,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->once())
             ->method('endVisitProperty');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($packages->current());
@@ -246,13 +248,13 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testVisitorVisitsTrait()
     {
-        $package = new PHP_Depend_Code_Package('MyPackage');
-        $package->addType(new PHP_Depend_Code_Trait('MyTraitOne'))
-            ->setSourceFile(new PHP_Depend_Code_File(__FILE__));
-        $package->addType(new PHP_Depend_Code_Trait('MyTraitTwo'))
-            ->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $package = new \PHP_Depend_Code_Package('MyPackage');
+        $package->addType(new \PHP_Depend_Code_Trait('MyTraitOne'))
+            ->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $package->addType(new \PHP_Depend_Code_Trait('MyTraitTwo'))
+            ->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitTrait'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('visitTrait'));
         $visitor->expects($this->exactly(2))
             ->method('visitTrait');
 
@@ -268,11 +270,11 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     public function testVisitorInvokesAcceptOnTraitMethods()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
-        $trait->addMethod($method0 = new PHP_Depend_Code_Method('m0'));
-        $trait->addMethod($method1 = new PHP_Depend_Code_Method('m1'));
+        $trait->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $trait->addMethod($method0 = new \PHP_Depend_Code_Method('m0'));
+        $trait->addMethod($method1 = new \PHP_Depend_Code_Method('m1'));
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('visitMethod'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('visitMethod'));
         $visitor->expects($this->at(0))
             ->method('visitMethod')
             ->with($this->equalTo($method0));
@@ -292,16 +294,16 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     public function testVisitorInvokesStartTraitOnListener()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $trait->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $package = new PHP_Depend_Code_Package('MyPackage');
+        $package = new \PHP_Depend_Code_Package('MyPackage');
         $package->addType($trait);
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->once())
             ->method('startVisitTrait');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($package);
@@ -316,16 +318,16 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
     public function testVisitorInvokesEndTraitOnListener()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $trait->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $package = new PHP_Depend_Code_Package('MyPackage');
+        $package = new \PHP_Depend_Code_Package('MyPackage');
         $package->addType($trait);
 
-        $listener = $this->getMock('PHP_Depend_Visitor_ListenerI');
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
         $listener->expects($this->once())
             ->method('endVisitTrait');
 
-        $visitor = $this->getMock('PHP_Depend_Visitor_AbstractVisitor', array('getVisitListeners'));
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
         $visitor->visitPackage($package);
@@ -338,7 +340,7 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testGetVisitListenersReturnsIterator()
     {
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
+        $visitor = $this->getMockForAbstractClass('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor');
         self::assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
@@ -349,8 +351,8 @@ class PHP_Depend_Visitor_DefaultVisitorTest extends PHP_Depend_AbstractTest
      */
     public function testGetVisitListenersContainsAddedListener()
     {
-        $visitor = $this->getMockForAbstractClass('PHP_Depend_Visitor_AbstractVisitor');
-        $visitor->addVisitListener($this->getMock('PHP_Depend_Visitor_ListenerI'));
+        $visitor = $this->getMockForAbstractClass('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor');
+        $visitor->addVisitListener($this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener'));
 
         self::assertEquals(1, count($visitor->getVisitListeners()));
     }

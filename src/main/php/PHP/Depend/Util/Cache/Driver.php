@@ -41,6 +41,8 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util\Cache;
+
 // @codeCoverageIgnoreStart
 
 /**
@@ -50,12 +52,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-interface PHP_Depend_Util_Cache_Driver
+interface Driver
 {
     /**
      * The current cache version.
      */
-    const VERSION = '@version:7ec2468dfc5923c12a74914dbc89e1be:@';
+    const VERSION = '@version:b73cfcddb566bbf4f61e6076bfa3cd5f:@';
 
     /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method
@@ -66,8 +68,7 @@ interface PHP_Depend_Util_Cache_Driver
      * <em>store()</em>.
      *
      * @param string $type The name or object type for the next storage method call.
-     *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return \PHP\Depend\Util\Cache\Driver
      */
     function type($type);
 
@@ -81,7 +82,6 @@ interface PHP_Depend_Util_Cache_Driver
      * @param string $key  The cache key for the given data.
      * @param mixed  $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
-     *
      * @return  void
      */
     function store($key, $data, $hash = null);
@@ -95,7 +95,6 @@ interface PHP_Depend_Util_Cache_Driver
      *
      * @param string $key  The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
-     *
      * @return mixed
      */
     function restore($key, $hash = null);
@@ -107,7 +106,6 @@ interface PHP_Depend_Util_Cache_Driver
      * nothing.
      *
      * @param string $pattern The cache key pattern.
-     *
      * @return void
      */
     function remove($pattern);

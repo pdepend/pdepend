@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of PHP_Depend.
+ * This file is part of \PHP_Depend.
  *
  * PHP Version 5
  *
@@ -41,6 +41,11 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Builder\Context;
+
+use PHP\Depend\Builder\Context;
+use PHP\Depend\Builder;
+
 /**
  * This class provides the default implementation of the builder context.
  *
@@ -51,21 +56,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Context
+class GlobalStatic implements Context
 {
     /**
      * The currently used ast builder.
      *
-     * @var PHP_Depend_BuilderI
+     * @var \PHP\Depend\Builder
      */
     protected static $builder = null;
 
     /**
      * Constructs a new builder context instance.
      *
-     * @param PHP_Depend_BuilderI $builder The currently used ast builder.
+     * @param \PHP\Depend\Builder $builder The currently used ast builder.
      */
-    public function __construct(PHP_Depend_BuilderI $builder)
+    public function __construct(Builder $builder)
     {
         self::$builder = $builder;
     }
@@ -74,11 +79,10 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      * This method can be used to register an existing function in the current
      * application context.
      *
-     * @param PHP_Depend_Code_Function $function The function instance.
-     *
+     * @param \PHP_Depend_Code_Function $function The function instance.
      * @return void
      */
-    public function registerFunction(PHP_Depend_Code_Function $function)
+    public function registerFunction(\PHP_Depend_Code_Function $function)
     {
         self::$builder->restoreFunction($function);
     }
@@ -87,12 +91,12 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      * This method can be used to register an existing trait in the current
      * class context.
      *
-     * @param PHP_Depend_Code_Trait $trait The trait instance.
+     * @param \PHP_Depend_Code_Trait $trait The trait instance.
      *
      * @return void
      * @since 1.0.0
      */
-    public function registerTrait(PHP_Depend_Code_Trait $trait)
+    public function registerTrait(\PHP_Depend_Code_Trait $trait)
     {
         self::$builder->restoreTrait($trait);
     }
@@ -101,11 +105,11 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      * This method can be used to register an existing class in the current
      * class context.
      *
-     * @param PHP_Depend_Code_Class $class The class instance.
+     * @param \PHP_Depend_Code_Class $class The class instance.
      *
      * @return void
      */
-    public function registerClass(PHP_Depend_Code_Class $class)
+    public function registerClass(\PHP_Depend_Code_Class $class)
     {
         self::$builder->restoreClass($class);
     }
@@ -114,11 +118,11 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      * This method can be used to register an existing interface in the current
      * class context.
      *
-     * @param PHP_Depend_Code_Interface $interface The interface instance.
+     * @param \PHP_Depend_Code_Interface $interface The interface instance.
      *
      * @return void
      */
-    public function registerInterface(PHP_Depend_Code_Interface $interface)
+    public function registerInterface(\PHP_Depend_Code_Interface $interface)
     {
         self::$builder->restoreInterface($interface);
     }
@@ -128,7 +132,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      *
      * @param string $qualifiedName Full qualified trait name.
      *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP_Depend_Code_Trait
      * @since 1.0.0
      */
     public function getTrait( $qualifiedName )
@@ -141,7 +145,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      *
      * @param string $qualifiedName Full qualified class name.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP_Depend_Code_Class
      */
     public function getClass($qualifiedName)
     {
@@ -153,7 +157,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
      *
      * @param string $qualifiedName Full qualified class or interface name.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP_Depend_Code_AbstractClassOrInterface
      */
     public function getClassOrInterface($qualifiedName)
     {
@@ -163,7 +167,7 @@ class PHP_Depend_Builder_Context_GlobalStatic implements PHP_Depend_Builder_Cont
     /**
      * Returns the currently used builder instance.
      *
-     * @return PHP_Depend_BuilderI
+     * @return \PHP\Depend\Builder
      */
     protected function getBuilder()
     {

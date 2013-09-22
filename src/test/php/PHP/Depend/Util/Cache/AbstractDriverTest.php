@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util\Cache;
+
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 /**
@@ -48,14 +50,12 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::cache
  * @group unittest
  */
-abstract class PHP_Depend_Util_Cache_AbstractDriverTest
-    extends PHP_Depend_AbstractTest
+abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testTypeMethodReturnsSameObjectInstance
@@ -216,7 +216,7 @@ abstract class PHP_Depend_Util_Cache_AbstractDriverTest
     /**
      * Creates a test fixture.
      *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return \PHP\Depend\Util\Cache\Driver
      */
     protected abstract function createDriver();
 }

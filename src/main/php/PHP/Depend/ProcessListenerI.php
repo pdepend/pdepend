@@ -41,6 +41,8 @@
   */
 
 // @codeCoverageIgnoreStart
+use PHP\Depend\Builder;
+use PHP\Depend\TreeVisitor\TreeVisitListener;
 
 /**
  * This listener can be used to get informations about the current pdepend process.
@@ -49,26 +51,24 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 interface PHP_Depend_ProcessListenerI
-    extends PHP_Depend_Visitor_ListenerI,
+    extends TreeVisitListener,
             PHP_Depend_Metrics_ListenerI
 {
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     * 
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    function startParseProcess(PHP_Depend_BuilderI $builder);
+    function startParseProcess(Builder $builder);
     
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     * 
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    function endParseProcess(PHP_Depend_BuilderI $builder);
+    function endParseProcess(Builder $builder);
     
     /**
      * Is called when PDepend starts parsing of a new file.

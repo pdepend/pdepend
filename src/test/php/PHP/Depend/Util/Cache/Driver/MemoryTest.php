@@ -40,26 +40,29 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
+namespace PHP\Depend\Util\Cache\Driver;
+
+use PHP\Depend\Util\Cache\AbstractDriverTest;
+
 require_once dirname(__FILE__) . '/../AbstractDriverTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Util_Cache_Driver_Memory} class.
+ * Test case for the {@link \PHP\Depend\Util\Cache\Driver\Memory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers PHP_Depend_Util_Cache_Driver_Memory
+ * @covers \PHP\Depend\Util\Cache\Driver\Memory
  */
-class PHP_Depend_Util_Cache_Driver_MemoryTest
-    extends PHP_Depend_Util_Cache_AbstractDriverTest
+class MemoryTest extends AbstractDriverTest
 {
     /**
      * Creates a test fixture.
      *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return \PHP\Depend\Util\Cache\Driver
      */
     protected function createDriver()
     {
-        return new PHP_Depend_Util_Cache_Driver_Memory();
+        return new Memory();
     }
 }

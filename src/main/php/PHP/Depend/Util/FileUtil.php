@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util;
+
 /**
  * This is a utility class for some file operations.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-final class PHP_Depend_Util_FileUtil
+final class FileUtil
 {
     /**
      * Returns the home directory of the current user if it exists. Otherwise

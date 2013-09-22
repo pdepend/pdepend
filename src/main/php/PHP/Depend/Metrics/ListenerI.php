@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\TreeVisitor\TreeVisitListener;
 
 /**
  * An implementation of this listener can be used to recieve informations about
@@ -48,7 +49,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 interface PHP_Depend_Metrics_ListenerI
-    extends PHP_Depend_Visitor_ListenerI
+    extends TreeVisitListener
 {
     /**
      * This method is called when the analyzer starts code processing.

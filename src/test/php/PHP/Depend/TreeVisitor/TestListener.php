@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -38,64 +38,31 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- */
+  */
+
+namespace PHP\Depend\TreeVisitor;
 
 /**
- * Test case for the signed default value bug no. 71.
+ * Simple test node visitor implementation.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers stdClass
- * @group pdepend
- * @group pdepend::bugs
- * @group regressiontest
  */
-class PHP_Depend_Bugs_SignedDefaultValueResultsInExceptionBug071Test
-    extends PHP_Depend_Bugs_AbstractTest
+class TestListener extends AbstractTreeVisitListener
 {
-    /**
-     * Tests that the parser handles a parameter with a signed default value.
-     *
-     * @return void
-     */
-    public function testParserHandlesSimpleSignedDefaultValue()
+    public $nodes = array();
+    
+    public function startVisitNode(\PHP_Depend_Code_NodeI $node)
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-        $this->assertSame(-42, $parameters[0]->getDefaultValue());
+        $this->nodes[$node->getName() . '#start'] = true;
+        
+        parent::startVisitNode($node);
     }
 
-    /**
-     * Tests that the parser handles a parameter with a signed default value.
-     *
-     * @return void
-     */
-    public function testParserHandlesMultipleSignedDefaultValue()
+    public function endVisitNode(\PHP_Depend_Code_NodeI $node)
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-        $this->assertSame(42, $parameters[0]->getDefaultValue());
-    }
-
-    /**
-     * Tests that the parser handles a parameter with a signed default value.
-     *
-     * @return void
-     */
-    public function testParserHandlesComplexSignedDefaultValue()
-    {
-        $parameters = self::parseTestCaseSource(__METHOD__)
-            ->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
-        $this->assertSame(-42, $parameters[0]->getDefaultValue());
+        $this->nodes[$node->getName() . '#end'] = true;
+        
+        parent::endVisitNode($node);
     }
 }

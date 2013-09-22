@@ -40,15 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TextUI;
+
+use PHP\Depend\Builder;
+use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
+
 /**
  * Prints current the PDepend status information.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_TextUI_ResultPrinter
-       extends PHP_Depend_Visitor_AbstractListener
-    implements PHP_Depend_ProcessListenerI
+class ResultPrinter
+       extends AbstractTreeVisitListener
+    implements \PHP_Depend_ProcessListenerI
 {
     /**
      * The step size.
@@ -65,11 +70,10 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     *
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    public function startParseProcess(PHP_Depend_BuilderI $builder)
+    public function startParseProcess(Builder $builder)
     {
         $this->count = 0;
 
@@ -79,11 +83,10 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param PHP_Depend_BuilderI $builder The used node builder instance.
-     *
+     * @param \PHP\Depend\Builder $builder The used node builder instance.
      * @return void
      */
-    public function endParseProcess(PHP_Depend_BuilderI $builder)
+    public function endParseProcess(Builder $builder)
     {
         $this->finish();
     }
@@ -91,11 +94,10 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     *
+     * @param \PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      * @return void
      */
-    public function startFileParsing(PHP_Depend_TokenizerI $tokenizer)
+    public function startFileParsing(\PHP_Depend_TokenizerI $tokenizer)
     {
         $this->step();
     }
@@ -103,11 +105,10 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     *
+     * @param \PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
      * @return void
      */
-    public function endFileParsing(PHP_Depend_TokenizerI $tokenizer)
+    public function endFileParsing(\PHP_Depend_TokenizerI $tokenizer)
     {
 
     }
@@ -119,7 +120,6 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     public function startAnalyzeProcess()
     {
-
     }
 
     /**
@@ -129,7 +129,6 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     public function endAnalyzeProcess()
     {
-
     }
 
     /**
@@ -149,17 +148,15 @@ class PHP_Depend_TextUI_ResultPrinter
      */
     public function endLogProcess()
     {
-
     }
 
     /**
      * Is called when PDepend starts a new analyzer.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
-     *
+     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
      * @return void
      */
-    public function startAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function startAnalyzer(\PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $this->count = 0;
 
@@ -170,11 +167,10 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Is called when PDepend has finished one analyzing process.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
-     *
+     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
      * @return void
      */
-    public function endAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function endAnalyzer(\PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $this->finish(self::STEP_SIZE);
     }
@@ -182,12 +178,10 @@ class PHP_Depend_TextUI_ResultPrinter
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP_Depend_Code_NodeI $node The context node instance.
      * @return void
-     * @see PHP_Depend_Visitor_AbstractVisitor::startVisitNode()
      */
-    public function startVisitNode(PHP_Depend_Code_NodeI $node)
+    public function startVisitNode(\PHP_Depend_Code_NodeI $node)
     {
         $this->step(self::STEP_SIZE);
     }
@@ -196,7 +190,6 @@ class PHP_Depend_TextUI_ResultPrinter
      * Prints a single dot for the current step.
      *
      * @param integer $size The number of processed items that result in a new dot.
-     *
      * @return void
      */
     protected function step($size = 1)
@@ -214,7 +207,6 @@ class PHP_Depend_TextUI_ResultPrinter
      * Closes the current dot line.
      *
      * @param integer $size The number of processed items that result in a new dot.
-     *
      * @return void
      */
     protected function finish($size = 1)

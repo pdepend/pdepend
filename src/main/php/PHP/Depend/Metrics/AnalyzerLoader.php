@@ -63,7 +63,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * The system wide used cache.
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      * @since 1.0.0
      */
     private $cache;
@@ -80,8 +80,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      *
      * @param PHP_Depend_Metrics_AnalyzerClassLocator $classLocator  Class locator
      *        used to find analyzer source files on the current system.
-     * @param PHP_Depend_Util_Cache_Driver            $cache         The cache
-     *        driver may be used by some analyzers to store calculated metrics.
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      * @param array                                   $acceptedTypes This property
      *        contains the class names of the required analyzer.
      * @param array                                   $options       Array with
@@ -89,7 +88,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      */
     public function __construct(
         PHP_Depend_Metrics_AnalyzerClassLocator $classLocator,
-        PHP_Depend_Util_Cache_Driver $cache,
+        \PHP\Depend\Util\Cache\Driver $cache,
         array $acceptedTypes,
         array $options = array()
     ) {

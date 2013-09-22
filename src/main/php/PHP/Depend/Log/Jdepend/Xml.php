@@ -48,7 +48,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Log_Jdepend_Xml
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
@@ -214,9 +214,7 @@ class PHP_Depend_Log_Jdepend_Xml
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -241,9 +239,7 @@ class PHP_Depend_Log_Jdepend_Xml
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -264,9 +260,7 @@ class PHP_Depend_Log_Jdepend_Xml
      * Visits a package node.
      *
      * @param PHP_Depend_Code_Class $package The package class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitPackage()
      */
     public function visitPackage(PHP_Depend_Code_Package $package)
     {

@@ -41,6 +41,8 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Util\Configuration;
+
 /**
  * Default implementation of a PHP_Depend configuration parser.
  *
@@ -56,7 +58,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Util_Configuration_Parser
+class Parser
 {
     /**
      * The default configuration settings.
@@ -68,7 +70,7 @@ class PHP_Depend_Util_Configuration_Parser
     /**
      * Root element of the currently parsed configuration file.
      *
-     * @var SimpleXMLElement
+     * @var \SimpleXMLElement
      */
     protected $sxml = null;
 
@@ -76,9 +78,9 @@ class PHP_Depend_Util_Configuration_Parser
      * Constructs a new parser instance that uses the given settings as a default
      * configuration.
      *
-     * @param stdClass $settings The default configuration values.
+     * @param \stdClass $settings The default configuration values.
      */
-    public function __construct(stdClass $settings)
+    public function __construct(\stdClass $settings)
     {
         $this->settings = $settings;
     }
@@ -89,12 +91,11 @@ class PHP_Depend_Util_Configuration_Parser
      * method represents the updated PHP_Depend configuration values.
      *
      * @param string $file Path to a PHP_Depend configuration.
-     *
-     * @return stdClass
+     * @return \stdClass
      */
     public function parse($file)
     {
-        $this->sxml = new SimpleXMLElement($file, null, true);
+        $this->sxml = new \SimpleXMLElement($file, null, true);
 
         $this->parseCache();
         $this->parseParser();

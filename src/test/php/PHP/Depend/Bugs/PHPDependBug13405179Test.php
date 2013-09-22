@@ -41,8 +41,6 @@
  * @link       https://www.pivotaltracker.com/story/show/13405179
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for bug #13405179.
  *
@@ -74,8 +72,8 @@ class PHP_Depend_Bugs_PHPDependBug13405179Test extends PHP_Depend_Bugs_AbstractT
         $logger = new $className();
         $logger->setLogFile($file);
 
-        $factory = new PHP_Depend_Util_Configuration_Factory();
-        $pdepend = new PHP_Depend($factory->createDefault());
+        $factory = new \PHP\Depend\Util\Configuration\Factory();
+        $pdepend = new \PHP_Depend($factory->createDefault());
         $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->addLogger($logger);
         $pdepend->analyze();

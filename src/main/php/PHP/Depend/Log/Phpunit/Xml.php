@@ -53,7 +53,7 @@
  * @deprecated Since release 0.10.5, please use the summary logger
  */
 class PHP_Depend_Log_Phpunit_Xml
-       extends PHP_Depend_Visitor_AbstractVisitor
+       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
     implements PHP_Depend_Log_CodeAwareI,
                PHP_Depend_Log_FileAwareI
 {
@@ -245,9 +245,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * Visits a class node.
      *
      * @param PHP_Depend_Code_Class $class The current class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitClass()
      */
     public function visitClass(PHP_Depend_Code_Class $class)
     {
@@ -258,9 +256,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * Visits a file node.
      *
      * @param PHP_Depend_Code_File $file The current file node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFile()
      */
     public function visitFile(PHP_Depend_Code_File $file)
     {
@@ -297,9 +293,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * Visits a function node.
      *
      * @param PHP_Depend_Code_Function $function The current function node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
     public function visitFunction(PHP_Depend_Code_Function $function)
     {
@@ -327,9 +321,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * Visits a code interface object.
      *
      * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
     public function visitInterface(PHP_Depend_Code_Interface $interface)
     {
@@ -340,9 +332,7 @@ class PHP_Depend_Log_Phpunit_Xml
      * Visits a method node.
      *
      * @param PHP_Depend_Code_Class $method The method class node.
-     *
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
     public function visitMethod(PHP_Depend_Code_Method $method)
     {

@@ -41,8 +41,6 @@
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/163
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
  * Test case for ticket #163.
  *

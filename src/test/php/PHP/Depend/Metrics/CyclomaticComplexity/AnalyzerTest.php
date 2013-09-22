@@ -59,7 +59,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     extends PHP_Depend_Metrics_AbstractTest
 {
     /**
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      * @since 1.0.0
      */
     private $_cache;
@@ -73,7 +73,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     {
         parent::setUp();
 
-        $this->_cache = new PHP_Depend_Util_Cache_Driver_Memory();
+        $this->_cache = new \PHP\Depend\Util\Cache\Driver\Memory();
     }
 
     /**

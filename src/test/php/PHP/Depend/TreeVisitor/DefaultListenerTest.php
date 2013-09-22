@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TreeVisitor;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
 require_once dirname(__FILE__) . '/TestListener.php';
@@ -49,13 +51,12 @@ require_once dirname(__FILE__) . '/TestListener.php';
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers PHP_Depend_Visitor_AbstractListener
+ * @covers \PHP\Depend\TreeVisitor\AbstractVisitor
  * @group pdepend
  * @group pdepend::visitor
  * @group unittest
  */
-class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
+class DefaultListenerTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testDefaultImplementationCallsListeners
@@ -67,8 +68,8 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
         $codeUri  = self::createCodeResourceUriForTest();
         $packages = self::parseSource($codeUri);
 
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $listener = new TestListener();
+        $visitor  = new DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
         $visitor->visitPackage($packages->current());
 
@@ -111,10 +112,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForClass()
     {
         $class = $this->createClassFixture(__FUNCTION__);
-        $class->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $class->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $listener = new TestListener();
+        $visitor  = new DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
 
         $class->accept($visitor);
@@ -139,10 +140,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForInterface()
     {
         $interface = $this->createInterfaceFixture(__FUNCTION__);
-        $interface->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $interface->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $listener = new TestListener();
+        $visitor  = new DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
 
         $interface->accept($visitor);
@@ -167,10 +168,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForFunction()
     {
         $function = $this->createFunctionFixture(__FUNCTION__);
-        $function->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $function->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $listener = new TestListener();
+        $visitor  = new DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
 
         $function->accept($visitor);
@@ -195,10 +196,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForMethod()
     {
         $method = $this->createMethodFixture(__FUNCTION__);
-        $method->setSourceFile(new PHP_Depend_Code_File(__FILE__));
+        $method->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
 
-        $listener = new PHP_Depend_Visitor_TestListener();
-        $visitor  = new PHP_Depend_Visitor_DefaultVisitorDummy();
+        $listener = new TestListener();
+        $visitor  = new DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
 
         $method->accept($visitor);
@@ -219,7 +220,7 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerCallsStartVisitNodeForPassedParameterInstance()
     {
-        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('startVisitNode'));
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitListener', array('startVisitNode'));
         $listener->expects($this->once())
             ->method('startVisitNode');
 
@@ -234,7 +235,7 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerCallsEndVisitNodeForPassedParameterInstance()
     {
-        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('endVisitNode'));
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitListener', array('endVisitNode'));
         $listener->expects($this->once())
             ->method('endVisitNode');
 
@@ -250,11 +251,11 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerInvokesStartVisitNotForTrait()
     {
-        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('startVisitNode'));
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitListener', array('startVisitNode'));
         $listener->expects($this->once())
             ->method('startVisitNode');
 
-        $listener->startVisitTrait(new PHP_Depend_Code_Trait('MyTrait'));
+        $listener->startVisitTrait(new \PHP_Depend_Code_Trait('MyTrait'));
     }
 
     /**
@@ -265,10 +266,10 @@ class PHP_Depend_Visitor_DefaultListenerTest extends PHP_Depend_AbstractTest
      */
     public function testListenerInvokesEndVisitNotForTrait()
     {
-        $listener = $this->getMock('PHP_Depend_Visitor_AbstractListener', array('endVisitNode'));
+        $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitListener', array('endVisitNode'));
         $listener->expects($this->once())
             ->method('endVisitNode');
 
-        $listener->endVisitTrait(new PHP_Depend_Code_Trait('MyTrait'));
+        $listener->endVisitTrait(new \PHP_Depend_Code_Trait('MyTrait'));
     }
 }

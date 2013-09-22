@@ -70,18 +70,17 @@ abstract class PHP_Depend_Metrics_AbstractCachingAnalyzer
     /**
      * Injected cache driver.
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      */
     private $cache;
 
     /**
      * Setter method for the system wide used cache.
      *
-     * @param PHP_Depend_Util_Cache_Driver $cache Used cache object.
-     *
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      * @return void
      */
-    public function setCache(PHP_Depend_Util_Cache_Driver $cache)
+    public function setCache(\PHP\Depend\Util\Cache\Driver $cache)
     {
         $this->cache = $cache;
     }

@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the analyzer loader.
  *
@@ -69,7 +67,7 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
         
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(
             new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator(),
-            $this->getMock( 'PHP_Depend_Util_Cache_Driver' ),
+            $this->getMock( '\\PHP\\Depend\\Util\\Cache\\Driver' ),
             $expected
         );
 
@@ -106,7 +104,7 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(
             $locator,
-            $this->getMock( 'PHP_Depend_Util_Cache_Driver' ),
+            $this->getMock( '\\PHP\\Depend\\Util\\Cache\\Driver' ),
             array('PHP_Depend_Metrics_AnalyzerI')
         );
 
@@ -138,7 +136,7 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
 
         $loader = new PHP_Depend_Metrics_AnalyzerLoader(
             $locator,
-            $this->getMock( 'PHP_Depend_Util_Cache_Driver' ),
+            $this->getMock( '\\PHP\\Depend\\Util\\Cache\\Driver' ),
             array('PHP_Depend_Metrics_AnalyzerI')
         );
 

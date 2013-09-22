@@ -40,20 +40,23 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\TextUI;
+
+use PHP\Depend\Util\ConfigurationInstance;
+
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 /**
  * Test case for the text ui command.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers PHP_Depend_TextUI_Command
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PHP\Depend\TextUI\Command
  * @group pdepend
  * @group pdepend::textui
  * @group unittest
  */
-class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
+class CommandTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Expected output of the --version option.
@@ -88,7 +91,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testPrintVersionReturnsExitCodeSuccess()
     {
         list($exitCode, ) = $this->_executeCommand(array('--version'));
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -110,7 +113,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testPrintUsageReturnsExitCodeSuccess()
     {
         list($exitCode, ) = $this->_executeCommand(array('--usage'));
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -132,7 +135,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testPrintHelpReturnsExitCodeSuccess()
     {
         list($exitCode, ) = $this->_executeCommand(array('--help'));
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -143,7 +146,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists()
     {
         list($exitCode, ) = $this->_executeCommand();
-        self::assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        self::assertEquals(Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -177,7 +180,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified()
     {
         list($exitCode, ) = $this->_executeCommand(array());
-        self::assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        self::assertEquals(Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -202,7 +205,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, ) = $this->_executeCommand($argv);
 
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
         $this->assertFileExists($logFile);
     }
 
@@ -221,7 +224,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $argv = array('--suffix=inc', '--dummy-logger=' . $logFile, $resource);
 
         list($exitCode, ) = $this->_executeCommand($argv);
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -232,7 +235,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
     public function testCommandExitsWithCliErrorForUnknownOption()
     {
         list($exitCode, ) = $this->_executeCommand(array('--unknown'));
-        self::assertEquals(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        self::assertEquals(Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -445,11 +448,11 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         );
 
         // Result previous instance
-        PHP_Depend_Util_ConfigurationInstance::set(null);
+        ConfigurationInstance::set(null);
 
         $this->_executeCommand($argv);
 
-        $config = PHP_Depend_Util_ConfigurationInstance::get();
+        $config = ConfigurationInstance::get();
         self::assertEquals('memory', $config->cache->driver);
     }
 
@@ -479,7 +482,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, ) = $this->_executeCommand($argv);
 
-        self::assertEquals(PHP_Depend_TextUI_Command::INPUT_ERROR, $exitCode);
+        self::assertEquals(Command::INPUT_ERROR, $exitCode);
     }
 
     /**
@@ -497,7 +500,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, ) = $this->_executeCommand($argv);
 
-        self::assertEquals(PHP_Depend_TextUI_Runner::SUCCESS_EXIT, $exitCode);
+        self::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -513,7 +516,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
 
         list($exitCode, $actual) = $this->_executeCommand($argv);
 
-        $this->assertSame(PHP_Depend_TextUI_Command::CLI_ERROR, $exitCode);
+        $this->assertSame(Command::CLI_ERROR, $exitCode);
         $this->assertContains(
             sprintf('The configuration file "%s" doesn\'t exist.', $configFile),
             $actual
@@ -557,7 +560,7 @@ class PHP_Depend_TextUI_CommandTest extends PHP_Depend_AbstractTest
         $this->_prepareArgv($argv);
 
         ob_start();
-        $exitCode = PHP_Depend_TextUI_Command::main();
+        $exitCode = Command::main();
         $output   = ob_get_contents();
         ob_end_clean();
 

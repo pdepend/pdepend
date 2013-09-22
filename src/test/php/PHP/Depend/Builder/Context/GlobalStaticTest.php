@@ -40,21 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
+namespace PHP\Depend\Builder\Context;
 
 /**
- * Test case for the {@link PHP_Depend_Builder_Context_GlobalStatic} class.
+ * Test case for the {@link \PHP\Depend\Builder\Context\GlobalStatic} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Builder_Context_GlobalStatic
+ * @covers \PHP\Depend\Builder\Context\GlobalStatic
  * @group pdepend
  * @group pdepend::builder
  * @group pdepend::builder::context
  * @group unittest
  */
-class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTest
+class GlobalStaticTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testRegisterTraitCallsRestoreClassOnBuilder
@@ -64,13 +64,13 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testRegisterTraitCallsRestoreClassOnBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('restoreTrait')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Trait::CLAZZ));
+            ->with(self::isInstanceOf(\PHP_Depend_Code_Trait::CLAZZ));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
-        $context->registerTrait(new PHP_Depend_Code_Trait(__CLASS__));
+        $context = new GlobalStatic($builder);
+        $context->registerTrait(new \PHP_Depend_Code_Trait(__CLASS__));
     }
 
     /**
@@ -80,13 +80,13 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testRegisterClassCallsRestoreClassOnBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('restoreClass')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Class::CLAZZ));
+            ->with(self::isInstanceOf(\PHP_Depend_Code_Class::CLAZZ));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
-        $context->registerClass(new PHP_Depend_Code_Class(__CLASS__));
+        $context = new GlobalStatic($builder);
+        $context->registerClass(new \PHP_Depend_Code_Class(__CLASS__));
     }
 
     /**
@@ -96,13 +96,13 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('restoreInterface')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Interface::CLAZZ));
+            ->with(self::isInstanceOf(\PHP_Depend_Code_Interface::CLAZZ));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
-        $context->registerInterface(new PHP_Depend_Code_Interface(__CLASS__));
+        $context = new GlobalStatic($builder);
+        $context->registerInterface(new \PHP_Depend_Code_Interface(__CLASS__));
     }
 
     /**
@@ -112,13 +112,13 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testRegisterFunctionCallsRestoreFunctionOnBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('restoreFunction')
-            ->with(self::isInstanceOf(PHP_Depend_Code_Function::CLAZZ));
+            ->with(self::isInstanceOf(\PHP_Depend_Code_Function::CLAZZ));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
-        $context->registerFunction(new PHP_Depend_Code_Function(__CLASS__));
+        $context = new GlobalStatic($builder);
+        $context->registerFunction(new \PHP_Depend_Code_Function(__CLASS__));
     }
 
     /**
@@ -129,12 +129,12 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testGetTraitDelegatesCallToWrappedBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('getTrait')
             ->with(self::equalTo(__CLASS__));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context = new GlobalStatic($builder);
         $context->getTrait(__CLASS__);
     }
 
@@ -145,12 +145,12 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testGetClassDelegatesCallToWrappedBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('getClass')
             ->with(self::equalTo(__CLASS__));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context = new GlobalStatic($builder);
         $context->getClass(__CLASS__);
     }
 
@@ -161,12 +161,12 @@ class PHP_Depend_Builder_Context_GlobalStaticTest extends PHP_Depend_AbstractTes
      */
     public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder()
     {
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('getClassOrInterface')
             ->with(self::equalTo(__CLASS__));
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context = new GlobalStatic($builder);
         $context->getClassOrInterface(__CLASS__);
     }
 }

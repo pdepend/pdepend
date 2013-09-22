@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
+use PHP\Depend\Builder;
+use PHP\Depend\Util\Log;
+use PHP\Depend\Util\Type;
 
 /**
  * The php source parser.
@@ -148,7 +151,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The used data structure builder.
      *
-     * @var PHP_Depend_BuilderI
+     * @var Builder
      */
     protected $builder;
 
@@ -205,7 +208,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Used identifier builder instance.
      *
-     * @var PHP_Depend_Util_UuidBuilder
+     * @var \PHP\Depend\Util\UuidBuilder
      * @since 0.9.12
      */
     private $uuidBuilder = null;
@@ -220,7 +223,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
     /**
      *
-     * @var PHP_Depend_Util_Cache_Driver
+     * @var \PHP\Depend\Util\Cache\Driver
      * @since 0.10.0
      */
     protected $cache;
@@ -235,20 +238,20 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Constructs a new source parser.
      *
-     * @param PHP_Depend_TokenizerI        $tokenizer The used code tokenizer.
-     * @param PHP_Depend_BuilderI          $builder   The used node builder.
-     * @param PHP_Depend_Util_Cache_Driver $cache     The used parser cache.
+     * @param PHP_Depend_TokenizerI $tokenizer
+     * @param \PHP\Depend\Builder $builder
+     * @param \PHP\Depend\Util\Cache\Driver $cache
      */
     public function __construct(
         PHP_Depend_TokenizerI $tokenizer,
-        PHP_Depend_BuilderI $builder,
-        PHP_Depend_Util_Cache_Driver $cache
+        Builder $builder,
+        \PHP\Depend\Util\Cache\Driver $cache
     ) {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
         $this->cache     = $cache;
 
-        $this->uuidBuilder    = new PHP_Depend_Util_UuidBuilder();
+        $this->uuidBuilder    = new \PHP\Depend\Util\UuidBuilder();
         $this->tokenStack     = new PHP_Depend_Parser_TokenStack();
 
         $this->useSymbolTable = new PHP_Depend_Parser_SymbolTable();
@@ -316,7 +319,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->tokenStack->push();
 
-        PHP_Depend_Util_Log::debug('Processing file ' . $this->sourceFile);
+        Log::debug('Processing file ' . $this->sourceFile);
 
         $tokenType = $this->tokenizer->peek();
         while ($tokenType !== self::T_EOF) {
@@ -6476,7 +6479,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         if (preg_match(self::REGEXP_RETURN_TYPE, $comment, $match) > 0) {
             foreach (explode('|', end($match)) as $type) {
-                if (PHP_Depend_Util_Type::isScalarType($type) === false) {
+                if (Type::isScalarType($type) === false) {
                     return $type;
                 }
             }
@@ -6522,11 +6525,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $annotations = $this->parseVarAnnotation($this->docComment);
         foreach ($annotations as $annotation) {
-            if (PHP_Depend_Util_Type::isPrimitiveType($annotation) === true) {
+            if (Type::isPrimitiveType($annotation) === true) {
                 return $this->builder->buildAstPrimitiveType(
-                    PHP_Depend_Util_Type::getPrimitiveType($annotation)
+                    Type::getPrimitiveType($annotation)
                 );
-            } else if (PHP_Depend_Util_Type::isArrayType($annotation) === true) {
+            } else if (Type::isArrayType($annotation) === true) {
                 return $this->builder->buildAstTypeArray();
             }
         }
@@ -6544,7 +6547,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     {
         $annotations = $this->parseVarAnnotation($this->docComment);
         foreach ($annotations as $annotation) {
-            if (PHP_Depend_Util_Type::isScalarType($annotation) === false) {
+            if (Type::isScalarType($annotation) === false) {
                 return $this->builder->buildAstClassOrInterfaceReference(
                     $annotation
                 );

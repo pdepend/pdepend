@@ -40,18 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
+namespace PHP\Depend\Util\Cache\Driver;
+
+use PHP\Depend\Util\Cache\AbstractDriverTest;
+
 require_once dirname(__FILE__) . '/../AbstractDriverTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Util_Cache_Driver_File} class.
+ * Test case for the {@link \PHP\Depend\Util\Cache\Driver\File} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers PHP_Depend_Util_Cache_Driver_File
+ * @covers \PHP\Depend\Util\Cache\Driver\File
  */
-class PHP_Depend_Util_Cache_Driver_FileTest
-    extends PHP_Depend_Util_Cache_AbstractDriverTest
+class FileTest extends AbstractDriverTest
 {
     /**
      * Temporary cache directory.
@@ -75,11 +78,11 @@ class PHP_Depend_Util_Cache_Driver_FileTest
     /**
      * Creates a test fixture.
      *
-     * @return PHP_Depend_Util_Cache_Driver
+     * @return \PHP\Depend\Util\Cache\Driver
      */
     protected function createDriver()
     {
-        return new PHP_Depend_Util_Cache_Driver_File($this->cacheDir);
+        return new File($this->cacheDir);
     }
 
     /**
@@ -90,7 +93,7 @@ class PHP_Depend_Util_Cache_Driver_FileTest
      */
     public function testFileDriverStoresFileWithCacheKeyIfPresent()
     {
-        $cache = new PHP_Depend_Util_Cache_Driver_File($this->cacheDir, 'foo');
+        $cache = new File($this->cacheDir, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
         $key = md5('baz' . 'foo');
@@ -107,7 +110,7 @@ class PHP_Depend_Util_Cache_Driver_FileTest
      */
     public function testFileDriverRestoresFileWithCacheKeyIfPresent()
     {
-        $cache = new PHP_Depend_Util_Cache_Driver_File($this->cacheDir, 'foo');
+        $cache = new File($this->cacheDir, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
         $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));

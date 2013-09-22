@@ -41,6 +41,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+use PHP\Depend\TextUI\Command;
+
 // PEAR/svn workaround
 if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
@@ -70,4 +72,4 @@ if (version_compare(phpversion(), '5.3.0')) {
 $autoload = new PHP_Depend_Autoload();
 $autoload->register();
 
-exit(PHP_Depend_TextUI_Command::main());
+exit(Command::main());

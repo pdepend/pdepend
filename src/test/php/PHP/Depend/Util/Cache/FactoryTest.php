@@ -40,21 +40,26 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Util\Cache;
+
+use PHP\Depend\Util\Cache\Driver\File;
+use PHP\Depend\Util\Cache\Driver\Memory;
+
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
 /**
- * Test case for the {@link PHP_Depend_Util_Cache_Factory} class.
+ * Test case for the {@link \PHP\Depend\Util\Cache\Factory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Util_Cache_Factory
+ * @covers \PHP\Depend\Util\Cache\Factory
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::cache
  * @group unittest
  */
-class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
+class FactoryTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testCreateReturnsDriverInstance
@@ -63,10 +68,10 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      */
     public function testCreateReturnsDriverInstance()
     {
-        $factory = new PHP_Depend_Util_Cache_Factory(
+        $factory = new Factory(
             $this->createConfigurationFixture()
         );
-        self::assertInstanceOf('PHP_Depend_Util_Cache_Driver', $factory->create());
+        self::assertInstanceOf('\\PHP\\Depend\\Util\\Cache\\Driver', $factory->create());
     }
 
     /**
@@ -76,7 +81,7 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      */
     public function testCreateHasSingletonBehaviorForIdenticalCacheNames()
     {
-        $factory = new PHP_Depend_Util_Cache_Factory(
+        $factory = new Factory(
             $this->createConfigurationFixture()
         );
 
@@ -93,7 +98,7 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
      */
     public function testCreateReturnsDifferentInstancesForDifferentCacheNames()
     {
-        $factory = new PHP_Depend_Util_Cache_Factory(
+        $factory = new Factory(
             $this->createConfigurationFixture()
         );
 
@@ -112,10 +117,7 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        self::assertInstanceOf(
-            PHP_Depend_Util_Cache_Driver_File::CLAZZ,
-            $this->createFactoryFixture()->create()
-        );
+        self::assertInstanceOf(File::CLAZZ, $this->createFactoryFixture()->create());
     }
 
     /**
@@ -127,17 +129,14 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        self::assertInstanceOf(
-            PHP_Depend_Util_Cache_Driver_Memory::CLAZZ,
-            $this->createFactoryFixture()->create()
-        );
+        self::assertInstanceOf(Memory::CLAZZ, $this->createFactoryFixture()->create());
     }
 
     /**
      * testCreateThrowsExpectedExceptionForUnknownCacheDriver
      *
      * @return void
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver()
     {
@@ -150,12 +149,10 @@ class PHP_Depend_Util_Cache_FactoryTest extends PHP_Depend_AbstractTest
     /**
      * Creates a prepared factory instance.
      *
-     * @return PHP_Depend_Util_Cache_Factory
+     * @return \PHP\Depend\Util\Cache\Factory
      */
     protected function createFactoryFixture()
     {
-        return new PHP_Depend_Util_Cache_Factory(
-            $this->createConfigurationFixture()
-        );
+        return new Factory($this->createConfigurationFixture());
     }
 }

@@ -41,6 +41,8 @@
  * @since     1.0.0
  */
 
+use PHP\Depend\TreeVisitor\TreeVisitor;
+
 /**
  * Representation of a trait.
  *
@@ -98,13 +100,12 @@ class PHP_Depend_Code_Trait extends PHP_Depend_Code_Class
     }
 
     /**
-     * Visitor method for node tree traversal.
+     * TreeVisitor method for node tree traversal.
      *
-     * @param PHP_Depend_VisitorI $visitor The context visitor implementation.
-     *
+     * @param \PHP\Depend\TreeVisitor $visitor
      * @return void
      */
-    public function accept(PHP_Depend_VisitorI $visitor)
+    public function accept(TreeVisitor $visitor)
     {
         $visitor->visitTrait($this);
     }

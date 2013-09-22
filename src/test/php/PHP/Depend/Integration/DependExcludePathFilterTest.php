@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Tests the integration of the {@link PHP_Depend} class and the input filter
  * class {@link PHP_Depend_Input_ExcludePathFilter}.

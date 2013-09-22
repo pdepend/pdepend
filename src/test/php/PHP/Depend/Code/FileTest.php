@@ -40,8 +40,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the code file class.
  *
@@ -132,7 +130,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      */
     public function testGetTokensDelegatesCallToCacheRestoreWithFileUuid()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -155,7 +153,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      */
     public function testSetTokensDelegatesCallToCacheStoreWithFileUuid()
     {
-        $cache = $this->getMock('PHP_Depend_Util_Cache_Driver');
+        $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -178,7 +176,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
      */
     public function testAcceptInvokesVisitFileOnGivenVisitor()
     {
-        $visitor = $this->getMock('PHP_Depend_VisitorI');
+        $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitor');
         $visitor->expects($this->once())
             ->method('visitFile')
             ->with(self::isInstanceOf(PHP_Depend_Code_File::CLAZZ));
@@ -330,7 +328,7 @@ class PHP_Depend_Code_FileTest extends PHP_Depend_AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new PHP_Depend_Code_File(__FILE__);
-        self::assertEquals(362, $file->getEndLine());
+        self::assertEquals(360, $file->getEndLine());
     }
 
     /**

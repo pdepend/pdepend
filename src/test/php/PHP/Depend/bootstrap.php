@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PHP_Depend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -38,29 +38,20 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
-  */
-
-/**
- * Simple test node visitor implementation.
- *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Visitor_TestListener extends PHP_Depend_Visitor_AbstractListener
-{
-    public $nodes = array();
-    
-    public function startVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-        $this->nodes[$node->getName() . '#start'] = true;
-        
-        parent::startVisitNode($node);
+
+namespace PHP\Depend;
+
+spl_autoload_register(function ($class) {
+    if (0 === strpos($class, __NAMESPACE__)) {
+        $file = __DIR__ . strtr(str_replace(__NAMESPACE__, '', $class), '\\', '/') . '.php';
+    } else if (0 === strpos($class, 'PHP_Depend_')) {
+        $file = __DIR__ . strtr(str_replace('PHP_Depend', '', $class), '_', '/') . '.php';
+    } else {
+        return;
     }
 
-    public function endVisitNode(PHP_Depend_Code_NodeI $node)
-    {
-        $this->nodes[$node->getName() . '#end'] = true;
-        
-        parent::endVisitNode($node);
+    if (file_exists($file)) {
+        include $file;
     }
-}
+});

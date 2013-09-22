@@ -40,7 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/ASTNodeTest.php';
+use PHP\Depend\Builder\Context\GlobalStatic;
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTSelfReference} class.
@@ -64,7 +64,7 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testGetTypeReturnsInjectedConstructorTargetArgument()
     {
         $target  = $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__));
-        $context = $this->getMock('PHP_Depend_Builder_Context');
+        $context = $this->getMock('\\PHP\\Depend\\Builder\\Context');
 
         $reference = new PHP_Depend_Code_ASTSelfReference($context, $target);
         self::assertSame($target, $reference->getType());
@@ -79,11 +79,11 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     {
         $target = $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__));
 
-        $builder = $this->getMock('PHP_Depend_BuilderI');
+        $builder = $this->getMock('\\PHP\\Depend\\Builder');
         $builder->expects($this->once())
             ->method('getClassOrInterface');
 
-        $context = new PHP_Depend_Builder_Context_GlobalStatic($builder);
+        $context = new GlobalStatic($builder);
 
         $reference = new PHP_Depend_Code_ASTSelfReference($context, $target);
         $reference = unserialize(serialize($reference));
@@ -218,7 +218,7 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
     protected function createNodeInstance()
     {
         return new PHP_Depend_Code_ASTSelfReference(
-            $this->getMock('PHP_Depend_Builder_Context'),
+            $this->getMock('\\PHP\\Depend\\Builder\\Context'),
             $this->getMockForAbstractClass('PHP_Depend_Code_AbstractClassOrInterface', array(__CLASS__))
         );
     }
