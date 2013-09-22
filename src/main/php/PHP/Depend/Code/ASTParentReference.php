@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,30 +36,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
- * @package    PHP_Depend
- * @subpackage Code
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since     0.9.6
  */
 
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>parent</b> is used to reference a class or interface.
  *
- * @category   PHP
- * @package    PHP_Depend
- * @subpackage Code
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.pdepend.org/
- * @since      0.9.6
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since     0.9.6
  */
 final class PHP_Depend_Code_ASTParentReference
     extends PHP_Depend_Code_ASTClassOrInterfaceReference

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,27 +36,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Builder
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://pdepend.org/
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 /**
  * Default code tree builder implementation.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Builder
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://pdepend.org/
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
 {
@@ -776,7 +764,6 @@ class PHP_Depend_Builder_Default implements PHP_Depend_BuilderI
      * @param string $image The source image of this expression.
      *
      * @return PHP_Depend_Code_ASTListExpression
-     * @author Joey Mazzarelli
      * @since 0.9.12
      */
     public function buildAstListExpression($image)

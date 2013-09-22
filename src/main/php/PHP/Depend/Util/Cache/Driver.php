@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,15 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Util_Cache
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://pdepend.org/
- * @since      0.10.0
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since     0.10.0
  */
 
 // @codeCoverageIgnoreStart
@@ -52,22 +46,16 @@
 /**
  * Base interface for a concrete cache driver.
  *
- * @category   QualityAssurance
- * @package    PHP_Depend
- * @subpackage Util_Cache
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://pdepend.org/
- * @since      0.10.0
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since     0.10.0
  */
 interface PHP_Depend_Util_Cache_Driver
 {
     /**
      * The current cache version.
      */
-    const VERSION = '@version:09b82c9ad89d86258bad20d1726b5dc4:@';
+    const VERSION = '@version:0bc76e6f10b367792e55aaa0d9854650:@';
 
     /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method

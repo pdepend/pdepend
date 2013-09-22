@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,15 +36,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
- * @package    PHP_Depend
- * @subpackage Bugs
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       https://www.pivotaltracker.com/story/show/23905939
- * @since      0.10.8
+ * @since     0.10.8
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
@@ -52,15 +47,10 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
 /**
  * Test case for bug #23905939.
  *
- * @category   PHP
- * @package    PHP_Depend
- * @subpackage Bugs
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2008-2012 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       https://www.pivotaltracker.com/story/show/23905939
- * @since      0.10.8
+ * @since     0.10.8
  *
  * @ticket 23905939
  * @covers stdClass

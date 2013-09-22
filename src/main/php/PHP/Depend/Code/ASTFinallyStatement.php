@@ -40,74 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
-
 /**
- * Test case for bug #59.
+ * This node class represents a finally-statement.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @ticket 59
- * @covers stdClass
- * @group pdepend
- * @group pdepend::bugs
- * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug059Test extends PHP_Depend_Bugs_AbstractTest
+class PHP_Depend_Code_ASTFinallyStatement extends PHP_Depend_Code_ASTStatement
 {
 
-    /**
-     * Tests that the parser sets the source file of an interface method.
-     *
-     * @return void
-     */
-    public function testParserSetsSourceFileForInterfaceMethod()
-    {
-        $sourceFile = self::parseCodeResourceForTest()
-            ->current()
-            ->getInterfaces()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getSourceFile();
-
-        self::assertEquals(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
-    }
-
-    /**
-     * Tests that the parser sets the source file of a class method.
-     *
-     * @return void
-     */
-    public function testParserSetsSourceFileForClassMethod()
-    {
-        $sourceFile = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getSourceFile();
-
-        $this->assertSame(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
-    }
-
-    /**
-     * Tests that the parser sets the source file of a class property.
-     *
-     * @return void
-     */
-    public function testParserSetsSourceFileForClassProperty()
-    {
-        $sourceFile = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getProperties()
-            ->current()
-            ->getSourceFile();
-
-        $this->assertSame(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
-    }
 }
