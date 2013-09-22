@@ -41,6 +41,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend;
 
 /**
  * This script updates the PEAR-Package-Manifest.
@@ -48,12 +49,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_ManifestUpdater
+class ManifestUpdater
 {
     /**
      * The pear manifest file.
      *
-     * @var string $_manifestFile
+     * @var string
      */
     private $_manifestFile = null;
 
@@ -80,13 +81,12 @@ class PHP_Depend_ManifestUpdater
     /**
      * Inserts the new content structure.
      *
-     * @param DOMElement $parent The parent directory element.
-     * @param array      $struct The content structure.
-     * @param string     $role   The pear manifest role.
-     *
+     * @param \DOMElement $parent The parent directory element.
+     * @param array $struct The content structure.
+     * @param string $role The pear manifest role.
      * @return void
      */
-    private function _insertContents(DOMElement $parent, array $struct, $role)
+    private function _insertContents(\DOMElement $parent, array $struct, $role)
     {
         $manifest = $parent->ownerDocument;
 
@@ -116,18 +116,18 @@ class PHP_Depend_ManifestUpdater
     /**
      * Creates the raw manifest without source contents.
      *
-     * @return DOMDocument
+     * @return \DOMDocument
      */
     private function _createManifest()
     {
-        $manifest = new DOMDocument('1.0', 'UTF-8');
+        $manifest = new \DOMDocument('1.0', 'UTF-8');
 
         $manifest->formatOutput       = true;
         $manifest->preserveWhiteSpace = false;
 
         $manifest->load($this->_manifestFile);
 
-        $xpath = new DOMXPath($manifest);
+        $xpath = new \DOMXPath($manifest);
         $xpath->registerNamespace('a', 'http://pear.php.net/dtd/package-2.0');
 
         $result = $xpath->query('//a:contents/a:dir[@name="/"]/a:dir');
@@ -167,7 +167,7 @@ class PHP_Depend_ManifestUpdater
     private function _readContent($dir)
     {
         $struct = array();
-        $files  = new DirectoryIterator($dir);
+        $files  = new \DirectoryIterator($dir);
         foreach ($files as $file) {
             if ($file->isDot() || strpos($file->getFilename(), '.') === 0) {
                 continue;
@@ -208,8 +208,8 @@ class PHP_Depend_ManifestUpdater
      */
     public static function main(array $args)
     {
-        $updater = new PHP_Depend_ManifestUpdater();
+        $updater = new ManifestUpdater();
     }
 }
 
-PHP_Depend_ManifestUpdater::main($_SERVER['argv']);
+ManifestUpdater::main($_SERVER['argv']);

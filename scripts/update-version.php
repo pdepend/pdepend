@@ -41,13 +41,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend;
+
 /**
  * Utility class that we use to recalculate the cache hash/version.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class PHP_Depend_CacheVersionUpdater
+class CacheVersionUpdater
 {
     /**
      * The source directory.
@@ -122,9 +124,8 @@ class PHP_Depend_CacheVersionUpdater
      * Generates a hash value for the given <b>$path</b> in combination with a
      * previous calculated <b>$checksum</b>.
      *
-     * @param string $path     Path to the current context file.
+     * @param string $path Path to the current context file.
      * @param string $checksum Hash/Checksum for all previously parsed files.
-     *
      * @return string
      */
     protected function hash($path, $checksum)
@@ -136,7 +137,6 @@ class PHP_Depend_CacheVersionUpdater
      * Reads all files below the given <b>$path</b>.
      *
      * @param string $path The parent directory or a file.
-     *
      * @return array(string)
      */
     protected function readFiles($path)
@@ -157,7 +157,6 @@ class PHP_Depend_CacheVersionUpdater
      * Does the given path represent a file that has the expected file extension?
      *
      * @param string $path Path to a file or directory.
-     *
      * @return boolean
      */
     protected function accept($path)
@@ -169,13 +168,12 @@ class PHP_Depend_CacheVersionUpdater
      * Creates an iterator with all files below the given directory.
      *
      * @param string $path Path to a directory.
-     *
-     * @return Iterator
+     * @return \Iterator
      */
     protected function createFileIterator($path)
     {
-        return new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path)
+        return new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($path)
         );
     }
 
@@ -183,12 +181,13 @@ class PHP_Depend_CacheVersionUpdater
      * The main method starts the cache version updater.
      *
      * @param array $args Cli arguments.
+     * @return void
      */
     public static function main(array $args)
     {
-        $updater = new PHP_Depend_CacheVersionUpdater();
+        $updater = new CacheVersionUpdater();
         $updater->run();
     }
 }
 
-PHP_Depend_CacheVersionUpdater::main($argv);
+CacheVersionUpdater::main($_SERVER['argv']);
