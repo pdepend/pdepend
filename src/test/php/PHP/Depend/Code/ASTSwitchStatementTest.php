@@ -171,7 +171,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testInvalidStatementInSwitchStatementResultsInExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException()
     {
@@ -182,7 +182,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testUnclosedSwitchStatementResultsInExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testUnclosedSwitchStatementResultsInExpectedException()
     {

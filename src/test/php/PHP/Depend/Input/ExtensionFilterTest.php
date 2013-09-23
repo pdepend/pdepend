@@ -40,18 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Test case for the file extension filter.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Input_ExtensionFilter
+ * @covers \PHP\Depend\Input\ExtensionFilter
  * @group pdepend
  * @group pdepend::input
  * @group unittest
  */
-class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
+class ExtensionFilterTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testExtensionFilterAcceptsOneFileExtension
@@ -89,10 +91,10 @@ class PHP_Depend_Input_ExtensionFilterTest extends PHP_Depend_AbstractTest
      */
     protected function createFilteredFileList(array $includes)
     {
-        $filter = new PHP_Depend_Input_ExtensionFilter($includes);
+        $filter = new ExtensionFilter($includes);
 
-        $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
                 self::createCodeResourceUriForTest()
             )
         );

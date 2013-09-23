@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #1.
  *
@@ -47,12 +49,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @ticket 1
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug001Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug001Test extends AbstractTest
 {
     /**
      * Test case for parser bug 01 that doesn't add dependencies for static

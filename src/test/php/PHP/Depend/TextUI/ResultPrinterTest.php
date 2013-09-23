@@ -43,8 +43,7 @@
 namespace PHP\Depend\TextUI;
 
 use PHP\Depend\Builder\DefaultBuilder;
-
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 
 /**
  * Test case for the default text ui result printer.
@@ -65,7 +64,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     {
         // Create dummy objects
         $builder   = new DefaultBuilder();
-        $tokenizer = new \PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
         $printer = new ResultPrinter();
@@ -90,7 +89,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     {
         // Create dummy objects
         $builder   = new DefaultBuilder();
-        $tokenizer = new \PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
         $printer = new ResultPrinter();

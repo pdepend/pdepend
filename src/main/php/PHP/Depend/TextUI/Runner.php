@@ -42,6 +42,9 @@
 
 namespace PHP\Depend\TextUI;
 
+use PHP\Depend\Input\ExcludePathFilter;
+use PHP\Depend\Input\ExtensionFilter;
+use PHP\Depend\Report\GeneratorFactory;
 use PHP\Depend\Util\Configuration;
 
 /**
@@ -209,13 +212,13 @@ class Runner
     /**
      * Adds a logger to this runner.
      *
-     * @param string $loggerID The logger identifier.
-     * @param string $logFileName The log file name.
+     * @param string $generatorId The logger identifier.
+     * @param string $reportFile The log file name.
      * @return void
      */
-    public function addLogger($loggerID, $logFileName)
+    public function addReportGenerator($generatorId, $reportFile)
     {
-        $this->loggerMap[$loggerID] = $logFileName;
+        $this->loggerMap[$generatorId] = $reportFile;
     }
 
     /**
@@ -256,13 +259,13 @@ class Runner
         $pdepend->setOptions($this->options);
 
         if (count($this->extensions) > 0) {
-            $filter = new \PHP_Depend_Input_ExtensionFilter($this->extensions);
+            $filter = new ExtensionFilter($this->extensions);
             $pdepend->addFileFilter($filter);
         }
 
         if (count($this->excludeDirectories) > 0) {
             $exclude = $this->excludeDirectories;
-            $filter  = new \PHP_Depend_Input_ExcludePathFilter($exclude);
+            $filter  = new ExcludePathFilter($exclude);
             $pdepend->addFileFilter($filter);
         }
 
@@ -293,15 +296,15 @@ class Runner
             throw new \RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
-        $loggerFactory = new \PHP_Depend_Log_LoggerFactory();
+        $generatorFactory = new GeneratorFactory();
 
         // To append all registered loggers.
         try {
-            foreach ($this->loggerMap as $loggerID => $logFileName) {
+            foreach ($this->loggerMap as $generatorId => $reportFile) {
                 // Create a new logger
-                $logger = $loggerFactory->createLogger($loggerID, $logFileName);
+                $generator = $generatorFactory->createGenerator($generatorId, $reportFile);
 
-                $pdepend->addLogger($logger);
+                $pdepend->addReportGenerator($generator);
             }
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);

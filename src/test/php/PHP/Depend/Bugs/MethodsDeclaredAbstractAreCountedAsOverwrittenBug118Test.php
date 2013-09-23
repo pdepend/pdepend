@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #118
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test
-    extends PHP_Depend_Bugs_AbstractTest
+class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractTest
 {
     /**
      * testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten
@@ -64,7 +65,7 @@ class PHP_Depend_Bugs_MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test
         $packages = self::parseCodeResourceForTest();
         $class    = $packages->current()->getClasses()->current();
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -81,7 +82,7 @@ class PHP_Depend_Bugs_MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test
         $packages = self::parseCodeResourceForTest();
         $class    = $packages->current()->getClasses()->current();
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($class);

@@ -223,7 +223,7 @@ class PHP_Depend_Code_ASTForeachStatementTest extends PHP_Depend_Code_ASTNodeTes
      * testForeachStatementThrowsExpectedExceptionForKeyByReference
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testForeachStatementThrowsExpectedExceptionForKeyByReference()
     {

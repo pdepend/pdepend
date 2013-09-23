@@ -98,7 +98,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
+            '\\PHP\\Depend\\Parser\\InvalidStateException',
             'The keyword "static" was used outside of a class/method scope.'
         );
 
@@ -113,7 +113,7 @@ class PHP_Depend_Code_ASTStaticReferenceTest extends PHP_Depend_Code_ASTNodeTest
     public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
+            '\\PHP\\Depend\\Parser\\InvalidStateException',
             'The keyword "static" was used outside of a class/method scope.'
         );
 

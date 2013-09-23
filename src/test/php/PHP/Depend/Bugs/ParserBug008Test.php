@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #8.
  *
@@ -47,12 +49,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @ticket 8
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug008Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug008Test extends AbstractTest
 {
     /**
      * Tests that the parser handles curly braces in strings correct.

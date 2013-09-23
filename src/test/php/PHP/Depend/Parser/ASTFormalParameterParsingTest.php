@@ -41,22 +41,20 @@
  * @since     0.10.2
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
- * Test case for the {@link PHP_Depend_Parser} class.
+ * Test case for the {@link \PHP_Depend_Parser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.2
- *
- * @covers PHP_Depend_Parser
+ * @covers \PHP_Depend_Parser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_ASTFormalParameterParsingTest
-    extends PHP_Depend_Parser_AbstractTest
+class ASTFormalParameterParsingTest extends AbstractTest
 {
     /**
      * testWithParentTypeHint
@@ -66,14 +64,14 @@ class PHP_Depend_Parser_ASTFormalParameterParsingTest
     public function testWithParentTypeHint()
     {
         $typeHint = self::getFirstMethodFormalParameter()->getChild(0);
-        self::assertInstanceOf(PHP_Depend_Code_ASTParentReference::CLAZZ, $typeHint);
+        self::assertInstanceOf(\PHP_Depend_Code_ASTParentReference::CLAZZ, $typeHint);
     }
 
     /**
      * testWithParentTypeHintInFunctionThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testWithParentTypeHintInFunctionThrowsExpectedException()
     {
@@ -84,7 +82,7 @@ class PHP_Depend_Parser_ASTFormalParameterParsingTest
      * testWithParentTypeHintInRootClassThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testWithParentTypeHintInRootClassThrowsExpectedException()
     {
@@ -94,7 +92,7 @@ class PHP_Depend_Parser_ASTFormalParameterParsingTest
     /**
      * Returns the first formal parameter found in the associated test file.
      * 
-     * @return PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP_Depend_Code_ASTFormalParameter
      */
     private static function getFirstMethodFormalParameter()
     {
@@ -104,6 +102,6 @@ class PHP_Depend_Parser_ASTFormalParameterParsingTest
             ->current()
             ->getMethods()
             ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTFormalParameter::CLAZZ);
+            ->getFirstChildOfType(\PHP_Depend_Code_ASTFormalParameter::CLAZZ);
     }
 }

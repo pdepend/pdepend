@@ -116,7 +116,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
     {

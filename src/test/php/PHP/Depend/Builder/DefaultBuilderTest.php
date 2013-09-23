@@ -539,14 +539,14 @@ class DefaultBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $interface = $builder->buildInterface('PHP_Depend_TokenizerI');
+        $interface = $builder->buildInterface('PHP_Depend_Source_Tokenizer_Tokenizer');
         $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
         self::assertSame(
             $interface,
-            $builder->getInterface('php_Depend_tokenizeri')
+            $builder->getInterface('PHP_Depend_Source_Tokenizer_ToKeNiZeR')
         );
     }
 
@@ -604,14 +604,14 @@ class DefaultBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $interface = $builder->buildInterface('PHP_Depend_TokenizerI');
+        $interface = $builder->buildInterface('PHP_Depend_Source_Tokenizer_Tokenizer');
         $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
         self::assertSame(
             $interface,
-            $builder->getClassOrInterface('php_Depend_tokenizeri')
+            $builder->getClassOrInterface('PHP_Depend_Source_Tokenizer_ToKeNiZeR')
         );
     }
 

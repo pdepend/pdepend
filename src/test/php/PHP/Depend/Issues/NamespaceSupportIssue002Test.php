@@ -118,7 +118,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_UnexpectedTokenException',
+            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
             'Unexpected token: as, line: 2, col: 19, file: '
         );
 
@@ -182,7 +182,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_UnexpectedTokenException',
+            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 2, col: 18, file: '
 
         );
@@ -199,7 +199,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_UnexpectedTokenException',
+            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
             'Unexpected token: {, line: 2, col: 13, file: '
 
         );

@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #33.
  *
@@ -47,12 +49,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @ticket 33
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug033Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug033Test extends AbstractTest
 {
     /**
      * The type hint detection was broken when a constant was used as default

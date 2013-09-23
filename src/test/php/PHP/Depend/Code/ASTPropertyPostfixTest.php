@@ -357,7 +357,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
@@ -368,7 +368,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
     {
@@ -379,7 +379,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {

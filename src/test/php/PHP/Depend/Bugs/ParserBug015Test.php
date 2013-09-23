@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #15.
  *
@@ -47,12 +49,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @ticket 15
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug015Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug015Test extends AbstractTest
 {
     /**
      * Tests that the parser ignores backtick expressions.

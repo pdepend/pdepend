@@ -42,7 +42,7 @@
 
 /**
  * Tests the integration of the {@link PHP_Depend} class and the input filter
- * class {@link PHP_Depend_Input_ExcludePathFilter}.
+ * class {@link \PHP\Depend\Input\ExcludePathFilter}.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -70,7 +70,7 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new PHP_Depend_Input_ExcludePathFilter(array($pattern))
+            new \PHP\Depend\Input\ExcludePathFilter(array($pattern))
         );
 
         self::assertEquals(1, count($pdepend->analyze()));
@@ -95,7 +95,7 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new PHP_Depend_Input_ExcludePathFilter(array($pattern))
+            new \PHP\Depend\Input\ExcludePathFilter(array($pattern))
         );
 
         self::assertEquals(
@@ -124,7 +124,7 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new PHP_Depend_Input_ExcludePathFilter(array($pattern))
+            new \PHP\Depend\Input\ExcludePathFilter(array($pattern))
         );
 
         self::assertEquals(2, count($pdepend->analyze()));

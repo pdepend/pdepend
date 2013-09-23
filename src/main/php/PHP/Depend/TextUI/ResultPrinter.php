@@ -43,6 +43,7 @@
 namespace PHP\Depend\TextUI;
 
 use PHP\Depend\Builder;
+use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
 
 /**
@@ -94,10 +95,10 @@ class ResultPrinter
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param \PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    public function startFileParsing(\PHP_Depend_TokenizerI $tokenizer)
+    public function startFileParsing(Tokenizer $tokenizer)
     {
         $this->step();
     }
@@ -105,10 +106,10 @@ class ResultPrinter
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param \PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    public function endFileParsing(\PHP_Depend_TokenizerI $tokenizer)
+    public function endFileParsing(Tokenizer $tokenizer)
     {
 
     }

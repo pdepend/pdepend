@@ -100,7 +100,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
@@ -111,7 +111,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceInClassWithoutParentThrowsException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testParentReferenceInClassWithoutParentThrowsException()
     {
@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {

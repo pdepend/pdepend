@@ -42,6 +42,8 @@
  * @since     0.10.8
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #23905939.
  *
@@ -51,12 +53,12 @@
  * @since     0.10.8
  *
  * @ticket 23905939
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug23905939Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug23905939Test extends AbstractTest
 {
     /**
      * testParserExtractsCorrectClassPackage

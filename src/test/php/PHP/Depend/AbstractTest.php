@@ -41,6 +41,8 @@
   */
 
 use PHP\Depend\Builder\DefaultBuilder;
+use PHP\Depend\Parser\VersionAllParser;
+use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 use PHP\Depend\Util\Cache\Driver\Memory;
 use PHP\Depend\Util\Configuration\Factory;
 
@@ -730,11 +732,11 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         if (is_dir($fileOrDirectory)) {
-            $it = new PHP_Depend_Input_Iterator(
+            $it = new \PHP\Depend\Input\Iterator(
                 new RecursiveIteratorIterator(
                     new RecursiveDirectoryIterator($fileOrDirectory)
                 ),
-                new PHP_Depend_Input_ExcludePathFilter(array('.svn'))
+                new \PHP\Depend\Input\ExcludePathFilter(array('.svn'))
             );
         } else {
             $it = new ArrayIterator(array($fileOrDirectory));
@@ -754,10 +756,10 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $builder = new DefaultBuilder();
 
         foreach ($files as $file) {
-            $tokenizer = new PHP_Depend_Tokenizer_Internal();
+            $tokenizer = new PHPTokenizerInternal();
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser_VersionAllParser(
+            $parser = new VersionAllParser(
                 $tokenizer,
                 $builder,
                 $cache

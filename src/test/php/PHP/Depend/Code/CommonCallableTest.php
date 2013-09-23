@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
+use PHP\Depend\Source\Tokenizer\Token;
 
 /**
  * Test case for the {@link PHP_Depend_Code_AbstractCallable} class.
@@ -182,7 +183,7 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
      */
     public function testSetTokensDelegatesCallToCacheStore()
     {
-        $tokens = array(new PHP_Depend_Token(1, 'a', 23, 42, 13, 17));
+        $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
 
         $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
@@ -216,8 +217,8 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
         $tokens = array(
-            new PHP_Depend_Token(1, 'a', 13, 17, 0, 0),
-            new PHP_Depend_Token(2, 'b', 23, 42, 0, 0)
+            new Token(1, 'a', 13, 17, 0, 0),
+            new Token(2, 'b', 23, 42, 0, 0)
         );
 
         $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
@@ -251,8 +252,8 @@ class PHP_Depend_Code_CommonCallableTest extends PHP_Depend_AbstractTest
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
         $tokens = array(
-            new PHP_Depend_Token(1, 'a', 13, 17, 0, 0),
-            new PHP_Depend_Token(2, 'b', 23, 42, 0, 0)
+            new Token(1, 'a', 13, 17, 0, 0),
+            new Token(2, 'b', 23, 42, 0, 0)
         );
 
         $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');

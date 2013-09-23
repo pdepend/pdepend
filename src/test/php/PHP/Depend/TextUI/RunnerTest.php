@@ -42,9 +42,6 @@
 
 namespace PHP\Depend\TextUI;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-require_once dirname(__FILE__) . '/../Log/Dummy/Logger.php';
-
 /**
  * Test case for the text ui runner.
  *
@@ -196,7 +193,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
     public function testRunnerHasParseErrorsReturnsFalseForValidSource()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI());
+        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
@@ -211,7 +208,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
     public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI());
+        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
@@ -226,7 +223,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
     public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('dummy-logger', self::createRunResourceURI());
+        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
@@ -243,7 +240,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
     public function testRunnerThrowsExceptionForUndefinedLoggerClass()
     {
         $runner = $this->createTextUiRunnerFixture();
-        $runner->addLogger('FooBarLogger', self::createRunResourceURI());
+        $runner->addReportGenerator('FooBarLogger', self::createRunResourceURI());
         $runner->run();
     }
 
@@ -273,7 +270,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
         $logFile = self::createRunResourceURI();
 
         $runner->setSourceArguments(array($pathName));
-        $runner->addLogger('dummy-logger', $logFile);
+        $runner->addReportGenerator('dummy-logger', $logFile);
 
         ob_start();
         $runner->run();

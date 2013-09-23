@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Parser\VersionAllParser;
+use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 
 /**
  * Tests the integration of parser and builder together with the cache component.
@@ -124,13 +126,13 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
 
         $cache = new \PHP\Depend\Util\Cache\Driver\File($this->cacheDir);
 
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->testFile);
 
         $builder = new \PHP\Depend\Builder\DefaultBuilder();
         $builder->setCache($cache);
 
-        $parser = new PHP_Depend_Parser_VersionAllParser(
+        $parser = new VersionAllParser(
             $tokenizer,
             $builder,
             $cache

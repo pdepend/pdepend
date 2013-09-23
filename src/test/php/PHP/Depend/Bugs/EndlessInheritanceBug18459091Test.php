@@ -42,21 +42,23 @@
  * @since     1.0.0
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #18459091.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       https://www.pivotaltracker.com/story/show/18459091
- * @since     1.0.0
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link https://www.pivotaltracker.com/story/show/18459091
+ * @since 1.0.0
  *
  * @ticket 18459091
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_AbstractTest
+class EndlessInheritanceBug18459091Test extends AbstractTest
 {
     /**
      * Resets the execution time to -1.
@@ -74,16 +76,16 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
      * testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
      * 
      * @return void
-     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
     public function testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy()
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -93,16 +95,16 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
      * testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
      *
      * @return void
-     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy()
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -117,10 +119,10 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -135,10 +137,10 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -148,13 +150,13 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
      * testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
      *
      * @return void
-     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
     public function testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy()
     {
         set_time_limit(5);
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 
@@ -162,13 +164,13 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
      * testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy
      *
      * @return void
-     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
     public function testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy()
     {
         set_time_limit(5);
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 
@@ -181,7 +183,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 
@@ -194,7 +196,7 @@ class PHP_Depend_Bugs_EndlessInheritanceBug18459091Test extends PHP_Depend_Bugs_
     {
         set_time_limit(5);
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 

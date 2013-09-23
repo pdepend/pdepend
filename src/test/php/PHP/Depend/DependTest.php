@@ -89,7 +89,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
+        $pdepend->addFileFilter(new \PHP\Depend\Input\ExtensionFilter(array('php')));
 
         self::assertInstanceOf('Iterator', $pdepend->analyze());
     }
@@ -103,7 +103,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
+        $pdepend->addFileFilter(new \PHP\Depend\Input\ExtensionFilter(array('php')));
         
         $metrics = $pdepend->analyze();
         
@@ -142,7 +142,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array(__METHOD__)));
+        $pdepend->addFileFilter(new \PHP\Depend\Input\ExtensionFilter(array(__METHOD__)));
        
         $this->assertEquals(0, $pdepend->analyze()->count()); 
     }
@@ -157,7 +157,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('inc')));
+        $pdepend->addFileFilter(new \PHP\Depend\Input\ExtensionFilter(array('inc')));
         $pdepend->setWithoutAnnotations();
         $packages = $pdepend->analyze();
         
@@ -181,7 +181,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     {
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
+        $pdepend->addFileFilter(new \PHP\Depend\Input\ExtensionFilter(array('php')));
         $pdepend->analyze();
         
         $this->assertEquals(10, $pdepend->countClasses());

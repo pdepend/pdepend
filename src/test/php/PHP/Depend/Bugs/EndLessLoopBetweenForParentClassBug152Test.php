@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #152.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
-    extends PHP_Depend_Bugs_AbstractTest
+class EndLessLoopBetweenForParentClassBug152Test extends AbstractTest
 {
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass
@@ -72,7 +73,7 @@ class PHP_Depend_Bugs_EndLessLoopBetweenForParentClassBug152Test
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
      *
      * @return void
-     * @expectedException PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
     {

@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #4
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_InvalidResultWhenFunctionReturnsByReferenceBug004Test
-    extends PHP_Depend_Bugs_AbstractTest
+class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractTest
 {
     /**
      * Tests that the parser handles function with reference return values

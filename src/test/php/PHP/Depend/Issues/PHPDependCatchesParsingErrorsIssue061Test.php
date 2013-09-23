@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Input\ExtensionFilter;
 
 /**
  * Test case for the catch error ticket #61.
@@ -65,8 +66,8 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     {
         $pdepend = $this->createPDependFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter(array('php')));
-        $pdepend->addLogger(new PHP_Depend_Log_Dummy_Logger());
+        $pdepend->addFileFilter(new ExtensionFilter(array('php')));
+        $pdepend->addReportGenerator(new \PHP\Depend\Report\Dummy\Logger());
         $pdepend->analyze();
 
         $exceptions = $pdepend->getExceptions();
@@ -87,7 +88,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     {
         $runner = new \PHP\Depend\TextUI\Runner();
         $runner->setConfiguration($this->createConfigurationFixture());
-        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.log'));
+        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
@@ -105,7 +106,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     {
         $runner = new \PHP\Depend\TextUI\Runner();
         $runner->setConfiguration($this->createConfigurationFixture());
-        $runner->addLogger('dummy-logger', self::createRunResourceURI('pdepend.log'));
+        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 

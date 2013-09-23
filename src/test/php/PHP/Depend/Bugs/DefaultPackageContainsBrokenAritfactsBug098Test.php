@@ -40,21 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #98. The default package contains software artifacts like
  * functions or classes that are broken. This can result in a fatal error during
  * the analysis phase.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers stdClass
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_DefaultPackageContainsBrokenAritfactsBug098Test
-    extends PHP_Depend_Bugs_AbstractTest
+class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractTest
 {
     /**
      * Tests that the result does not contain a function with a broken signature.

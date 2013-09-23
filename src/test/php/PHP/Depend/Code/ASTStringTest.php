@@ -213,7 +213,7 @@ class PHP_Depend_Code_ASTStringTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid literal results in the expected exception.
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenException
+     * @expectedException \PHP\Depend\Parser\TokenException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {

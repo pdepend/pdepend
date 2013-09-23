@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Parser;
+
 /**
  * This type of exception is thrown when the parser reaches an invalid state
  * and the parsed source does not fill the expected structure.
@@ -47,7 +49,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Parser_InvalidStateException extends PHP_Depend_Parser_Exception
+class InvalidStateException extends \PHP\Depend\Parser\Exception
 {
     /**
      * Constructs a new invalid state exception.
@@ -69,4 +71,3 @@ class PHP_Depend_Parser_InvalidStateException extends PHP_Depend_Parser_Exceptio
         );
     }
 }
-?>

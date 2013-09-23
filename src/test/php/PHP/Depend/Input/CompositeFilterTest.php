@@ -40,18 +40,19 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Test case for the composite filter.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers PHP_Depend_Input_CompositeFilter
+ * @covers \PHP\Depend\Input\CompositeFilter
  * @group pdepend
  * @group pdepend::input
  * @group unittest
  */
-class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
+class CompositeFilterTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testCompositeInvokesFirstAcceptInFilterChain
@@ -60,9 +61,9 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
      */
     public function testCompositeInvokesFirstAcceptInFilterChain()
     {
-        $filter0 = new PHP_Depend_Input_DummyFilter(true);
+        $filter0 = new DummyFilter(true);
 
-        $composite = new PHP_Depend_Input_CompositeFilter();
+        $composite = new CompositeFilter();
         $composite->append($filter0);
 
         $composite->accept(dirname(__FILE__), dirname(__FILE__));
@@ -77,10 +78,10 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
      */
     public function testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue()
     {
-        $filter0 = new PHP_Depend_Input_DummyFilter(true);
-        $filter1 = new PHP_Depend_Input_DummyFilter(true);
+        $filter0 = new DummyFilter(true);
+        $filter1 = new DummyFilter(true);
 
-        $composite = new PHP_Depend_Input_CompositeFilter();
+        $composite = new CompositeFilter();
         $composite->append($filter0);
         $composite->append($filter1);
 
@@ -96,10 +97,10 @@ class PHP_Depend_Input_CompositeFilterTest extends PHP_Depend_AbstractTest
      */
     public function testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue()
     {
-        $filter0 = new PHP_Depend_Input_DummyFilter(false);
-        $filter1 = new PHP_Depend_Input_DummyFilter(true);
+        $filter0 = new DummyFilter(false);
+        $filter1 = new DummyFilter(true);
 
-        $composite = new PHP_Depend_Input_CompositeFilter();
+        $composite = new CompositeFilter();
         $composite->append($filter0);
         $composite->append($filter1);
 

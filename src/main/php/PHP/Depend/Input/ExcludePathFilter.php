@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Filters a given file path against a blacklist with disallow path fragments.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Input_ExcludePathFilter implements PHP_Depend_Input_FilterI
+class ExcludePathFilter implements Filter
 {
     /**
      * Regular expression that should not match against the relative file paths.

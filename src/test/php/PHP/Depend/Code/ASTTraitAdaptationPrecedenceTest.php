@@ -78,7 +78,7 @@ class PHP_Depend_Code_ASTTraitAdaptationPrecedenceTest extends PHP_Depend_Code_A
      * testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException()
     {

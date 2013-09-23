@@ -41,21 +41,23 @@
  * @since     0.10.0
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
+
+use PHP\Depend\Source\Tokenizer\Token;
 
 /**
- * Test case for the {@link PHP_Depend_Parser_TokenStack} class.
+ * Test case for the {@link \PHP\Depend\Parser\TokenStack} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  *
- * @covers PHP_Depend_Parser_TokenStack
+ * @covers \PHP\Depend\Parser\TokenStack
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
+class TokenStackTest extends AbstractTest
 {
     /**
      * testAddReturnsGivenTokenInstance
@@ -64,7 +66,7 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      */
     public function testAddReturnsGivenTokenInstance()
     {
-        $stack = new PHP_Depend_Parser_TokenStack();
+        $stack = new TokenStack();
         $token = $this->createToken();
 
         self::assertSame($token, $stack->add($token));
@@ -77,7 +79,7 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      */
     public function testPopReturnsExpectedTokenArray()
     {
-        $stack = new PHP_Depend_Parser_TokenStack();
+        $stack = new TokenStack();
         $stack->push();
 
         $expected = array(
@@ -96,7 +98,7 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      */
     public function testPopOnlyReturnsExpectedTokenArrayInCurrentScope()
     {
-        $stack = new PHP_Depend_Parser_TokenStack();
+        $stack = new TokenStack();
         $stack->push();
         $stack->add($this->createToken());
         $stack->add($this->createToken());
@@ -117,7 +119,7 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
      */
     public function testPopOnRootReturnsExpectedTokenArrayWithAllTokens()
     {
-        $stack = new PHP_Depend_Parser_TokenStack();
+        $stack = new TokenStack();
         $stack->push();
 
         $expected = array(
@@ -136,10 +138,10 @@ class PHP_Depend_Parser_TokenStackTest extends PHP_Depend_Parser_AbstractTest
     /**
      * Returns a test token instance.
      *
-     * @return PHP_Depend_Token
+     * @return \PHP\Depend\Source\Tokenizer\Token
      */
     protected function createToken()
     {
-        return new PHP_Depend_Token(1, __CLASS__, 13, 17, 23, 42);
+        return new Token(1, __CLASS__, 13, 17, 23, 42);
     }
 }

@@ -41,6 +41,8 @@
  * @since     0.9.10
  */
 
+namespace PHP\Depend\Parser;
+
 /**
  * Base class for token/token stream related exceptions.
  *
@@ -48,7 +50,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.10
  */
-class PHP_Depend_Parser_TokenException extends PHP_Depend_Parser_Exception
+class TokenException extends \PHP\Depend\Parser\Exception
 {
 
 }

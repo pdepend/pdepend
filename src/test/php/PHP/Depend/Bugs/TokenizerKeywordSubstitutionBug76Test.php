@@ -40,6 +40,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
+use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
+
 /**
  * Test case for the keyword substitution bug no 76.
  *
@@ -48,12 +52,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_AbstractTest
+class TokenizerKeywordSubstitutionBug76Test extends AbstractTest
 {
     /**
      * This method tests that the parser does not substitute keyword tokens in
@@ -67,7 +71,7 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
      */
     public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes)
     {
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceURI($sourceFile));
 
         $actual = array();
@@ -90,232 +94,232 @@ class PHP_Depend_Bugs_TokenizerKeywordSubstitutionBug76Test extends PHP_Depend_A
             array(
                 'bugs/076-001-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-002-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-003-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-004-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-005-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-006-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-007-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-008-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-009-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-010-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-011-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_VARIABLE,
-                    PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_VARIABLE,
+                    \PHP_Depend_ConstantsI::T_OBJECT_OPERATOR,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-012-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-013-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-014-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-015-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-016-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-017-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-018-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-019-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-020-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
             array(
                 'bugs/076-021-tokenizer-keyword-substitution.php',
                 array(
-                    PHP_Depend_ConstantsI::T_OPEN_TAG,
-                    PHP_Depend_ConstantsI::T_ECHO,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_DOUBLE_COLON,
-                    PHP_Depend_ConstantsI::T_STRING,
-                    PHP_Depend_ConstantsI::T_SEMICOLON
+                    \PHP_Depend_ConstantsI::T_OPEN_TAG,
+                    \PHP_Depend_ConstantsI::T_ECHO,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_DOUBLE_COLON,
+                    \PHP_Depend_ConstantsI::T_STRING,
+                    \PHP_Depend_ConstantsI::T_SEMICOLON
                 )
             ),
         );

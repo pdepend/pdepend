@@ -41,21 +41,20 @@
  * @since     0.10.5
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
- * Test case for the namespace resolving in the {@link PHP_Depend_Parser} class.
+ * Test case for the namespace resolving in the {@link \PHP_Depend_Parser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.5
- *
- * @covers PHP_Depend_Parser
+ * @covers \PHP_Depend_Parser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_NamespaceResovingTest extends PHP_Depend_Parser_AbstractTest
+class NamespaceResovingTest extends AbstractTest
 {
     /**
      * testNamespacesAreCorrectlyLookedUp
@@ -72,7 +71,7 @@ class PHP_Depend_Parser_NamespaceResovingTest extends PHP_Depend_Parser_Abstract
             ->current();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(\PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -104,7 +103,7 @@ class PHP_Depend_Parser_NamespaceResovingTest extends PHP_Depend_Parser_Abstract
             ->current();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(\PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -138,7 +137,7 @@ class PHP_Depend_Parser_NamespaceResovingTest extends PHP_Depend_Parser_Abstract
             ->current();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(\PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -174,7 +173,7 @@ class PHP_Depend_Parser_NamespaceResovingTest extends PHP_Depend_Parser_Abstract
             ->current();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(\PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 

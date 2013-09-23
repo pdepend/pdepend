@@ -44,8 +44,6 @@ namespace PHP\Depend\TextUI;
 
 use PHP\Depend\Util\ConfigurationInstance;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the text ui command.
  *

@@ -43,6 +43,8 @@
  * @since     1.1.1
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #104 and #95.
  *
@@ -54,12 +56,12 @@
  *
  * @ticket 104
  * @ticket 95
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ShortArraySyntaxInitializerBug00000104Test extends PHP_Depend_Bugs_AbstractTest
+class ShortArraySyntaxInitializerBug00000104Test extends AbstractTest
 {
     /**
      * testPropertyDefaultValue

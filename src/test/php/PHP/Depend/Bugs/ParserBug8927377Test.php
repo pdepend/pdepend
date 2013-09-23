@@ -41,6 +41,8 @@
  * @link       https://www.pivotaltracker.com/story/show/8927377
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #8927377.
  *
@@ -49,12 +51,12 @@
  * @link       https://www.pivotaltracker.com/story/show/8927377
  *
  * @ticket 8927377
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug8927377Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug8927377Test extends AbstractTest
 {
     /**
      * testPropertyPostfixHasExpectedStartLine
@@ -103,7 +105,7 @@ class PHP_Depend_Bugs_ParserBug8927377Test extends PHP_Depend_Bugs_AbstractTest
     /**
      * Returns the property postfix found in a class.
      * 
-     * @return PHP_Depend_Code_ASTPropertyPostfix
+     * @return \PHP_Depend_Code_ASTPropertyPostfix
      */
     protected function getFirstPropertyPostfixInClass()
     {
@@ -111,6 +113,6 @@ class PHP_Depend_Bugs_ParserBug8927377Test extends PHP_Depend_Bugs_AbstractTest
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTPropertyPostfix::CLAZZ);
+            ->getFirstChildOfType(\PHP_Depend_Code_ASTPropertyPostfix::CLAZZ);
     }
 }

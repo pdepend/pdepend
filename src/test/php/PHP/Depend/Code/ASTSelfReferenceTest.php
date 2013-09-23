@@ -94,7 +94,7 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
@@ -105,7 +105,7 @@ class PHP_Depend_Code_ASTSelfReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_InvalidStateException
+     * @expectedException \PHP\Depend\Parser\InvalidStateException
      */
     public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {

@@ -41,22 +41,21 @@
  * @since     0.10.2
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
- * Test case for the {@link PHP_Depend_Parser} class.
+ * Test case for the {@link \PHP_Depend_Parser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.2
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP_Depend_Parser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
-    extends PHP_Depend_Parser_AbstractTest
+class ASTAllocationExpressionParsingTest extends AbstractTest
 {
     /**
      * testAllocationExpressionForSelfProperty
@@ -68,7 +67,7 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     {
         $allocation = $this->_getFirstAllocationInClass();
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
             $allocation->getChild(0)
         );
     }
@@ -83,7 +82,7 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     {
         $allocation = $this->_getFirstAllocationInClass();
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
             $allocation->getChild(0)
         );
     }
@@ -98,7 +97,7 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     {
         $allocation = $this->_getFirstAllocationInClass();
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
             $allocation->getChild(0)
         );
     }
@@ -113,7 +112,7 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     {
         $allocation = $this->_getFirstAllocationInClass();
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
+            \PHP_Depend_Code_ASTFunctionPostfix::CLAZZ,
             $allocation->getChild(0)
         );
     }
@@ -128,7 +127,7 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     {
         $allocation = $this->_getFirstAllocationInClass();
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+            \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
             $allocation->getChild(0)
         );
     }
@@ -146,11 +145,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $reference = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
         $this->assertEquals('Foo', $reference->getType()->getName());
     }
 
@@ -169,11 +168,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $self = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTSelfReference::CLAZZ, $self);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTSelfReference::CLAZZ, $self);
         $this->assertEquals(__FUNCTION__, $self->getType()->getName());
     }
 
@@ -193,11 +192,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $parent = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTParentReference::CLAZZ, $parent);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTParentReference::CLAZZ, $parent);
         $this->assertEquals(__FUNCTION__ . 'Parent', $parent->getType()->getName());
     }
 
@@ -214,11 +213,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $reference = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
         $this->assertEquals('Bar', $reference->getType()->getName());
     }
 
@@ -235,11 +234,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $reference = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
         $this->assertEquals('Bar', $reference->getType()->getName());
     }
 
@@ -256,11 +255,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $reference = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTClassReference::CLAZZ, $reference);
         $this->assertEquals('Foo', $reference->getType()->getName());
     }
 
@@ -277,11 +276,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $variable = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
         $this->assertEquals('$foo', $variable->getImage());
     }
 
@@ -298,15 +297,15 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $function->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $vvariable = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTVariableVariable::CLAZZ, $vvariable);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTVariableVariable::CLAZZ, $vvariable);
         $this->assertEquals('$', $vvariable->getImage());
 
         $variable = $vvariable->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
         $this->assertEquals('$foo', $variable->getImage());
     }
 
@@ -325,11 +324,11 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
             ->current();
 
         $allocation = $method->getFirstChildOfType(
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
 
         $reference = $allocation->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTStaticReference::CLAZZ, $reference);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTStaticReference::CLAZZ, $reference);
         $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
     }
 
@@ -342,7 +341,7 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
     public function testInvalidAllocationExpressionResultsInExpectedException()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_UnexpectedTokenException',
+            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 4, col: 9, file: '
         );
         self::parseCodeResourceForTest();
@@ -352,14 +351,14 @@ class PHP_Depend_Parser_ASTAllocationExpressionParsingTest
      * Returns the first allocation expression found in the test file associated
      * with the calling test method.
      *
-     * @return PHP_Depend_Code_ASTAllocationExpression
+     * @return \PHP_Depend_Code_ASTAllocationExpression
      * @since 1.0.1
      */
     private function _getFirstAllocationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            PHP_Depend_Code_ASTAllocationExpression::CLAZZ
+            \PHP_Depend_Code_ASTAllocationExpression::CLAZZ
         );
     }
 }

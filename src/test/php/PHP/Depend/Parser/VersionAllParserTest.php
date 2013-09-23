@@ -41,21 +41,21 @@
  * @since     0.9.20
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
- * Test case for the {@link PHP_Depend_Parser_VersionAllParser} class.
+ * Test case for the {@link \PHP\Depend\Parser\VersionAllParser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.20
  *
- * @covers PHP_Depend_Parser_VersionAllParser
+ * @covers \PHP\Depend\Parser\VersionAllParser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractTest
+class VersionAllParserTest extends AbstractTest
 {
     /**
      * testParserAcceptsStringAsClassName
@@ -335,8 +335,8 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionOnTokenStreamEnd
      *
      * @return void
-     * @covers PHP_Depend_Parser_TokenStreamEndException
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @covers \PHP\Depend\Parser\TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd()
     {
@@ -347,8 +347,8 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionForUnexpectedTokenType
      *
      * @return void
-     * @covers PHP_Depend_Parser_UnexpectedTokenException
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @covers \PHP\Depend\Parser\UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType()
     {
@@ -487,9 +487,9 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesCallableTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
 
-        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeCallable::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTTypeCallable::CLAZZ, $type);
     }
 
     /**
@@ -501,9 +501,9 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesNamespaceTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
 
-        $this->assertInstanceOf(PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $type);
     }
 
     /**
@@ -515,9 +515,9 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesArrayTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
 
-        $this->assertInstanceOf(PHP_Depend_Code_ASTTypeArray::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTTypeArray::CLAZZ, $type);
     }
 
     /**
@@ -529,9 +529,9 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesSelfTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
 
-        $this->assertInstanceOf(PHP_Depend_Code_ASTSelfReference::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTSelfReference::CLAZZ, $type);
     }
 
     /**
@@ -543,7 +543,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesCompoundStaticMethodInvocation()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $postfix = $method->getFirstChildOfType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+        $postfix = $method->getFirstChildOfType(\PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
 
         $this->assertNotNull($postfix);
     }
@@ -557,7 +557,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesVariableStaticMethodInvocation()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $postfix = $method->getFirstChildOfType(PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+        $postfix = $method->getFirstChildOfType(\PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
 
         $this->assertNotNull($postfix);
     }
@@ -571,7 +571,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesBinaryIntegerLiteral()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $literal = $method->getFirstChildOfType(PHP_Depend_Code_ASTLiteral::CLAZZ);
+        $literal = $method->getFirstChildOfType(\PHP_Depend_Code_ASTLiteral::CLAZZ);
 
         $this->assertEquals('0b0100110100111', $literal->getImage());
     }
@@ -580,7 +580,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExceptionForInvalidBinaryIntegerLiteral
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      * @since 1.0.0
      */
     public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
@@ -596,7 +596,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInvalidToken()
     {
@@ -607,7 +607,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * testParserThrowsExpectedExceptionForTokenStreamEnd
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
@@ -623,9 +623,9 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesRegularArraySyntax()
     {
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTArray::CLAZZ,
+            \PHP_Depend_Code_ASTArray::CLAZZ,
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType(PHP_Depend_Code_ASTArray::CLAZZ)
+                ->getFirstChildOfType(\PHP_Depend_Code_ASTArray::CLAZZ)
         );
     }
 
@@ -638,9 +638,9 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
     public function testParserHandlesShortArraySyntax()
     {
         $this->assertInstanceOf(
-            PHP_Depend_Code_ASTArray::CLAZZ,
+            \PHP_Depend_Code_ASTArray::CLAZZ,
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType(PHP_Depend_Code_ASTArray::CLAZZ)
+                ->getFirstChildOfType(\PHP_Depend_Code_ASTArray::CLAZZ)
         );
     }
 
@@ -762,7 +762,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP_Depend_Code_AbstractClassOrInterface
      */
     protected function getFirstTypeForTestCase()
     {
@@ -776,7 +776,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * Returns the first method that could be found in the code under test for
      * the calling test case.
      *
-     * @return PHP_Depend_Code_Method
+     * @return \PHP_Depend_Code_Method
      */
     protected function getFirstMethodForTestCase()
     {
@@ -789,7 +789,7 @@ class PHP_Depend_Parser_VersionAllParserTest extends PHP_Depend_Parser_AbstractT
      * Returns the first property that could be found in the code under test for
      * the calling test case.
      *
-     * @return PHP_Depend_Code_Method
+     * @return \PHP_Depend_Code_Method
      */
     protected function getFirstPropertyForTestCase()
     {

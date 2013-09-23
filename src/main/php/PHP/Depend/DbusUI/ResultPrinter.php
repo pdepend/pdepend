@@ -40,9 +40,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\DbusUI;
+
 // This is just fun and it is not really testable
 // @codeCoverageIgnoreStart
 use PHP\Depend\Builder;
+use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
 
 /**
@@ -51,7 +54,7 @@ use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_DbusUI_ResultPrinter
+class ResultPrinter
        extends AbstractTreeVisitListener
     implements PHP_Depend_ProcessListenerI
 {
@@ -93,22 +96,20 @@ class PHP_Depend_DbusUI_ResultPrinter
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    public function startFileParsing(PHP_Depend_TokenizerI $tokenizer)
+    public function startFileParsing(Tokenizer $tokenizer)
     {
     }
 
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    public function endFileParsing(PHP_Depend_TokenizerI $tokenizer)
+    public function endFileParsing(Tokenizer $tokenizer)
     {
         ++$this->parsedFiles;
     }

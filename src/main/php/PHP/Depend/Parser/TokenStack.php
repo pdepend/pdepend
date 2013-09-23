@@ -41,26 +41,31 @@
  * @since     0.9.6
  */
 
+namespace PHP\Depend\Parser;
+
+use PHP\Depend\Source\Tokenizer\Token;
+
 /**
- * This class provides a scoped collection for {@PHP_Depend_Token} objects.
+ * This class provides a scoped collection for {@link \PHP\Depend\Source\Tokenizer\Token}
+ * objects.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.6
  */
-class PHP_Depend_Parser_TokenStack
+class TokenStack
 {
     /**
      * The actual token scope.
      *
-     * @var PHP_Depend_Token[]
+     * @var \PHP\Depend\Source\Tokenizer\Token[]
      */
     private $tokens = array();
 
     /**
      * Stack with token scopes.
      *
-     * @var PHP_Depend_Token[][]
+     * @var \PHP\Depend\Source\Tokenizer\Token[][]
      */
     private $stack = array();
 
@@ -87,7 +92,7 @@ class PHP_Depend_Parser_TokenStack
      * array with all collected tokens. Additionally this method will add all
      * tokens of the removed scope onto the next token scope.
      *
-     * @return PHP_Depend_Token[]
+     * @return \PHP\Depend\Source\Tokenizer\Token[]
      */
     public function pop()
     {
@@ -105,11 +110,10 @@ class PHP_Depend_Parser_TokenStack
     /**
      * This method will add a new token to the currently active token scope.
      *
-     * @param PHP_Depend_Token $token The token to add.
-     *
-     * @return PHP_Depend_Token
+     * @param \PHP\Depend\Source\Tokenizer\Token $token The token to add.
+     * @return \PHP\Depend\Source\Tokenizer\Token
      */
-    public function add(PHP_Depend_Token $token)
+    public function add(Token $token)
     {
         return ($this->tokens[] = $token);
     }

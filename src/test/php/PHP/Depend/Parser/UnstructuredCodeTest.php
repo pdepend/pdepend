@@ -41,21 +41,21 @@
  * @since     1.0.0
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
- * Tests for unstructured code handling in the {@link PHP_Depend_Parser} class.
+ * Tests for unstructured code handling in the {@link \PHP_Depend_Parser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP_Depend_Parser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_UnstructuredCodeTest extends PHP_Depend_Parser_AbstractTest
+class UnstructuredCodeTest extends AbstractTest
 {
     /**
      * testParserHandlesNonPhpCodeInFileProlog
@@ -110,15 +110,5 @@ class PHP_Depend_Parser_UnstructuredCodeTest extends PHP_Depend_Parser_AbstractT
             ->current();
 
         self::assertEquals(6, $function->getEndLine());
-    }
-
-    /**
-     * Factory method that returns a test suite for this class.
-     * 
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite(__CLASS__);
     }
 }

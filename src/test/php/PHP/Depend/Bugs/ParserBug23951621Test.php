@@ -42,21 +42,23 @@
  * @since     0.10.9
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #23951621.
  *
  * @copyright 2008-2011 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       https://www.pivotaltracker.com/story/show/23951621
- * @since     0.10.9
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link https://www.pivotaltracker.com/story/show/23951621
+ * @since 0.10.9
  *
  * @ticket 23951621
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug23951621Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug23951621Test extends AbstractTest
 {
     /**
      * testParserHandlesHeredocAsPropertyDefaultValue

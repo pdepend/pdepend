@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case related to bug 14.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @ticket 14
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_CouplingAnalyzerBug014Test extends PHP_Depend_Bugs_AbstractTest
+class CouplingAnalyzerBug014Test extends AbstractTest
 {
     /**
      * Test case for the execution chain bug 14.
@@ -66,7 +67,7 @@ class PHP_Depend_Bugs_CouplingAnalyzerBug014Test extends PHP_Depend_Bugs_Abstrac
         self::assertEquals(1, $packages->count());
         self::assertEquals(1, $packages->current()->getFunctions()->count());
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

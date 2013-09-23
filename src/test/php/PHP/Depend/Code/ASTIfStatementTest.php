@@ -135,7 +135,7 @@ class PHP_Depend_Code_ASTIfStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserThrowsExpectedExceptionWhenIfStatementHasNoBody
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody()
     {

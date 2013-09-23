@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 62 where reference in an instanceof operator weren't handled
  * correct.
@@ -47,14 +49,14 @@
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/62
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_InstanceOfExpressionReferenceHandlingBug062Test extends PHP_Depend_Bugs_AbstractTest
+class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractTest
 {
     /**
      * Tests that the parser handles an interface within an instanceof operator

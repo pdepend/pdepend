@@ -40,14 +40,14 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Parser;
+
 /**
  * Base class for exceptions that can occure during the parsing process.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Parser_Exception extends RuntimeException
+class Exception extends \RuntimeException
 {
-    
 }
-?>

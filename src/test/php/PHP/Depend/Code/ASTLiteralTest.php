@@ -220,7 +220,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testLiteralWithBrokenBinaryIntegerThrowsExpectedException()
     {
@@ -246,7 +246,7 @@ class PHP_Depend_Code_ASTLiteralTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that an invalid literal results in the expected exception.
      * 
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {

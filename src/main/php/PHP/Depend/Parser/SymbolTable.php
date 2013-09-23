@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Parser;
+
 /**
  * This class provides a simple hashmap for name mappings done by the parser.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Parser_SymbolTable
+class SymbolTable
 {
     /**
      * Stack with all active scopes.
@@ -92,7 +94,6 @@ class PHP_Depend_Parser_SymbolTable
      *
      * @param string $key   The key of this scope value.
      * @param mixed  $value A new scope value.
-     *
      * @return void
      */
     public function add($key, $value)
@@ -122,7 +123,6 @@ class PHP_Depend_Parser_SymbolTable
      * value exists for the given key.
      *
      * @param string $key The key for a searched scope value.
-     *
      * @return mixed
      */
     public function lookup($key)

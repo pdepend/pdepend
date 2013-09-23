@@ -41,7 +41,7 @@
  * @since     0.9.20
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
  * Abstract test case class for this sub package.
@@ -50,7 +50,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.20
  */
-abstract class PHP_Depend_Parser_AbstractTest extends PHP_Depend_AbstractTest
+abstract class AbstractTest extends \PHP_Depend_AbstractTest
 {
 
 }

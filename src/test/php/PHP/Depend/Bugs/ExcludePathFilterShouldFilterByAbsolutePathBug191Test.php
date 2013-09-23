@@ -40,6 +40,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
+use PHP\Depend\Input\ExcludePathFilter;
+
 /**
  * Test case for bug #191.
  *
@@ -47,13 +51,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/191
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
-    extends PHP_Depend_Bugs_AbstractTest
+class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractTest
 {
     /**
      * testAbsoluteUnixPathAsFilterPattern
@@ -62,7 +65,7 @@ class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
      */
     public function testAbsoluteUnixPathAsFilterPattern()
     {
-        $filter = new PHP_Depend_Input_ExcludePathFilter(array('/foo/bar'));
+        $filter = new ExcludePathFilter(array('/foo/bar'));
         self::assertFalse($filter->accept('/baz', '/foo/bar/baz'));
     }
 
@@ -73,7 +76,7 @@ class PHP_Depend_Input_ExcludePathFilterShouldFilterByAbsolutePathBug191Test
      */
     public function testAbsoluteWindowsPathAsFilterPattern()
     {
-        $filter = new PHP_Depend_Input_ExcludePathFilter(array('c:\workspace\bar'));
+        $filter = new ExcludePathFilter(array('c:\workspace\bar'));
         self::assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
     }
 }

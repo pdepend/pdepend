@@ -41,6 +41,8 @@
  * @link       https://www.pivotaltracker.com/story/show/17264279
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #17264279.
  *
@@ -49,12 +51,12 @@
  * @link       https://www.pivotaltracker.com/story/show/17264279
  *
  * @ticket 17264279
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug17264279Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug17264279Test extends AbstractTest
 {
     /**
      * testParserAcceptsUseAsClassName

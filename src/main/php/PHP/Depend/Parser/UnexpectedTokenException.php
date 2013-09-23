@@ -40,22 +40,25 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Parser;
+
+use PHP\Depend\Source\Tokenizer\Token;
+
 /**
  * This type of exception is thrown when the parser detects an unexpected token.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Parser_UnexpectedTokenException
-    extends PHP_Depend_Parser_TokenException
+class UnexpectedTokenException extends TokenException
 {
     /**
      * Constructs a new unexpected token exception.
      *
-     * @param PHP_Depend_Token $token    The last parsed token instance.
+     * @param Token $token    The last parsed token instance.
      * @param string           $fileName The file where the exception occured.
      */
-    public function __construct(PHP_Depend_Token $token, $fileName)
+    public function __construct(Token $token, $fileName)
     {
         $message = sprintf(
             'Unexpected token: %s, line: %d, col: %d, file: %s.',

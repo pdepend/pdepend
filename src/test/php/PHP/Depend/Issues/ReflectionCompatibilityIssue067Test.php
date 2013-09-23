@@ -657,8 +657,8 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * was defined.
      *
      * @return void
-     * @covers PHP_Depend_Parser_MissingValueException
-     * @expectedException PHP_Depend_Parser_MissingValueException
+     * @covers \PHP\Depend\Parser\MissingValueException
+     * @expectedException \PHP\Depend\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue()
     {
@@ -670,8 +670,8 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * end of file while it parses a parameter default value.
      *
      * @return void
-     * @covers PHP_Depend_Parser_TokenStreamEndException
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @covers \PHP\Depend\Parser\TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()
     {
@@ -683,8 +683,8 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * an invalid token.
      *
      * @return void
-     * @covers PHP_Depend_Parser_UnexpectedTokenException
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @covers \PHP\Depend\Parser\UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionWhenDefaultValueContainsInvalidToken()
     {

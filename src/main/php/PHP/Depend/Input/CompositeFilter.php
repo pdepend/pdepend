@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Simple composite pattern implementation that allows to bundle multiple
  * filter implementations.
@@ -47,23 +49,22 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
+class CompositeFilter implements Filter
 {
     /**
-     * List of aggregated {@link PHP_Depend_Input_FilterI} objects.
+     * List of aggregated {@link \PHP\Depend\Input\Filter} objects.
      *
-     * @var PHP_Depend_Input_FilterI[]
+     * @var \PHP\Depend\Input\Filter[]
      */
     protected $filters = array();
 
     /**
      * Adds a file filter to this composite.
      *
-     * @param PHP_Depend_Input_FilterI $filter The new filter object.
-     *
+     * @param \PHP\Depend\Input\Filter $filter The new filter object.
      * @return void
      */
-    public function append(PHP_Depend_Input_FilterI $filter)
+    public function append(Filter $filter)
     {
         $this->filters[] = $filter;
     }
@@ -74,7 +75,6 @@ class PHP_Depend_Input_CompositeFilter implements PHP_Depend_Input_FilterI
      *
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
-     *
      * @return boolean
      */
     public function accept($relative, $absolute)

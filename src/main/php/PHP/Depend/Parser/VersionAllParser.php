@@ -41,6 +41,8 @@
  * @since     0.9.20
  */
 
+namespace PHP\Depend\Parser;
+
 /**
  * Concrete parser implementation that is very tolerant and accepts language
  * constructs and keywords that are reserved in newer php versions, but not in
@@ -50,7 +52,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.20
  */
-class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
+class VersionAllParser extends \PHP_Depend_Parser
 {
     /**
      * Tests if the given token type is a reserved keyword in the supported PHP
@@ -106,9 +108,9 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * token.
      *
      * @return string
-     * @throws PHP_Depend_Parser_TokenStreamEndException When the current token
+     * @throws \PHP\Depend\Parser\TokenStreamEndException When the current token
      *         stream does not contain one more token.
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the next available
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the next available
      *         token is not a valid class name.
      */
     protected function parseClassName()
@@ -118,10 +120,10 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
         if ($this->isClassName($type)) {
             return $this->consumeToken($type)->image;
         } else if ($type === self::T_EOF) {
-            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+            throw new TokenStreamEndException($this->tokenizer);
         }
         
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
+        throw new UnexpectedTokenException(
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()
         );
@@ -133,9 +135,9 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * token stream, this method will throw an exception.
      *
      * @return string
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the next available
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the next available
      *         token does not represent a valid php function name.
-     * @throws PHP_Depend_Parser_TokenStreamEndException When there is no next
+     * @throws \PHP\Depend\Parser\TokenStreamEndException When there is no next
      *         token available in the given token stream.
      */
     public function parseFunctionName()
@@ -159,9 +161,9 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
             case self::T_TRAIT_C:
                 return $this->consumeToken($type)->image;
             case self::T_EOF:
-                throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+                throw new TokenStreamEndException($this->tokenizer);
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
+        throw new UnexpectedTokenException(
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()
         );
@@ -192,7 +194,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * Parses a formal parameter type hint that is valid in the supported PHP
      * version.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP_Depend_Code_ASTNode
      * @since 1.0.0
      */
     protected function parseFormalParameterTypeHint()
@@ -220,9 +222,9 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     /**
      * Parses an integer value.
      *
-     * @return PHP_Depend_Code_ASTLiteral
+     * @return \PHP_Depend_Code_ASTLiteral
      * @since 1.0.0
-     * @throws PHP_Depend_Parser_UnexpectedTokenException
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException
      */
     protected function parseIntegerNumber()
     {
@@ -236,7 +238,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
                     $token->endLine   = $token1->endLine;
                     $token->endColumn = $token1->endColumn;
                 } else {
-                    throw new PHP_Depend_Parser_UnexpectedTokenException(
+                    throw new UnexpectedTokenException(
                         $token1,
                         $this->tokenizer->getSourceFile()
                     );
@@ -259,7 +261,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * This method parses a PHP version specific identifier for method and
      * property postfix expressions.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP_Depend_Code_ASTNode
      * @since 1.0.0
      */
     protected function parsePostfixIdentifier()
@@ -282,7 +284,7 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
      * Implements some quirks and hacks to support php here- and now-doc for
      * PHP 5.2.x versions :/
      *
-     * @return PHP_Depend_Code_ASTHeredoc
+     * @return \PHP_Depend_Code_ASTHeredoc
      * @since 1.0.0
      */
     protected function parseHeredoc()
@@ -321,12 +323,12 @@ class PHP_Depend_Parser_VersionAllParser extends PHP_Depend_Parser
     /**
      * Parses a php array declaration.
      *
-     * @param PHP_Depend_Code_ASTArray $array
+     * @param \PHP_Depend_Code_ASTArray $array
      * @param boolean $static
-     * @return PHP_Depend_Code_ASTArray
+     * @return \PHP_Depend_Code_ASTArray
      * @since 1.0.0
      */
-    protected function parseArray(PHP_Depend_Code_ASTArray $array, $static = false)
+    protected function parseArray(\PHP_Depend_Code_ASTArray $array, $static = false)
     {
         switch ($this->tokenizer->peek()) {
             case self::T_ARRAY:

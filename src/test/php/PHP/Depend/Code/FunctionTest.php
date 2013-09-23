@@ -41,6 +41,7 @@
   */
 
 use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
@@ -284,7 +285,7 @@ class PHP_Depend_Code_FunctionTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testSetTokensDelegatesToCacheStoreMethod()
     {
-        $tokens = array(new PHP_Depend_Token(1, '$foo', 3, 3, 0, 0));
+        $tokens = array(new Token(1, '$foo', 3, 3, 0, 0));
 
         $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())

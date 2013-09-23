@@ -142,7 +142,7 @@ class Command
                 // Reduce recieved option list
                 unset($options[$option]);
                 // Register logger
-                $this->runner->addLogger(substr($option, 2), $value);
+                $this->runner->addReportGenerator(substr($option, 2), $value);
             } else if (isset($analyzerOptions[$option])) {
                 // Reduce recieved option list
                 unset($options[$option]);
@@ -180,7 +180,7 @@ class Command
 
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
-                new \PHP_Depend_DbusUI_ResultPrinter()
+                new \PHP\Depend\DbusUI\ResultPrinter()
             );
             unset($options['--notify-me']);
         }
@@ -484,7 +484,7 @@ class Command
 
         foreach ($paths as $path) {
 
-            $path .= '/PHP/Depend/Log';
+            $path .= '/PHP/Depend/Report';
 
             if (is_dir($path) === false) {
                 continue;

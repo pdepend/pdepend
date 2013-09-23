@@ -41,6 +41,8 @@
  * @link       https://github.com/pdepend/pdepend/issues/100
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case issue 00000100.
  *
@@ -48,12 +50,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       https://github.com/pdepend/pdepend/issues/100
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_TraitsNotHandledCorrrectBug00000100Test extends PHP_Depend_AbstractTest
+class TraitsNotHandledCorrrectBug00000100Test extends AbstractTest
 {
     /**
      * testHandlingOfSelfReferenceInTrait

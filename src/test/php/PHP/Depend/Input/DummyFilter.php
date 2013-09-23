@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Dummy filter.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Input_DummyFilter implements PHP_Depend_Input_FilterI
+class DummyFilter implements Filter
 {
     /**
      * The return value for this filter.
@@ -77,7 +79,6 @@ class PHP_Depend_Input_DummyFilter implements PHP_Depend_Input_FilterI
      *
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
-     *
      * @return boolean
      */
     public function accept($relative, $absolute)

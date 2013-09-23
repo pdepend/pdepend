@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 090 where the coupling analyzer calculates wrong results
  * for functions calls and object allocations that use PHP 5.3's namespace
@@ -50,13 +52,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test
-    extends PHP_Depend_Bugs_AbstractTest
+class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends AbstractTest
 {
     /**
      * Tests that the analyzer calculates the expected result.
@@ -67,7 +68,7 @@ class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Te
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -83,7 +84,7 @@ class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Te
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -99,7 +100,7 @@ class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Te
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -115,7 +116,7 @@ class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Te
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -131,7 +132,7 @@ class PHP_Depend_Bugs_NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Te
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

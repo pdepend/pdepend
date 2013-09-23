@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for the parent keyword type hint bug no #87.
  *
@@ -48,13 +50,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
-    extends PHP_Depend_Bugs_AbstractTest
+class ParentKeywordAsParameterTypeHintBug087Test extends AbstractTest
 {
     /**
      * Tests that the parser handles the parent type hint as expected.
@@ -83,7 +84,7 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
+            '\\PHP\\Depend\\Parser\\InvalidStateException',
             'The keyword "parent" was used as type hint but the parameter ' .
             'declaration is not in a class scope.'
         );
@@ -99,7 +100,7 @@ class PHP_Depend_Bugs_ParentKeywordAsParameterTypeHintBug087Test
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()
     {
         $this->setExpectedException(
-            'PHP_Depend_Parser_InvalidStateException',
+            '\\PHP\\Depend\\Parser\\InvalidStateException',
             'The keyword "parent" was used as type hint but the ' .
             'class "Baz" does not declare a parent.'
         );

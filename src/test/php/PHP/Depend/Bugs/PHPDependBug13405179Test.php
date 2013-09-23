@@ -41,6 +41,8 @@
  * @link       https://www.pivotaltracker.com/story/show/13405179
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #13405179.
  *
@@ -49,12 +51,12 @@
  * @link       https://www.pivotaltracker.com/story/show/13405179
  *
  * @ticket 13405179
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_PHPDependBug13405179Test extends PHP_Depend_Bugs_AbstractTest
+class PHPDependBug13405179Test extends AbstractTest
 {
     /**
      * testLogFileIsCreatedForUnstructuredCode
@@ -69,13 +71,13 @@ class PHP_Depend_Bugs_PHPDependBug13405179Test extends PHP_Depend_Bugs_AbstractT
     {
         $file = self::createRunResourceURI() . '.' . $extension;
 
-        $logger = new $className();
-        $logger->setLogFile($file);
+        $generator = new $className();
+        $generator->setLogFile($file);
 
         $factory = new \PHP\Depend\Util\Configuration\Factory();
         $pdepend = new \PHP_Depend($factory->createDefault());
         $pdepend->addFile(self::createCodeResourceUriForTest());
-        $pdepend->addLogger($logger);
+        $pdepend->addReportGenerator($generator);
         $pdepend->analyze();
 
         self::assertFileExists($file);
@@ -89,10 +91,10 @@ class PHP_Depend_Bugs_PHPDependBug13405179Test extends PHP_Depend_Bugs_AbstractT
     public function getLoggerClassNames()
     {
         return array(
-            array(PHP_Depend_Log_Jdepend_Chart::CLAZZ, 'svg'),
-            array(PHP_Depend_Log_Jdepend_Xml::CLAZZ, 'xml'),
-            array(PHP_Depend_Log_Overview_Pyramid::CLAZZ, 'svg'),
-            array(PHP_Depend_Log_Summary_Xml::CLAZZ, 'xml'),
+            array(\PHP\Depend\Report\Jdepend\Chart::CLAZZ, 'svg'),
+            array(\PHP\Depend\Report\Jdepend\Xml::CLAZZ, 'xml'),
+            array(\PHP\Depend\Report\Overview\Pyramid::CLAZZ, 'svg'),
+            array(\PHP\Depend\Report\Summary\Xml::CLAZZ, 'xml'),
         );
     }
 }

@@ -41,21 +41,21 @@
  * @link       https://www.pivotaltracker.com/story/show/9936901
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case related to bug #9936901.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       https://www.pivotaltracker.com/story/show/9936901
- *
  * @ticket 9936901
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ClassLevelAnalyzerBug09936901Test
-    extends PHP_Depend_Bugs_AbstractTest
+class ClassLevelAnalyzerBug09936901Test extends AbstractTest
 {
     /**
      * testWmciMetricIsCalculatedForCurrentAndNotParentClass
@@ -70,10 +70,10 @@ class PHP_Depend_Bugs_ClassLevelAnalyzerBug09936901Test
             ->getClasses()
             ->current();
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 

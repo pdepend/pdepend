@@ -173,7 +173,7 @@ class PHP_Depend_Code_ASTTryStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testParserThrowsExceptionWhenNoCatchStatementFollows
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows()
     {

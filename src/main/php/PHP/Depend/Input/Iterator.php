@@ -40,18 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Simple utility filter iterator for php source files.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Input_Iterator extends FilterIterator
+class Iterator extends \FilterIterator
 {
     /**
      * The associated filter object.
      *
-     * @var PHP_Depend_Input_FilterI
+     * @var \PHP\Depend\Input\Filter
      */
     protected $filter = null;
 
@@ -66,15 +68,12 @@ class PHP_Depend_Input_Iterator extends FilterIterator
     /**
      * Constructs a new file filter iterator.
      *
-     * @param Iterator                 $iterator The inner iterator.
-     * @param PHP_Depend_Input_FilterI $filter   The filter object.
-     * @param string                   $rootPath Optional root path for the files.
+     * @param \Iterator $iterator The inner iterator.
+     * @param \PHP\Depend\Input\Filter $filter   The filter object.
+     * @param string $rootPath Optional root path for the files.
      */
-    public function __construct(
-        Iterator $iterator,
-        PHP_Depend_Input_FilterI $filter,
-        $rootPath = null
-    ) {
+    public function __construct(\Iterator $iterator, Filter $filter, $rootPath = null)
+    {
         parent::__construct($iterator);
 
         $this->filter   = $filter;

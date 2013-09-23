@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 73 that results in an inconsistent object graph and fatal
  * errors.
@@ -47,12 +49,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_InconsistentObjectGraphBug073Test extends PHP_Depend_Bugs_AbstractTest
+class InconsistentObjectGraphBug073Test extends AbstractTest
 {
     /**
      * Tests that the parser handles the following code correct:

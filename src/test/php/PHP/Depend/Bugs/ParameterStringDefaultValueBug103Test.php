@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 103. The current parser implementation does not handle
  * string parameter default values as expected. For example the following source
@@ -50,13 +52,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParameterStringDefaultValueBug103Test
-    extends PHP_Depend_Bugs_AbstractTest
+class ParameterStringDefaultValueBug103Test extends AbstractTest
 {
     /**
      * testParserHandlesStringDefaultValueWithEmbeddedExpression

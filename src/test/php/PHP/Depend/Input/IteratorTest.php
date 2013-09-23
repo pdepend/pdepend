@@ -40,18 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Test case for the php file filter iterator.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Input_Iterator
+ * @covers \PHP\Depend\Input\Iterator
  * @group pdepend
  * @group pdepend::input
  * @group unittest
  */
-class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
+class IteratorTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testIteratorWithOneFileExtension
@@ -86,13 +88,13 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
     {
-        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter = $this->getMock('\\PHP\\Depend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
             ->with(self::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
         
-        $iterator = new PHP_Depend_Input_Iterator(
-            new ArrayIterator(array(new SplFileInfo(__FILE__))),
+        $iterator = new Iterator(
+            new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
             $filter,
             dirname(__FILE__)
         );
@@ -106,14 +108,14 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
     {
-        $files = new ArrayIterator(array(new SplFileInfo(__FILE__)));
+        $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
 
-        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter = $this->getMock('\\PHP\\Depend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
             ->with(self::equalTo(__FILE__), self::equalTo(__FILE__));
 
-        $iterator = new PHP_Depend_Input_Iterator($files, $filter);
+        $iterator = new Iterator($files, $filter);
         $iterator->accept();
     }
 
@@ -124,14 +126,14 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
     {
-        $files = new ArrayIterator(array(new SplFileInfo(__FILE__)));
+        $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
 
-        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter = $this->getMock('\\PHP\\Depend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
             ->with(self::equalTo(__FILE__), self::equalTo(__FILE__));
 
-        $iterator = new PHP_Depend_Input_Iterator($files, $filter, 'c:\foo');
+        $iterator = new Iterator($files, $filter, 'c:\foo');
         $iterator->accept();
     }
 
@@ -144,9 +146,9 @@ class PHP_Depend_Input_IteratorTest extends PHP_Depend_AbstractTest
      */
     protected function createFilteredFileList(array $extensions)
     {
-        $files  = new PHP_Depend_Input_Iterator(
-            new DirectoryIterator(self::createCodeResourceUriForTest()),
-            new PHP_Depend_Input_ExtensionFilter($extensions)
+        $files  = new Iterator(
+            new \DirectoryIterator(self::createCodeResourceUriForTest()),
+            new ExtensionFilter($extensions)
         );
 
         $actual = array();

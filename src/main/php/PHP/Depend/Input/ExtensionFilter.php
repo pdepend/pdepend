@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Input;
+
 /**
  * Whitelist filter that accepts files by their file extension.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
+class ExtensionFilter implements Filter
 {
     /**
      * Whitelist of accepted file extensions.
@@ -71,7 +73,6 @@ class PHP_Depend_Input_ExtensionFilter implements PHP_Depend_Input_FilterI
      *
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
-     *
      * @return boolean
      */
     public function accept($relative, $absolute)

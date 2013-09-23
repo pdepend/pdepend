@@ -40,19 +40,19 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #149
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test
-    extends PHP_Depend_Bugs_AbstractTest
+class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractTest
 {
     /**
      * Will skip this test for PHP versions >= 5.3
@@ -71,7 +71,7 @@ class PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test
      * testHelperThrowsExceptionForInvalidToken
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenException
+     * @expectedException \PHP\Depend\Parser\TokenException
      */
     public function testHelperThrowsExceptionForInvalidToken()
     {
@@ -82,7 +82,7 @@ class PHP_Depend_Bugs_EmptyExceptionMessageInPHP52HelperBug149Test
      * testHelperThrowsExceptionWithExpectedExceptionMessage
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenException
+     * @expectedException \PHP\Depend\Parser\TokenException
      */
     public function testHelperThrowsExceptionWithExpectedExceptionMessage()
     {

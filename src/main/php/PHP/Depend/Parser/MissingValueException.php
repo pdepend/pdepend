@@ -40,6 +40,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Parser;
+
+use PHP\Depend\Source\Tokenizer\Token;
+use PHP\Depend\Source\Tokenizer\Tokenizer;
+
 /**
  * This type of exception is thrown when a parameter or property declaration
  * should contain a default value, but this value was not defined.
@@ -47,19 +52,19 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Parser_MissingValueException extends PHP_Depend_Parser_Exception
+class MissingValueException extends \PHP\Depend\Parser\Exception
 {
     /**
      * Constructs a new missing value exception.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer instance.
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      */
-    public function __construct(PHP_Depend_TokenizerI $tokenizer)
+    public function __construct(Tokenizer $tokenizer)
     {
         // Get wrong token
         $token = $tokenizer->next();
         // The parser must take care for this
-        assert($token instanceof PHP_Depend_Token);
+        assert($token instanceof Token);
 
         $message = sprintf(
             'Missing default value on line: %d, col: %d, file: %s.',
@@ -71,4 +76,3 @@ class PHP_Depend_Parser_MissingValueException extends PHP_Depend_Parser_Exceptio
         parent::__construct($message);
     }
 }
-?>

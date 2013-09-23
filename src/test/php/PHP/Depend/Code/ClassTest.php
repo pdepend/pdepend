@@ -41,6 +41,7 @@
   */
 
 use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
@@ -1287,7 +1288,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
      */
     public function testSetTokensDelegatesCallToCacheStore()
     {
-        $tokens = array(new PHP_Depend_Token(1, 'a', 23, 42, 13, 17));
+        $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
 
         $cache = $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver');
         $cache->expects($this->once())
@@ -1330,8 +1331,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class->setCache($cache)
             ->setTokens(
                 array(
-                    new PHP_Depend_Token(1, 'a', 23, 42, 0, 0),
-                    new PHP_Depend_Token(2, 'b', 17, 32, 0, 0),
+                    new Token(1, 'a', 23, 42, 0, 0),
+                    new Token(2, 'b', 17, 32, 0, 0),
                 )
             );
 
@@ -1365,8 +1366,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $class->setCache($cache)
             ->setTokens(
                 array(
-                    new PHP_Depend_Token(1, 'a', 23, 42, 0, 0),
-                    new PHP_Depend_Token(2, 'b', 17, 32, 0, 0),
+                    new Token(1, 'a', 23, 42, 0, 0),
+                    new Token(2, 'b', 17, 32, 0, 0),
                 )
             );
 

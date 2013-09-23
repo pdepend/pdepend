@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #69.
  *
@@ -47,12 +49,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @ticket 69
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug069Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug069Test extends AbstractTest
 {
     /**
      * Tests that parser handles a php 5.3 static method call correct.

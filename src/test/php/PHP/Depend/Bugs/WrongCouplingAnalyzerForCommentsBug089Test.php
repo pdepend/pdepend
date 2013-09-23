@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 089 where the coupling analyzer calculates wrong results
  * when there are comments in method execution expressions.
@@ -48,14 +50,12 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
-    extends PHP_Depend_Bugs_AbstractTest
+class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
 {
     /**
      * Tests that the analyzer calculates the expected result.
@@ -66,7 +66,7 @@ class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -82,7 +82,7 @@ class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -98,7 +98,7 @@ class PHP_Depend_Bugs_WrongCouplingAnalyzerForCommentsBug089Test
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

@@ -308,7 +308,7 @@ class PHP_Depend_Code_ASTSwitchLabelTest extends PHP_Depend_Code_ASTNodeTest
      * testParserThrowsExceptionForUnclosedSwitchLabelBody
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_TokenStreamEndException
+     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody()
     {

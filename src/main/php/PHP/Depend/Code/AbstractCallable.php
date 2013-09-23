@@ -220,7 +220,7 @@ abstract class PHP_Depend_Code_AbstractCallable
     /**
      * Sets the tokens found in the function body.
      *
-     * @param PHP_Depend_Token[] $tokens The body tokens.
+     * @param \PHP\Depend\Source\Tokenizer\Token[] $tokens The body tokens.
      *
      * @return void
      */

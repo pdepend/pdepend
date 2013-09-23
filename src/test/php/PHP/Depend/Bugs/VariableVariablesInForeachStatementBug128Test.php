@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for the keyword substitution bug no 128.
  *
@@ -48,13 +50,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_VariableVariablesInForeachStatementBug128Test
-    extends PHP_Depend_Bugs_AbstractTest
+class VariableVariablesInForeachStatementBug128Test extends AbstractTest
 {
     /**
      * testParserHandlesVariableVariableAsForeachValue

@@ -40,20 +40,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #164.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/164
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/164
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_InputIteratorShouldOnlyFilterOnLocalPathBug164Test
-    extends PHP_Depend_Bugs_AbstractTest
+class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractTest
 {
     /**
      * testIteratorOnlyPassesLocalPathToFilter
@@ -62,13 +63,13 @@ class PHP_Depend_Bugs_InputIteratorShouldOnlyFilterOnLocalPathBug164Test
      */
     public function testIteratorOnlyPassesLocalPathToFilter()
     {
-        $filter = $this->getMock('PHP_Depend_Input_FilterI');
+        $filter = $this->getMock('\\PHP\\Depend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
             ->with(self::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
 
-        $iterator = new PHP_Depend_Input_Iterator(
-            new ArrayIterator(array(new SplFileInfo(__FILE__))),
+        $iterator = new \PHP\Depend\Input\Iterator(
+            new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
             $filter,
             dirname(__FILE__)
         );

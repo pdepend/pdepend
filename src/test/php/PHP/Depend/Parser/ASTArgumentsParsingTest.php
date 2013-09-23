@@ -41,22 +41,21 @@
  * @since     0.10.2
  */
 
-require_once dirname(__FILE__) . '/AbstractTest.php';
+namespace PHP\Depend\Parser;
 
 /**
- * Test case for the {@link PHP_Depend_Parser} class.
+ * Test case for the {@link \PHP_Depend_Parser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.2
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP_Depend_Parser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Parser_ASTArgumentsParsingTest
-    extends PHP_Depend_Parser_AbstractTest
+class ASTArgumentsParsingTest extends AbstractTest
 {
     /**
      * Tests that the parser adds the expected children to an argument instance.
@@ -68,11 +67,11 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         self::assertGraphEquals(
             $this->_getFirstArgumentsOfFunction(),
             array(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ
+                \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                \PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                \PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                \PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                \PHP_Depend_Code_ASTArguments::CLAZZ
             )
         );
     }
@@ -87,11 +86,11 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         self::assertGraphEquals(
             $this->_getFirstArgumentsOfFunction(),
             array(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ
+                \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                \PHP_Depend_Code_ASTVariable::CLAZZ,
+                \PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                \PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                \PHP_Depend_Code_ASTArguments::CLAZZ
             )
         );
     }
@@ -106,10 +105,10 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         self::assertGraphEquals(
             $this->_getFirstArgumentsOfFunction(),
             array(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
-                PHP_Depend_Code_ASTConstantPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ
+                \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                \PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                \PHP_Depend_Code_ASTConstantPostfix::CLAZZ,
+                \PHP_Depend_Code_ASTIdentifier::CLAZZ
             )
         );
     }
@@ -124,10 +123,10 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         self::assertGraphEquals(
             $this->_getFirstArgumentsOfFunction(),
             array(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
+                \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                \PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ,
+                \PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                \PHP_Depend_Code_ASTVariable::CLAZZ
             )
         );
     }
@@ -142,10 +141,10 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         self::assertGraphEquals(
             $this->_getFirstArgumentsOfMethod(),
             array(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTSelfReference::CLAZZ,
-                PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
-                PHP_Depend_Code_ASTVariable::CLAZZ
+                \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                \PHP_Depend_Code_ASTSelfReference::CLAZZ,
+                \PHP_Depend_Code_ASTPropertyPostfix::CLAZZ,
+                \PHP_Depend_Code_ASTVariable::CLAZZ
             )
         );
     }
@@ -160,11 +159,11 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         self::assertGraphEquals(
             $this->_getFirstArgumentsOfMethod(),
             array(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
-                PHP_Depend_Code_ASTParentReference::CLAZZ,
-                PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
-                PHP_Depend_Code_ASTIdentifier::CLAZZ,
-                PHP_Depend_Code_ASTArguments::CLAZZ
+                \PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ,
+                \PHP_Depend_Code_ASTParentReference::CLAZZ,
+                \PHP_Depend_Code_ASTMethodPostfix::CLAZZ,
+                \PHP_Depend_Code_ASTIdentifier::CLAZZ,
+                \PHP_Depend_Code_ASTArguments::CLAZZ
             )
         );
     }
@@ -179,7 +178,7 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         $arguments = $this->_getFirstArgumentsOfFunction();
 
         $allocation = $arguments->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTAllocationExpression::CLAZZ, $allocation);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTAllocationExpression::CLAZZ, $allocation);
     }
 
     /**
@@ -192,9 +191,9 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         $arguments = $this->_getFirstArgumentsOfFunction();
 
         $postfix = $arguments->getFirstChildOfType(
-            PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
+            \PHP_Depend_Code_ASTFunctionPostfix::CLAZZ
         );
-        $this->assertInstanceOf(PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $postfix);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTFunctionPostfix::CLAZZ, $postfix);
     }
 
     /**
@@ -207,7 +206,7 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         $arguments = $this->_getFirstArgumentsOfFunction();
 
         $child = $arguments->getChild(0);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $child);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTVariable::CLAZZ, $child);
     }
 
     /**
@@ -220,7 +219,7 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
         $arguments = $this->_getFirstArgumentsOfFunction();
 
         $postfixes = $arguments->findChildrenOfType(
-            PHP_Depend_Code_ASTMethodPostfix::CLAZZ
+            \PHP_Depend_Code_ASTMethodPostfix::CLAZZ
         );
         $this->assertEquals(1, count($postfixes));
     }
@@ -230,7 +229,7 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
      * exception.
      *
      * @return void
-     * @expectedException PHP_Depend_Parser_UnexpectedTokenException
+     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
     {
@@ -240,26 +239,26 @@ class PHP_Depend_Parser_ASTArgumentsParsingTest
     /**
      * Returns an arguments instance for the currently executed test case.
      *
-     * @return PHP_Depend_Code_ASTArguments
+     * @return \PHP_Depend_Code_ASTArguments
      */
     private function _getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             self::getCallingTestMethod(),
-            PHP_Depend_Code_ASTArguments::CLAZZ
+            \PHP_Depend_Code_ASTArguments::CLAZZ
         );
     }
 
     /**
      * Returns an arguments instance for the currently executed test case.
      *
-     * @return PHP_Depend_Code_ASTArguments
+     * @return \PHP_Depend_Code_ASTArguments
      */
     private function _getFirstArgumentsOfMethod()
     {
         return $this->getFirstNodeOfTypeInClass(
             self::getCallingTestMethod(),
-            PHP_Depend_Code_ASTArguments::CLAZZ
+            \PHP_Depend_Code_ASTArguments::CLAZZ
         );
     }
 }

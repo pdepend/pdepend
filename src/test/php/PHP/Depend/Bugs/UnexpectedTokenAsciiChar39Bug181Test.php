@@ -42,9 +42,11 @@
  * @since     0.10.0
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 181, where an unexpected token in a chinese translation
- * file forces PHP_Depend to quit.
+ * file forces \PHP_Depend to quit.
  *
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  *
@@ -53,13 +55,12 @@
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since     0.10.0
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_UnexpectedTokenAsciiChar39Bug181Test
-    extends PHP_Depend_Bugs_AbstractTest
+class UnexpectedTokenAsciiChar39Bug181Test extends AbstractTest
 {
     /**
      * testUnexpectedTokenDoesNotQuitPDepend

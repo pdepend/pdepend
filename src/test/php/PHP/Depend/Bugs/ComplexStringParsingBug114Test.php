@@ -40,18 +40,19 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for ticket #114.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_AbstractTest
+class ComplexStringParsingBug114Test extends AbstractTest
 {
     /**
      * testParserHandlesStringWithEmbeddedBacktickExpression
@@ -137,7 +138,7 @@ class PHP_Depend_Bugs_ComplexStringParsingBug114Test extends PHP_Depend_Bugs_Abs
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+        $string = $method->getFirstChildOfType(\PHP_Depend_Code_ASTString::CLAZZ);
+        $this->assertInstanceOf(\PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
     }
 }

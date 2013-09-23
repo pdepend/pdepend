@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 91, magic constant __CLASS__ as array default value results
  * in an exception.
@@ -48,14 +50,12 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test
-    extends PHP_Depend_Bugs_AbstractTest
+class ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test extends AbstractTest
 {
     /**
      * Tests that the parser does not throw an exception.

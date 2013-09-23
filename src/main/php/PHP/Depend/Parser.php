@@ -40,6 +40,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 use PHP\Depend\Builder;
+use PHP\Depend\Parser\InvalidStateException;
+use PHP\Depend\Parser\MissingValueException;
+use PHP\Depend\Parser\TokenStreamEndException;
+use PHP\Depend\Parser\UnexpectedTokenException;
+use PHP\Depend\Source\Tokenizer\Token;
+use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\Util\Log;
 use PHP\Depend\Util\Type;
 
@@ -165,7 +171,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * The symbol table used to handle PHP 5.3 use statements.
      *
-     * @var PHP_Depend_Parser_SymbolTable
+     * @var \PHP\Depend\Parser\SymbolTable
      */
     private $useSymbolTable;
 
@@ -201,7 +207,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Stack with all active token scopes.
      *
-     * @var PHP_Depend_Parser_TokenStack
+     * @var \PHP\Depend\Parser\TokenStack
      */
     private $tokenStack;
 
@@ -231,19 +237,19 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /*
      * The used code tokenizer.
      *
-     * @var PHP_Depend_TokenizerI
+     * @var \PHP\Depend\Source\Tokenizer\Tokenizer
      */
     protected $tokenizer;
 
     /**
      * Constructs a new source parser.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PHP\Depend\Builder $builder
      * @param \PHP\Depend\Util\Cache\Driver $cache
      */
     public function __construct(
-        PHP_Depend_TokenizerI $tokenizer,
+        Tokenizer $tokenizer,
         Builder $builder,
         \PHP\Depend\Util\Cache\Driver $cache
     ) {
@@ -252,9 +258,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         $this->cache     = $cache;
 
         $this->uuidBuilder    = new \PHP\Depend\Util\UuidBuilder();
-        $this->tokenStack     = new PHP_Depend_Parser_TokenStack();
+        $this->tokenStack     = new \PHP\Depend\Parser\TokenStack();
 
-        $this->useSymbolTable = new PHP_Depend_Parser_SymbolTable();
+        $this->useSymbolTable = new \PHP\Depend\Parser\SymbolTable();
 
         $this->builder->setCache($this->cache);
     }
@@ -802,7 +808,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                throw new UnexpectedTokenException(
                     $this->tokenizer->next(),
                     $this->tokenizer->getSourceFile()
                 );
@@ -811,7 +817,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             $tokenType = $this->tokenizer->peek();
         }
 
-        throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+        throw new TokenStreamEndException($this->tokenizer);
     }
 
     /**
@@ -820,7 +826,6 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param integer $modifiers Optional default modifiers for the property
      *        or method node that will be parsed.
-     *
      * @return PHP_Depend_Code_Method|PHP_Depend_Code_ASTFieldDeclaration
      * @since 0.9.6
      */
@@ -882,7 +887,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
             $tokenType = $this->tokenizer->peek();
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
+        throw new UnexpectedTokenException(
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()
         );
@@ -1338,15 +1343,14 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parses a trait adaptation precedence statement.
      *
      * @param array $reference Parsed method reference array.
-     *
-     * @return PHP_Depend_Code_ASTTraitAdaptationPrecedence
-     * @throws PHP_Depend_Parser_InvalidStateException
+     * @return \PHP_Depend_Code_ASTTraitAdaptationPrecedence
+     * @throws InvalidStateException
      * @since 1.0.0
      */
     private function parseTraitAdaptationPrecedenceStatement(array $reference)
     {
         if (count($reference) < 2) {
-            throw new PHP_Depend_Parser_InvalidStateException(
+            throw new InvalidStateException(
                 $this->tokenizer->next()->startLine,
                 $this->sourceFile->getFileName(),
                 'Expecting full qualified trait method name.'
@@ -1907,9 +1911,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * Strips all trailing comments from the given token stream.
      *
-     * @param PHP_Depend_Token[] $tokens Original token stream.
-     *
-     * @return PHP_Depend_Token[]
+     * @param Token[] $tokens Original token stream.
+     * @return Token[]
      * @since 1.0.0
      */
     private function stripTrailingComments(array $tokens)
@@ -2269,18 +2272,17 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * $foo[$bar];
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node       The context node instance.
-     * @param PHP_Depend_Token        $start      The opening token.
-     * @param integer                 $closeToken The brace close token type.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_TokenStreamEndException When this method reaches
+     * @param \PHP_Depend_Code_ASTNode $node
+     * @param Token $start
+     * @param integer $closeToken
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws TokenStreamEndException When this method reaches
      *         the token stream end without terminating the brache expression.
      * @since 0.9.6
      */
     private function parseBraceExpression(
         PHP_Depend_Code_ASTNode $node,
-        PHP_Depend_Token $start,
+        Token $start,
         $closeToken
     ) {
         if (is_object($expr = $this->parseOptionalExpression())) {
@@ -2469,8 +2471,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses an expression node and returns it. When no expression
      * was found this method will throw an InvalidStateException.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 1.0.1
      */
@@ -2479,7 +2481,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         if (null === ($expr = $this->parseOptionalExpression())) {
             $token = $this->consumeToken($this->tokenizer->peek());
 
-            throw new PHP_Depend_Parser_InvalidStateException(
+            throw new InvalidStateException(
                 $token->startLine,
                 $this->sourceFile->getFileName(),
                 'Mandatory expression expected.'
@@ -2492,8 +2494,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -2760,7 +2762,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                throw new UnexpectedTokenException(
                     $this->consumeToken($tokenType),
                     $this->sourceFile->getFileName()
                 );
@@ -2895,7 +2897,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break 2;
             }
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
+        throw new UnexpectedTokenException(
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()
         );
@@ -2999,7 +3001,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             }
             $tokenType = $this->tokenizer->peek();
         }
-        throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+        throw new TokenStreamEndException($this->tokenizer);
     }
 
     /**
@@ -3667,8 +3669,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * func();
      * </code>
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -3739,12 +3741,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * member primary prefix object when the function postfix expression is
      * followed by an object operator.
      *
-     * @param PHP_Depend_Code_ASTNode $node This node represents the function
+     * @param \PHP_Depend_Code_ASTNode $node This node represents the function
      *        identifier. An identifier can be a static string, a variable, a
      *        compound variable or any other valid php function identifier.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -3774,14 +3775,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses an optional member primary expression. It will parse
      * the primary expression when an object operator can be found at the actual
      * token stream position. Otherwise this method simply returns the input
-     * {@link PHP_Depend_Code_ASTNode} instance.
+     * {@link \PHP_Depend_Code_ASTNode} instance.
      *
-     * @param PHP_Depend_Code_ASTNode $node This node represents primary prefix
+     * @param \PHP_Depend_Code_ASTNode $node This node represents primary prefix
      *        left expression. It will be the first child of the parsed member
      *        primary expression.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -3809,11 +3809,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * $object->foo;
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The left node in the parsed member
+     * @param \PHP_Depend_Code_ASTNode $node The left node in the parsed member
      *        primary expression.
-     *
-     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -3870,12 +3869,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * actual token stream position. Otherwise this method simply returns the
      * input {@link PHP_Depend_Code_ASTNode} instance.
      *
-     * @param PHP_Depend_Code_ASTNode $node This node represents primary prefix
+     * @param \PHP_Depend_Code_ASTNode $node This node represents primary prefix
      *        left expression. It will be the first child of the parsed member
      *        primary expression.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 1.0.1
      */
@@ -3913,11 +3911,10 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Foo::BAR;
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The left node in the parsed member
+     * @param \PHP_Depend_Code_ASTNode $node The left node in the parsed member
      *        primary expression.
-     *
-     * @return PHP_Depend_Code_ASTMemberPrimaryPrefix
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -3954,8 +3951,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses a method- or constant-postfix expression. This expression
      * will contain an identifier node as nested child.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -3980,12 +3977,12 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses a method- or property-postfix expression. This expression
      * will contain the given node as method or property identifier.
      *
-     * @param PHP_Depend_Code_ASTNode $node The identifier for the parsed postfix
+     * @param \PHP_Depend_Code_ASTNode $node The identifier for the parsed postfix
      *        expression node. This node will be the first child of the returned
      *        postfix node instance.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
      * @since 0.9.6
      */
@@ -4080,9 +4077,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * This method parses the arguments passed to a function- or method-call.
      *
-     * @return PHP_Depend_Code_ASTArguments
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
+     * @return \PHP_Depend_Code_ASTArguments
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the parsing process.
      * @since 0.9.6
      */
     private function parseArguments()
@@ -4141,7 +4137,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             break;
 
         default:
-            throw new PHP_Depend_Parser_UnexpectedTokenException(
+            throw new UnexpectedTokenException(
                 $this->tokenizer->next(),
                 $this->sourceFile->getFileName()
             );
@@ -4161,9 +4157,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * variable is followed by an object operator, double colon or opening
      * parenthesis.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occur during the
-     *         parsing process.
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occur during the parsing process.
      * @since 0.9.6
      */
     private function parseVariableOrFunctionPostfixOrMemberPrimaryPrefix()
@@ -4226,24 +4221,23 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     }
 
     /**
-     * This method parses a {@link PHP_Depend_Code_ASTStaticReference} node.
+     * This method parses a {@link \PHP_Depend_Code_ASTStaticReference} node.
      *
-     * @param PHP_Depend_Token $token The "static" keyword token.
-     *
-     * @return PHP_Depend_Code_ASTStaticReference
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
+     * @param \PHP\Depend\Source\Tokenizer\Token $token The "static" keyword token.
+     * @return \PHP_Depend_Code_ASTStaticReference
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the
      *         parsing process.
-     * @throws PHP_Depend_Parser_InvalidStateException When the keyword static
+     * @throws \PHP\Depend\Parser\InvalidStateException When the keyword static
      *         was used outside of a class or interface scope.
      * @since 0.9.6
      */
-    private function parseStaticReference(PHP_Depend_Token $token)
+    private function parseStaticReference(Token $token)
     {
         // Strip optional comments
         $this->consumeComments();
 
         if ($this->classOrInterface === null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
+            throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->sourceFile,
                 'The keyword "static" was used outside of a class/method scope.'
@@ -4264,19 +4258,17 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * This method parses a {@link PHP_Depend_Code_ASTSelfReference} node.
      *
-     * @param PHP_Depend_Token $token The "self" keyword token.
-     *
-     * @return PHP_Depend_Code_ASTSelfReference
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_InvalidStateException When the keyword self
+     * @param \PHP\Depend\Source\Tokenizer\Token $token The "self" keyword token.
+     * @return \PHP_Depend_Code_ASTSelfReference
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the parsing process.
+     * @throws \PHP\Depend\Parser\InvalidStateException When the keyword self
      *         was used outside of a class or interface scope.
      * @since 0.9.6
      */
-    private function parseSelfReference(PHP_Depend_Token $token)
+    private function parseSelfReference(Token $token)
     {
         if ($this->classOrInterface === null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
+            throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->sourceFile,
                 'The keyword "self" was used outside of a class/method scope.'
@@ -4329,11 +4321,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * reference as its first child when the self token is followed by a
      * double colon token.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_InvalidStateException When the keyword self
-     *         was used outside of a class or interface scope.
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @throws \PHP\Depend\Parser\InvalidStateException self used outside class or interface.
      * @since 0.9.6
      */
     private function parseConstantOrSelfMemberPrimaryPrefix()
@@ -4353,19 +4343,16 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
     /**
      * This method parses a {@link PHP_Depend_Code_ASTParentReference} node.
      *
-     * @param PHP_Depend_Token $token The "self" keyword token.
-     *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_InvalidStateException When the keyword parent
-     *         was used outside of a class or interface scope.
+     * @param \PHP\Depend\Source\Tokenizer\Token $token The "self" keyword token.
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @throws \PHP\Depend\Parser\InvalidStateException parent used outside a class.
      * @since 0.9.6
      */
-    private function parseParentReference(PHP_Depend_Token $token)
+    private function parseParentReference(Token $token)
     {
         if ($this->classOrInterface === null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
+            throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->sourceFile,
                 'The keyword "parent" was used as type hint but the parameter ' .
@@ -4375,7 +4362,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $classReference = $this->classOrInterface->getParentClassReference();
         if ($classReference === null) {
-            throw new PHP_Depend_Parser_InvalidStateException(
+            throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->sourceFile,
                 sprintf(
@@ -4405,10 +4392,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * double colon token.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_InvalidStateException When the keyword parent
-     *         was used outside of a class or interface scope.
+     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @throws \PHP\Depend\Parser\InvalidStateException parent used outside a class.
      * @since 0.9.6
      */
     private function parseConstantOrParentMemberPrimaryPrefix()
@@ -4485,7 +4470,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * This method parses a simple PHP variable.
      *
      * @return PHP_Depend_Code_ASTVariable
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the actual token
      *         is not a valid variable token.
      * @since 0.9.6
      */
@@ -4552,11 +4537,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * ------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
-     *         is not a valid variable token.
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occured during the parsing process.
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the actual token is not a valid variable token.
      * @since 0.9.6
      */
     protected function parseCompoundVariableOrVariableVariableOrVariable()
@@ -4607,11 +4590,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * this is compound variable, otherwise it can be a variable-variable or a
      * compound-variable.
      *
-     * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
-     *         is not a valid variable token.
+     * @return \PHP_Depend_Code_ASTNode
+     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the actual token is not a valid variable token.
      * @since 0.9.6
      */
     private function parseCompoundVariableOrVariableVariable()
@@ -4654,12 +4635,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * //     ----------------
      * </code>
      *
-     * @param PHP_Depend_Token $token The dollar token.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Token $token The dollar token.
      * @return PHP_Depend_Code_ASTCompoundVariable
      * @since 0.10.0
      */
-    private function parseCompoundVariable(PHP_Depend_Token $token)
+    private function parseCompoundVariable(Token $token)
     {
         return $this->parseBraceExpression(
             $this->builder->buildAstCompoundVariable($token->image),
@@ -4724,11 +4704,9 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * ------------------
      * </code>
      *
-     * @return PHP_Depend_Code_ASTCompoundExpression
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
-     *         is not a valid variable token.
+     * @return \PHP_Depend_Code_ASTCompoundExpression
+     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the actual token is not a valid variable token.
      * @since 0.9.6
      */
     protected function parseCompoundExpression()
@@ -4770,7 +4748,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * in double quotes or surrounded by backticks.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When this method
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When this method
      *         reaches the end of the token stream without terminating the
      *         literal string.
      */
@@ -4900,7 +4878,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
             if ($static) {
                 $tokens = $this->tokenStack->pop();
 
-                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                throw new \PHP\Depend\Parser\UnexpectedTokenException(
                     end($tokens),
                     $this->sourceFile->getFileName()
                 );
@@ -4911,7 +4889,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
 
         $this->consumeComments();
         if ($this->isKeyword($this->tokenizer->peek())) {
-            throw new PHP_Depend_Parser_UnexpectedTokenException(
+            throw new \PHP\Depend\Parser\UnexpectedTokenException(
                 $this->tokenizer->next(),
                 $this->sourceFile->getFileName()
             );
@@ -4992,7 +4970,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * @param integer $delimiterType The start/stop token type.
      *
      * @return PHP_Depend_Code_ASTString
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When this method
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When this method
      *         reaches the end of the token stream without terminating the
      *         literal string.
      * @since 0.9.10
@@ -5287,7 +5265,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * </code>
      *
      * @return PHP_Depend_Code_ASTFormalParameter
-     * @throws PHP_Depend_Parser_InvalidStateException When this type hint is
+     * @throws \PHP\Depend\Parser\InvalidStateException When this type hint is
      *         used outside the scope of a class. When this type hint is used
      *         for a class that has no parent.
      * @since 0.9.6
@@ -5456,13 +5434,13 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * Parse a statement.
      *
      * @return PHP_Depend_Code_ASTNode
-     * @throws PHP_Depend_Parser_UnexpectedTokenException
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException
      * @since 1.0.0
      */
     private function parseStatement()
     {
         if (null === ($stmt = $this->parseOptionalStatement())) {
-            throw new PHP_Depend_Parser_UnexpectedTokenException(
+            throw new UnexpectedTokenException(
                 $this->tokenizer->next(),
                 $this->sourceFile->getFileName()
             );
@@ -6073,10 +6051,8 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * </code>
      *
      * @return PHP_Depend_Code_ASTConstant
-     * @throws PHP_Depend_Parser_Exception When an error occured during the
-     *         parsing process.
-     * @throws PHP_Depend_Parser_UnexpectedTokenException When the actual token
-     *         is not a valid variable token.
+     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException When the actual token is not a valid variable token.
      * @since 0.9.6
      */
     private function parseStaticVariableDeclarationOrMemberPrimaryPrefix()
@@ -6126,12 +6102,11 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      * }
      * </code>
      *
-     * @param PHP_Depend_Token $token Token with the "static" keyword.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Token $token Token with the "static" keyword.
      * @return PHP_Depend_Code_ASTStaticVariableDeclaration
      * @since 0.9.6
      */
-    private function parseStaticVariableDeclaration(PHP_Depend_Token $token)
+    private function parseStaticVariableDeclaration(Token $token)
     {
         $staticDeclaration = $this->builder->buildAstStaticVariableDeclaration(
             $token->image
@@ -6245,7 +6220,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 if ($defaultValue->isValueAvailable() === true) {
                     return $defaultValue;
                 }
-                throw new PHP_Depend_Parser_MissingValueException($this->tokenizer);
+                throw new MissingValueException($this->tokenizer);
 
             case self::T_NULL:
                 $token = $this->consumeToken(self::T_NULL);
@@ -6320,7 +6295,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
                 break;
 
             default:
-                throw new PHP_Depend_Parser_UnexpectedTokenException(
+                throw new UnexpectedTokenException(
                     $this->tokenizer->next(),
                     $this->tokenizer->getSourceFile()
                 );
@@ -6332,7 +6307,7 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
         }
 
         // We should never reach this, so throw an exception
-        throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+        throw new TokenStreamEndException($this->tokenizer);
     }
 
     /**
@@ -6595,17 +6570,19 @@ abstract class PHP_Depend_Parser implements PHP_Depend_ConstantsI
      *
      * @param integer $tokenType The next expected token type.
      *
-     * @return PHP_Depend_Token
+     * @return \PHP\Depend\Source\Tokenizer\Token
+     * @throws \PHP\Depend\Parser\TokenStreamEndException
+     * @throws \PHP\Depend\Parser\UnexpectedTokenException
      */
     protected function consumeToken($tokenType)
     {
         $token = $this->tokenizer->next();
         if ($token === self::T_EOF) {
-            throw new PHP_Depend_Parser_TokenStreamEndException($this->tokenizer);
+            throw new TokenStreamEndException($this->tokenizer);
         } else if ($token->type == $tokenType) {
             return $this->tokenStack->add($token);
         }
-        throw new PHP_Depend_Parser_UnexpectedTokenException(
+        throw new UnexpectedTokenException(
             $token,
             $this->tokenizer->getSourceFile()
         );

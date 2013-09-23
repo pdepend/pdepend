@@ -42,21 +42,23 @@
  * @since     1.0.0
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #21500611.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       https://www.pivotaltracker.com/story/show/21500611
- * @since     1.0.0
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link https://www.pivotaltracker.com/story/show/21500611
+ * @since 1.0.0
  *
  * @ticket 21500611
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug21500611Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug21500611Test extends AbstractTest
 {
     /**
      * testParserHandlesNowdocInPropertyDeclaration
@@ -111,7 +113,7 @@ class PHP_Depend_Bugs_ParserBug21500611Test extends PHP_Depend_Bugs_AbstractTest
     /**
      * Returns the first heredoc found in a class.
      *
-     * @return PHP_Depend_Code_ASTHeredoc
+     * @return \PHP_Depend_Code_ASTHeredoc
      */
     protected function getFirstHeredocInClass()
     {
@@ -119,6 +121,6 @@ class PHP_Depend_Bugs_ParserBug21500611Test extends PHP_Depend_Bugs_AbstractTest
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTHeredoc::CLAZZ);
+            ->getFirstChildOfType(\PHP_Depend_Code_ASTHeredoc::CLAZZ);
     }
 }

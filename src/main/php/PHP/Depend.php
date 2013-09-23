@@ -41,6 +41,10 @@
   */
 
 use PHP\Depend\Builder;
+use PHP\Depend\Parser\VersionAllParser;
+use PHP\Depend\Report\GeneratorCodeAware;
+use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
+use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\Util\Configuration;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
@@ -102,16 +106,16 @@ class PHP_Depend
     private $packages = null;
 
     /**
-     * List of all registered {@link PHP_Depend_Log_LoggerI} instances.
+     * List of all registered {@link \PHP\Depend\Report\Generator} instances.
      *
-     * @var PHP_Depend_Log_LoggerI[]
+     * @var \PHP\Depend\Report\Generator[]
      */
-    private $loggers = array();
+    private $generators = array();
 
     /**
      * A composite filter for input files.
      *
-     * @var PHP_Depend_Input_CompositeFilter
+     * @var \PHP\Depend\Input\CompositeFilter
      */
     private $fileFilter = null;
 
@@ -144,10 +148,10 @@ class PHP_Depend
     private $options = array();
 
     /**
-     * List of all {@link PHP_Depend_Parser_Exception} that were caught during
+     * List of all {@link \PHP\Depend\Parser\Exception} that were caught during
      * the parsing process.
      *
-     * @var PHP_Depend_Parser_Exception[]
+     * @var \PHP\Depend\Parser\Exception[]
      */
     private $parseExceptions = array();
 
@@ -169,7 +173,7 @@ class PHP_Depend
         $this->configuration = $configuration;
 
         $this->codeFilter = new PHP_Depend_Code_Filter_Null();
-        $this->fileFilter = new PHP_Depend_Input_CompositeFilter();
+        $this->fileFilter = new \PHP\Depend\Input\CompositeFilter();
 
         $this->cacheFactory = new \PHP\Depend\Util\Cache\Factory($configuration);
     }
@@ -216,23 +220,22 @@ class PHP_Depend
     /**
      * Adds a logger to the output list.
      *
-     * @param PHP_Depend_Log_LoggerI $logger The logger instance.
-     *
+     * @param \PHP\Depend\Report\Generator $generator The logger instance.
      * @return void
      */
-    public function addLogger(PHP_Depend_Log_LoggerI $logger)
+    public function addReportGenerator(\PHP\Depend\Report\Generator $generator)
     {
-        $this->loggers[] = $logger;
+        $this->generators[] = $generator;
     }
 
     /**
      * Adds a new input/file filter.
      *
-     * @param PHP_Depend_Input_FilterI $filter New input/file filter instance.
+     * @param \PHP\Depend\Input\Filter $filter New input/file filter instance.
      *
      * @return void
      */
-    public function addFileFilter(PHP_Depend_Input_FilterI $filter)
+    public function addFileFilter(\PHP\Depend\Input\Filter $filter)
     {
         $this->fileFilter->append($filter);
     }
@@ -313,12 +316,12 @@ class PHP_Depend
 
         $this->fireStartLogProcess();
 
-        foreach ($this->loggers as $logger) {
+        foreach ($this->generators as $generator) {
             // Check for code aware loggers
-            if ($logger instanceof PHP_Depend_Log_CodeAwareI) {
-                $logger->setCode($packages);
+            if ($generator instanceof GeneratorCodeAware) {
+                $generator->setCode($packages);
             }
-            $logger->close();
+            $generator->close();
         }
 
         $this->fireEndLogProcess();
@@ -346,10 +349,10 @@ class PHP_Depend
     }
 
     /**
-     * Returns an <b>array</b> with all {@link PHP_Depend_Parser_Exception} that
+     * Returns an <b>array</b> with all {@link \PHP\Depend\Parser\Exception} that
      * were caught during the parsing process.
      *
-     * @return PHP_Depend_Parser_Exception[]
+     * @return \PHP\Depend\Parser\Exception[]
      */
     public function getExceptions()
     {
@@ -365,7 +368,7 @@ class PHP_Depend
     {
         if ($this->packages === null) {
             $msg = 'countPackages() doesn\'t work before the source was analyzed.';
-            throw new RuntimeException($msg);
+            throw new \RuntimeException($msg);
         }
 
         $count = 0;
@@ -381,14 +384,13 @@ class PHP_Depend
      * Returns the analyzed package of the specified name.
      *
      * @param string $name The package name.
-     *
      * @return PHP_Depend_Code_Package
      */
     public function getPackage($name)
     {
         if ($this->packages === null) {
             $msg = 'getPackage() doesn\'t work before the source was analyzed.';
-            throw new RuntimeException($msg);
+            throw new \RuntimeException($msg);
         }
         foreach ($this->packages as $package) {
             if ($package->getName() === $name) {
@@ -441,11 +443,10 @@ class PHP_Depend
     /**
      * Sends the start file parsing event.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    protected function fireStartFileParsing(PHP_Depend_TokenizerI $tokenizer)
+    protected function fireStartFileParsing(Tokenizer $tokenizer)
     {
         foreach ($this->listeners as $listener) {
             $listener->startFileParsing($tokenizer);
@@ -455,11 +456,10 @@ class PHP_Depend
     /**
      * Sends the end file parsing event.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    protected function fireEndFileParsing(PHP_Depend_TokenizerI $tokenizer)
+    protected function fireEndFileParsing(Tokenizer $tokenizer)
     {
         foreach ($this->listeners as $listener) {
             $listener->endFileParsing($tokenizer);
@@ -526,14 +526,14 @@ class PHP_Depend
         // Reset list of thrown exceptions
         $this->parseExceptions = array();
 
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new PHPTokenizerInternal();
 
         $this->fireStartParseProcess($this->builder);
 
         foreach ($this->createFileIterator() as $file) {
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHP_Depend_Parser_VersionAllParser(
+            $parser = new VersionAllParser(
                 $tokenizer,
                 $this->builder,
                 $this->cacheFactory->create()
@@ -549,7 +549,7 @@ class PHP_Depend
 
             try {
                 $parser->parse();
-            } catch (PHP_Depend_Parser_Exception $e) {
+            } catch (\PHP\Depend\Parser\Exception $e) {
                 $this->parseExceptions[] = $e;
             }
             $this->fireEndFileParsing($tokenizer);
@@ -586,7 +586,7 @@ class PHP_Depend
             // Remove filters if this analyzer is filter aware
             $collection->setFilter();
 
-            foreach ($this->loggers as $logger) {
+            foreach ($this->generators as $logger) {
                 $logger->log($analyzer);
             }
         }
@@ -639,7 +639,7 @@ class PHP_Depend
 
         foreach ($this->directories as $directory) {
             $fileIterator->append(
-                new PHP_Depend_Input_Iterator(
+                new \PHP\Depend\Input\Iterator(
                     new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator($directory . '/')
                     ),
@@ -681,7 +681,7 @@ class PHP_Depend
     {
         $analyzerSet = array();
 
-        foreach ($this->loggers as $logger) {
+        foreach ($this->generators as $logger) {
             foreach ($logger->getAcceptedAnalyzers() as $type) {
                 // Check for type existence
                 if (in_array($type, $analyzerSet) === false) {

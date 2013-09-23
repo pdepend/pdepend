@@ -40,13 +40,17 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
+use PHP\Depend\Report\Summary\Xml;
+
 /**
  * Abstract test case for the "Bugs" package.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
+abstract class AbstractTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Creates the PDepend summary report for the source associated with the
@@ -63,12 +67,12 @@ abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
 
         $file = self::createRunResourceURI('summary.xml');
 
-        $log = new PHP_Depend_Log_Summary_Xml();
+        $log = new Xml();
         $log->setLogFile($file);
 
         $pdepend = $this->createPDependFixture();
         $pdepend->addFile(self::createCodeResourceUriForTest());
-        $pdepend->addLogger($log);
+        $pdepend->addReportGenerator($log);
         $pdepend->analyze();
 
         return $file;
@@ -80,7 +84,7 @@ abstract class PHP_Depend_Bugs_AbstractTest extends PHP_Depend_AbstractTest
      * @param string  $testCase          Full test case name.
      * @param boolean $ignoreAnnotations Ignore annotations?
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP_Depend_Code_NodeIterator
      */
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

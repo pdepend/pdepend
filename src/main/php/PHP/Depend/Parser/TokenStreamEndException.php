@@ -40,6 +40,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Parser;
+
+use PHP\Depend\Source\Tokenizer\Tokenizer;
+
 /**
  * This type of exception is thrown when the parser reaches the end of the token
  * stream, but expects further tokens.
@@ -47,15 +51,14 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Parser_TokenStreamEndException 
-    extends PHP_Depend_Parser_TokenException
+class TokenStreamEndException extends TokenException
 {
     /**
      * Constructs a new end of token stream exception.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The context tokenizer instance.
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      */
-    public function __construct(PHP_Depend_TokenizerI $tokenizer)
+    public function __construct(Tokenizer $tokenizer)
     {
         parent::__construct(
             sprintf(

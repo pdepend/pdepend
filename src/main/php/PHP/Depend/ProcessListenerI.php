@@ -42,6 +42,7 @@
 
 // @codeCoverageIgnoreStart
 use PHP\Depend\Builder;
+use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\TreeVisitor\TreeVisitListener;
 
 /**
@@ -73,20 +74,18 @@ interface PHP_Depend_ProcessListenerI
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     * 
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    function startFileParsing(PHP_Depend_TokenizerI $tokenizer);
+    function startFileParsing(Tokenizer $tokenizer);
     
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param PHP_Depend_TokenizerI $tokenizer The used tokenizer instance.
-     * 
+     * @param \PHP\Depend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    function endFileParsing(PHP_Depend_TokenizerI $tokenizer);
+    function endFileParsing(Tokenizer $tokenizer);
     
     /**
      * Is called when PDepend starts the analyzing process.

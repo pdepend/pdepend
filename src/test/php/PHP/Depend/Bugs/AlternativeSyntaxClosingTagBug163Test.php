@@ -41,20 +41,20 @@
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/163
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for ticket #163.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/163
- *
- * @covers stdClass
+ * @link      http://tracker.pdepend.org/pdepend/issue_tracker/issue/163
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bug_AlternativeSyntaxClosingTagBug163Test
-    extends PHP_Depend_Bugs_AbstractTest
+class AlternativeSyntaxClosingTagBug163Test extends AbstractTest
 {
     /**
      * testParserHandlesAlternativeSyntaxTerminatedByClosingTag

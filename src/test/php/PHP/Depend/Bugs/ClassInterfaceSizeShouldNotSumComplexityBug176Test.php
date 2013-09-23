@@ -41,20 +41,20 @@
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for ticket #176.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
- *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
-    extends PHP_Depend_Bugs_AbstractTest
+class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractTest
 {
     /**
      * testAnalyzerCountsNumberOfMethodsForClassInterfaceSize
@@ -69,10 +69,10 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
             ->getClasses()
             ->current();
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($packages);
@@ -95,10 +95,10 @@ class PHP_Depend_Bugs_ClassInterfaceSizeShouldNotSumComplexityBug176Test
             ->getClasses()
             ->current();
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 

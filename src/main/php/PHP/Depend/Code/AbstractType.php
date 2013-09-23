@@ -338,7 +338,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
-     * @return PHP_Depend_Token[]
+     * @return \PHP\Depend\Source\Tokenizer\Token[]
      */
     public function getTokens()
     {
@@ -350,8 +350,7 @@ abstract class PHP_Depend_Code_AbstractType extends PHP_Depend_Code_AbstractItem
     /**
      * Sets the tokens for this type.
      *
-     * @param PHP_Depend_Token[] $tokens The generated tokens.
-     *
+     * @param \PHP\Depend\Source\Tokenizer\Token[] $tokens The generated tokens.
      * @return void
      */
     public function setTokens(array $tokens)

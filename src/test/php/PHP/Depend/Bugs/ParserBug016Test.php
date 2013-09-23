@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug #16.
  *
@@ -47,12 +49,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @ticket 16
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_ParserBug016Test extends PHP_Depend_Bugs_AbstractTest
+class ParserBug016Test extends AbstractTest
 {
     /**
      * Tests that the parser detect a type within an instance of operator.
@@ -92,7 +94,7 @@ class PHP_Depend_Bugs_ParserBug016Test extends PHP_Depend_Bugs_AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
-     * @todo TODO: It would be a cool feature if PHP_Depend would replace such
+     * @todo TODO: It would be a cool feature if \PHP_Depend would replace such
      *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
      *             T_INSTANCEOF + T_VARIABLE).
      */

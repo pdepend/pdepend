@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
 /**
  * Test case for bug 95.
  *
@@ -48,12 +50,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::bugs
  * @group regressiontest
  */
-class PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test extends PHP_Depend_Bugs_AbstractTest
+class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractTest
 {
     /**
      * Tests that the parser handles an interface within an instanceof operator
@@ -68,7 +70,7 @@ class PHP_Depend_Bugs_NPathComplexityIsBrokenInVersion096Bug095Test extends PHP_
             ->getFunctions()
             ->current();
 
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer = new \PHP_Depend_Metrics_NPathComplexity_Analyzer();
         $analyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $analyzer->analyze($packages);
 
