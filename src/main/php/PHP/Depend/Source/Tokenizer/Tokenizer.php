@@ -111,8 +111,18 @@ if (!defined('T_CALLABLE')) {
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface Tokenizer extends \PHP_Depend_ConstantsI
+interface Tokenizer
 {
+    /**
+     * Marks the end of the token stream.
+     */
+    const T_EOF = -1;
+
+    /**
+     * Marks the beginning of the token stream.
+     */
+    const T_BOF = -2;
+
     /**
      * Returns the name of the source file.
      *

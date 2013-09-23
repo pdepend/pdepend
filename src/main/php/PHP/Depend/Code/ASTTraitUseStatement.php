@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\State;
 
 /**
  * This node class represents a strait use statement.
@@ -151,9 +152,9 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
             $modifier = $method->getModifiers();
             if (-1 < $alias->getNewModifier()) {
                 $modifier &= ~(
-                    PHP_Depend_ConstantsI::IS_PUBLIC |
-                    PHP_Depend_ConstantsI::IS_PROTECTED |
-                    PHP_Depend_ConstantsI::IS_PRIVATE
+                    State::IS_PUBLIC |
+                    State::IS_PROTECTED |
+                    State::IS_PRIVATE
                 );
                 $modifier |= $alias->getNewModifier();
             }

@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -71,8 +72,8 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isAbstract()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT)
-                                 === PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
+        return (($this->modifiers & State::IS_EXPLICIT_ABSTRACT)
+                                 === State::IS_EXPLICIT_ABSTRACT);
     }
 
     /**
@@ -82,8 +83,7 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
      */
     public function isFinal()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
-                                 === PHP_Depend_ConstantsI::IS_FINAL);
+        return (($this->modifiers & State::IS_FINAL) === State::IS_FINAL);
     }
 
     /**
@@ -179,9 +179,9 @@ class PHP_Depend_Code_Class extends PHP_Depend_Code_AbstractClassOrInterface
             );
         }
 
-        $expected = ~PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
-                  & ~PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT
-                  & ~PHP_Depend_ConstantsI::IS_FINAL;
+        $expected = ~State::IS_EXPLICIT_ABSTRACT
+                  & ~State::IS_IMPLICIT_ABSTRACT
+                  & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException('Invalid class modifier given.');

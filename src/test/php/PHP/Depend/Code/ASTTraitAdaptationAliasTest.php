@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\State;
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTraitAdaptationAlias} class.
@@ -98,7 +99,7 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
     {
         $alias = $this->_getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC,
+            State::IS_PUBLIC,
             $alias->getNewModifier()
         );
     }
@@ -112,7 +113,7 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
     {
         $alias = $this->_getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED,
+            State::IS_PROTECTED,
             $alias->getNewModifier()
         );
     }
@@ -145,10 +146,7 @@ class PHP_Depend_Code_ASTTraitAdaptationAliasTest extends PHP_Depend_Code_ASTNod
     public function testGetNewModifierReturnsExpectedIsPrivateValue()
     {
         $alias = $this->_getFirstTraitAdaptationAliasInClass();
-        $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PRIVATE,
-            $alias->getNewModifier()
-        );
+        $this->assertEquals(State::IS_PRIVATE, $alias->getNewModifier());
     }
 
     /**

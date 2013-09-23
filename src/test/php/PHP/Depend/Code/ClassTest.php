@@ -41,6 +41,7 @@
   */
 
 use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
@@ -252,7 +253,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC,
+            State::IS_PUBLIC,
             $methods['foo']->getModifiers()
         );
     }
@@ -269,7 +270,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED,
+            State::IS_PROTECTED,
             $methods['foo']->getModifiers()
         );
     }
@@ -286,7 +287,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PRIVATE,
+            State::IS_PRIVATE,
             $methods['foo']->getModifiers()
         );
     }
@@ -303,7 +304,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED | PHP_Depend_ConstantsI::IS_ABSTRACT,
+            State::IS_PROTECTED | State::IS_ABSTRACT,
             $methods['foo']->getModifiers()
         );
     }
@@ -320,7 +321,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC | PHP_Depend_ConstantsI::IS_STATIC,
+            State::IS_PUBLIC | State::IS_STATIC,
             $methods['foo']->getModifiers()
         );
     }
@@ -898,7 +899,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testMarkClassInstanceAsAbstract()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setModifiers(PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT);
+        $class->setModifiers(State::IS_EXPLICIT_ABSTRACT);
 
         self::assertTrue($class->isAbstract());
     }
@@ -922,7 +923,7 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testMarkClassInstanceAsFinal()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+        $class->setModifiers(State::IS_FINAL);
 
         self::assertTrue($class->isFinal());
     }
@@ -938,8 +939,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
         $class->setModifiers(
-            PHP_Depend_ConstantsI::IS_ABSTRACT |
-            PHP_Depend_ConstantsI::IS_FINAL
+            State::IS_ABSTRACT |
+            State::IS_FINAL
         );
     }
 
@@ -1219,8 +1220,8 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetModifiersThrowsExpectedExceptionOnOverwrite()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
-        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+        $class->setModifiers(State::IS_FINAL);
+        $class->setModifiers(State::IS_FINAL);
     }
 
     /**
@@ -1242,9 +1243,9 @@ class PHP_Depend_Code_ClassTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetModifiersReturnsInjectedModifierValue()
     {
         $class = new PHP_Depend_Code_Class(__CLASS__);
-        $class->setModifiers(PHP_Depend_ConstantsI::IS_FINAL);
+        $class->setModifiers(State::IS_FINAL);
 
-        self::assertSame(PHP_Depend_ConstantsI::IS_FINAL, $class->getModifiers());
+        self::assertSame(State::IS_FINAL, $class->getModifiers());
     }
 
     /**

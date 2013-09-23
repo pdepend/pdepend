@@ -149,12 +149,12 @@ was going on in this method. ::
   private function _countCalls(PHP_Depend_Code_AbstractCallable $callable)
   {
       $callT  = array(
-          \PHP\Depend\Source\Tokenizer\Tokenizer::T_STRING,
-          \PHP\Depend\Source\Tokenizer\Tokenizer::T_VARIABLE
+          \PHP\Depend\Source\Tokenizer\Tokens::T_STRING,
+          \PHP\Depend\Source\Tokenizer\Tokens::T_VARIABLE
       );
       $chainT = array(
-          \PHP\Depend\Source\Tokenizer\Tokenizer::T_DOUBLE_COLON,
-          \PHP\Depend\Source\Tokenizer\Tokenizer::T_OBJECT_OPERATOR,
+          \PHP\Depend\Source\Tokenizer\Tokens::T_DOUBLE_COLON,
+          \PHP\Depend\Source\Tokenizer\Tokens::T_OBJECT_OPERATOR,
       );
 
       $called = array();
@@ -163,14 +163,14 @@ was going on in this method. ::
       $count  = count($tokens);
       for ($i = 0; $i < $count; ++$i) {
           // break on function body open
-          if ($tokens[$i]->type === \PHP\Depend\Source\Tokenizer\Tokenizer::T_CURLY_BRACE_OPEN) {
+          if ($tokens[$i]->type === \PHP\Depend\Source\Tokenizer\Tokens::T_CURLY_BRACE_OPEN) {
               break;
           }
       }
 
       for (; $i < $count; ++$i) {
           // Skip non parenthesis tokens
-          if ($tokens[$i]->type !== \PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_OPEN) {
+          if ($tokens[$i]->type !== \PHP\Depend\Source\Tokenizer\Tokens::T_PARENTHESIS_OPEN) {
               continue;
           }
           // Skip first token
@@ -197,7 +197,7 @@ was going on in this method. ::
                   $called[$identifier] = true;
                   ++$this->_calls;
               }
-          } else if ($tokens[$i - 2]->type !== \PHP\Depend\Source\Tokenizer\Tokenizer::T_NEW
+          } else if ($tokens[$i - 2]->type !== \PHP\Depend\Source\Tokenizer\Tokens::T_NEW
               && !isset($called[$tokens[$i - 1]->image])
           ) {
               $called[$tokens[$i - 1]->image] = true;

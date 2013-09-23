@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
@@ -416,7 +417,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetModifiersAcceptsPublicValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
+        $method->setModifiers(State::IS_PUBLIC);
 
         self::assertTrue(
             $method->isPublic() &&
@@ -446,10 +447,10 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testGetModifiersReturnsPreviousSetValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setModifiers(PHP_Depend_ConstantsI::IS_ABSTRACT);
+        $method->setModifiers(State::IS_ABSTRACT);
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_ABSTRACT,
+            State::IS_ABSTRACT,
             $method->getModifiers()
         );
     }
@@ -475,8 +476,8 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     {
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(
-            PHP_Depend_ConstantsI::IS_PROTECTED |
-            PHP_Depend_ConstantsI::IS_STATIC
+            State::IS_PROTECTED |
+            State::IS_STATIC
         );
 
         self::assertTrue($method->isStatic());
@@ -503,8 +504,8 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     {
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(
-            PHP_Depend_ConstantsI::IS_PROTECTED |
-            PHP_Depend_ConstantsI::IS_FINAL
+            State::IS_PROTECTED |
+            State::IS_FINAL
         );
 
         self::assertTrue($method->isFinal());
@@ -520,9 +521,9 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     {
         $method = new PHP_Depend_Code_Method('method');
         $method->setModifiers(
-            PHP_Depend_ConstantsI::IS_PROTECTED |
-            PHP_Depend_ConstantsI::IS_STATIC |
-            PHP_Depend_ConstantsI::IS_FINAL
+            State::IS_PROTECTED |
+            State::IS_STATIC |
+            State::IS_FINAL
         );
 
         self::assertTrue($method->isFinal() && $method->isStatic());
@@ -537,7 +538,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetModifiersAcceptsProtectedValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
+        $method->setModifiers(State::IS_PROTECTED);
 
         self::assertTrue(
             $method->isProtected() &&
@@ -555,7 +556,7 @@ class PHP_Depend_Code_MethodTest extends PHP_Depend_Code_AbstractItemTest
     public function testSetModifiersAcceptsPrivateValue()
     {
         $method = new PHP_Depend_Code_Method('method');
-        $method->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
+        $method->setModifiers(State::IS_PRIVATE);
 
         self::assertTrue(
             $method->isPrivate() &&

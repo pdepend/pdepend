@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.6
  */
+use PHP\Depend\Source\AST\State;
 
 /**
  * This class represents a field or property declaration of a class.
@@ -108,10 +109,10 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function setModifiers($modifiers)
     {
-        $expected = ~PHP_Depend_ConstantsI::IS_PUBLIC
-                  & ~PHP_Depend_ConstantsI::IS_PROTECTED
-                  & ~PHP_Depend_ConstantsI::IS_PRIVATE
-                  & ~PHP_Depend_ConstantsI::IS_STATIC;
+        $expected = ~State::IS_PUBLIC
+                  & ~State::IS_PROTECTED
+                  & ~State::IS_PRIVATE
+                  & ~State::IS_STATIC;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException(
@@ -131,8 +132,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isPublic()
     {
-        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_PUBLIC)
-                                 === PHP_Depend_ConstantsI::IS_PUBLIC);
+        return (($this->getModifiers() & State::IS_PUBLIC) === State::IS_PUBLIC);
     }
 
     /**
@@ -143,8 +143,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isProtected()
     {
-        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_PROTECTED)
-                                 === PHP_Depend_ConstantsI::IS_PROTECTED);
+        return (($this->getModifiers() & State::IS_PROTECTED) === State::IS_PROTECTED);
     }
 
     /**
@@ -155,8 +154,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isPrivate()
     {
-        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_PRIVATE)
-                                 === PHP_Depend_ConstantsI::IS_PRIVATE);
+        return (($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE);
     }
 
     /**
@@ -167,8 +165,7 @@ class PHP_Depend_Code_ASTFieldDeclaration extends PHP_Depend_Code_ASTNode
      */
     public function isStatic()
     {
-        return (($this->getModifiers() & PHP_Depend_ConstantsI::IS_STATIC)
-                                 === PHP_Depend_ConstantsI::IS_STATIC);
+        return (($this->getModifiers() & State::IS_STATIC) === State::IS_STATIC);
     }
 
     /**

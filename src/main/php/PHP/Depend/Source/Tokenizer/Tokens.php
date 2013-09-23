@@ -40,64 +40,16 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Source\Tokenizer;
+
 /**
  * This interface holds the different tokenizer, builder and parser constants.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface PHP_Depend_ConstantsI
+interface Tokens
 {
-    /**
-     * Marks a class or interface as implicit abstract.
-     */
-    const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
-
-    /**
-     * Marks a class or interface as explicit abstract.
-     */
-    const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
-
-    /**
-     * Marks a node as public.
-     */
-    const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
-
-    /**
-     * Marks a node as protected.
-     */
-    const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
-
-    /**
-     * Marks a node as private.
-     */
-    const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
-
-    /**
-     * Marks a node as abstract.
-     */
-    const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
-
-    /**
-     * Marks a node as final.
-     */
-    const IS_FINAL = ReflectionMethod::IS_FINAL;
-
-    /**
-     * Marks a node as static.
-     */
-    const IS_STATIC = ReflectionMethod::IS_STATIC;
-
-    /**
-     * Marks the end of the token stream.
-     */
-    const T_EOF = -1;
-
-    /**
-     * Marke the beginning of the token stream.
-     */
-    const T_BOF = -2;
-
     /**
      * Marks a class token.
      */
@@ -887,14 +839,4 @@ interface PHP_Depend_ConstantsI
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;
-
-    /**
-     * The default package name.
-     */
-    const DEFAULT_PACKAGE = '+global';
-
-    /**
-     * The package separator token.
-     */
-    const PACKAGE_SEPARATOR = '\\';
 }

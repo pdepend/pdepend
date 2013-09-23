@@ -42,8 +42,10 @@
 
 use PHP\Depend\Builder\DefaultBuilder;
 use PHP\Depend\Parser\VersionAllParser;
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 use PHP\Depend\Source\Tokenizer\Token;
+use PHP\Depend\Source\Tokenizer\Tokens;
 use PHP\Depend\Util\Cache\Driver\Memory;
 
 /**
@@ -207,32 +209,32 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSetsCorrectFunctionTokens()
     {
         $tokens = array(
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_FUNCTION, 'function', 5, 5, 1, 8),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_STRING, 'foo', 5, 5, 10, 12),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_OPEN, '(', 5, 5, 13, 13),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_VARIABLE, '$foo', 5, 5, 14, 17),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_EQUAL, '=', 5, 5, 19, 19),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_ARRAY, 'array', 5, 5, 21, 25),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_OPEN, '(', 5, 5, 26, 26),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_CLOSE, ')', 5, 5, 27, 27),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_CLOSE, ')', 5, 5, 28, 28),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_CURLY_BRACE_OPEN, '{', 5, 5, 30, 30),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_FOREACH, 'foreach', 6, 6, 5, 11),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_OPEN, '(', 6, 6, 13, 13),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_VARIABLE, '$foo', 6, 6, 14, 17),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_AS, 'as', 6, 6, 19, 20),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_VARIABLE, '$bar', 6, 6, 22, 25),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_CLOSE, ')', 6, 6, 26, 26),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_CURLY_BRACE_OPEN, '{', 6, 6, 28, 28),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_STRING, 'FooBar', 7, 7, 9, 14),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_DOUBLE_COLON, '::', 7, 7, 15, 16),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_STRING, 'y', 7, 7, 17, 17),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_OPEN, '(', 7, 7, 18, 18),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_VARIABLE, '$bar', 7, 7, 19, 22),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_PARENTHESIS_CLOSE, ')', 7, 7, 23, 23),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_SEMICOLON, ';', 7, 7, 24, 24),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_CURLY_BRACE_CLOSE, '}', 8, 8, 5, 5),
-            new Token(\PHP\Depend\Source\Tokenizer\Tokenizer::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
+            new Token(Tokens::T_FUNCTION, 'function', 5, 5, 1, 8),
+            new Token(Tokens::T_STRING, 'foo', 5, 5, 10, 12),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 5, 5, 13, 13),
+            new Token(Tokens::T_VARIABLE, '$foo', 5, 5, 14, 17),
+            new Token(Tokens::T_EQUAL, '=', 5, 5, 19, 19),
+            new Token(Tokens::T_ARRAY, 'array', 5, 5, 21, 25),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 5, 5, 26, 26),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 5, 5, 27, 27),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 5, 5, 28, 28),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 5, 5, 30, 30),
+            new Token(Tokens::T_FOREACH, 'foreach', 6, 6, 5, 11),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 6, 6, 13, 13),
+            new Token(Tokens::T_VARIABLE, '$foo', 6, 6, 14, 17),
+            new Token(Tokens::T_AS, 'as', 6, 6, 19, 20),
+            new Token(Tokens::T_VARIABLE, '$bar', 6, 6, 22, 25),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 6, 6, 26, 26),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 6, 6, 28, 28),
+            new Token(Tokens::T_STRING, 'FooBar', 7, 7, 9, 14),
+            new Token(Tokens::T_DOUBLE_COLON, '::', 7, 7, 15, 16),
+            new Token(Tokens::T_STRING, 'y', 7, 7, 17, 17),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 18, 18),
+            new Token(Tokens::T_VARIABLE, '$bar', 7, 7, 19, 22),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 7, 7, 23, 23),
+            new Token(Tokens::T_SEMICOLON, ';', 7, 7, 24, 24),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 8, 8, 5, 5),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
         );
 
         $packages = self::parseSource('/Parser/parser-sets-expected-function-tokens.php');
@@ -983,8 +985,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current();
 
         self::assertSame(
-            PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT,
-            $class->getModifiers() & PHP_Depend_ConstantsI::IS_EXPLICIT_ABSTRACT
+            State::IS_EXPLICIT_ABSTRACT,
+            $class->getModifiers() & State::IS_EXPLICIT_ABSTRACT
         );
     }
 
@@ -1015,9 +1017,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertSame(
-            PHP_Depend_ConstantsI::IS_FINAL,
-            $class->getModifiers() & PHP_Depend_ConstantsI::IS_FINAL
+        self::assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL
         );
     }
 

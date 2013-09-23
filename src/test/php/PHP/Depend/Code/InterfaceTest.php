@@ -41,6 +41,7 @@
   */
 
 use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\Util\Cache\Driver\Memory;
 
@@ -425,7 +426,7 @@ class PHP_Depend_Code_InterfaceTest extends PHP_Depend_Code_AbstractItemTest
     {
         $interface = $this->createItem();
         $this->assertSame(
-            PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT,
+            State::IS_IMPLICIT_ABSTRACT,
             $interface->getModifiers()
         );
     }

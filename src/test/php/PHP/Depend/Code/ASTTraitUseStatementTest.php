@@ -41,6 +41,8 @@
  * @since     1.0.0
  */
 
+use PHP\Depend\Source\AST\State;
+
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTraitUseStatement} class.
  *
@@ -200,7 +202,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC,
+            State::IS_PUBLIC,
             $methods[0]->getModifiers()
         );
     }
@@ -216,7 +218,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED,
+            State::IS_PROTECTED,
             $methods[0]->getModifiers()
         );
     }
@@ -232,7 +234,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PRIVATE,
+            State::IS_PRIVATE,
             $methods[0]->getModifiers()
         );
     }
@@ -248,7 +250,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED | PHP_Depend_ConstantsI::IS_ABSTRACT,
+            State::IS_PROTECTED | State::IS_ABSTRACT,
             $methods[0]->getModifiers()
         );
     }
@@ -264,7 +266,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC | PHP_Depend_ConstantsI::IS_STATIC,
+            State::IS_PUBLIC | State::IS_STATIC,
             $methods[0]->getModifiers()
         );
     }

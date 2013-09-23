@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 use PHP\Depend\Source\Tokenizer\Token;
+use PHP\Depend\Source\Tokenizer\Tokens;
 
 /**
  * Test case for issue #79 where we should store the tokens for each created
@@ -121,15 +122,15 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 1, 8),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 10, 12),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 14, 14),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 1, 1),
-            new Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 12, 16),
-            new Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 17, 17),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
+            new Token(Tokens::T_FUNCTION, 'function', 7, 7, 1, 8),
+            new Token(Tokens::T_STRING, 'foo', 7, 7, 10, 12),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 7, 7, 14, 14),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 8, 8, 1, 1),
+            new Token(Tokens::T_RETURN, 'return', 9, 9, 5, 10),
+            new Token(Tokens::T_FALSE, 'false', 9, 9, 12, 16),
+            new Token(Tokens::T_SEMICOLON, ';', 9, 9, 17, 17),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
         self::assertEquals($expected, $function->getTokens());
@@ -149,24 +150,24 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 1, 8),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 10, 12),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
-            new Token(PHP_Depend_ConstantsI::T_VARIABLE, '$foo', 7, 7, 14, 17),
-            new Token(PHP_Depend_ConstantsI::T_COMMA, ',', 7, 7, 18, 18),
-            new Token(PHP_Depend_ConstantsI::T_VARIABLE, '$bar', 7, 7, 20, 23),
-            new Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 7, 7, 25, 25),
-            new Token(PHP_Depend_ConstantsI::T_LNUMBER, '42', 7, 7, 27, 28),
-            new Token(PHP_Depend_ConstantsI::T_COMMA, ',', 7, 7, 29, 29),
-            new Token(PHP_Depend_ConstantsI::T_VARIABLE, '$baz', 7, 7, 31, 34),
-            new Token(PHP_Depend_ConstantsI::T_EQUAL, '=', 7, 7, 36, 36),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'T_42', 7, 7, 38, 41),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 42, 42),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 1, 1),
-            new Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 12, 16),
-            new Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 17, 17),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
+            new Token(Tokens::T_FUNCTION, 'function', 7, 7, 1, 8),
+            new Token(Tokens::T_STRING, 'foo', 7, 7, 10, 12),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
+            new Token(Tokens::T_VARIABLE, '$foo', 7, 7, 14, 17),
+            new Token(Tokens::T_COMMA, ',', 7, 7, 18, 18),
+            new Token(Tokens::T_VARIABLE, '$bar', 7, 7, 20, 23),
+            new Token(Tokens::T_EQUAL, '=', 7, 7, 25, 25),
+            new Token(Tokens::T_LNUMBER, '42', 7, 7, 27, 28),
+            new Token(Tokens::T_COMMA, ',', 7, 7, 29, 29),
+            new Token(Tokens::T_VARIABLE, '$baz', 7, 7, 31, 34),
+            new Token(Tokens::T_EQUAL, '=', 7, 7, 36, 36),
+            new Token(Tokens::T_STRING, 'T_42', 7, 7, 38, 41),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 7, 7, 42, 42),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 8, 8, 1, 1),
+            new Token(Tokens::T_RETURN, 'return', 9, 9, 5, 10),
+            new Token(Tokens::T_FALSE, 'false', 9, 9, 12, 16),
+            new Token(Tokens::T_SEMICOLON, ';', 9, 9, 17, 17),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
         self::assertEquals($expected, $function->getTokens());
@@ -226,16 +227,16 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 7, 7, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 12, 19),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 21, 23),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 24, 24),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 25, 25),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
-            new Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 9, 14),
-            new Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 16, 20),
-            new Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 21, 21),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
+            new Token(Tokens::T_PUBLIC, 'public', 7, 7, 5, 10),
+            new Token(Tokens::T_FUNCTION, 'function', 7, 7, 12, 19),
+            new Token(Tokens::T_STRING, 'foo', 7, 7, 21, 23),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 24, 24),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 7, 7, 25, 25),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
+            new Token(Tokens::T_RETURN, 'return', 9, 9, 9, 14),
+            new Token(Tokens::T_FALSE, 'false', 9, 9, 16, 20),
+            new Token(Tokens::T_SEMICOLON, ';', 9, 9, 21, 21),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
         self::assertEquals($expected, $method->getTokens());
@@ -257,17 +258,17 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_STATIC, 'static', 7, 7, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 7, 7, 12, 17),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 19, 26),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 28, 30),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 31, 31),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 32, 32),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
-            new Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 9, 14),
-            new Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 16, 20),
-            new Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 21, 21),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
+            new Token(Tokens::T_STATIC, 'static', 7, 7, 5, 10),
+            new Token(Tokens::T_PUBLIC, 'public', 7, 7, 12, 17),
+            new Token(Tokens::T_FUNCTION, 'function', 7, 7, 19, 26),
+            new Token(Tokens::T_STRING, 'foo', 7, 7, 28, 30),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 31, 31),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 7, 7, 32, 32),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
+            new Token(Tokens::T_RETURN, 'return', 9, 9, 9, 14),
+            new Token(Tokens::T_FALSE, 'false', 9, 9, 16, 20),
+            new Token(Tokens::T_SEMICOLON, ';', 9, 9, 21, 21),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
         self::assertEquals($expected, $method->getTokens());
@@ -289,18 +290,18 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_STATIC, 'static', 7, 7, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 7, 7, 12, 17),
-            new Token(PHP_Depend_ConstantsI::T_FINAL, 'final', 7, 7, 19, 23),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 7, 7, 25, 32),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'foo', 7, 7, 34, 36),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 7, 7, 37, 37),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 7, 7, 38, 38),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
-            new Token(PHP_Depend_ConstantsI::T_RETURN, 'return', 9, 9, 9, 14),
-            new Token(PHP_Depend_ConstantsI::T_FALSE, 'false', 9, 9, 16, 20),
-            new Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 9, 9, 21, 21),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
+            new Token(Tokens::T_STATIC, 'static', 7, 7, 5, 10),
+            new Token(Tokens::T_PUBLIC, 'public', 7, 7, 12, 17),
+            new Token(Tokens::T_FINAL, 'final', 7, 7, 19, 23),
+            new Token(Tokens::T_FUNCTION, 'function', 7, 7, 25, 32),
+            new Token(Tokens::T_STRING, 'foo', 7, 7, 34, 36),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 37, 37),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 7, 7, 38, 38),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 8, 8, 5, 5),
+            new Token(Tokens::T_RETURN, 'return', 9, 9, 9, 14),
+            new Token(Tokens::T_FALSE, 'false', 9, 9, 16, 20),
+            new Token(Tokens::T_SEMICOLON, ';', 9, 9, 21, 21),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
         self::assertEquals($expected, $method->getTokens());
@@ -362,17 +363,17 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_CLASS, 'class', 2, 2, 1, 5),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 7, 9),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+            new Token(Tokens::T_CLASS, 'class', 2, 2, 1, 5),
+            new Token(Tokens::T_STRING, 'Foo', 2, 2, 7, 9),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new Token(Tokens::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new Token(Tokens::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new Token(Tokens::T_STRING, 'bar', 4, 4, 21, 23),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
         self::assertEquals($expected, $class->getTokens());
@@ -392,18 +393,18 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_FINAL, 'final', 2, 2, 1, 5),
-            new Token(PHP_Depend_ConstantsI::T_CLASS, 'class', 2, 2, 7, 11),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 13, 15),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+            new Token(Tokens::T_FINAL, 'final', 2, 2, 1, 5),
+            new Token(Tokens::T_CLASS, 'class', 2, 2, 7, 11),
+            new Token(Tokens::T_STRING, 'Foo', 2, 2, 13, 15),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new Token(Tokens::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new Token(Tokens::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new Token(Tokens::T_STRING, 'bar', 4, 4, 21, 23),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
         self::assertEquals($expected, $class->getTokens());
@@ -423,18 +424,18 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_ABSTRACT, 'abstract', 2, 2, 1, 8),
-            new Token(PHP_Depend_ConstantsI::T_CLASS, 'class', 2, 2, 10, 14),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 16, 18),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+            new Token(Tokens::T_ABSTRACT, 'abstract', 2, 2, 1, 8),
+            new Token(Tokens::T_CLASS, 'class', 2, 2, 10, 14),
+            new Token(Tokens::T_STRING, 'Foo', 2, 2, 16, 18),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new Token(Tokens::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new Token(Tokens::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new Token(Tokens::T_STRING, 'bar', 4, 4, 21, 23),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
         self::assertEquals($expected, $class->getTokens());
@@ -454,16 +455,16 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current();
 
         $expected = array(
-            new Token(PHP_Depend_ConstantsI::T_INTERFACE, 'interface', 2, 2, 1, 9),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'Foo', 2, 2, 11, 13),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
-            new Token(PHP_Depend_ConstantsI::T_PUBLIC, 'public', 4, 4, 5, 10),
-            new Token(PHP_Depend_ConstantsI::T_FUNCTION, 'function', 4, 4, 12, 19),
-            new Token(PHP_Depend_ConstantsI::T_STRING, 'bar', 4, 4, 21, 23),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
-            new Token(PHP_Depend_ConstantsI::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
-            new Token(PHP_Depend_ConstantsI::T_SEMICOLON, ';', 4, 4, 26, 26),
-            new Token(PHP_Depend_ConstantsI::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
+            new Token(Tokens::T_INTERFACE, 'interface', 2, 2, 1, 9),
+            new Token(Tokens::T_STRING, 'Foo', 2, 2, 11, 13),
+            new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
+            new Token(Tokens::T_PUBLIC, 'public', 4, 4, 5, 10),
+            new Token(Tokens::T_FUNCTION, 'function', 4, 4, 12, 19),
+            new Token(Tokens::T_STRING, 'bar', 4, 4, 21, 23),
+            new Token(Tokens::T_PARENTHESIS_OPEN, '(', 4, 4, 24, 24),
+            new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
+            new Token(Tokens::T_SEMICOLON, ';', 4, 4, 26, 26),
+            new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
         self::assertEquals($expected, $interface->getTokens());

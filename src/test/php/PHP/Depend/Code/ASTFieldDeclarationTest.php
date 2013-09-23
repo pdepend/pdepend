@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\State;
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTFieldDeclaration} class.
@@ -146,7 +147,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet()
     {
         $declaration = $this->createNodeInstance();
-        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PUBLIC);
+        $declaration->setModifiers(State::IS_PUBLIC);
 
         self::assertTrue($declaration->isPublic());
     }
@@ -170,7 +171,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet()
     {
         $declaration = $this->createNodeInstance();
-        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PROTECTED);
+        $declaration->setModifiers(State::IS_PROTECTED);
 
         self::assertTrue($declaration->isProtected());
     }
@@ -194,7 +195,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet()
     {
         $declaration = $this->createNodeInstance();
-        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_PRIVATE);
+        $declaration->setModifiers(State::IS_PRIVATE);
 
         self::assertTrue($declaration->isPrivate());
     }
@@ -218,7 +219,7 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet()
     {
         $declaration = $this->createNodeInstance();
-        $declaration->setModifiers(PHP_Depend_ConstantsI::IS_STATIC);
+        $declaration->setModifiers(State::IS_STATIC);
 
         self::assertTrue($declaration->isStatic());
     }
@@ -307,20 +308,20 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
     {
         return array(
-            array(PHP_Depend_ConstantsI::IS_PRIVATE),
-            array(PHP_Depend_ConstantsI::IS_PROTECTED),
-            array(PHP_Depend_ConstantsI::IS_PUBLIC),
+            array(State::IS_PRIVATE),
+            array(State::IS_PROTECTED),
+            array(State::IS_PUBLIC),
             array(
-                PHP_Depend_ConstantsI::IS_PRIVATE |
-                PHP_Depend_ConstantsI::IS_STATIC
+                State::IS_PRIVATE |
+                State::IS_STATIC
             ),
             array(
-                PHP_Depend_ConstantsI::IS_PROTECTED |
-                PHP_Depend_ConstantsI::IS_STATIC
+                State::IS_PROTECTED |
+                State::IS_STATIC
             ),
             array(
-                PHP_Depend_ConstantsI::IS_PUBLIC |
-                PHP_Depend_ConstantsI::IS_STATIC
+                State::IS_PUBLIC |
+                State::IS_STATIC
             ),
         );
     }
@@ -333,24 +334,24 @@ class PHP_Depend_Code_ASTFieldDeclarationTest extends PHP_Depend_Code_ASTNodeTes
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
     {
         return array(
-            array(PHP_Depend_ConstantsI::IS_ABSTRACT),
-            array(PHP_Depend_ConstantsI::IS_FINAL),
+            array(State::IS_ABSTRACT),
+            array(State::IS_FINAL),
             array(
-                PHP_Depend_ConstantsI::IS_PRIVATE |
-                PHP_Depend_ConstantsI::IS_ABSTRACT
+                State::IS_PRIVATE |
+                State::IS_ABSTRACT
             ),
             array(
-                PHP_Depend_ConstantsI::IS_PROTECTED |
-                PHP_Depend_ConstantsI::IS_ABSTRACT
+                State::IS_PROTECTED |
+                State::IS_ABSTRACT
             ),
             array(
-                PHP_Depend_ConstantsI::IS_PUBLIC |
-                PHP_Depend_ConstantsI::IS_FINAL
+                State::IS_PUBLIC |
+                State::IS_FINAL
             ),
             array(
-                PHP_Depend_ConstantsI::IS_PUBLIC |
-                PHP_Depend_ConstantsI::IS_STATIC |
-                PHP_Depend_ConstantsI::IS_FINAL
+                State::IS_PUBLIC |
+                State::IS_STATIC |
+                State::IS_FINAL
             ),
         );
     }

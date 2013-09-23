@@ -50,8 +50,13 @@ use PHP\Depend\Util\Cache\Driver;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface Builder extends \PHP_Depend_ConstantsI, \IteratorAggregate
+interface Builder extends \IteratorAggregate
 {
+    /**
+     * The default package name.
+     */
+    const DEFAULT_PACKAGE = '+global';
+
     /**
      * Setter method for the currently used token cache.
      *

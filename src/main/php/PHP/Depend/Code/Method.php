@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -92,12 +93,12 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function setModifiers($modifiers)
     {
-        $expected = ~PHP_Depend_ConstantsI::IS_PUBLIC
-                  & ~PHP_Depend_ConstantsI::IS_PROTECTED
-                  & ~PHP_Depend_ConstantsI::IS_PRIVATE
-                  & ~PHP_Depend_ConstantsI::IS_STATIC
-                  & ~PHP_Depend_ConstantsI::IS_ABSTRACT
-                  & ~PHP_Depend_ConstantsI::IS_FINAL;
+        $expected = ~State::IS_PUBLIC
+                  & ~State::IS_PROTECTED
+                  & ~State::IS_PRIVATE
+                  & ~State::IS_STATIC
+                  & ~State::IS_ABSTRACT
+                  & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException('Invalid method modifier given.');
@@ -113,8 +114,8 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isAbstract()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_ABSTRACT)
-                                 === PHP_Depend_ConstantsI::IS_ABSTRACT);
+        return (($this->modifiers & State::IS_ABSTRACT)
+                                 === State::IS_ABSTRACT);
     }
 
     /**
@@ -125,8 +126,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isPublic()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PUBLIC)
-                                 === PHP_Depend_ConstantsI::IS_PUBLIC);
+        return (($this->modifiers & State::IS_PUBLIC) === State::IS_PUBLIC);
     }
 
     /**
@@ -137,8 +137,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isProtected()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PROTECTED)
-                                 === PHP_Depend_ConstantsI::IS_PROTECTED);
+        return (($this->modifiers & State::IS_PROTECTED) === State::IS_PROTECTED);
     }
 
     /**
@@ -149,8 +148,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isPrivate()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_PRIVATE)
-                                 === PHP_Depend_ConstantsI::IS_PRIVATE);
+        return (($this->modifiers & State::IS_PRIVATE) === State::IS_PRIVATE);
     }
 
     /**
@@ -161,8 +159,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isStatic()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_STATIC)
-                                 === PHP_Depend_ConstantsI::IS_STATIC);
+        return (($this->modifiers & State::IS_STATIC) === State::IS_STATIC);
     }
 
     /**
@@ -173,8 +170,7 @@ class PHP_Depend_Code_Method extends PHP_Depend_Code_AbstractCallable
      */
     public function isFinal()
     {
-        return (($this->modifiers & PHP_Depend_ConstantsI::IS_FINAL)
-                                 === PHP_Depend_ConstantsI::IS_FINAL);
+        return (($this->modifiers & State::IS_FINAL) === State::IS_FINAL);
     }
 
     /**

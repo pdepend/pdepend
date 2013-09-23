@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -63,7 +64,7 @@ class PHP_Depend_Code_Interface extends PHP_Depend_Code_AbstractClassOrInterface
      *
      * @var integer
      */
-    protected $modifiers = PHP_Depend_ConstantsI::IS_IMPLICIT_ABSTRACT;
+    protected $modifiers = State::IS_IMPLICIT_ABSTRACT;
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.

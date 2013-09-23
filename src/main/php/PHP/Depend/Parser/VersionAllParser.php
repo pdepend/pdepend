@@ -43,6 +43,9 @@
 
 namespace PHP\Depend\Parser;
 
+use PHP\Depend\Source\Tokenizer\Tokenizer;
+use PHP\Depend\Source\Tokenizer\Tokens;
+
 /**
  * Concrete parser implementation that is very tolerant and accepts language
  * constructs and keywords that are reserved in newer php versions, but not in
@@ -65,9 +68,9 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function isKeyword($tokenType)
     {
         switch ($tokenType) {
-            case self::T_CLASS:
-            case self::T_INTERFACE:
-            case self::T_FUNCTION:
+            case Tokens::T_CLASS:
+            case Tokens::T_INTERFACE:
+            case Tokens::T_FUNCTION:
                 return true;
         }
         return false;
@@ -85,19 +88,19 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function isClassName($tokenType)
     {
         switch ($tokenType) {
-            case self::T_DIR:
-            case self::T_USE:
-            case self::T_GOTO:
-            case self::T_NULL:
-            case self::T_NS_C:
-            case self::T_TRUE:
-            case self::T_CLONE:
-            case self::T_FALSE:
-            case self::T_TRAIT:
-            case self::T_STRING:
-            case self::T_TRAIT_C:
-            case self::T_INSTEADOF:
-            case self::T_NAMESPACE:
+            case Tokens::T_DIR:
+            case Tokens::T_USE:
+            case Tokens::T_GOTO:
+            case Tokens::T_NULL:
+            case Tokens::T_NS_C:
+            case Tokens::T_TRUE:
+            case Tokens::T_CLONE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_STRING:
+            case Tokens::T_TRAIT_C:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_NAMESPACE:
                 return true;
         }
         return false;
@@ -119,7 +122,7 @@ class VersionAllParser extends \PHP_Depend_Parser
         
         if ($this->isClassName($type)) {
             return $this->consumeToken($type)->image;
-        } else if ($type === self::T_EOF) {
+        } else if ($type === Tokenizer::T_EOF) {
             throw new TokenStreamEndException($this->tokenizer);
         }
         
@@ -144,23 +147,23 @@ class VersionAllParser extends \PHP_Depend_Parser
     {
         $type = $this->tokenizer->peek();
         switch ($type) {
-            case self::T_CLONE:
-            case self::T_STRING:
-            case self::T_USE:
-            case self::T_GOTO:
-            case self::T_NULL:
-            case self::T_SELF:
-            case self::T_TRUE:
-            case self::T_FALSE:
-            case self::T_TRAIT:
-            case self::T_INSTEADOF:
-            case self::T_NAMESPACE:
-            case self::T_DIR:
-            case self::T_NS_C:
-            case self::T_PARENT:
-            case self::T_TRAIT_C:
+            case Tokens::T_CLONE:
+            case Tokens::T_STRING:
+            case Tokens::T_USE:
+            case Tokens::T_GOTO:
+            case Tokens::T_NULL:
+            case Tokens::T_SELF:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_NAMESPACE:
+            case Tokens::T_DIR:
+            case Tokens::T_NS_C:
+            case Tokens::T_PARENT:
+            case Tokens::T_TRAIT_C:
                 return $this->consumeToken($type)->image;
-            case self::T_EOF:
+            case Tokenizer::T_EOF:
                 throw new TokenStreamEndException($this->tokenizer);
         }
         throw new UnexpectedTokenException(
@@ -181,10 +184,10 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function isFormalParameterTypeHint($tokenType)
     {
         switch ($tokenType) {
-            case self::T_STRING:
-            case self::T_CALLABLE:
-            case self::T_BACKSLASH:
-            case self::T_NAMESPACE:
+            case Tokens::T_STRING:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
                 return true;
         }
         return false;
@@ -200,13 +203,13 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function parseFormalParameterTypeHint()
     {
         switch ($this->tokenizer->peek()) {
-            case self::T_CALLABLE:
-                $this->consumeToken(self::T_CALLABLE);
+            case Tokens::T_CALLABLE:
+                $this->consumeToken(Tokens::T_CALLABLE);
                 $type = $this->builder->buildAstTypeCallable();
                 break;
-            case self::T_STRING:
-            case self::T_BACKSLASH:
-            case self::T_NAMESPACE:
+            case Tokens::T_STRING:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
                 $name = $this->parseQualifiedName();
 
                 if (0 === strcasecmp('callable', $name)) {
@@ -228,11 +231,11 @@ class VersionAllParser extends \PHP_Depend_Parser
      */
     protected function parseIntegerNumber()
     {
-        $token = $this->consumeToken(self::T_LNUMBER);
+        $token = $this->consumeToken(Tokens::T_LNUMBER);
 
         if ('0' === $token->image) {
-            if (self::T_STRING === $this->tokenizer->peek()) {
-                $token1 = $this->consumeToken(self::T_STRING);
+            if (Tokens::T_STRING === $this->tokenizer->peek()) {
+                $token1 = $this->consumeToken(Tokens::T_STRING);
                 if (preg_match('(^b[01]+$)', $token1->image)) {
                     $token->image     = $token->image . $token1->image;
                     $token->endLine   = $token1->endLine;
@@ -267,10 +270,10 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function parsePostfixIdentifier()
     {
         switch ($this->tokenizer->peek()) {
-            case self::T_STRING:
+            case Tokens::T_STRING:
                 $node = $this->parseLiteral();
                 break;
-            case self::T_CURLY_BRACE_OPEN:
+            case Tokens::T_CURLY_BRACE_OPEN:
                 $node = $this->parseCompoundExpression();
                 break;
             default:
@@ -313,8 +316,8 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function isArrayStartDelimiter()
     {
         switch ($this->tokenizer->peek()) {
-            case self::T_ARRAY:
-            case self::T_SQUARED_BRACKET_OPEN:
+            case Tokens::T_ARRAY:
+            case Tokens::T_SQUARED_BRACKET_OPEN:
                 return true;
         }
         return false;
@@ -331,17 +334,17 @@ class VersionAllParser extends \PHP_Depend_Parser
     protected function parseArray(\PHP_Depend_Code_ASTArray $array, $static = false)
     {
         switch ($this->tokenizer->peek()) {
-            case self::T_ARRAY:
-                $this->consumeToken(self::T_ARRAY);
+            case Tokens::T_ARRAY:
+                $this->consumeToken(Tokens::T_ARRAY);
                 $this->consumeComments();
-                $this->consumeToken(self::T_PARENTHESIS_OPEN);
-                $this->parseArrayElements($array, self::T_PARENTHESIS_CLOSE, $static);
-                $this->consumeToken(self::T_PARENTHESIS_CLOSE);
+                $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+                $this->parseArrayElements($array, Tokens::T_PARENTHESIS_CLOSE, $static);
+                $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
                 break;
             default:
-                $this->consumeToken(self::T_SQUARED_BRACKET_OPEN);
-                $this->parseArrayElements($array, self::T_SQUARED_BRACKET_CLOSE, $static);
-                $this->consumeToken(self::T_SQUARED_BRACKET_CLOSE);
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
+                $this->parseArrayElements($array, Tokens::T_SQUARED_BRACKET_CLOSE, $static);
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
                 break;
         }
         return $array;

@@ -42,6 +42,7 @@
  */
 
 use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\AST\State;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -140,7 +141,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC,
+            State::IS_PUBLIC,
             $methods['foo']->getModifiers()
         );
     }
@@ -156,7 +157,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED,
+            State::IS_PROTECTED,
             $methods['foo']->getModifiers()
         );
     }
@@ -172,7 +173,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PRIVATE,
+            State::IS_PRIVATE,
             $methods['foo']->getModifiers()
         );
     }
@@ -188,7 +189,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PROTECTED | PHP_Depend_ConstantsI::IS_ABSTRACT,
+            State::IS_PROTECTED | State::IS_ABSTRACT,
             $methods['foo']->getModifiers()
         );
     }
@@ -204,7 +205,7 @@ class PHP_Depend_Code_TraitTest extends PHP_Depend_Code_AbstractItemTest
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
-            PHP_Depend_ConstantsI::IS_PUBLIC | PHP_Depend_ConstantsI::IS_STATIC,
+            State::IS_PUBLIC | State::IS_STATIC,
             $methods['foo']->getModifiers()
         );
     }

@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\Tokenizer\Tokens;
 
 /**
  * This analyzer collects different lines of code metrics.
@@ -416,7 +417,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             for ($i = 0; $i < $count; ++$i) {
                 $token = $tokens[$i];
 
-                if ($token->type === \PHP\Depend\Source\Tokenizer\Tokenizer::T_CURLY_BRACE_OPEN) {
+                if ($token->type === Tokens::T_CURLY_BRACE_OPEN) {
                     break;
                 }
             }
@@ -427,8 +428,8 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
         for (; $i < $count; ++$i) {
             $token = $tokens[$i];
 
-            if ($token->type === \PHP\Depend\Source\Tokenizer\Tokenizer::T_COMMENT
-                || $token->type === \PHP\Depend\Source\Tokenizer\Tokenizer::T_DOC_COMMENT
+            if ($token->type === Tokens::T_COMMENT
+                || $token->type === Tokens::T_DOC_COMMENT
             ) {
                 $lines =& $clines;
             } else {
@@ -438,26 +439,26 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
             switch ($token->type) {
 
             // These statement are terminated by a semicolon
-            //case \PHP\Depend\Source\Tokenizer\Tokenizer::T_RETURN:
-            //case \PHP\Depend\Source\Tokenizer\Tokenizer::T_THROW:
+            //case \PHP\Depend\Source\Tokenizer\Tokens::T_RETURN:
+            //case \PHP\Depend\Source\Tokenizer\Tokens::T_THROW:
 
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_IF:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_TRY:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_CASE:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_GOTO:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_CATCH:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_WHILE:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_ELSEIF:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_SWITCH:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_DEFAULT:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_FOREACH:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_FUNCTION:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_SEMICOLON:
+            case Tokens::T_IF:
+            case Tokens::T_TRY:
+            case Tokens::T_CASE:
+            case Tokens::T_GOTO:
+            case Tokens::T_CATCH:
+            case Tokens::T_WHILE:
+            case Tokens::T_ELSEIF:
+            case Tokens::T_SWITCH:
+            case Tokens::T_DEFAULT:
+            case Tokens::T_FOREACH:
+            case Tokens::T_FUNCTION:
+            case Tokens::T_SEMICOLON:
                 ++$llines;
                 break;
 
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_DO:
-            case \PHP\Depend\Source\Tokenizer\Tokenizer::T_FOR:
+            case Tokens::T_DO:
+            case Tokens::T_FOR:
                 // Because statements at least require one semicolon
                 --$llines;
                 break;
