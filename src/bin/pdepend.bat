@@ -1,5 +1,5 @@
 @echo off
-REM This file is part of PHP_Depend.
+REM This file is part of PDepend.
 REM
 REM Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
 REM All rights reserved.
