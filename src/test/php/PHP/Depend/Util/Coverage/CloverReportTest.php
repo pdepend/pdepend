@@ -173,17 +173,16 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
      * Creates a mocked method instance.
      *
      * @param string $name Name of the mock method.
-     *
-     * @return PHP_Depend_Code_Method
+     * @return \PHP\Depend\Source\AST\ASTMethod
      */
     private function _createMethodMock($name)
     {
-        $file = $this->getMock('PHP_Depend_Code_File', array(), array(null));
+        $file = $this->getMock('\\PHP\\Depend\\Source\\AST\\ASTCompilationUnit', array(), array(null));
         $file->expects($this->any())
             ->method('__toString')
             ->will($this->returnValue('/' . $name . '.php'));
 
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array($name));
+        $method = $this->getMock('\\PHP\\Depend\\Source\\AST\\ASTMethod', array(), array($name));
         $method->expects($this->once())
             ->method('getSourceFile')
             ->will($this->returnValue($file));

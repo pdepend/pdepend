@@ -39,6 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\AbstractASTType;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
 
 /**
  * This analyzer collects coupling values for the hole project. It calculates
@@ -64,10 +71,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Coupling_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -169,7 +173,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     }
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      *
@@ -248,11 +252,10 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a function node.
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(PHP\Depend\Source\AST\ASTFunction $function)
     {
         $this->fireStartFunction($function);
 
@@ -293,12 +296,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * Visit method for classes that will be called by PHP_Depend during the
      * analysis phase with the current context class.
      *
-     * @param PHP_Depend_Code_Class $class The currently analyzed class.
-     *
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      * @since 0.10.2
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->initDependencyMap($class);
         return parent::visitClass($class);
@@ -308,12 +310,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * Visit method for interfaces that will be called by PHP_Depend during the
      * analysis phase with the current context interface.
      *
-     * @param PHP_Depend_Code_Interface $interface The currently analyzed interface.
-     *
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      * @since 0.10.2
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->initDependencyMap($interface);
         return parent::visitInterface($interface);
@@ -322,11 +323,10 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 
@@ -371,17 +371,14 @@ class PHP_Depend_Metrics_Coupling_Analyzer
     /**
      * Calculates the coupling between the given types.
      *
-     * @param PHP_Depend_Code_AbstractType $declaringType The declaring type
-     *        or the context type.
-     * @param PHP_Depend_Code_AbstractType $coupledType   The type that is used
-     *        by the declaring type or <b>null</b> when no type is defined.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTType $declaringType
+     * @param \PHP\Depend\Source\AST\AbstractASTType $coupledType
      * @return void
      * @since 0.10.2
      */
     private function calculateCoupling(
-        PHP_Depend_Code_AbstractType $declaringType,
-        PHP_Depend_Code_AbstractType $coupledType = null
+        AbstractASTType $declaringType,
+        AbstractASTType $coupledType = null
     ) {
         $this->initDependencyMap($declaringType);
 
@@ -413,13 +410,11 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * This method will initialize a temporary coupling container for the given
      * given class or interface instance.
      *
-     * @param PHP_Depend_Code_AbstractType $type The currently
-     *        visited/traversed class or interface instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTType $type
      * @return void
      * @since 0.10.2
      */
-    private function initDependencyMap(PHP_Depend_Code_AbstractType $type)
+    private function initDependencyMap(AbstractASTType $type)
     {
         if (isset($this->dependencyMap[$type->getUuid()])) {
             return;
@@ -435,7 +430,6 @@ class PHP_Depend_Metrics_Coupling_Analyzer
      * Counts all calls within the given <b>$callable</b>
      *
      * @param PHP_Depend_Code_AbstractCallable $callable Context callable.
-     *
      * @return void
      */
     private function countCalls(PHP_Depend_Code_AbstractCallable $callable)

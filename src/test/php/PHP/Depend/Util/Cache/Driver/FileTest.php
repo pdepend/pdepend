@@ -44,15 +44,14 @@ namespace PHP\Depend\Util\Cache\Driver;
 
 use PHP\Depend\Util\Cache\AbstractDriverTest;
 
-require_once dirname(__FILE__) . '/../AbstractDriverTest.php';
-
 /**
  * Test case for the {@link \PHP\Depend\Util\Cache\Driver\File} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PHP\Depend\Util\Cache\Driver\File
+ * @group unittest
  */
 class FileTest extends AbstractDriverTest
 {

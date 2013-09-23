@@ -46,14 +46,14 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
- * @covers \PHP\Depend\Builder\DefaultBuilder
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PHP\Depend\Source\Language\PHP\PHPBuilder
  * @covers PHP_Depend_Code_ASTPropertyPostfix
  * @group pdepend
  * @group pdepend::ast
  * @group unittest
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTPropertyPostfix
  */
 class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
@@ -357,7 +357,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
@@ -368,7 +368,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
     {
@@ -379,7 +379,7 @@ class PHP_Depend_Code_ASTPropertyPostfixTest extends PHP_Depend_Code_ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {

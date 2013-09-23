@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * Test case for the class level analyzer.
@@ -63,7 +64,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
-        $package  = new PHP_Depend_Code_Package('package1');
+        $package  = new ASTNamespace('package1');
         $packages = new PHP_Depend_Code_NodeIterator(array($package));
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();

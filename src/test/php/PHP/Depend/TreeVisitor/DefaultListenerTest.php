@@ -42,15 +42,15 @@
 
 namespace PHP\Depend\TreeVisitor;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
-require_once dirname(__FILE__) . '/TestListener.php';
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTTrait;
 
 /**
  * Test case for the default visit listener implementation.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @covers \PHP\Depend\TreeVisitor\AbstractVisitor
  * @group pdepend
  * @group pdepend::visitor
@@ -71,7 +71,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
         $listener = new TestListener();
         $visitor  = new DefaultVisitorDummy();
         $visitor->addVisitListener($listener);
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
 
         $actual   = $listener->nodes;
         $expected = array(
@@ -112,7 +112,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForClass()
     {
         $class = $this->createClassFixture(__FUNCTION__);
-        $class->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $class->setSourceFile(new ASTCompilationUnit(__FILE__));
 
         $listener = new TestListener();
         $visitor  = new DefaultVisitorDummy();
@@ -140,7 +140,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForInterface()
     {
         $interface = $this->createInterfaceFixture(__FUNCTION__);
-        $interface->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $interface->setSourceFile(new ASTCompilationUnit(__FILE__));
 
         $listener = new TestListener();
         $visitor  = new DefaultVisitorDummy();
@@ -168,7 +168,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForFunction()
     {
         $function = $this->createFunctionFixture(__FUNCTION__);
-        $function->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $function->setSourceFile(new ASTCompilationUnit(__FILE__));
 
         $listener = new TestListener();
         $visitor  = new DefaultVisitorDummy();
@@ -196,7 +196,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
     public function testListenerCallsStartNodeEndNodeForMethod()
     {
         $method = $this->createMethodFixture(__FUNCTION__);
-        $method->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $method->setSourceFile(new ASTCompilationUnit(__FILE__));
 
         $listener = new TestListener();
         $visitor  = new DefaultVisitorDummy();
@@ -255,7 +255,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
         $listener->expects($this->once())
             ->method('startVisitNode');
 
-        $listener->startVisitTrait(new \PHP_Depend_Code_Trait('MyTrait'));
+        $listener->startVisitTrait(new ASTTrait('MyTrait'));
     }
 
     /**
@@ -270,6 +270,6 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
         $listener->expects($this->once())
             ->method('endVisitNode');
 
-        $listener->endVisitTrait(new \PHP_Depend_Code_Trait('MyTrait'));
+        $listener->endVisitTrait(new ASTTrait('MyTrait'));
     }
 }

@@ -40,8 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-use PHP\Depend\Builder\DefaultBuilder;
-use PHP\Depend\Parser\VersionAllParser;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTTrait;
+use PHP\Depend\Source\Builder\BuilderContext;
+use PHP\Depend\Source\Language\PHP\PHPBuilder;
+use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 use PHP\Depend\Util\Cache\Driver\Memory;
 use PHP\Depend\Util\Configuration\Factory;
@@ -166,7 +173,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first function found in a test file associated with the
      * given test case.
      *
-     * @return PHP_Depend_Code_Function
+     * @return ASTFunction
      */
     protected function getFirstFunctionForTestCase()
     {
@@ -222,7 +229,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first trait found in a test file associated with the given
      * test case.
      *
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP\Depend\Source\AST\ASTTrait
      * @since 1.0.0
      */
     protected function getFirstTraitForTestCase()
@@ -237,7 +244,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first class found in a test file associated with the given
      * test case.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP\Depend\Source\AST\ASTClass
      */
     protected function getFirstClassForTestCase()
     {
@@ -251,7 +258,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first interface that could be found in the source file
      * associated with the calling test case.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP\Depend\Source\AST\ASTInterface
      */
     protected function getFirstInterfaceForTestCase()
     {
@@ -442,17 +449,17 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $name Optional class name.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP\Depend\Source\AST\ASTClass
      * @since 1.0.2
      */
     protected function createClassFixture($name = null)
     {
         $name = $name ? $name : get_class($this);
 
-        $class = new PHP_Depend_Code_Class($name);
-        $class->setSourceFile(new PHP_Depend_Code_File($GLOBALS['argv'][0]));
+        $class = new ASTClass($name);
+        $class->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $class->setCache(new Memory());
-        $class->setContext($this->getMock('\\PHP\\Depend\\Builder\\Context'));
+        $class->setContext($this->getMock(BuilderContext::CLAZZ));
 
         return $class;
     }
@@ -462,15 +469,15 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $name Optional interface name.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP\Depend\Source\AST\ASTInterface
      * @since 1.0.2
      */
     protected function createInterfaceFixture($name = null)
     {
         $name = $name ? $name : get_class($this);
 
-        $interface = new PHP_Depend_Code_Interface($name);
-        $interface->setSourceFile(new PHP_Depend_Code_File($GLOBALS['argv'][0]));
+        $interface = new ASTInterface($name);
+        $interface->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $interface->setCache(new Memory());
 
         return $interface;
@@ -480,14 +487,14 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a ready to use trait fixture.
      *
      * @param string $name Optional trait name.
-     * @return PHP_Depend_Code_Trait
+     * @return \PHP\Depend\Source\AST\ASTTrait
      * @since 1.0.2
      */
     protected function createTraitFixture($name = null)
     {
         $name = $name ? $name : get_class($this);
 
-        $trait = new PHP_Depend_Code_Trait($name);
+        $trait = new ASTTrait($name);
         $trait->setCache(new Memory());
 
         return $trait;
@@ -498,15 +505,15 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $name Optional function name.
      *
-     * @return PHP_Depend_Code_Function
+     * @return ASTFunction
      * @since 1.0.2
      */
     protected function createFunctionFixture($name = null)
     {
         $name = $name ? $name : get_class($this);
 
-        $function = new PHP_Depend_Code_Function($name);
-        $function->setSourceFile(new PHP_Depend_Code_File($GLOBALS['argv'][0]));
+        $function = new ASTFunction($name);
+        $function->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $function->setCache(new Memory());
         $function->addChild(new PHP_Depend_Code_ASTFormalParameters());
 
@@ -517,14 +524,14 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a ready to use method fixture.
      *
      * @param string $name Optional method name.
-     * @return PHP_Depend_Code_Method
+     * @return \PHP\Depend\Source\AST\ASTMethod
      * @since 1.0.2
      */
     protected function createMethodFixture($name = null)
     {
         $name = $name ? $name : get_class($this);
 
-        $method = new PHP_Depend_Code_Method($name);
+        $method = new ASTMethod($name);
         $method->setCache(new Memory());
         $method->addChild(new PHP_Depend_Code_ASTFormalParameters());
 
@@ -753,13 +760,13 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         sort($files);
 
         $cache   = new Memory();
-        $builder = new DefaultBuilder();
+        $builder = new PHPBuilder();
 
         foreach ($files as $file) {
             $tokenizer = new PHPTokenizerInternal();
             $tokenizer->setSourceFile($file);
 
-            $parser = new VersionAllParser(
+            $parser = new PHPParserGeneric(
                 $tokenizer,
                 $builder,
                 $cache

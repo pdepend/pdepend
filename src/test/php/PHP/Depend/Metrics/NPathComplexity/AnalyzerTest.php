@@ -40,15 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the NPath complexity analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_AbstractCachingAnalyzer
+ * @covers \PHP\Depend\Metrics\AbstractCachingAnalyzer
  * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
  * @group pdepend
  * @group pdepend::metrics
@@ -525,7 +523,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * Parses the source code associated with the calling test case and returns
      * the first function found in the test case source file.
      *
-     * @return PHP_Depend_Code_Function
+     * @return \PHP\Depend\Source\AST\ASTFunction
      * @since 0.9.12
      */
     private function _getFirstFunctionForTestCase()
@@ -554,7 +552,7 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
      * Parses the source code associated with the calling test case and returns
      * the first method found in the test case source file.
      *
-     * @return PHP_Depend_Code_Method
+     * @return \PHP\Depend\Source\AST\ASTMethod
      * @since 0.9.12
      */
     private function _getFirstMethodForTestCase()

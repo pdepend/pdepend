@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\State;
 
 /**
@@ -57,14 +58,14 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
     const CLAZZ = __CLASS__;
 
     /**
-     * @var PHP_Depend_Code_Method[]
+     * @var \PHP\Depend\Source\AST\ASTMethod[]
      */
     private $allMethods;
 
     /**
      * Returns an array with all aliased or directly imported methods.
      *
-     * @return PHP_Depend_Code_Method[]
+     * @return \PHP\Depend\Source\AST\ASTMethod[]
      */
     public function getAllMethods()
     {
@@ -80,16 +81,15 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
     }
 
     /**
-     * This method tests if the given {@link PHP_Depend_Code_Method} is excluded
+     * This method tests if the given {@link \PHP\Depend\Source\AST\ASTMethod} is excluded
      * by precedence statement in this use statement. It will return <b>true</b>
      * if the given <b>$method</b> is excluded, otherwise the return value of
      * this method will be <b>false</b>.
      *
-     * @param PHP_Depend_Code_Method $method The method to test for exclusion.
-     *
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return boolean
      */
-    public function hasExcludeFor(PHP_Depend_Code_Method $method)
+    public function hasExcludeFor(ASTMethod $method)
     {
         $methodName   = strtolower($method->getName());
         $methodParent = $method->getParent();
@@ -134,11 +134,10 @@ class PHP_Depend_Code_ASTTraitUseStatement extends PHP_Depend_Code_ASTStatement
      * alias exists for the given method, this method will simply return the
      * an <b>array</b> with the original method.
      *
-     * @param PHP_Depend_Code_Method $method The imported trait method.
-     *
-     * @return PHP_Depend_Code_Method[]
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
+     * @return \PHP\Depend\Source\AST\ASTMethod[]
      */
-    private function getAliasesFor(PHP_Depend_Code_Method $method)
+    private function getAliasesFor(ASTMethod $method)
     {
         $name = strtolower($method->getName());
 

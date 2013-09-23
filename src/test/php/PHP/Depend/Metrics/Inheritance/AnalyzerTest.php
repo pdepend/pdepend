@@ -39,14 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+use PHP\Depend\Source\AST\ASTClass;
 
 /**
  * Test case for the inheritance analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers PHP_Depend_Metrics_Inheritance_Analyzer
  * @group pdepend
@@ -309,7 +308,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testAnalyzerIgnoresClassesThatAreNotUserDefined()
     {
-        $class = new PHP_Depend_Code_Class(null);
+        $class = new ASTClass(null);
 
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
         $analyzer->visitClass($class);

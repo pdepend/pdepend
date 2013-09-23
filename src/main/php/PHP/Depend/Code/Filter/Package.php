@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * This class implements a filter that is based on the package.
@@ -82,13 +85,13 @@ class PHP_Depend_Code_Filter_Package
     {
         $package = null;
         // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       PHP_Depend_Code_Method and PHP_Depend_Code_Property, but when
+        //       \PHP\Depend\Source\AST\ASTMethod and PHP_Depend_Code_Property, but when
         //       PDepend supports more node types, this could produce errors.
-        if ($node instanceof PHP_Depend_Code_AbstractClassOrInterface) {
+        if ($node instanceof AbstractASTClassOrInterface) {
             $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_Function) {
+        } else if ($node instanceof ASTFunction) {
             $package = $node->getPackage()->getName();
-        } else if ($node instanceof PHP_Depend_Code_Package) {
+        } else if ($node instanceof ASTNamespace) {
             $package = $node->getName();
         }
 

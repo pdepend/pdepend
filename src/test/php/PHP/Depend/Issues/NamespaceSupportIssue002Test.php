@@ -46,7 +46,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group pdepend
  * @group pdepend::issues
  * @group pdepend::parser
@@ -118,7 +118,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: as, line: 2, col: 19, file: '
         );
 
@@ -182,7 +182,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 2, col: 18, file: '
 
         );
@@ -199,7 +199,7 @@ class PHP_Depend_Issues_NamespaceSupportIssue002Test extends PHP_Depend_Issues_A
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: {, line: 2, col: 13, file: '
 
         );

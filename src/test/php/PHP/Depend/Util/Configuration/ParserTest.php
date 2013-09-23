@@ -43,14 +43,13 @@
 
 namespace PHP\Depend\Util\Configuration;
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
 /**
  * Test case for the {@link \PHP\Depend\Util\Configuration\Parser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     0.10.0
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since 0.10.0
+ *
  * @covers \PHP\Depend\Util\Configuration\Parser
  * @group pdepend
  * @group pdepend::util

@@ -41,6 +41,8 @@
  * @since     0.9.10
  */
 
+namespace PHP\Depend\Metrics;
+
 /**
  * Locator that searches for PHP_Depend analyzers that follow the PHP_Depend
  * convention and are present the PHP_Depend source tree.
@@ -49,8 +51,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.10
  */
-class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
-    implements PHP_Depend_Metrics_AnalyzerClassLocator
+class AnalyzerClassFileSystemLocator implements AnalyzerClassLocator
 {
     /**
      * The root search directory.
@@ -82,7 +83,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
     /**
      * Returns an array with reflection instances for all analyzer classes.
      *
-     * @return array(ReflectionClass)
+     * @return \ReflectionClass[]
      */
     public function findAll()
     {
@@ -96,7 +97,7 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      * Performs a recursive search for analyzers in the configured class path
      * directory.
      *
-     * @return array(ReflectionClass)
+     * @return \ReflectionClass[]
      */
     private function find()
     {
@@ -118,22 +119,26 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
 
             $this->classPath = $dir;
 
-            $iterator = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($dir)
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($dir)
             );
 
             foreach ($iterator as $file) {
-                if ($file->getFilename() === 'Analyzer.php') {
-                    $className = $this->createClassNameFromPath(
-                        $dir, $file->getPathname()
-                    );
-                    if (!class_exists($className)) {
-                        include_once $file->getPathname();
-                    }
 
-                    if ($this->isAnalyzerClass($className)) {
-                        $result[$className] = new ReflectionClass($className);
-                    }
+                $pathName = strtr($file->getPathname(), '\\', '/');
+                if (0 === preg_match('(/Metrics/[^/]+/Analyzer\.php$)', $pathName)) {
+                    continue;
+                }
+
+                $className = $this->createClassNameFromPath(
+                    $dir, $file->getPathname()
+                );
+                if (!class_exists($className)) {
+                    include_once $file->getPathname();
+                }
+
+                if ($this->isAnalyzerClass($className)) {
+                    $result[$className] = new \ReflectionClass($className);
                 }
             }
         }
@@ -148,7 +153,6 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      *
      * @param string $classPath The currently processed class path.
      * @param string $path      Path of a possible analyzer class.
-     *
      * @return string
      */
     private function createClassNameFromPath($classPath, $path)
@@ -161,7 +165,6 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      * Checks if the given class name represents a valid analyzer implementation.
      *
      * @param string $className Class name of a possible analyzer implementation.
-     *
      * @return boolean
      */
     private function isAnalyzerClass($className)
@@ -173,12 +176,11 @@ class PHP_Depend_Metrics_AnalyzerClassFileSystemLocator
      * Checks if the given class implements the analyzer interface.
      *
      * @param string $className Class name of a possible analyzer implementation.
-     *
      * @return boolean
      */
     private function implementsInterface($className)
     {
-        $expectedType = 'PHP_Depend_Metrics_AnalyzerI';
+        $expectedType = 'PHP\\Depend\\Metrics\\Analyzer';
         return in_array($expectedType, class_implements($className));
     }
 }

@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Report;
 
+use PHP\Depend\Metrics\Analyzer;
+
 /**
  * Base interface for all PHP_Depend loggers.
  *
@@ -54,10 +56,10 @@ interface Generator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
-    function log(\PHP_Depend_Metrics_AnalyzerI $analyzer);
+    function log(Analyzer $analyzer);
     
     /**
      * Closes the logger process and writes the output file.

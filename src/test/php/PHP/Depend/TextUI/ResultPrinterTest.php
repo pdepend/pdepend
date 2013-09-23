@@ -42,7 +42,8 @@
 
 namespace PHP\Depend\TextUI;
 
-use PHP\Depend\Builder\DefaultBuilder;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\Language\PHP\PHPBuilder;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 
 /**
@@ -63,7 +64,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     public function testResultPrinterOutputForSingleEntry()
     {
         // Create dummy objects
-        $builder   = new DefaultBuilder();
+        $builder   = new PHPBuilder();
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
@@ -88,7 +89,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     public function testResultPrinterOutputForMultipleEntries()
     {
         // Create dummy objects
-        $builder   = new DefaultBuilder();
+        $builder   = new PHPBuilder();
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
@@ -116,7 +117,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     public function testResultPrinterForMultipleEntries()
     {
         // Create dummy objects
-        $method   = new \PHP_Depend_Code_Method('method');
+        $method   = new ASTMethod('method');
         $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
 
         $printer = new ResultPrinter();
@@ -143,7 +144,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     public function testResultPrinterForCompleteLine()
     {
         // Create dummy objects
-        $method   = new \PHP_Depend_Code_Method('method');
+        $method   = new ASTMethod('method');
         $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
 
         $printer = new ResultPrinter();

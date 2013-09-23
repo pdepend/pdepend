@@ -42,14 +42,16 @@
 
 namespace PHP\Depend\TreeVisitor;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-require_once dirname(__FILE__) . '/DefaultVisitorDummy.php';
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
 
 /**
  * Test case for the default visitor implementation.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\TreeVisitor\AbstractVisitor
  * @group pdepend
@@ -75,20 +77,20 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $expected = array(
             'pkgA',
             'classB',
-            'PHP_Depend_Code_File',
+            'PHP\\Depend\\Source\\AST\\ASTCompilationUnit',
             'methodBA',
             'methodBB',
             'classA',
-            'PHP_Depend_Code_File',
+            'PHP\\Depend\\Source\\AST\\ASTCompilationUnit',
             'methodAB',
             'methodAA',
             'pkgB',
             'interfsC',
-            'PHP_Depend_Code_File',
+            'PHP\\Depend\\Source\\AST\\ASTCompilationUnit',
             'methodCB',
             'methodCA',
             'funcD',
-            'PHP_Depend_Code_File'
+            'PHP\\Depend\\Source\\AST\\ASTCompilationUnit'
         );
         
         self::assertEquals($expected, $visitor->visits);
@@ -107,7 +109,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor->expects($this->exactly(2))
             ->method('visitParameter');
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -123,7 +125,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor->expects($this->exactly(3))
             ->method('visitParameter');
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -142,7 +144,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -161,7 +163,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -180,7 +182,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -199,7 +201,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -218,7 +220,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -237,7 +239,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($packages->current());
+        $visitor->visitNamespace($packages->current());
     }
 
     /**
@@ -248,11 +250,11 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
      */
     public function testVisitorVisitsTrait()
     {
-        $package = new \PHP_Depend_Code_Package('MyPackage');
-        $package->addType(new \PHP_Depend_Code_Trait('MyTraitOne'))
-            ->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
-        $package->addType(new \PHP_Depend_Code_Trait('MyTraitTwo'))
-            ->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $package = new ASTNamespace('MyPackage');
+        $package->addType(new ASTTrait('MyTraitOne'))
+            ->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $package->addType(new ASTTrait('MyTraitTwo'))
+            ->setSourceFile(new ASTCompilationUnit(__FILE__));
 
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('visitTrait'));
         $visitor->expects($this->exactly(2))
@@ -270,9 +272,9 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
     public function testVisitorInvokesAcceptOnTraitMethods()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
-        $trait->addMethod($method0 = new \PHP_Depend_Code_Method('m0'));
-        $trait->addMethod($method1 = new \PHP_Depend_Code_Method('m1'));
+        $trait->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $trait->addMethod($method0 = new ASTMethod('m0'));
+        $trait->addMethod($method1 = new ASTMethod('m1'));
 
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('visitMethod'));
         $visitor->expects($this->at(0))
@@ -294,9 +296,9 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
     public function testVisitorInvokesStartTraitOnListener()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $trait->setSourceFile(new ASTCompilationUnit(__FILE__));
 
-        $package = new \PHP_Depend_Code_Package('MyPackage');
+        $package = new ASTNamespace('MyPackage');
         $package->addType($trait);
 
         $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
@@ -306,7 +308,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($package);
+        $visitor->visitNamespace($package);
     }
 
     /**
@@ -318,9 +320,9 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
     public function testVisitorInvokesEndTraitOnListener()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new \PHP_Depend_Code_File(__FILE__));
+        $trait->setSourceFile(new ASTCompilationUnit(__FILE__));
 
-        $package = new \PHP_Depend_Code_Package('MyPackage');
+        $package = new ASTNamespace('MyPackage');
         $package->addType($trait);
 
         $listener = $this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener');
@@ -330,7 +332,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMock('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitPackage($package);
+        $visitor->visitNamespace($package);
     }
 
     /**

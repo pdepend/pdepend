@@ -326,7 +326,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     private function _createPackage($userDefined, $packageName)
     {
         $packageA = $this->getMock(
-            '\\PHP_Depend_Code_Package',
+            '\\PHP\\Depend\\Source\\AST\\ASTNamespace',
             array('isUserDefined'),
             array($packageName),
             'package_' . md5(microtime())

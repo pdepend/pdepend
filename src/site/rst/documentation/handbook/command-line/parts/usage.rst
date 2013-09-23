@@ -70,7 +70,7 @@ summary of all metrics collected for the analyzed php source code. ::
       ...
     </files>
     <package name="PHP_Depend" cr="1.3005761647303" noc="3" nof="0" noi="4" nom="51" rcr="0.50515422957667">
-      <class name="PHP_Depend_Parser" cis="12" cloc="250" cr="0.15" csz="113" dit="0" eloc="526" impl="1" loc="913" ncloc="663" nom="20" rcr="0.1925" vars="6" varsi="6" varsnp="0" wmc="107" wmci="107" wmcnp="12">
+      <class name="\PHP\Depend\Source\Language\PHP\AbstractPHPParser" cis="12" cloc="250" cr="0.15" csz="113" dit="0" eloc="526" impl="1" loc="913" ncloc="663" nom="20" rcr="0.1925" vars="6" varsi="6" varsnp="0" wmc="107" wmci="107" wmcnp="12">
         <file name="/usr/local/pear/PEAR/PHP/Depend/Parser.php"/>
         <method name="__construct" ccn="1" ccn2="1" cloc="0" eloc="4" loc="6" ncloc="6" npath="1"/>
         <method name="_consumeComments" ccn="3" ccn2="3" cloc="0" eloc="10" loc="12" ncloc="12" npath="3"/>

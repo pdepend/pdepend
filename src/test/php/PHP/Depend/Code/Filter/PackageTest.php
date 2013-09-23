@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * Test case for the {@link PHP_Depend_Code_Filter_Package} class.
@@ -62,7 +66,7 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
     public function testFilterAcceptsPackage()
     {
         $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__, __METHOD__));
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
     /**
@@ -73,7 +77,7 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
     public function testFilterNotAcceptsPackage()
     {
         $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__, __FUNCTION__));
-        $this->assertFalse($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
+        $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
     /**
@@ -84,8 +88,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
     public function testFilterAcceptsAndNotAcceptsExpectedPackage()
     {
         $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
-        $this->assertFalse($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Package(__FUNCTION__)));
+        $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTNamespace(__FUNCTION__)));
     }
 
     /**
@@ -95,8 +99,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterAcceptsClass()
     {
-        $package = new PHP_Depend_Code_Package(__FUNCTION__);
-        $class   = $package->addType(new PHP_Depend_Code_Class('Clazz'));
+        $package = new ASTNamespace(__FUNCTION__);
+        $class   = $package->addType(new ASTClass('Clazz'));
 
         $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
         $this->assertTrue($filter->accept($class));
@@ -109,8 +113,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterNotAcceptsClass()
     {
-        $package = new PHP_Depend_Code_Package(__FUNCTION__);
-        $class   = $package->addType(new PHP_Depend_Code_Class('Clazz'));
+        $package = new ASTNamespace(__FUNCTION__);
+        $class   = $package->addType(new ASTClass('Clazz'));
 
         $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__));
         $this->assertFalse($filter->accept($class));
@@ -123,8 +127,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterAcceptsInterface()
     {
-        $package   = new PHP_Depend_Code_Package(__FUNCTION__);
-        $interface = $package->addType(new PHP_Depend_Code_Interface('Iface'));
+        $package   = new ASTNamespace(__FUNCTION__);
+        $interface = $package->addType(new ASTInterface('Iface'));
 
         $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
         $this->assertTrue($filter->accept($interface));
@@ -137,8 +141,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterNotAcceptsInterface()
     {
-        $package   = new PHP_Depend_Code_Package(__FUNCTION__);
-        $interface = $package->addType(new PHP_Depend_Code_Interface('Iface'));
+        $package   = new ASTNamespace(__FUNCTION__);
+        $interface = $package->addType(new ASTInterface('Iface'));
 
         $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__));
         $this->assertFalse($filter->accept($interface));
@@ -151,8 +155,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterAcceptsFunction()
     {
-        $package  = new PHP_Depend_Code_Package(__FUNCTION__);
-        $function = $package->addFunction(new PHP_Depend_Code_Function('Func'));
+        $package  = new ASTNamespace(__FUNCTION__);
+        $function = $package->addFunction(new ASTFunction('Func'));
 
         $filter = new PHP_Depend_Code_Filter_Package(array(__CLASS__));
         $this->assertTrue($filter->accept($function));
@@ -165,8 +169,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterNotAcceptsFunction()
     {
-        $package  = new PHP_Depend_Code_Package(__FUNCTION__);
-        $function = $package->addFunction(new PHP_Depend_Code_Function('Func'));
+        $package  = new ASTNamespace(__FUNCTION__);
+        $function = $package->addFunction(new ASTFunction('Func'));
 
         $filter = new PHP_Depend_Code_Filter_Package(array(__FUNCTION__));
         $this->assertFalse($filter->accept($function));
@@ -179,7 +183,7 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterAcceptsPackageWithWildcard()
     {
-        $pdepend = new PHP_Depend_Code_Package('PHP_Depend_Code');
+        $pdepend = new ASTNamespace('PHP_Depend_Code');
 
         $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
         $this->assertTrue($filter->accept($pdepend));
@@ -192,7 +196,7 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterNotAcceptsPackageWithWildcard()
     {
-        $ezcGraph = new PHP_Depend_Code_Package('ezcGraph');
+        $ezcGraph = new ASTNamespace('ezcGraph');
 
         $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
         $this->assertFalse($filter->accept($ezcGraph));
@@ -206,8 +210,8 @@ class PHP_Depend_Code_Filter_PackageTest extends PHP_Depend_AbstractTest
      */
     public function testFilterAcceptsAndNotAcceptsPackageWithWildcard()
     {
-        $zendFW  = new PHP_Depend_Code_Package('Zend_Controller');
-        $pdepend = new PHP_Depend_Code_Package('PHP_Depend_Code');
+        $zendFW  = new ASTNamespace('Zend_Controller');
+        $pdepend = new ASTNamespace('PHP_Depend_Code');
 
         $filter = new PHP_Depend_Code_Filter_Package(array('ezc*', 'Zend_*'));
         $this->assertFalse($filter->accept($zendFW));

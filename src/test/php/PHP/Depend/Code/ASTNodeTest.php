@@ -108,7 +108,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     * Tests the behavior of {@link \PHP\Depend\Source\AST\ASTMethod::getFirstChildOfType()}.
      *
      * @return void
      */
@@ -132,7 +132,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     * Tests the behavior of {@link \PHP\Depend\Source\AST\ASTMethod::getFirstChildOfType()}.
      *
      * @return void
      */
@@ -165,7 +165,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Method::getFirstChildOfType()}.
+     * Tests the behavior of {@link \PHP\Depend\Source\AST\ASTMethod::getFirstChildOfType()}.
      *
      * @return void
      */
@@ -190,7 +190,7 @@ abstract class PHP_Depend_Code_ASTNodeTest extends PHP_Depend_AbstractTest
     }
 
     /**
-     * Tests the behavior of {@link PHP_Depend_Code_Method::findChildrenOfType()}.
+     * Tests the behavior of {@link \PHP\Depend\Source\AST\ASTMethod::findChildrenOfType()}.
      *
      * @return void
      */

@@ -39,14 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * Test case for the node count analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers PHP_Depend_Metrics_NodeCount_Analyzer
  * @group pdepend
@@ -65,7 +64,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     {
         $notUserDefined = $this->createClassFixture();
 
-        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package = new ASTNamespace('PHP_Depend');
         $package->addType($notUserDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
@@ -85,7 +84,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $userDefined = $this->createClassFixture();
         $userDefined->setUserDefined();
 
-        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package = new ASTNamespace('PHP_Depend');
         $package->addType($userDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
@@ -104,7 +103,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     {
         $notUserDefined = $this->createInterfaceFixture();
 
-        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package = new ASTNamespace('PHP_Depend');
         $package->addType($notUserDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
@@ -124,7 +123,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $userDefined = $this->createInterfaceFixture();
         $userDefined->setUserDefined();
 
-        $package = new PHP_Depend_Code_Package('PHP_Depend');
+        $package = new ASTNamespace('PHP_Depend');
         $package->addType($userDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();

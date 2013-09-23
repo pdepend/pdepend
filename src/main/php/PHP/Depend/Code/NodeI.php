@@ -68,7 +68,7 @@ interface PHP_Depend_Code_NodeI
     /**
      * TreeVisitor method for node tree traversal.
      *
-     * @param \PHP\Depend\TreeVisitor $visitor
+     * @param \PHP\Depend\TreeVisitor\TreeVisitor $visitor
      * @return void
      */
     function accept(TreeVisitor $visitor);

@@ -46,7 +46,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTSwitchStatement
  * @group pdepend
  * @group pdepend::ast
@@ -171,7 +171,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testInvalidStatementInSwitchStatementResultsInExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
+     * @expectedException \PHP\Depend\Source\Parser\UnexpectedTokenException
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException()
     {
@@ -182,7 +182,7 @@ class PHP_Depend_Code_ASTSwitchStatementTest extends PHP_Depend_Code_ASTNodeTest
      * testUnclosedSwitchStatementResultsInExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
+     * @expectedException \PHP\Depend\Source\Parser\TokenStreamEndException
      */
     public function testUnclosedSwitchStatementResultsInExpectedException()
     {

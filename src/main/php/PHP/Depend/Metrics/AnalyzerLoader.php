@@ -40,6 +40,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics;
+
+use PHP\Depend\Metrics\AnalyzerCacheAware;
+use PHP\Depend\Metrics\AnalyzerIterator;
+
 /**
  * This class provides a simple way to load all required analyzers by class,
  * implemented interface or parent class.
@@ -47,12 +52,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
+class AnalyzerLoader implements \IteratorAggregate
 {
     /**
      * All matching analyzer instances.
      *
-     * @var PHP_Depend_Metrics_AnalyzerI[]
+     * @var \PHP\Depend\Metrics\Analyzer[]
      */
     private $analyzers;
     
@@ -71,14 +76,14 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Used locator for installed analyzer classes.
      *
-     * @var PHP_Depend_Metrics_AnalyzerClassLocator
+     * @var \PHP\Depend\Metrics\AnalyzerClassLocator
      */
     private $classLocator;
 
     /**
      * Constructs a new analyzer loader.
      *
-     * @param PHP_Depend_Metrics_AnalyzerClassLocator $classLocator  Class locator
+     * @param \PHP\Depend\Metrics\AnalyzerClassLocator $classLocator  Class locator
      *        used to find analyzer source files on the current system.
      * @param \PHP\Depend\Util\Cache\Driver $cache
      * @param array                                   $acceptedTypes This property
@@ -87,7 +92,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      *        additional options supplied on the command line.
      */
     public function __construct(
-        PHP_Depend_Metrics_AnalyzerClassLocator $classLocator,
+        AnalyzerClassLocator $classLocator,
         \PHP\Depend\Util\Cache\Driver $cache,
         array $acceptedTypes,
         array $options = array()
@@ -100,17 +105,17 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     }
 
     /**
-     * Returns a countable iterator of {@link PHP_Depend_Metrics_AnalyzerI}
+     * Returns a countable iterator of {@link \PHP\Depend\Metrics\Analyzer}
      * instances that match against the given accepted types.
      *
-     * @return Iterator
+     * @return \Iterator
      */
     public function getIterator()
     {
         if ($this->analyzers === null) {
             $this->initAnalyzers();
         }
-        return new PHP_Depend_Metrics_AnalyzerIterator($this->analyzers);
+        return new AnalyzerIterator($this->analyzers);
     }
 
     /**
@@ -129,8 +134,7 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * Loads all accepted node analyzers.
      *
      * @param array $acceptedTypes Accepted/expected analyzer types.
-     *
-     * @return PHP_Depend_Metrics_AnalyzerI
+     * @return \PHP\Depend\Metrics\Analyzer[]
      */
     private function loadAcceptedAnalyzers(array $acceptedTypes)
     {
@@ -147,13 +151,12 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * This method checks if the given analyzer class implements one of the
      * expected analyzer types.
      *
-     * @param ReflectionClass $reflection    Reflection class for an analyzer.
-     * @param array           $expectedTypes List of accepted analyzer types.
-     *
+     * @param \ReflectionClass $reflection
+     * @param array $expectedTypes
      * @return boolean
      * @since 0.9.10
      */
-    private function isInstanceOf(ReflectionClass $reflection, array $expectedTypes)
+    private function isInstanceOf(\ReflectionClass $reflection, array $expectedTypes)
     {
         foreach ($expectedTypes as $type) {
             if (interface_exists($type) && $reflection->implementsInterface($type)) {
@@ -173,12 +176,11 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
      * This method creates a new analyzer instance or returns a previously
      * created instance of the given reflection instance.
      *
-     * @param ReflectionClass $reflection Reflection class for an analyzer.
-     *
-     * @return PHP_Depend_Metrics_AnalyzerI
+     * @param \ReflectionClass $reflection
+     * @return \PHP\Depend\Metrics\Analyzer
      * @since 0.9.10
      */
-    private function createOrReturnAnalyzer(ReflectionClass $reflection)
+    private function createOrReturnAnalyzer(\ReflectionClass $reflection)
     {
         $name = $reflection->getName();
         if (!isset($this->analyzers[$name])) {
@@ -190,12 +192,11 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Creates an analyzer instance of the given reflection class instance.
      *
-     * @param ReflectionClass $reflection Reflection class for an analyzer.
-     *
-     * @return PHP_Depend_Metrics_AnalyzerI
+     * @param \ReflectionClass $reflection
+     * @return \PHP\Depend\Metrics\Analyzer
      * @since 0.9.10
      */
-    private function createAndConfigure(ReflectionClass $reflection)
+    private function createAndConfigure(\ReflectionClass $reflection)
     {
         if ($reflection->getConstructor()) {
             $analyzer = $reflection->newInstance($this->options);
@@ -208,18 +209,17 @@ class PHP_Depend_Metrics_AnalyzerLoader implements IteratorAggregate
     /**
      * Initializes the given analyzer instance.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer Context analyzer instance.
-     *
-     * @return PHP_Depend_Metrics_AnalyzerI
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer Context analyzer instance.
+     * @return \PHP\Depend\Metrics\Analyzer
      * @since 0.9.10
      */
-    private function configure(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    private function configure(\PHP\Depend\Metrics\Analyzer $analyzer)
     {
-        if ($analyzer instanceof PHP_Depend_Metrics_CacheAware) {
+        if ($analyzer instanceof AnalyzerCacheAware) {
             $analyzer->setCache($this->cache);
         }
 
-        if (!($analyzer instanceof PHP_Depend_Metrics_AggregateAnalyzerI)) {
+        if (!($analyzer instanceof AggregateAnalyzer)) {
             return $analyzer;
         }
         

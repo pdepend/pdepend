@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -69,14 +71,14 @@ class PHP_Depend_Code_Property
     /**
      * The source file for this item.
      *
-     * @var PHP_Depend_Code_File
+     * @var ASTCompilationUnit
      */
     private $sourceFile = null;
     
     /**
      * The parent type object.
      *
-     * @var PHP_Depend_Code_Class
+     * @var ASTClass
      */
     private $declaringClass = null;
 
@@ -231,7 +233,7 @@ class PHP_Depend_Code_Property
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      * @since 0.9.5
      */
     public function getClass()
@@ -248,7 +250,7 @@ class PHP_Depend_Code_Property
     /**
      * Returns the source file for this item.
      *
-     * @return PHP_Depend_Code_File
+     * @return ASTCompilationUnit
      */
     public function getSourceFile()
     {
@@ -258,14 +260,13 @@ class PHP_Depend_Code_Property
     /**
      * Sets the source file for this item.
      *
-     * @param PHP_Depend_Code_File $sourceFile The item source file.
-     *
+     * @param PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function setSourceFile(PHP_Depend_Code_File $sourceFile)
+    public function setSourceFile(ASTCompilationUnit $compilationUnit)
     {
         if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
-            $this->sourceFile = $sourceFile;
+            $this->sourceFile = $compilationUnit;
         }
     }
 
@@ -326,7 +327,7 @@ class PHP_Depend_Code_Property
     /**
      * This method will return the class where this property was declared.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      * @since 0.9.6
      */
     public function getDeclaringClass()
@@ -337,12 +338,11 @@ class PHP_Depend_Code_Property
     /**
      * Sets the declaring class object.
      *
-     * @param PHP_Depend_Code_Class $declaringClass The declaring class.
-     *
+     * @param \PHP\Depend\Source\AST\ASTClass $declaringClass
      * @return void
      * @since 0.9.6
      */
-    public function setDeclaringClass(PHP_Depend_Code_Class $declaringClass)
+    public function setDeclaringClass(ASTClass $declaringClass)
     {
         $this->declaringClass = $declaringClass;
     }
@@ -444,7 +444,7 @@ class PHP_Depend_Code_Property
     /**
      * TreeVisitor method for node tree traversal.
      *
-     * @param \PHP\Depend\TreeVisitor $visitor
+     * @param \PHP\Depend\TreeVisitor\TreeVisitor $visitor
      * @return void
      */
     public function accept(TreeVisitor $visitor)

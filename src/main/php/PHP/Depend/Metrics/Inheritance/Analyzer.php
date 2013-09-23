@@ -39,6 +39,11 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\ASTClass;
 
 /**
  * This analyzer provides two project related inheritance metrics.
@@ -54,10 +59,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_Inheritance_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+       extends AbstractAnalyzer
+    implements AnalyzerNodeAware,
+               AnalyzerFilterAware,
+               AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -164,7 +169,7 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     }
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * @return void
@@ -206,10 +211,10 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Visits a class node.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         if (!$class->isUserDefined()) {
             return;
@@ -229,11 +234,11 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Calculates the number of derived classes.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      * @since 0.9.5
      */
-    private function calculateNumberOfDerivedClasses(PHP_Depend_Code_Class $class)
+    private function calculateNumberOfDerivedClasses(ASTClass $class)
     {
         $uuid = $class->getUuid();
         if (isset($this->derivedClasses[$uuid]) === false) {
@@ -252,11 +257,11 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Calculates the maximum HIT for the given class.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      * @since 0.9.10
      */
-    private function calculateDepthOfInheritanceTree(PHP_Depend_Code_Class $class)
+    private function calculateDepthOfInheritanceTree(ASTClass $class)
     {
         $dit  = 0;
         $uuid = $class->getUuid();
@@ -283,13 +288,12 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Calculates two metrics. The number of added methods and the number of
      * overwritten methods.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      * @since 0.9.10
      */
-    private function calculateNumberOfAddedAndOverwrittenMethods(
-        PHP_Depend_Code_Class $class
-    ) {
+    private function calculateNumberOfAddedAndOverwrittenMethods(ASTClass $class)
+    {
         $parentClass = $class->getParentClass();
         if ($parentClass === null) {
             return;
@@ -328,11 +332,11 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Initializes a empty metric container for the given class node.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      * @since 0.9.10
      */
-    private function initNodeMetricsForClass(PHP_Depend_Code_Class $class)
+    private function initNodeMetricsForClass(ASTClass $class)
     {
         $uuid = $class->getUuid();
         if (isset($this->nodeMetrics[$uuid])) {

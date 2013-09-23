@@ -47,7 +47,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Code_Class
+ * @covers \PHP\Depend\Source\AST\ASTClass
  * @group pdepend
  * @group pdepend::code
  * @group unittest
@@ -255,7 +255,7 @@ class PHP_Depend_Code_ReflectionClassTest extends PHP_Depend_AbstractTest
      *
      * @param string $testCase File name of the test file.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP\Depend\Source\AST\ASTClass
      */
     protected static function parseClass($testCase)
     {

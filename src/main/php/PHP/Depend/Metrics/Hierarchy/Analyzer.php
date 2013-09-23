@@ -39,6 +39,15 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * This analyzer calculates class/package hierarchy metrics.
@@ -57,11 +66,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_Hierarchy_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+       extends AbstractAnalyzer
+    implements AnalyzerFilterAware,
+               AnalyzerNodeAware,
+               AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -148,12 +156,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     private $nodeMetrics = null;
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages The input package set.
-     *
      * @return void
-     * @see PHP_Depend_Metrics_AnalyzerI::analyze()
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
     {
@@ -211,10 +217,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Calculates metrics for the given <b>$class</b> instance.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         if (false === $class->isUserDefined()) {
             return;
@@ -252,10 +258,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Calculates metrics for the given <b>$function</b> instance.
      *
-     * @param PHP_Depend_Code_Function $function The context function instance.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->fireStartFunction($function);
         ++$this->fcs;
@@ -265,10 +271,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Calculates metrics for the given <b>$interface</b> instance.
      *
-     * @param PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->fireStartInterface($interface);
 
@@ -284,10 +290,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
         ++$this->mts;
@@ -297,21 +303,21 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Calculates metrics for the given <b>$package</b> instance.
      *
-     * @param PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function visitPackage(PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($package);
+        $this->fireStartPackage($namespace);
 
-        foreach ($package->getTypes() as $type) {
+        foreach ($namespace->getTypes() as $type) {
             $type->accept($this);
         }
 
-        foreach ($package->getFunctions() as $function) {
+        foreach ($namespace->getFunctions() as $function) {
             $function->accept($this);
         }
 
-        $this->fireEndPackage($package);
+        $this->fireEndPackage($namespace);
     }
 }

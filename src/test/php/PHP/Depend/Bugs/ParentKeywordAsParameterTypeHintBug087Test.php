@@ -84,7 +84,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractTest
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\InvalidStateException',
+            '\\PHP\\Depend\\Source\\Parser\\InvalidStateException',
             'The keyword "parent" was used as type hint but the parameter ' .
             'declaration is not in a class scope.'
         );
@@ -100,7 +100,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractTest
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\InvalidStateException',
+            '\\PHP\\Depend\\Source\\Parser\\InvalidStateException',
             'The keyword "parent" was used as type hint but the ' .
             'class "Baz" does not declare a parent.'
         );

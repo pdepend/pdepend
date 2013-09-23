@@ -97,7 +97,7 @@ class Logger implements GeneratorCodeAware, GeneratorFileAware
      */
     public function getAcceptedAnalyzers()
     {
-        return array('\PHP_Depend_Metrics_NodeAwareI');
+        return array('\\PHP\\Depend\\Metrics\\AnalyzerNodeAware');
     }
 
     /**
@@ -115,10 +115,10 @@ class Logger implements GeneratorCodeAware, GeneratorFileAware
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
-    public function log(\PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function log(\PHP\Depend\Metrics\Analyzer $analyzer)
     {
         $this->_input['analyzers'][] = $analyzer;
         return true;

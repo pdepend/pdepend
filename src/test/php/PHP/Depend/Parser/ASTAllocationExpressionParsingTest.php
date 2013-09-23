@@ -44,13 +44,13 @@
 namespace PHP\Depend\Parser;
 
 /**
- * Test case for the {@link \PHP_Depend_Parser} class.
+ * Test case for the {@link \PHP\Depend\Source\Language\PHP\AbstractPHPParser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.2
  *
- * @covers \PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
@@ -341,7 +341,7 @@ class ASTAllocationExpressionParsingTest extends AbstractTest
     public function testInvalidAllocationExpressionResultsInExpectedException()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 4, col: 9, file: '
         );
         self::parseCodeResourceForTest();

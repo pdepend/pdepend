@@ -40,18 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics;
+
 /**
  * Base interface for an analyzer source locator.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface PHP_Depend_Metrics_AnalyzerClassLocator
+interface AnalyzerClassLocator
 {
     /**
      * Returns an array with reflection instances for all analyzer classes.
      *
-     * @return array(ReflectionClass)
+     * @return \ReflectionClass[]
      */
     function findAll();
 }

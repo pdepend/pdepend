@@ -46,8 +46,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
- * @covers \PHP\Depend\Builder\DefaultBuilder
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PHP\Depend\Source\Language\PHP\PHPBuilder
  * @covers PHP_Depend_Code_ASTPreIncrementExpression
  * @group pdepend
  * @group pdepend::ast

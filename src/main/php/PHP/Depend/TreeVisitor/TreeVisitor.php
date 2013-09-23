@@ -42,6 +42,14 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
+
 /**
  * Base interface for visitors that work on the generated node tree.
  *
@@ -65,59 +73,59 @@ interface TreeVisitor
     /**
      * Visits a class node.
      *
-     * @param \PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    function visitClass(\PHP_Depend_Code_Class $class);
+    function visitClass(ASTClass $class);
 
     /**
      * Visits a trait node.
      *
-     * @param \PHP_Depend_Code_Trait $trait The current trait node.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    function visitTrait(\PHP_Depend_Code_Trait $trait);
+    function visitTrait(ASTTrait $trait);
 
     /**
      * Visits a file node.
      *
-     * @param \PHP_Depend_Code_File $file The current file node.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    function visitFile(\PHP_Depend_Code_File $file);
+    function visitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Visits a function node.
      *
-     * @param \PHP_Depend_Code_Function $function The current function node.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    function visitFunction(\PHP_Depend_Code_Function $function);
+    function visitFunction(ASTFunction $function);
 
     /**
      * Visits a code interface object.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function visitInterface(\PHP_Depend_Code_Interface $interface);
+    function visitInterface(ASTInterface $interface);
 
     /**
      * Visits a method node.
      *
-     * @param \PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    function visitMethod(\PHP_Depend_Code_Method $method);
+    function visitMethod(ASTMethod $method);
 
     /**
      * Visits a package node.
      *
-     * @param \PHP_Depend_Code_Package $package The package class node.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    function visitPackage(\PHP_Depend_Code_Package $package);
+    function visitNamespace(ASTNamespace $namespace);
 
     /**
      * Visits a parameter node.

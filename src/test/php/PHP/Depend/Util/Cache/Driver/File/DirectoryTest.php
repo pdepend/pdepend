@@ -45,20 +45,14 @@ namespace PHP\Depend\Util\Cache\Driver\File;
 
 use PHP\Depend\Util\Cache\Driver;
 
-require_once dirname(__FILE__) . '/../../../../AbstractTest.php';
-
 /**
  * Test case for the {@link \PHP\Depend\Util\Cache\Driver\File\Directory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.10.0
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.10.0
  *
  * @covers \PHP\Depend\Util\Cache\Driver\File\Directory
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::cache
- * @group pdepend::util::cache::file
  * @group unittest
  */
 class DirectoryTest extends \PHP_Depend_AbstractTest

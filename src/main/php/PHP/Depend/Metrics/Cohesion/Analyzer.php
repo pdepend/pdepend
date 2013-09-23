@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
 
 /**
  * This analyzer implements several metrics that describe cohesion of classes
@@ -47,9 +49,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Cohesion_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_NodeAwareI
+class PHP_Depend_Metrics_Cohesion_Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.
@@ -94,7 +94,7 @@ class PHP_Depend_Metrics_Cohesion_Analyzer
     }
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      *
@@ -119,7 +119,7 @@ class PHP_Depend_Metrics_Cohesion_Analyzer
         $this->fireEndProperty($property);
     }
 
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 

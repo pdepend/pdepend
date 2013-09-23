@@ -43,14 +43,19 @@
 
 namespace PHP\Depend\Util;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
 
 /**
  * Test case for the {@link \PHP\Depend\Util\UuidBuilder} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     0.9.12
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since 0.9.12
+ *
  * @covers \PHP\Depend\Util\UuidBuilder
  * @group pdepend
  * @group pdepend::util
@@ -65,7 +70,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForFile()
     {
-        $file    = new \PHP_Depend_Code_File(__FILE__);
+        $file    = new ASTCompilationUnit(__FILE__);
         $builder = new UuidBuilder();
 
         self::assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
@@ -80,8 +85,8 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = new UuidBuilder();
 
-        $identifier0 = $builder->forFile(new \PHP_Depend_Code_File(__FILE__));
-        $identifier1 = $builder->forFile(new \PHP_Depend_Code_File(strtolower(__FILE__)));
+        $identifier0 = $builder->forFile(new ASTCompilationUnit(__FILE__));
+        $identifier1 = $builder->forFile(new ASTCompilationUnit(strtolower(__FILE__)));
 
         self::assertNotEquals($identifier0, $identifier1);
     }
@@ -93,10 +98,10 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForClass()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid('FooBar');
 
-        $class = new \PHP_Depend_Code_Class(__FUNCTION__);
+        $class = new ASTClass(__FUNCTION__);
         $class->setSourceFile($file);
 
         $builder = new UuidBuilder();
@@ -111,10 +116,10 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid('FooBar');
 
-        $class = new \PHP_Depend_Code_Class(__FUNCTION__);
+        $class = new ASTClass(__FUNCTION__);
         $class->setSourceFile($file);
 
         $builder = new UuidBuilder();
@@ -130,13 +135,13 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondClass()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid('FooBar');
 
-        $class1 = new \PHP_Depend_Code_Class(__FUNCTION__);
+        $class1 = new ASTClass(__FUNCTION__);
         $class1->setSourceFile($file);
 
-        $class2 = new \PHP_Depend_Code_Class(__CLASS__);
+        $class2 = new ASTClass(__CLASS__);
         $class2->setSourceFile($file);
 
         $builder = new UuidBuilder();
@@ -152,13 +157,13 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveClassIdentifiers()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid(__FUNCTION__);
         
-        $class0 = new \PHP_Depend_Code_Class(__FUNCTION__);
+        $class0 = new ASTClass(__FUNCTION__);
         $class0->setSourceFile($file);
         
-        $class1 = new \PHP_Depend_Code_Class(strtolower(__FUNCTION__));
+        $class1 = new ASTClass(strtolower(__FUNCTION__));
         $class1->setSourceFile($file);
 
         $builder0 = new UuidBuilder();
@@ -177,13 +182,13 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid(__FUNCTION__);
 
-        $interface0 = new \PHP_Depend_Code_Interface(__FUNCTION__);
+        $interface0 = new ASTInterface(__FUNCTION__);
         $interface0->setSourceFile($file);
 
-        $interface1 = new \PHP_Depend_Code_Interface(strtolower(__FUNCTION__));
+        $interface1 = new ASTInterface(strtolower(__FUNCTION__));
         $interface1->setSourceFile($file);
 
         $builder0 = new UuidBuilder();
@@ -202,10 +207,10 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForFunction()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid('FooBar');
 
-        $function = new \PHP_Depend_Code_Function(__FUNCTION__);
+        $function = new ASTFunction(__FUNCTION__);
         $function->setSourceFile($file);
 
         $builder = new UuidBuilder();
@@ -220,13 +225,13 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid(__FUNCTION__);
 
-        $function0 = new \PHP_Depend_Code_Function(__FUNCTION__);
+        $function0 = new ASTFunction(__FUNCTION__);
         $function0->setSourceFile($file);
 
-        $function1 = new \PHP_Depend_Code_Function(strtolower(__FUNCTION__));
+        $function1 = new ASTFunction(strtolower(__FUNCTION__));
         $function1->setSourceFile($file);
 
         $builder0 = new UuidBuilder();
@@ -245,10 +250,10 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForMethod()
     {
-        $class = new \PHP_Depend_Code_Class(__CLASS__);
+        $class = new ASTClass(__CLASS__);
         $class->setUuid('FooBar');
 
-        $method = new \PHP_Depend_Code_Method(__FUNCTION__);
+        $method = new ASTMethod(__FUNCTION__);
         $method->setParent($class);
 
         $builder = new UuidBuilder();
@@ -263,10 +268,10 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid('FooBar');
 
-        $function = new \PHP_Depend_Code_Function(__FUNCTION__);
+        $function = new ASTFunction(__FUNCTION__);
         $function->setSourceFile($file);
 
         $builder = new UuidBuilder();
@@ -282,13 +287,13 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondFunction()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid('FooBar');
 
-        $function1 = new \PHP_Depend_Code_Function(__FUNCTION__);
+        $function1 = new ASTFunction(__FUNCTION__);
         $function1->setSourceFile($file);
 
-        $function2 = new \PHP_Depend_Code_Function(__CLASS__);
+        $function2 = new ASTFunction(__CLASS__);
         $function2->setSourceFile($file);
 
         $builder = new UuidBuilder();
@@ -304,16 +309,16 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveMethodIdentifiers()
     {
-        $file = new \PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid(__FUNCTION__);
 
-        $class = new \PHP_Depend_Code_Class(__FUNCTION__);
+        $class = new ASTClass(__FUNCTION__);
         $class->setSourceFile($file);
 
-        $method0 = new \PHP_Depend_Code_Method(__FUNCTION__);
+        $method0 = new ASTMethod(__FUNCTION__);
         $method0->setParent($class);
 
-        $method1 = new \PHP_Depend_Code_Method(strtolower(__FUNCTION__));
+        $method1 = new ASTMethod(strtolower(__FUNCTION__));
         $method1->setParent($class);
 
         $builder0 = new UuidBuilder();

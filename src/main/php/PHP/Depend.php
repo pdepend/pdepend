@@ -40,9 +40,14 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-use PHP\Depend\Builder;
-use PHP\Depend\Parser\VersionAllParser;
+use PHP\Depend\Metrics\AnalyzerClassFileSystemLocator;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerLoader;
+use PHP\Depend\ProcessListener;
 use PHP\Depend\Report\GeneratorCodeAware;
+use PHP\Depend\Source\Builder\Builder;
+use PHP\Depend\Source\Language\PHP\PHPBuilder;
+use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\Util\Configuration;
@@ -94,12 +99,12 @@ class PHP_Depend
     /**
      * The used code node builder.
      *
-     * @var Builder
+     * @var \PHP\Depend\Source\Builder\Builder
      */
     private $builder = null;
 
     /**
-     * Generated {@link PHP_Depend_Code_Package} objects.
+     * Generated {@link \PHP\Depend\Source\AST\ASTNamespace} objects.
      *
      * @var Iterator
      */
@@ -136,7 +141,7 @@ class PHP_Depend
     /**
      * List or registered listeners.
      *
-     * @var PHP_Depend_ProcessListenerI[]
+     * @var ProcessListener[]
      */
     private $listeners = array();
 
@@ -148,10 +153,10 @@ class PHP_Depend
     private $options = array();
 
     /**
-     * List of all {@link \PHP\Depend\Parser\Exception} that were caught during
+     * List of all {@link \PHP\Depend\Source\Parser\ParserException} that were caught during
      * the parsing process.
      *
-     * @var \PHP\Depend\Parser\Exception[]
+     * @var \PHP\Depend\Source\Parser\ParserException[]
      */
     private $parseExceptions = array();
 
@@ -278,11 +283,10 @@ class PHP_Depend
     /**
      * Adds a process listener.
      *
-     * @param PHP_Depend_ProcessListenerI $listener The listener instance.
-     *
+     * @param ProcessListener $listener The listener instance.
      * @return void
      */
-    public function addProcessListener(PHP_Depend_ProcessListenerI $listener)
+    public function addProcessListener(ProcessListener $listener)
     {
         if (in_array($listener, $this->listeners, true) === false) {
             $this->listeners[] = $listener;
@@ -297,7 +301,7 @@ class PHP_Depend
      */
     public function analyze()
     {
-        $this->builder = new \PHP\Depend\Builder\DefaultBuilder();
+        $this->builder = new PHPBuilder();
 
         $this->performParseProcess();
 
@@ -349,10 +353,10 @@ class PHP_Depend
     }
 
     /**
-     * Returns an <b>array</b> with all {@link \PHP\Depend\Parser\Exception} that
-     * were caught during the parsing process.
+     * Returns an <b>array</b> with all {@link \PHP\Depend\Source\Parser\ParserException}
+     * that were caught during the parsing process.
      *
-     * @return \PHP\Depend\Parser\Exception[]
+     * @return \PHP\Depend\Source\Parser\ParserException[]
      */
     public function getExceptions()
     {
@@ -384,7 +388,7 @@ class PHP_Depend
      * Returns the analyzed package of the specified name.
      *
      * @param string $name The package name.
-     * @return PHP_Depend_Code_Package
+     * @return \PHP\Depend\Source\AST\ASTNamespace
      */
     public function getPackage($name)
     {
@@ -417,7 +421,7 @@ class PHP_Depend
     /**
      * Send the start parsing process event.
      *
-     * @param \PHP\Depend\Builder $builder The used node builder instance.
+     * @param \PHP\Depend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     protected function fireStartParseProcess(Builder $builder)
@@ -430,7 +434,7 @@ class PHP_Depend
     /**
      * Send the end parsing process event.
      *
-     * @param \PHP\Depend\Builder $builder The used node builder instance.
+     * @param \PHP\Depend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     protected function fireEndParseProcess(Builder $builder)
@@ -533,7 +537,7 @@ class PHP_Depend
         foreach ($this->createFileIterator() as $file) {
             $tokenizer->setSourceFile($file);
 
-            $parser = new VersionAllParser(
+            $parser = new PHPParserGeneric(
                 $tokenizer,
                 $this->builder,
                 $this->cacheFactory->create()
@@ -549,7 +553,7 @@ class PHP_Depend
 
             try {
                 $parser->parse();
-            } catch (\PHP\Depend\Parser\Exception $e) {
+            } catch (\PHP\Depend\Source\Parser\ParserException $e) {
                 $this->parseExceptions[] = $e;
             }
             $this->fireEndFileParsing($tokenizer);
@@ -577,7 +581,7 @@ class PHP_Depend
 
         foreach ($analyzerLoader as $analyzer) {
             // Add filters if this analyzer is filter aware
-            if ($analyzer instanceof PHP_Depend_Metrics_FilterAwareI) {
+            if ($analyzer instanceof AnalyzerFilterAware) {
                 $collection->setFilter($this->codeFilter);
             }
 
@@ -600,14 +604,11 @@ class PHP_Depend
      * This method will initialize all code analysers and register the
      * interested listeners.
      *
-     * @param PHP_Depend_Metrics_AnalyzerLoader $analyzerLoader The used loader
-     *        instance for all code analysers.
-     *
-     * @return PHP_Depend_Metrics_AnalyzerLoader
+     * @param \PHP\Depend\Metrics\AnalyzerLoader $analyzerLoader
+     * @return \PHP\Depend\Metrics\AnalyzerLoader
      */
-    private function initAnalyseListeners(
-        PHP_Depend_Metrics_AnalyzerLoader $analyzerLoader
-    ) {
+    private function initAnalyseListeners(AnalyzerLoader $analyzerLoader)
+    {
         // Append all listeners
         foreach ($analyzerLoader as $analyzer) {
             foreach ($this->listeners as $listener) {
@@ -669,13 +670,12 @@ class PHP_Depend
     }
 
     /**
-     * Creates a {@link PHP_Depend_Metrics_AnalyzerLoader} instance that will be
+     * Creates a {@link \PHP\Depend\Metrics\AnalyzerLoader} instance that will be
      * used to create all analyzers required for the actually registered logger
      * instances.
      *
      * @param array $options The command line options recieved for this run.
-     *
-     * @return PHP_Depend_Metrics_AnalyzerLoader
+     * @return \PHP\Depend\Metrics\AnalyzerLoader
      */
     private function createAnalyzerLoader(array $options)
     {
@@ -692,8 +692,8 @@ class PHP_Depend
 
         $cacheKey = md5(serialize($this->files) . serialize($this->directories));
 
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
-            new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator(),
+        $loader = new AnalyzerLoader(
+            new AnalyzerClassFileSystemLocator(),
             $this->cacheFactory->create($cacheKey),
             $analyzerSet,
             $options

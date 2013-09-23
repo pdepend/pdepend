@@ -104,8 +104,8 @@ class XmlTest extends \PHP_Depend_AbstractTest
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $expected = array(
-            'PHP_Depend_Metrics_NodeAwareI',
-            'PHP_Depend_Metrics_ProjectAwareI'
+            'PHP\\Depend\\Metrics\\AnalyzerNodeAware',
+            'PHP\\Depend\\Metrics\\AnalyzerProjectAware'
         );
 
         $this->assertEquals($expected, $actual);
@@ -136,7 +136,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware()
     {
         $logger = new Xml();
-        $actual = $logger->log($this->getMock('\\PHP_Depend_Metrics_ProjectAwareI'));
+        $actual = $logger->log($this->getMock('\\PHP\\Depend\\Metrics\\AnalyzerProjectAware'));
 
         $this->assertTrue($actual);
     }
@@ -149,7 +149,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
     {
         $logger = new Xml();
-        $actual = $logger->log($this->getMock('\\PHP_Depend_Metrics_NodeAwareI'));
+        $actual = $logger->log($this->getMock('\\PHP\\Depend\\Metrics\\AnalyzerNodeAware'));
 
         $this->assertTrue($actual);
     }

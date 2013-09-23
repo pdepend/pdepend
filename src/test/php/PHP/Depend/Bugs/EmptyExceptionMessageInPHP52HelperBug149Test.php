@@ -71,7 +71,7 @@ class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractTest
      * testHelperThrowsExceptionForInvalidToken
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\TokenException
+     * @expectedException \PHP\Depend\Source\Parser\TokenException
      */
     public function testHelperThrowsExceptionForInvalidToken()
     {
@@ -82,7 +82,7 @@ class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractTest
      * testHelperThrowsExceptionWithExpectedExceptionMessage
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\TokenException
+     * @expectedException \PHP\Depend\Source\Parser\TokenException
      */
     public function testHelperThrowsExceptionWithExpectedExceptionMessage()
     {

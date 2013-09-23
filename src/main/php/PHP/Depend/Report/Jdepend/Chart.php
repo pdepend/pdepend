@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Report\Jdepend;
 
+use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Report\GeneratorCodeAware;
 use PHP\Depend\Report\GeneratorFileAware;
 use PHP\Depend\Report\NoLogOutputException;
@@ -122,11 +123,10 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
-     *
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
-    public function log(\PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function log(Analyzer $analyzer)
     {
         if ($analyzer instanceof \PHP_Depend_Metrics_Dependency_Analyzer) {
             $this->analyzer = $analyzer;

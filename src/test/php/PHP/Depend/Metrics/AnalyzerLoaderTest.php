@@ -40,18 +40,18 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics;
+
 /**
  * Test case for the analyzer loader.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_AnalyzerLoader
- * @group pdepend
- * @group pdepend::metrics
+ * @covers \PHP\Depend\Metrics\AnalyzerLoader
  * @group unittest
  */
-class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
+class AnalyzerLoaderTest extends \PHP_Depend_AbstractTest
 {
     /**
      * Tests that the analyzer loader loads the correct analyzer instances.
@@ -65,9 +65,9 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
             'PHP_Depend_Metrics_Hierarchy_Analyzer',
         );
         
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
-            new PHP_Depend_Metrics_AnalyzerClassFileSystemLocator(),
-            $this->getMock( '\\PHP\\Depend\\Util\\Cache\\Driver' ),
+        $loader = new AnalyzerLoader(
+            new AnalyzerClassFileSystemLocator(),
+            $this->getMock('\\PHP\\Depend\\Util\\Cache\\Driver'),
             $expected
         );
 
@@ -87,25 +87,25 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
      */
     public function testLoaderOnlyReturnsEnabledAnalyzerInstances()
     {
-        $analyzer = $this->getMock('PHP_Depend_Metrics_AnalyzerI');
+        $analyzer = $this->getMock('\\PHP\\Depend\\Metrics\\Analyzer');
         $analyzer->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
 
-        $reflection = $this->getMock('ReflectionObject', array('newInstance'), array($analyzer));
+        $reflection = $this->getMock('\\ReflectionObject', array('newInstance'), array($analyzer));
         $reflection->expects($this->once())
             ->method('newInstance')
             ->will($this->returnValue($analyzer));
 
-        $locator = $this->getMock('PHP_Depend_Metrics_AnalyzerClassLocator');
+        $locator = $this->getMock('\\PHP\\Depend\\Metrics\\AnalyzerClassLocator');
         $locator->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue(array($reflection)));
 
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
+        $loader = new AnalyzerLoader(
             $locator,
             $this->getMock( '\\PHP\\Depend\\Util\\Cache\\Driver' ),
-            array('PHP_Depend_Metrics_AnalyzerI')
+            array('\\PHP\\Depend\\Metrics\\Analyzer')
         );
 
         self::assertEquals(1, iterator_count($loader->getIterator()));
@@ -119,25 +119,25 @@ class PHP_Depend_Metrics_AnalyzerLoaderTest extends PHP_Depend_AbstractTest
      */
     public function testLoaderNotReturnsDisabledAnalyzerInstances()
     {
-        $analyzer = $this->getMock('PHP_Depend_Metrics_AnalyzerI');
+        $analyzer = $this->getMock('\\PHP\\Depend\\Metrics\\Analyzer');
         $analyzer->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
 
-        $reflection = $this->getMock('ReflectionObject', array('newInstance'), array($analyzer));
+        $reflection = $this->getMock('\\ReflectionObject', array('newInstance'), array($analyzer));
         $reflection->expects($this->once())
             ->method('newInstance')
             ->will($this->returnValue($analyzer));
 
-        $locator = $this->getMock('PHP_Depend_Metrics_AnalyzerClassLocator');
+        $locator = $this->getMock('\\PHP\\Depend\\Metrics\\AnalyzerClassLocator');
         $locator->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue(array($reflection)));
 
-        $loader = new PHP_Depend_Metrics_AnalyzerLoader(
+        $loader = new AnalyzerLoader(
             $locator,
             $this->getMock( '\\PHP\\Depend\\Util\\Cache\\Driver' ),
-            array('PHP_Depend_Metrics_AnalyzerI')
+            array('\\PHP\\Depend\\Metrics\\Analyzer')
         );
 
         self::assertEquals(0, iterator_count($loader->getIterator()));

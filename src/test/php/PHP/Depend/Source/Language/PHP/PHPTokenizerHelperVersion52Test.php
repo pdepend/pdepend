@@ -222,7 +222,7 @@ class PHPTokenizerHelperVersion52Test extends \PHP_Depend_AbstractTest
      * testHelperThrowsExpectedExceptionWhenTokenGetAllFails
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\TokenException
+     * @expectedException \PHP\Depend\Source\Parser\TokenException
      */
     public function testHelperThrowsExpectedExceptionWhenTokenGetAllFails()
     {

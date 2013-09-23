@@ -40,6 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AggregateAnalyzer;
+use PHP\Depend\Metrics\Analyzer;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTMethod;
+
 /**
  * This analyzer calculates the C.R.A.P. index for methods an functions when a
  * clover coverage report was supplied. This report can be supplied by using the
@@ -48,10 +55,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_CrapIndex_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AggregateAnalyzerI,
-               PHP_Depend_Metrics_NodeAwareI
+class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.
@@ -129,12 +133,10 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
     /**
      * Adds an analyzer that this analyzer depends on.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer An analyzer this analyzer
-     *        depends on.
-     *
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer
      * @return void
      */
-    public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function addAnalyzer(Analyzer $analyzer)
     {
         $this->ccnAnalyzer = $analyzer;
     }
@@ -178,11 +180,10 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
     /**
      * Visits the given method.
      *
-     * @param PHP_Depend_Code_Method $method The context method.
-     *
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         if ($method->isAbstract() === false) {
             $this->visitCallable($method);
@@ -192,11 +193,10 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer
     /**
      * Visits the given function.
      *
-     * @param PHP_Depend_Code_Function $function The context function.
-     *
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->visitCallable($function);
     }

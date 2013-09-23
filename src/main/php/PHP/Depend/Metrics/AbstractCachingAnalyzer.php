@@ -41,6 +41,11 @@
  * @since     1.0.0
  */
 
+namespace PHP\Depend\Metrics;
+
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AnalyzerCacheAware;
+
 /**
  * This abstract class provides an analyzer that provides the basic infrastructure
  * for caching.
@@ -49,9 +54,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
-abstract class PHP_Depend_Metrics_AbstractCachingAnalyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_CacheAware
+abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements AnalyzerCacheAware
 {
     /**
      * Collected node metrics
@@ -90,11 +93,10 @@ abstract class PHP_Depend_Metrics_AbstractCachingAnalyzer
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP_Depend_Code_NodeI $node The context node instance.
      * @return boolean
      */
-    protected function restoreFromCache(PHP_Depend_Code_NodeI $node)
+    protected function restoreFromCache(\PHP_Depend_Code_NodeI $node)
     {
         $uuid = $node->getUuid();
         if ($node->isCached() && isset($this->metricsCached[$uuid])) {

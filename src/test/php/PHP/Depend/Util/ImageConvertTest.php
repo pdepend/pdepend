@@ -42,13 +42,12 @@
 
 namespace PHP\Depend\Util;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the image convert utility class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @covers \PHP\Depend\Util\ImageConvert
  * @group pdepend
  * @group pdepend::util

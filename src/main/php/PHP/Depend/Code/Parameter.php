@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -50,7 +51,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * <?php
  * class Builder
  * {
- *     public function buildNode($name, $line, PHP_Depend_Code_File $file) {
+ *     public function buildNode($name, $line, \PHP\Depend\Source\AST\ASTCompilationUnit $unit) {
  *     }
  * }
  *
@@ -198,13 +199,13 @@ class PHP_Depend_Code_Parameter
      * This method will return the class where the parent method was declared.
      * The returned value will be <b>null</b> if the parent is a function.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      * @since 0.9.5
      */
     public function getDeclaringClass()
     {
         // TODO: Review this for refactoring, maybe create a empty getParent()?
-        if ($this->declaringFunction instanceof PHP_Depend_Code_Method) {
+        if ($this->declaringFunction instanceof ASTMethod) {
             return $this->declaringFunction->getParent();
         }
         return null;
@@ -236,7 +237,7 @@ class PHP_Depend_Code_Parameter
      * Returns the class type of this parameter. This method will return
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      * @since 0.9.5
      */
     public function getClass()
@@ -362,7 +363,7 @@ class PHP_Depend_Code_Parameter
     /**
      * TreeVisitor method for node tree traversal.
      *
-     * @param \PHP\Depend\TreeVisitor $visitor
+     * @param \PHP\Depend\TreeVisitor\TreeVisitor $visitor
      * @return void
      */
     public function accept(TreeVisitor $visitor)

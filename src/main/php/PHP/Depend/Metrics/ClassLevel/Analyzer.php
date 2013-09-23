@@ -39,6 +39,16 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AggregateAnalyzer;
+use PHP\Depend\Metrics\Analyzer;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\AbstractASTType;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTTrait;
 
 /**
  * Generates some class level based metrics. This analyzer is based on the
@@ -50,10 +60,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_ClassLevel_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AggregateAnalyzerI,
-               PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_NodeAwareI
+       extends AbstractAnalyzer
+    implements AggregateAnalyzer,
+               AnalyzerFilterAware,
+               AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.
@@ -104,7 +114,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     private $cyclomaticAnalyzer = null;
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * @return void
@@ -114,7 +124,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
         if ($this->nodeMetrics === null) {
             // First check for the require cc analyzer
             if ($this->cyclomaticAnalyzer === null) {
-                throw new RuntimeException('Missing required CC analyzer.');
+                throw new \RuntimeException('Missing required CC analyzer.');
             }
 
             $this->fireStartAnalyzer();
@@ -149,15 +159,15 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Adds a required sub analyzer.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The sub analyzer instance.
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer The sub analyzer instance.
      * @return void
      */
-    public function addAnalyzer(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function addAnalyzer(Analyzer $analyzer)
     {
-        if ($analyzer instanceof PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
+        if ($analyzer instanceof \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
             $this->cyclomaticAnalyzer = $analyzer;
         } else {
-            throw new InvalidArgumentException('CC Analyzer required.');
+            throw new \InvalidArgumentException('CC Analyzer required.');
         }
     }
 
@@ -181,10 +191,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a class node.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->fireStartClass($class);
 
@@ -218,10 +228,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         // Empty visit method, we don't want interface metrics
     }
@@ -229,11 +239,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a trait node.
      *
-     * @param PHP_Depend_Code_Trait $trait The current trait node.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    public function visitTrait(PHP_Depend_Code_Trait $trait)
+    public function visitTrait(ASTTrait $trait)
     {
         $this->fireStartTrait($trait);
 
@@ -265,10 +275,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 
@@ -327,11 +337,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Calculates the Variables Inheritance of a class metric, this method only
      * counts protected and public properties of parent classes.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTClass $class The context class instance.
      * @return integer
      */
-    private function calculateVarsi(PHP_Depend_Code_Class $class)
+    private function calculateVarsi(ASTClass $class)
     {
         // List of properties, this method only counts not overwritten properties
         $properties = array();
@@ -354,11 +363,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * Calculates the Weight Method Per Class metric, this method only counts
      * protected and public methods of parent classes.
      *
-     * @param PHP_Depend_Code_Class $class The context class instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTClass $class The context class instance.
      * @return integer
      */
-    private function calculateWmciForClass(PHP_Depend_Code_Class $class)
+    private function calculateWmciForClass(ASTClass $class)
     {
         $ccn = $this->calculateWmci($class);
 
@@ -380,12 +388,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Calculates the Weight Method Per Class metric for a trait.
      *
-     * @param PHP_Depend_Code_Trait $trait The context trait instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return integer
      * @since 1.0.6
      */
-    private function calculateWmciForTrait(PHP_Depend_Code_Trait $trait)
+    private function calculateWmciForTrait(ASTTrait $trait)
     {
         return array_sum($this->calculateWmci($trait));
     }
@@ -393,12 +400,11 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Calculates the Weight Method Per Class metric.
      *
-     * @param PHP_Depend_Code_AbstractType $type The context type instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTType $type
      * @return integer[]
      * @since 1.0.6
      */
-    private function calculateWmci(PHP_Depend_Code_AbstractType $type)
+    private function calculateWmci(AbstractASTType $type)
     {
         $ccn = array();
 

@@ -48,7 +48,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.12
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTIssetExpression
  * @group pdepend
  * @group pdepend::ast

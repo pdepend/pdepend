@@ -40,18 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics;
+
 /**
- * Test case for the {@link PHP_Depend_Metrics_AnalyzerIterator} class.
+ * Test case for the {@link \PHP\Depend\Metrics\AnalyzerIterator} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_AnalyzerIterator
+ * @covers \PHP\Depend\Metrics\AnalyzerIterator
  * @group pdepend
  * @group pdepend::metrics
  * @group unittest
  */
-class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
+class AnalyzerIteratorTest extends \PHP_Depend_AbstractTest
 {
     /**
      * testIteratorReturnsEnabledAnalyzerInstances
@@ -60,12 +62,12 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorReturnsEnabledAnalyzerInstances()
     {
-        $analyzer = $this->getMock('PHP_Depend_Metrics_AnalyzerI');
+        $analyzer = $this->getMock('\\PHP\\Depend\\Metrics\\Analyzer');
         $analyzer->expects($this->exactly(2))
             ->method('isEnabled')
             ->will($this->returnValue(true));
 
-        $iterator = new PHP_Depend_Metrics_AnalyzerIterator(array($analyzer, $analyzer));
+        $iterator = new AnalyzerIterator(array($analyzer, $analyzer));
         self::assertEquals(2, iterator_count($iterator));
     }
 
@@ -76,7 +78,7 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
      */
     public function testIteratorDoesNotReturnDisabledAnalyzerInstances()
     {
-        $analyzer = $this->getMock('PHP_Depend_Metrics_AnalyzerI');
+        $analyzer = $this->getMock('\\PHP\\Depend\\Metrics\\Analyzer');
         $analyzer->expects($this->at(0))
             ->method('isEnabled')
             ->will($this->returnValue(true));
@@ -84,7 +86,7 @@ class PHP_Depend_Metrics_AnalyzerIteratorTest extends PHP_Depend_AbstractTest
             ->method('isEnabled')
             ->will($this->returnValue(false));
 
-        $iterator = new PHP_Depend_Metrics_AnalyzerIterator(array($analyzer, $analyzer));
+        $iterator = new AnalyzerIterator(array($analyzer, $analyzer));
         self::assertEquals(1, iterator_count($iterator));
     }
 }

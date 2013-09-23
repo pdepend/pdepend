@@ -42,16 +42,16 @@
 
 namespace PHP\Depend\Report;
 
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Metrics\AnalyzerProjectAware;
+
 /**
  * Simple dummy analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class DummyAnalyzer
-    implements \PHP_Depend_Metrics_AnalyzerI,
-               \PHP_Depend_Metrics_NodeAwareI,
-               \PHP_Depend_Metrics_ProjectAwareI
+class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
      * Test project metrics
@@ -105,23 +105,23 @@ class DummyAnalyzer
     /**
      * Adds a listener to this analyzer.
      *
-     * @param \PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * @param \PHP\Depend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(\PHP_Depend_Metrics_ListenerI $listener) {
+    public function addAnalyzeListener(\PHP\Depend\Metrics\AnalyzerListener $listener) {
     }
     
     /**
      * Removes the listener from this analyzer.
      *
-     * @param \PHP_Depend_Metrics_ListenerI $listener The listener instance.
+     * @param \PHP\Depend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(\PHP_Depend_Metrics_ListenerI $listener) {
+    public function removeAnalyzeListener(\PHP\Depend\Metrics\AnalyzerListener $listener) {
     }
     
     /**
-     * Processes all {@link \PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param \PHP_Depend_Code_NodeIterator $packages All code packages.
      * @return void

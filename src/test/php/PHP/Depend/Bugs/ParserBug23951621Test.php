@@ -44,6 +44,9 @@
 
 namespace PHP\Depend\Bugs;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTInterface;
+
 /**
  * Test case for bug #23951621.
  *
@@ -68,7 +71,7 @@ class ParserBug23951621Test extends AbstractTest
     public function testParserHandlesHeredocAsPropertyDefaultValue()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertInstanceOf('PHP_Depend_Code_Class', $class);
+        $this->assertInstanceOf(ASTClass::CLAZZ, $class);
     }
 
     /**
@@ -79,7 +82,7 @@ class ParserBug23951621Test extends AbstractTest
     public function testParserHandlesHeredocAsParameterDefaultValue()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertInstanceOf('PHP_Depend_Code_Class', $class);
+        $this->assertInstanceOf(ASTClass::CLAZZ, $class);
     }
 
     /**
@@ -90,6 +93,6 @@ class ParserBug23951621Test extends AbstractTest
     public function testParserHandlesHeredocAsClassConstantValue()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertInstanceOf('PHP_Depend_Code_Interface', $interface);
+        $this->assertInstanceOf(ASTInterface::CLAZZ, $interface);
     }
 }

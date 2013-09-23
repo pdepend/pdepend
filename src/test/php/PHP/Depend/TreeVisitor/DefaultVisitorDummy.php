@@ -42,6 +42,13 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+
 /**
  * Dummy implementation of the default visitor.
  *
@@ -60,10 +67,10 @@ class DefaultVisitorDummy extends AbstractTreeVisitor
     /**
      * Visits a class node.
      *
-     * @param \PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(\PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->visits[] = $class->getName();
 
@@ -73,23 +80,23 @@ class DefaultVisitorDummy extends AbstractTreeVisitor
     /**
      * Visits a file node.
      *
-     * @param \PHP_Depend_Code_File $file The current file node.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(\PHP_Depend_Code_File $file)
+    public function visitFile(ASTCompilationUnit $compilationUnit)
     {
-        $this->visits[] = get_class($file);
+        $this->visits[] = get_class($compilationUnit);
 
-        parent::visitFile($file);
+        parent::visitFile($compilationUnit);
     }
 
     /**
      * Visits a function node.
      *
-     * @param \PHP_Depend_Code_Function $function The current function node.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(\PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->visits[] = $function->getName();
 
@@ -99,10 +106,10 @@ class DefaultVisitorDummy extends AbstractTreeVisitor
     /**
      * Visits a code interface object.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(\PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->visits[] = $interface->getName();
 
@@ -112,10 +119,10 @@ class DefaultVisitorDummy extends AbstractTreeVisitor
     /**
      * Visits a method node.
      *
-     * @param \PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(\PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->visits[] = $method->getName();
 
@@ -125,14 +132,14 @@ class DefaultVisitorDummy extends AbstractTreeVisitor
     /**
      * Visits a package node.
      *
-     * @param \PHP_Depend_Code_Package $package The package class node.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace The package class node.
      * @return void
      */
-    public function visitPackage(\PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->visits[] = $package->getName();
+        $this->visits[] = $namespace->getName();
 
-        parent::visitPackage($package);
+        parent::visitNamespace($namespace);
     }
 
     /**

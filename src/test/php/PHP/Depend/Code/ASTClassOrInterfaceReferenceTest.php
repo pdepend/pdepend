@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+use PHP\Depend\Source\Builder\BuilderContext;
+
 /**
  * description
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTClassOrInterfaceReference
  * @group pdepend
  * @group pdepend::ast
@@ -314,10 +316,10 @@ class PHP_Depend_Code_ASTClassOrInterfaceReferenceTest
     /**
      * Returns a mocked builder context instance.
      *
-     * @return \PHP\Depend\Builder\Context
+     * @return \PHP\Depend\Source\Builder\BuilderContext
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock('\\PHP\\Depend\\Builder\\Context');
+        return $this->getMock(BuilderContext::CLAZZ);
     }
 }

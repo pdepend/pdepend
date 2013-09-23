@@ -64,13 +64,10 @@ class CacheVersionUpdater
      * @var array(string)
      */
     private $_localPaths = array(
-        '/Builder',
+        '/Source',
         '/Code',
         '/Metrics',
         '/Parser',
-        '/Tokenizer',
-        '/Parser.php',
-        '/ConstantsI.php'
     );
 
     /**

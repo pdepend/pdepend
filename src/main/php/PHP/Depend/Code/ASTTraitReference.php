@@ -59,7 +59,7 @@ class PHP_Depend_Code_ASTTraitReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return PHP_Depend_Code_AbstractType
+     * @return \PHP\Depend\Source\AST\AbstractASTType
      */
     public function getType()
     {

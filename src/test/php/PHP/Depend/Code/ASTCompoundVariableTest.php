@@ -46,7 +46,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTCompoundVariable
  * @group pdepend
  * @group pdepend::ast
@@ -116,7 +116,7 @@ class PHP_Depend_Code_ASTCompoundVariableTest extends PHP_Depend_Code_ASTNodeTes
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
+     * @expectedException \PHP\Depend\Source\Parser\TokenStreamEndException
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
     {

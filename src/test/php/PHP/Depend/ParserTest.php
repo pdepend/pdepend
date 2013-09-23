@@ -40,9 +40,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-use PHP\Depend\Builder\DefaultBuilder;
-use PHP\Depend\Parser\VersionAllParser;
 use PHP\Depend\Source\AST\State;
+use PHP\Depend\Source\Language\PHP\PHPBuilder;
+use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\Source\Tokenizer\Tokens;
@@ -54,7 +54,7 @@ use PHP\Depend\Util\Cache\Driver\Memory;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
@@ -75,12 +75,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         ini_set('xdebug.max_nesting_level', '100');
 
         $cache   = new Memory();
-        $builder = new DefaultBuilder();
+        $builder = new PHPBuilder();
 
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
-        $parser = new VersionAllParser($tokenizer, $builder, $cache);
+        $parser = new PHPParserGeneric($tokenizer, $builder, $cache);
         $parser->setMaxNestingLevel(512);
         $parser->parse();
     }
@@ -96,7 +96,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             'pkg1'                               =>  true,
             'pkg2'                               =>  true,
             'pkg3'                               =>  true,
-            \PHP\Depend\Builder::DEFAULT_PACKAGE  =>  true
+            \PHP\Depend\Source\Builder\Builder::DEFAULT_PACKAGE  =>  true
         );
 
         $tmp = self::parseCodeResourceForTest();
@@ -132,7 +132,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     {
         $sourceFile = self::createCodeResourceUriForTest();
         $this->setExpectedException(
-            '\\PHP\Depend\\Parser\\TokenStreamEndException',
+            '\\PHP\\Depend\\Source\\Parser\\TokenStreamEndException',
             "Unexpected end of token stream in file: {$sourceFile}."
         );
 
@@ -148,7 +148,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserWithUnclosedFunctionFail()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\TokenStreamEndException',
+            '\\PHP\\Depend\\Source\\Parser\\TokenStreamEndException',
             'Unexpected end of token stream in file: '
         );
 
@@ -1060,7 +1060,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: {, line: 2, col: 29, file: '
         );
 
@@ -1076,7 +1076,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: &, line: 2, col: 27, file: '
         );
 
@@ -1092,7 +1092,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 4, col: 5, file: '
         );
 
@@ -1108,7 +1108,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: &, line: 4, col: 12, file: '
         );
 
@@ -1124,7 +1124,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
     {
         $this->setExpectedException(
-            '\\PHP\\Depend\\Parser\\UnexpectedTokenException',
+            '\\PHP\\Depend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: const, line: 4, col: 13, file: '
         );
 
@@ -1272,7 +1272,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\MissingValueException
+     * @expectedException \PHP\Depend\Source\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists()
     {
@@ -1386,7 +1386,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserStopsProcessingWhenCacheContainsValidResult()
     {
-        $builder = $this->getMock('\\PHP\\Depend\\Builder');
+        $builder = $this->getMock('\\PHP\\Depend\\Source\\Builder\\Builder');
 
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
@@ -1398,7 +1398,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $cache->expects($this->never())
             ->method('store');
 
-        $parser = new VersionAllParser(
+        $parser = new PHPParserGeneric(
             $tokenizer,
             $builder,
             $cache
@@ -1480,7 +1480,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
      * testParseExpressionUntilThrowsExceptionForUnclosedStatement
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
+     * @expectedException \PHP\Depend\Source\Parser\UnexpectedTokenException
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
@@ -1506,7 +1506,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     /**
      * Returns an interface instance from the mixed code test file.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP\Depend\Source\AST\ASTInterface
      */
     protected function getInterfaceForTest()
     {
@@ -1537,7 +1537,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     /**
      * Returns a class instance from the mixed code test file.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP\Depend\Source\AST\ASTClass
      */
     protected function getClassForTest()
     {

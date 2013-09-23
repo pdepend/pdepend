@@ -226,7 +226,7 @@ class PHP_Depend_Code_ParameterTest extends PHP_Depend_AbstractTest
      * Returns the first class method found in the test file associated with the
      * calling test method.
      *
-     * @return PHP_Depend_Code_Method
+     * @return \PHP\Depend\Source\AST\ASTMethod
      * @since 1.0.0
      */
     private function _getFirstMethodInClass()

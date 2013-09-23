@@ -44,13 +44,13 @@
 namespace PHP\Depend\Parser;
 
 /**
- * Tests for unstructured code handling in the {@link \PHP_Depend_Parser} class.
+ * Tests for unstructured code handling in the {@link \PHP\Depend\Source\Language\PHP\AbstractPHPParser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  *
- * @covers \PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest

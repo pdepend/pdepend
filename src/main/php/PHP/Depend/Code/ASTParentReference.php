@@ -97,7 +97,7 @@ final class PHP_Depend_Code_ASTParentReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      */
     public function getType()
     {

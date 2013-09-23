@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
 
 /**
  * This type of exception will be thrown when an inheritance hierarchy is
@@ -55,10 +56,9 @@ class PHP_Depend_Code_Exceptions_RecursiveInheritanceException
     /**
      * Constructs a new exception instance.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The class or
-     *        interface that is part of the endless inheritance hierarchy.
+     * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $type
      */
-    public function __construct(PHP_Depend_Code_AbstractClassOrInterface $type)
+    public function __construct(AbstractASTClassOrInterface $type)
     {
         parent::__construct(
             sprintf(

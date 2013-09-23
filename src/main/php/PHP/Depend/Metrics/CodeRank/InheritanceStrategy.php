@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTInterface;
 
 /**
  * Collects class and package metrics based on inheritance.
@@ -70,10 +73,10 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Visits a code class object.
      *
-     * @param PHP_Depend_Code_Class $class The context code class.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -83,10 +86,10 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
@@ -97,12 +100,10 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The context type
-     *        instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
-    protected function visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
+    protected function visitType(AbstractASTClassOrInterface $type)
     {
         $pkg = $type->getPackage();
 

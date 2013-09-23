@@ -39,6 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+use PHP\Depend\Metrics\AbstractCachingAnalyzer;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Util\MathUtil;
 
 /**
@@ -50,10 +57,9 @@ use PHP\Depend\Util\MathUtil;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_NPathComplexity_Analyzer
-       extends PHP_Depend_Metrics_AbstractCachingAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_NodeAwareI,
+       extends AbstractCachingAnalyzer
+    implements AnalyzerFilterAware,
+               AnalyzerNodeAware,
                PHP_Depend_Code_ASTVisitorI
 {
     /**
@@ -67,7 +73,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     const M_NPATH_COMPLEXITY = 'npath';
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      *
@@ -118,11 +124,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
-     *
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         // Empty visit method, we don't want interface metrics
     }
@@ -130,11 +135,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     /**
      * Visits a function node.
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->fireStartFunction($function);
 
@@ -148,11 +152,11 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      *
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 

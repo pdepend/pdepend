@@ -48,7 +48,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTTraitAdaptationPrecedence
  * @group pdepend
  * @group pdepend::ast
@@ -78,7 +78,7 @@ class PHP_Depend_Code_ASTTraitAdaptationPrecedenceTest extends PHP_Depend_Code_A
      * testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException()
     {

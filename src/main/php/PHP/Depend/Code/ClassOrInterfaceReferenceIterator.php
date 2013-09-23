@@ -43,7 +43,8 @@
 /**
  * This is a special implementation of the node iterator that will translate
  * a list of given {@link PHP_Depend_Code_ASTClassOrInterfaceReference} holders
- * into a list of unique {@link PHP_Depend_Code_AbstractClassOrInterface} instances.
+ * into a list of unique {@link \PHP\Depend\Source\AST\AbstractASTClassOrInterface}
+ * instances.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -63,13 +64,13 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIterator
     }
 
     /**
-     * This method creates a set of {@link PHP_Depend_Code_AbstractClassOrInterface}
+     * This method creates a set of {@link \PHP\Depend\Source\AST\AbstractASTClassOrInterface}
      * objects from the given reference array.
      *
      * @param PHP_Depend_Code_ASTClassOrInterfaceReference[] $references List of
      *        references to concrete type instances.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface[]
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface[]
      */
     protected function createClassesAndInterfaces(array $references)
     {

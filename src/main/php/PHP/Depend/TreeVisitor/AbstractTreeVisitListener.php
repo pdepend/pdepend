@@ -42,6 +42,14 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
+
 /**
  * This abstract class provides a default implementation of the node visitor
  * listener.
@@ -54,10 +62,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new class instance.
      *
-     * @param \PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function startVisitClass(\PHP_Depend_Code_Class $class)
+    public function startVisitClass(ASTClass $class)
     {
         $this->startVisitNode($class);
     }
@@ -65,10 +73,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with a class instance.
      *
-     * @param \PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function endVisitClass(\PHP_Depend_Code_Class $class)
+    public function endVisitClass(ASTClass $class)
     {
         $this->endVisitNode($class);
     }
@@ -76,11 +84,11 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new trait instance.
      *
-     * @param \PHP_Depend_Code_Trait $trait The context trait instance.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    public function startVisitTrait(\PHP_Depend_Code_Trait $trait)
+    public function startVisitTrait(ASTTrait $trait)
     {
         $this->startVisitNode($trait);
     }
@@ -88,11 +96,11 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with a trait instance.
      *
-     * @param \PHP_Depend_Code_Trait $trait The context trait instance.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    public function endVisitTrait(\PHP_Depend_Code_Trait $trait)
+    public function endVisitTrait(ASTTrait $trait)
     {
         $this->endVisitNode($trait);
     }
@@ -100,32 +108,32 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new file instance.
      *
-     * @param \PHP_Depend_Code_File $file The context file instance.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function startVisitFile(\PHP_Depend_Code_File $file)
+    public function startVisitFile(ASTCompilationUnit $compilationUnit)
     {
-        $this->startVisitNode($file);
+        $this->startVisitNode($compilationUnit);
     }
 
     /**
      * Is called when the visitor ends with a file instance.
      *
-     * @param \PHP_Depend_Code_File $file The context file instance.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function endVisitFile(\PHP_Depend_Code_File $file)
+    public function endVisitFile(ASTCompilationUnit $compilationUnit)
     {
-        $this->endVisitNode($file);
+        $this->endVisitNode($compilationUnit);
     }
 
     /**
      * Is called when the visitor starts a new function instance.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param ASTFunction $function
      * @return void
      */
-    public function startVisitFunction(\PHP_Depend_Code_Function $function)
+    public function startVisitFunction(ASTFunction $function)
     {
         $this->startVisitNode($function);
     }
@@ -133,10 +141,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with a function instance.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function endVisitFunction(\PHP_Depend_Code_Function $function)
+    public function endVisitFunction(ASTFunction $function)
     {
         $this->endVisitNode($function);
     }
@@ -144,10 +152,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new interface instance.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function startVisitInterface(\PHP_Depend_Code_Interface $interface)
+    public function startVisitInterface(ASTInterface $interface)
     {
         $this->startVisitNode($interface);
     }
@@ -155,10 +163,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with an interface instance.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function endVisitInterface(\PHP_Depend_Code_Interface $interface)
+    public function endVisitInterface(ASTInterface $interface)
     {
         $this->endVisitNode($interface);
     }
@@ -166,10 +174,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new method instance.
      *
-     * @param \PHP_Depend_Code_Method $method The context method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function startVisitMethod(\PHP_Depend_Code_Method $method)
+    public function startVisitMethod(ASTMethod $method)
     {
         $this->startVisitNode($method);
     }
@@ -177,10 +185,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with a method instance.
      *
-     * @param \PHP_Depend_Code_Method $method The context method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function endVisitMethod(\PHP_Depend_Code_Method $method)
+    public function endVisitMethod(ASTMethod $method)
     {
         $this->endVisitNode($method);
     }
@@ -188,23 +196,23 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new package instance.
      *
-     * @param \PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function startVisitPackage(\PHP_Depend_Code_Package $package)
+    public function startVisitPackage(ASTNamespace $namespace)
     {
-        $this->startVisitNode($package);
+        $this->startVisitNode($namespace);
     }
 
     /**
      * Is called when the visitor ends with a package instance.
      *
-     * @param \PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function endVisitPackage(\PHP_Depend_Code_Package $package)
+    public function endVisitPackage(ASTNamespace $namespace)
     {
-        $this->endVisitNode($package);
+        $this->endVisitNode($namespace);
     }
 
     /**

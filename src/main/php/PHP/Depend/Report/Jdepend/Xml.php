@@ -42,9 +42,13 @@
 
 namespace PHP\Depend\Report\Jdepend;
 
+use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Report\GeneratorCodeAware;
 use PHP\Depend\Report\GeneratorFileAware;
 use PHP\Depend\Report\NoLogOutputException;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTNamespace;
 use PHP\Depend\TreeVisitor\AbstractTreeVisitor;
 
 /**
@@ -69,7 +73,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     private $logFile = null;
 
     /**
-     * The raw {@link \PHP_Depend_Code_Package} instances.
+     * The raw {@link \PHP\Depend\Source\AST\ASTNamespace} instances.
      *
      * @var \PHP_Depend_Code_NodeIterator
      */
@@ -78,7 +82,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * Set of all analyzed files.
      *
-     * @var \PHP_Depend_Code_File[]
+     * @var \PHP\Depend\Source\AST\ASTCompilationUnit[]
      */
     protected $fileSet = array();
 
@@ -169,10 +173,10 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
-    public function log(\PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function log(Analyzer $analyzer)
     {
         if ($analyzer instanceof \PHP_Depend_Metrics_Dependency_Analyzer) {
             $this->analyzer = $analyzer;
@@ -215,10 +219,10 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * Visits a class node.
      *
-     * @param \PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(\PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         if (!$class->isUserDefined()) {
             return;
@@ -240,10 +244,10 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * Visits a code interface object.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(\PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         if (!$interface->isUserDefined()) {
             return;
@@ -261,16 +265,16 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * Visits a package node.
      *
-     * @param \PHP_Depend_Code_Package $package The package class node.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function visitPackage(\PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        if (!$package->isUserDefined()) {
+        if (!$namespace->isUserDefined()) {
             return;
         }
 
-        $stats = $this->analyzer->getStats($package);
+        $stats = $this->analyzer->getStats($namespace);
         if (count($stats) === 0) {
             return;
         }
@@ -281,7 +285,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
         $this->abstractClasses = $doc->createElement('AbstractClasses');
 
         $packageXml = $doc->createElement('Package');
-        $packageXml->setAttribute('name', $package->getName());
+        $packageXml->setAttribute('name', $namespace->getName());
 
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
@@ -302,7 +306,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
             ->appendChild($doc->createTextNode($stats['d']));
 
         $dependsUpon = $doc->createElement('DependsUpon');
-        foreach ($this->analyzer->getEfferents($package) as $efferent) {
+        foreach ($this->analyzer->getEfferents($namespace) as $efferent) {
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
 
@@ -310,7 +314,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
         }
 
         $usedBy = $doc->createElement('UsedBy');
-        foreach ($this->analyzer->getAfferents($package) as $afferent) {
+        foreach ($this->analyzer->getAfferents($namespace) as $afferent) {
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
 
@@ -323,9 +327,9 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
         $packageXml->appendChild($dependsUpon);
         $packageXml->appendChild($usedBy);
 
-        if (($cycles = $this->analyzer->getCycle($package)) !== null) {
+        if (($cycles = $this->analyzer->getCycle($namespace)) !== null) {
             $cycleXml = $doc->createElement('Package');
-            $cycleXml->setAttribute('Name', $package->getName());
+            $cycleXml->setAttribute('Name', $namespace->getName());
 
             foreach ($cycles as $cycle) {
                 $cycleXml->appendChild($doc->createElement('Package'))
@@ -335,7 +339,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
             $this->cycles->appendChild($cycleXml);
         }
 
-        foreach ($package->getTypes() as $type) {
+        foreach ($namespace->getTypes() as $type) {
             $type->accept($this);
         }
 

@@ -40,7 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.5
  */
-use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\Builder\BuilderContext;
 
 /**
  * This class is used as a placeholder for unknown classes or interfaces. It
@@ -60,24 +60,24 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference extends PHP_Depend_Code_ASTTy
     /**
      * The global AST builder context.
      *
-     * @var Context
+     * @var \PHP\Depend\Source\Builder\BuilderContext
      */
     protected $context = null;
 
     /**
      * An already loaded type instance.
      *
-     * @var PHP_Depend_Code_AbstractClassOrInterface
+     * @var \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      */
     protected $typeInstance = null;
 
     /**
      * Constructs a new type holder instance.
      *
-     * @param \PHP\Depend\Builder\Context $context
+     * @param \PHP\Depend\Source\Builder\BuilderContext $context
      * @param string $qualifiedName
      */
-    public function __construct(Context $context, $qualifiedName)
+    public function __construct(BuilderContext $context, $qualifiedName)
     {
         parent::__construct($qualifiedName);
 
@@ -87,7 +87,7 @@ class PHP_Depend_Code_ASTClassOrInterfaceReference extends PHP_Depend_Code_ASTTy
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      */
     public function getType()
     {

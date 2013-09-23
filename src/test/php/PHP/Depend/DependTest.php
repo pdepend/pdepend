@@ -240,7 +240,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link PHP_Depend::getPackage()} method returns the 
-     * expected {@link PHP_Depend_Code_Package} objects.
+     * expected {@link \PHP\Depend\Source\AST\ASTNamespace} objects.
      *
      * @return void
      */
@@ -256,7 +256,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
             'package3'
         );
         
-        $className = 'PHP_Depend_Code_Package';
+        $className = '\\PHP\\Depend\\Source\\AST\\ASTNamespace';
         
         foreach ($packages as $package) {
             $this->assertInstanceOf($className, $pdepend->getPackage($package));
@@ -302,7 +302,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link PHP_Depend::getPackages()} method returns the 
-     * expected {@link PHP_Depend_Code_Package} objects and reuses the result of
+     * expected {@link \PHP\Depend\Source\AST\ASTNamespace} objects and reuses the result of
      * {@link PHP_Depend::analyze()}.
      *
      * @return void

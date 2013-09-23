@@ -42,7 +42,7 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
-use PHP\Depend\Parser\TokenException;
+use PHP\Depend\Source\Parser\TokenException;
 
 /**
  * Utility class that can be used to handle PHP's namespace separator in all
@@ -110,7 +110,7 @@ final class PHPTokenizerHelperVersion52
      *
      * @param string $source The raw php source code.
      * @return array
-     * @throws \PHP\Depend\Parser\TokenException
+     * @throws \PHP\Depend\Source\Parser\TokenException
      * @todo Exception should be moved into a general package.
      */
     private static function doTokenize($source)

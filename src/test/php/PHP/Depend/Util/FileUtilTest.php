@@ -42,13 +42,12 @@
 
 namespace PHP\Depend\Util;
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the {@link \PHP\Depend\Util\FileUtil} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @covers \PHP\Depend\Util\FileUtil
  * @group pdepend
  * @group pdepend::util

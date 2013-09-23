@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
+use PHP\Depend\Source\AST\ASTCompilationUnit;
 
 /**
  * Test case for the code property class.
@@ -160,7 +161,7 @@ class PHP_Depend_Code_PropertyTest extends PHP_Depend_AbstractTest
      */
     public function testGetSourceFileReturnsInjectedFileInstance()
     {
-        $file = new PHP_Depend_Code_File(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
 
         $property = $this->getMockWithoutConstructor(PHP_Depend_Code_Property::CLAZZ);
         $property->setSourceFile($file);

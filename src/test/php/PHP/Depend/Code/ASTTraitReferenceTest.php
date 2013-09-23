@@ -41,7 +41,7 @@
  * @since     1.0.0
  */
 
-use PHP\Depend\Builder\Context;
+use PHP\Depend\Source\Builder\BuilderContext;
 
 /**
  * Test case for the {@link PHP_Depend_Code_ASTTraitReference} class.
@@ -50,7 +50,7 @@ use PHP\Depend\Builder\Context;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTTraitReference
  * @group pdepend
  * @group pdepend::ast
@@ -65,7 +65,7 @@ class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
      */
     public function testGetTraitDelegatesToContextGetTraitMethod()
     {
-        $context = $this->getMock(Context::CLAZZ);
+        $context = $this->getMock(BuilderContext::CLAZZ);
         $context->expects($this->once())
             ->method('getTrait')
             ->with($this->equalTo(__CLASS__));
@@ -169,10 +169,10 @@ class PHP_Depend_Code_ASTTraitReferenceTest extends PHP_Depend_Code_ASTNodeTest
     /**
      * Returns a mocked builder context instance.
      *
-     * @return \PHP\Depend\Builder\Context
+     * @return \PHP\Depend\Source\Builder\BuilderContext
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock(Context::CLAZZ);
+        return $this->getMock(BuilderContext::CLAZZ);
     }
 }

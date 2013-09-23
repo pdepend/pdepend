@@ -92,7 +92,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassC']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassA',
-                'type'  =>  'PHP_Depend_Code_Class'
+                'type'  =>  'PHP\\Depend\\Source\\AST\\ASTClass'
             ),
             $uuidMap['PDepend_CodeRank_ClassB']  =>  array(
                 'in'  =>  array(
@@ -103,7 +103,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassA']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassB',
-                'type'  =>  'PHP_Depend_Code_Class'
+                'type'  =>  'PHP\\Depend\\Source\\AST\\ASTClass'
             ),
             $uuidMap['PDepend_CodeRank_ClassC']  =>  array(
                 'in'  =>  array(
@@ -115,7 +115,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend_CodeRank_ClassB']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassC',
-                'type'  =>  'PHP_Depend_Code_Class'
+                'type'  =>  'PHP\\Depend\\Source\\AST\\ASTClass'
             ),
             $uuidMap['PDepend::CodeRankA']  =>  array(
                 'in'  =>  array(
@@ -127,7 +127,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend::CodeRankB'],
                 ),
                 'name'  =>  'PDepend::CodeRankA',
-                'type'  =>  'PHP_Depend_Code_Package'
+                'type'  =>  'PHP\\Depend\\Source\\AST\\ASTNamespace'
             ),
             $uuidMap['PDepend::CodeRankB']  =>  array(
                 'in'  =>  array(
@@ -139,7 +139,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
                     $uuidMap['PDepend::CodeRankA']
                 ),
                 'name'  =>  'PDepend::CodeRankB',
-                'type'  =>  'PHP_Depend_Code_Package'
+                'type'  =>  'PHP\\Depend\\Source\\AST\\ASTNamespace'
             ),
         );
     

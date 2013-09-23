@@ -40,15 +40,17 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics;
+
+use PHP\Depend\TreeVisitor\AbstractTreeVisitor;
+
 /**
  * This abstract class provides a base implementation of an analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-abstract class PHP_Depend_Metrics_AbstractAnalyzer
-       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
-    implements PHP_Depend_Metrics_AnalyzerI
+abstract class AbstractAnalyzer extends AbstractTreeVisitor implements Analyzer
 {
     /**
      * Global options array.
@@ -60,7 +62,7 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * List or registered listeners.
      *
-     * @var PHP_Depend_Metrics_ListenerI[]
+     * @var \PHP\Depend\Metrics\AnalyzerListener[]
      */
     private $listeners = array();
 
@@ -78,11 +80,10 @@ abstract class PHP_Depend_Metrics_AbstractAnalyzer
     /**
      * Adds a listener to this analyzer.
      *
-     * @param PHP_Depend_Metrics_ListenerI $listener The listener instance.
-     *
+     * @param \PHP\Depend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(PHP_Depend_Metrics_ListenerI $listener)
+    public function addAnalyzeListener(\PHP\Depend\Metrics\AnalyzerListener $listener)
     {
         if (in_array($listener, $this->listeners, true) === false) {
             $this->listeners[] = $listener;

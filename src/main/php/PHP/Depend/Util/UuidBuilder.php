@@ -43,6 +43,11 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\Source\AST\AbstractASTType;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTMethod;
+
 /**
  * This class provides methods to generate unique, but reproducable identifiers
  * for nodes generated during the parsing process.
@@ -56,21 +61,21 @@ class UuidBuilder
     /**
      * Generates an identifier for the given file instance.
      *
-     * @param \PHP_Depend_Code_File $file The context source file instance.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return string
      */
-    public function forFile(\PHP_Depend_Code_File $file)
+    public function forFile(ASTCompilationUnit $compilationUnit)
     {
-        return $this->hash($file->getFileName());
+        return $this->hash($compilationUnit->getFileName());
     }
 
     /**
      * Generates an identifier for the given function instance.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return string
      */
-    public function forFunction(\PHP_Depend_Code_Function $function)
+    public function forFunction(ASTFunction $function)
     {
         return $this->forOffsetItem($function, 'function');
     }
@@ -78,10 +83,10 @@ class UuidBuilder
     /**
      * Generates an identifier for the given class, interface or trait instance.
      *
-     * @param \PHP_Depend_Code_AbstractType $type A class instance.
+     * @param \PHP\Depend\Source\AST\AbstractASTType $type
      * @return string
      */
-    public function forClassOrInterface(\PHP_Depend_Code_AbstractType $type)
+    public function forClassOrInterface(AbstractASTType $type)
     {
 
         return $this->forOffsetItem(
@@ -110,10 +115,10 @@ class UuidBuilder
     /**
      * Generates an identifier for the given method instance.
      *
-     * @param \PHP_Depend_Code_Method $method A method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return string
      */
-    public function forMethod(\PHP_Depend_Code_Method $method)
+    public function forMethod(ASTMethod $method)
     {
         return sprintf(
             '%s-%s',

@@ -41,24 +41,26 @@
  * @since     0.9.10
  */
 
+namespace PHP\Depend\Metrics;
+
 /**
- * Filter iterator that only returns enabled {@link PHP_Depend_Metrics_AnalyzerI}
+ * Filter iterator that only returns enabled {@link \PHP\Depend\Metrics\Analyzer}
  * instances.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.10
  */
-class PHP_Depend_Metrics_AnalyzerIterator extends FilterIterator
+class AnalyzerIterator extends \FilterIterator
 {
     /**
      * Constructs a new iterator instance.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI[] $analyzers
+     * @param \PHP\Depend\Metrics\Analyzer[] $analyzers
      */
     public function __construct(array $analyzers)
     {
-        parent::__construct(new ArrayIterator($analyzers));
+        parent::__construct(new \ArrayIterator($analyzers));
     }
 
     /**

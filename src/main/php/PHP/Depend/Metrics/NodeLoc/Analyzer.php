@@ -39,6 +39,15 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractCachingAnalyzer;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\Tokenizer\Tokens;
 
 /**
@@ -64,11 +73,10 @@ use PHP\Depend\Source\Tokenizer\Tokens;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_NodeLoc_Analyzer
-       extends PHP_Depend_Metrics_AbstractCachingAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+       extends AbstractCachingAnalyzer
+    implements AnalyzerNodeAware,
+               AnalyzerFilterAware,
+               AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -160,7 +168,7 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     }
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      * @return void
@@ -184,10 +192,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a class node.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->fireStartClass($class);
 
@@ -223,31 +231,31 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a file node.
      *
-     * @param PHP_Depend_Code_File $file The current file node.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(PHP_Depend_Code_File $file)
+    public function visitFile(ASTCompilationUnit $compilationUnit)
     {
         // Skip for dummy files
-        if ($file->getFileName() === null) {
+        if ($compilationUnit->getFileName() === null) {
             return;
         }
         // Check for initial file
-        $uuid = $file->getUuid();
+        $uuid = $compilationUnit->getUuid();
         if (isset($this->metrics[$uuid])) {
             return;
         }
 
-        $this->fireStartFile($file);
+        $this->fireStartFile($compilationUnit);
 
-        if ($this->restoreFromCache($file)) {
+        if ($this->restoreFromCache($compilationUnit)) {
             $this->updateProjectMetrics($uuid);
-            return $this->fireEndFile($file);
+            return $this->fireEndFile($compilationUnit);
         }
 
-        list($cloc, $eloc, $lloc) = $this->linesOfCode($file->getTokens());
+        list($cloc, $eloc, $lloc) = $this->linesOfCode($compilationUnit->getTokens());
 
-        $loc   = $file->getEndLine();
+        $loc   = $compilationUnit->getEndLine();
         $ncloc = $loc - $cloc;
 
         $this->metrics[$uuid] = array(
@@ -260,16 +268,16 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
 
         $this->updateProjectMetrics($uuid);
 
-        $this->fireEndFile($file);
+        $this->fireEndFile($compilationUnit);
     }
 
     /**
      * Visits a function node.
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->fireStartFunction($function);
 
@@ -301,10 +309,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->fireStartInterface($interface);
 
@@ -337,10 +345,10 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 

@@ -39,6 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\Analyzer;
+use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * This visitor generates the metrics for the analyzed packages.
@@ -46,9 +53,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Dependency_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI
+class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
 {
     /**
      * Type of this analyzer class.
@@ -100,12 +105,12 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * <code>
      * array(
      *     <package-uuid> => array(
-     *         PHP_Depend_Code_Package {},
-     *         PHP_Depend_Code_Package {},
+     *         \PHP\Depend\Source\AST\ASTNamespace {},
+     *         \PHP\Depend\Source\AST\ASTNamespace {},
      *     ),
      *     <package-uuid> => array(
-     *         PHP_Depend_Code_Package {},
-     *         PHP_Depend_Code_Package {},
+     *         \PHP\Depend\Source\AST\ASTNamespace {},
+     *         \PHP\Depend\Source\AST\ASTNamespace {},
      *     ),
      * )
      * </code>
@@ -115,10 +120,9 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     private $collectedCycles = array();
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
+     * @param PHP_Depend_Code_NodeIterator $packages
      * @return void
      */
     public function analyze(PHP_Depend_Code_NodeIterator $packages)
@@ -215,11 +219,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $method The method class node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 
@@ -234,33 +237,31 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits a package node.
      *
-     * @param PHP_Depend_Code_Class $package The package class node.
-     *
+     * @param PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function visitPackage(PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($package);
+        $this->fireStartPackage($namespace);
 
-        $this->initPackageMetric($package);
+        $this->initPackageMetric($namespace);
 
-        $this->nodeSet[$package->getUuid()] = $package;
+        $this->nodeSet[$namespace->getUuid()] = $namespace;
 
-        foreach ($package->getTypes() as $type) {
+        foreach ($namespace->getTypes() as $type) {
             $type->accept($this);
         }
 
-        $this->fireEndPackage($package);
+        $this->fireEndPackage($namespace);
     }
 
     /**
      * Visits a class node.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -270,11 +271,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Visits an interface node.
      *
-     * @param PHP_Depend_Code_Interface $interface The current interface node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
@@ -285,11 +285,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Generic visit method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type The type instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
-    protected function visitType(PHP_Depend_Code_AbstractClassOrInterface $type)
+    protected function visitType(AbstractASTClassOrInterface $type)
     {
         // Get context package uuid
         $pkgUUID = $type->getPackage()->getUuid();
@@ -317,15 +316,13 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Collects the dependencies between the two given packages.
      *
-     * @param PHP_Depend_Code_Package $packageA Context/owning package.
-     * @param PHP_Depend_Code_Package $packageB Dependent package.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $packageA Context/owning package.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $packageB Dependent package.
      *
      * @return void
      */
-    private function collectDependencies(
-        PHP_Depend_Code_Package $packageA,
-        PHP_Depend_Code_Package $packageB
-    ) {
+    private function collectDependencies(ASTNamespace $packageA, ASTNamespace $packageB)
+    {
         $idA = $packageA->getUuid();
         $idB = $packageB->getUuid();
 
@@ -345,17 +342,16 @@ class PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Initializes the node metric record for the given <b>$package</b>.
      *
-     * @param PHP_Depend_Code_Package $package The context package.
-     *
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    protected function initPackageMetric(PHP_Depend_Code_Package $package)
+    protected function initPackageMetric(ASTNamespace $namespace)
     {
-        $uuid = $package->getUuid();
+        $uuid = $namespace->getUuid();
 
         if (!isset($this->nodeMetrics[$uuid])) {
             // Store a package reference
-            $this->nodeSet[$uuid] = $package;
+            $this->nodeSet[$uuid] = $namespace;
 
             // Create empty metrics for this package
             $this->nodeMetrics[$uuid] = array(
@@ -460,27 +456,27 @@ class PHP_Depend_Metrics_Dependency_Analyzer
      * Collects a single cycle that is reachable by this package. All packages
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param PHP_Depend_Code_Package[] &$list
-     * @param PHP_Depend_Code_Package $package
+     * @param \PHP\Depend\Source\AST\ASTNamespace[] &$list
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(array &$list, PHP_Depend_Code_Package $package)
+    protected function collectCycle(array &$list, ASTNamespace $namespace)
     {
-        if (in_array($package, $list, true)) {
-            $list[] = $package;
+        if (in_array($namespace, $list, true)) {
+            $list[] = $namespace;
             return true;
         }
 
-        $list[] = $package;
+        $list[] = $namespace;
 
-        foreach ($this->getEfferents($package) as $efferent) {
+        foreach ($this->getEfferents($namespace) as $efferent) {
             if ($this->collectCycle($list, $efferent)) {
                 return true;
             }
         }
 
-        if (is_int($idx = array_search($package, $list, true))) {
+        if (is_int($idx = array_search($namespace, $list, true))) {
             unset($list[$idx]);
         }
         return false;

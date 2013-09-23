@@ -42,6 +42,14 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
+
 /**
  * Base interface for a visitor listener.
  *
@@ -53,116 +61,116 @@ interface TreeVisitListener
     /**
      * Is called when the visitor starts a new class instance.
      *
-     * @param \PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class The context class instance.
      * @return void
      */
-    function startVisitClass(\PHP_Depend_Code_Class $class);
+    function startVisitClass(ASTClass $class);
 
     /**
      * Is called when the visitor ends with a class instance.
      *
-     * @param \PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class The context class instance.
      * @return void
      */
-    function endVisitClass(\PHP_Depend_Code_Class $class);
+    function endVisitClass(ASTClass $class);
 
     /**
      * Is called when the visitor starts a new trait instance.
      *
-     * @param \PHP_Depend_Code_Trait $trait The context trait instance.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    function startVisitTrait(\PHP_Depend_Code_Trait $trait);
+    function startVisitTrait(ASTTrait $trait);
 
     /**
      * Is called when the visitor ends with a trait instance.
      *
-     * @param \PHP_Depend_Code_Trait $trait The context trait instance.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    function endVisitTrait(\PHP_Depend_Code_Trait $trait);
+    function endVisitTrait(ASTTrait $trait);
 
     /**
      * Is called when the visitor starts a new file instance.
      *
-     * @param \PHP_Depend_Code_File $file The context file instance.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
      * @return void
      */
-    function startVisitFile(\PHP_Depend_Code_File $file);
+    function startVisitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Is called when the visitor ends with a file instance.
      *
-     * @param \PHP_Depend_Code_File $file The context file instance.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
      * @return void
      */
-    function endVisitFile(\PHP_Depend_Code_File $file);
+    function endVisitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Is called when the visitor starts a new function instance.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    function startVisitFunction(\PHP_Depend_Code_Function $function);
+    function startVisitFunction(ASTFunction $function);
 
     /**
      * Is called when the visitor ends with a function instance.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param ASTFunction $function
      * @return void
      */
-    function endVisitFunction(\PHP_Depend_Code_Function $function);
+    function endVisitFunction(ASTFunction $function);
 
     /**
      * Is called when the visitor starts a new interface instance.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function startVisitInterface(\PHP_Depend_Code_Interface $interface);
+    function startVisitInterface(ASTInterface $interface);
 
     /**
      * Is called when the visitor ends with an interface instance.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function endVisitInterface(\PHP_Depend_Code_Interface $interface);
+    function endVisitInterface(ASTInterface $interface);
 
     /**
      * Is called when the visitor starts a new method instance.
      *
-     * @param \PHP_Depend_Code_Method $method The context method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    function startVisitMethod(\PHP_Depend_Code_Method $method);
+    function startVisitMethod(ASTMethod $method);
 
     /**
      * Is called when the visitor ends with a method instance.
      *
-     * @param \PHP_Depend_Code_Method $method The context method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    function endVisitMethod(\PHP_Depend_Code_Method $method);
+    function endVisitMethod(ASTMethod $method);
 
     /**
      * Is called when the visitor starts a new package instance.
      *
-     * @param \PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    function startVisitPackage(\PHP_Depend_Code_Package $package);
+    function startVisitPackage(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor ends with a package instance.
      *
-     * @param \PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    function endVisitPackage(\PHP_Depend_Code_Package $package);
+    function endVisitPackage(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor starts a new parameter instance.

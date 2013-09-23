@@ -39,7 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-use PHP\Depend\Parser\VersionAllParser;
+
+use PHP\Depend\Source\Language\PHP\PHPBuilder;
+use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
 
 /**
@@ -118,7 +120,7 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
      * Parses the given test file and then returns the builder instance.
      *
      * @param string $file Relative path to a test file for the calling test.
-     * @return \PHP\Depend\Builder\DefaultBuilder
+     * @return \PHP\Depend\Source\Builder\Builder
      */
     protected function parseSourceAndReturnBuilder($file)
     {
@@ -129,10 +131,10 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->testFile);
 
-        $builder = new \PHP\Depend\Builder\DefaultBuilder();
+        $builder = new PHPBuilder();
         $builder->setCache($cache);
 
-        $parser = new VersionAllParser(
+        $parser = new PHPParserGeneric(
             $tokenizer,
             $builder,
             $cache

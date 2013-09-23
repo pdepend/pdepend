@@ -39,6 +39,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
 
 /**
  * Test case the node iterator.
@@ -62,10 +68,10 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     public function testCreateIteratorWidthValidInput()
     {
         $nodes = array(
-            new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
-            new PHP_Depend_Code_Package('pkg'),
-            new PHP_Depend_Code_Method('method', 0),
-            new PHP_Depend_Code_Function('func', 0),
+            new ASTClass('clazz', 0, 'clazz.php'),
+            new ASTNamespace('pkg'),
+            new ASTMethod('method', 0),
+            new ASTFunction('func', 0),
         );
         
         $it = new PHP_Depend_Code_NodeIterator($nodes);
@@ -81,10 +87,10 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     public function testNodeIteratorReturnsObjectsInUnmodifiedOrder()
     {
         $expected = array(
-            new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
-            new PHP_Depend_Code_Function('func', 0),
-            new PHP_Depend_Code_Method('method', 0),
-            new PHP_Depend_Code_Package('pkg'),
+            new ASTClass('clazz', 0, 'clazz.php'),
+            new ASTFunction('func', 0),
+            new ASTMethod('method', 0),
+            new ASTNamespace('pkg'),
         );
         
         $iterator = new PHP_Depend_Code_NodeIterator($expected);
@@ -106,9 +112,9 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     {
         $iterator = new PHP_Depend_Code_NodeIterator(
             array(
-                $object2 = new PHP_Depend_Code_Class('o2', 0, 'o2.php'),
-                $object1 = new PHP_Depend_Code_Class('o1', 0, 'o1.php'),
-                $object3 = new PHP_Depend_Code_Class('o3', 0, 'o3.php'),
+                $object2 = new ASTClass('o2', 0, 'o2.php'),
+                $object1 = new ASTClass('o1', 0, 'o1.php'),
+                $object3 = new ASTClass('o3', 0, 'o3.php'),
                 $object1,
                 $object2,
                 $object3
@@ -132,10 +138,10 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     public function testIteratorUsesNodeNameAsItsIterationKey()
     {
         $nodes = array(
-            new PHP_Depend_Code_Class('clazz', 0, 'clazz.php'),
-            new PHP_Depend_Code_Function('func', 0),
-            new PHP_Depend_Code_Method('method', 0),
-            new PHP_Depend_Code_Package('pkg'),
+            new ASTClass('clazz', 0, 'clazz.php'),
+            new ASTFunction('func', 0),
+            new ASTMethod('method', 0),
+            new ASTNamespace('pkg'),
         );
 
         $iterator = new PHP_Depend_Code_NodeIterator($nodes);
@@ -182,9 +188,9 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     {
         $iterator = new PHP_Depend_Code_NodeIterator(
             array(
-                new PHP_Depend_Code_Class('Class'),
-                new PHP_Depend_Code_Interface('Interface'),
-                new PHP_Depend_Code_Trait('Trait')
+                new ASTClass('Class'),
+                new ASTInterface('Interface'),
+                new ASTTrait('Trait')
             )
         );
         $this->assertTrue(isset($iterator[1]));
@@ -200,9 +206,9 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     {
         $iterator = new PHP_Depend_Code_NodeIterator(
             array(
-                $class     = new PHP_Depend_Code_Class('Class'),
-                $interface = new PHP_Depend_Code_Interface('Interface'),
-                $trait     = new PHP_Depend_Code_Trait('Trait')
+                $class     = new ASTClass('Class'),
+                $interface = new ASTInterface('Interface'),
+                $trait     = new ASTTrait('Trait')
             )
         );
         $this->assertSame($interface, $iterator[1]);
@@ -231,7 +237,7 @@ class PHP_Depend_Code_NodeIteratorTest extends PHP_Depend_AbstractTest
     public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException()
     {
         $iterator    = new PHP_Depend_Code_NodeIterator(array());
-        $iterator[0] = new PHP_Depend_Code_Class('Class');
+        $iterator[0] = new ASTClass('Class');
     }
 
     /**

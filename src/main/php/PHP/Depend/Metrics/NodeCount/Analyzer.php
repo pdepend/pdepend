@@ -39,6 +39,15 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Metrics\AbstractAnalyzer;
+use PHP\Depend\Metrics\AnalyzerFilterAware;
+use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
  * This analyzer collects different count metrics for code artifacts like
@@ -48,11 +57,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 class PHP_Depend_Metrics_NodeCount_Analyzer
-       extends PHP_Depend_Metrics_AbstractAnalyzer
-    implements PHP_Depend_Metrics_AnalyzerI,
-               PHP_Depend_Metrics_FilterAwareI,
-               PHP_Depend_Metrics_NodeAwareI,
-               PHP_Depend_Metrics_ProjectAwareI
+       extends AbstractAnalyzer
+    implements AnalyzerFilterAware,
+               AnalyzerNodeAware,
+               AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -163,7 +171,7 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     }
 
     /**
-     * Processes all {@link PHP_Depend_Code_Package} code nodes.
+     * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
      * @param PHP_Depend_Code_NodeIterator $packages All code packages.
      *
@@ -191,10 +199,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a class node.
      *
-     * @param PHP_Depend_Code_Class $class The current class node.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         if (false === $class->isUserDefined()) {
             return;
@@ -223,10 +231,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a function node.
      *
-     * @param PHP_Depend_Code_Function $function The current function node.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->fireStartFunction($function);
 
@@ -243,10 +251,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a code interface object.
      *
-     * @param PHP_Depend_Code_Interface $interface The context code interface.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         if (false === $interface->isUserDefined()) {
             return;
@@ -275,10 +283,10 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 
@@ -301,17 +309,17 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
     /**
      * Visits a package node.
      *
-     * @param PHP_Depend_Code_Package $package The package class node.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function visitPackage(PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($package);
+        $this->fireStartPackage($namespace);
 
         // Update package count
         ++$this->nop;
 
-        $this->nodeMetrics[$package->getUuid()] = array(
+        $this->nodeMetrics[$namespace->getUuid()] = array(
             self::M_NUMBER_OF_CLASSES     =>  0,
             self::M_NUMBER_OF_INTERFACES  =>  0,
             self::M_NUMBER_OF_METHODS     =>  0,
@@ -319,16 +327,16 @@ class PHP_Depend_Metrics_NodeCount_Analyzer
         );
 
 
-        foreach ($package->getClasses() as $class) {
+        foreach ($namespace->getClasses() as $class) {
             $class->accept($this);
         }
-        foreach ($package->getInterfaces() as $interface) {
+        foreach ($namespace->getInterfaces() as $interface) {
             $interface->accept($this);
         }
-        foreach ($package->getFunctions() as $function) {
+        foreach ($namespace->getFunctions() as $function) {
             $function->accept($this);
         }
 
-        $this->fireEndPackage($package);
+        $this->fireEndPackage($namespace);
     }
 }

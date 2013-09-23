@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
+use PHP\Depend\Source\AST\ASTMethod;
 
 /**
  * Collects class and package metrics based on class and interface methods.
@@ -70,10 +72,10 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 
@@ -97,15 +99,12 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategy
      * Extracts the coupling information between the two given types and their
      * parent packages.
      *
-     * @param PHP_Depend_Code_AbstractClassOrInterface $type    The type instance.
-     * @param PHP_Depend_Code_AbstractClassOrInterface $depType The referenced type.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $type
+     * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $depType
      * @return void
      */
-    private function processType(
-        PHP_Depend_Code_AbstractClassOrInterface $type,
-        PHP_Depend_Code_AbstractClassOrInterface $depType
-    ) {
+    private function processType(AbstractASTClassOrInterface $type, AbstractASTClassOrInterface $depType)
+    {
         if ($type !== $depType) {
             $this->initNode($type);
             $this->initNode($depType);

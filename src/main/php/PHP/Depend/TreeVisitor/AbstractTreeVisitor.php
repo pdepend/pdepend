@@ -42,6 +42,14 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
+
 /**
  * This abstract visitor implementation provides a default traversal algorithm
  * that can be used for custom visitors.
@@ -84,10 +92,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a class node.
      *
-     * @param \PHP_Depend_Code_Class $class The current class node.
+     * @param ASTClass $class
      * @return void
      */
-    public function visitClass(\PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->fireStartClass($class);
 
@@ -106,11 +114,11 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a trait node.
      *
-     * @param \PHP_Depend_Code_Trait $trait The current trait node.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    public function visitTrait(\PHP_Depend_Code_Trait $trait)
+    public function visitTrait(ASTTrait $trait)
     {
         $this->fireStartTrait($trait);
 
@@ -126,22 +134,22 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a file node.
      *
-     * @param \PHP_Depend_Code_File $file The current file node.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(\PHP_Depend_Code_File $file)
+    public function visitFile(ASTCompilationUnit $compilationUnit)
     {
-        $this->fireStartFile($file);
-        $this->fireEndFile($file);
+        $this->fireStartFile($compilationUnit);
+        $this->fireEndFile($compilationUnit);
     }
 
     /**
      * Visits a function node.
      *
-     * @param \PHP_Depend_Code_Function $function The current function node.
+     * @param ASTFunction $function
      * @return void
      */
-    public function visitFunction(\PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->fireStartFunction($function);
 
@@ -157,10 +165,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a code interface object.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context code interface.
+     * @param ASTInterface $interface
      * @return void
      */
-    public function visitInterface(\PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->fireStartInterface($interface);
 
@@ -176,10 +184,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a method node.
      *
-     * @param \PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(\PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->fireStartMethod($method);
 
@@ -193,27 +201,27 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a package node.
      *
-     * @param \PHP_Depend_Code_Package $package The package class node.
+     * @param ASTNamespace $namespace
      * @return void
      */
-    public function visitPackage(\PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($package);
+        $this->fireStartPackage($namespace);
 
-        foreach ($package->getClasses() as $class) {
+        foreach ($namespace->getClasses() as $class) {
             $class->accept($this);
         }
-        foreach ($package->getInterfaces() as $interface) {
+        foreach ($namespace->getInterfaces() as $interface) {
             $interface->accept($this);
         }
-        foreach ($package->getTraits() as $trait) {
+        foreach ($namespace->getTraits() as $trait) {
             $trait->accept($this);
         }
-        foreach ($package->getFunctions() as $function) {
+        foreach ($namespace->getFunctions() as $function) {
             $function->accept($this);
         }
 
-        $this->fireEndPackage($package);
+        $this->fireEndPackage($namespace);
     }
 
     /**
@@ -243,10 +251,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start class event.
      *
-     * @param \PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    protected function fireStartClass(\PHP_Depend_Code_Class $class)
+    protected function fireStartClass(ASTClass $class)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitClass($class);
@@ -256,10 +264,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends an end class event.
      *
-     * @param \PHP_Depend_Code_Class $class The context class instance.
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    protected function fireEndClass(\PHP_Depend_Code_Class $class)
+    protected function fireEndClass(ASTClass $class)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitClass($class);
@@ -269,10 +277,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start trait event.
      *
-     * @param \PHP_Depend_Code_Trait $trait The context trait instance.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      */
-    protected function fireStartTrait(\PHP_Depend_Code_Trait $trait)
+    protected function fireStartTrait(ASTTrait $trait)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitTrait($trait);
@@ -282,10 +290,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends an end trait event.
      *
-     * @param \PHP_Depend_Code_Trait $trait The context trait instance.
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      */
-    protected function fireEndTrait(\PHP_Depend_Code_Trait $trait)
+    protected function fireEndTrait(ASTTrait $trait)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitTrait($trait);
@@ -295,36 +303,36 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start file event.
      *
-     * @param \PHP_Depend_Code_File $file The context file.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    protected function fireStartFile(\PHP_Depend_Code_File $file)
+    protected function fireStartFile(ASTCompilationUnit $compilationUnit)
     {
         foreach ($this->listeners as $listener) {
-            $listener->startVisitFile($file);
+            $listener->startVisitFile($compilationUnit);
         }
     }
 
     /**
      * Sends an end file event.
      *
-     * @param \PHP_Depend_Code_File $file The context file instance.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    protected function fireEndFile(\PHP_Depend_Code_File $file)
+    protected function fireEndFile(ASTCompilationUnit $compilationUnit)
     {
         foreach ($this->listeners as $listener) {
-            $listener->endVisitFile($file);
+            $listener->endVisitFile($compilationUnit);
         }
     }
 
     /**
      * Sends a start function event.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param ASTFunction $function
      * @return void
      */
-    protected function fireStartFunction(\PHP_Depend_Code_Function $function)
+    protected function fireStartFunction(ASTFunction $function)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitFunction($function);
@@ -334,10 +342,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends an end function event.
      *
-     * @param \PHP_Depend_Code_Function $function The context function instance.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    protected function fireEndFunction(\PHP_Depend_Code_Function $function)
+    protected function fireEndFunction(ASTFunction $function)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitFunction($function);
@@ -347,10 +355,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start interface event.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    protected function fireStartInterface(\PHP_Depend_Code_Interface $interface)
+    protected function fireStartInterface(ASTInterface $interface)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitInterface($interface);
@@ -360,10 +368,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends an end interface event.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context interface instance.
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    protected function fireEndInterface(\PHP_Depend_Code_Interface $interface)
+    protected function fireEndInterface(ASTInterface $interface)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitInterface($interface);
@@ -373,10 +381,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start method event.
      *
-     * @param \PHP_Depend_Code_Method $method The context method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    protected function fireStartMethod(\PHP_Depend_Code_Method $method)
+    protected function fireStartMethod(ASTMethod $method)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitMethod($method);
@@ -386,10 +394,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends an end method event.
      *
-     * @param \PHP_Depend_Code_Method $method The context method instance.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    protected function fireEndMethod(\PHP_Depend_Code_Method $method)
+    protected function fireEndMethod(ASTMethod $method)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitMethod($method);
@@ -399,26 +407,26 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start package event.
      *
-     * @param \PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    protected function fireStartPackage(\PHP_Depend_Code_Package $package)
+    protected function fireStartPackage(ASTNamespace $namespace)
     {
         foreach ($this->listeners as $listener) {
-            $listener->startVisitPackage($package);
+            $listener->startVisitPackage($namespace);
         }
     }
 
     /**
      * Sends an end package event.
      *
-     * @param \PHP_Depend_Code_Package $package The context package instance.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    protected function fireEndPackage(\PHP_Depend_Code_Package $package)
+    protected function fireEndPackage(ASTNamespace $namespace)
     {
         foreach ($this->listeners as $listener) {
-            $listener->endVisitPackage($package);
+            $listener->endVisitPackage($namespace);
         }
     }
 

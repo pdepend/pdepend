@@ -40,13 +40,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
 /**
  * Tests the for the package metrics visitor.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers PHP_Depend_Metrics_Dependency_Analyzer
  * @group pdepend
@@ -59,7 +57,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
     /**
      * The used node builder.
      *
-     * @var \PHP\Depend\Builder\DefaultBuilder
+     * @var \PHP\Depend\Source\Builder\Builder
      */
     protected $builder = null;
 

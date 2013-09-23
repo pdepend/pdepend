@@ -99,7 +99,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractTest
      * Tests that the parser handles a closure function with bound variables.
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
+     * @expectedException \PHP\Depend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
     {

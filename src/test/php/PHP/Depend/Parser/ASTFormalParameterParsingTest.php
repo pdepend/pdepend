@@ -44,12 +44,12 @@
 namespace PHP\Depend\Parser;
 
 /**
- * Test case for the {@link \PHP_Depend_Parser} class.
+ * Test case for the {@link \PHP\Depend\Source\Language\PHP\AbstractPHPParser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.2
- * @covers \PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group pdepend
  * @group pdepend::parser
  * @group unittest
@@ -71,7 +71,7 @@ class ASTFormalParameterParsingTest extends AbstractTest
      * testWithParentTypeHintInFunctionThrowsExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testWithParentTypeHintInFunctionThrowsExpectedException()
     {
@@ -82,7 +82,7 @@ class ASTFormalParameterParsingTest extends AbstractTest
      * testWithParentTypeHintInRootClassThrowsExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testWithParentTypeHintInRootClassThrowsExpectedException()
     {

@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   * @since     1.0.0
  */
+use PHP\Depend\Source\AST\ASTClass;
 
 /**
  * Test case for the {@link PHP_Depend_Code_ClassOrInterfaceReferenceIterator}
@@ -63,10 +64,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIteratorTest extends PHP_Depend_A
      */
     public function testIteratorReturnsExpectedClasses()
     {
-        $class1 = new PHP_Depend_Code_Class('c1');
+        $class1 = new ASTClass('c1');
         $class1->setUuid(md5(23));
 
-        $class2 = new PHP_Depend_Code_Class('c2');
+        $class2 = new ASTClass('c2');
         $class2->setUuid(md5(42));
 
         $reference1 = $this->getMockBuilder(PHP_Depend_Code_ASTSelfReference::CLAZZ)
@@ -101,10 +102,10 @@ class PHP_Depend_Code_ClassOrInterfaceReferenceIteratorTest extends PHP_Depend_A
      */
     public function testIteratorReturnsSameClassOnlyOnce()
     {
-        $class1 = new PHP_Depend_Code_Class('c1');
+        $class1 = new ASTClass('c1');
         $class1->setUuid(md5(23));
 
-        $class2 = new PHP_Depend_Code_Class('c2');
+        $class2 = new ASTClass('c2');
         $class2->setUuid(md5(23));
 
         $reference1 = $this->getMockBuilder(PHP_Depend_Code_ASTSelfReference::CLAZZ)

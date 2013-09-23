@@ -46,7 +46,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTParentReference
  * @group pdepend
  * @group pdepend::ast
@@ -100,7 +100,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
@@ -111,7 +111,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceInClassWithoutParentThrowsException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testParentReferenceInClassWithoutParentThrowsException()
     {
@@ -122,7 +122,7 @@ class PHP_Depend_Code_ASTParentReferenceTest extends PHP_Depend_Code_ASTNodeTest
      * testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException \PHP\Depend\Parser\InvalidStateException
+     * @expectedException \PHP\Depend\Source\Parser\InvalidStateException
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {

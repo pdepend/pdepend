@@ -39,8 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-
-require_once dirname(__FILE__) . '/../AbstractTest.php';
+use PHP\Depend\Source\AST\ASTCompilationUnit;
 
 /**
  * Test case for the node lines of code analyzer.
@@ -48,7 +47,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_AbstractCachingAnalyzer
+ * @covers \PHP\Depend\Metrics\AbstractCachingAnalyzer
  * @covers PHP_Depend_Metrics_NodeLoc_Analyzer
  * @group pdepend
  * @group pdepend::metrics
@@ -683,7 +682,7 @@ class PHP_Depend_Metrics_NodeLoc_AnalyzerTest extends PHP_Depend_Metrics_Abstrac
      */
     public function testAnalyzerIgnoresFilesWithoutFileName()
     {
-        $file = new PHP_Depend_Code_File(null);
+        $file = new ASTCompilationUnit(null);
         $file->setUuid(42);
 
         $analyzer = $this->_createAnalyzer();

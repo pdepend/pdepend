@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTCompilationUnit;
 
 /**
  * Abstract base class for code item.
@@ -86,7 +87,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     /**
      * The source file for this item.
      *
-     * @var PHP_Depend_Code_File
+     * @var ASTCompilationUnit
      */
     protected $sourceFile = null;
 
@@ -159,7 +160,7 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     /**
      * Returns the source file for this item.
      *
-     * @return PHP_Depend_Code_File
+     * @return ASTCompilationUnit
      */
     public function getSourceFile()
     {
@@ -169,14 +170,13 @@ abstract class PHP_Depend_Code_AbstractItem implements PHP_Depend_Code_NodeI
     /**
      * Sets the source file for this item.
      *
-     * @param PHP_Depend_Code_File $sourceFile The item source file.
-     *
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function setSourceFile(PHP_Depend_Code_File $sourceFile)
+    public function setSourceFile(ASTCompilationUnit $compilationUnit)
     {
         if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
-            $this->sourceFile = $sourceFile;
+            $this->sourceFile = $compilationUnit;
         }
     }
 

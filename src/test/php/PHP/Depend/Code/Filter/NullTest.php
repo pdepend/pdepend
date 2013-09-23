@@ -40,6 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
 
 /**
  * Test case for the {@link PHP_Depend_Code_Filter_Null} class.
@@ -64,7 +71,7 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForClass()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Class(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTClass(__CLASS__)));
     }
 
     /**
@@ -75,7 +82,7 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForFile()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_File(__FILE__)));
+        $this->assertTrue($filter->accept(new ASTCompilationUnit(__FILE__)));
     }
 
     /**
@@ -86,7 +93,7 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForFunction()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Function(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTFunction(__CLASS__)));
     }
 
     /**
@@ -97,7 +104,7 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForInterface()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Interface(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTInterface(__CLASS__)));
     }
 
     /**
@@ -108,7 +115,7 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForMethod()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Method(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTMethod(__CLASS__)));
     }
 
     /**
@@ -119,7 +126,7 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForPackage()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Package(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
     /**
@@ -130,6 +137,6 @@ class PHP_Depend_Code_Filter_NullTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueForTrait()
     {
         $filter = new PHP_Depend_Code_Filter_Null();
-        $this->assertTrue($filter->accept(new PHP_Depend_Code_Trait(__CLASS__)));
+        $this->assertTrue($filter->accept(new ASTTrait(__CLASS__)));
     }
 }

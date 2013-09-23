@@ -49,7 +49,7 @@ use PHP\Depend\Source\AST\State;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTTraitAdaptationAlias
  * @group pdepend
  * @group pdepend::ast

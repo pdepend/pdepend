@@ -44,6 +44,7 @@ namespace PHP\Depend\TextUI;
 
 use PHP\Depend\Input\ExcludePathFilter;
 use PHP\Depend\Input\ExtensionFilter;
+use PHP\Depend\ProcessListener;
 use PHP\Depend\Report\GeneratorFactory;
 use PHP\Depend\Util\Configuration;
 
@@ -128,7 +129,7 @@ class Runner
      * This of process listeners that will be hooked into PHP_Depend's analyzing
      * process.
      *
-     * @var \PHP_Depend_ProcessListenerI[]
+     * @var ProcessListener[]
      */
     private $processListeners = array();
 
@@ -237,10 +238,10 @@ class Runner
      * Adds a process listener instance that will be hooked into PHP_Depends
      * analyzing process.
      *
-     * @param \PHP_Depend_ProcessListenerI $processListener A process listener.
+     * @param ProcessListener $processListener A process listener.
      * @return void
      */
-    public function addProcessListener(\PHP_Depend_ProcessListenerI $processListener)
+    public function addProcessListener(ProcessListener $processListener)
     {
         $this->processListeners[] = $processListener;
     }

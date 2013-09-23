@@ -46,7 +46,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_Parameter
  * @group pdepend
  * @group pdepend::code
@@ -657,8 +657,8 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * was defined.
      *
      * @return void
-     * @covers \PHP\Depend\Parser\MissingValueException
-     * @expectedException \PHP\Depend\Parser\MissingValueException
+     * @covers \PHP\Depend\Source\Parser\MissingValueException
+     * @expectedException \PHP\Depend\Source\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue()
     {
@@ -670,8 +670,8 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * end of file while it parses a parameter default value.
      *
      * @return void
-     * @covers \PHP\Depend\Parser\TokenStreamEndException
-     * @expectedException \PHP\Depend\Parser\TokenStreamEndException
+     * @covers \PHP\Depend\Source\Parser\TokenStreamEndException
+     * @expectedException \PHP\Depend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()
     {
@@ -683,8 +683,8 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
      * an invalid token.
      *
      * @return void
-     * @covers \PHP\Depend\Parser\UnexpectedTokenException
-     * @expectedException \PHP\Depend\Parser\UnexpectedTokenException
+     * @covers \PHP\Depend\Source\Parser\UnexpectedTokenException
+     * @expectedException \PHP\Depend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionWhenDefaultValueContainsInvalidToken()
     {
@@ -694,7 +694,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     /**
      * Returns the first interface in the test case file.
      *
-     * @return PHP_Depend_Code_Interface
+     * @return \PHP\Depend\Source\AST\ASTInterface
      */
     private function _getFirstInterface()
     {
@@ -707,7 +707,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     /**
      * Returns the first class in the test case file.
      *
-     * @return PHP_Depend_Code_Class
+     * @return \PHP\Depend\Source\AST\ASTClass
      */
     private function _getFirstClass()
     {
@@ -720,7 +720,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     /**
      * Returns the first method in the test case file.
      *
-     * @return PHP_Depend_Code_Method
+     * @return \PHP\Depend\Source\AST\ASTMethod
      */
     private function _getFirstMethod()
     {
@@ -735,7 +735,7 @@ class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
     /**
      * Returns the first function in the test case file.
      *
-     * @return PHP_Depend_Code_Function
+     * @return \PHP\Depend\Source\AST\ASTFunction
      */
     private function _getFirstFunction()
     {

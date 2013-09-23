@@ -257,8 +257,8 @@ abstract class PHP_Depend_Code_AbstractCallable
     }
 
     /**
-     * Returns all {@link PHP_Depend_Code_AbstractClassOrInterface} objects this
-     * function depends on.
+     * Returns all {@link \PHP\Depend\Source\AST\AbstractASTClassOrInterface}
+     * objects this function depends on.
      *
      * @return PHP_Depend_Code_NodeIterator
      */
@@ -321,7 +321,7 @@ abstract class PHP_Depend_Code_AbstractCallable
 
     /**
      * Returns an iterator with thrown exception
-     * {@link PHP_Depend_Code_AbstractClassOrInterface} instances.
+     * {@link \PHP\Depend\Source\AST\AbstractASTClassOrInterface} instances.
      *
      * @return PHP_Depend_Code_NodeIterator
      */

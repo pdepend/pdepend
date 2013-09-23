@@ -42,14 +42,13 @@
 
 namespace PHP\Depend\Util\Cache;
 
-require_once dirname(__FILE__) . '/../../AbstractTest.php';
-
 /**
  * Abstract test case that validates the behavior of concrete driver
  * implementations.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @group pdepend
  * @group pdepend::util
  * @group pdepend::util::cache

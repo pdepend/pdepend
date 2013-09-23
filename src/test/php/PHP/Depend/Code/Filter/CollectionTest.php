@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\ASTClass;
 
 /**
  * Test case for the {@link PHP_Depend_Code_Filter_Collection} class.
@@ -64,7 +65,7 @@ class PHP_Depend_Code_Filter_CollectionTest extends PHP_Depend_AbstractTest
     public function testAcceptsReturnsTrueByDefault()
     {
         $collection = new PHP_Depend_Code_Filter_Collection();
-        $this->assertTrue($collection->accept(new PHP_Depend_Code_Class(__CLASS__)));
+        $this->assertTrue($collection->accept(new ASTClass(__CLASS__)));
     }
 
     /**
@@ -74,7 +75,7 @@ class PHP_Depend_Code_Filter_CollectionTest extends PHP_Depend_AbstractTest
      */
     public function testAcceptsCallsNestedFilterWhenSet()
     {
-        $class = new PHP_Depend_Code_Class(__CLASS__);
+        $class = new ASTClass(__CLASS__);
 
         $filter = $this->getMock('PHP_Depend_Code_FilterI');
         $filter->expects($this->once())

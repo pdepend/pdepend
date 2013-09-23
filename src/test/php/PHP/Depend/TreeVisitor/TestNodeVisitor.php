@@ -42,6 +42,14 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFunction;
+use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTTrait;
+
 /**
  * Simple test node visitor implementation.
  *
@@ -53,14 +61,14 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * The last visited class instance.
      *
-     * @var \PHP_Depend_Code_Class
+     * @var \PHP\Depend\Source\AST\ASTClass
      */
     public $class;
 
     /**
      * The last visited trait instance.
      *
-     * @var \PHP_Depend_Code_Trait
+     * @var \PHP\Depend\Source\AST\ASTTrait
      * @since 1.0.0
      */
     public $trait;
@@ -68,21 +76,21 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * The last visited interface instance.
      *
-     * @var \PHP_Depend_Code_Interface
+     * @var \PHP\Depend\Source\AST\ASTInterface
      */
     public $interface;
 
     /**
      * The last visited method instance.
      *
-     * @var \PHP_Depend_Code_Method
+     * @var \PHP\Depend\Source\AST\ASTMethod
      */
     public $method;
 
     /**
      * The last visited package instance.
      *
-     * @var \PHP_Depend_Code_Package
+     * @var \PHP\Depend\Source\AST\ASTNamespace
      */
     public $package;
 
@@ -103,7 +111,7 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * The last visited function instance.
      *
-     * @var \PHP_Depend_Code_Function
+     * @var \PHP\Depend\Source\AST\ASTFunction
      */
     public $function;
 
@@ -120,11 +128,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a class node.
      *
-     * @param \PHP_Depend_Code_Class $class The current class node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(\PHP_Depend_Code_Class $class)
+    public function visitClass(ASTClass $class)
     {
         $this->class = $class;
     }
@@ -132,12 +139,11 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a trait node.
      *
-     * @param \PHP_Depend_Code_Trait $trait The current trait node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTTrait $trait
      * @return void
      * @since 1.0.0
      */
-    public function visitTrait(\PHP_Depend_Code_Trait $trait)
+    public function visitTrait(ASTTrait $trait)
     {
         $this->trait = $trait;
     }
@@ -146,11 +152,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a code interface object.
      *
-     * @param \PHP_Depend_Code_Interface $interface The context code interface.
-     *
+     * @param \PHP\Depend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(\PHP_Depend_Code_Interface $interface)
+    public function visitInterface(ASTInterface $interface)
     {
         $this->interface = $interface;
     }
@@ -158,10 +163,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a method node.
      *
-     * @param \PHP_Depend_Code_Method $method The method class node.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(\PHP_Depend_Code_Method $method)
+    public function visitMethod(ASTMethod $method)
     {
         $this->method = $method;
     }
@@ -169,19 +174,18 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a package node.
      *
-     * @param \PHP_Depend_Code_Package $package The package class node.
+     * @param \PHP\Depend\Source\AST\ASTNamespace $namespace The package class node.
      * @return void
      */
-    public function visitPackage(\PHP_Depend_Code_Package $package)
+    public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->package = $package;
+        $this->package = $namespace;
     }
 
     /**
      * Visits a parameter node.
      *
      * @param \PHP_Depend_Code_Parameter $parameter The parameter node.
-     *
      * @return void
      */
     public function visitParameter(\PHP_Depend_Code_Parameter $parameter)
@@ -203,10 +207,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a function node.
      *
-     * @param \PHP_Depend_Code_Function $function The current function node.
+     * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(\PHP_Depend_Code_Function $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->function = $function;
     }
@@ -214,10 +218,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a file node.
      *
-     * @param \PHP_Depend_Code_File $file The current file node.
+     * @param \PHP\Depend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(\PHP_Depend_Code_File $file)
+    public function visitFile(ASTCompilationUnit $compilationUnit)
     {
 
     }

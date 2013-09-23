@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
+use PHP\Depend\Source\AST\AbstractASTType;
+use PHP\Depend\Source\AST\ASTMethod;
 
 /**
  * This type of exception will be thrown when a trait related method collision
@@ -55,15 +57,11 @@ class PHP_Depend_Code_Exceptions_MethodCollisionException
     /**
      * Constructs a new exception instance.
      *
-     * @param PHP_Depend_Code_Method       $method The method that could not be
-     *        applied to the given <b>$type</b>.
-     * @param PHP_Depend_Code_AbstractType $type   The class or trait that cannot
-     *        resolve the imported methods.
+     * @param \PHP\Depend\Source\AST\ASTMethod $method
+     * @param \PHP\Depend\Source\AST\AbstractASTType $type
      */
-    public function __construct(
-        PHP_Depend_Code_Method $method,
-        PHP_Depend_Code_AbstractType $type
-    ) {
+    public function __construct(ASTMethod $method, AbstractASTType $type)
+    {
         parent::__construct(
             sprintf(
                 'Trait method %s has not been applied, because there are ' .

@@ -41,6 +41,7 @@
  * @since     1.0.0
  */
 
+use PHP\Depend\Source\AST\ASTTrait;
 use PHP\Depend\Source\AST\State;
 
 /**
@@ -50,7 +51,7 @@ use PHP\Depend\Source\AST\State;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  *
- * @covers PHP_Depend_Parser
+ * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @covers PHP_Depend_Code_ASTTraitUseStatement
  * @group pdepend
  * @group pdepend::ast
@@ -133,7 +134,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertInstanceOf(
-            PHP_Depend_Code_Trait::CLAZZ,
+            ASTTrait::CLAZZ,
             $methods[0]->getParent()
         );
     }
@@ -150,7 +151,7 @@ class PHP_Depend_Code_ASTTraitUseStatementTest extends PHP_Depend_Code_ASTNodeTe
         $methods = $useStmt->getAllMethods();
 
         $this->assertInstanceOf(
-            PHP_Depend_Code_Trait::CLAZZ,
+            ASTTrait::CLAZZ,
             $methods[0]->getParent()
         );
     }

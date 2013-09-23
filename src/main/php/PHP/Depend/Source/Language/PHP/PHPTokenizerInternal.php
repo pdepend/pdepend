@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
+use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\Source\Tokenizer\Tokens;
@@ -249,7 +250,7 @@ class PHPTokenizerInternal implements Tokenizer
     );
 
     /**
-     * Context sensitive alternative mappings.
+     * BuilderContext sensitive alternative mappings.
      *
      * @var array(integer=>array)
      */
@@ -345,7 +346,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * The source file instance.
      *
-     * @var \PHP_Depend_Code_File
+     * @var \PHP\Depend\Source\AST\ASTCompilationUnit
      */
     protected $sourceFile = '';
 
@@ -380,7 +381,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return \PHP_Depend_Code_File
+     * @return \PHP\Depend\Source\AST\ASTCompilationUnit
      */
     public function getSourceFile()
     {
@@ -397,7 +398,7 @@ class PHPTokenizerInternal implements Tokenizer
     public function setSourceFile($sourceFile)
     {
         $this->tokens = null;
-        $this->sourceFile = new \PHP_Depend_Code_File($sourceFile);
+        $this->sourceFile = new ASTCompilationUnit($sourceFile);
     }
 
     /**

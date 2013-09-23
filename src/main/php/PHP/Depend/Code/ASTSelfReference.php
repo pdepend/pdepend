@@ -40,7 +40,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.9.6
  */
-use PHP\Depend\Builder\Context;
+
+use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
+use PHP\Depend\Source\Builder\BuilderContext;
 
 /**
  * This is a special reference container that is used whenever the keyword
@@ -66,7 +68,7 @@ class PHP_Depend_Code_ASTSelfReference
     /**
      * The currently used builder context.
      *
-     * @var Context
+     * @var \PHP\Depend\Source\Builder\BuilderContext
      * @since 0.10.0
      */
     protected $context = null;
@@ -83,13 +85,11 @@ class PHP_Depend_Code_ASTSelfReference
     /**
      * Constructs a new type holder instance.
      *
-     * @param \PHP\Depend\Builder\Context $context
-     * @param PHP_Depend_Code_AbstractClassOrInterface $target
+     * @param \PHP\Depend\Source\Builder\BuilderContext $context
+     * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      */
-    public function __construct(
-        Context $context,
-        PHP_Depend_Code_AbstractClassOrInterface $target
-    ) {
+    public function __construct(BuilderContext $context, AbstractASTClassOrInterface $target)
+    {
         $this->context      = $context;
         $this->typeInstance = $target;
     }
@@ -108,7 +108,7 @@ class PHP_Depend_Code_ASTSelfReference
     /**
      * Returns the class or interface instance that this node instance represents.
      *
-     * @return PHP_Depend_Code_AbstractClassOrInterface
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface
      * @since 0.10.0
      */
     public function getType()

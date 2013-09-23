@@ -42,7 +42,9 @@
 
 namespace PHP\Depend\TextUI;
 
-use PHP\Depend\Builder;
+use PHP\Depend\Metrics\Analyzer;
+use PHP\Depend\ProcessListener;
+use PHP\Depend\Source\Builder\Builder;
 use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
 
@@ -52,9 +54,7 @@ use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class ResultPrinter
-       extends AbstractTreeVisitListener
-    implements \PHP_Depend_ProcessListenerI
+class ResultPrinter extends AbstractTreeVisitListener implements ProcessListener
 {
     /**
      * The step size.
@@ -71,7 +71,7 @@ class ResultPrinter
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param \PHP\Depend\Builder $builder The used node builder instance.
+     * @param \PHP\Depend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     public function startParseProcess(Builder $builder)
@@ -84,7 +84,7 @@ class ResultPrinter
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param \PHP\Depend\Builder $builder The used node builder instance.
+     * @param \PHP\Depend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     public function endParseProcess(Builder $builder)
@@ -154,10 +154,10 @@ class ResultPrinter
     /**
      * Is called when PDepend starts a new analyzer.
      *
-     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
+     * @param Analyzer $analyzer The context analyzer instance.
      * @return void
      */
-    public function startAnalyzer(\PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function startAnalyzer(Analyzer $analyzer)
     {
         $this->count = 0;
 
@@ -168,10 +168,10 @@ class ResultPrinter
     /**
      * Is called when PDepend has finished one analyzing process.
      *
-     * @param \PHP_Depend_Metrics_AnalyzerI $analyzer The context analyzer instance.
+     * @param \PHP\Depend\Metrics\Analyzer $analyzer The context analyzer instance.
      * @return void
      */
-    public function endAnalyzer(\PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function endAnalyzer(Analyzer $analyzer)
     {
         $this->finish(self::STEP_SIZE);
     }

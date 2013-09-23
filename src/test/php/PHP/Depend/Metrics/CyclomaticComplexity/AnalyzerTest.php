@@ -40,15 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
 /**
  * Test case for the cyclomatic analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_AbstractCachingAnalyzer
+ * @covers \PHP\Depend\Metrics\AbstractCachingAnalyzer
  * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
  * @group pdepend
  * @group pdepend::metrics
