@@ -43,6 +43,9 @@ use PHP\Depend\Metrics\AbstractCachingAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
@@ -137,14 +140,14 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
      * )
      * </code>
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metrics = array();
-        if (isset($this->metrics[$node->getUuid()])) {
-            $metrics = $this->metrics[$node->getUuid()];
+        if (isset($this->metrics[$artifact->getUuid()])) {
+            $metrics = $this->metrics[$artifact->getUuid()];
         }
         return $metrics;
     }
@@ -170,17 +173,17 @@ class PHP_Depend_Metrics_NodeLoc_Analyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces All code packages.
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->metrics === null) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 
             $this->metrics = array();
-            foreach ($packages as $package) {
+            foreach ($namespaces as $package) {
                 $package->accept($this);
             }
 

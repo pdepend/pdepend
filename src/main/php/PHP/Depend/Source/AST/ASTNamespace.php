@@ -51,7 +51,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class ASTNamespace implements \PHP_Depend_Code_NodeI
+class ASTNamespace extends AbstractASTArtifact
 {
     /**
      * The type of this class.
@@ -178,7 +178,7 @@ class ASTNamespace implements \PHP_Depend_Code_NodeI
      * Returns an iterator with all {@link \PHP\Depend\Source\AST\ASTClass}
      * instances within this package.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTClass[]
      */
     public function getClasses()
     {
@@ -189,7 +189,7 @@ class ASTNamespace implements \PHP_Depend_Code_NodeI
      * Returns an iterator with all {@link \PHP\Depend\Source\AST\ASTInterface}
      * instances within this package.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTInterface[]
      */
     public function getInterfaces()
     {
@@ -202,7 +202,7 @@ class ASTNamespace implements \PHP_Depend_Code_NodeI
      *
      * @param string $className The class/type we are looking for.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTArtifactList
      * @since 1.0.0
      */
     private function getTypesOfType($className)
@@ -213,18 +213,18 @@ class ASTNamespace implements \PHP_Depend_Code_NodeI
                 $types[] = $type;
             }
         }
-        return new \PHP_Depend_Code_NodeIterator($types);
+        return new ASTArtifactList($types);
     }
 
     /**
      * Returns all {@link \PHP\Depend\Source\AST\AbstractASTType} objects in
      * this package.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\AbstractASTType[]
      */
     public function getTypes()
     {
-        return new \PHP_Depend_Code_NodeIterator($this->types);
+        return new ASTArtifactList($this->types);
     }
 
     /**
@@ -271,11 +271,11 @@ class ASTNamespace implements \PHP_Depend_Code_NodeI
     /**
      * Returns all {@link \PHP\Depend\Source\AST\ASTFunction} objects in this package.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTFunction[]
      */
     public function getFunctions()
     {
-        return new \PHP_Depend_Code_NodeIterator($this->functions);
+        return new ASTArtifactList($this->functions);
     }
 
     /**

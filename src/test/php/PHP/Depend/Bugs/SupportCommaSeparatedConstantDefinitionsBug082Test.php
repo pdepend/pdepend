@@ -71,7 +71,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractTest
             ->current()
             ->getConstants();
 
-        self::assertEquals(2, count($constants));
+        $this->assertEquals(2, count($constants));
     }
 
     /**
@@ -88,7 +88,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractTest
             ->current()
             ->getConstants();
 
-        self::assertEquals(2, count($constants));
+        $this->assertEquals(2, count($constants));
     }
 
     /**
@@ -105,6 +105,6 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractTest
             ->current()
             ->getConstants();
 
-        self::assertEquals(5, count($constants));
+        $this->assertEquals(5, count($constants));
     }
 }

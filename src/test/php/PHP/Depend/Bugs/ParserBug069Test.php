@@ -75,7 +75,7 @@ class ParserBug069Test extends AbstractTest
             ->current()
             ->getPackage();
 
-        self::assertEquals('PHP\Depend', $package->getName());
+        $this->assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
@@ -97,7 +97,7 @@ class ParserBug069Test extends AbstractTest
             ->current()
             ->getPackage();
 
-        self::assertEquals('PHP\Depend', $package->getName());
+        $this->assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
@@ -138,7 +138,7 @@ class ParserBug069Test extends AbstractTest
             ->current()
             ->getPackage();
 
-        self::assertEquals('PHP\Depend', $package->getName());
+        $this->assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
@@ -160,6 +160,6 @@ class ParserBug069Test extends AbstractTest
             ->current()
             ->getPackage();
 
-        self::assertEquals('PHP\Depend', $package->getName());
+        $this->assertEquals('PHP\Depend', $package->getName());
     }
 }

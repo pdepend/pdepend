@@ -80,7 +80,7 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractTest
             $actual[] = $token->type;
         }
 
-        self::assertEquals($tokenTypes, $actual);
+        $this->assertEquals($tokenTypes, $actual);
     }
 
     /**

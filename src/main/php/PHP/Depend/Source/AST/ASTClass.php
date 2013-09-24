@@ -62,7 +62,7 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * List of associated properties.
      *
-     * @var \PHP_Depend_Code_Property[]
+     * @var \PHP\Depend\Source\AST\ASTProperty[]
      */
     private $properties = null;
 
@@ -89,7 +89,7 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * Returns all properties for this class.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTProperty[]
      */
     public function getProperties()
     {
@@ -97,16 +97,16 @@ class ASTClass extends AbstractASTClassOrInterface
             $this->properties = array();
 
             $declarations = $this->findChildrenOfType(
-                \PHP_Depend_Code_ASTFieldDeclaration::CLAZZ
+                \PHP\Depend\Source\AST\ASTFieldDeclaration::CLAZZ
             );
             foreach ($declarations as $declaration) {
                 $declarators = $declaration->findChildrenOfType(
-                    \PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
+                    \PHP\Depend\Source\AST\ASTVariableDeclarator::CLAZZ
                 );
 
                 foreach ($declarators as $declarator) {
 
-                    $property = new \PHP_Depend_Code_Property(
+                    $property = new ASTProperty(
                         $declaration, $declarator
                     );
                     $property->setDeclaringClass($this);
@@ -117,7 +117,7 @@ class ASTClass extends AbstractASTClassOrInterface
             }
         }
 
-        return new \PHP_Depend_Code_NodeIterator($this->properties);
+        return new ASTArtifactList($this->properties);
     }
 
     /**

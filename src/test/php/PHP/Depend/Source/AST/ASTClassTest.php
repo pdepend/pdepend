@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
+use PHP\Depend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PHP\Depend\Source\Builder\BuilderContext;
 use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\TreeVisitor\TestNodeVisitor;
@@ -57,7 +59,7 @@ use PHP\Depend\TreeVisitor\TestNodeVisitor;
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
+class ASTClassTest extends AbstractASTArtifactTest
 {
     /**
      * testGetAllMethodsContainsMethodsOfImplementedInterface
@@ -70,7 +72,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -84,7 +86,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -98,7 +100,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -112,7 +114,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -126,7 +128,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        self::assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
     }
 
     /**
@@ -358,8 +360,8 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
      *
      * @return void
      * @since 1.0.0
-     * @covers \PHP_Depend_Code_Exceptions_MethodCollisionException
-     * @expectedException \PHP_Depend_Code_Exceptions_MethodCollisionException
+     * @covers \PHP\Depend\Source\AST\ASTTraitMethodCollisionException
+     * @expectedException \PHP\Depend\Source\AST\ASTTraitMethodCollisionException
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
     {
@@ -399,7 +401,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantsReturnsAnEmptyArrayByDefault()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(array(), $class->getConstants());
+        $this->assertEquals(array(), $class->getConstants());
     }
 
     /**
@@ -410,7 +412,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantsReturnsExpectedConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(array('FOO' => 42), $class->getConstants());
+        $this->assertEquals(array('FOO' => 42), $class->getConstants());
     }
 
     /**
@@ -421,7 +423,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantsReturnsExpectedConstants()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
     }
 
     /**
@@ -432,7 +434,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantsReturnsExpectedParentConstants()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
     }
 
     /**
@@ -443,7 +445,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantsReturnsExpectedMergedParentAndChildConstants()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
     }
 
     /**
@@ -466,7 +468,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantReturnsFalseForNotExistentConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertFalse($class->getConstant('BAR'));
+        $this->assertFalse($class->getConstant('BAR'));
     }
 
     /**
@@ -477,7 +479,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantReturnsExpectedValueForExistentConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(42, $class->getConstant('BAR'));
+        $this->assertEquals(42, $class->getConstant('BAR'));
     }
 
     /**
@@ -488,7 +490,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetConstantReturnsExpectedValueNullForExistentConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertNull($class->getConstant('BAR'));
+        $this->assertNull($class->getConstant('BAR'));
     }
 
     /**
@@ -499,7 +501,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testHasConstantReturnsFalseForNotExistentConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertFalse($class->hasConstant('BAR'));
+        $this->assertFalse($class->hasConstant('BAR'));
     }
 
     /**
@@ -510,7 +512,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testHasConstantReturnsTrueForExistentConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertTrue($class->hasConstant('BAR'));
+        $this->assertTrue($class->hasConstant('BAR'));
     }
 
     /**
@@ -521,7 +523,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testHasConstantReturnsTrueForExistentNullConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertTrue($class->hasConstant('BAR'));
+        $this->assertTrue($class->hasConstant('BAR'));
     }
 
     /**
@@ -592,20 +594,20 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
@@ -616,7 +618,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->addChild($node2);
 
         $child = $class->getFirstChildOfType(get_class($node2));
-        self::assertSame($node2, $child);
+        $this->assertSame($node2, $child);
     }
 
     /**
@@ -627,29 +629,29 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
@@ -660,7 +662,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->addChild($node3);
 
         $child = $class->getFirstChildOfType(get_class($node1));
-        self::assertSame($node1, $child);
+        $this->assertSame($node1, $child);
     }
 
     /**
@@ -671,20 +673,20 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
@@ -696,9 +698,9 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->addChild($node2);
 
         $child = $class->getFirstChildOfType(
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
-        self::assertNull($child);
+        $this->assertNull($child);
     }
 
     /**
@@ -710,10 +712,10 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     {
         $class  = $this->getFirstClassForTestCase();
         $params = $class->getFirstChildOfType(
-            \PHP_Depend_Code_ASTFormalParameter::CLAZZ
+            \PHP\Depend\Source\AST\ASTFormalParameter::CLAZZ
         );
 
-        self::assertInstanceOf(\PHP_Depend_Code_ASTFormalParameter::CLAZZ, $params);
+        $this->assertInstanceOf(\PHP\Depend\Source\AST\ASTFormalParameter::CLAZZ, $params);
     }
 
     /**
@@ -725,10 +727,10 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     {
         $class  = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(
-            \PHP_Depend_Code_ASTFormalParameter::CLAZZ
+            \PHP\Depend\Source\AST\ASTFormalParameter::CLAZZ
         );
 
-        self::assertEquals(4, count($params));
+        $this->assertEquals(4, count($params));
     }
 
     /**
@@ -740,10 +742,10 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     {
         $class  = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(
-            \PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
+            \PHP\Depend\Source\AST\ASTVariableDeclarator::CLAZZ
         );
 
-        self::assertEquals(2, count($params));
+        $this->assertEquals(2, count($params));
     }
 
     /**
@@ -756,7 +758,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame($copy, $copy->getMethods()->current()->getParent());
+        $this->assertSame($copy, $copy->getMethods()->current()->getParent());
     }
 
     /**
@@ -769,7 +771,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $copy->getSourceFile(),
             $copy->getMethods()->current()->getSourceFile()
         );
@@ -785,7 +787,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getParentClass(),
             $copy->getParentClass()
         );
@@ -801,7 +803,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getInterfaces()->current(),
             $copy->getInterfaces()->current()
         );
@@ -819,7 +821,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
 
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $method->getReturnClass(),
             $copy
         );
@@ -835,7 +837,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getPackage(),
             $copy->getPackage()
         );
@@ -851,7 +853,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame($copy, $orig->getPackage()->getClasses()->current());
+        $this->assertSame($copy, $orig->getPackage()->getClasses()->current());
     }
 
     /**
@@ -864,7 +866,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertEquals(1, $orig->getPackage()->getClasses()->count());
+        $this->assertEquals(1, $orig->getPackage()->getClasses()->count());
     }
 
     /**
@@ -875,7 +877,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testCreateNewClassInstance()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertEquals(__CLASS__, $class->getName());
+        $this->assertEquals(__CLASS__, $class->getName());
     }
 
     /**
@@ -886,7 +888,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsAbstractReturnsFalseByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertFalse($class->isAbstract());
+        $this->assertFalse($class->isAbstract());
     }
 
     /**
@@ -899,7 +901,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(State::IS_EXPLICIT_ABSTRACT);
 
-        self::assertTrue($class->isAbstract());
+        $this->assertTrue($class->isAbstract());
     }
 
     /**
@@ -910,7 +912,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsFinalReturnsFalseByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertFalse($class->isFinal());
+        $this->assertFalse($class->isFinal());
     }
 
     /**
@@ -923,7 +925,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(State::IS_FINAL);
 
-        self::assertTrue($class->isFinal());
+        $this->assertTrue($class->isFinal());
     }
 
     /**
@@ -944,7 +946,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
 
     /**
      * Tests that a new {@link \PHP\Depend\Source\AST\ASTClass} object returns
-     * an empty {@link \PHP_Depend_Code_NodeIterator} instance for methods.
+     * an empty {@link \PHP\Depend\Source\AST\ASTArtifactList} instance for methods.
      *
      * @return void
      */
@@ -953,7 +955,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class = new ASTClass(__CLASS__);
         $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        self::assertEquals(0, $class->getMethods()->count());
+        $this->assertEquals(0, $class->getMethods()->count());
     }
 
     /**
@@ -969,7 +971,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $class->addMethod(new ASTMethod(__FUNCTION__));
 
-        self::assertEquals(1, $class->getMethods()->count());
+        $this->assertEquals(1, $class->getMethods()->count());
     }
 
     /**
@@ -984,7 +986,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
 
         $method = $class->addMethod(new ASTMethod(__FUNCTION__));
 
-        self::assertSame($class, $method->getParent());
+        $this->assertSame($class, $method->getParent());
     }
 
     /**
@@ -995,7 +997,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetPackageReturnsNullByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertNull($class->getPackage());
+        $this->assertNull($class->getPackage());
     }
 
     /**
@@ -1011,7 +1013,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class   = new ASTClass(__CLASS__);
 
         $class->setPackage($package);
-        self::assertSame($package, $class->getPackage());
+        $this->assertSame($package, $class->getPackage());
     }
 
     /**
@@ -1026,7 +1028,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->setPackage(new ASTNamespace(__FUNCTION__));
         $class->unsetPackage();
 
-        self::assertNull($class->getPackage());
+        $this->assertNull($class->getPackage());
     }
 
     /**
@@ -1042,7 +1044,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->setPackage(new ASTNamespace(__FUNCTION__));
         $class->unsetPackage();
 
-        self::assertNull($class->getPackageName());
+        $this->assertNull($class->getPackageName());
     }
 
     /**
@@ -1061,7 +1063,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         }
         sort($actual);
 
-        self::assertEquals(array('A', 'C', 'E', 'F'), $actual);
+        $this->assertEquals(array('A', 'C', 'E', 'F'), $actual);
     }
 
     /**
@@ -1085,7 +1087,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         }
         sort($actual);
 
-        self::assertEquals(array('A', 'B', 'C', 'D', 'E', 'F'), $actual);
+        $this->assertEquals(array('A', 'B', 'C', 'D', 'E', 'F'), $actual);
     }
 
     /**
@@ -1104,7 +1106,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         }
         sort($actual);
 
-        self::assertEquals(array('A', 'B'), $actual);
+        $this->assertEquals(array('A', 'B'), $actual);
     }
 
     /**
@@ -1135,7 +1137,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
             'F' => false
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -1166,7 +1168,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
             'F' => false
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -1197,7 +1199,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
             'F' => true
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -1208,7 +1210,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetPropertiesReturnsExpectedNumberOfProperties()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(6, count($class->getProperties()));
+        $this->assertEquals(6, count($class->getProperties()));
     }
 
     /**
@@ -1232,7 +1234,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetModifiersReturnsZeroByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertSame(0, $class->getModifiers());
+        $this->assertSame(0, $class->getModifiers());
     }
 
     /**
@@ -1245,7 +1247,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(State::IS_FINAL);
 
-        self::assertSame(State::IS_FINAL, $class->getModifiers());
+        $this->assertSame(State::IS_FINAL, $class->getModifiers());
     }
 
     /**
@@ -1259,7 +1261,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $visitor = new TestNodeVisitor();
 
         $class->accept($visitor);
-        self::assertSame($class, $visitor->class);
+        $this->assertSame($class, $visitor->class);
     }
 
     /**
@@ -1313,7 +1315,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetStartLineReturnsZeroByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertSame(0, $class->getStartLine());
+        $this->assertSame(0, $class->getStartLine());
     }
 
     /**
@@ -1337,7 +1339,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
                 )
             );
 
-        self::assertEquals(23, $class->getStartLine());
+        $this->assertEquals(23, $class->getStartLine());
     }
 
     /**
@@ -1348,7 +1350,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetEndLineReturnsZeroByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertSame(0, $class->getEndLine());
+        $this->assertSame(0, $class->getEndLine());
     }
 
     /**
@@ -1372,7 +1374,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
                 )
             );
 
-        self::assertEquals(32, $class->getEndLine());
+        $this->assertEquals(32, $class->getEndLine());
     }
 
     /**
@@ -1383,7 +1385,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetParentClassReferenceReturnsNullByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertNull($class->getParentClassReference());
+        $this->assertNull($class->getParentClassReference());
     }
 
     /**
@@ -1406,9 +1408,8 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
      * testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame
      *
      * @return void
-     * @covers \PHP_Depend_Code_Exceptions_AbstractException
-     * @covers \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @covers \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame()
     {
@@ -1465,8 +1466,8 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
      */
     public function testGetParentReturnsNullWhenParentIsFiltered()
     {
-        \PHP_Depend_Code_Filter_Collection::getInstance()->setFilter(
-            new \PHP_Depend_Code_Filter_Package(array('org.pdepend.filter'))
+        CollectionArtifactFilter::getInstance()->setFilter(
+            new PackageArtifactFilter(array('org.pdepend.filter'))
         );
 
         $class = $this->getFirstClassForTestCase();
@@ -1477,9 +1478,8 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
      * testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
      *
      * @return void
-     * @covers \PHP_Depend_Code_Exceptions_AbstractException
-     * @covers \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @covers \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy()
     {
@@ -1498,7 +1498,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertSame(array(), $class->getInterfaceReferences());
+        $this->assertSame(array(), $class->getInterfaceReferences());
     }
 
     /**
@@ -1509,7 +1509,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals(3, count($class->getInterfaceReferences()));
+        $this->assertEquals(3, count($class->getInterfaceReferences()));
     }
 
     /**
@@ -1520,7 +1520,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsUserDefinedReturnsFalseByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        self::assertFalse($class->isUserDefined());
+        $this->assertFalse($class->isUserDefined());
     }
 
     /**
@@ -1533,7 +1533,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class = $this->createItem();
         $class->setUserDefined();
 
-        self::assertTrue($class->isUserDefined());
+        $this->assertTrue($class->isUserDefined());
     }
 
     /**
@@ -1544,7 +1544,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsCachedReturnsFalseByDefault()
     {
         $class = $this->createItem();
-        self::assertFalse($class->isCached());
+        $this->assertFalse($class->isCached());
     }
 
     /**
@@ -1557,7 +1557,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class = $this->createItem();
         serialize($class);
 
-        self::assertFalse($class->isCached());
+        $this->assertFalse($class->isCached());
     }
 
     /**
@@ -1571,7 +1571,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $class->setPackage(new ASTNamespace(__FUNCTION__));
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'constants',
                 'interfaceReferences',
@@ -1610,7 +1610,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
         $class->setSourceFile($file);
         $class->__wakeup();
 
-        self::assertSame($file, $method->getSourceFile());
+        $this->assertSame($file, $method->getSourceFile());
     }
 
     /**
@@ -1633,7 +1633,7 @@ class ASTClassTest extends \PHP_Depend_Code_AbstractItemTest
     /**
      * Creates an abstract item instance.
      *
-     * @return \PHP_Depend_Code_AbstractItem
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact
      */
     protected function createItem()
     {

@@ -48,6 +48,8 @@ use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTParameter;
+use PHP\Depend\Source\AST\ASTProperty;
 use PHP\Depend\Source\AST\ASTTrait;
 
 /**
@@ -97,14 +99,14 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * The last visited parameter instance.
      *
-     * @var \PHP_Depend_Code_Parameter
+     * @var \PHP\Depend\Source\AST\ASTParameter
      */
     public $parameter;
 
     /**
      * The last visited property instance.
      *
-     * @var \PHP_Depend_Code_Property
+     * @var \PHP\Depend\Source\AST\ASTProperty
      */
     public $property;
 
@@ -185,10 +187,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a parameter node.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The parameter node.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function visitParameter(\PHP_Depend_Code_Parameter $parameter)
+    public function visitParameter(ASTParameter $parameter)
     {
         $this->parameter = $parameter;
     }
@@ -196,10 +198,10 @@ class TestNodeVisitor implements TreeVisitor
     /**
      * Visits a property node.
      *
-     * @param \PHP_Depend_Code_Property $property The property class node.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(\PHP_Depend_Code_Property $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->property = $property;
     }

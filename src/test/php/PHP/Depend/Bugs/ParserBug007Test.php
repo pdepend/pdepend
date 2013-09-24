@@ -74,6 +74,6 @@ class ParserBug007Test extends AbstractTest
             'methods'   => $classes->current()->getMethods()->count()
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 }

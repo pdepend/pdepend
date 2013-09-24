@@ -52,10 +52,9 @@ abstract class PHP_Depend_Metrics_AbstractTest extends PHP_Depend_AbstractTest
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase          Qualified test case name.
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @param string  $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

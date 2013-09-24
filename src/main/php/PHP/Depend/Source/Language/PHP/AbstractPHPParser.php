@@ -42,10 +42,13 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
+use PHP\Depend\Source\AST\AbstractASTCallable;
 use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
 use PHP\Depend\Source\AST\AbstractASTType;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTNode;
+use PHP\Depend\Source\AST\ASTValue;
 use PHP\Depend\Source\AST\State;
 use PHP\Depend\Source\Builder\Builder;
 use PHP\Depend\Source\Parser\InvalidStateException;
@@ -179,7 +182,7 @@ abstract class AbstractPHPParser
     /**
      * The symbol table used to handle PHP 5.3 use statements.
      *
-     * @var \PHP\Depend\Parser\SymbolTable
+     * @var \PHP\Depend\Source\Parser\SymbolTable
      */
     private $useSymbolTable;
 
@@ -215,7 +218,7 @@ abstract class AbstractPHPParser
     /**
      * Stack with all active token scopes.
      *
-     * @var \PHP\Depend\Parser\TokenStack
+     * @var \PHP\Depend\Source\AST\Parser\TokenStack
      */
     private $tokenStack;
 
@@ -266,9 +269,8 @@ abstract class AbstractPHPParser
         $this->cache     = $cache;
 
         $this->uuidBuilder    = new \PHP\Depend\Util\UuidBuilder();
-        $this->tokenStack     = new \PHP\Depend\Parser\TokenStack();
-
-        $this->useSymbolTable = new \PHP\Depend\Parser\SymbolTable();
+        $this->tokenStack     = new \PHP\Depend\Source\Parser\TokenStack();
+        $this->useSymbolTable = new \PHP\Depend\Source\Parser\SymbolTable();
 
         $this->builder->setCache($this->cache);
     }
@@ -754,7 +756,7 @@ abstract class AbstractPHPParser
                     $defaultModifier
                 );
 
-                if ($methodOrProperty instanceof \PHP_Depend_Code_ASTNode) {
+                if ($methodOrProperty instanceof \PHP\Depend\Source\AST\ASTNode) {
                     $type->addChild($methodOrProperty);
                 }
 
@@ -830,7 +832,7 @@ abstract class AbstractPHPParser
      * method.
      *
      * @param integer $modifiers
-     * @return \PHP\Depend\Source\AST\ASTMethod|PHP_Depend_Code_ASTFieldDeclaration
+     * @return \PHP\Depend\Source\AST\ASTMethod|\PHP\Depend\Source\AST\ASTFieldDeclaration
      * @since 0.9.6
      */
     private function parseMethodOrFieldDeclaration($modifiers = 0)
@@ -914,7 +916,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFieldDeclaration
+     * @return \PHP\Depend\Source\AST\ASTFieldDeclaration
      * @since 0.9.6
      */
     private function parseFieldDeclaration()
@@ -956,7 +958,7 @@ abstract class AbstractPHPParser
      * This method parses a simple function or a PHP 5.3 lambda function or
      * closure.
      *
-     * @return \PHP_Depend_Code_AbstractCallable
+     * @return \PHP\Depend\Source\AST\AbstractASTCallable
      * @since 0.9.5
      */
     private function parseFunctionOrClosureDeclaration()
@@ -1116,7 +1118,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a PHP 5.3 closure or lambda function.
      *
-     * @return \PHP_Depend_Code_ASTClosure
+     * @return \PHP\Depend\Source\AST\ASTClosure
      * @since 0.9.5
      */
     private function parseClosureDeclaration()
@@ -1139,13 +1141,11 @@ abstract class AbstractPHPParser
     /**
      * Parses a function or a method and adds it to the parent context node.
      *
-     * @param \PHP_Depend_Code_AbstractCallable $callable The context callable.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
-    private function parseCallableDeclaration(
-        \PHP_Depend_Code_AbstractCallable $callable
-    ) {
+    private function parseCallableDeclaration(AbstractASTCallable $callable)
+    {
         $callable->addChild($this->parseFormalParameters());
 
         $this->consumeComments();
@@ -1159,7 +1159,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait use statement.
      *
-     * @return \PHP_Depend_Code_ASTTraitUseStatement
+     * @return \PHP\Depend\Source\AST\ASTTraitUseStatement
      * @since 1.0.0
      */
     private function parseTraitUseStatement()
@@ -1184,7 +1184,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait reference instance.
      *
-     * @return \PHP_Depend_Code_ASTTraitReference
+     * @return \PHP\Depend\Source\AST\ASTTraitReference
      * @since 1.0.0
      */
     private function parseTraitReference()
@@ -1203,13 +1203,13 @@ abstract class AbstractPHPParser
      * Parses the adaptation list of the given use statement or simply reads
      * the terminating semicolon, when no adaptation list exists.
      *
-     * @param \PHP_Depend_Code_ASTTraitUseStatement $useStatement The parent use
+     * @param \PHP\Depend\Source\AST\ASTTraitUseStatement $useStatement The parent use
      *
-     * @return \PHP_Depend_Code_ASTTraitUseStatement
+     * @return \PHP\Depend\Source\AST\ASTTraitUseStatement
      * @since 1.0.0
      */
     private function parseOptionalTraitAdaptation(
-        \PHP_Depend_Code_ASTTraitUseStatement $useStatement
+        \PHP\Depend\Source\AST\ASTTraitUseStatement $useStatement
     ) {
         $this->consumeComments();
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
@@ -1223,7 +1223,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the adaptation expression of a trait use statement.
      *
-     * @return \PHP_Depend_Code_ASTTraitAdaptation
+     * @return \PHP\Depend\Source\AST\ASTTraitAdaptation
      * @since 1.0.0
      */
     private function parseTraitAdaptation()
@@ -1268,7 +1268,7 @@ abstract class AbstractPHPParser
      * When the method reference contains the declaring trait the returned
      * <b>array</b> will contain two elements. The first element is the plain
      * method name and the second element is an instance of the
-     * {@link \PHP_Depend_Code_ASTTraitReference} class that represents the
+     * {@link \PHP\Depend\Source\AST\ASTTraitReference} class that represents the
      * declaring trait.
      *
      * @return array
@@ -1302,7 +1302,7 @@ abstract class AbstractPHPParser
      *
      * @param array $reference Parsed method reference array.
      *
-     * @return \PHP_Depend_Code_ASTTraitAdaptationAlias
+     * @return \PHP\Depend\Source\AST\ASTTraitAdaptationAlias
      * @since 1.0.0
      */
     private function parseTraitAdaptationAliasStatement(array $reference)
@@ -1347,7 +1347,7 @@ abstract class AbstractPHPParser
      * Parses a trait adaptation precedence statement.
      *
      * @param array $reference Parsed method reference array.
-     * @return \PHP_Depend_Code_ASTTraitAdaptationPrecedence
+     * @return \PHP\Depend\Source\AST\ASTTraitAdaptationPrecedence
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 1.0.0
      */
@@ -1395,7 +1395,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTAllocationExpression
+     * @return \PHP\Depend\Source\AST\ASTAllocationExpression
      * @since 0.9.6
      */
     private function parseAllocationExpression()
@@ -1416,7 +1416,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a eval-expression node.
      *
-     * @return \PHP_Depend_Code_ASTEvalExpression
+     * @return \PHP\Depend\Source\AST\ASTEvalExpression
      * @since 0.9.12
      */
     private function parseEvalExpression()
@@ -1433,7 +1433,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses an exit-expression.
      *
-     * @return \PHP_Depend_Code_ASTExitExpression
+     * @return \PHP\Depend\Source\AST\ASTExitExpression
      * @since 0.9.12
      */
     private function parseExitExpression()
@@ -1453,7 +1453,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a clone-expression node.
      *
-     * @return \PHP_Depend_Code_ASTCloneExpression
+     * @return \PHP\Depend\Source\AST\ASTCloneExpression
      * @since 0.9.12
      */
     private function parseCloneExpression()
@@ -1470,7 +1470,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single list-statement node.
      *
-     * @return \PHP_Depend_Code_ASTListExpression
+     * @return \PHP\Depend\Source\AST\ASTListExpression
      * @since 0.9.12
      */
     private function parseListExpression()
@@ -1520,7 +1520,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a include-expression node.
      *
-     * @return \PHP_Depend_Code_ASTIncludeExpression
+     * @return \PHP\Depend\Source\AST\ASTIncludeExpression
      * @since 0.9.12
      */
     private function parseIncludeExpression()
@@ -1533,7 +1533,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a include_once-expression node.
      *
-     * @return \PHP_Depend_Code_ASTIncludeExpression
+     * @return \PHP\Depend\Source\AST\ASTIncludeExpression
      * @since 0.9.12
      */
     private function parseIncludeOnceExpression()
@@ -1547,7 +1547,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a require-expression node.
      *
-     * @return \PHP_Depend_Code_ASTRequireExpression
+     * @return \PHP\Depend\Source\AST\ASTRequireExpression
      * @since 0.9.12
      */
     private function parseRequireExpression()
@@ -1560,7 +1560,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a require_once-expression node.
      *
-     * @return \PHP_Depend_Code_ASTRequireExpression
+     * @return \PHP\Depend\Source\AST\ASTRequireExpression
      * @since 0.9.12
      */
     private function parseRequireOnceExpression()
@@ -1575,14 +1575,14 @@ abstract class AbstractPHPParser
      * Parses a <b>require_once</b>-, <b>require</b>-, <b>include_once</b>- or
      * <b>include</b>-expression node.
      *
-     * @param \PHP_Depend_Code_ASTExpression $expr The concrete expression type.
+     * @param \PHP\Depend\Source\AST\ASTExpression $expr The concrete expression type.
      * @param integer                       $type The token type to read.
      *
-     * @return \PHP_Depend_Code_ASTExpression
+     * @return \PHP\Depend\Source\AST\ASTExpression
      * @since 0.9.12
      */
     private function parseRequireOrIncludeExpression(
-        \PHP_Depend_Code_ASTExpression $expr, $type
+        \PHP\Depend\Source\AST\ASTExpression $expr, $type
     ) {
         $this->tokenStack->push();
 
@@ -1603,7 +1603,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a cast-expression node.
      *
-     * @return \PHP_Depend_Code_ASTCaseExpression
+     * @return \PHP\Depend\Source\AST\ASTCaseExpression
      * @since 0.10.0
      */
     private function parseCastExpression()
@@ -1623,12 +1623,12 @@ abstract class AbstractPHPParser
 
     /**
      * This method will parse an increment-expression. Depending on the previous
-     * node this can be a {@link \PHP_Depend_Code_ASTPostIncrementExpression} or
-     * {@link \PHP_Depend_Code_ASTPostfixExpression}.
+     * node this can be a {@link \PHP\Depend\Source\AST\ASTPostIncrementExpression} or
+     * {@link \PHP\Depend\Source\AST\ASTPostfixExpression}.
      *
      * @param array &$expressions List of previous parsed expression nodes.
      *
-     * @return \PHP_Depend_Code_ASTExpression
+     * @return \PHP\Depend\Source\AST\ASTExpression
      * @since 0.10.0
      */
     private function parseIncrementExpression(array &$expressions)
@@ -1642,12 +1642,12 @@ abstract class AbstractPHPParser
     /**
      * Parses a post increment-expression and adds the given child to that node.
      *
-     * @param \PHP_Depend_Code_ASTNode $child The child expression node.
+     * @param \PHP\Depend\Source\AST\ASTNode $child The child expression node.
      *
-     * @return \PHP_Depend_Code_ASTPostfixExpression
+     * @return \PHP\Depend\Source\AST\ASTPostfixExpression
      * @since 0.10.0
      */
-    private function parsePostIncrementExpression(\PHP_Depend_Code_ASTNode $child)
+    private function parsePostIncrementExpression(\PHP\Depend\Source\AST\ASTNode $child)
     {
         $token = $this->consumeToken(Tokens::T_INC);
 
@@ -1666,7 +1666,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a pre increment-expression and adds the given child to that node.
      *
-     * @return \PHP_Depend_Code_ASTPreIncrementExpression
+     * @return \PHP\Depend\Source\AST\ASTPreIncrementExpression
      * @since 0.10.0
      */
     private function parsePreIncrementExpression()
@@ -1686,12 +1686,12 @@ abstract class AbstractPHPParser
 
     /**
      * This method will parse an decrement-expression. Depending on the previous
-     * node this can be a {@link \PHP_Depend_Code_ASTPostDecrementExpression} or
-     * {@link \PHP_Depend_Code_ASTPostfixExpression}.
+     * node this can be a {@link \PHP\Depend\Source\AST\ASTPostDecrementExpression} or
+     * {@link \PHP\Depend\Source\AST\ASTPostfixExpression}.
      *
      * @param array &$expressions List of previous parsed expression nodes.
      *
-     * @return \PHP_Depend_Code_ASTExpression
+     * @return \PHP\Depend\Source\AST\ASTExpression
      * @since 0.10.0
      */
     private function parseDecrementExpression(array &$expressions)
@@ -1705,12 +1705,12 @@ abstract class AbstractPHPParser
     /**
      * Parses a post decrement-expression and adds the given child to that node.
      *
-     * @param \PHP_Depend_Code_ASTNode $child The child expression node.
+     * @param \PHP\Depend\Source\AST\ASTNode $child The child expression node.
      *
-     * @return \PHP_Depend_Code_ASTPostfixExpression
+     * @return \PHP\Depend\Source\AST\ASTPostfixExpression
      * @since 0.10.0
      */
-    private function parsePostDecrementExpression(\PHP_Depend_Code_ASTNode $child)
+    private function parsePostDecrementExpression(\PHP\Depend\Source\AST\ASTNode $child)
     {
         $token = $this->consumeToken(Tokens::T_DEC);
 
@@ -1729,7 +1729,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a pre decrement-expression and adds the given child to that node.
      *
-     * @return \PHP_Depend_Code_ASTPreDecrementExpression
+     * @return \PHP\Depend\Source\AST\ASTPreDecrementExpression
      * @since 0.10.0
      */
     private function parsePreDecrementExpression()
@@ -1764,12 +1764,12 @@ abstract class AbstractPHPParser
      * ----------------
      * </code>
      *
-     * @param \PHP_Depend_Code_ASTNode $node The parent/context node instance.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The parent/context node instance.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.12
      */
-    protected function parseOptionalIndexExpression(\PHP_Depend_Code_ASTNode $node)
+    protected function parseOptionalIndexExpression(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $this->consumeComments();
 
@@ -1789,17 +1789,17 @@ abstract class AbstractPHPParser
      * Parses an index expression as it is valid to access elements in a php
      * string or array.
      *
-     * @param \PHP_Depend_Code_ASTNode       $node  The context source node.
-     * @param \PHP_Depend_Code_ASTExpression $expr  The concrete index expression.
+     * @param \PHP\Depend\Source\AST\ASTNode       $node  The context source node.
+     * @param \PHP\Depend\Source\AST\ASTExpression $expr  The concrete index expression.
      * @param integer                       $open  The open token type.
      * @param integer                       $close The close token type.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.12
      */
     private function parseIndexExpression(
-        \PHP_Depend_Code_ASTNode $node,
-        \PHP_Depend_Code_ASTExpression $expr,
+        \PHP\Depend\Source\AST\ASTNode $node,
+        \PHP\Depend\Source\AST\ASTExpression $expr,
         $open,
         $close
     ) {
@@ -1830,12 +1830,12 @@ abstract class AbstractPHPParser
      * //    ---
      * </code>
      *
-     * @param \PHP_Depend_Code_ASTNode $node The context source node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The context source node.
      *
-     * @return \PHP_Depend_Code_ASTArrayIndexExpression
+     * @return \PHP\Depend\Source\AST\ASTArrayIndexExpression
      * @since 0.9.12
      */
-    private function parseArrayIndexExpression(\PHP_Depend_Code_ASTNode $node)
+    private function parseArrayIndexExpression(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $expr = $this->builder->buildAstArrayIndexExpression();
         $expr->addChild($node);
@@ -1857,12 +1857,12 @@ abstract class AbstractPHPParser
      * //     ---
      * </code>
      *
-     * @param \PHP_Depend_Code_ASTNode $node The context source node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The context source node.
      *
-     * @return \PHP_Depend_Code_ASTStringIndexExpression
+     * @return \PHP\Depend\Source\AST\ASTStringIndexExpression
      * @since 0.9.12
      */
-    private function parseStringIndexExpression(\PHP_Depend_Code_ASTNode $node)
+    private function parseStringIndexExpression(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $expr = $this->builder->buildAstStringIndexExpression();
         $expr->addChild($node);
@@ -1890,12 +1890,12 @@ abstract class AbstractPHPParser
     /**
      * This method configures the given node with its start and end positions.
      *
-     * @param \PHP_Depend_Code_ASTNode $node The node to prepare.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The node to prepare.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.8
      */
-    private function setNodePositionsAndReturn(\PHP_Depend_Code_ASTNode $node)
+    private function setNodePositionsAndReturn(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
 
@@ -1955,7 +1955,7 @@ abstract class AbstractPHPParser
      *          -----------------------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTInstanceOfExpression
+     * @return \PHP\Depend\Source\AST\ASTInstanceOfExpression
      * @since 0.9.6
      */
     private function parseInstanceOfExpression()
@@ -1983,7 +1983,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTIssetExpression
+     * @return \PHP\Depend\Source\AST\ASTIssetExpression
      * @since 0.9.12
      */
     private function parseIssetExpression()
@@ -2009,16 +2009,16 @@ abstract class AbstractPHPParser
 
     /**
      * This method parses a type identifier as it is used in expression nodes
-     * like {@link \PHP_Depend_Code_ASTInstanceOfExpression} or an object
-     * allocation node like {@link \PHP_Depend_Code_ASTAllocationExpression}.
+     * like {@link \PHP\Depend\Source\AST\ASTInstanceOfExpression} or an object
+     * allocation node like {@link \PHP\Depend\Source\AST\ASTAllocationExpression}.
      *
-     * @param \PHP_Depend_Code_ASTNode $expr     The parent expression node.
+     * @param \PHP\Depend\Source\AST\ASTNode $expr     The parent expression node.
      * @param boolean                 $classRef Create a class reference.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      */
     private function parseExpressionTypeReference(
-        \PHP_Depend_Code_ASTNode $expr, $classRef
+        \PHP\Depend\Source\AST\ASTNode $expr, $classRef
     ) {
         // Peek next token and look for a static type identifier
         $this->consumeComments();
@@ -2067,7 +2067,7 @@ abstract class AbstractPHPParser
      *         --------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTConditionalExpression
+     * @return \PHP\Depend\Source\AST\ASTConditionalExpression
      * @since 0.9.8
      */
     private function parseConditionalExpression()
@@ -2090,7 +2090,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a shift left expression node.
      *
-     * @return \PHP_Depend_Code_ASTShiftLeftExpression
+     * @return \PHP\Depend\Source\AST\ASTShiftLeftExpression
      * @since 1.0.1
      */
     private function parseShiftLeftExpression()
@@ -2110,7 +2110,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a shift right expression node.
      *
-     * @return \PHP_Depend_Code_ASTShiftRightExpression
+     * @return \PHP\Depend\Source\AST\ASTShiftRightExpression
      * @since 1.0.1
      */
     private function parseShiftRightExpression()
@@ -2130,7 +2130,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a boolean and-expression.
      *
-     * @return \PHP_Depend_Code_ASTBooleanAndExpression
+     * @return \PHP\Depend\Source\AST\ASTBooleanAndExpression
      * @since 0.9.8
      */
     private function parseBooleanAndExpression()
@@ -2150,7 +2150,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a boolean or-expression.
      *
-     * @return \PHP_Depend_Code_ASTBooleanOrExpression
+     * @return \PHP\Depend\Source\AST\ASTBooleanOrExpression
      * @since 0.9.8
      */
     private function parseBooleanOrExpression()
@@ -2170,7 +2170,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a logical <b>and</b>-expression.
      *
-     * @return \PHP_Depend_Code_ASTLogicalAndExpression
+     * @return \PHP\Depend\Source\AST\ASTLogicalAndExpression
      * @since 0.9.8
      */
     private function parseLogicalAndExpression()
@@ -2190,7 +2190,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a logical <b>or</b>-expression.
      *
-     * @return \PHP_Depend_Code_ASTLogicalOrExpression
+     * @return \PHP\Depend\Source\AST\ASTLogicalOrExpression
      * @since 0.9.8
      */
     private function parseLogicalOrExpression()
@@ -2210,7 +2210,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a logical <b>xor</b>-expression.
      *
-     * @return \PHP_Depend_Code_ASTLogicalXorExpression
+     * @return \PHP\Depend\Source\AST\ASTLogicalXorExpression
      * @since 0.9.8
      */
     private function parseLogicalXorExpression()
@@ -2232,7 +2232,7 @@ abstract class AbstractPHPParser
      *
      * @param boolean $classReference Force a class reference.
      *
-     * @return \PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @return \PHP\Depend\Source\AST\ASTClassOrInterfaceReference
      * @since 0.9.8
      */
     private function parseClassOrInterfaceReference($classReference)
@@ -2255,7 +2255,7 @@ abstract class AbstractPHPParser
 
     /**
      * This method parses a brace expression and adds all parsed node instances
-     * to the given {@link \PHP_Depend_Code_ASTNode} object. Finally it returns
+     * to the given {@link \PHP\Depend\Source\AST\ASTNode} object. Finally it returns
      * the prepared input node.
      *
      * A brace expression can be a compound:
@@ -2276,15 +2276,15 @@ abstract class AbstractPHPParser
      * $foo[$bar];
      * </code>
      *
-     * @param \PHP_Depend_Code_ASTNode $node
-     * @param Token $start
+     * @param \PHP\Depend\Source\AST\ASTNode $node
+     * @param \PHP\Depend\Source\Tokenizer\Token $start
      * @param integer $closeToken
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\TokenStreamEndException
      * @since 0.9.6
      */
     private function parseBraceExpression(
-        \PHP_Depend_Code_ASTNode $node,
+        ASTNode $node,
         Token $start,
         $closeToken
     ) {
@@ -2307,12 +2307,12 @@ abstract class AbstractPHPParser
      * Parses the body of the given statement instance and adds all parsed nodes
      * to that statement.
      *
-     * @param \PHP_Depend_Code_ASTStatement $stmt The owning statement.
+     * @param \PHP\Depend\Source\AST\ASTStatement $stmt The owning statement.
      *
-     * @return \PHP_Depend_Code_ASTStatement
+     * @return \PHP\Depend\Source\AST\ASTStatement
      * @since 0.9.12
      */
-    private function parseStatementBody(\PHP_Depend_Code_ASTStatement $stmt)
+    private function parseStatementBody(\PHP\Depend\Source\AST\ASTStatement $stmt)
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -2330,7 +2330,7 @@ abstract class AbstractPHPParser
     /**
      * Parse a scope enclosed by curly braces.
      *
-     * @return \PHP_Depend_Code_ASTScope
+     * @return \PHP\Depend\Source\AST\ASTScope
      * @since 0.9.12
      */
     private function parseRegularScope()
@@ -2350,7 +2350,7 @@ abstract class AbstractPHPParser
      * Parses the scope of a statement that is surrounded with PHP's alternative
      * syntax for statements.
      *
-     * @return \PHP_Depend_Code_ASTScopeStatement
+     * @return \PHP\Depend\Source\AST\ASTScopeStatement
      * @since 0.10.0
      */
     private function parseAlternativeScope()
@@ -2368,14 +2368,14 @@ abstract class AbstractPHPParser
      * Parses all statements that exist in a scope an adds them to a scope
      * instance.
      *
-     * @return \PHP_Depend_Code_ASTScopeStatement
+     * @return \PHP\Depend\Source\AST\ASTScopeStatement
      * @since 0.10.0
      */
     private function parseScopeStatements()
     {
         $scope = $this->builder->buildAstScopeStatement();
         while (($child = $this->parseOptionalStatement()) != null) {
-            if ($child instanceof \PHP_Depend_Code_ASTNode) {
+            if ($child instanceof \PHP\Depend\Source\AST\ASTNode) {
                 $scope->addChild($child);
             }
         }
@@ -2447,12 +2447,12 @@ abstract class AbstractPHPParser
      * This method parses multiple expressions and adds them as children to the
      * given <b>$exprList</b> node.
      *
-     * @param \PHP_Depend_Code_ASTNode $exprList Parent that accepts multiple expr.
+     * @param \PHP\Depend\Source\AST\ASTNode $exprList Parent that accepts multiple expr.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
-    private function parseExpressionList(\PHP_Depend_Code_ASTNode $exprList)
+    private function parseExpressionList(\PHP\Depend\Source\AST\ASTNode $exprList)
     {
         $this->consumeComments();
         while ($expr = $this->parseOptionalExpression()) {
@@ -2474,7 +2474,7 @@ abstract class AbstractPHPParser
      * This method parses an expression node and returns it. When no expression
      * was found this method will throw an InvalidStateException.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 1.0.1
      */
@@ -2496,7 +2496,7 @@ abstract class AbstractPHPParser
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -2796,10 +2796,10 @@ abstract class AbstractPHPParser
     /**
      * Applies all reduce rules against the given expression list.
      *
-     * @param \PHP_Depend_Code_ASTExpression[] $expressions Unprepared input
+     * @param \PHP\Depend\Source\AST\ASTExpression[] $expressions Unprepared input
      *        array with parsed expression nodes found in the source tree.
      *
-     * @return \PHP_Depend_Code_ASTExpression[]
+     * @return \PHP\Depend\Source\AST\ASTExpression[]
      * @since 0.10.0
      */
     private function reduce(array $expressions)
@@ -2810,17 +2810,17 @@ abstract class AbstractPHPParser
     /**
      * Reduces all unary-expressions in the given expression list.
      *
-     * @param \PHP_Depend_Code_ASTExpression[] $expressions Unprepared input
+     * @param \PHP\Depend\Source\AST\ASTExpression[] $expressions Unprepared input
      *        array with parsed expression nodes found in the source tree.
      *
-     * @return \PHP_Depend_Code_ASTExpression[]
+     * @return \PHP\Depend\Source\AST\ASTExpression[]
      * @since 0.10.0
      */
     private function reduceUnaryExpression(array $expressions)
     {
         for ($i = count($expressions) - 2; $i >= 0; --$i) {
             $expr = $expressions[$i];
-            if ($expr instanceof \PHP_Depend_Code_ASTUnaryExpression) {
+            if ($expr instanceof \PHP\Depend\Source\AST\ASTUnaryExpression) {
                 $child = $expressions[$i + 1];
 
                 $expr->addChild($child);
@@ -2836,7 +2836,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a switch statement.
      *
-     * @return \PHP_Depend_Code_ASTSwitchStatement
+     * @return \PHP\Depend\Source\AST\ASTSwitchStatement
      * @since 0.9.8
      */
     private function parseSwitchStatement()
@@ -2854,13 +2854,13 @@ abstract class AbstractPHPParser
     /**
      * Parses the body of a switch statement.
      *
-     * @param \PHP_Depend_Code_ASTSwitchStatement $switch The parent switch stmt.
+     * @param \PHP\Depend\Source\AST\ASTSwitchStatement $switch The parent switch stmt.
      *
-     * @return \PHP_Depend_Code_ASTSwitchStatement
+     * @return \PHP\Depend\Source\AST\ASTSwitchStatement
      * @since 0.9.8
      */
     private function parseSwitchStatementBody(
-        \PHP_Depend_Code_ASTSwitchStatement $switch
+        \PHP\Depend\Source\AST\ASTSwitchStatement $switch
     ) {
         $this->consumeComments();
         if ($this->tokenizer->peek() === Tokens::T_CURLY_BRACE_OPEN) {
@@ -2907,7 +2907,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a case label of a switch statement.
      *
-     * @return \PHP_Depend_Code_ASTSwitchLabel
+     * @return \PHP\Depend\Source\AST\ASTSwitchLabel
      * @since 0.9.8
      */
     private function parseSwitchLabel()
@@ -2932,7 +2932,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses the default label of a switch statement.
      *
-     * @return \PHP_Depend_Code_ASTSwitchLabel
+     * @return \PHP\Depend\Source\AST\ASTSwitchLabel
      * @since 0.9.8
      */
     private function parseSwitchLabelDefault()
@@ -2958,11 +2958,11 @@ abstract class AbstractPHPParser
     /**
      * Parses the body of an switch label node.
      *
-     * @param \PHP_Depend_Code_ASTSwitchLabel $label The context switch label.
+     * @param \PHP\Depend\Source\AST\ASTSwitchLabel $label The context switch label.
      *
-     * @return \PHP_Depend_Code_ASTSwitchLabel
+     * @return \PHP\Depend\Source\AST\ASTSwitchLabel
      */
-    private function parseSwitchLabelBody(\PHP_Depend_Code_ASTSwitchLabel $label)
+    private function parseSwitchLabelBody(\PHP\Depend\Source\AST\ASTSwitchLabel $label)
     {
         $curlyBraceCount = 0;
 
@@ -2993,7 +2993,7 @@ abstract class AbstractPHPParser
                 $statement = $this->parseOptionalStatement();
                 if ($statement === null) {
                     $this->consumeToken($tokenType);
-                } else if ($statement instanceof \PHP_Depend_Code_ASTNode) {
+                } else if ($statement instanceof \PHP\Depend\Source\AST\ASTNode) {
                     $label->addChild($statement);
                 }
                 // TODO: Change the <else if> into and <else> when the ast
@@ -3025,7 +3025,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a try-statement + associated catch-statements.
      *
-     * @return \PHP_Depend_Code_ASTTryStatement
+     * @return \PHP\Depend\Source\AST\ASTTryStatement
      * @since 0.9.12
      */
     private function parseTryStatement()
@@ -3047,7 +3047,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a throw-statement.
      *
-     * @return \PHP_Depend_Code_ASTThrowStatement
+     * @return \PHP\Depend\Source\AST\ASTThrowStatement
      * @since 0.9.12
      */
     private function parseThrowStatement()
@@ -3066,7 +3066,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a goto-statement.
      *
-     * @return \PHP_Depend_Code_ASTGotoStatement
+     * @return \PHP\Depend\Source\AST\ASTGotoStatement
      * @since 0.9.12
      */
     private function parseGotoStatement()
@@ -3087,7 +3087,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a label-statement.
      *
-     * @return \PHP_Depend_Code_ASTLabelStatement
+     * @return \PHP\Depend\Source\AST\ASTLabelStatement
      * @since 0.9.12
      */
     private function parseLabelStatement()
@@ -3106,7 +3106,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a global-statement.
      *
-     * @return \PHP_Depend_Code_ASTGlobalStatement
+     * @return \PHP\Depend\Source\AST\ASTGlobalStatement
      * @since 0.9.12
      */
     private function parseGlobalStatement()
@@ -3125,7 +3125,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a unset-statement.
      *
-     * @return \PHP_Depend_Code_ASTUnsetStatement
+     * @return \PHP\Depend\Source\AST\ASTUnsetStatement
      * @since 0.9.12
      */
     private function parseUnsetStatement()
@@ -3149,7 +3149,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a catch-statement.
      *
-     * @return \PHP_Depend_Code_ASTCatchStatement
+     * @return \PHP\Depend\Source\AST\ASTCatchStatement
      * @since 0.9.8
      */
     private function parseCatchStatement()
@@ -3184,7 +3184,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single if-statement node.
      *
-     * @return \PHP_Depend_Code_ASTIfStatement
+     * @return \PHP\Depend\Source\AST\ASTIfStatement
      * @since 0.9.8
      */
     private function parseIfStatement()
@@ -3204,7 +3204,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single elseif-statement node.
      *
-     * @return \PHP_Depend_Code_ASTElseIfStatement
+     * @return \PHP\Depend\Source\AST\ASTElseIfStatement
      * @since 0.9.8
      */
     private function parseElseIfStatement()
@@ -3224,13 +3224,13 @@ abstract class AbstractPHPParser
     /**
      * This method parses an optional else-, else+if- or elseif-statement.
      *
-     * @param \PHP_Depend_Code_ASTStatement $stmt The owning if/elseif statement.
+     * @param \PHP\Depend\Source\AST\ASTStatement $stmt The owning if/elseif statement.
      *
-     * @return \PHP_Depend_Code_ASTStatement
+     * @return \PHP\Depend\Source\AST\ASTStatement
      * @since 0.9.12
      */
     private function parseOptionalElseOrElseIfStatement(
-        \PHP_Depend_Code_ASTStatement $stmt
+        \PHP\Depend\Source\AST\ASTStatement $stmt
     ) {
         $this->consumeComments();
         switch ($this->tokenizer->peek()) {
@@ -3256,7 +3256,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single for-statement node.
      *
-     * @return \PHP_Depend_Code_ASTForStatement
+     * @return \PHP\Depend\Source\AST\ASTForStatement
      * @since 0.9.8
      */
     private function parseForStatement()
@@ -3296,7 +3296,7 @@ abstract class AbstractPHPParser
      *      ------------------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTForInit
+     * @return \PHP\Depend\Source\AST\ASTForInit
      * @since 0.9.8
      */
     private function parseForInit()
@@ -3317,7 +3317,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @return \PHP_Depend_Code_ASTExpression
+     * @return \PHP\Depend\Source\AST\ASTExpression
      * @since 0.9.12
      */
     private function parseForExpression()
@@ -3334,7 +3334,7 @@ abstract class AbstractPHPParser
      *                                        -------------------------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTForUpdate
+     * @return \PHP\Depend\Source\AST\ASTForUpdate
      * @since 0.9.12
      */
     private function parseForUpdate()
@@ -3355,7 +3355,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single foreach-statement node.
      *
-     * @return \PHP_Depend_Code_ASTForeachStatement
+     * @return \PHP\Depend\Source\AST\ASTForeachStatement
      * @since 0.9.8
      */
     private function parseForeachStatement()
@@ -3397,7 +3397,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single while-statement node.
      *
-     * @return \PHP_Depend_Code_ASTWhileStatement
+     * @return \PHP\Depend\Source\AST\ASTWhileStatement
      * @since 0.9.8
      */
     private function parseWhileStatement()
@@ -3416,7 +3416,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a do/while-statement.
      *
-     * @return \PHP_Depend_Code_ASTDoWhileStatement
+     * @return \PHP\Depend\Source\AST\ASTDoWhileStatement
      * @sibce 0.9.12
      */
     private function parseDoWhileStatement()
@@ -3458,7 +3458,7 @@ abstract class AbstractPHPParser
      * -----------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTDeclareStatement
+     * @return \PHP\Depend\Source\AST\ASTDeclareStatement
      * @since 0.10.0
      */
     private function parseDeclareStatement()
@@ -3477,13 +3477,13 @@ abstract class AbstractPHPParser
      * This method parses a list of declare values. A declare list value always
      * consists of a string token and a static scalar.
      *
-     * @param \PHP_Depend_Code_ASTDeclareStatement $stmt The declare statement that
+     * @param \PHP\Depend\Source\AST\ASTDeclareStatement $stmt The declare statement that
      *        is the owner of this list.
      *
-     * @return \PHP_Depend_Code_ASTDeclareStatement
+     * @return \PHP\Depend\Source\AST\ASTDeclareStatement
      * @since 0.10.0
      */
-    private function parseDeclareList(\PHP_Depend_Code_ASTDeclareStatement $stmt)
+    private function parseDeclareList(\PHP\Depend\Source\AST\ASTDeclareStatement $stmt)
     {
         $this->consumeComments();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
@@ -3515,7 +3515,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single return-statement node.
      *
-     * @return \PHP_Depend_Code_ASTReturnStatement
+     * @return \PHP\Depend\Source\AST\ASTReturnStatement
      * @since 0.9.12
      */
     private function parseReturnStatement()
@@ -3535,7 +3535,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a break-statement node.
      *
-     * @return \PHP_Depend_Code_ASTBreakStatement
+     * @return \PHP\Depend\Source\AST\ASTBreakStatement
      * @since 0.9.12
      */
     private function parseBreakStatement()
@@ -3555,7 +3555,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a continue-statement node.
      *
-     * @return \PHP_Depend_Code_ASTContinueStatement
+     * @return \PHP\Depend\Source\AST\ASTContinueStatement
      * @since 0.9.12
      */
     private function parseContinueStatement()
@@ -3575,7 +3575,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a echo-statement node.
      *
-     * @return \PHP_Depend_Code_ASTEchoStatement
+     * @return \PHP\Depend\Source\AST\ASTEchoStatement
      * @since 0.9.12
      */
     private function parseEchoStatement()
@@ -3600,7 +3600,7 @@ abstract class AbstractPHPParser
      * (new MyClass())->bar();
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     private function parseParenthesisExpressionOrPrimaryPrefix()
@@ -3618,7 +3618,7 @@ abstract class AbstractPHPParser
      * Parses any expression that is surrounded by an opening and a closing
      * parenthesis
      *
-     * @return \PHP_Depend_Code_ASTExpression
+     * @return \PHP\Depend\Source\AST\ASTExpression
      * @since 0.9.8
      */
     private function parseParenthesisExpression()
@@ -3670,7 +3670,7 @@ abstract class AbstractPHPParser
      * func();
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -3714,16 +3714,16 @@ abstract class AbstractPHPParser
      * This method will parse an optional function postfix.
      *
      * If the next available token is an opening parenthesis, this method will
-     * wrap the given <b>$node</b> with a {@link \PHP_Depend_Code_ASTFunctionPostfix}
+     * wrap the given <b>$node</b> with a {@link \PHP\Depend\Source\AST\ASTFunctionPostfix}
      * node.
      *
-     * @param \PHP_Depend_Code_ASTNode $node The previously parsed node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The previously parsed node.
      *
-     * @return \PHP_Depend_Code_ASTNode The original input node or this node
+     * @return \PHP\Depend\Source\AST\ASTNode The original input node or this node
      *         wrapped with a function postfix instance.
      * @since 1.0.0
      */
-    private function parseOptionalFunctionPostfix(\PHP_Depend_Code_ASTNode $node)
+    private function parseOptionalFunctionPostfix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $this->consumeComments();
         if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
@@ -3734,21 +3734,21 @@ abstract class AbstractPHPParser
 
     /**
      * This method parses a function postfix expression. An object of type
-     * {@link \PHP_Depend_Code_ASTFunctionPostfix} represents any valid php
+     * {@link \PHP\Depend\Source\AST\ASTFunctionPostfix} represents any valid php
      * function call.
      *
      * This method will delegate the call to another method that returns a
      * member primary prefix object when the function postfix expression is
      * followed by an object operator.
      *
-     * @param \PHP_Depend_Code_ASTNode $node This node represents the function
+     * @param \PHP\Depend\Source\AST\ASTNode $node This node represents the function
      *        identifier. An identifier can be a static string, a variable, a
      *        compound variable or any other valid php function identifier.
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseFunctionPostfix(\PHP_Depend_Code_ASTNode $node)
+    private function parseFunctionPostfix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $image = $this->extractPostfixImage($node);
 
@@ -3765,7 +3765,7 @@ abstract class AbstractPHPParser
      * This method parses a PHP version specific identifier for method and
      * property postfix expressions.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     protected abstract function parsePostfixIdentifier();
@@ -3774,16 +3774,16 @@ abstract class AbstractPHPParser
      * This method parses an optional member primary expression. It will parse
      * the primary expression when an object operator can be found at the actual
      * token stream position. Otherwise this method simply returns the input
-     * {@link \PHP_Depend_Code_ASTNode} instance.
+     * {@link \PHP\Depend\Source\AST\ASTNode} instance.
      *
-     * @param \PHP_Depend_Code_ASTNode $node This node represents primary prefix
+     * @param \PHP\Depend\Source\AST\ASTNode $node This node represents primary prefix
      *        left expression. It will be the first child of the parsed member
      *        primary expression.
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseOptionalMemberPrimaryPrefix(\PHP_Depend_Code_ASTNode $node)
+    private function parseOptionalMemberPrimaryPrefix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $this->consumeComments();
 
@@ -3807,13 +3807,13 @@ abstract class AbstractPHPParser
      * $object->foo;
      * </code>
      *
-     * @param \PHP_Depend_Code_ASTNode $node The left node in the parsed member
+     * @param \PHP\Depend\Source\AST\ASTNode $node The left node in the parsed member
      *        primary expression.
-     * @return \PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @return \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseMemberPrimaryPrefix(\PHP_Depend_Code_ASTNode $node)
+    private function parseMemberPrimaryPrefix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         // Consume double colon and optional comments
         $token = $this->consumeToken(Tokens::T_OBJECT_OPERATOR);
@@ -3831,7 +3831,7 @@ abstract class AbstractPHPParser
             $child = $this->parseOptionalIndexExpression($child);
 
             // TODO: Move this in a separate method
-            if ($child instanceof \PHP_Depend_Code_ASTIndexExpression) {
+            if ($child instanceof \PHP\Depend\Source\AST\ASTIndexExpression) {
                 $this->consumeComments();
                 if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
                     $prefix->addChild($this->parsePropertyPostfix($child));
@@ -3864,17 +3864,17 @@ abstract class AbstractPHPParser
      * This method parses an optional member primary expression. It will parse
      * the primary expression when a double colon operator can be found at the
      * actual token stream position. Otherwise this method simply returns the
-     * input {@link \PHP_Depend_Code_ASTNode} instance.
+     * input {@link \PHP\Depend\Source\AST\ASTNode} instance.
      *
-     * @param \PHP_Depend_Code_ASTNode $node This node represents primary prefix
+     * @param \PHP\Depend\Source\AST\ASTNode $node This node represents primary prefix
      *        left expression. It will be the first child of the parsed member
      *        primary expression.
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 1.0.1
      */
     private function parseOptionalStaticMemberPrimaryPrefix(
-        \PHP_Depend_Code_ASTNode $node
+        \PHP\Depend\Source\AST\ASTNode $node
     ) {
         $this->consumeComments();
 
@@ -3907,13 +3907,13 @@ abstract class AbstractPHPParser
      * Foo::BAR;
      * </code>
      *
-     * @param \PHP_Depend_Code_ASTNode $node The left node in the parsed member
+     * @param \PHP\Depend\Source\AST\ASTNode $node The left node in the parsed member
      *        primary expression.
-     * @return \PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @return \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseStaticMemberPrimaryPrefix(\PHP_Depend_Code_ASTNode $node)
+    private function parseStaticMemberPrimaryPrefix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $token = $this->consumeToken(Tokens::T_DOUBLE_COLON);
 
@@ -3946,7 +3946,7 @@ abstract class AbstractPHPParser
      * This method parses a method- or constant-postfix expression. This expression
      * will contain an identifier node as nested child.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -3971,15 +3971,15 @@ abstract class AbstractPHPParser
      * This method parses a method- or property-postfix expression. This expression
      * will contain the given node as method or property identifier.
      *
-     * @param \PHP_Depend_Code_ASTNode $node The identifier for the parsed postfix
+     * @param \PHP\Depend\Source\AST\ASTNode $node The identifier for the parsed postfix
      *        expression node. This node will be the first child of the returned
      *        postfix node instance.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseMethodOrPropertyPostfix(\PHP_Depend_Code_ASTNode $node)
+    private function parseMethodOrPropertyPostfix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         // Strip optional comments
         $this->consumeComments();
@@ -4000,13 +4000,13 @@ abstract class AbstractPHPParser
     /**
      * Parses/Creates a property postfix node instance.
      *
-     * @param \PHP_Depend_Code_ASTNode $node Node that represents the image of
+     * @param \PHP\Depend\Source\AST\ASTNode $node Node that represents the image of
      *        the property postfix node.
      *
-     * @return \PHP_Depend_Code_ASTPropertyPostfix
+     * @return \PHP\Depend\Source\AST\ASTPropertyPostfix
      * @since 0.10.2
      */
-    private function parsePropertyPostfix(\PHP_Depend_Code_ASTNode $node)
+    private function parsePropertyPostfix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $image = $this->extractPostfixImage($node);
 
@@ -4023,19 +4023,19 @@ abstract class AbstractPHPParser
 
     /**
      * This method will extract the image/name of the real property/variable
-     * that is wrapped by {@link \PHP_Depend_Code_ASTIndexExpression} nodes. If
+     * that is wrapped by {@link \PHP\Depend\Source\AST\ASTIndexExpression} nodes. If
      * the given node is now wrapped by index expressions, this method will
      * return the image of the entire <b>$node</b>.
      *
-     * @param \PHP_Depend_Code_ASTNode $node The context node that may be wrapped
+     * @param \PHP\Depend\Source\AST\ASTNode $node The context node that may be wrapped
      *        by multiple array or string index expressions.
      *
      * @return string
      * @since 1.0.0
      */
-    private function extractPostfixImage(\PHP_Depend_Code_ASTNode $node)
+    private function extractPostfixImage(\PHP\Depend\Source\AST\ASTNode $node)
     {
-        while ($node instanceof \PHP_Depend_Code_ASTIndexExpression) {
+        while ($node instanceof \PHP\Depend\Source\AST\ASTIndexExpression) {
             $node = $node->getChild(0);
         }
         return $node->getImage();
@@ -4044,13 +4044,13 @@ abstract class AbstractPHPParser
     /**
      * Parses a method postfix node instance.
      *
-     * @param \PHP_Depend_Code_ASTNode $node Node that represents the image of
+     * @param \PHP\Depend\Source\AST\ASTNode $node Node that represents the image of
      *        the method postfix node.
      *
-     * @return \PHP_Depend_Code_ASTMethodPostfix
+     * @return \PHP\Depend\Source\AST\ASTMethodPostfix
      * @since 1.0.0
      */
-    private function parseMethodPostfix(\PHP_Depend_Code_ASTNode $node)
+    private function parseMethodPostfix(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $args  = $this->parseArguments();
         $image = $this->extractPostfixImage($node);
@@ -4070,7 +4070,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses the arguments passed to a function- or method-call.
      *
-     * @return \PHP_Depend_Code_ASTArguments
+     * @return \PHP\Depend\Source\AST\ASTArguments
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -4098,7 +4098,7 @@ abstract class AbstractPHPParser
      * variables, object/static method. All these expressions are valid in
      * several php language constructs like, isset, empty, unset etc.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.12
      */
     private function parseVariableOrConstantOrPrimaryPrefix()
@@ -4150,7 +4150,7 @@ abstract class AbstractPHPParser
      * variable is followed by an object operator, double colon or opening
      * parenthesis.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -4186,13 +4186,13 @@ abstract class AbstractPHPParser
     /**
      * Parses an assingment expression node.
      *
-     * @param \PHP_Depend_Code_ASTNode $left The left part of the assignment
+     * @param \PHP\Depend\Source\AST\ASTNode $left The left part of the assignment
      *        expression that will be parsed by this method.
      *
-     * @return \PHP_Depend_Code_ASTAssignmentExpression
+     * @return \PHP\Depend\Source\AST\ASTAssignmentExpression
      * @since 0.9.12
      */
-    private function parseAssignmentExpression(\PHP_Depend_Code_ASTNode $left)
+    private function parseAssignmentExpression(\PHP\Depend\Source\AST\ASTNode $left)
     {
         $token = $this->consumeToken($this->tokenizer->peek());
 
@@ -4214,10 +4214,10 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a {@link \PHP_Depend_Code_ASTStaticReference} node.
+     * This method parses a {@link \PHP\Depend\Source\AST\ASTStaticReference} node.
      *
      * @param \PHP\Depend\Source\Tokenizer\Token $token The "static" keyword token.
-     * @return \PHP_Depend_Code_ASTStaticReference
+     * @return \PHP\Depend\Source\AST\ASTStaticReference
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 0.9.6
@@ -4247,10 +4247,10 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a {@link \PHP_Depend_Code_ASTSelfReference} node.
+     * This method parses a {@link \PHP\Depend\Source\AST\ASTSelfReference} node.
      *
      * @param \PHP\Depend\Source\Tokenizer\Token $token The "self" keyword token.
-     * @return \PHP_Depend_Code_ASTSelfReference
+     * @return \PHP\Depend\Source\AST\ASTSelfReference
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 0.9.6
@@ -4279,7 +4279,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a simple PHP constant use and returns a corresponding node.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     private function parseConstant()
@@ -4305,13 +4305,13 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a {@link \PHP_Depend_Code_ASTConstant} node or an
-     * instance of {@link \PHP_Depend_Code_ASTSelfReference} as part of
-     * a {@link \PHP_Depend_Code_MemberPrimaryPrefix} that contains the self
-     * reference as its first child when the self token is followed by a
+     * This method parses a {@link \PHP\Depend\Source\AST\ASTConstant} node or
+     * an instance of {@link \PHP\Depend\Source\AST\ASTSelfReference} as part of
+     * a {@link \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix} that contains the
+     * self reference as its first child when the self token is followed by a
      * double colon token.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 0.9.6
@@ -4331,10 +4331,10 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a {@link \PHP_Depend_Code_ASTParentReference} node.
+     * This method parses a {@link \PHP\Depend\Source\AST\ASTParentReference} node.
      *
      * @param \PHP\Depend\Source\Tokenizer\Token $token The "self" keyword token.
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 0.9.6
@@ -4375,13 +4375,13 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a {@link \PHP_Depend_Code_ASTConstant} node or an
-     * instance of {@link \PHP_Depend_Code_ASTParentReference} as part of
-     * a {@link \PHP_Depend_Code_MemberPrimaryPrefix} that contains the parent
-     * reference as its first child when the self token is followed by a
-     * double colon token.
+     * This method parses a {@link \PHP\Depend\Source\AST\ASTConstant} node or
+     * an instance of {@link \PHP\Depend\Source\AST\ASTParentReference} as part
+     * of a {@link \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix} that contains
+     * the parent reference as its first child when the self token is followed
+     * by a double colon token.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 0.9.6
@@ -4414,7 +4414,7 @@ abstract class AbstractPHPParser
      * //     ----------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTUnaryExpression
+     * @return \PHP\Depend\Source\AST\ASTUnaryExpression
      * @since 0.9.18
      */
     private function parseVariableOrMemberOptionalByReference()
@@ -4440,7 +4440,7 @@ abstract class AbstractPHPParser
      * //     ----------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTUnaryExpression
+     * @return \PHP\Depend\Source\AST\ASTUnaryExpression
      * @since 0.9.18
      */
     private function parseVariableOrMemberByReference()
@@ -4459,7 +4459,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a simple PHP variable.
      *
-     * @return \PHP_Depend_Code_ASTVariable
+     * @return \PHP\Depend\Source\AST\ASTVariable
      * @throws UnexpectedTokenException
      * @since 0.9.6
      */
@@ -4482,12 +4482,12 @@ abstract class AbstractPHPParser
      * This method parses a comma separated list of valid php variables and/or
      * properties and adds them to the given node instance.
      *
-     * @param \PHP_Depend_Code_ASTNode $node The context parent node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The context parent node.
      *
-     * @return \PHP_Depend_Code_ASTNode The prepared entire node.
+     * @return \PHP\Depend\Source\AST\ASTNode The prepared entire node.
      * @since 0.9.12
      */
-    private function parseVariableList(\PHP_Depend_Code_ASTNode $node)
+    private function parseVariableList(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $this->consumeComments();
         while ($this->tokenizer->peek() !== Tokenizer::T_EOF) {
@@ -4526,7 +4526,7 @@ abstract class AbstractPHPParser
      * ------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws UnexpectedTokenException
      * @since 0.9.6
@@ -4542,7 +4542,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a PHP compound variable or a simple literal node.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.19
      */
     private function parseCompoundVariableOrLiteral()
@@ -4579,7 +4579,7 @@ abstract class AbstractPHPParser
      * this is compound variable, otherwise it can be a variable-variable or a
      * compound-variable.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws UnexpectedTokenException
      * @since 0.9.6
@@ -4625,7 +4625,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @param \PHP\Depend\Source\Tokenizer\Token $token The dollar token.
-     * @return \PHP_Depend_Code_ASTCompoundVariable
+     * @return \PHP\Depend\Source\AST\ASTCompoundVariable
      * @since 0.10.0
      */
     private function parseCompoundVariable(Token $token)
@@ -4654,7 +4654,7 @@ abstract class AbstractPHPParser
      * //      -
      * </code>
      *
-     * @return \PHP_Depend_Code_NodeI
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.10
      */
     private function parseCompoundExpressionOrLiteral()
@@ -4693,7 +4693,7 @@ abstract class AbstractPHPParser
      * ------------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTCompoundExpression
+     * @return \PHP\Depend\Source\AST\ASTCompoundExpression
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\ParserException
      * @since 0.9.6
@@ -4713,7 +4713,7 @@ abstract class AbstractPHPParser
      * Parses a static identifier expression, as it is used for method and
      * function names.
      *
-     * @return \PHP_Depend_Code_ASTIdentifier
+     * @return \PHP\Depend\Source\AST\ASTIdentifier
      * @since 0.9.12
      */
     protected function parseIdentifier()
@@ -4732,11 +4732,11 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a {@link \PHP_Depend_Code_ASTLiteral} node or an
-     * instance of {@link \PHP_Depend_Code_ASTString} that represents a string
+     * This method parses a {@link \PHP\Depend\Source\AST\ASTLiteral} node or an
+     * instance of {@link \PHP\Depend\Source\AST\ASTString} that represents a string
      * in double quotes or surrounded by backticks.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws UnexpectedTokenException
      */
     private function parseLiteralOrString()
@@ -4772,7 +4772,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an integer value.
      *
-     * @return \PHP_Depend_Code_ASTLiteral
+     * @return \PHP\Depend\Source\AST\ASTLiteral
      * @since 1.0.0
      */
     protected abstract function parseIntegerNumber();
@@ -4780,7 +4780,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an array structure.
      *
-     * @return \PHP_Depend_Code_ASTArray
+     * @return \PHP\Depend\Source\AST\ASTArray
      * @since 1.0.0
      */
     private function doParseArray($static = false)
@@ -4807,26 +4807,26 @@ abstract class AbstractPHPParser
     /**
      * Parses a php array declaration.
      *
-     * @param \PHP_Depend_Code_ASTArray $array
+     * @param \PHP\Depend\Source\AST\ASTArray $array
      * @param boolean $static
      *
-     * @return \PHP_Depend_Code_ASTArray
+     * @return \PHP\Depend\Source\AST\ASTArray
      * @since 1.0.0
      */
-    protected abstract function parseArray(\PHP_Depend_Code_ASTArray $array, $static = false);
+    protected abstract function parseArray(\PHP\Depend\Source\AST\ASTArray $array, $static = false);
 
     /**
      * Parses all elements in an array.
      *
-     * @param \PHP_Depend_Code_ASTArray $array
+     * @param \PHP\Depend\Source\AST\ASTArray $array
      * @param integer $endDelimiter
      * @param boolean $static
      *
-     * @return \PHP_Depend_Code_ASTArray
+     * @return \PHP\Depend\Source\AST\ASTArray
      * @since 1.0.0
      */
     protected function parseArrayElements(
-        \PHP_Depend_Code_ASTArray $array,
+        \PHP\Depend\Source\AST\ASTArray $array,
         $endDelimiter,
         $static = false
     ) {
@@ -4850,7 +4850,7 @@ abstract class AbstractPHPParser
      * reference or a key/value pair with a referenced value.
      *
      * @param boolean $static
-     * @return \PHP_Depend_Code_ASTArrayElement
+     * @return \PHP\Depend\Source\AST\ASTArrayElement
      * @since 1.0.0
      */
     protected function parseArrayElement($static = false)
@@ -4901,7 +4901,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a here- or nowdoc string instance.
      *
-     * @return \PHP_Depend_Code_ASTHeredoc
+     * @return \PHP\Depend\Source\AST\ASTHeredoc
      * @since 0.9.12
      */
     protected function parseHeredoc()
@@ -4945,7 +4945,7 @@ abstract class AbstractPHPParser
      * <code>
      * $string = "Manuel $Pichler <{$email}>";
      *
-     * // \PHP_Depend_Code_ASTSTring
+     * // \PHP\Depend\Source\AST\ASTSTring
      * // |-- ASTLiteral             -  "Manuel ")
      * // |-- ASTVariable            -  $Pichler
      * // |-- ASTLiteral             -  " <"
@@ -4956,7 +4956,7 @@ abstract class AbstractPHPParser
      *
      * @param integer $delimiterType The start/stop token type.
      *
-     * @return \PHP_Depend_Code_ASTString
+     * @return \PHP\Depend\Source\AST\ASTString
      * @throws \PHP\Depend\Source\Parser\UnexpectedTokenException
      * @since 0.9.10
      */
@@ -4983,14 +4983,14 @@ abstract class AbstractPHPParser
      * to consume the stop token. The return value of this method is the prepared
      * input string node.
      *
-     * @param \PHP_Depend_Code_ASTNode $node      The parent string or nowdoc node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node      The parent string or nowdoc node.
      * @param integer                 $stopToken The stop token type.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.12
      */
     private function parseStringExpressions(
-        \PHP_Depend_Code_ASTNode $node,
+        \PHP\Depend\Source\AST\ASTNode $node,
         $stopToken
     ) {
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
@@ -5027,7 +5027,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses an escaped sequence of literal tokens.
      *
-     * @return \PHP_Depend_Code_ASTLiteral
+     * @return \PHP\Depend\Source\AST\ASTLiteral
      * @since 0.9.10
      */
     private function parseEscapedAstLiteralString()
@@ -5061,7 +5061,7 @@ abstract class AbstractPHPParser
      * This method parses a simple literal and configures the position
      * properties.
      *
-     * @return \PHP_Depend_Code_ASTLiteral
+     * @return \PHP\Depend\Source\AST\ASTLiteral
      * @since 0.9.10
      */
     protected function parseLiteral()
@@ -5082,7 +5082,7 @@ abstract class AbstractPHPParser
     /**
      * Extracts all dependencies from a callable signature.
      *
-     * @return \PHP_Depend_Code_ASTFormalParameters
+     * @return \PHP\Depend\Source\AST\ASTFormalParameters
      * @since 0.9.5
      */
     private function parseFormalParameters()
@@ -5141,7 +5141,7 @@ abstract class AbstractPHPParser
      * //                ---
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     private function parseFormalParameterOrTypeHintOrByReference()
@@ -5189,7 +5189,7 @@ abstract class AbstractPHPParser
      * //                ---------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     private function parseFormalParameterAndArrayTypeHint()
@@ -5219,7 +5219,7 @@ abstract class AbstractPHPParser
      * //                ------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     private function parseFormalParameterAndTypeHint()
@@ -5249,7 +5249,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @throws \PHP\Depend\Source\Parser\InvalidStateException
      * @since 0.9.6
      */
@@ -5277,7 +5277,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     private function parseFormalParameterAndSelfTypeHint()
@@ -5308,7 +5308,7 @@ abstract class AbstractPHPParser
      * //                 ---  -------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     protected function parseFormalParameterOrByReference()
@@ -5329,7 +5329,7 @@ abstract class AbstractPHPParser
      * //                 ---  --------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     private function parseFormalParameterAndByReference()
@@ -5353,7 +5353,7 @@ abstract class AbstractPHPParser
      * //               --  -------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     private function parseFormalParameter()
@@ -5379,7 +5379,7 @@ abstract class AbstractPHPParser
      * Parses a formal parameter type hint that is valid in the supported PHP
      * version.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     protected abstract function parseFormalParameterTypeHint();
@@ -5387,7 +5387,7 @@ abstract class AbstractPHPParser
     /**
      * Extracts all dependencies from a callable body.
      *
-     * @return \PHP_Depend_Code_ASTScope
+     * @return \PHP\Depend\Source\AST\ASTScope
      * @since 0.9.12
      */
     private function parseScope()
@@ -5402,7 +5402,7 @@ abstract class AbstractPHPParser
         while (($stmt = $this->parseOptionalStatement()) !== null) {
             // TODO: Remove if-statement once, we have translated functions and
             //       closures into ast-nodes
-            if ($stmt instanceof \PHP_Depend_Code_ASTNode) {
+            if ($stmt instanceof \PHP\Depend\Source\AST\ASTNode) {
                 $scope->addChild($stmt);
             }
         }
@@ -5416,7 +5416,7 @@ abstract class AbstractPHPParser
     /**
      * Parse a statement.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @throws \PHP\Depend\Source\Parser\UnexpectedTokenException
      * @since 1.0.0
      */
@@ -5434,7 +5434,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional statement or returns <b>null</b>.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 0.9.8
      */
     private function parseOptionalStatement()
@@ -5605,7 +5605,7 @@ abstract class AbstractPHPParser
      * Parses a comment and optionally an embedded class or interface type
      * annotation.
      *
-     * @return \PHP_Depend_Code_ASTComment
+     * @return \PHP\Depend\Source\AST\ASTComment
      * @since 0.9.8
      */
     private function parseCommentWithOptionalInlineClassOrInterfaceReference()
@@ -5631,13 +5631,13 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional set of bound closure variables.
      *
-     * @param \PHP_Depend_Code_ASTClosure $closure The context closure instance.
+     * @param \PHP\Depend\Source\AST\ASTClosure $closure The context closure instance.
      *
-     * @return \PHP_Depend_Code_ASTClosure
+     * @return \PHP\Depend\Source\AST\ASTClosure
      * @since 1.0.0
      */
     private function parseOptionalBoundVariables(
-        \PHP_Depend_Code_ASTClosure $closure
+        \PHP\Depend\Source\AST\ASTClosure $closure
     ) {
         $this->consumeComments();
         if (Tokens::T_USE === $this->tokenizer->peek()) {
@@ -5649,12 +5649,12 @@ abstract class AbstractPHPParser
     /**
      * Parses a list of bound closure variables.
      *
-     * @param \PHP_Depend_Code_ASTClosure $closure The parent closure instance.
+     * @param \PHP\Depend\Source\AST\ASTClosure $closure The parent closure instance.
      *
-     * @return \PHP_Depend_Code_ASTClosure
+     * @return \PHP\Depend\Source\AST\ASTClosure
      * @since 0.9.5
      */
-    private function parseBoundVariables(\PHP_Depend_Code_ASTClosure $closure)
+    private function parseBoundVariables(\PHP\Depend\Source\AST\ASTClosure $closure)
     {
         $this->consumeToken(Tokens::T_USE);
 
@@ -5689,7 +5689,7 @@ abstract class AbstractPHPParser
      * Parses a php class/method name chain.
      *
      * <code>
-     * PHP\Depend\Parser::parse();
+     * PHP\Depend\Source\Parser::parse();
      * </code>
      *
      * @return string
@@ -5913,7 +5913,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTConstantDefinition
+     * @return \PHP\Depend\Source\AST\ASTConstantDefinition
      * @since 0.9.6
      */
     private function parseConstantDefinition()
@@ -5976,7 +5976,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTConstantDeclarator
+     * @return \PHP\Depend\Source\AST\ASTConstantDeclarator
      * @since 0.9.6
      */
     private function parseConstantDeclarator()
@@ -6033,8 +6033,8 @@ abstract class AbstractPHPParser
      * };
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTConstant
-     * @throws \PHP\Depend\Parser\Exception When an error occurred during the parsing process.
+     * @return \PHP\Depend\Source\AST\ASTConstant
+     * @throws \PHP\Depend\Source\Parser\ParserException
      * @throws \PHP\Depend\Source\Parser\UnexpectedTokenException
      * @since 0.9.6
      */
@@ -6086,7 +6086,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @param \PHP\Depend\Source\Tokenizer\Token $token Token with the "static" keyword.
-     * @return \PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @return \PHP\Depend\Source\AST\ASTStaticVariableDeclaration
      * @since 0.9.6
      */
     private function parseStaticVariableDeclaration(Token $token)
@@ -6135,7 +6135,7 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTVariableDeclarator
+     * @return \PHP\Depend\Source\AST\ASTVariableDeclarator
      * @since 0.9.6
      */
     private function parseVariableDeclarator()
@@ -6158,7 +6158,7 @@ abstract class AbstractPHPParser
      * This method will parse a static value or a static array as it is
      * used as default value for a parameter or property declaration.
      *
-     * @return \PHP_Depend_Code_Value
+     * @return \PHP\Depend\Source\AST\ASTValue
      * @since 0.9.6
      */
     private function parseStaticValueOrStaticArray()
@@ -6168,7 +6168,7 @@ abstract class AbstractPHPParser
             // TODO: Use default value as value!
             $defaultValue = $this->doParseArray(true);
 
-            $value = new \PHP_Depend_Code_Value();
+            $value = new ASTValue();
             $value->setValue(array());
 
             return $value;
@@ -6180,12 +6180,12 @@ abstract class AbstractPHPParser
      * This method will parse a static default value as it is used for a
      * parameter, property or constant declaration.
      *
-     * @return \PHP_Depend_Code_Value
+     * @return \PHP\Depend\Source\AST\ASTValue
      * @since 0.9.5
      */
     private function parseStaticValue()
     {
-        $defaultValue = new \PHP_Depend_Code_Value();
+        $defaultValue = new ASTValue();
 
         $this->consumeComments();
 
@@ -6297,18 +6297,18 @@ abstract class AbstractPHPParser
      * Checks if the given expression is a read/write variable as defined in
      * the PHP zend_language_parser.y definition.
      *
-     * @param \PHP_Depend_Code_ASTNode $expr The context node instance.
+     * @param \PHP\Depend\Source\AST\ASTNode $expr The context node instance.
      *
      * @return boolean
      * @since 0.10.0
      */
     private function isReadWriteVariable($expr)
     {
-        return ($expr instanceof \PHP_Depend_Code_ASTVariable
-            || $expr instanceof \PHP_Depend_Code_ASTFunctionPostfix
-            || $expr instanceof \PHP_Depend_Code_ASTVariableVariable
-            || $expr instanceof \PHP_Depend_Code_ASTCompoundVariable
-            || $expr instanceof \PHP_Depend_Code_ASTMemberPrimaryPrefix);
+        return ($expr instanceof \PHP\Depend\Source\AST\ASTVariable
+            || $expr instanceof \PHP\Depend\Source\AST\ASTFunctionPostfix
+            || $expr instanceof \PHP\Depend\Source\AST\ASTVariableVariable
+            || $expr instanceof \PHP\Depend\Source\AST\ASTCompoundVariable
+            || $expr instanceof \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix);
     }
 
     /**
@@ -6466,7 +6466,7 @@ abstract class AbstractPHPParser
      * doc comment information. The returned value will be <b>null</b> when no
      * type information exists.
      *
-     * @return \PHP_Depend_Code_ASTType
+     * @return \PHP\Depend\Source\AST\ASTType
      * @since 0.9.6
      */
     private function parseFieldDeclarationType()
@@ -6498,7 +6498,7 @@ abstract class AbstractPHPParser
      * Extracts non scalar types from a field doc comment and creates a
      * matching type instance.
      *
-     * @return \PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @return \PHP\Depend\Source\AST\ASTClassOrInterfaceReference
      * @since 0.9.6
      */
     private function parseFieldDeclarationClassOrInterfaceReference()
@@ -6518,11 +6518,10 @@ abstract class AbstractPHPParser
      * Extracts documented <b>throws</b> and <b>return</b> types and sets them
      * to the given <b>$callable</b> instance.
      *
-     * @param \PHP_Depend_Code_AbstractCallable $callable The context callable.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
-    private function prepareCallable(\PHP_Depend_Code_AbstractCallable $callable)
+    private function prepareCallable(AbstractASTCallable $callable)
     {
         // Skip, if ignore annotations is set
         if ($this->ignoreAnnotations === true) {

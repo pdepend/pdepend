@@ -71,7 +71,7 @@ class ParserBug033Test extends AbstractTest
             ->getFunctions()
             ->current();
 
-        self::assertEquals(1, $function->getDependencies()->count());
+        $this->assertEquals(1, $function->getDependencies()->count());
     }
 
     /**
@@ -91,7 +91,7 @@ class ParserBug033Test extends AbstractTest
             ->getMethods()
             ->current();
 
-        self::assertEquals('parse', $method->getName());
-        self::assertEquals(1, $method->getDependencies()->count());
+        $this->assertEquals('parse', $method->getName());
+        $this->assertEquals(1, $method->getDependencies()->count());
     }
 }

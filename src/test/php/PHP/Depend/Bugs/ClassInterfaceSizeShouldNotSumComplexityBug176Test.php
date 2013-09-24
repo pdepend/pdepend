@@ -79,7 +79,7 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractTest
         
         $metrics = $analyzer->getNodeMetrics($class);
 
-        self::assertEquals(2, $metrics['cis']);
+        $this->assertEquals(2, $metrics['cis']);
     }
 
     /**
@@ -104,6 +104,6 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractTest
 
         $metrics = $analyzer->getNodeMetrics($class);
 
-        self::assertEquals(6, $metrics['csz']);
+        $this->assertEquals(6, $metrics['csz']);
     }
 }

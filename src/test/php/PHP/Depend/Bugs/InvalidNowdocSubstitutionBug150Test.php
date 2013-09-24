@@ -63,6 +63,6 @@ class InvalidNowdocSubstitutionBug150Test extends AbstractTest
     public function testTokenizerDoesNotDetectNowdocSyntaxInString()
     {
         $packages = self::parseCodeResourceForTest();
-        self::assertEquals(1, $packages->current()->getFunctions()->count());
+        $this->assertEquals(1, $packages->current()->getFunctions()->count());
     }
 }

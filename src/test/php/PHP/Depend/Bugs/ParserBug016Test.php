@@ -106,6 +106,6 @@ class ParserBug016Test extends AbstractTest
         $function  = $functions->current();
 
         $dependencies = $function->getDependencies();
-        self::assertEquals(0, $dependencies->count());
+        $this->assertEquals(0, $dependencies->count());
     }
 }

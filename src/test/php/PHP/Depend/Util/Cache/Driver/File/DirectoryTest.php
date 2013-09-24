@@ -92,7 +92,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
     public function testCreatesNotExistingCacheDirectory()
     {
         new Directory($this->cacheDir);
-        self::assertFileExists($this->cacheDir);
+        $this->assertFileExists($this->cacheDir);
     }
 
     /**
@@ -103,7 +103,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
     public function testAddsCacheVersionFileToNewlyCreatedCache()
     {
         new Directory($this->cacheDir);
-        self::assertFileExists($this->versionFile);
+        $this->assertFileExists($this->versionFile);
     }
 
     /**
@@ -114,7 +114,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
     public function testCacheVersionFileContainsExpectedVersionString()
     {
         new Directory($this->cacheDir);
-        self::assertEquals(
+        $this->assertEquals(
             Driver::VERSION,
             file_get_contents($this->versionFile)
         );
@@ -131,7 +131,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new Directory($this->cacheDir);
-        self::assertEquals(
+        $this->assertEquals(
             Driver::VERSION,
             file_get_contents($this->versionFile)
         );
@@ -151,7 +151,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new Directory($this->cacheDir);
-        self::assertFileNotExists($cacheFile);
+        $this->assertFileNotExists($cacheFile);
     }
 
     /**
@@ -167,7 +167,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new Directory($this->cacheDir);
-        self::assertFileNotExists($cacheDir);
+        $this->assertFileNotExists($cacheDir);
     }
 
     /**
@@ -185,7 +185,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new Directory($this->cacheDir);
-        self::assertFileNotExists("{$this->cacheDir}/test");
+        $this->assertFileNotExists("{$this->cacheDir}/test");
     }
 
     /**
@@ -198,7 +198,7 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
         $dir  = new Directory($this->cacheDir);
         $path = $dir->createCacheDirectory('abcdef0123456789');
 
-        self::assertEquals("{$this->cacheDir}/ab", $path);
+        $this->assertEquals("{$this->cacheDir}/ab", $path);
     }
 
     /**
@@ -209,6 +209,6 @@ class DirectoryTest extends \PHP_Depend_AbstractTest
     public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory()
     {
         $dir = new Directory($this->cacheDir);
-        self::assertFileExists($dir->createCacheDirectory('abcdef0123456789'));
+        $this->assertFileExists($dir->createCacheDirectory('abcdef0123456789'));
     }
 }

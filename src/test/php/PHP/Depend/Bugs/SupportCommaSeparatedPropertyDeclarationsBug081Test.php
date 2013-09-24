@@ -71,7 +71,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractTest
             ->current()
             ->getProperties();
 
-        self::assertEquals(2, count($properties));
+        $this->assertEquals(2, count($properties));
     }
 
     /**
@@ -95,7 +95,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractTest
             );
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 array('private' => false, 'public' => true),
                 array('private' => false, 'public' => true),
@@ -124,6 +124,6 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractTest
             $actual[] = $property->isStatic();
         }
 
-        self::assertEquals(array(true, true), $actual);
+        $this->assertEquals(array(true, true), $actual);
     }
 }

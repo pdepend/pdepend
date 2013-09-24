@@ -43,9 +43,23 @@
 use PHP\Depend\Metrics\AbstractCachingAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\AbstractASTCallable;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
+use PHP\Depend\Source\AST\ASTBooleanAndExpression;
+use PHP\Depend\Source\AST\ASTBooleanOrExpression;
+use PHP\Depend\Source\AST\ASTConditionalExpression;
+use PHP\Depend\Source\AST\ASTExpression;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTLogicalAndExpression;
+use PHP\Depend\Source\AST\ASTLogicalOrExpression;
+use PHP\Depend\Source\AST\ASTLogicalXorExpression;
 use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTStatement;
+use PHP\Depend\Source\AST\ASTSwitchLabel;
+use PHP\Depend\Source\AST\ASTVisitorI;
 use PHP\Depend\Util\MathUtil;
 
 /**
@@ -60,7 +74,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
        extends AbstractCachingAnalyzer
     implements AnalyzerFilterAware,
                AnalyzerNodeAware,
-               PHP_Depend_Code_ASTVisitorI
+               ASTVisitorI
 {
     /**
      * Type of this analyzer class.
@@ -75,18 +89,17 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->metrics === null) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 
             $this->metrics = array();
-            foreach ($packages as $package) {
+            foreach ($namespaces as $package) {
                 $package->accept($this);
             }
 
@@ -106,16 +119,15 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * )
      * </code>
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metric = array();
-        if (isset($this->metrics[$node->getUuid()])) {
+        if (isset($this->metrics[$artifact->getUuid()])) {
             $metric = array(
-                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$node->getUuid()]
+                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getUuid()]
             );
         }
         return $metric;
@@ -171,14 +183,12 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * This method will calculate the NPath complexity for the given callable
      * instance.
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTCallable $callable
      * @return void
      * @since 0.9.12
      */
-    protected function calculateComplexity(
-        PHP_Depend_Code_AbstractCallable $callable
-    ) {
+    protected function calculateComplexity(AbstractASTCallable $callable)
+    {
         $npath = '1';
         foreach ($callable->getChildren() as $child) {
             $stmt  = $child->accept($this, $npath);
@@ -217,7 +227,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -255,7 +265,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(do) = NP(<do-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -293,7 +303,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -303,7 +313,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $npath = $this->sumComplexity($node->getChild(0));
         foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+            if ($child instanceof ASTStatement) {
                 $expr  = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $expr);
             }
@@ -328,7 +338,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(for) = NP(<for-range>) + NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -338,10 +348,10 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $npath = '1';
         foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+            if ($child instanceof ASTStatement) {
                 $stmt  = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $stmt);
-            } else if ($child instanceof PHP_Depend_Code_ASTExpression) {
+            } else if ($child instanceof ASTExpression) {
                 $expr  = $this->sumComplexity($child);
                 $npath = MathUtil::add($npath, $expr);
             }
@@ -362,7 +372,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(foreach) = NP(<foreach-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -374,7 +384,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $npath = MathUtil::add($npath, '1');
 
         foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+            if ($child instanceof ASTStatement) {
                 $stmt  = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $stmt);
             }
@@ -404,7 +414,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -415,7 +425,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
         $npath = $this->sumComplexity($node->getChild(0));
 
         foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+            if ($child instanceof ASTStatement) {
                 $stmt  = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $stmt);
             }
@@ -438,7 +448,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(return) = NP(<expr>) --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -466,7 +476,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(switch) = NP(<expr>) + NP(<default-range>) +  NP(<case-range1>) ... --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -476,7 +486,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $npath = $this->sumComplexity($node->getChild(0));
         foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTSwitchLabel) {
+            if ($child instanceof ASTSwitchLabel) {
                 $label = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $label);
             }
@@ -508,7 +518,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(try) = NP(<try-range>) + NP(<catch-range1>) + NP(<catch-range2>) ... --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -518,7 +528,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     {
         $npath = '0';
         foreach ($node->getChildren() as $child) {
-            if ($child instanceof PHP_Depend_Code_ASTStatement) {
+            if ($child instanceof ASTStatement) {
                 $stmt  = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $stmt);
             }
@@ -538,7 +548,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
      * -- NP(while) = NP(<while-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      * @param string                   $data The previously calculated npath value.
      *
      * @return string
@@ -558,7 +568,7 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     /**
      * Calculates the expression sum of the given node.
      *
-     * @param PHP_Depend_Code_ASTNode $node The currently visited node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The currently visited node.
      *
      * @return string
      * @since 0.9.12
@@ -569,13 +579,13 @@ class PHP_Depend_Metrics_NPathComplexity_Analyzer
     public function sumComplexity($node)
     {
         $sum = '0';
-        if ($node instanceof PHP_Depend_Code_ASTConditionalExpression) {
+        if ($node instanceof ASTConditionalExpression) {
             $sum = MathUtil::add($sum, $node->accept($this, 1));
-        } else if ($node instanceof PHP_Depend_Code_ASTBooleanAndExpression
-            || $node instanceof PHP_Depend_Code_ASTBooleanOrExpression
-            || $node instanceof PHP_Depend_Code_ASTLogicalAndExpression
-            || $node instanceof PHP_Depend_Code_ASTLogicalOrExpression
-            || $node instanceof PHP_Depend_Code_ASTLogicalXorExpression
+        } else if ($node instanceof ASTBooleanAndExpression
+            || $node instanceof ASTBooleanOrExpression
+            || $node instanceof ASTLogicalAndExpression
+            || $node instanceof ASTLogicalOrExpression
+            || $node instanceof ASTLogicalXorExpression
         ) {
             $sum = MathUtil::add($sum, '1');
         } else {

@@ -70,7 +70,7 @@ class ConfigurationTest extends \PHP_Depend_AbstractTest
 
         $configuration = new Configuration($settings);
 
-        self::assertEquals(42, $configuration->foo);
+        $this->assertEquals(42, $configuration->foo);
     }
 
     /**
@@ -112,7 +112,7 @@ class ConfigurationTest extends \PHP_Depend_AbstractTest
 
         $configuration = new Configuration($settings);
 
-        self::assertTrue(isset($configuration->foo));
+        $this->assertTrue(isset($configuration->foo));
     }
 
     /**
@@ -127,6 +127,6 @@ class ConfigurationTest extends \PHP_Depend_AbstractTest
 
         $configuration = new Configuration($settings);
 
-        self::assertFalse(isset($configuration->bar));
+        $this->assertFalse(isset($configuration->bar));
     }
 }

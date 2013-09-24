@@ -53,13 +53,13 @@ use PHP\Depend\TreeVisitor\TestNodeVisitor;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PHP\Depend\Source\AST\AbstractASTCallable
  * @covers \PHP\Depend\Source\AST\ASTFunction
- * @covers \PHP_Depend_Code_AbstractCallable
  * @group pdepend
  * @group pdepend::code
  * @group unittest
  */
-class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
+class ASTFunctionTest extends AbstractASTArtifactTest
 {
     /**
      * testReturnsReferenceReturnsExpectedTrue
@@ -69,7 +69,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testReturnsReferenceReturnsExpectedTrue()
     {
         $function = $this->_getFirstFunctionForTestCase();
-        self::assertTrue($function->returnsReference());
+        $this->assertTrue($function->returnsReference());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testReturnsReferenceReturnsExpectedFalse()
     {
         $function = $this->_getFirstFunctionForTestCase();
-        self::assertFalse($function->returnsReference());
+        $this->assertFalse($function->returnsReference());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetStaticVariablesReturnsEmptyArrayByDefault()
     {
         $function = $this->createItem();
-        self::assertEquals(array(), $function->getStaticVariables());
+        $this->assertEquals(array(), $function->getStaticVariables());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
     {
-        self::assertEquals(
+        $this->assertEquals(
             array('a' => 42, 'b' => 23),
             $this->_getFirstFunctionForTestCase()->getStaticVariables()
         );
@@ -114,7 +114,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
     {
-        self::assertEquals(
+        $this->assertEquals(
             array('a' => 42, 'b' => 23, 'c' => 17),
             $this->_getFirstFunctionForTestCase()->getStaticVariables()
         );
@@ -128,7 +128,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testCreateNewFunctionInstance()
     {
         $function = $this->createItem();
-        self::assertEquals('createItem', $function->getName());
+        $this->assertEquals('createItem', $function->getName());
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetPackageReturnsNullByDefault()
     {
         $function = $this->createItem();
-        self::assertNull($function->getPackage());
+        $this->assertNull($function->getPackage());
     }
 
     /**
@@ -155,7 +155,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function->setPackage($package);
         $function->unsetPackage();
 
-        self::assertNull($function->getPackage());
+        $this->assertNull($function->getPackage());
     }
 
     /**
@@ -169,7 +169,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function->setPackage(new ASTNamespace(__FUNCTION__));
         $function->unsetPackage();
 
-        self::assertNull($function->getPackageName());
+        $this->assertNull($function->getPackageName());
     }
 
     /**
@@ -203,7 +203,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
 
         $function->setPackage($package);
-        self::assertSame($package, $function->getPackage());
+        $this->assertSame($package, $function->getPackage());
     }
 
     /**
@@ -213,7 +213,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
      */
     public function testGetPackageNameReturnsNullByDefault()
     {
-        self::assertNull($this->createItem()->getPackageName());
+        $this->assertNull($this->createItem()->getPackageName());
     }
 
     /**
@@ -226,7 +226,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         $function->setPackage(new ASTNamespace(__FUNCTION__));
 
-        self::assertEquals(__FUNCTION__, $function->getPackageName());
+        $this->assertEquals(__FUNCTION__, $function->getPackageName());
     }
 
     /**
@@ -237,7 +237,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsCachedReturnsFalseByDefault()
     {
         $function = $this->createItem();
-        self::assertFalse($function->isCached());
+        $this->assertFalse($function->isCached());
     }
 
     /**
@@ -250,7 +250,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         serialize($function);
 
-        self::assertFalse($function->isCached());
+        $this->assertFalse($function->isCached());
     }
 
     /**
@@ -261,7 +261,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testMagicSleepReturnsExpectedSetOfPropertyNames()
     {
         $function = $this->createItem();
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'context',
                 'packageName',
@@ -342,7 +342,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function = $this->createItem();
         $function->setCache($cache);
 
-        self::assertSame(array(), $function->getTokens());
+        $this->assertSame(array(), $function->getTokens());
     }
 
     /**
@@ -353,20 +353,20 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
@@ -377,7 +377,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function->addChild($node2);
 
         $child = $function->getFirstChildOfType(get_class($node2));
-        self::assertSame($node2, $child);
+        $this->assertSame($node2, $child);
     }
 
     /**
@@ -388,29 +388,29 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
@@ -421,7 +421,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function->addChild($node3);
 
         $child = $function->getFirstChildOfType(get_class($node1));
-        self::assertSame($node1, $child);
+        $this->assertSame($node1, $child);
     }
 
     /**
@@ -432,20 +432,20 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
@@ -456,7 +456,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function->addChild($node2);
 
         $child = $function->getFirstChildOfType('PHP_Depend_' . md5(microtime()));
-        self::assertNull($child);
+        $this->assertNull($child);
     }
 
     /**
@@ -467,20 +467,20 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('findChildrenOfType')
             ->will($this->returnValue(array()));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('findChildrenOfType')
@@ -491,7 +491,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $function->addChild($node2);
 
         $children = $function->findChildrenOfType(get_class($node2));
-        self::assertSame(array($node2), $children);
+        $this->assertSame(array($node2), $children);
     }
 
     /**
@@ -504,7 +504,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -520,7 +520,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getReturnClass(),
             $copy->getReturnClass()
         );
@@ -536,7 +536,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -552,7 +552,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getExceptionClasses()->current(),
             $copy->getExceptionClasses()->current()
         );
@@ -568,7 +568,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -584,7 +584,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame($orig->getPackage(), $copy->getPackage());
+        $this->assertSame($orig->getPackage(), $copy->getPackage());
     }
 
     /**
@@ -597,7 +597,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertEquals(
+        $this->assertEquals(
             'Baz',
             $copy->getPackage()->getClasses()->current()->getName()
         );
@@ -613,7 +613,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertEquals(1, count($copy->getPackage()->getFunctions()));
+        $this->assertEquals(1, count($copy->getPackage()->getFunctions()));
     }
 
     /**
@@ -626,7 +626,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame($copy, $orig->getPackage()->getFunctions()->current());
+        $this->assertSame($copy, $orig->getPackage()->getFunctions()->current());
     }
 
     /**
@@ -640,7 +640,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
         $visitor  = new TestNodeVisitor();
 
         $function->accept($visitor);
-        self::assertSame($function, $visitor->function);
+        $this->assertSame($function, $visitor->function);
     }
 
     /**
@@ -660,7 +660,7 @@ class ASTFunctionTest extends \PHP_Depend_Code_AbstractItemTest
     /**
      * Creates an abstract item instance.
      *
-     * @return \PHP_Depend_Code_AbstractItem
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact
      */
     protected function createItem()
     {

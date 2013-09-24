@@ -67,7 +67,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
         $output = self::createRunResourceURI('pdepend.out.svg');
 
         ImageConvert::convert($input, $output);
-        self::assertFileEquals($input, $output);
+        $this->assertFileEquals($input, $output);
     }
 
     /**
@@ -85,7 +85,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
         $output = self::createRunResourceURI('pdepend.out.png');
 
         ImageConvert::convert($input, $output);
-        self::assertFileExists($output);
+        $this->assertFileExists($output);
     }
 
     /**
@@ -103,7 +103,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
         $output = self::createRunResourceURI('pdepend');
 
         ImageConvert::convert($input, $output);
-        self::assertFileExists("{$output}.svg");
+        $this->assertFileExists("{$output}.svg");
     }
 
     /**
@@ -114,7 +114,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
     {
         $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
-        self::assertEquals(25, substr_count($svg, 'font-family:Arial'));
+        $this->assertEquals(25, substr_count($svg, 'font-family:Arial'));
     }
 
     /**
@@ -138,7 +138,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
         ImageConvert::convert($input, $output);
 
         $svg = file_get_contents($output);
-        self::assertEquals(25, substr_count($svg, 'font-family:Verdana'));
+        $this->assertEquals(25, substr_count($svg, 'font-family:Verdana'));
     }
 
     /**
@@ -149,7 +149,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
     {
         $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
-        self::assertEquals(25, substr_count($svg, 'font-size:11px'));
+        $this->assertEquals(25, substr_count($svg, 'font-size:11px'));
     }
 
     /**
@@ -173,7 +173,7 @@ class ImageConvertTest extends \PHP_Depend_AbstractTest
         ImageConvert::convert($input, $output);
 
         $svg = file_get_contents($output);
-        self::assertEquals(25, substr_count($svg, 'font-size:14px'));
+        $this->assertEquals(25, substr_count($svg, 'font-size:14px'));
     }
 
     /**

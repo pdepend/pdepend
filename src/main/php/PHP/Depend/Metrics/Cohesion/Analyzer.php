@@ -41,6 +41,9 @@
  */
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
  * This analyzer implements several metrics that describe cohesion of classes
@@ -81,14 +84,13 @@ class PHP_Depend_Metrics_Cohesion_Analyzer extends AbstractAnalyzer implements A
      * )
      * </code>
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            return $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
+            return $this->nodeMetrics[$artifact->getUuid()];
         }
         return array();
     }
@@ -96,15 +98,15 @@ class PHP_Depend_Metrics_Cohesion_Analyzer extends AbstractAnalyzer implements A
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      *
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         $this->fireStartAnalyzer();
 
-        foreach ($packages as $package) {
+        foreach ($namespaces as $package) {
             $package->accept($this);
         }
 
@@ -112,7 +114,7 @@ class PHP_Depend_Metrics_Cohesion_Analyzer extends AbstractAnalyzer implements A
     }
 
     /*
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(\PHP\Depend\Source\AST\ASTProperty $property)
     {
         $this->fireStartProperty($property);
         echo ltrim($property->getName(), '$'), PHP_EOL;
@@ -124,28 +126,28 @@ class PHP_Depend_Metrics_Cohesion_Analyzer extends AbstractAnalyzer implements A
         $this->fireStartMethod($method);
 
         $prefixes = $method->findChildrenOfType(
-            PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
+            \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ
         );
         foreach ($prefixes as $prefix) {
             $variable = $prefix->getChild(0);
-            if ($variable instanceof PHP_Depend_Code_ASTVariable
+            if ($variable instanceof \PHP\Depend\Source\AST\ASTVariable
                 && $variable->isThis()
             ) {
                 echo "\$this->";
-            } else if ($variable instanceof PHP_Depend_Code_ASTSelfReference) {
+            } else if ($variable instanceof \PHP\Depend\Source\AST\ASTSelfReference) {
                 echo "self::";
             } else {
                 continue;
             }
 
             $next = $prefix->getChild(1);
-            if ($next instanceof PHP_Depend_Code_ASTMemberPrimaryPrefix) {
+            if ($next instanceof \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix) {
                 $next = $next->getChild(0);
             }
 
-            if ($next instanceof PHP_Depend_Code_ASTPropertyPostfix) {
+            if ($next instanceof \PHP\Depend\Source\AST\ASTPropertyPostfix) {
                 echo $next->getImage(), PHP_EOL;
-            } else if ($next instanceof PHP_Depend_Code_ASTMethodPostfix) {
+            } else if ($next instanceof \PHP\Depend\Source\AST\ASTMethodPostfix) {
                 echo $next->getImage(), '()', PHP_EOL;
             }
         }

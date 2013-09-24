@@ -81,10 +81,9 @@ abstract class AbstractTest extends \PHP_Depend_AbstractTest
     /**
      * Parses the source of a test case file.
      *
-     * @param string  $testCase          Full test case name.
-     * @param boolean $ignoreAnnotations Ignore annotations?
-     *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @param string $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

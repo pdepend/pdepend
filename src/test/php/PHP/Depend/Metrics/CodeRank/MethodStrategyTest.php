@@ -73,7 +73,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
         
         foreach ($packages as $package) {
             foreach ($package->getClasses() as $class) {
-                self::assertArrayHasKey($class->getName(), $uuidMap);
+                $this->assertArrayHasKey($class->getName(), $uuidMap);
                 $uuidMap[$class->getName()] = $class->getUuid();
             }
             if (array_key_exists($package->getName(), $uuidMap)) {
@@ -149,6 +149,6 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
 
         $actual = $strategy->getCollectedNodes();
         
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 }

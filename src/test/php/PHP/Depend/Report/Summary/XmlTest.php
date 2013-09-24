@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Report\Summary;
 
+use PHP\Depend\Source\AST\ASTArtifactList;
+
 /**
  * Test case for the xml summary log.
  *
@@ -59,7 +61,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     /**
      * Test code structure.
      *
-     * @var \PHP_Depend_Code_NodeIterator
+     * @var \PHP\Depend\Source\AST\ASTNamespace[]
      */
     protected $packages = null;
 
@@ -167,7 +169,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setCode($this->packages);
+        $log->setArtifacts($this->packages);
         $log->close();
 
         $fileName = 'xml-log-without-metrics.xml';
@@ -193,7 +195,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setCode(new \PHP_Depend_Code_NodeIterator(array()));
+        $log->setArtifacts(new ASTArtifactList(array()));
         $log->log($resultOne);
         $log->log($resultTwo);
 
@@ -222,7 +224,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setCode($this->packages);
+        $log->setArtifacts($this->packages);
         $log->log($analyzer);
 
         $log->close();
@@ -281,7 +283,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setCode($this->packages);
+        $log->setArtifacts($this->packages);
         $log->log($resultOne);
         $log->log($resultTwo);
 

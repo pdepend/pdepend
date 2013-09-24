@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
+
 /**
  * Represents an interface or a class type.
  *
@@ -53,7 +55,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * The parent for this class node.
      *
-     * @var \PHP_Depend_Code_ASTClassReference
+     * @var \PHP\Depend\Source\AST\ASTClassReference
      * @since 0.9.5
      */
     protected $parentClassReference = null;
@@ -61,7 +63,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * List of all interfaces implemented/extended by the this type.
      *
-     * @var \PHP_Depend_Code_ASTClassOrInterfaceReference[]
+     * @var \PHP\Depend\Source\AST\ASTClassOrInterfaceReference[]
      */
     protected $interfaceReferences = array();
 
@@ -87,13 +89,11 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         $parentClass = $this->parentClassReference->getType();
 
         if ($parentClass === $this) {
-            throw new \PHP_Depend_Code_Exceptions_RecursiveInheritanceException(
-                $this
-            );
+            throw new ASTClassOrInterfaceRecursiveInheritanceException($this);
         }
 
         // Check parent against global filter
-        $collection = \PHP_Depend_Code_Filter_Collection::getInstance();
+        $collection = CollectionArtifactFilter::getInstance();
         if ($collection->accept($parentClass) === false) {
             return null;
         }
@@ -118,9 +118,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         $parent  = $this;
         while (is_object($parent = $parent->getParentClass())) {
             if (in_array($parent, $parents, true)) {
-                throw new \PHP_Depend_Code_Exceptions_RecursiveInheritanceException(
-                    $parent
-                );
+                throw new ASTClassOrInterfaceRecursiveInheritanceException($parent);
             }
             $parents[] = $parent;
         }
@@ -130,7 +128,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a reference onto the parent class of this class node or <b>null</b>.
      *
-     * @return \PHP_Depend_Code_ASTClassReference
+     * @return \PHP\Depend\Source\AST\ASTClassReference
      * @since 0.9.5
      */
     public function getParentClassReference()
@@ -141,14 +139,14 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Sets a reference onto the parent class of this class node.
      *
-     * @param \PHP_Depend_Code_ASTClassReference $classReference Reference to the
+     * @param \PHP\Depend\Source\AST\ASTClassReference $classReference Reference to the
      *        declared parent class.
      *
      * @return void
      * @since 0.9.5
      */
     public function setParentClassReference(
-        \PHP_Depend_Code_ASTClassReference $classReference
+        \PHP\Depend\Source\AST\ASTClassReference $classReference
     ) {
         $this->nodes[]              = $classReference;
         $this->parentClassReference = $classReference;
@@ -157,7 +155,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a node iterator with all implemented interfaces.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTInterface[]
      * @since 0.9.5
      */
     public function getInterfaces()
@@ -179,7 +177,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
             }
         }
 
-        return new \PHP_Depend_Code_NodeIterator($interfaces);
+        return new ASTArtifactList($interfaces);
     }
 
     /**
@@ -196,14 +194,14 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Adds a interface reference node.
      *
-     * @param \PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference The
+     * @param \PHP\Depend\Source\AST\ASTClassOrInterfaceReference $interfaceReference The
      *        extended or implemented interface reference.
      *
      * @return void
      * @since 0.9.5
      */
     public function addInterfaceReference(
-        \PHP_Depend_Code_ASTClassOrInterfaceReference $interfaceReference
+        \PHP\Depend\Source\AST\ASTClassOrInterfaceReference $interfaceReference
     ) {
         $this->nodes[]               = $interfaceReference;
         $this->interfaceReferences[] = $interfaceReference;
@@ -293,7 +291,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns all {@link \PHP\Depend\Source\AST\AbstractASTClassOrInterface}
      * objects this type depends on.
      *
-     * @return \PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\AbstractASTClassOrInterface[]
      */
     public function getDependencies()
     {
@@ -302,7 +300,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
             $references[] = $this->parentClassReference;
         }
 
-        return new \PHP_Depend_Code_ClassOrInterfaceReferenceIterator($references);
+        return new ASTClassOrInterfaceReferenceIterator($references);
     }
 
     /**
@@ -340,12 +338,12 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         }
 
         $definitions = $this->findChildrenOfType(
-            \PHP_Depend_Code_ASTConstantDefinition::CLAZZ
+            \PHP\Depend\Source\AST\ASTConstantDefinition::CLAZZ
         );
 
         foreach ($definitions as $definition) {
             $declarators = $definition->findChildrenOfType(
-                \PHP_Depend_Code_ASTConstantDeclarator::CLAZZ
+                \PHP\Depend\Source\AST\ASTConstantDeclarator::CLAZZ
             );
 
             foreach ($declarators as $declarator) {

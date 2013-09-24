@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Report\Jdepend;
 
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+
 /**
  * A dummy dependency analyzer.
  *
@@ -60,10 +62,10 @@ class DependencyAnalyzer extends \PHP_Depend_Metrics_Dependency_Analyzer
     /**
      * Returns the statistics for the requested node.
      *
-     * @param \PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return array
      */
-    public function getStats(\PHP_Depend_Code_NodeI $node)
+    public function getStats(AbstractASTArtifact $node)
     {
         if (isset($this->stats[$node->getUuid()])) {
             return $this->stats[$node->getUuid()];

@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTFieldDeclaration;
+use PHP\Depend\Source\AST\ASTType;
 
 /**
  * Test case for issue #84, where the object model should keep information about
@@ -72,8 +74,8 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         $type = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+            ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
+            ->getFirstChildOfType(ASTType::CLAZZ);
 
         $this->assertEquals($expected, $type->getImage());
     }
@@ -90,8 +92,8 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         $type = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+            ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
+            ->getFirstChildOfType(ASTType::CLAZZ);
 
         $this->assertTrue($type->isArray());
     }
@@ -108,8 +110,8 @@ class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
         $type = $packages->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(PHP_Depend_Code_ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(PHP_Depend_Code_ASTType::CLAZZ);
+            ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
+            ->getFirstChildOfType(ASTType::CLAZZ);
 
         $this->assertTrue($type->isArray());
     }

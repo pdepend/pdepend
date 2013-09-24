@@ -42,10 +42,17 @@
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\AbstractASTCallable;
 use PHP\Depend\Source\AST\AbstractASTType;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTInterface;
+use PHP\Depend\Source\AST\ASTInvocation;
+use PHP\Depend\Source\AST\ASTMemberPrimaryPrefix;
 use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTProperty;
 
 /**
  * This analyzer collects coupling values for the hole project. It calculates
@@ -160,14 +167,13 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
      * )
      * </code>
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            return $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
+            return $this->nodeMetrics[$artifact->getUuid()];
         }
         return array();
     }
@@ -175,14 +181,13 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->uninitialized) {
-            $this->doAnalyze($packages);
+            $this->doAnalyze($namespaces);
             $this->uninitialized = false;
         }
     }
@@ -191,18 +196,17 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
      * This method traverses all packages in the given iterator and calculates
      * the coupling metrics for them.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All parsed code packages.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      * @since 0.10.2
      */
-    private function doAnalyze(PHP_Depend_Code_NodeIterator $packages)
+    private function doAnalyze(ASTArtifactList $namespaces)
     {
         $this->fireStartAnalyzer();
         $this->reset();
 
-        foreach ($packages as $package) {
-            $package->accept($this);
+        foreach ($namespaces as $namespace) {
+            $namespace->accept($this);
         }
 
         $this->postProcessTemporaryCouplingMap();
@@ -352,11 +356,10 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
     /**
      * Visits a property node.
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
-     *
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->fireStartProperty($property);
 
@@ -429,21 +432,17 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable Context callable.
+     * @param \PHP\Depend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
-    private function countCalls(PHP_Depend_Code_AbstractCallable $callable)
+    private function countCalls(AbstractASTCallable $callable)
     {
-        $invocations = $callable->findChildrenOfType(
-            PHP_Depend_Code_ASTInvocation::CLAZZ
-        );
+        $invocations = $callable->findChildrenOfType(ASTInvocation::CLAZZ);
 
         $invoked = array();
 
         foreach ($invocations as $invocation) {
-            $parents = $invocation->getParentsOfType(
-                PHP_Depend_Code_ASTMemberPrimaryPrefix::CLAZZ
-            );
+            $parents = $invocation->getParentsOfType(ASTMemberPrimaryPrefix::CLAZZ);
 
             $image = '';
             foreach ($parents as $parent) {

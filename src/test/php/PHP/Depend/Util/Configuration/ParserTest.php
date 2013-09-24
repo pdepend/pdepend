@@ -79,7 +79,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
         $parser = new Parser($this->createFixture());
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals('memory', $values->cache->driver);
+        $this->assertEquals('memory', $values->cache->driver);
     }
 
     /**
@@ -92,7 +92,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
         $parser = new Parser($this->createFixture());
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals('/foo/bar/baz', $values->cache->location);
+        $this->assertEquals('/foo/bar/baz', $values->cache->location);
     }
 
     /**
@@ -105,7 +105,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
         $parser = new Parser($this->createFixture());
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals('Courier New', $values->imageConvert->fontFamily);
+        $this->assertEquals('Courier New', $values->imageConvert->fontFamily);
     }
 
     /**
@@ -118,7 +118,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
         $parser = new Parser($this->createFixture());
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals(23, $values->imageConvert->fontSize);
+        $this->assertEquals(23, $values->imageConvert->fontSize);
     }
 
     /**
@@ -131,7 +131,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
         $parser = new Parser($this->createFixture());
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals(423, $values->parser->nesting);
+        $this->assertEquals(423, $values->parser->nesting);
     }
 
     /**
@@ -146,7 +146,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
 
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals(23, $values->imageConvert->fontSize);
+        $this->assertEquals(23, $values->imageConvert->fontSize);
     }
 
     /**
@@ -161,7 +161,7 @@ class ParserTest extends \PHP_Depend_AbstractTest
 
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
-        self::assertEquals('Courier New', $values->imageConvert->fontFamily);
+        $this->assertEquals('Courier New', $values->imageConvert->fontFamily);
     }
 
     /**

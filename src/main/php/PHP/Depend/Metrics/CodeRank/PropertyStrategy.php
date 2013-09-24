@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTProperty;
 
 /**
  * Collects class and package metrics based on class properties.
@@ -70,10 +72,10 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Visits a property node.
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->fireStartProperty($property);
 
@@ -109,11 +111,10 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    protected function initNode(PHP_Depend_Code_NodeI $node)
+    protected function initNode(AbstractASTArtifact $node)
     {
         if (!isset($this->nodes[$node->getUuid()])) {
             $this->nodes[$node->getUuid()] = array(

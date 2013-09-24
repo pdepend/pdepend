@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Metrics;
 
+use PHP\Depend\Source\AST\ASTArtifact;
+
 /**
  * Marker interface that marks a result set as node metrics aware.
  *
@@ -63,8 +65,8 @@ interface AnalyzerNodeAware extends Analyzer
      * )
      * </code>
      *
-     * @param \PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    function getNodeMetrics(\PHP_Depend_Code_NodeI $node);
+    public function getNodeMetrics(ASTArtifact $artifact);
 }

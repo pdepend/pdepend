@@ -44,6 +44,7 @@ namespace PHP\Depend\Report\Summary;
 
 use PHP\Depend\Metrics\AnalyzerListener;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
  * Dummy implementation of an analyzer.
@@ -91,10 +92,10 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(\PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
     }
 

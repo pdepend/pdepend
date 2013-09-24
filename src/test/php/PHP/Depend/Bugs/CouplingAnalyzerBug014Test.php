@@ -64,14 +64,14 @@ class CouplingAnalyzerBug014Test extends AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        self::assertEquals(1, $packages->count());
-        self::assertEquals(1, $packages->current()->getFunctions()->count());
+        $this->assertEquals(1, $packages->count());
+        $this->assertEquals(1, $packages->current()->getFunctions()->count());
 
         $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
 
-        self::assertEquals(3, $project['calls']);
+        $this->assertEquals(3, $project['calls']);
     }
 }

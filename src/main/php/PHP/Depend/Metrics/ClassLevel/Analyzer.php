@@ -45,9 +45,12 @@ use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Source\AST\AbstractASTType;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTProperty;
 use PHP\Depend\Source\AST\ASTTrait;
 
 /**
@@ -116,10 +119,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->nodeMetrics === null) {
             // First check for the require cc analyzer
@@ -129,13 +132,13 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
 
             $this->fireStartAnalyzer();
 
-            $this->cyclomaticAnalyzer->analyze($packages);
+            $this->cyclomaticAnalyzer->analyze($namespaces);
 
             // Init node metrics
             $this->nodeMetrics = array();
 
             // Visit all nodes
-            foreach ($packages as $package) {
+            foreach ($namespaces as $package) {
                 $package->accept($this);
             }
 
@@ -176,14 +179,14 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metrics = array();
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            $metrics = $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
+            $metrics = $this->nodeMetrics[$artifact->getUuid()];
         }
         return $metrics;
     }
@@ -307,10 +310,10 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * Visits a property node.
      *
-     * @param PHP_Depend_Code_Property $property The property class node.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(PHP_Depend_Code_Property $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->fireStartProperty($property);
 

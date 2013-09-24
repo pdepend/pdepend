@@ -60,7 +60,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * @group pdepend::code
  * @group unittest
  */
-class ASTTraitTest extends \PHP_Depend_Code_AbstractItemTest
+class ASTTraitTest extends AbstractASTArtifactTest
 {
     /**
      * testGetAllMethodsOnSimpleTraitReturnsExpectedResult
@@ -242,8 +242,8 @@ class ASTTraitTest extends \PHP_Depend_Code_AbstractItemTest
      * testGetAllMethodsWithMethodCollisionThrowsExpectedException
      *
      * @return void
-     * @covers \PHP_Depend_Code_Exceptions_MethodCollisionException
-     * @expectedException \PHP_Depend_Code_Exceptions_MethodCollisionException
+     * @covers \PHP\Depend\Source\AST\ASTTraitMethodCollisionException
+     * @expectedException \PHP\Depend\Source\AST\ASTTraitMethodCollisionException
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
     {
@@ -394,7 +394,7 @@ class ASTTraitTest extends \PHP_Depend_Code_AbstractItemTest
     /**
      * Creates an item instance.
      *
-     * @return \PHP_Depend_Code_AbstractItem
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact
      */
     protected function createItem()
     {

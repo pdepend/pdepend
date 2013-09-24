@@ -72,7 +72,7 @@ class ParserBug059Test extends AbstractTest
             ->current()
             ->getSourceFile();
 
-        self::assertEquals(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
+        $this->assertEquals(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
     }
 
     /**

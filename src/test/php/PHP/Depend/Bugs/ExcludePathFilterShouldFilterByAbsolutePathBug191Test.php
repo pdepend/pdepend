@@ -66,7 +66,7 @@ class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractTest
     public function testAbsoluteUnixPathAsFilterPattern()
     {
         $filter = new ExcludePathFilter(array('/foo/bar'));
-        self::assertFalse($filter->accept('/baz', '/foo/bar/baz'));
+        $this->assertFalse($filter->accept('/baz', '/foo/bar/baz'));
     }
 
     /**
@@ -77,6 +77,6 @@ class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractTest
     public function testAbsoluteWindowsPathAsFilterPattern()
     {
         $filter = new ExcludePathFilter(array('c:\workspace\bar'));
-        self::assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
+        $this->assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
     }
 }

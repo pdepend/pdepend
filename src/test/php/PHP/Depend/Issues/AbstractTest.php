@@ -51,23 +51,20 @@ abstract class PHP_Depend_Issues_AbstractTest extends PHP_Depend_AbstractTest
     /**
      * Returns the parameters of the first function in the test case file.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTParameter[]
      */
     protected function getParametersOfFirstFunction()
     {
         $packages = self::parseTestCase();
-        return $packages->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
+        $functions = $packages[0]->getFunctions();
+        return $functions[0]->getParameters();
     }
     
     /**
      * Parses the sourse for the calling test case.
      *
-     * @param string $testCase Optional test case name.
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @param string $testCase
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     protected static function parseTestCase($testCase = null)
     {
@@ -81,16 +78,15 @@ abstract class PHP_Depend_Issues_AbstractTest extends PHP_Depend_AbstractTest
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase          Qualified name of the test case.
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @param string  $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
-            throw new ErrorException('Unexpected class name format');
+            throw new \ErrorException('Unexpected class name format');
         }
         return self::parseSource('issues/' . $match[1] . '/' . $method . '.php');
     }

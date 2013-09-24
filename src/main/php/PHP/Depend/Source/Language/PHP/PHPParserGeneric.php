@@ -195,7 +195,7 @@ class PHPParserGeneric extends AbstractPHPParser
      * Parses a formal parameter type hint that is valid in the supported PHP
      * version.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     protected function parseFormalParameterTypeHint()
@@ -223,7 +223,7 @@ class PHPParserGeneric extends AbstractPHPParser
     /**
      * Parses an integer value.
      *
-     * @return \PHP_Depend_Code_ASTLiteral
+     * @return \PHP\Depend\Source\AST\ASTLiteral
      * @throws \PHP\Depend\Source\Parser\UnexpectedTokenException
      * @since 1.0.0
      */
@@ -262,7 +262,7 @@ class PHPParserGeneric extends AbstractPHPParser
      * This method parses a PHP version specific identifier for method and
      * property postfix expressions.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     protected function parsePostfixIdentifier()
@@ -285,7 +285,7 @@ class PHPParserGeneric extends AbstractPHPParser
      * Implements some quirks and hacks to support php here- and now-doc for
      * PHP 5.2.x versions :/
      *
-     * @return \PHP_Depend_Code_ASTHeredoc
+     * @return \PHP\Depend\Source\AST\ASTHeredoc
      * @since 1.0.0
      */
     protected function parseHeredoc()
@@ -324,12 +324,12 @@ class PHPParserGeneric extends AbstractPHPParser
     /**
      * Parses a php array declaration.
      *
-     * @param \PHP_Depend_Code_ASTArray $array
+     * @param \PHP\Depend\Source\AST\ASTArray $array
      * @param boolean $static
-     * @return \PHP_Depend_Code_ASTArray
+     * @return \PHP\Depend\Source\AST\ASTArray
      * @since 1.0.0
      */
-    protected function parseArray(\PHP_Depend_Code_ASTArray $array, $static = false)
+    protected function parseArray(\PHP\Depend\Source\AST\ASTArray $array, $static = false)
     {
         switch ($this->tokenizer->peek()) {
             case Tokens::T_ARRAY:

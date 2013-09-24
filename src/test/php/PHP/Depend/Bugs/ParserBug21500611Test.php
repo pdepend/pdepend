@@ -44,6 +44,8 @@
 
 namespace PHP\Depend\Bugs;
 
+use PHP\Depend\Source\AST\ASTHeredoc;
+
 /**
  * Test case for bug #21500611.
  *
@@ -113,7 +115,7 @@ class ParserBug21500611Test extends AbstractTest
     /**
      * Returns the first heredoc found in a class.
      *
-     * @return \PHP_Depend_Code_ASTHeredoc
+     * @return \PHP\Depend\Source\AST\ASTHeredoc
      */
     protected function getFirstHeredocInClass()
     {
@@ -121,6 +123,6 @@ class ParserBug21500611Test extends AbstractTest
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(\PHP_Depend_Code_ASTHeredoc::CLAZZ);
+            ->getFirstChildOfType(ASTHeredoc::CLAZZ);
     }
 }

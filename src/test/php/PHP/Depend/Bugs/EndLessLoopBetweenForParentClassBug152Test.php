@@ -73,7 +73,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractTest
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
      *
      * @return void
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
     {

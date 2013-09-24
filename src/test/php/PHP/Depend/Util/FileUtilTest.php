@@ -62,7 +62,7 @@ class FileUtilTest extends \PHP_Depend_AbstractTest
      */
     public function testGetSysTempDirReturnsExpectedDirectory()
     {
-        self::assertEquals(
+        $this->assertEquals(
             sys_get_temp_dir(),
             FileUtil::getSysTempDir()
         );
@@ -75,7 +75,7 @@ class FileUtilTest extends \PHP_Depend_AbstractTest
      */
     public function testGetUserHomeDirReturnsExpectedDirectory()
     {
-        self::assertEquals(
+        $this->assertEquals(
             getenv('HOME'),
             FileUtil::getUserHomeDir()
         );
@@ -88,7 +88,7 @@ class FileUtilTest extends \PHP_Depend_AbstractTest
      */
     public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory()
     {
-        self::assertEquals(
+        $this->assertEquals(
             getenv('HOME'),
             FileUtil::getUserHomeDirOrSysTempDir()
         );

@@ -65,7 +65,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $actual   = $analyzer->getRequiredAnalyzers();
         $expected = array(PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ);
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -77,7 +77,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     {
         $analyzer = new PHP_Depend_Metrics_CrapIndex_Analyzer();
         
-        self::assertFalse($analyzer->isEnabled());
+        $this->assertFalse($analyzer->isEnabled());
     }
 
     /**
@@ -90,7 +90,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $options  = array('coverage-report' => $this->_createCloverReportFile());
         $analyzer = new PHP_Depend_Metrics_CrapIndex_Analyzer($options);
 
-        self::assertTrue($analyzer->isEnabled());
+        $this->assertTrue($analyzer->isEnabled());
     }
 
     /**
@@ -101,7 +101,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testAnalyzerIgnoresAbstractMethods()
     {
         $metrics = $this->_calculateCrapIndex(__METHOD__, 42);
-        self::assertSame(array(), $metrics);
+        $this->assertSame(array(), $metrics);
     }
 
     /**
@@ -112,7 +112,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testAnalyzerIgnoresInterfaceMethods()
     {
         $metrics = $this->_calculateCrapIndex(__METHOD__, 42);
-        self::assertSame(array(), $metrics);
+        $this->assertSame(array(), $metrics);
     }
 
     /**
@@ -177,7 +177,7 @@ class PHP_Depend_Metrics_CrapIndex_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     private function _testCrapIndexCalculation($testCase, $ccn, $crapIndex)
     {
         $metrics = $this->_calculateCrapIndex($testCase, $ccn);
-        self::assertEquals($crapIndex, $metrics['crap'], '', 0.005);
+        $this->assertEquals($crapIndex, $metrics['crap'], '', 0.005);
     }
 
     /**

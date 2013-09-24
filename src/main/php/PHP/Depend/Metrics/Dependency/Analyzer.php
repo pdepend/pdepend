@@ -41,7 +41,9 @@
  */
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\Analyzer;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
@@ -122,10 +124,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->nodeMetrics === null) {
 
@@ -133,7 +135,7 @@ class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
 
             $this->nodeMetrics = array();
 
-            foreach ($packages as $package) {
+            foreach ($namespaces as $package) {
                 $package->accept($this);
             }
 
@@ -150,11 +152,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
     /**
      * Returns the statistics for the requested node.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return array
      */
-    public function getStats(PHP_Depend_Code_NodeI $node)
+    public function getStats(AbstractASTArtifact $node)
     {
         $stats = array();
         if (isset($this->nodeMetrics[$node->getUuid()])) {
@@ -166,10 +167,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * @return PHP_Depend_Code_NodeI[]
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact[]
      */
-    public function getAfferents(PHP_Depend_Code_NodeI $node)
+    public function getAfferents(AbstractASTArtifact $node)
     {
         $afferents = array();
         if (isset($this->afferentNodes[$node->getUuid()])) {
@@ -181,10 +182,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * @return PHP_Depend_Code_NodeI[]
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact[]
      */
-    public function getEfferents(PHP_Depend_Code_NodeI $node)
+    public function getEfferents(AbstractASTArtifact $node)
     {
         $efferents = array();
         if (isset($this->efferentNodes[$node->getUuid()])) {
@@ -197,10 +198,10 @@ class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
      * Returns an array of nodes that build a cycle for the requested node or it
      * returns <b>null</b> if no cycle exists .
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     * @return PHP_Depend_Code_NodeI[]
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact[]
      */
-    public function getCycle(PHP_Depend_Code_NodeI $node)
+    public function getCycle(AbstractASTArtifact $node)
     {
         if (array_key_exists($node->getUuid(), $this->collectedCycles)) {
             return $this->collectedCycles[$node->getUuid()];

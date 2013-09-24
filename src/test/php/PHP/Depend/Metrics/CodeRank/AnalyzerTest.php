@@ -100,7 +100,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Bar'  =>  0.2775,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -118,7 +118,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Bar'  =>  0.15,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -130,7 +130,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     public function testCodeRankOfNamespacedSameNameInheritanceExample()
     {
         $actual = $this->getCodeRankForTestCase(__METHOD__);
-        self::assertEquals(array('Foo' =>  0.15), $actual);
+        $this->assertEquals(array('Foo' =>  0.15), $actual);
     }
 
     /**
@@ -144,7 +144,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('property'));
         $actual  = $this->getCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.15), $actual);
+        $this->assertEquals(array('Foo' =>  0.15), $actual);
     }
 
     /**
@@ -158,7 +158,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('property'));
         $actual  = $this->getReverseCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.2775), $actual);
+        $this->assertEquals(array('Foo' =>  0.2775), $actual);
     }
 
     /**
@@ -172,7 +172,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.15), $actual);
+        $this->assertEquals(array('Foo' =>  0.15), $actual);
     }
 
     /**
@@ -186,7 +186,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.2775), $actual);
+        $this->assertEquals(array('Foo' =>  0.2775), $actual);
     }
 
     /**
@@ -200,7 +200,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.2775), $actual);
+        $this->assertEquals(array('Foo' =>  0.2775), $actual);
     }
 
     /**
@@ -214,7 +214,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.2775), $actual);
+        $this->assertEquals(array('Foo' =>  0.2775), $actual);
     }
 
     /**
@@ -228,7 +228,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.15), $actual);
+        $this->assertEquals(array('Foo' =>  0.15), $actual);
     }
 
     /**
@@ -242,7 +242,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase(__METHOD__, $options);
 
-        self::assertEquals(array('Foo' =>  0.2775), $actual);
+        $this->assertEquals(array('Foo' =>  0.2775), $actual);
     }
 
     /**
@@ -254,7 +254,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     public function testReverseCodeRankOfNamespacedSameNameInheritanceExample()
     {
         $actual = $this->getReverseCodeRankForTestCase(__METHOD__);
-        self::assertEquals(array('Foo' => 0.2775), $actual);
+        $this->assertEquals(array('Foo' => 0.2775), $actual);
     }
 
     /**
@@ -277,7 +277,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Order'         =>  0.15,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -300,7 +300,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Order'         =>  0.26794,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -323,7 +323,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Order'         =>  0.15,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -346,7 +346,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Order'         =>  0.26794,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -369,7 +369,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Order'         =>  0.15,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -392,7 +392,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
             'Order'         =>  0.26794,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -425,12 +425,12 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         foreach ($expected as $key => $info) {
             $metrics = $this->_analyzer->getNodeMetrics($info[0]);
 
-            self::assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
-            self::assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
+            $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
+            $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
 
             unset($expected[$key]);
         }
-        self::assertEquals(0, count($expected));
+        $this->assertEquals(0, count($expected));
     }
 
     /**
@@ -452,8 +452,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
         $class   = new ASTClass('PDepend');
         $metrics = $this->_analyzer->getNodeMetrics($class);
 
-        self::assertInternalType('array', $metrics);
-        self::assertEquals(0, count($metrics));
+        $this->assertInternalType('array', $metrics);
+        $this->assertEquals(0, count($metrics));
     }
 
     protected function getCodeRankForTestCase($testCase, array $options = array())

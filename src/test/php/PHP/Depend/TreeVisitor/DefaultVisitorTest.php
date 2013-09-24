@@ -93,7 +93,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
             'PHP\\Depend\\Source\\AST\\ASTCompilationUnit'
         );
         
-        self::assertEquals($expected, $visitor->visits);
+        $this->assertEquals($expected, $visitor->visits);
     }
 
     /**
@@ -343,7 +343,7 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
     public function testGetVisitListenersReturnsIterator()
     {
         $visitor = $this->getMockForAbstractClass('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor');
-        self::assertInstanceOf('Iterator', $visitor->getVisitListeners());
+        $this->assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
     /**
@@ -356,6 +356,6 @@ class DefaultVisitorTest extends \PHP_Depend_AbstractTest
         $visitor = $this->getMockForAbstractClass('\\PHP\\Depend\\TreeVisitor\\AbstractTreeVisitor');
         $visitor->addVisitListener($this->getMock('\\PHP\\Depend\\TreeVisitor\\TreeVisitListener'));
 
-        self::assertEquals(1, count($visitor->getVisitListeners()));
+        $this->assertEquals(1, count($visitor->getVisitListeners()));
     }
 }

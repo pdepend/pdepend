@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util\Coverage;
 
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+
 /**
  * Coverage report implementation for clover formatted xml files.
  *
@@ -107,15 +109,15 @@ class CloverReport implements Report
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param \PHP_Depend_Code_AbstractItem $item The context code item.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $artifact
      * @return float
      */
-    public function getCoverage(\PHP_Depend_Code_AbstractItem $item)
+    public function getCoverage(AbstractASTArtifact $artifact)
     {
-        $lines = $this->getLines((string) $item->getSourceFile());
+        $lines = $this->getLines((string) $artifact->getSourceFile());
 
-        $startLine = $item->getStartLine();
-        $endLine   = $item->getEndLine();
+        $startLine = $artifact->getStartLine();
+        $endLine   = $artifact->getEndLine();
 
         $executable = 0;
         $executed   = 0;

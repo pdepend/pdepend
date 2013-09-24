@@ -74,6 +74,6 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractTest
         $analyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $analyzer->analyze($packages);
 
-        self::assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));
+        $this->assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));
     }
 }

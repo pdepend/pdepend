@@ -62,7 +62,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
      * Tests that the parameter contains the start line of the first token.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
+     * @covers \PHP\Depend\Source\AST\ASTParameter
      */
     public function testParameterContainsStartLineOfFirstToken()
     {
@@ -72,14 +72,14 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current()
             ->getParameters();
 
-        self::assertEquals(4, $parameters[0]->getStartLine());
+        $this->assertEquals(4, $parameters[0]->getStartLine());
     }
 
     /**
      * Tests that the parameter contains the end line of the last token.
      *
      * @return void
-     * @covers PHP_Depend_Code_Parameter
+     * @covers \PHP\Depend\Source\AST\ASTParameter
      */
     public function testParameterContainsEndLineOfLastToken()
     {
@@ -89,7 +89,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             ->current()
             ->getParameters();
 
-        self::assertEquals(11, $parameters[0]->getEndLine());
+        $this->assertEquals(11, $parameters[0]->getEndLine());
     }
 
     /**
@@ -133,7 +133,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
-        self::assertEquals($expected, $function->getTokens());
+        $this->assertEquals($expected, $function->getTokens());
     }
 
     /**
@@ -170,7 +170,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         );
 
-        self::assertEquals($expected, $function->getTokens());
+        $this->assertEquals($expected, $function->getTokens());
     }
 
     /**
@@ -189,7 +189,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $tokens = $function->getTokens();
         $token  = reset($tokens);
 
-        self::assertEquals($token->startLine, $function->getStartLine());
+        $this->assertEquals($token->startLine, $function->getStartLine());
     }
 
     /**
@@ -208,7 +208,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $tokens = $function->getTokens();
         $token  = end($tokens);
 
-        self::assertEquals($token->endLine, $function->getEndLine());
+        $this->assertEquals($token->endLine, $function->getEndLine());
     }
 
     /**
@@ -239,7 +239,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
-        self::assertEquals($expected, $method->getTokens());
+        $this->assertEquals($expected, $method->getTokens());
     }
 
     /**
@@ -271,7 +271,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
-        self::assertEquals($expected, $method->getTokens());
+        $this->assertEquals($expected, $method->getTokens());
     }
 
     /**
@@ -304,7 +304,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         );
 
-        self::assertEquals($expected, $method->getTokens());
+        $this->assertEquals($expected, $method->getTokens());
     }
 
     /**
@@ -325,7 +325,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $tokens = $method->getTokens();
         $token  = reset($tokens);
 
-        self::assertEquals($token->startLine, $method->getStartLine());
+        $this->assertEquals($token->startLine, $method->getStartLine());
     }
 
     /**
@@ -346,7 +346,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
         $tokens = $method->getTokens();
         $token  = end($tokens);
 
-        self::assertEquals($token->endLine, $method->getEndLine());
+        $this->assertEquals($token->endLine, $method->getEndLine());
     }
 
     /**
@@ -376,7 +376,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        self::assertEquals($expected, $class->getTokens());
+        $this->assertEquals($expected, $class->getTokens());
     }
 
     /**
@@ -407,7 +407,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        self::assertEquals($expected, $class->getTokens());
+        $this->assertEquals($expected, $class->getTokens());
     }
 
     /**
@@ -438,7 +438,7 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        self::assertEquals($expected, $class->getTokens());
+        $this->assertEquals($expected, $class->getTokens());
     }
 
     /**
@@ -467,6 +467,6 @@ class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depen
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         );
 
-        self::assertEquals($expected, $interface->getTokens());
+        $this->assertEquals($expected, $interface->getTokens());
     }
 }

@@ -61,7 +61,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     /**
      * Test code structure.
      *
-     * @var PHP_Depend_Code_NodeIterator
+     * @var \PHP\Depend\Source\AST\ASTArtifactList
      */
     protected $packages = null;
 
@@ -150,7 +150,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setCode($this->packages);
+        $log->setArtifacts($this->packages);
         $log->log($this->analyzer);
         $log->close();
 

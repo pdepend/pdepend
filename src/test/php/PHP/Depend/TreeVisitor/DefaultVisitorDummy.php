@@ -48,6 +48,7 @@ use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTProperty;
 
 /**
  * Dummy implementation of the default visitor.
@@ -145,10 +146,10 @@ class DefaultVisitorDummy extends AbstractTreeVisitor
     /**
      * Visits a property node.
      *
-     * @param \PHP_Depend_Code_Property $property The property class node.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(\PHP_Depend_Code_Property $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->visits[] = $property->getName();
 

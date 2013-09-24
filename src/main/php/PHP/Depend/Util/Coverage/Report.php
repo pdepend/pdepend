@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util\Coverage;
 
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+
 /**
  * Base interface representing a coverage report.
  *
@@ -53,8 +55,8 @@ interface Report
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param \PHP_Depend_Code_AbstractItem $item The context code item.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $artifact
      * @return float
      */
-    function getCoverage(\PHP_Depend_Code_AbstractItem $item);
+    function getCoverage(AbstractASTArtifact $artifact);
 }

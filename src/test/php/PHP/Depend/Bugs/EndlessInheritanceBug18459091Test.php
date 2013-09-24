@@ -76,7 +76,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
      * testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
      * 
      * @return void
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy()
     {
@@ -95,7 +95,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
      * testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
      *
      * @return void
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy()
     {
@@ -150,7 +150,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
      * testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
      *
      * @return void
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy()
     {
@@ -164,7 +164,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
      * testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy
      *
      * @return void
-     * @expectedException \PHP_Depend_Code_Exceptions_RecursiveInheritanceException
+     * @expectedException \PHP\Depend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy()
     {

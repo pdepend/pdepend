@@ -46,6 +46,7 @@ use PHP\Depend\Input\ExcludePathFilter;
 use PHP\Depend\Input\ExtensionFilter;
 use PHP\Depend\ProcessListener;
 use PHP\Depend\Report\GeneratorFactory;
+use PHP\Depend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PHP\Depend\Util\Configuration;
 
 /**
@@ -272,7 +273,7 @@ class Runner
 
         if (count($this->excludePackages) > 0) {
             $exclude = $this->excludePackages;
-            $filter  = new \PHP_Depend_Code_Filter_Package($exclude);
+            $filter  = new PackageArtifactFilter($exclude);
             $pdepend->setCodeFilter($filter);
         }
 

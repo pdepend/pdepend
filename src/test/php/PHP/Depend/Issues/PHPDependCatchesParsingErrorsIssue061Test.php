@@ -71,7 +71,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         $pdepend->analyze();
 
         $exceptions = $pdepend->getExceptions();
-        self::assertStringStartsWith(
+        $this->assertStringStartsWith(
             'Unexpected token: function, line: 7, col: 41, file:',
             $exceptions[0]->getMessage()
         );
@@ -92,7 +92,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
-        self::assertFalse($runner->hasParseErrors());
+        $this->assertFalse($runner->hasParseErrors());
     }
 
     /**
@@ -110,7 +110,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
-        self::assertTrue($runner->hasParseErrors());
+        $this->assertTrue($runner->hasParseErrors());
     }
 
     /**
@@ -131,7 +131,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
 
         list($exitCode, $output) = $this->runTextUICommand();
 
-        self::assertNotContains('Following errors occured:', $output);
+        $this->assertNotContains('Following errors occured:', $output);
     }
 
     /**
@@ -150,7 +150,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
         );
         list($exitCode, $output) = $this->runTextUICommand();
 
-        self::assertContains('Unexpected token: function, line: 7, col: 41, file:', $output);
+        $this->assertContains('Unexpected token: function, line: 7, col: 41, file:', $output);
     }
 
     /**

@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 
 /**
  * Test case for the cyclomatic analyzer.
@@ -82,7 +83,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     public function testGetCCNReturnsZeroForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        self::assertEquals(0, $analyzer->getCcn($this->getMock('PHP_Depend_Code_NodeI')));
+        $this->assertEquals(0, $analyzer->getCcn($this->getMock('\\PHP\\Depend\\Source\\AST\\ASTArtifact')));
     }
 
     /**
@@ -93,7 +94,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     public function testGetCCN2ReturnsZeroForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        self::assertEquals(0, $analyzer->getCcn2($this->getMock('PHP_Depend_Code_NodeI')));
+        $this->assertEquals(0, $analyzer->getCcn2($this->getMock('\\PHP\\Depend\\Source\\AST\\ASTArtifact')));
     }
 
     /**
@@ -122,7 +123,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         ksort($expected);
         ksort($actual);
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -138,7 +139,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 12, 'ccn2' => 16);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
     
     /**
@@ -170,7 +171,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         ksort($expected);
         ksort($actual);
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -187,7 +188,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 2, 'ccn2' => 2);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -205,7 +206,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        self::assertEquals(3, $analyzer->getCcn($function));
+        $this->assertEquals(3, $analyzer->getCcn($function));
     }
 
     /**
@@ -223,7 +224,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        self::assertEquals(3, $analyzer->getCcn2($function));
+        $this->assertEquals(3, $analyzer->getCcn2($function));
     }
 
     /**
@@ -239,7 +240,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -255,7 +256,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 4, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -271,7 +272,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 2, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -287,7 +288,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 2, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
     
     /**
@@ -303,7 +304,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 24, 'ccn2' => 32);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
     
     /**
@@ -319,7 +320,7 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**

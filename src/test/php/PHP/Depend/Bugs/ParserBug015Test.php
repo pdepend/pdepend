@@ -69,7 +69,7 @@ class ParserBug015Test extends AbstractTest
         $classes = $package->getClasses();
         $methods = $classes->current()->getMethods();
 
-        self::assertEquals(
+        $this->assertEquals(
             array('classes' => 1, 'methods' => 1),
             array('classes' => $classes->count(), 'methods' => $methods->count())
         );

@@ -43,6 +43,9 @@ use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 
 /**
@@ -136,13 +139,13 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            return $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
+            return $this->nodeMetrics[$artifact->getUuid()];
         }
         return array();
     }
@@ -171,16 +174,16 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->nodeMetrics === null) {
             $this->nodeMetrics = array();
 
             $this->fireStartAnalyzer();
-            $this->doAnalyze($packages);
+            $this->doAnalyze($namespaces);
             $this->fireEndAnalyzer();
         }
     }
@@ -189,15 +192,15 @@ class PHP_Depend_Metrics_Inheritance_Analyzer
      * Calculates several inheritance related metrics for the given source
      * packages.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages The source packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      * @since 0.9.10
      */
-    private function doAnalyze(PHP_Depend_Code_NodeIterator $packages)
+    private function doAnalyze(ASTArtifactList $namespaces)
     {
         // Process all packages
-        foreach ($packages as $package) {
-            $package->accept($this);
+        foreach ($namespaces as $namespace) {
+            $namespace->accept($this);
         }
 
         if ($this->numberOfClasses > 0) {

@@ -117,9 +117,9 @@ class ClosureResultsInExceptionBug070Test extends AbstractTest
             ->current()
             ->getFunctions();
 
-        self::assertEquals('bar', $functions->current()->getName());
+        $this->assertEquals('bar', $functions->current()->getName());
         $functions->next();
-        self::assertEquals('foo', $functions->current()->getName());
+        $this->assertEquals('foo', $functions->current()->getName());
     }
 
     /**
@@ -134,6 +134,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractTest
             ->getFunctions()
             ->current();
 
-        self::assertEquals('foo', $function->getName());
+        $this->assertEquals('foo', $function->getName());
     }
 }

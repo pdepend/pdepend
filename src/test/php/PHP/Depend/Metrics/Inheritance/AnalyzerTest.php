@@ -39,6 +39,8 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
+use PHP\Depend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PHP\Depend\Source\AST\ASTClass;
 
 /**
@@ -63,8 +65,8 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testAnalyzerCalculatesCorrectANDCValue()
     {
-        $filter = PHP_Depend_Code_Filter_Collection::getInstance();
-        $filter->setFilter(new PHP_Depend_Code_Filter_Package(array('library')));
+        $filter = CollectionArtifactFilter::getInstance();
+        $filter->setFilter(new PackageArtifactFilter(array('library')));
 
         $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
@@ -72,7 +74,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
 
         $project = $analyzer->getProjectMetrics();
 
-        self::assertEquals(0.7368, $project['andc'], null, 0.0001);
+        $this->assertEquals(0.7368, $project['andc'], null, 0.0001);
     }
 
     /**
@@ -82,8 +84,8 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testAnalyzerCalculatesCorrectAHHValue()
     {
-        $filter = PHP_Depend_Code_Filter_Collection::getInstance();
-        $filter->setFilter(new PHP_Depend_Code_Filter_Package(array('library')));
+        $filter = CollectionArtifactFilter::getInstance();
+        $filter->setFilter(new PackageArtifactFilter(array('library')));
 
         $packages = self::parseTestCaseSource(__METHOD__);
         $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
@@ -91,7 +93,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
 
         $project = $analyzer->getProjectMetrics();
 
-        self::assertEquals(1, $project['ahh']);
+        $this->assertEquals(1, $project['ahh']);
     }
 
     /**
@@ -101,7 +103,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoccMetricForClassWithoutChildren()
     {
-        self::assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
+        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
     }
 
     /**
@@ -111,7 +113,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoccMetricForClassWithDirectChildren()
     {
-        self::assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
+        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
     }
 
     /**
@@ -121,7 +123,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren()
     {
-        self::assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
+        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
     }
 
     /**
@@ -131,7 +133,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricNoInheritance()
     {
-        self::assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -141,7 +143,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricOneLevelInheritance()
     {
-        self::assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -151,7 +153,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricTwoLevelNoInheritance()
     {
-        self::assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -161,7 +163,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricThreeLevelNoInheritance()
     {
-        self::assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -171,7 +173,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricFourLevelNoInheritance()
     {
-        self::assertEquals(4, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(4, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -181,7 +183,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo()
     {
-        self::assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -191,7 +193,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculateDITMetricForInternalParentIncrementsMetricWithTwo()
     {
-        self::assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -224,7 +226,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
             'E' => 3,
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -238,7 +240,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(3, $metrics['maxDIT']);
+        $this->assertEquals(3, $metrics['maxDIT']);
     }
 
     /**
@@ -248,7 +250,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoamMetricForClassWithoutParent()
     {
-        self::assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noam'));
     }
 
     /**
@@ -258,7 +260,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoamMetricForClassWithDirectParent()
     {
-        self::assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
     }
 
     /**
@@ -268,7 +270,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoamMetricForClassWithIndirectParent()
     {
-        self::assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
     }
 
     /**
@@ -278,7 +280,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoomMetricForClassWithoutParent()
     {
-        self::assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noom'));
     }
 
     /**
@@ -288,7 +290,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoomMetricForClassWithParent()
     {
-        self::assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noom'));
     }
 
     /**
@@ -298,7 +300,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods()
     {
-        self::assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'noom'));
     }
 
     /**
@@ -314,7 +316,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        self::assertEquals(array(), $metrics);
+        $this->assertEquals(array(), $metrics);
     }
 
     /**

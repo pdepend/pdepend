@@ -74,7 +74,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
             'PHP_Depend_Metrics_NodeLoc_Analyzer'
         );
 
-        self::assertEquals($exptected, $actual);
+        $this->assertEquals($exptected, $actual);
     }
 
     /**
@@ -102,7 +102,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
     public function testPyramidDoesntAcceptInvalidAnalyzer()
     {
         $logger = new Pyramid();
-        self::assertFalse($logger->log(new DummyAnalyzer()));
+        $this->assertFalse($logger->log(new DummyAnalyzer()));
     }
 
     /**
@@ -231,7 +231,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
         $log->log($this->createNodeLocAnalyzer());
         $log->close();
 
-        self::assertFileExists($output);
+        $this->assertFileExists($output);
 
         $expected = array(
             'cyclo'         =>  5579,
@@ -257,8 +257,8 @@ class PyramidTest extends \PHP_Depend_AbstractTest
         // TODO: Replace this loop assertion
         foreach ($expected as $name => $value) {
             $elem = $svg->getElementById("pdepend.{$name}");
-            self::assertInstanceOf('\\DOMElement', $elem);
-            self::assertEquals($value, $elem->nodeValue, null, 0.01);
+            $this->assertInstanceOf('\\DOMElement', $elem);
+            $this->assertEquals($value, $elem->nodeValue, null, 0.01);
         }
 
         unlink($output);

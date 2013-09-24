@@ -44,6 +44,7 @@ namespace PHP\Depend\Report\Dummy;
 
 use PHP\Depend\Report\GeneratorCodeAware;
 use PHP\Depend\Report\GeneratorFileAware;
+use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
  * Dummy generator for testing
@@ -103,12 +104,12 @@ class Logger implements GeneratorCodeAware, GeneratorFileAware
     /**
      * Sets the context code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    public function setCode(\PHP_Depend_Code_NodeIterator $code)
+    public function setArtifacts(ASTArtifactList $artifacts)
     {
-        $this->_input['code'] = $code;
+        $this->_input['code'] = $artifacts;
     }
 
     /**

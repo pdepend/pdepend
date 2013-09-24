@@ -72,13 +72,13 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(2, $package->getTypes()->count());
-        self::assertEquals(2, $package->getClasses()->count());
+        $this->assertEquals(2, $package->getTypes()->count());
+        $this->assertEquals(2, $package->getClasses()->count());
 
         $packages->next();
         $package = $packages->current();
-        self::assertEquals(1, $package->getTypes()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -97,9 +97,9 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(3, $package->getTypes()->count());
-        self::assertEquals(2, $package->getClasses()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(3, $package->getTypes()->count());
+        $this->assertEquals(2, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -118,14 +118,14 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(2, $package->getTypes()->count());
-        self::assertEquals(1, $package->getClasses()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(2, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
 
         $packages->next();
         $package = $packages->current();
-        self::assertEquals(1, $package->getTypes()->count());
-        self::assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
     }
 
     /**
@@ -144,9 +144,9 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(3, $package->getTypes()->count());
-        self::assertEquals(2, $package->getClasses()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(3, $package->getTypes()->count());
+        $this->assertEquals(2, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -165,13 +165,13 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(2, $package->getTypes()->count());
-        self::assertEquals(2, $package->getClasses()->count());
+        $this->assertEquals(2, $package->getTypes()->count());
+        $this->assertEquals(2, $package->getClasses()->count());
 
         $packages->next();
         $package = $packages->current();
-        self::assertEquals(1, $package->getTypes()->count());
-        self::assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
     }
 
     /**
@@ -190,13 +190,13 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(2, $package->getTypes()->count());
-        self::assertEquals(2, $package->getInterfaces()->count());
+        $this->assertEquals(2, $package->getTypes()->count());
+        $this->assertEquals(2, $package->getInterfaces()->count());
 
         $packages->next();
         $package = $packages->current();
-        self::assertEquals(1, $package->getTypes()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -219,13 +219,13 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(2, $package->getTypes()->count());
-        self::assertEquals(2, $package->getClasses()->count());
+        $this->assertEquals(2, $package->getTypes()->count());
+        $this->assertEquals(2, $package->getClasses()->count());
 
         $packages->next();
         $package = $packages->current();
-        self::assertEquals(1, $package->getTypes()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
     }
 
     /**
@@ -248,14 +248,14 @@ class InconsistentObjectGraphBug073Test extends AbstractTest
         $packages = self::parseCodeResourceForTest();
 
         $package = $packages->current();
-        self::assertEquals(2, $package->getTypes()->count());
-        self::assertEquals(1, $package->getClasses()->count());
-        self::assertEquals(1, $package->getInterfaces()->count());
+        $this->assertEquals(2, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getInterfaces()->count());
 
         $packages->next();
         $package = $packages->current();
-        self::assertEquals(1, $package->getTypes()->count());
-        self::assertEquals(1, $package->getClasses()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getClasses()->count());
     }
 
     /**

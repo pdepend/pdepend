@@ -44,6 +44,9 @@ namespace PHP\Depend\Report;
 
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
  * Simple dummy analyzer.
@@ -87,17 +90,17 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     {
         return $this->projectMetrics;
     }
-    
+
     /**
      * Returns the node metrics.
      *
-     * @param \PHP_Depend_Code_NodeI $node context npde.
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array
      */
-    public function getNodeMetrics(\PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$node->getName()])) {
-            return $this->nodeMetrics[$node->getName()];
+        if (isset($this->nodeMetrics[$artifact->getName()])) {
+            return $this->nodeMetrics[$artifact->getName()];
         }
         return array();
     }
@@ -123,10 +126,10 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces All code packages.
      * @return void
      */
-    public function analyze(\PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
     }
 

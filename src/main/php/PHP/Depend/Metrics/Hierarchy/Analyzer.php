@@ -43,6 +43,9 @@ use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
@@ -158,10 +161,10 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages The input package set.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->nodeMetrics === null) {
 
@@ -171,8 +174,8 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
             $this->nodeMetrics = array();
 
             // Visit all nodes
-            foreach ($packages as $package) {
-                $package->accept($this);
+            foreach ($namespaces as $namespace) {
+                $namespace->accept($this);
             }
 
             $this->fireEndAnalyzer();
@@ -202,14 +205,13 @@ class PHP_Depend_Metrics_Hierarchy_Analyzer
      * for the given <b>$node</b> instance. If there are no metrics for the
      * requested node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            return $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
+            return $this->nodeMetrics[$artifact->getUuid()];
         }
         return array();
     }

@@ -42,12 +42,15 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTParameter;
+use PHP\Depend\Source\AST\ASTProperty;
 use PHP\Depend\Source\AST\ASTTrait;
 
 /**
@@ -218,10 +221,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new parameter instance.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function startVisitParameter(\PHP_Depend_Code_Parameter $parameter)
+    public function startVisitParameter(ASTParameter $parameter)
     {
         $this->startVisitNode($parameter);
     }
@@ -229,10 +232,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with a parameter instance.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function endVisitParameter(\PHP_Depend_Code_Parameter $parameter)
+    public function endVisitParameter(ASTParameter $parameter)
     {
         $this->endVisitNode($parameter);
     }
@@ -240,10 +243,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor starts a new property instance.
      *
-     * @param \PHP_Depend_Code_Property $property The context property instance.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function startVisitProperty(\PHP_Depend_Code_Property $property)
+    public function startVisitProperty(ASTProperty $property)
     {
         $this->startVisitNode($property);
     }
@@ -251,10 +254,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Is called when the visitor ends with a property instance.
      *
-     * @param \PHP_Depend_Code_Property $property The context property instance.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function endVisitProperty(\PHP_Depend_Code_Property $property)
+    public function endVisitProperty(ASTProperty $property)
     {
         $this->endVisitNode($property);
     }
@@ -262,10 +265,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param \PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    protected function startVisitNode(\PHP_Depend_Code_NodeI $node)
+    protected function startVisitNode(AbstractASTArtifact $node)
     {
 
     }
@@ -273,10 +276,10 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
     /**
      * Generic notification method that is called when the node processing ends.
      *
-     * @param \PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    protected function endVisitNode(\PHP_Depend_Code_NodeI $node)
+    protected function endVisitNode(AbstractASTArtifact $node)
     {
 
     }

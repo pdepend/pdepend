@@ -61,7 +61,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetNameReturnsTheFileName()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertEquals(__FILE__, $file->getName());
+        $this->assertEquals(__FILE__, $file->getName());
     }
 
     /**
@@ -72,7 +72,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetFileNameReturnsTheFileName()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertEquals(__FILE__, $file->getFileName());
+        $this->assertEquals(__FILE__, $file->getFileName());
     }
 
     /**
@@ -83,7 +83,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetUuidReturnsNullByDefault()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertNull($file->getUuid());
+        $this->assertNull($file->getUuid());
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
         $file = new ASTCompilationUnit(__FILE__);
         $file->setUuid(__FUNCTION__);
 
-        self::assertEquals(__FUNCTION__, $file->getUuid());
+        $this->assertEquals(__FUNCTION__, $file->getUuid());
     }
 
     /**
@@ -107,7 +107,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetDocCommentReturnsNullByDefault()
     {
         $file = new ASTCompilationUnit(null);
-        self::assertNull($file->getDocComment());
+        $this->assertNull($file->getDocComment());
     }
 
     /**
@@ -120,7 +120,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
         $file = new ASTCompilationUnit(null);
         $file->setDocComment('/** Manuel */');
 
-        self::assertEquals('/** Manuel */', $file->getDocComment());
+        $this->assertEquals('/** Manuel */', $file->getDocComment());
     }
 
     /**
@@ -193,7 +193,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull()
     {
         $file = new ASTCompilationUnit(null);
-        self::assertSame('', $file->__toString());
+        $this->assertSame('', $file->__toString());
     }
 
     /**
@@ -204,7 +204,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testMagicStringMethodReturnInjectedFileNameValue()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertEquals(__FILE__, $file->__toString());
+        $this->assertEquals(__FILE__, $file->__toString());
     }
 
     /**
@@ -215,7 +215,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'cache',
                 'childNodes',
@@ -258,7 +258,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testIsCachedReturnsFalseByDefault()
     {
         $file = new ASTCompilationUnit(null);
-        self::assertFalse($file->isCached());
+        $this->assertFalse($file->isCached());
     }
 
     /**
@@ -271,7 +271,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
         $file = new ASTCompilationUnit(null);
         serialize($file);
 
-        self::assertFalse($file->isCached());
+        $this->assertFalse($file->isCached());
     }
 
     /**
@@ -284,7 +284,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
         $file = new ASTCompilationUnit(null);
         $file = unserialize(serialize($file));
 
-        self::assertTrue($file->isCached());
+        $this->assertTrue($file->isCached());
     }
 
     /**
@@ -295,7 +295,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetStartLineReturnsZeroWhenSourceFileNotExists()
     {
         $file = new ASTCompilationUnit(null);
-        self::assertSame(0, $file->getStartLine());
+        $this->assertSame(0, $file->getStartLine());
     }
 
     /**
@@ -306,7 +306,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetStartLineReturnsOneWhenSourceFileExists()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertEquals(1, $file->getStartLine());
+        $this->assertEquals(1, $file->getStartLine());
     }
 
     /**
@@ -317,7 +317,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetEndLineReturnsZeroWhenSourceFileNotExists()
     {
         $file = new ASTCompilationUnit(null);
-        self::assertSame(0, $file->getEndLine());
+        $this->assertSame(0, $file->getEndLine());
     }
 
     /**
@@ -328,7 +328,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        self::assertEquals(360, $file->getEndLine());
+        $this->assertEquals(360, $file->getEndLine());
     }
 
     /**
@@ -339,7 +339,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetSourceReturnsNullWhenSourceFileNotExists()
     {
         $file = new ASTCompilationUnit(null);
-        self::assertNull($file->getSource());
+        $this->assertNull($file->getSource());
     }
 
     /**
@@ -354,6 +354,6 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
         $actual   = $file->getSource();
         $expected = file_get_contents(self::createCodeResourceUriForTest());
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 }

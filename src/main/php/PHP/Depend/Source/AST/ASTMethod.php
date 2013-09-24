@@ -50,7 +50,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class ASTMethod extends \PHP_Depend_Code_AbstractCallable
+class ASTMethod extends AbstractASTCallable
 {
     /**
      * The parent type object.
@@ -196,14 +196,13 @@ class ASTMethod extends \PHP_Depend_Code_AbstractCallable
      * Returns the source file where this method was declared.
      *
      * @return \PHP\Depend\Source\AST\ASTCompilationUnit
-     * @throws \PHP_Depend_Code_Exceptions_SourceNotFoundException When no parent
-     *         class or interface was set for this method instance.
+     * @throws \PHP\Depend\Source\AST\ASTCompilationUnitNotFoundException When no parent was set.
      * @since 0.10.0
      */
     public function getSourceFile()
     {
         if ($this->parent === null) {
-            throw new \PHP_Depend_Code_Exceptions_SourceNotFoundException($this);
+            throw new ASTCompilationUnitNotFoundException($this);
         }
         return $this->parent->getSourceFile();
     }

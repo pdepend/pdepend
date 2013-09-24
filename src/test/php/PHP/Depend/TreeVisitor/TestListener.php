@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+
 /**
  * Simple test node visitor implementation.
  *
@@ -52,14 +54,14 @@ class TestListener extends AbstractTreeVisitListener
 {
     public $nodes = array();
     
-    public function startVisitNode(\PHP_Depend_Code_NodeI $node)
+    public function startVisitNode(AbstractASTArtifact $node)
     {
         $this->nodes[$node->getName() . '#start'] = true;
         
         parent::startVisitNode($node);
     }
 
-    public function endVisitNode(\PHP_Depend_Code_NodeI $node)
+    public function endVisitNode(AbstractASTArtifact $node)
     {
         $this->nodes[$node->getName() . '#end'] = true;
         

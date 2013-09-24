@@ -162,7 +162,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE
         );
 
-        self::assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -210,7 +210,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             $actual[] = array($token->type, $token->startLine);
         }
         
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -224,7 +224,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
 
-        self::assertEquals(Tokenizer::T_BOF, $tokenizer->prev());
+        $this->assertEquals(Tokenizer::T_BOF, $tokenizer->prev());
     }
 
     /**
@@ -270,7 +270,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             Tokens::T_CLOSE_TAG
         );
 
-        self::assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -302,7 +302,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE,
         );
 
-        self::assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -346,7 +346,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE,
         );
 
-        self::assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**
@@ -402,7 +402,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             $actual[] = array($token->type, $token->startLine);
         }
 
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -434,7 +434,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             $actual[] = array($token->type, $token->startLine);
         }
 
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -480,7 +480,7 @@ class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
             );
         }
 
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -524,7 +524,7 @@ Manuel', 3, 5, 61, 6),
             );
         }
 
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -553,7 +553,7 @@ Manuel', 3, 5, 61, 6),
             array(Tokens::T_SEMICOLON, 15, 15),
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -581,7 +581,7 @@ Manuel', 3, 5, 61, 6),
             array(Tokens::T_SEMICOLON),
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -601,7 +601,7 @@ Manuel', 3, 5, 61, 6),
             Tokens::T_SEMICOLON,
         );
 
-        self::assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->_getTokenTypesForTest());
     }
 
     /**

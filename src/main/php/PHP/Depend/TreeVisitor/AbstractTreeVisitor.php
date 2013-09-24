@@ -48,6 +48,8 @@ use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTParameter;
+use PHP\Depend\Source\AST\ASTProperty;
 use PHP\Depend\Source\AST\ASTTrait;
 
 /**
@@ -227,10 +229,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a parameter node.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The parameter node.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function visitParameter(\PHP_Depend_Code_Parameter $parameter)
+    public function visitParameter(ASTParameter $parameter)
     {
         $this->fireStartParameter($parameter);
         $this->fireEndParameter($parameter);
@@ -239,10 +241,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Visits a property node.
      *
-     * @param \PHP_Depend_Code_Property $property The property class node.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(\PHP_Depend_Code_Property $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->fireStartProperty($property);
         $this->fireEndProperty($property);
@@ -433,10 +435,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start parameter event.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    protected function fireStartParameter(\PHP_Depend_Code_Parameter $parameter)
+    protected function fireStartParameter(ASTParameter $parameter)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitParameter($parameter);
@@ -446,10 +448,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a end parameter event.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    protected function fireEndParameter(\PHP_Depend_Code_Parameter $parameter)
+    protected function fireEndParameter(ASTParameter $parameter)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitParameter($parameter);
@@ -459,10 +461,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends a start property event.
      *
-     * @param \PHP_Depend_Code_Property $property The context property instance.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    protected function fireStartProperty(\PHP_Depend_Code_Property $property)
+    protected function fireStartProperty(ASTProperty $property)
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitProperty($property);
@@ -472,10 +474,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Sends an end property event.
      *
-     * @param \PHP_Depend_Code_Property $property The context property instance.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    protected function fireEndProperty(\PHP_Depend_Code_Property $property)
+    protected function fireEndProperty(ASTProperty $property)
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitProperty($property);

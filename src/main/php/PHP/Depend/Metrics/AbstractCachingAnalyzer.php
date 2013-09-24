@@ -45,6 +45,7 @@ namespace PHP\Depend\Metrics;
 
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerCacheAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 
 /**
  * This abstract class provides an analyzer that provides the basic infrastructure
@@ -93,10 +94,10 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.
      *
-     * @param \PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return boolean
      */
-    protected function restoreFromCache(\PHP_Depend_Code_NodeI $node)
+    protected function restoreFromCache(AbstractASTArtifact $node)
     {
         $uuid = $node->getUuid();
         if ($node->isCached() && isset($this->metricsCached[$uuid])) {

@@ -73,7 +73,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
         $file    = new ASTCompilationUnit(__FILE__);
         $builder = new UuidBuilder();
 
-        self::assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
+        $this->assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
     }
 
     /**
@@ -88,7 +88,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
         $identifier0 = $builder->forFile(new ASTCompilationUnit(__FILE__));
         $identifier1 = $builder->forFile(new ASTCompilationUnit(strtolower(__FILE__)));
 
-        self::assertNotEquals($identifier0, $identifier1);
+        $this->assertNotEquals($identifier0, $identifier1);
     }
 
     /**
@@ -169,7 +169,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
 
-        self::assertEquals(
+        $this->assertEquals(
             $builder0->forClassOrInterface($class0),
             $builder1->forClassOrInterface($class1)
         );
@@ -194,7 +194,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
 
-        self::assertEquals(
+        $this->assertEquals(
             $builder0->forClassOrInterface($interface0),
             $builder1->forClassOrInterface($interface1)
         );
@@ -237,7 +237,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
 
-        self::assertEquals(
+        $this->assertEquals(
             $builder0->forFunction($function0),
             $builder1->forFunction($function1)
         );
@@ -324,7 +324,7 @@ class UuidBuilderTest extends \PHP_Depend_AbstractTest
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
 
-        self::assertEquals(
+        $this->assertEquals(
             $builder0->forMethod($method0),
             $builder1->forMethod($method1)
         );

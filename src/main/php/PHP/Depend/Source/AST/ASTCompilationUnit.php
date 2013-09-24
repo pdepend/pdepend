@@ -50,7 +50,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class ASTCompilationUnit implements \PHP_Depend_Code_NodeI
+class ASTCompilationUnit extends AbstractASTArtifact
 {
     /**
      * The type of this class.
@@ -107,7 +107,7 @@ class ASTCompilationUnit implements \PHP_Depend_Code_NodeI
     /**
      * List of classes, interfaces and functions that parsed from this file.
      *
-     * @var \PHP_Depend_Code_AbstractItem[]
+     * @var \PHP\Depend\Source\AST\AbstractASTArtifact[]
      * @since 0.10.0
      */
     protected $childNodes = array();
@@ -257,14 +257,13 @@ class ASTCompilationUnit implements \PHP_Depend_Code_NodeI
     /**
      * Adds a source item that was parsed from this source file.
      *
-     * @param \PHP_Depend_Code_AbstractItem $item Node parsed in this file.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $artifact
      * @return void
      * @since 0.10.0
      */
-    public function addChild(\PHP_Depend_Code_AbstractItem $item)
+    public function addChild(AbstractASTArtifact $artifact)
     {
-        $this->childNodes[$item->getUuid()] = $item;
+        $this->childNodes[$artifact->getUuid()] = $artifact;
     }
 
     /**

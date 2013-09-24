@@ -40,6 +40,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\State;
 use PHP\Depend\Source\Language\PHP\PHPBuilder;
 use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
@@ -429,7 +430,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertEquals(3, count($class->getInterfaces()));
+        $this->assertEquals(3, count($class->getInterfaces()));
     }
 
     /**
@@ -444,7 +445,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getInterfaces()
             ->current();
 
-        self::assertEquals(3, count($class->getInterfaces()));
+        $this->assertEquals(3, count($class->getInterfaces()));
     }
 
     /**
@@ -567,7 +568,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             }
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'func1 throws RuntimeException',
                 'func2 throws OutOfRangeException',
@@ -594,7 +595,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $actual[] = $function->getReturnClass();
         }
 
-        self::assertSame(array(0, null, 0, null, 0, null), $actual);
+        $this->assertSame(array(0, null, 0, null, 0, null), $actual);
     }
 
     /**
@@ -632,7 +633,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $actual[] = $method->getReturnClass() ? $method->getReturnClass()->getName() : null;
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array('__construct', null, 'method1', 'SplObjectStore', 'method2', 'SplSubject'),
             $actual
         );
@@ -659,7 +660,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             }
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 '__construct',
                 'RuntimeException',
@@ -691,7 +692,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $actual[] = $method->getReturnClass();
         }
 
-        self::assertSame(array(0, null, 0, null, 0, null), $actual);
+        $this->assertSame(array(0, null, 0, null, 0, null), $actual);
     }
 
     /**
@@ -732,7 +733,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             );
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 array('public' => false, 'protected' => false, 'private' => true),
                 array('public' => true,  'protected' => false, 'private' => false),
@@ -762,7 +763,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $actual[$node->getName()] = $className;
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 '$property1'  =>  'MyPropertyClass2',
                 '$property2'  =>  'MyPropertyClass2',
@@ -797,7 +798,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current()
             ->getClass();
 
-        self::assertEquals('Runtime', $class->getName());
+        $this->assertEquals('Runtime', $class->getName());
     }
 
     /**
@@ -822,7 +823,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->current()
             ->getClass();
 
-        self::assertEquals('Session', $type->getName());
+        $this->assertEquals('Session', $type->getName());
     }
 
     /**
@@ -893,7 +894,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $actual[] = $property->getClass();
         }
 
-        self::assertEquals(array(null, null, null, null, null, null), $actual);
+        $this->assertEquals(array(null, null, null, null, null, null), $actual);
     }
 
     /**
@@ -917,7 +918,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             $actual[] = $type->getDocComment();
         }
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -928,7 +929,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserSubpackageSupport()
     {
         $package = self::parseCodeResourceForTest()->current();
-        self::assertEquals('PHP\Depend', $package->getName());
+        $this->assertEquals('PHP\Depend', $package->getName());
     }
 
     /**
@@ -969,7 +970,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertTrue($class->isAbstract());
+        $this->assertTrue($class->isAbstract());
     }
 
     /**
@@ -984,7 +985,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertSame(
+        $this->assertSame(
             State::IS_EXPLICIT_ABSTRACT,
             $class->getModifiers() & State::IS_EXPLICIT_ABSTRACT
         );
@@ -1002,7 +1003,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertTrue($class->isFinal());
+        $this->assertTrue($class->isFinal());
     }
 
     /**
@@ -1017,7 +1018,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL
+        $this->assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL
         );
     }
 
@@ -1047,7 +1048,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getMethods()
             ->current();
 
-        $foreach = $method->getFirstChildOfType(PHP_Depend_Code_ASTForeachStatement::CLAZZ);
+        $foreach = $method->getFirstChildOfType(PHP\Depend\Source\AST\ASTForeachStatement::CLAZZ);
         $this->assertNotNull($foreach);
     }
 
@@ -1301,7 +1302,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $string = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
         $image  = $string->getChild(0)->getImage();
 
         $this->assertEquals('\$foobar', $image);
@@ -1319,7 +1320,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $string = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
         $image  = $string->getChild(0)->getImage();
 
         $this->assertEquals('\\\\\"', $image);
@@ -1337,10 +1338,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $string   = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(PHP\Depend\Source\AST\ASTVariable::CLAZZ, $variable);
     }
 
     /**
@@ -1355,10 +1356,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
+        $string   = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(PHP_Depend_Code_ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(PHP\Depend\Source\AST\ASTVariable::CLAZZ, $variable);
     }
 
     /**
@@ -1375,8 +1376,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType(PHP_Depend_Code_ASTString::CLAZZ);
-        $this->assertInstanceOf(PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+        $string = $method->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
+        $this->assertInstanceOf(PHP\Depend\Source\AST\ASTLiteral::CLAZZ, $string->getChild(1));
     }
 
     /**
@@ -1520,7 +1521,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     /**
      * Returns the methods of an interface from the mixed code test file.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTMethod[]
      */
     protected function getInterfaceMethodsForTest()
     {
@@ -1550,7 +1551,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     /**
      * Returns the methods of a class from the mixed code test file.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTMethod[]
      */
     protected function getClassMethodsForTest()
     {
@@ -1563,15 +1564,12 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     /**
      * Generic comment test method.
      *
-     * @param PHP_Depend_Code_NodeIterator $nodes  The context nodes.
-     * @param integer                      $indent How deep is the commend indented.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $nodes
+     * @param integer $indent
      * @return void
      */
-    protected function doTestParserSetsCorrectDocComment(
-        PHP_Depend_Code_NodeIterator $nodes,
-        $indent = 1
-    ) {
+    protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, $indent = 1)
+    {
         $ws = str_repeat(" ", 4 * $indent);
 
         $expected = array(

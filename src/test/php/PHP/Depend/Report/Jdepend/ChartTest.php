@@ -43,6 +43,7 @@
 namespace PHP\Depend\Report\Jdepend;
 
 use PHP\Depend\Report\DummyAnalyzer;
+use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
  * Test case for the jdepend chart logger.
@@ -104,7 +105,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array(\PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
 
-        self::assertEquals($exptected, $actual);
+        $this->assertEquals($exptected, $actual);
     }
 
     /**
@@ -128,7 +129,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     public function testChartLogAcceptsValidAnalyzer()
     {
         $logger = new Chart();
-        self::assertTrue($logger->log(new \PHP_Depend_Metrics_Dependency_Analyzer()));
+        $this->assertTrue($logger->log(new \PHP_Depend_Metrics_Dependency_Analyzer()));
     }
 
     /**
@@ -139,7 +140,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     public function testChartLogRejectsInvalidAnalyzer()
     {
         $logger = new Chart();
-        self::assertFalse($logger->log(new DummyAnalyzer()));
+        $this->assertFalse($logger->log(new DummyAnalyzer()));
     }
 
     /**
@@ -149,18 +150,18 @@ class ChartTest extends \PHP_Depend_AbstractTest
      */
     public function testGeneratesCorrectSVGImageFile()
     {
-        $nodes = new \PHP_Depend_Code_NodeIterator($this->_createPackages(true, true));
+        $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
         $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
         $logger->setLogFile($this->_outputFile);
-        $logger->setCode($nodes);
+        $logger->setArtifacts($nodes);
         $logger->log($analyzer);
         $logger->close();
 
-        self::assertFileExists($this->_outputFile);
+        $this->assertFileExists($this->_outputFile);
     }
 
     /**
@@ -170,14 +171,14 @@ class ChartTest extends \PHP_Depend_AbstractTest
      */
     public function testGeneratedSvgImageContainsExpectedPackages()
     {
-        $nodes = new \PHP_Depend_Code_NodeIterator($this->_createPackages(true, true));
+        $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
         $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
         $logger->setLogFile($this->_outputFile);
-        $logger->setCode($nodes);
+        $logger->setArtifacts($nodes);
         $logger->log($analyzer);
         $logger->close();
 
@@ -198,14 +199,14 @@ class ChartTest extends \PHP_Depend_AbstractTest
      */
     public function testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages()
     {
-        $nodes = new \PHP_Depend_Code_NodeIterator($this->_createPackages(true, false, true));
+        $nodes = new ASTArtifactList($this->_createPackages(true, false, true));
 
         $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
         $logger->setLogFile($this->_outputFile);
-        $logger->setCode($nodes);
+        $logger->setArtifacts($nodes);
         $logger->log($analyzer);
         $logger->close();
 
@@ -245,11 +246,11 @@ class ChartTest extends \PHP_Depend_AbstractTest
             ),
         );
 
-        $nodes = new \PHP_Depend_Code_NodeIterator($nodes);
+        $nodes = new ASTArtifactList($nodes);
 
         $logger = new Chart();
         $logger->setLogFile($this->_outputFile);
-        $logger->setCode($nodes);
+        $logger->setArtifacts($nodes);
         $logger->log($analyzer);
 
         $logger->close();
@@ -289,14 +290,14 @@ class ChartTest extends \PHP_Depend_AbstractTest
             unlink($fileName);
         }
 
-        $nodes = new \PHP_Depend_Code_NodeIterator($this->_createPackages(true, true));
+        $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
         $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
         $logger->setLogFile($fileName);
-        $logger->setCode($nodes);
+        $logger->setArtifacts($nodes);
         $logger->log($analyzer);
 
         $this->assertFileNotExists($fileName);

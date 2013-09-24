@@ -63,7 +63,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
     public function testAbsoluteUnixPathAsFilterPatternMatches()
     {
         $filter = new ExcludePathFilter(array('/foo/bar'));
-        self::assertFalse($filter->accept('/baz', '/foo/bar/baz'));
+        $this->assertFalse($filter->accept('/baz', '/foo/bar/baz'));
     }
 
     /**
@@ -74,7 +74,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
     public function testAbsoluteUnixPathAsFilterPatternNotMatches()
     {
         $filter = new ExcludePathFilter(array('/foo/bar'));
-        self::assertTrue($filter->accept('/foo/baz/bar', '/foo/baz/bar'));
+        $this->assertTrue($filter->accept('/foo/baz/bar', '/foo/baz/bar'));
     }
 
     /**
@@ -89,7 +89,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $relative = '/PHP/Depend.php';
 
         $filter = new ExcludePathFilter(array($pattern));
-        self::assertTrue($filter->accept($relative, $absolute));
+        $this->assertTrue($filter->accept($relative, $absolute));
     }
 
     /**
@@ -100,7 +100,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
     public function testAbsoluteWindowsPathAsFilterPatternMatches()
     {
         $filter = new ExcludePathFilter(array('c:\workspace\bar'));
-        self::assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
+        $this->assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));
     }
 
     /**
@@ -111,7 +111,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
     public function testAbsoluteWindowsPathAsFilterPatternNotMatches()
     {
         $filter = new ExcludePathFilter(array('c:\workspace\\'));
-        self::assertTrue($filter->accept('c:\workspac\bar', 'c:\workspac\bar'));
+        $this->assertTrue($filter->accept('c:\workspac\bar', 'c:\workspac\bar'));
     }
 
     /**
@@ -126,7 +126,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $relative = '\PHP\Depend.php';
 
         $filter = new ExcludePathFilter(array($pattern));
-        self::assertTrue($filter->accept($relative, $absolute));
+        $this->assertTrue($filter->accept($relative, $absolute));
     }
 
     /**
@@ -139,7 +139,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('/package2.php'));
         $expected = array('package1.php', 'package3.php');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -152,7 +152,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('/package2.php', '*1.php'));
         $expected = array('package3.php');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -165,7 +165,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('/package1'));
         $expected = array('file2.php', 'file3.php');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -178,7 +178,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('/package1', 'package3'));
         $expected = array('file2.php');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -191,7 +191,7 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('/package1', '/file3.php'));
         $expected = array('file2.php');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**

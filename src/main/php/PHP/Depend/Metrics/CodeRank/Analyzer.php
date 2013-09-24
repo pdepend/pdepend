@@ -39,9 +39,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
-use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
  * Calculates the code rank metric for classes and packages.
@@ -117,11 +120,10 @@ class PHP_Depend_Metrics_CodeRank_Analyzer extends AbstractAnalyzer implements A
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages All code packages.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->nodeMetrics === null) {
 
@@ -144,7 +146,7 @@ class PHP_Depend_Metrics_CodeRank_Analyzer extends AbstractAnalyzer implements A
             }
 
             // First traverse package tree
-            foreach ($packages as $package) {
+            foreach ($namespaces as $package) {
                 // Traverse all strategies
                 foreach ($this->strategies as $strategy) {
                     $package->accept($strategy);
@@ -172,14 +174,13 @@ class PHP_Depend_Metrics_CodeRank_Analyzer extends AbstractAnalyzer implements A
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            return $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
+            return $this->nodeMetrics[$artifact->getUuid()];
         }
         return array();
     }

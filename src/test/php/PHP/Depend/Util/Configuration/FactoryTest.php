@@ -103,7 +103,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals('file', $config->cache->driver);
+        $this->assertEquals('file', $config->cache->driver);
     }
 
     /**
@@ -116,7 +116,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals(
+        $this->assertEquals(
             FileUtil::getUserHomeDirOrSysTempDir() . '/.pdepend',
             $config->cache->location
         );
@@ -132,7 +132,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals('Arial', $config->imageConvert->fontFamily);
+        $this->assertEquals('Arial', $config->imageConvert->fontFamily);
     }
 
     /**
@@ -145,7 +145,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals(11, $config->imageConvert->fontSize);
+        $this->assertEquals(11, $config->imageConvert->fontSize);
     }
 
     /**
@@ -160,7 +160,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals(23, $config->imageConvert->fontSize);
+        $this->assertEquals(23, $config->imageConvert->fontSize);
     }
 
     /**
@@ -175,7 +175,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals(42, $config->imageConvert->fontSize);
+        $this->assertEquals(42, $config->imageConvert->fontSize);
     }
 
     /**
@@ -190,7 +190,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals(42, $config->imageConvert->fontSize);
+        $this->assertEquals(42, $config->imageConvert->fontSize);
     }
 
     /**
@@ -203,7 +203,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->createDefault();
 
-        self::assertEquals(8192, $config->parser->nesting);
+        $this->assertEquals(8192, $config->parser->nesting);
     }
 
     /**
@@ -230,6 +230,6 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory();
         $config  = $factory->create($file);
 
-        self::assertEquals(42, $config->imageConvert->fontSize);
+        $this->assertEquals(42, $config->imageConvert->fontSize);
     }
 }

@@ -126,6 +126,6 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
             $actual[$package->getName()] = $visitor->getStats($package);
         }
 
-        self::assertEquals($this->_input, $actual);
+        $this->assertEquals($this->_input, $actual);
     }
 }

@@ -73,7 +73,7 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
             new \PHP\Depend\Input\ExcludePathFilter(array($pattern))
         );
 
-        self::assertEquals(1, count($pdepend->analyze()));
+        $this->assertEquals(1, count($pdepend->analyze()));
     }
 
     /**
@@ -98,7 +98,7 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
             new \PHP\Depend\Input\ExcludePathFilter(array($pattern))
         );
 
-        self::assertEquals(
+        $this->assertEquals(
             1,
             count($pdepend->analyze()),
             sprintf(
@@ -127,6 +127,6 @@ class PHP_Depend_Integration_DependExcludePathFilterTest
             new \PHP\Depend\Input\ExcludePathFilter(array($pattern))
         );
 
-        self::assertEquals(2, count($pdepend->analyze()));
+        $this->assertEquals(2, count($pdepend->analyze()));
     }
 }

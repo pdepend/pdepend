@@ -61,7 +61,7 @@ class TokenTest extends \PHP_Depend_AbstractTest
     public function testConstructorSetsTypeProperty()
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(1, $token->type);
+        $this->assertEquals(1, $token->type);
     }
 
     /**
@@ -72,7 +72,7 @@ class TokenTest extends \PHP_Depend_AbstractTest
     public function testConstructorSetsImageProperty()
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(2, $token->image);
+        $this->assertEquals(2, $token->image);
     }
 
     /**
@@ -83,7 +83,7 @@ class TokenTest extends \PHP_Depend_AbstractTest
     public function testConstructorSetsStartLineProperty()
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(4, $token->startLine);
+        $this->assertEquals(4, $token->startLine);
     }
 
     /**
@@ -94,7 +94,7 @@ class TokenTest extends \PHP_Depend_AbstractTest
     public function testConstructorSetsEndLineProperty()
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(8, $token->endLine);
+        $this->assertEquals(8, $token->endLine);
     }
 
     /**
@@ -105,7 +105,7 @@ class TokenTest extends \PHP_Depend_AbstractTest
     public function testConstructorSetsStartColumnProperty()
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(16, $token->startColumn);
+        $this->assertEquals(16, $token->startColumn);
     }
 
     /**
@@ -116,6 +116,6 @@ class TokenTest extends \PHP_Depend_AbstractTest
     public function testConstructorSetsEndColumnProperty()
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        self::assertEquals(32, $token->endColumn);
+        $this->assertEquals(32, $token->endColumn);
     }
 }

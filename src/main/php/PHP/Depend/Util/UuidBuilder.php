@@ -43,6 +43,7 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\AbstractASTType;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
@@ -98,14 +99,14 @@ class UuidBuilder
     /**
      * Generates an identifier for the given source item.
      *
-     * @param \PHP_Depend_Code_AbstractItem $item The context source item.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $artifact
      * @param string $prefix The item type identifier.
      * @return string
      */
-    protected function forOffsetItem(\PHP_Depend_Code_AbstractItem $item, $prefix)
+    protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
     {
-        $fileHash = $item->getSourceFile()->getUuid();
-        $itemHash = $this->hash($prefix . ':' . strtolower($item->getName()));
+        $fileHash = $artifact->getSourceFile()->getUuid();
+        $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getName()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);
 

@@ -68,7 +68,7 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertEquals(2, $class->getStartLine());
+        $this->assertEquals(2, $class->getStartLine());
     }
 
     /**
@@ -83,6 +83,6 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractTest
             ->getClasses()
             ->current();
 
-        self::assertEquals(8, $class->getEndLine());
+        $this->assertEquals(8, $class->getEndLine());
     }
 }

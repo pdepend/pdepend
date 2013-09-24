@@ -112,7 +112,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
             self::createCodeResourceUriForTest()
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -145,7 +145,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
             $runner, self::createCodeResourceUriForTest()
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -182,7 +182,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
             $runner, self::createCodeResourceUriForTest()
         );
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -197,7 +197,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
-        self::assertFalse($runner->hasParseErrors());
+        $this->assertFalse($runner->hasParseErrors());
     }
 
     /**
@@ -212,7 +212,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
 
-        self::assertTrue($runner->hasParseErrors());
+        $this->assertTrue($runner->hasParseErrors());
     }
 
     /**
@@ -228,7 +228,7 @@ class RunnerTest extends \PHP_Depend_AbstractTest
         $runner->run();
 
         $errors = $runner->getParseErrors();
-        self::assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
+        $this->assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
     }
 
     /**

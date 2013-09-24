@@ -65,7 +65,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsUseAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -75,7 +75,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsNullAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -85,7 +85,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsTrueAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -95,7 +95,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsCloneAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -105,7 +105,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsFalseAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -115,7 +115,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsStringAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -125,7 +125,7 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsObjectAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 
     /**
@@ -135,6 +135,6 @@ class ParserBug17264279Test extends AbstractTest
      */
     public function testParserAcceptsNamespaceAsClassName()
     {
-        self::assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull(self::parseCodeResourceForTest());
     }
 }

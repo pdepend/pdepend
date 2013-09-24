@@ -46,6 +46,7 @@ use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Report\GeneratorCodeAware;
 use PHP\Depend\Report\GeneratorFileAware;
 use PHP\Depend\Report\NoLogOutputException;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\TreeVisitor\AbstractTreeVisitor;
 use PHP\Depend\Util\FileUtil;
 use PHP\Depend\Util\ImageConvert;
@@ -73,7 +74,7 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
     /**
      * The context source code.
      *
-     * @var \PHP_Depend_Code_NodeIterator
+     * @var \PHP\Depend\Source\AST\ASTArtifactList
      */
     private $code = null;
 
@@ -110,13 +111,12 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
     /**
      * Sets the context code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $code The code nodes.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    public function setCode(\PHP_Depend_Code_NodeIterator $code)
+    public function setArtifacts(ASTArtifactList $artifacts)
     {
-        $this->code = $code;
+        $this->code = $artifacts;
     }
 
     /**

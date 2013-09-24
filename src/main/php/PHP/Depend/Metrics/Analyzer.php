@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Metrics;
 
+use PHP\Depend\Source\AST\ASTArtifactList;
+
 /**
  * Base interface for all analyzer implementations.
  *
@@ -69,10 +71,10 @@ interface Analyzer
     /**
      * Processes all {@link \PHP\Depend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $packages All code packages.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    function analyze(\PHP_Depend_Code_NodeIterator $packages);
+    function analyze(ASTArtifactList $namespaces);
 
     /**
      * An analyzer that is active must return <b>true</b> to recognized by

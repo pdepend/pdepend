@@ -66,7 +66,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(2, $metrics['leafs']);
+        $this->assertEquals(2, $metrics['leafs']);
     }
 
     /**
@@ -80,7 +80,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(1, $metrics['clsa']);
+        $this->assertEquals(1, $metrics['clsa']);
     }
 
     /**
@@ -94,7 +94,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(2, $metrics['clsc']);
+        $this->assertEquals(2, $metrics['clsc']);
     }
 
     /**
@@ -108,7 +108,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(1, $metrics['roots']);
+        $this->assertEquals(1, $metrics['roots']);
     }
 
     /**
@@ -122,7 +122,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(0, $metrics['leafs']);
+        $this->assertEquals(0, $metrics['leafs']);
     }
 
     /**
@@ -138,7 +138,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        self::assertEquals(array(), $metrics);
+        $this->assertEquals(array(), $metrics);
     }
 
     /**
@@ -152,6 +152,6 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $class    = new ASTClass('PDepend');
         $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
 
-        self::assertSame(array(), $analyzer->getNodeMetrics($class));
+        $this->assertSame(array(), $analyzer->getNodeMetrics($class));
     }
 }

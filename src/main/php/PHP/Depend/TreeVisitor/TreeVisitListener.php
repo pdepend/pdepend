@@ -48,6 +48,8 @@ use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\ASTNamespace;
+use PHP\Depend\Source\AST\ASTParameter;
+use PHP\Depend\Source\AST\ASTProperty;
 use PHP\Depend\Source\AST\ASTTrait;
 
 /**
@@ -175,32 +177,32 @@ interface TreeVisitListener
     /**
      * Is called when the visitor starts a new parameter instance.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    function startVisitParameter(\PHP_Depend_Code_Parameter $parameter);
+    function startVisitParameter(ASTParameter $parameter);
 
     /**
      * Is called when the visitor ends with a parameter instance.
      *
-     * @param \PHP_Depend_Code_Parameter $parameter The context parameter instance.
+     * @param \PHP\Depend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    function endVisitParameter(\PHP_Depend_Code_Parameter $parameter);
+    function endVisitParameter(ASTParameter $parameter);
 
     /**
      * Is called when the visitor starts a new property instance.
      *
-     * @param \PHP_Depend_Code_Property $property The context property instance.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    function startVisitProperty(\PHP_Depend_Code_Property $property);
+    function startVisitProperty(ASTProperty $property);
 
     /**
      * Is called when the visitor ends with a property instance.
      *
-     * @param \PHP_Depend_Code_Property $property The context property instance.
+     * @param \PHP\Depend\Source\AST\ASTProperty $property
      * @return void
      */
-    function endVisitProperty(\PHP_Depend_Code_Property $property);
+    function endVisitProperty(ASTProperty $property);
 }

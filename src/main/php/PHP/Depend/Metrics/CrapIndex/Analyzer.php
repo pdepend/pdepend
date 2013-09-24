@@ -44,6 +44,10 @@ use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AggregateAnalyzer;
 use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\AbstractASTCallable;
+use PHP\Depend\Source\AST\ASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTMethod;
 
@@ -107,14 +111,13 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
      * Returns the calculated metrics for the given node or an empty <b>array</b>
      * when no metrics exist for the given node.
      *
-     * @param PHP_Depend_Code_NodeI $node The context source node instance.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifact $artifact
      * @return array(string=>float)
      */
-    public function getNodeMetrics(PHP_Depend_Code_NodeI $node)
+    public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->metrics[$node->getUuid()])) {
-            return $this->metrics[$node->getUuid()];
+        if (isset($this->metrics[$artifact->getUuid()])) {
+            return $this->metrics[$artifact->getUuid()];
         }
         return array();
     }
@@ -144,34 +147,32 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
     /**
      * Performs the crap index analysis.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages The context source tree.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    public function analyze(PHP_Depend_Code_NodeIterator $packages)
+    public function analyze(ASTArtifactList $namespaces)
     {
         if ($this->isEnabled() && $this->metrics === null) {
-            $this->doAnalyze($packages);
+            $this->doAnalyze($namespaces);
         }
     }
 
     /**
      * Performs the crap index analysis.
      *
-     * @param PHP_Depend_Code_NodeIterator $packages The context source tree.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    private function doAnalyze(PHP_Depend_Code_NodeIterator $packages)
+    private function doAnalyze(ASTArtifactList $namespaces)
     {
         $this->metrics = array();
         
-        $this->ccnAnalyzer->analyze($packages);
+        $this->ccnAnalyzer->analyze($namespaces);
 
         $this->fireStartAnalyzer();
 
-        foreach ($packages as $package) {
-            $package->accept($this);
+        foreach ($namespaces as $namespace) {
+            $namespace->accept($this);
         }
 
         $this->fireEndAnalyzer();
@@ -204,11 +205,10 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
     /**
      * Visits the given callable instance.
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
-    private function visitCallable(PHP_Depend_Code_AbstractCallable $callable)
+    private function visitCallable(AbstractASTCallable $callable)
     {
         $this->metrics[$callable->getUuid()] = array(
             self::M_CRAP_INDEX => $this->calculateCrapIndex($callable)
@@ -218,11 +218,10 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
     /**
      * Calculates the crap index for the given callable.
      *
-     * @param PHP_Depend_Code_AbstractCallable $callable The context callable.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTCallable $callable
      * @return float
      */
-    private function calculateCrapIndex(PHP_Depend_Code_AbstractCallable $callable)
+    private function calculateCrapIndex(AbstractASTCallable $callable)
     {
         $report = $this->createOrReturnCoverageReport();
 

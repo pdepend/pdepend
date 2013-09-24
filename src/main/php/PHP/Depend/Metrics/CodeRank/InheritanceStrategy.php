@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTInterface;
@@ -131,11 +132,10 @@ class PHP_Depend_Metrics_CodeRank_InheritanceStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param PHP_Depend_Code_NodeI $node The context node instance.
-     *
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    protected function initNode(PHP_Depend_Code_NodeI $node)
+    protected function initNode(AbstractASTArtifact $node)
     {
         if (!isset($this->nodes[$node->getUuid()])) {
             $this->nodes[$node->getUuid()] = array(

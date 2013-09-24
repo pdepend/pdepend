@@ -66,7 +66,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(0, $coverage);
+        $this->assertEquals(0, $coverage);
     }
 
     /**
@@ -79,7 +79,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(50, $coverage);
+        $this->assertEquals(50, $coverage);
     }
 
     /**
@@ -92,7 +92,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(100, $coverage);
+        $this->assertEquals(100, $coverage);
     }
 
     /**
@@ -105,7 +105,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(0, $coverage);
+        $this->assertEquals(0, $coverage);
     }
 
     /**
@@ -118,7 +118,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(50, $coverage);
+        $this->assertEquals(50, $coverage);
     }
 
     /**
@@ -131,7 +131,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(100, $coverage);
+        $this->assertEquals(100, $coverage);
     }
 
     /**
@@ -144,7 +144,7 @@ class CloverReportTest extends \PHP_Depend_AbstractTest
         $report   = $this->_createCloverReport();
         $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
 
-        self::assertEquals(0, $coverage);
+        $this->assertEquals(0, $coverage);
     }
 
     /**

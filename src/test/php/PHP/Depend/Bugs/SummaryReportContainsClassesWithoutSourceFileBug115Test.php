@@ -63,7 +63,7 @@ class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractTe
     public function testSummaryReportFiltersClassesNotFlaggedUserDefined()
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
-        self::assertSame(array(), $sxml->xpath('//class[@name="FooBar"]'));
+        $this->assertSame(array(), $sxml->xpath('//class[@name="FooBar"]'));
     }
 
     /**
@@ -74,7 +74,7 @@ class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractTe
     public function testSummaryReportFiltersInternalClasses()
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
-        self::assertSame(array(), $sxml->xpath('//class[@name="RuntimeException"]'));
+        $this->assertSame(array(), $sxml->xpath('//class[@name="RuntimeException"]'));
     }
 
     /**
@@ -85,6 +85,6 @@ class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractTe
     public function testSummaryReportDoesNotContainEmptyPackages()
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
-        self::assertSame(array(), $sxml->xpath('//package[@name="+global"]'));
+        $this->assertSame(array(), $sxml->xpath('//package[@name="+global"]'));
     }
 }

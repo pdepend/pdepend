@@ -70,7 +70,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
-        self::assertEquals(1, $project['calls']);
+        $this->assertEquals(1, $project['calls']);
     }
 
     /**
@@ -86,7 +86,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
-        self::assertEquals(2, $project['calls']);
+        $this->assertEquals(2, $project['calls']);
     }
 
     /**
@@ -102,6 +102,6 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
-        self::assertEquals(0, $project['calls']);
+        $this->assertEquals(0, $project['calls']);
     }
 }

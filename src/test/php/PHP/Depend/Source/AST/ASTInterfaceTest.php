@@ -58,7 +58,7 @@ use PHP\Depend\Util\Cache\Driver\Memory;
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
+class ASTInterfaceTest extends AbstractASTArtifactTest
 {
     /**
      * Tests the behavior of {@link \PHP\Depend\Source\AST\ASTMethod::getFirstChildOfType()}.
@@ -68,20 +68,20 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
@@ -103,29 +103,29 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
@@ -147,20 +147,20 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
@@ -171,7 +171,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $interface->addChild($node2);
 
         $child = $interface->getFirstChildOfType(
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $this->assertNull($child);
     }
@@ -373,8 +373,8 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
             ->current();
 
         $this->assertInstanceOf(
-            \PHP_Depend_Code_ASTFormalParameter::CLAZZ,
-            $class->getFirstChildOfType(\PHP_Depend_Code_ASTFormalParameter::CLAZZ)
+            \PHP\Depend\Source\AST\ASTFormalParameter::CLAZZ,
+            $class->getFirstChildOfType(\PHP\Depend\Source\AST\ASTFormalParameter::CLAZZ)
         );
     }
 
@@ -391,7 +391,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
             ->current();
 
         $parameters = $class->findChildrenOfType(
-            \PHP_Depend_Code_ASTFormalParameter::CLAZZ
+            \PHP\Depend\Source\AST\ASTFormalParameter::CLAZZ
         );
         $this->assertEquals(4, count($parameters));
     }
@@ -408,7 +408,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $interface = $this->createItem();
         $interface->setParentClassReference(
             $this->getMock(
-                'PHP_Depend_Code_ASTClassReference',
+                '\\PHP\\Depend\\Source\\AST\\ASTClassReference',
                 array(),
                 array(),
                 '',
@@ -441,7 +441,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame($copy, $copy->getMethods()->current()->getParent());
+        $this->assertSame($copy, $copy->getMethods()->current()->getParent());
     }
 
     /**
@@ -454,7 +454,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $copy->getSourceFile(),
             $copy->getMethods()->current()->getSourceFile()
         );
@@ -470,7 +470,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getInterfaces()->current(),
             $copy->getInterfaces()->current()
         );
@@ -488,7 +488,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
 
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $method->getReturnClass(),
             $copy
         );
@@ -504,7 +504,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getPackage(),
             $copy->getPackage()
         );
@@ -520,7 +520,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame($copy, $orig->getPackage()->getInterfaces()->current());
+        $this->assertSame($copy, $orig->getPackage()->getInterfaces()->current());
     }
 
     /**
@@ -533,7 +533,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        self::assertEquals(1, $orig->getPackage()->getInterfaces()->count());
+        $this->assertEquals(1, $orig->getPackage()->getInterfaces()->count());
     }
 
     /**
@@ -587,7 +587,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetStartLineReturnsZeroByDefault()
     {
         $interface = $this->createItem();
-        self::assertSame(0, $interface->getStartLine());
+        $this->assertSame(0, $interface->getStartLine());
     }
 
     /**
@@ -611,7 +611,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
                 )
             );
 
-        self::assertEquals(23, $interface->getStartLine());
+        $this->assertEquals(23, $interface->getStartLine());
     }
 
     /**
@@ -622,7 +622,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetEndLineReturnsZeroByDefault()
     {
         $interface = $this->createItem();
-        self::assertSame(0, $interface->getEndLine());
+        $this->assertSame(0, $interface->getEndLine());
     }
 
     /**
@@ -633,7 +633,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetParentClassReferenceReturnsNullByDefault()
     {
         $class = $this->createItem();
-        self::assertNull($class->getParentClassReference());
+        $this->assertNull($class->getParentClassReference());
     }
 
     /**
@@ -670,7 +670,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault()
     {
         $interface = $this->createItem();
-        self::assertSame(array(), $interface->getInterfaceReferences());
+        $this->assertSame(array(), $interface->getInterfaceReferences());
     }
 
     /**
@@ -681,7 +681,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        self::assertEquals(3, count($interface->getInterfaceReferences()));
+        $this->assertEquals(3, count($interface->getInterfaceReferences()));
     }
 
     /**
@@ -765,7 +765,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
                 )
             );
 
-        self::assertEquals(32, $interface->getEndLine());
+        $this->assertEquals(32, $interface->getEndLine());
     }
 
     /**
@@ -776,7 +776,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsAbstractReturnsAlwaysTrue()
     {
         $interface = $this->createItem();
-        self::assertTrue($interface->isAbstract());
+        $this->assertTrue($interface->isAbstract());
     }
 
     /**
@@ -787,7 +787,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsUserDefinedReturnsFalseByDefault()
     {
         $interface = $this->createItem();
-        self::assertFalse($interface->isUserDefined());
+        $this->assertFalse($interface->isUserDefined());
     }
 
     /**
@@ -800,7 +800,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $interface = $this->createItem();
         $interface->setUserDefined();
 
-        self::assertTrue($interface->isUserDefined());
+        $this->assertTrue($interface->isUserDefined());
     }
 
     /**
@@ -823,7 +823,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsCachedReturnsFalseByDefault()
     {
         $interface = $this->createItem();
-        self::assertFalse($interface->isCached());
+        $this->assertFalse($interface->isCached());
     }
 
     /**
@@ -836,7 +836,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $interface = $this->createItem();
         serialize($interface);
 
-        self::assertFalse($interface->isCached());
+        $this->assertFalse($interface->isCached());
     }
 
     /**
@@ -849,7 +849,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
         $interface = $this->createItem();
         $interface->setPackage(new ASTNamespace(__FUNCTION__));
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'constants',
                 'interfaceReferences',
@@ -883,7 +883,7 @@ class ASTInterfaceTest extends \PHP_Depend_Code_AbstractItemTest
 
         $interface->__wakeup();
 
-        self::assertSame($interface->getSourceFile(), $method->getSourceFile());
+        $this->assertSame($interface->getSourceFile(), $method->getSourceFile());
     }
 
     /**

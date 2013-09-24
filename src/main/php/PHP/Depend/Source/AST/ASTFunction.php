@@ -51,7 +51,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class ASTFunction extends \PHP_Depend_Code_AbstractCallable
+class ASTFunction extends AbstractASTCallable
 {
     /**
      * The type of this class.

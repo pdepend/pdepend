@@ -108,7 +108,7 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
         $exists = class_exists($className, true);
         set_include_path($this->includePath);
 
-        self::assertTrue($exists);
+        $this->assertTrue($exists);
     }
 
     /**
@@ -127,6 +127,6 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
         $exists = class_exists($className, true);
         set_include_path($this->includePath);
 
-        self::assertFalse($exists);
+        $this->assertFalse($exists);
     }
 }

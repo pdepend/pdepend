@@ -96,7 +96,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return \PHP_Depend_Code_ASTClassOrInterfaceReference
+     * @return \PHP\Depend\Source\AST\ASTClassOrInterfaceReference
      * @since 0.9.5
      */
     function buildAstClassOrInterfaceReference($qualifiedName);
@@ -162,7 +162,7 @@ interface Builder extends \IteratorAggregate
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
-     * @return \PHP_Depend_Code_ASTClassReference
+     * @return \PHP\Depend\Source\AST\ASTClassReference
      * @since 0.9.5
      */
     function buildAstClassReference($qualifiedName);
@@ -223,7 +223,7 @@ interface Builder extends \IteratorAggregate
      * Builds a new self reference instance.
      *
      * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $type
-     * @return \PHP_Depend_Code_ASTSelfReference
+     * @return \PHP\Depend\Source\AST\ASTSelfReference
      * @since 0.9.6
      */
     function buildAstSelfReference(AbstractASTClassOrInterface $type);
@@ -231,21 +231,21 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new parent reference instance.
      *
-     * @param \PHP_Depend_Code_ASTClassOrInterfaceReference $reference The type
+     * @param \PHP\Depend\Source\AST\ASTClassOrInterfaceReference $reference The type
      *        instance that reference the concrete target of parent.
      *
-     * @return \PHP_Depend_Code_ASTParentReference
+     * @return \PHP\Depend\Source\AST\ASTParentReference
      * @since 0.9.6
      */
     function buildAstParentReference(
-        \PHP_Depend_Code_ASTClassOrInterfaceReference $reference
+        \PHP\Depend\Source\AST\ASTClassOrInterfaceReference $reference
     );
 
     /**
      * Builds a new static reference instance.
      *
      * @param \PHP\Depend\Source\AST\AbstractASTClassOrInterface $owner
-     * @return \PHP_Depend_Code_ASTStaticReference
+     * @return \PHP\Depend\Source\AST\ASTStaticReference
      * @since 0.9.6
      */
     function buildAstStaticReference(AbstractASTClassOrInterface $owner);
@@ -253,7 +253,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new field declaration node.
      *
-     * @return \PHP_Depend_Code_ASTFieldDeclaration
+     * @return \PHP\Depend\Source\AST\ASTFieldDeclaration
      * @since 0.9.6
      */
     function buildAstFieldDeclaration();
@@ -263,7 +263,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the variable declarator.
      *
-     * @return \PHP_Depend_Code_ASTVariableDeclarator
+     * @return \PHP\Depend\Source\AST\ASTVariableDeclarator
      * @since 0.9.6
      */
     function buildAstVariableDeclarator($image);
@@ -273,7 +273,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the constant.
      *
-     * @return \PHP_Depend_Code_ASTConstant
+     * @return \PHP\Depend\Source\AST\ASTConstant
      * @since 0.9.6
      */
     function buildAstConstant($image);
@@ -283,7 +283,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the variable.
      *
-     * @return \PHP_Depend_Code_ASTVariable
+     * @return \PHP\Depend\Source\AST\ASTVariable
      * @since 0.9.6
      */
     function buildAstVariable($image);
@@ -293,7 +293,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the variable variable.
      *
-     * @return \PHP_Depend_Code_ASTVariableVariable
+     * @return \PHP\Depend\Source\AST\ASTVariableVariable
      * @since 0.9.6
      */
     function buildAstVariableVariable($image);
@@ -303,7 +303,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the compound variable.
      *
-     * @return \PHP_Depend_Code_ASTCompoundVariable
+     * @return \PHP\Depend\Source\AST\ASTCompoundVariable
      * @since 0.9.6
      */
     function buildAstCompoundVariable($image);
@@ -311,7 +311,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new compound expression node.
      *
-     * @return \PHP_Depend_Code_ASTCompoundExpression
+     * @return \PHP\Depend\Source\AST\ASTCompoundExpression
      * @since 0.9.6
      */
     function buildAstCompoundExpression();
@@ -321,7 +321,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the static declaration.
      *
-     * @return \PHP_Depend_Code_ASTStaticVariableDeclaration
+     * @return \PHP\Depend\Source\AST\ASTStaticVariableDeclaration
      * @since 0.9.6
      */
     function buildAstStaticVariableDeclaration($image);
@@ -329,7 +329,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new closure node.
      *
-     * @return \PHP_Depend_Code_ASTClosure
+     * @return \PHP\Depend\Source\AST\ASTClosure
      * @since 0.9.12
      */
     function buildAstClosure();
@@ -337,7 +337,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new formal parameters node.
      *
-     * @return \PHP_Depend_Code_ASTFormalParameters
+     * @return \PHP\Depend\Source\AST\ASTFormalParameters
      * @since 0.9.6
      */
     function buildAstFormalParameters();
@@ -345,7 +345,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new formal parameter node.
      *
-     * @return \PHP_Depend_Code_ASTFormalParameter
+     * @return \PHP\Depend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
     function buildAstFormalParameter();
@@ -353,7 +353,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new expression node.
      *
-     * @return \PHP_Depend_Code_ASTExpression
+     * @return \PHP\Depend\Source\AST\ASTExpression
      * @since 0.9.8
      */
     function buildAstExpression();
@@ -363,7 +363,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The assignment operator.
      *
-     * @return \PHP_Depend_Code_ASTAssignmentExpression
+     * @return \PHP\Depend\Source\AST\ASTAssignmentExpression
      * @since 0.9.8
      */
     function buildAstAssignmentExpression($image);
@@ -373,7 +373,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PHP_Depend_Code_ASTAllocationExpression
+     * @return \PHP\Depend\Source\AST\ASTAllocationExpression
      * @since 0.9.6
      */
     function buildAstAllocationExpression($image);
@@ -383,7 +383,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PHP_Depend_Code_ASTEvalExpression
+     * @return \PHP\Depend\Source\AST\ASTEvalExpression
      * @since 0.9.12
      */
     function buildAstEvalExpression($image);
@@ -393,7 +393,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTExitExpression
+     * @return \PHP\Depend\Source\AST\ASTExitExpression
      * @since 0.9.12
      */
     function buildAstExitExpression($image);
@@ -403,7 +403,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PHP_Depend_Code_ASTCloneExpression
+     * @return \PHP\Depend\Source\AST\ASTCloneExpression
      * @since 0.9.12
      */
     function buildAstCloneExpression($image);
@@ -413,7 +413,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PHP_Depend_Code_ASTListExpression
+     * @return \PHP\Depend\Source\AST\ASTListExpression
      * @since 0.9.12
      */
     function buildAstListExpression($image);
@@ -421,7 +421,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new include- or include_once-expression.
      *
-     * @return \PHP_Depend_Code_ASTIncludeExpression
+     * @return \PHP\Depend\Source\AST\ASTIncludeExpression
      * @since 0.9.12
      */
     function buildAstIncludeExpression();
@@ -429,7 +429,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new require- or require_once-expression.
      *
-     * @return \PHP_Depend_Code_ASTRequireExpression
+     * @return \PHP\Depend\Source\AST\ASTRequireExpression
      * @since 0.9.12
      */
     function buildAstRequireExpression();
@@ -437,7 +437,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new array-expression node.
      *
-     * @return \PHP_Depend_Code_ASTArrayIndexExpression
+     * @return \PHP\Depend\Source\AST\ASTArrayIndexExpression
      * @since 0.9.12
      */
     function buildAstArrayIndexExpression();
@@ -451,7 +451,7 @@ interface Builder extends \IteratorAggregate
      * //     --------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTStringIndexExpression
+     * @return \PHP\Depend\Source\AST\ASTStringIndexExpression
      * @since 0.9.12
      */
     function buildAstStringIndexExpression();
@@ -461,7 +461,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PHP_Depend_Code_ASTInstanceOfExpression
+     * @return \PHP\Depend\Source\AST\ASTInstanceOfExpression
      * @since 0.9.6
      */
     function buildAstInstanceOfExpression($image);
@@ -481,7 +481,7 @@ interface Builder extends \IteratorAggregate
      * }
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTIssetExpression
+     * @return \PHP\Depend\Source\AST\ASTIssetExpression
      * @since 0.9.12
      */
     function buildAstIssetExpression();
@@ -495,7 +495,7 @@ interface Builder extends \IteratorAggregate
      *         --------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTConditionalExpression
+     * @return \PHP\Depend\Source\AST\ASTConditionalExpression
      * @since 0.9.8
      */
     function buildAstConditionalExpression();
@@ -503,7 +503,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Build a new shift left expression.
      *
-     * @return \PHP_Depend_Code_ASTShiftLeftExpression
+     * @return \PHP\Depend\Source\AST\ASTShiftLeftExpression
      * @since 1.0.1
      */
     function buildAstShiftLeftExpression();
@@ -511,7 +511,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Build a new shift right expression.
      *
-     * @return \PHP_Depend_Code_ASTShiftRightExpression
+     * @return \PHP\Depend\Source\AST\ASTShiftRightExpression
      * @since 1.0.1
      */
     function buildAstShiftRightExpression();
@@ -519,7 +519,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new boolean and-expression.
      *
-     * @return \PHP_Depend_Code_ASTBooleanAndExpression
+     * @return \PHP\Depend\Source\AST\ASTBooleanAndExpression
      * @since 0.9.8
      */
     function buildAstBooleanAndExpression();
@@ -527,7 +527,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new boolean or-expression.
      *
-     * @return \PHP_Depend_Code_ASTBooleanOrExpression
+     * @return \PHP\Depend\Source\AST\ASTBooleanOrExpression
      * @since 0.9.8
      */
     function buildAstBooleanOrExpression();
@@ -535,7 +535,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new logical <b>and</b>-expression.
      *
-     * @return \PHP_Depend_Code_ASTLogicalAndExpression
+     * @return \PHP\Depend\Source\AST\ASTLogicalAndExpression
      * @since 0.9.8
      */
     function buildAstLogicalAndExpression();
@@ -543,7 +543,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new logical <b>or</b>-expression.
      *
-     * @return \PHP_Depend_Code_ASTLogicalOrExpression
+     * @return \PHP\Depend\Source\AST\ASTLogicalOrExpression
      * @since 0.9.8
      */
     function buildAstLogicalOrExpression();
@@ -551,7 +551,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
-     * @return \PHP_Depend_Code_ASTLogicalXorExpression
+     * @return \PHP\Depend\Source\AST\ASTLogicalXorExpression
      * @since 0.9.8
      */
     function buildAstLogicalXorExpression();
@@ -559,7 +559,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new trait use-statement node.
      *
-     * @return \PHP_Depend_Code_ASTTraitUseStatement
+     * @return \PHP\Depend\Source\AST\ASTTraitUseStatement
      * @since 1.0.0
      */
     function buildAstTraitUseStatement();
@@ -567,7 +567,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new trait adaptation scope.
      *
-     * @return \PHP_Depend_Code_ASTTraitAdaptation
+     * @return \PHP\Depend\Source\AST\ASTTraitAdaptation
      * @since 1.0.0
      */
     function buildAstTraitAdaptation();
@@ -577,7 +577,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The trait method name.
      *
-     * @return \PHP_Depend_Code_ASTTraitAdaptationAlias
+     * @return \PHP\Depend\Source\AST\ASTTraitAdaptationAlias
      * @since 1.0.0
      */
     function buildAstTraitAdaptationAlias($image);
@@ -587,7 +587,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The trait method name.
      *
-     * @return \PHP_Depend_Code_ASTTraitAdaptationPrecedence
+     * @return \PHP\Depend\Source\AST\ASTTraitAdaptationPrecedence
      * @since 1.0.0
      */
     function buildAstTraitAdaptationPrecedence($image);
@@ -597,7 +597,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $qualifiedName The full qualified trait name.
      *
-     * @return \PHP_Depend_Code_ASTTraitReference
+     * @return \PHP\Depend\Source\AST\ASTTraitReference
      * @since 1.0.0
      */
     function buildAstTraitReference($qualifiedName);
@@ -605,7 +605,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new switch-statement-node.
      *
-     * @return \PHP_Depend_Code_ASTSwitchStatement
+     * @return \PHP\Depend\Source\AST\ASTSwitchStatement
      * @since 0.9.8
      */
     function buildAstSwitchStatement();
@@ -615,7 +615,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this label.
      *
-     * @return \PHP_Depend_Code_ASTSwitchLabel
+     * @return \PHP\Depend\Source\AST\ASTSwitchLabel
      * @since 0.9.8
      */
     function buildAstSwitchLabel($image);
@@ -625,7 +625,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTCatchStatement
+     * @return \PHP\Depend\Source\AST\ASTCatchStatement
      * @since 0.9.8
      */
     function buildAstCatchStatement($image);
@@ -635,7 +635,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTIfStatement
+     * @return \PHP\Depend\Source\AST\ASTIfStatement
      * @since 0.9.8
      */
     function buildAstIfStatement($image);
@@ -645,7 +645,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTElseIfStatement
+     * @return \PHP\Depend\Source\AST\ASTElseIfStatement
      * @since 0.9.8
      */
     function buildAstElseIfStatement($image);
@@ -655,7 +655,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTForStatement
+     * @return \PHP\Depend\Source\AST\ASTForStatement
      * @since 0.9.8
      */
     function buildAstForStatement($image);
@@ -669,7 +669,7 @@ interface Builder extends \IteratorAggregate
      *      ------------------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTForInit
+     * @return \PHP\Depend\Source\AST\ASTForInit
      * @since 0.9.8
      */
     function buildAstForInit();
@@ -683,7 +683,7 @@ interface Builder extends \IteratorAggregate
      *                                        -------------------------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTForUpdate
+     * @return \PHP\Depend\Source\AST\ASTForUpdate
      * @since 0.9.12
      */
     function buildAstForUpdate();
@@ -693,7 +693,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTForeachStatement
+     * @return \PHP\Depend\Source\AST\ASTForeachStatement
      * @since 0.9.8
      */
     function buildAstForeachStatement($image);
@@ -703,7 +703,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTWhileStatement
+     * @return \PHP\Depend\Source\AST\ASTWhileStatement
      * @since 0.9.8
      */
     function buildAstWhileStatement($image);
@@ -713,7 +713,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PHP_Depend_Code_ASTDoWhileStatement
+     * @return \PHP\Depend\Source\AST\ASTDoWhileStatement
      * @since 0.9.12
      */
     function buildAstDoWhileStatement($image);
@@ -739,7 +739,7 @@ interface Builder extends \IteratorAggregate
      * -----------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTDeclareStatement
+     * @return \PHP\Depend\Source\AST\ASTDeclareStatement
      * @since 0.10.0
      */
     function buildAstDeclareStatement();
@@ -767,7 +767,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PHP_Depend_Code_ASTMemberPrimaryPrefix
+     * @return \PHP\Depend\Source\AST\ASTMemberPrimaryPrefix
      * @since 0.9.6
      */
     function buildAstMemberPrimaryPrefix($image);
@@ -777,7 +777,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this identifier.
      *
-     * @return \PHP_Depend_Code_ASTIdentifier
+     * @return \PHP\Depend\Source\AST\ASTIdentifier
      * @since 0.9.6
      */
     function buildAstIdentifier($image);
@@ -797,7 +797,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PHP_Depend_Code_ASTFunctionPostfix
+     * @return \PHP\Depend\Source\AST\ASTFunctionPostfix
      * @since 0.9.6
      */
     function buildAstFunctionPostfix($image);
@@ -817,7 +817,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PHP_Depend_Code_ASTMethodPostfix
+     * @return \PHP\Depend\Source\AST\ASTMethodPostfix
      * @since 0.9.6
      */
     function buildAstMethodPostfix($image);
@@ -833,7 +833,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PHP_Depend_Code_ASTConstantPostfix
+     * @return \PHP\Depend\Source\AST\ASTConstantPostfix
      * @since 0.9.6
      */
     function buildAstConstantPostfix($image);
@@ -853,7 +853,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PHP_Depend_Code_ASTPropertyPostfix
+     * @return \PHP\Depend\Source\AST\ASTPropertyPostfix
      * @since 0.9.6
      */
     function buildAstPropertyPostfix($image);
@@ -871,7 +871,7 @@ interface Builder extends \IteratorAggregate
      * //       ------------
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTArguments
+     * @return \PHP\Depend\Source\AST\ASTArguments
      * @since 0.9.6
      */
     function buildAstArguments();
@@ -879,7 +879,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new array type node.
      *
-     * @return \PHP_Depend_Code_ASTTypeArray
+     * @return \PHP\Depend\Source\AST\ASTTypeArray
      * @since 0.9.6
      */
     function buildAstTypeArray();
@@ -887,7 +887,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new node for the callable type.
      *
-     * @return \PHP_Depend_Code_ASTTypeCallable
+     * @return \PHP\Depend\Source\AST\ASTTypeCallable
      * @since 1.0.0
      */
     function buildAstTypeCallable();
@@ -897,7 +897,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the primitive type.
      *
-     * @return \PHP_Depend_Code_ASTPrimitiveType
+     * @return \PHP\Depend\Source\AST\ASTPrimitiveType
      * @since 0.9.6
      */
     function buildAstPrimitiveType($image);
@@ -907,7 +907,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the literal node.
      *
-     * @return \PHP_Depend_Code_ASTLiteral
+     * @return \PHP\Depend\Source\AST\ASTLiteral
      * @since 0.9.6
      */
     function buildAstLiteral($image);
@@ -918,7 +918,7 @@ interface Builder extends \IteratorAggregate
      * <code>
      * $string = "Manuel $Pichler <{$email}>";
      *
-     * // \PHP_Depend_Code_ASTString
+     * // \PHP\Depend\Source\AST\ASTString
      * // |-- ASTLiteral             -  "Manuel ")
      * // |-- ASTVariable            -  $Pichler
      * // |-- ASTLiteral             -  " <"
@@ -927,7 +927,7 @@ interface Builder extends \IteratorAggregate
      * // |-- ASTLiteral             -  ">"
      * </code>
      *
-     * @return \PHP_Depend_Code_ASTString
+     * @return \PHP\Depend\Source\AST\ASTString
      * @since 0.9.10
      */
     function buildAstString();
@@ -935,7 +935,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new php array node.
      *
-     * @return \PHP_Depend_Code_ASTArray
+     * @return \PHP\Depend\Source\AST\ASTArray
      * @since 1.0.0
      */
     function buildAstArray();
@@ -943,7 +943,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new array element node.
      *
-     * @return \PHP_Depend_Code_ASTArrayElement
+     * @return \PHP\Depend\Source\AST\ASTArrayElement
      * @since 1.0.0
      */
     function buildAstArrayElement();
@@ -951,7 +951,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new heredoc node.
      *
-     * @return \PHP_Depend_Code_ASTHeredoc
+     * @return \PHP\Depend\Source\AST\ASTHeredoc
      * @since 0.9.12
      */
     function buildAstHeredoc();
@@ -970,7 +970,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTConstantDefinition
+     * @return \PHP\Depend\Source\AST\ASTConstantDefinition
      * @since 0.9.6
      */
     function buildAstConstantDefinition($image);
@@ -1008,7 +1008,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTConstantDeclarator
+     * @return \PHP\Depend\Source\AST\ASTConstantDeclarator
      * @since 0.9.6
      */
     function buildAstConstantDeclarator($image);
@@ -1018,7 +1018,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $cdata The comment text.
      *
-     * @return \PHP_Depend_Code_ASTComment
+     * @return \PHP\Depend\Source\AST\ASTComment
      * @since 0.9.8
      */
     function buildAstComment($cdata);
@@ -1028,7 +1028,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The unary expression image/character.
      *
-     * @return \PHP_Depend_Code_ASTUnaryExpression
+     * @return \PHP\Depend\Source\AST\ASTUnaryExpression
      * @since 0.9.11
      */
     function buildAstUnaryExpression($image);
@@ -1038,7 +1038,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The cast-expression image/character.
      *
-     * @return \PHP_Depend_Code_ASTCastExpression
+     * @return \PHP\Depend\Source\AST\ASTCastExpression
      * @since 0.10.0
      */
     function buildAstCastExpression($image);
@@ -1048,7 +1048,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The postfix-expression image/character.
      *
-     * @return \PHP_Depend_Code_ASTPostfixExpression
+     * @return \PHP\Depend\Source\AST\ASTPostfixExpression
      * @since 0.10.0
      */
     function buildAstPostfixExpression($image);
@@ -1056,7 +1056,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new pre-increment-expression node instance.
      *
-     * @return \PHP_Depend_Code_ASTPreIncrementExpression
+     * @return \PHP\Depend\Source\AST\ASTPreIncrementExpression
      * @since 0.10.0
      */
     function buildAstPreIncrementExpression();
@@ -1064,7 +1064,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new pre-decrement-expression node instance.
      *
-     * @return \PHP_Depend_Code_ASTPreDecrementExpression
+     * @return \PHP\Depend\Source\AST\ASTPreDecrementExpression
      * @since 0.10.0
      */
     function buildAstPreDecrementExpression();
@@ -1072,7 +1072,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new function/method scope instance.
      *
-     * @return \PHP_Depend_Code_ASTScope
+     * @return \PHP\Depend\Source\AST\ASTScope
      * @since 0.9.12
      */
     function buildAstScope();
@@ -1080,7 +1080,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new statement instance.
      *
-     * @return \PHP_Depend_Code_ASTStatement
+     * @return \PHP\Depend\Source\AST\ASTStatement
      * @since 0.9.12
      */
     function buildAstStatement();
@@ -1090,7 +1090,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTReturnStatement
+     * @return \PHP\Depend\Source\AST\ASTReturnStatement
      * @since 0.9.12
      */
     function buildAstReturnStatement($image);
@@ -1100,7 +1100,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTBreakStatement
+     * @return \PHP\Depend\Source\AST\ASTBreakStatement
      * @since 0.9.12
      */
     function buildAstBreakStatement($image);
@@ -1110,7 +1110,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTContinueStatement
+     * @return \PHP\Depend\Source\AST\ASTContinueStatement
      * @since 0.9.12
      */
     function buildAstContinueStatement($image);
@@ -1118,7 +1118,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new scope-statement instance.
      *
-     * @return \PHP_Depend_Code_ASTScopeStatement
+     * @return \PHP\Depend\Source\AST\ASTScopeStatement
      * @since 0.9.12
      */
     function buildAstScopeStatement();
@@ -1128,7 +1128,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTTryStatement
+     * @return \PHP\Depend\Source\AST\ASTTryStatement
      * @since 0.9.12
      */
     function buildAstTryStatement($image);
@@ -1138,7 +1138,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTThrowStatement
+     * @return \PHP\Depend\Source\AST\ASTThrowStatement
      * @since 0.9.12
      */
     function buildAstThrowStatement($image);
@@ -1148,7 +1148,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTGotoStatement
+     * @return \PHP\Depend\Source\AST\ASTGotoStatement
      * @since 0.9.12
      */
     function buildAstGotoStatement($image);
@@ -1158,7 +1158,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTLabelStatement
+     * @return \PHP\Depend\Source\AST\ASTLabelStatement
      * @since 0.9.12
      */
     function buildAstLabelStatement($image);
@@ -1166,7 +1166,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new global-statement instance.
      *
-     * @return \PHP_Depend_Code_ASTGlobalStatement
+     * @return \PHP\Depend\Source\AST\ASTGlobalStatement
      * @since 0.9.12
      */
     function buildAstGlobalStatement();
@@ -1174,7 +1174,7 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new unset-statement instance.
      *
-     * @return \PHP_Depend_Code_ASTUnsetStatement
+     * @return \PHP\Depend\Source\AST\ASTUnsetStatement
      * @since 0.9.12
      */
     function buildAstUnsetStatement();
@@ -1184,7 +1184,7 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PHP_Depend_Code_ASTEchoStatement
+     * @return \PHP\Depend\Source\AST\ASTEchoStatement
      * @since 0.9.12
      */
     function buildAstEchoStatement($image);

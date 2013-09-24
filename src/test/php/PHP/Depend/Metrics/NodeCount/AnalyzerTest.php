@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
@@ -68,10 +69,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $package->addType($notUserDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        self::assertEquals(0, $metrics['noc']);
+        $this->assertEquals(0, $metrics['noc']);
     }
 
     /**
@@ -88,10 +89,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $package->addType($userDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        self::assertEquals(1, $metrics['noc']);
+        $this->assertEquals(1, $metrics['noc']);
     }
 
     /**
@@ -107,10 +108,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $package->addType($notUserDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        self::assertEquals(0, $metrics['noi']);
+        $this->assertEquals(0, $metrics['noi']);
     }
 
     /**
@@ -127,10 +128,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $package->addType($userDefined);
 
         $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
-        $analyzer->analyze(new PHP_Depend_Code_NodeIterator(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
-        self::assertEquals(1, $metrics['noi']);
+        $this->assertEquals(1, $metrics['noi']);
     }
 
     /**
@@ -145,7 +146,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(3, $metrics['nop']);
+        $this->assertEquals(3, $metrics['nop']);
     }
     
     /**
@@ -160,7 +161,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(6, $metrics['noc']);
+        $this->assertEquals(6, $metrics['noc']);
     }
 
     /**
@@ -179,7 +180,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'A' => array('noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0),
                 'B' => array('noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0),
@@ -201,7 +202,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(9, $metrics['noi']);
+        $this->assertEquals(9, $metrics['noi']);
     }
 
     /**
@@ -220,7 +221,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'A' => array('noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0),
                 'B' => array('noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0),
@@ -242,7 +243,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(9, $metrics['nom']);
+        $this->assertEquals(9, $metrics['nom']);
     }
 
     /**
@@ -261,7 +262,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'A' => array('noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0),
                 'B' => array('noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0),
@@ -283,7 +284,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getProjectMetrics();
-        self::assertEquals(6, $metrics['nof']);
+        $this->assertEquals(6, $metrics['nof']);
     }
 
     /**
@@ -302,7 +303,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
         }
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'A' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3),
                 'B' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2),

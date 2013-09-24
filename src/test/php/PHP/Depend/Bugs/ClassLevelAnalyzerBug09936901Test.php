@@ -79,6 +79,6 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractTest
 
         $metrics = $analyzer->getNodeMetrics($class);
 
-        self::assertEquals(2, $metrics['wmci']);
+        $this->assertEquals(2, $metrics['wmci']);
     }
 }

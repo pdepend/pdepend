@@ -91,7 +91,7 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new \PHP\Depend\Input\ExtensionFilter(array('php')));
 
-        self::assertInstanceOf('Iterator', $pdepend->analyze());
+        $this->assertInstanceOf('Iterator', $pdepend->analyze());
     }
     
     /**

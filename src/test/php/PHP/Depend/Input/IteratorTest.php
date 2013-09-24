@@ -65,7 +65,7 @@ class IteratorTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('php4'));
         $expected = array('file4.php4');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -78,7 +78,7 @@ class IteratorTest extends \PHP_Depend_AbstractTest
         $actual   = $this->createFilteredFileList(array('inc', 'php'));
         $expected = array('file1.inc', 'file2.php');
 
-        self::assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**

@@ -63,7 +63,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsStringAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('SimpleClassName', $class->getName());
+        $this->assertSame('SimpleClassName', $class->getName());
     }
 
     /**
@@ -74,7 +74,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsStringAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('SimpleInterfaceName', $interface->getName());
+        $this->assertSame('SimpleInterfaceName', $interface->getName());
     }
 
     /**
@@ -85,7 +85,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNullAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('Null', $class->getName());
+        $this->assertSame('Null', $class->getName());
     }
 
     /**
@@ -96,7 +96,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNullAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('Null', $interface->getName());
+        $this->assertSame('Null', $interface->getName());
     }
 
     /**
@@ -107,7 +107,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTrueAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('True', $class->getName());
+        $this->assertSame('True', $class->getName());
     }
 
     /**
@@ -118,7 +118,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTrueAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('True', $interface->getName());
+        $this->assertSame('True', $interface->getName());
     }
 
     /**
@@ -129,7 +129,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsFalseAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('False', $class->getName());
+        $this->assertSame('False', $class->getName());
     }
 
     /**
@@ -140,7 +140,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsFalseAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('False', $interface->getName());
+        $this->assertSame('False', $interface->getName());
     }
 
     /**
@@ -151,7 +151,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsInsteadofAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('insteadof', $class->getName());
+        $this->assertSame('insteadof', $class->getName());
     }
 
     /**
@@ -162,7 +162,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsInsteadofAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('insteadof', $interface->getName());
+        $this->assertSame('insteadof', $interface->getName());
     }
 
     /**
@@ -173,7 +173,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsUseAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('Use', $class->getName());
+        $this->assertSame('Use', $class->getName());
     }
 
     /**
@@ -184,7 +184,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsUseAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('Use', $interface->getName());
+        $this->assertSame('Use', $interface->getName());
     }
 
     /**
@@ -196,7 +196,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('Namespace', $class->getName());
+        $this->assertSame('Namespace', $class->getName());
     }
 
     /**
@@ -208,7 +208,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('Namespace', $interface->getName());
+        $this->assertSame('Namespace', $interface->getName());
     }
 
     /**
@@ -220,7 +220,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceConstantAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('__NAMESPACE__', $class->getName());
+        $this->assertSame('__NAMESPACE__', $class->getName());
     }
 
     /**
@@ -232,7 +232,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceConstantAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('__NAMESPACE__', $interface->getName());
+        $this->assertSame('__NAMESPACE__', $interface->getName());
     }
 
     /**
@@ -244,7 +244,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('Trait', $class->getName());
+        $this->assertSame('Trait', $class->getName());
     }
 
     /**
@@ -256,7 +256,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('Trait', $interface->getName());
+        $this->assertSame('Trait', $interface->getName());
     }
 
     /**
@@ -268,7 +268,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitConstantAsClassName()
     {
         $class = $this->getFirstTypeForTestCase();
-        self::assertSame('__TRAIT__', $class->getName());
+        $this->assertSame('__TRAIT__', $class->getName());
     }
 
     /**
@@ -280,7 +280,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitConstantAsInterfaceName()
     {
         $interface = $this->getFirstTypeForTestCase();
-        self::assertSame('__TRAIT__', $interface->getName());
+        $this->assertSame('__TRAIT__', $interface->getName());
     }
 
     /**
@@ -291,7 +291,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsGotoKeywordAsClassName()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals('Goto', $class->getName());
+        $this->assertEquals('Goto', $class->getName());
     }
 
     /**
@@ -302,7 +302,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsGotoKeywordAsInterfaceName()
     {
         $class = $this->getFirstInterfaceForTestCase();
-        self::assertEquals('Goto', $class->getName());
+        $this->assertEquals('Goto', $class->getName());
     }
 
     /**
@@ -314,7 +314,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsDirConstantAsClassName()
     {
         $class = $this->getFirstClassForTestCase();
-        self::assertEquals('__DIR__', $class->getName());
+        $this->assertEquals('__DIR__', $class->getName());
     }
 
     /**
@@ -326,7 +326,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsDirConstantAsInterfaceName()
     {
         $class = $this->getFirstInterfaceForTestCase();
-        self::assertEquals('__DIR__', $class->getName());
+        $this->assertEquals('__DIR__', $class->getName());
     }
 
     /**
@@ -361,7 +361,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsStringAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('myMethodName', $method->getName());
+        $this->assertEquals('myMethodName', $method->getName());
     }
 
     /**
@@ -372,7 +372,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsUseKeywordAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('Use', $method->getName());
+        $this->assertEquals('Use', $method->getName());
     }
 
     /**
@@ -383,7 +383,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsGotoKeywordAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('Goto', $method->getName());
+        $this->assertEquals('Goto', $method->getName());
     }
 
     /**
@@ -394,7 +394,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsSelfKeywordAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('self', $method->getName());
+        $this->assertEquals('self', $method->getName());
     }
 
     /**
@@ -405,7 +405,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNullAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('null', $method->getName());
+        $this->assertEquals('null', $method->getName());
     }
 
     /**
@@ -416,7 +416,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTrueAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('true', $method->getName());
+        $this->assertEquals('true', $method->getName());
     }
 
     /**
@@ -427,7 +427,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsFalseAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('false', $method->getName());
+        $this->assertEquals('false', $method->getName());
     }
 
     /**
@@ -438,7 +438,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsDirConstantAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('__DIR__', $method->getName());
+        $this->assertEquals('__DIR__', $method->getName());
     }
 
     /**
@@ -450,7 +450,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceKeywordAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('nameSpace', $method->getName());
+        $this->assertEquals('nameSpace', $method->getName());
     }
 
     /**
@@ -462,7 +462,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceConstantAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('__NAMESPACE__', $method->getName());
+        $this->assertEquals('__NAMESPACE__', $method->getName());
     }
 
     /**
@@ -473,7 +473,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsParentKeywordAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('Parent', $method->getName());
+        $this->assertEquals('Parent', $method->getName());
     }
 
     /**
@@ -485,9 +485,9 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesCallableTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTType::CLAZZ);
 
-        $this->assertInstanceOf(\PHP_Depend_Code_ASTTypeCallable::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP\Depend\Source\AST\ASTTypeCallable::CLAZZ, $type);
     }
 
     /**
@@ -499,9 +499,9 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesNamespaceTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTType::CLAZZ);
 
-        $this->assertInstanceOf(\PHP_Depend_Code_ASTClassOrInterfaceReference::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP\Depend\Source\AST\ASTClassOrInterfaceReference::CLAZZ, $type);
     }
 
     /**
@@ -513,9 +513,9 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesArrayTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTType::CLAZZ);
 
-        $this->assertInstanceOf(\PHP_Depend_Code_ASTTypeArray::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP\Depend\Source\AST\ASTTypeArray::CLAZZ, $type);
     }
 
     /**
@@ -527,9 +527,9 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesSelfTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PHP_Depend_Code_ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTType::CLAZZ);
 
-        $this->assertInstanceOf(\PHP_Depend_Code_ASTSelfReference::CLAZZ, $type);
+        $this->assertInstanceOf(\PHP\Depend\Source\AST\ASTSelfReference::CLAZZ, $type);
     }
 
     /**
@@ -541,7 +541,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesCompoundStaticMethodInvocation()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $postfix = $method->getFirstChildOfType(\PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+        $postfix = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTMethodPostfix::CLAZZ);
 
         $this->assertNotNull($postfix);
     }
@@ -555,7 +555,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesVariableStaticMethodInvocation()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $postfix = $method->getFirstChildOfType(\PHP_Depend_Code_ASTMethodPostfix::CLAZZ);
+        $postfix = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTMethodPostfix::CLAZZ);
 
         $this->assertNotNull($postfix);
     }
@@ -569,7 +569,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesBinaryIntegerLiteral()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $literal = $method->getFirstChildOfType(\PHP_Depend_Code_ASTLiteral::CLAZZ);
+        $literal = $method->getFirstChildOfType(\PHP\Depend\Source\AST\ASTLiteral::CLAZZ);
 
         $this->assertEquals('0b0100110100111', $literal->getImage());
     }
@@ -621,9 +621,9 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesRegularArraySyntax()
     {
         $this->assertInstanceOf(
-            \PHP_Depend_Code_ASTArray::CLAZZ,
+            \PHP\Depend\Source\AST\ASTArray::CLAZZ,
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType(\PHP_Depend_Code_ASTArray::CLAZZ)
+                ->getFirstChildOfType(\PHP\Depend\Source\AST\ASTArray::CLAZZ)
         );
     }
 
@@ -636,9 +636,9 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserHandlesShortArraySyntax()
     {
         $this->assertInstanceOf(
-            \PHP_Depend_Code_ASTArray::CLAZZ,
+            \PHP\Depend\Source\AST\ASTArray::CLAZZ,
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType(\PHP_Depend_Code_ASTArray::CLAZZ)
+                ->getFirstChildOfType(\PHP\Depend\Source\AST\ASTArray::CLAZZ)
         );
     }
 
@@ -669,7 +669,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsGotoAsFunctionName()
     {
         $function = $this->getFirstFunctionForTestCase();
-        self::assertEquals('goto', $function->getName());
+        $this->assertEquals('goto', $function->getName());
     }
 
     /**
@@ -681,7 +681,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsDirConstantAsFunctionName()
     {
         $function = $this->getFirstFunctionForTestCase();
-        self::assertEquals('__DIR__', $function->getName());
+        $this->assertEquals('__DIR__', $function->getName());
     }
 
     /**
@@ -693,7 +693,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceKeywordAsFunctionName()
     {
         $method = $this->getFirstFunctionForTestCase();
-        self::assertEquals('namespace', $method->getName());
+        $this->assertEquals('namespace', $method->getName());
     }
 
     /**
@@ -705,7 +705,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsNamespaceConstantAsFunctionName()
     {
         $method = $this->getFirstFunctionForTestCase();
-        self::assertEquals('__NAMESPACE__', $method->getName());
+        $this->assertEquals('__NAMESPACE__', $method->getName());
     }
 
     /**
@@ -717,7 +717,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('trait', $method->getName());
+        $this->assertEquals('trait', $method->getName());
     }
 
     /**
@@ -729,7 +729,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitConstantAsMethodName()
     {
         $method = $this->getFirstMethodForTestCase();
-        self::assertEquals('__trait__', $method->getName());
+        $this->assertEquals('__trait__', $method->getName());
     }
 
     /**
@@ -741,7 +741,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitAsFunctionName()
     {
         $function = $this->getFirstFunctionForTestCase();
-        self::assertEquals('trait', $function->getName());
+        $this->assertEquals('trait', $function->getName());
     }
 
     /**
@@ -753,7 +753,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
     public function testParserAcceptsTraitConstantAsFunctionName()
     {
         $function = $this->getFirstFunctionForTestCase();
-        self::assertEquals('__TRAIT__', $function->getName());
+        $this->assertEquals('__TRAIT__', $function->getName());
     }
 
     /**
@@ -787,7 +787,7 @@ class PHPParserGenericTest extends \PHP_Depend_AbstractTest
      * Returns the first property that could be found in the code under test for
      * the calling test case.
      *
-     * @return \PHP_Depend_Code_Property
+     * @return \PHP\Depend\Source\AST\ASTProperty
      */
     protected function getFirstPropertyForTestCase()
     {

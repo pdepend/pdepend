@@ -62,7 +62,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsInternalTypeDetectsInternalClassPrefixedWithBackslash()
     {
-        self::assertTrue(Type::isInternalType('\LogicException'));
+        $this->assertTrue(Type::isInternalType('\LogicException'));
     }
 
     /**
@@ -72,7 +72,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testGetTypePackageReturnsNullWhenGivenClassIsNotExtensionClass()
     {
-        self::assertNull(Type::getTypePackage(__CLASS__));
+        $this->assertNull(Type::getTypePackage(__CLASS__));
     }
 
     /**
@@ -82,7 +82,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsScalarTypeReturnsTrueCaseInsensitive()
     {
-        self::assertTrue(Type::isScalarType('ArRaY'));
+        $this->assertTrue(Type::isScalarType('ArRaY'));
     }
 
     /**
@@ -92,7 +92,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsScalarTypeReturnsTrueMetaphone()
     {
-        self::assertTrue(Type::isScalarType('Arrai'));
+        $this->assertTrue(Type::isScalarType('Arrai'));
     }
 
     /**
@@ -102,7 +102,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsScalarTypeReturnsTrueSoundex()
     {
-        self::assertTrue(Type::isScalarType('Imteger'));
+        $this->assertTrue(Type::isScalarType('Imteger'));
     }
 
     /**
@@ -112,7 +112,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsPrimitiveTypeReturnsTrueForMatchingInput()
     {
-        self::assertTrue(Type::isPrimitiveType('int'));
+        $this->assertTrue(Type::isPrimitiveType('int'));
     }
 
     /**
@@ -122,7 +122,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsPrimitiveTypeReturnsFalseForNotMatchingInput()
     {
-        self::assertFalse(Type::isPrimitiveType('input'));
+        $this->assertFalse(Type::isPrimitiveType('input'));
     }
 
     /**
@@ -133,7 +133,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
     public function testGetPrimitiveTypeReturnsExpectedValueForExactMatch()
     {
         $actual = Type::getPrimitiveType('int');
-        self::assertEquals(Type::PHP_TYPE_INTEGER, $actual);
+        $this->assertEquals(Type::PHP_TYPE_INTEGER, $actual);
     }
 
     /**
@@ -144,7 +144,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
     public function testGetPrimitiveTypeWorksCaseInsensitive()
     {
         $actual = Type::getPrimitiveType('INT');
-        self::assertEquals(Type::PHP_TYPE_INTEGER, $actual);
+        $this->assertEquals(Type::PHP_TYPE_INTEGER, $actual);
     }
 
     /**
@@ -154,7 +154,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testGetPrimitiveTypeReturnsNullForNonPrimitive()
     {
-        self::assertNull(Type::getPrimitiveType('FooBarBaz'));
+        $this->assertNull(Type::getPrimitiveType('FooBarBaz'));
     }
 
     /**
@@ -165,7 +165,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
     public function testGetPrimitiveTypeFindsTypeByMetaphone()
     {
         $int = Type::getPrimitiveType('indeger');
-        self::assertEquals(Type::PHP_TYPE_INTEGER, $int);
+        $this->assertEquals(Type::PHP_TYPE_INTEGER, $int);
     }
 
     /**
@@ -176,7 +176,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
     public function testGetPrimitiveTypeFindsTypeBySoundex()
     {
         $int = Type::getPrimitiveType('imtege');
-        self::assertEquals(Type::PHP_TYPE_INTEGER, $int);
+        $this->assertEquals(Type::PHP_TYPE_INTEGER, $int);
     }
 
     /**
@@ -189,7 +189,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
         if (!extension_loaded('spl')) {
             $this->markTestSkipped('SPL extension not loaded.');
         }
-        self::assertTrue(Type::isInternalPackage('+spl'));
+        $this->assertTrue(Type::isInternalPackage('+spl'));
     }
 
     /**
@@ -200,7 +200,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
     public function testGetTypePackageReturnsExpectedExtensionNameForClassPrefixedWithBackslash()
     {
         $extensionName = Type::getTypePackage('\LogicException');
-        self::assertEquals('+spl', $extensionName);
+        $this->assertEquals('+spl', $extensionName);
     }
     
     /**
@@ -210,7 +210,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsArrayReturnsFalseForNonArrayString()
     {
-        self::assertFalse(Type::isArrayType('Pdepend'));
+        $this->assertFalse(Type::isArrayType('Pdepend'));
     }
 
     /**
@@ -220,7 +220,7 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsArrayReturnsTrueForLowerCaseArrayString()
     {
-        self::assertTrue(Type::isArrayType('array'));
+        $this->assertTrue(Type::isArrayType('array'));
     }
 
     /**
@@ -230,6 +230,6 @@ class TypeTest extends \PHP_Depend_AbstractTest
      */
     public function testIsArrayPerformsCheckCaseInsensitive()
     {
-        self::assertTrue(Type::isArrayType('ArRaY'));
+        $this->assertTrue(Type::isArrayType('ArRaY'));
     }
 }

@@ -39,6 +39,7 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTNamespace;
 
 /**
@@ -65,7 +66,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
         $package  = new ASTNamespace('package1');
-        $packages = new PHP_Depend_Code_NodeIterator(array($package));
+        $packages = new ASTArtifactList(array($package));
 
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
         $analyzer->analyze($packages);
@@ -92,7 +93,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     public function testGetRequiredAnalyzersReturnsExpectedClassNames()
     {
         $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        self::assertEquals(
+        $this->assertEquals(
             array(PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ),
             $analyzer->getRequiredAnalyzers()
         );
@@ -105,7 +106,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
     {
-        self::assertEquals(
+        $this->assertEquals(
             array('impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'),
             array_keys($this->_calculateClassMetrics())
         );
@@ -118,7 +119,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetric()
     {
-        self::assertEquals(4, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(4, $this->_calculateClassMetric('impl'));
     }
 
     /**
@@ -128,7 +129,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetric1()
     {
-        self::assertEquals(6, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(6, $this->_calculateClassMetric('impl'));
     }
 
     /**
@@ -138,7 +139,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetric2()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(2, $this->_calculateClassMetric('impl'));
     }
 
     /**
@@ -148,7 +149,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetricContainsUnknownImplementedInterface()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(1, $this->_calculateClassMetric('impl'));
     }
 
     /**
@@ -158,7 +159,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(1, $this->_calculateClassMetric('impl'));
     }
 
     /**
@@ -168,7 +169,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetricContainsInternalImplementedInterface()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(1, $this->_calculateClassMetric('impl'));
     }
 
     /**
@@ -178,7 +179,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCISMetricZeroInheritance()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(2, $this->_calculateClassMetric('cis'));
     }
 
     /**
@@ -188,7 +189,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCISMetricOneLevelInheritance()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(2, $this->_calculateClassMetric('cis'));
     }
 
     /**
@@ -198,7 +199,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCISMetricTwoLevelInheritance()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(3, $this->_calculateClassMetric('cis'));
     }
 
     /**
@@ -208,7 +209,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(2, $this->_calculateClassMetric('cis'));
     }
 
     /**
@@ -218,7 +219,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCSZMetricZeroInheritance()
     {
-        self::assertEquals(6, $this->_calculateClassMetric('csz'));
+        $this->assertEquals(6, $this->_calculateClassMetric('csz'));
     }
 
     /**
@@ -228,7 +229,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCSZMetricOneLevelInheritance()
     {
-        self::assertEquals(4, $this->_calculateClassMetric('csz'));
+        $this->assertEquals(4, $this->_calculateClassMetric('csz'));
     }
 
     /**
@@ -238,7 +239,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('csz'));
+        $this->assertEquals(2, $this->_calculateClassMetric('csz'));
     }
 
     /**
@@ -248,7 +249,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForEmptyClass()
     {
-        self::assertEquals(0, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(0, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -258,7 +259,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForClassWithPublicMethod()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(1, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -268,7 +269,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForClassWithPublicMethods()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(3, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -278,7 +279,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForClassWithPublicStaticMethod()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(1, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -288,7 +289,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForClassWithProtectedMethod()
     {
-        self::assertEquals(0, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(0, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -298,7 +299,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForClassWithPrivateMethod()
     {
-        self::assertEquals(0, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(0, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -308,7 +309,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForClassWithAllVisibilityMethods()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(1, $this->_calculateClassMetric('npm'));
     }
 
     /**
@@ -318,7 +319,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSMetricZeroInheritance()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('vars'));
+        $this->assertEquals(1, $this->_calculateClassMetric('vars'));
     }
 
     /**
@@ -328,7 +329,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSMetricOneLevelInheritance()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('vars'));
+        $this->assertEquals(3, $this->_calculateClassMetric('vars'));
     }
 
     /**
@@ -338,7 +339,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSiMetric()
     {
-        self::assertEquals(4, $this->_calculateClassMetric('varsi'));
+        $this->assertEquals(4, $this->_calculateClassMetric('varsi'));
     }
 
     /**
@@ -348,7 +349,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSiMetricWithInheritance()
     {
-        self::assertEquals(5, $this->_calculateClassMetric('varsi'));
+        $this->assertEquals(5, $this->_calculateClassMetric('varsi'));
     }
 
     /**
@@ -358,7 +359,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSnpMetric()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('varsnp'));
+        $this->assertEquals(2, $this->_calculateClassMetric('varsnp'));
     }
 
     /**
@@ -368,7 +369,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSnpMetricWithInheritance()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('varsnp'));
+        $this->assertEquals(1, $this->_calculateClassMetric('varsnp'));
     }
 
     /**
@@ -378,7 +379,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCMetric()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('wmc'));
+        $this->assertEquals(3, $this->_calculateClassMetric('wmc'));
     }
 
     /**
@@ -388,7 +389,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCMetricOneLevelInheritance()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('wmc'));
+        $this->assertEquals(3, $this->_calculateClassMetric('wmc'));
     }
 
     /**
@@ -398,7 +399,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCMetricTwoLevelInheritance()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('wmc'));
+        $this->assertEquals(3, $this->_calculateClassMetric('wmc'));
     }
 
     /**
@@ -408,7 +409,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCiMetric()
     {
-        self::assertEquals(3, $this->_calculateClassMetric('wmci'));
+        $this->assertEquals(3, $this->_calculateClassMetric('wmci'));
     }
 
     /**
@@ -418,7 +419,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCiMetricOneLevelInheritance()
     {
-        self::assertEquals(4, $this->_calculateClassMetric('wmci'));
+        $this->assertEquals(4, $this->_calculateClassMetric('wmci'));
     }
 
     /**
@@ -428,7 +429,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCiMetricTwoLevelInheritance()
     {
-        self::assertEquals(5, $this->_calculateClassMetric('wmci'));
+        $this->assertEquals(5, $this->_calculateClassMetric('wmci'));
     }
 
     /**
@@ -438,7 +439,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCnpMetric()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('wmcnp'));
+        $this->assertEquals(1, $this->_calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -448,7 +449,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCnpMetricOneLevelInheritance()
     {
-        self::assertEquals(2, $this->_calculateClassMetric('wmcnp'));
+        $this->assertEquals(2, $this->_calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -458,7 +459,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCnpMetricTwoLevelInheritance()
     {
-        self::assertEquals(1, $this->_calculateClassMetric('wmcnp'));
+        $this->assertEquals(1, $this->_calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -506,7 +507,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
     {
         $metrics = $this->_calculateTraitMetrics();
 
-        self::assertInternalType('array', $metrics);
+        $this->assertInternalType('array', $metrics);
 
         return $metrics;
     }
@@ -522,7 +523,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics)
     {
-        self::assertEquals(
+        $this->assertEquals(
             array('impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'),
             array_keys($metrics)
         );
@@ -539,7 +540,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateIMPLMetricForTrait(array $metrics)
     {
-        self::assertEquals(0, $metrics['impl']);
+        $this->assertEquals(0, $metrics['impl']);
     }
 
     /**
@@ -553,7 +554,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCISMetricForTrait(array $metrics)
     {
-        self::assertEquals(2, $metrics['cis']);
+        $this->assertEquals(2, $metrics['cis']);
     }
 
     /**
@@ -567,7 +568,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateCSZMetricForTrait(array $metrics)
     {
-        self::assertEquals(3, $metrics['csz']);
+        $this->assertEquals(3, $metrics['csz']);
     }
 
     /**
@@ -581,7 +582,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateNpmMetricForTrait(array $metrics)
     {
-        self::assertEquals(2, $metrics['npm']);
+        $this->assertEquals(2, $metrics['npm']);
     }
 
     /**
@@ -595,7 +596,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSMetricForTrait(array $metrics)
     {
-        self::assertEquals(0, $metrics['vars']);
+        $this->assertEquals(0, $metrics['vars']);
     }
 
     /**
@@ -609,7 +610,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSiMetricForTrait(array $metrics)
     {
-        self::assertEquals(0, $metrics['varsi']);
+        $this->assertEquals(0, $metrics['varsi']);
     }
 
     /**
@@ -623,7 +624,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateVARSnpMetricForTrait(array $metrics)
     {
-        self::assertEquals(0, $metrics['varsnp']);
+        $this->assertEquals(0, $metrics['varsnp']);
     }
 
     /**
@@ -637,7 +638,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCMetricForTrait(array $metrics)
     {
-        self::assertEquals(10, $metrics['wmc']);
+        $this->assertEquals(10, $metrics['wmc']);
     }
 
     /**
@@ -651,7 +652,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCiMetricForTrait(array $metrics)
     {
-        self::assertEquals(10, $metrics['wmci']);
+        $this->assertEquals(10, $metrics['wmci']);
     }
 
     /**
@@ -665,7 +666,7 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testCalculateWMCnpMetricForTrait(array $metrics)
     {
-        self::assertEquals(8, $metrics['wmcnp']);
+        $this->assertEquals(8, $metrics['wmcnp']);
     }
 
     /**

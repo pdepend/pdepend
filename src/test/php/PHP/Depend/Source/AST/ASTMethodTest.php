@@ -51,13 +51,11 @@ use PHP\Depend\TreeVisitor\TestNodeVisitor;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PHP\Depend\Source\AST\AbstractASTCallable
  * @covers \PHP\Depend\Source\AST\ASTMethod
- * @covers \PHP_Depend_Code_AbstractCallable
-  * @group pdepend
-  * @group pdepend::code
-  * @group unittest
+ * @group unittest
  */
-class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
+class ASTMethodTest extends AbstractASTArtifactTest
 {
     /**
      * testIsCachedReturnsFalseByDefault
@@ -67,7 +65,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsCachedReturnsFalseByDefault()
     {
         $method = $this->createItem();
-        self::assertFalse($method->isCached());
+        $this->assertFalse($method->isCached());
     }
 
     /**
@@ -80,7 +78,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method = $this->createItem();
         serialize($method);
 
-        self::assertFalse($method->isCached());
+        $this->assertFalse($method->isCached());
     }
 
     /**
@@ -91,7 +89,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testReturnValueOfMagicSleepContainsContextProperty()
     {
         $method = new ASTMethod('method');
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'modifiers',
                 'cache',
@@ -117,7 +115,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testParserNotSetsAbstractFlagOnMethod()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertFalse($method->isAbstract());
+        $this->assertFalse($method->isAbstract());
     }
 
     /**
@@ -128,7 +126,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testParserSetsAbstractFlagOnMethod()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertTrue($method->isAbstract());
+        $this->assertTrue($method->isAbstract());
     }
 
     /**
@@ -139,7 +137,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetReturnClassForMethodWithNamespacedRootClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals('Foo', $method->getReturnClass()->getName());
+        $this->assertEquals('Foo', $method->getReturnClass()->getName());
     }
 
     /**
@@ -150,7 +148,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetReturnClassForMethodWithNamespacedClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals('Baz', $method->getReturnClass()->getName());
+        $this->assertEquals('Baz', $method->getReturnClass()->getName());
     }
 
     /**
@@ -161,7 +159,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals('Foo', $method->getReturnClass()->getName());
+        $this->assertEquals('Foo', $method->getReturnClass()->getName());
     }
 
     /**
@@ -172,7 +170,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetReturnClassForMethodWithNamespacedArrayClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals('Baz', $method->getReturnClass()->getName());
+        $this->assertEquals('Baz', $method->getReturnClass()->getName());
     }
 
     /**
@@ -183,7 +181,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetExceptionsForMethodWithNamespacedRootClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals(
+        $this->assertEquals(
             'Exception',
             $method->getExceptionClasses()->current()->getName()
         );
@@ -197,7 +195,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetExceptionsForMethodWithNamespacedClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals(
+        $this->assertEquals(
             'ErrorException',
             $method->getExceptionClasses()->current()->getName()
         );
@@ -211,7 +209,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testInlineDependencyForMethodWithNamespacedRootClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals(
+        $this->assertEquals(
             'ASTBuilder',
             $method->getDependencies()->current()->getName()
         );
@@ -225,7 +223,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testInlineDependencyForMethodWithNamespacedClass()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertEquals(
+        $this->assertEquals(
             'ASTBuilder',
             $method->getDependencies()->current()->getName()
         );
@@ -239,7 +237,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testReturnsReferenceReturnsExpectedTrue()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertTrue($method->returnsReference());
+        $this->assertTrue($method->returnsReference());
     }
 
     /**
@@ -250,7 +248,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testReturnsReferenceReturnsExpectedFalse()
     {
         $method = $this->getFirstMethodInClass();
-        self::assertFalse($method->returnsReference());
+        $this->assertFalse($method->returnsReference());
     }
 
     /**
@@ -261,7 +259,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetStaticVariablesReturnsEmptyArrayByDefault()
     {
         $method = new ASTMethod('method');
-        self::assertEquals(array(), $method->getStaticVariables());
+        $this->assertEquals(array(), $method->getStaticVariables());
     }
 
     /**
@@ -273,7 +271,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     {
         $method = $this->getFirstMethodInClass();
 
-        self::assertEquals(
+        $this->assertEquals(
             array('a' => 42, 'b' => 23),
             $method->getStaticVariables()
         );
@@ -288,7 +286,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     {
         $method = $this->getFirstMethodInClass();
 
-        self::assertEquals(
+        $this->assertEquals(
             array('a' => 42, 'b' => 23, 'c' => 17),
             $method->getStaticVariables()
         );
@@ -298,9 +296,8 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
      * testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined
      *
      * @return void
-     * @covers \PHP_Depend_Code_Exceptions_AbstractException
-     * @covers \PHP_Depend_Code_Exceptions_SourceNotFoundException
-     * @expectedException \PHP_Depend_Code_Exceptions_SourceNotFoundException
+     * @covers \PHP\Depend\Source\AST\ASTCompilationUnitNotFoundException
+     * @expectedException \PHP\Depend\Source\AST\ASTCompilationUnitNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()
     {
@@ -324,7 +321,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method = new ASTMethod(__FUNCTION__);
         $method->setParent($class);
 
-        self::assertSame($file, $method->getSourceFile());
+        $this->assertSame($file, $method->getSourceFile());
     }
 
     /**
@@ -348,7 +345,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testByDefaultGetParentReturnsNull()
     {
         $method = new ASTMethod('method');
-        self::assertNull($method->getParent());
+        $this->assertNull($method->getParent());
     }
 
     /**
@@ -363,7 +360,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
 
         $method->setParent($class);
         $method->setParent(null);
-        self::assertNull($method->getParent());
+        $this->assertNull($method->getParent());
     }
 
     /**
@@ -378,7 +375,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method = new ASTMethod('method');
 
         $method->setParent($class);
-        self::assertSame($class, $method->getParent());
+        $this->assertSame($class, $method->getParent());
     }
 
     /**
@@ -392,7 +389,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $visitor = new TestNodeVisitor();
         $method->accept($visitor);
 
-        self::assertSame($method, $visitor->method);
+        $this->assertSame($method, $visitor->method);
     }
 
     /**
@@ -420,7 +417,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_PUBLIC);
 
-        self::assertTrue(
+        $this->assertTrue(
             $method->isPublic() &&
             !$method->isProtected() &&
             !$method->isPrivate()
@@ -464,7 +461,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsStaticDefaultByReturnsFalse()
     {
         $method = new ASTMethod('method');
-        self::assertFalse($method->isStatic());
+        $this->assertFalse($method->isStatic());
     }
 
     /**
@@ -481,7 +478,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
             State::IS_STATIC
         );
 
-        self::assertTrue($method->isStatic());
+        $this->assertTrue($method->isStatic());
     }
 
     /**
@@ -492,7 +489,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsFinalByDefaultReturnsFalse()
     {
         $method = new ASTMethod('method');
-        self::assertFalse($method->isFinal());
+        $this->assertFalse($method->isFinal());
     }
 
     /**
@@ -509,7 +506,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
             State::IS_FINAL
         );
 
-        self::assertTrue($method->isFinal());
+        $this->assertTrue($method->isFinal());
     }
 
     /**
@@ -527,7 +524,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
             State::IS_FINAL
         );
 
-        self::assertTrue($method->isFinal() && $method->isStatic());
+        $this->assertTrue($method->isFinal() && $method->isStatic());
     }
 
     /**
@@ -541,7 +538,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_PROTECTED);
 
-        self::assertTrue(
+        $this->assertTrue(
             $method->isProtected() &&
             !$method->isPublic() &&
             !$method->isPrivate()
@@ -559,7 +556,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_PRIVATE);
 
-        self::assertTrue(
+        $this->assertTrue(
             $method->isPrivate() &&
             !$method->isPublic() &&
             !$method->isProtected()
@@ -574,7 +571,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testIsPublicByDefaultReturnsFalse()
     {
         $method = new ASTMethod('method');
-        self::assertFalse($method->isPublic());
+        $this->assertFalse($method->isPublic());
     }
 
     /**
@@ -585,20 +582,20 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
@@ -609,7 +606,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method->addChild($node2);
 
         $child = $method->getFirstChildOfType(get_class($node2));
-        self::assertSame($node2, $child);
+        $this->assertSame($node2, $child);
     }
 
     /**
@@ -620,29 +617,29 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
@@ -653,7 +650,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method->addChild($node3);
 
         $child = $method->getFirstChildOfType(get_class($node1));
-        self::assertSame($node1, $child);
+        $this->assertSame($node1, $child);
     }
 
     /**
@@ -664,20 +661,20 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
@@ -688,9 +685,9 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method->addChild($node2);
 
         $child = $method->getFirstChildOfType(
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
-        self::assertNull($child);
+        $this->assertNull($child);
     }
 
     /**
@@ -701,20 +698,20 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
         $node1 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node1->expects($this->once())
             ->method('findChildrenOfType')
             ->will($this->returnValue(array()));
 
         $node2 = $this->getMock(
-            'PHP_Depend_Code_ASTNode',
+            ASTNode::CLAZZ,
             array(),
             array(),
-            'PHP_Depend_Code_ASTNode_' . md5(microtime())
+            'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
         $node2->expects($this->once())
             ->method('findChildrenOfType')
@@ -725,7 +722,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $method->addChild($node2);
 
         $children = $method->findChildrenOfType(get_class($node2));
-        self::assertSame(array($node2), $children);
+        $this->assertSame(array($node2), $children);
     }
 
     /**
@@ -738,7 +735,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -754,7 +751,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getReturnClass(),
             $copy->getReturnClass()
         );
@@ -770,7 +767,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -786,7 +783,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getExceptionClasses()->current(),
             $copy->getExceptionClasses()->current()
         );
@@ -802,7 +799,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        self::assertSame(
+        $this->assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -827,7 +824,7 @@ class ASTMethodTest extends \PHP_Depend_Code_AbstractItemTest
     /**
      * Creates an abstract item instance.
      *
-     * @return \PHP_Depend_Code_AbstractItem
+     * @return \PHP\Depend\Source\AST\AbstractASTArtifact
      */
     protected function createItem()
     {

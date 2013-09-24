@@ -69,7 +69,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $factory = new Factory(
             $this->createConfigurationFixture()
         );
-        self::assertInstanceOf('\\PHP\\Depend\\Util\\Cache\\Driver', $factory->create());
+        $this->assertInstanceOf('\\PHP\\Depend\\Util\\Cache\\Driver', $factory->create());
     }
 
     /**
@@ -86,7 +86,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $cache0 = $factory->create();
         $cache1 = $factory->create();
 
-        self::assertSame($cache0, $cache1);
+        $this->assertSame($cache0, $cache1);
     }
 
     /**
@@ -103,7 +103,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
         $cache0 = $factory->create();
         $cache1 = $factory->create(__FUNCTION__);
 
-        self::assertNotSame($cache0, $cache1);
+        $this->assertNotSame($cache0, $cache1);
     }
 
     /**
@@ -115,7 +115,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        self::assertInstanceOf(File::CLAZZ, $this->createFactoryFixture()->create());
+        $this->assertInstanceOf(File::CLAZZ, $this->createFactoryFixture()->create());
     }
 
     /**
@@ -127,7 +127,7 @@ class FactoryTest extends \PHP_Depend_AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        self::assertInstanceOf(Memory::CLAZZ, $this->createFactoryFixture()->create());
+        $this->assertInstanceOf(Memory::CLAZZ, $this->createFactoryFixture()->create());
     }
 
     /**

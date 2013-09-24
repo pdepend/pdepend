@@ -69,7 +69,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
 
     /**
      * Tests that the {@link \PHP\Depend\Source\AST\ASTNamespace::getTypes()} method returns
-     * an empty {@link \PHP_Depend_Code_NodeIterator}.
+     * an empty {@link \PHP\Depend\Source\AST\ASTArtifactList}.
      *
      * @return void
      */
@@ -78,7 +78,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package = new ASTNamespace('package1');
         $types = $package->getTypes();
         
-        $this->assertInstanceOf('\\PHP_Depend_Code_NodeIterator', $types);
+        $this->assertInstanceOf(ASTArtifactList::CLAZZ, $types);
     }
     
     /**
@@ -94,7 +94,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $class   = new ASTClass('Class', 0, 'class.php');
         
         $package->addType($class);
-        self::assertEquals(1, $package->getTypes()->count());
+        $this->assertEquals(1, $package->getTypes()->count());
     }
 
     /**
@@ -108,7 +108,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $class   = new ASTClass('Class', 0, 'class.php');
 
         $package->addType($class);
-        self::assertSame($package, $class->getPackage());
+        $this->assertSame($package, $class->getPackage());
     }
     
     /**
@@ -126,7 +126,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package1->addType($class);
         $package2->addType($class);
 
-        self::assertSame($package2, $class->getPackage());
+        $this->assertSame($package2, $class->getPackage());
     }
 
     /**
@@ -143,7 +143,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package1->addType($class);
         $package2->addType($class);
 
-        self::assertEquals(0, $package1->getTypes()->count());
+        $this->assertEquals(0, $package1->getTypes()->count());
     }
 
     /**
@@ -159,7 +159,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package->addType($class);
         $package->addType($class);
 
-        self::assertEquals(1, count($package->getClasses()));
+        $this->assertEquals(1, count($package->getClasses()));
     }
 
     /**
@@ -170,7 +170,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
     public function testGetInterfacesReturnsAnEmptyResultByDefault()
     {
         $package = new ASTNamespace(__FUNCTION__);
-        self::assertEquals(0, count($package->getInterfaces()));
+        $this->assertEquals(0, count($package->getInterfaces()));
     }
 
     /**
@@ -183,7 +183,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package = new ASTNamespace(__FUNCTION__);
         $package->addType(new ASTInterface(__CLASS__));
 
-        self::assertEquals(1, count($package->getInterfaces()));
+        $this->assertEquals(1, count($package->getInterfaces()));
     }
 
     /**
@@ -196,7 +196,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package = new ASTNamespace(__FUNCTION__);
         $package->addType(new ASTClass(__CLASS__));
 
-        self::assertEquals(0, count($package->getInterfaces()));
+        $this->assertEquals(0, count($package->getInterfaces()));
     }
     
     /**
@@ -214,7 +214,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package->addType($class2);
         $package->removeType($class2);
 
-        self::assertEquals(0, $package->getTypes()->count());
+        $this->assertEquals(0, $package->getTypes()->count());
     }
 
     /**
@@ -230,7 +230,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package->addType($class);
         $package->removeType($class);
 
-        self::assertNull($class->getPackage());
+        $this->assertNull($class->getPackage());
     }
 
     /**
@@ -281,7 +281,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
     
     /**
      * Tests that the {@link \PHP\Depend\Source\AST\ASTNamespace::getFunctions()}
-     * method returns an empty {@link \PHP_Depend_Code_NodeIterator}.
+     * method returns an empty {@link \PHP\Depend\Source\AST\ASTArtifactList}.
      *
      * @return void
      */
@@ -290,7 +290,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package   = new ASTNamespace('package1');
         $functions = $package->getFunctions();
         
-        self::assertInstanceOf('PHP_Depend_Code_NodeIterator', $functions);
+        $this->assertInstanceOf(ASTArtifactList::CLAZZ, $functions);
     }
     
     /**
@@ -306,7 +306,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $function = new ASTFunction('function', 0);
         
         $package->addFunction($function);
-        self::assertEquals(1, $package->getFunctions()->count());
+        $this->assertEquals(1, $package->getFunctions()->count());
     }
 
     /**
@@ -320,7 +320,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $function = new ASTFunction('function', 0);
 
         $package->addFunction($function);
-        self::assertSame($package, $function->getPackage());
+        $this->assertSame($package, $function->getPackage());
     }
     
     /**
@@ -338,7 +338,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package1->addFunction($function);
         $package2->addFunction($function);
 
-        self::assertSame($package2, $function->getPackage());
+        $this->assertSame($package2, $function->getPackage());
     }
 
     /**
@@ -355,7 +355,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package1->addFunction($function);
         $package2->addFunction($function);
 
-        self::assertEquals(0, $package1->getFunctions()->count());
+        $this->assertEquals(0, $package1->getFunctions()->count());
     }
     
     /**
@@ -375,7 +375,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package->addFunction($function2);
         $package->removeFunction($function2);
 
-        self::assertEquals(1, $package->getFunctions()->count());
+        $this->assertEquals(1, $package->getFunctions()->count());
     }
 
     /**
@@ -391,7 +391,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package->addFunction($function);
         $package->removeFunction($function);
 
-        self::assertNull($function->getPackage());
+        $this->assertNull($function->getPackage());
     }
     
     /**
@@ -405,7 +405,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $visitor = new TestNodeVisitor();
         
         $package->accept($visitor);
-        self::assertSame($package, $visitor->package);
+        $this->assertSame($package, $visitor->package);
     }
 
     /**
@@ -416,7 +416,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
     public function testIsUserDefinedReturnsFalseWhenPackageIsEmpty()
     {
         $package = new ASTNamespace('package1');
-        self::assertFalse($package->isUserDefined());
+        $this->assertFalse($package->isUserDefined());
     }
 
     /**
@@ -429,7 +429,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package = new ASTNamespace('package1');
         $package->addType(new ASTClass('class', 0));
         
-        self::assertFalse($package->isUserDefined());
+        $this->assertFalse($package->isUserDefined());
     }
 
     /**
@@ -445,7 +445,7 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package = new ASTNamespace('package1');
         $package->addType($class);
 
-        self::assertTrue($package->isUserDefined());
+        $this->assertTrue($package->isUserDefined());
     }
 
     /**
@@ -458,6 +458,6 @@ class ASTNamespaceTest extends \PHP_Depend_AbstractTest
         $package = new ASTNamespace('package1');
         $package->addFunction(new ASTFunction("foo", 0));
 
-        self::assertTrue($package->isUserDefined());
+        $this->assertTrue($package->isUserDefined());
     }
 }

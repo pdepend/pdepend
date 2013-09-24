@@ -43,6 +43,8 @@
 
 namespace PHP\Depend\Bugs;
 
+use PHP\Depend\Source\AST\ASTPropertyPostfix;
+
 /**
  * Test case for bug #8927377.
  *
@@ -66,7 +68,7 @@ class ParserBug8927377Test extends AbstractTest
     public function testPropertyPostfixHasExpectedStartLine()
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        self::assertEquals(6, $postfix->getStartLine());
+        $this->assertEquals(6, $postfix->getStartLine());
     }
 
     /**
@@ -77,7 +79,7 @@ class ParserBug8927377Test extends AbstractTest
     public function testPropertyPostfixHasExpectedEndLine()
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        self::assertEquals(6, $postfix->getEndLine());
+        $this->assertEquals(6, $postfix->getEndLine());
     }
 
     /**
@@ -88,7 +90,7 @@ class ParserBug8927377Test extends AbstractTest
     public function testPropertyPostfixHasExpectedStartColumn()
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        self::assertEquals(16, $postfix->getStartColumn());
+        $this->assertEquals(16, $postfix->getStartColumn());
     }
 
     /**
@@ -99,13 +101,13 @@ class ParserBug8927377Test extends AbstractTest
     public function testPropertyPostfixHasExpectedEndColumn()
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        self::assertEquals(18, $postfix->getEndColumn());
+        $this->assertEquals(18, $postfix->getEndColumn());
     }
 
     /**
      * Returns the property postfix found in a class.
      * 
-     * @return \PHP_Depend_Code_ASTPropertyPostfix
+     * @return \PHP\Depend\Source\AST\ASTPropertyPostfix
      */
     protected function getFirstPropertyPostfixInClass()
     {
@@ -113,6 +115,6 @@ class ParserBug8927377Test extends AbstractTest
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(\PHP_Depend_Code_ASTPropertyPostfix::CLAZZ);
+            ->getFirstChildOfType(ASTPropertyPostfix::CLAZZ);
     }
 }

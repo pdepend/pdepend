@@ -48,6 +48,8 @@ use PHP\Depend\Metrics\AnalyzerProjectAware;
 use PHP\Depend\Report\GeneratorCodeAware;
 use PHP\Depend\Report\GeneratorFileAware;
 use PHP\Depend\Report\NoLogOutputException;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
+use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
@@ -80,7 +82,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * The raw {@link \PHP\Depend\Source\AST\ASTNamespace} instances.
      *
-     * @var \PHP_Depend_Code_NodeIterator
+     * @var \PHP\Depend\Source\AST\ASTArtifactList
      */
     protected $code = null;
 
@@ -143,13 +145,12 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * Sets the context code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $code The code nodes.
-     *
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    public function setCode(\PHP_Depend_Code_NodeIterator $code)
+    public function setArtifacts(ASTArtifactList $artifacts)
     {
-        $this->code = $code;
+        $this->code = $artifacts;
     }
 
     /**
@@ -366,11 +367,11 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
      * Aggregates all metrics for the given <b>$node</b> instance and adds them
      * to the <b>\DOMElement</b>
      *
-     * @param \DOMElement            $xml  DOM Element that represents <b>$node</b>.
-     * @param \PHP_Depend_Code_NodeI $node The context code node instance.
+     * @param \DOMElement $xml
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    protected function writeNodeMetrics(\DOMElement $xml, \PHP_Depend_Code_NodeI $node)
+    protected function writeNodeMetrics(\DOMElement $xml, AbstractASTArtifact $node)
     {
         $metrics = array();
         foreach ($this->nodeAwareAnalyzers as $analyzer) {

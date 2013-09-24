@@ -40,11 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
+use PHP\Depend\Source\AST\ASTNode;
 use PHP\Depend\Source\AST\ASTTrait;
 use PHP\Depend\Source\Builder\BuilderContext;
 use PHP\Depend\Source\Language\PHP\PHPBuilder;
@@ -99,7 +101,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        PHP_Depend_Code_Filter_Collection::getInstance()->setFilter();
+        CollectionArtifactFilter::getInstance()->setFilter();
 
         $this->clearRunResources();
         $this->resetWorkingDirectory();
@@ -161,7 +163,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      */
     protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
     {
@@ -188,7 +190,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $nodeType The searched node class.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @since 1.0.0
      */
     protected function getFirstNodeOfTypeInTrait($nodeType)
@@ -203,7 +205,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      */
     protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
     {
@@ -217,7 +219,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
-     * @return PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      */
     protected function getFirstNodeOfTypeInInterface($testCase, $nodeType)
     {
@@ -271,13 +273,13 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Collects all children from a given node.
      *
-     * @param PHP_Depend_Code_ASTNode $node   The current root node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node   The current root node.
      * @param array                   $actual Previous filled list.
      *
      * @return array(string)
      */
     protected static function collectChildNodes(
-        PHP_Depend_Code_ASTNode $node,
+        \PHP\Depend\Source\AST\ASTNode $node,
         array $actual = array()
     ) {
         foreach ($node->getChildren() as $child) {
@@ -291,27 +293,24 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Tests that the given node and its children represent the expected ast
      * object graph.
      *
-     * @param PHP_Depend_Code_ASTNode $node     The root node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node     The root node.
      * @param array(string)           $expected Expected class structure.
      *
      * @return void
      */
-    protected static function assertGraphEquals(
-        PHP_Depend_Code_ASTNode $node,
-        array $expected
-    ) {
-        $actual = self::collectChildNodes($node);
-        self::assertEquals($expected, $actual);
+    protected static function assertGraphEquals(ASTNode $node, array $expected)
+    {
+        self::assertEquals($expected, self::collectChildNodes($node));
     }
 
     /**
      * Collects all children from a given node.
      *
-     * @param PHP_Depend_Code_ASTNode $node The current root node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node The current root node.
      *
      * @return array
      */
-    protected static function collectGraph(PHP_Depend_Code_ASTNode $node)
+    protected static function collectGraph(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $graph = array();
         foreach ($node->getChildren() as $child) {
@@ -327,12 +326,12 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Tests that the given node and its children represent the expected ast
      * object graph.
      *
-     * @param PHP_Depend_Code_ASTNode $node  The root node.
+     * @param \PHP\Depend\Source\AST\ASTNode $node  The root node.
      * @param array                   $graph Expected class structure.
      *
      * @return void
      */
-    protected static function assertGraph(PHP_Depend_Code_ASTNode $node, $graph)
+    protected static function assertGraph(\PHP\Depend\Source\AST\ASTNode $node, $graph)
     {
         $actual = self::collectGraph($node);
         self::assertEquals($graph, $actual);
@@ -515,7 +514,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $function = new ASTFunction($name);
         $function->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $function->setCache(new Memory());
-        $function->addChild(new PHP_Depend_Code_ASTFormalParameters());
+        $function->addChild(new \PHP\Depend\Source\AST\ASTFormalParameters());
 
         return $function;
     }
@@ -533,7 +532,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 
         $method = new ASTMethod($name);
         $method->setCache(new Memory());
-        $method->addChild(new PHP_Depend_Code_ASTFormalParameters());
+        $method->addChild(new \PHP\Depend\Source\AST\ASTFormalParameters());
 
         return $method;
     }
@@ -642,8 +641,6 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
-        include_once 'PHP/Depend/Code/Filter/Collection.php';
-
         self::_initVersionCompatibility();
     }
 
@@ -688,7 +685,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     protected static function parseCodeResourceForTest($ignoreAnnotations = false)
     {
@@ -702,10 +699,9 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase          Qualified name of the test case.
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @param string  $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
@@ -727,10 +723,9 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $fileOrDirectory   A source file or a source directory.
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
-     * @return PHP_Depend_Code_NodeIterator
+     * @param string  $fileOrDirectory
+     * @param boolean $ignoreAnnotations
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
@@ -740,13 +735,13 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 
         if (is_dir($fileOrDirectory)) {
             $it = new \PHP\Depend\Input\Iterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($fileOrDirectory)
+                new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($fileOrDirectory)
                 ),
                 new \PHP\Depend\Input\ExcludePathFilter(array('.svn'))
             );
         } else {
-            $it = new ArrayIterator(array($fileOrDirectory));
+            $it = new \ArrayIterator(array($fileOrDirectory));
         }
 
         $files = array();

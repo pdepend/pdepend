@@ -80,12 +80,12 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * Sets a reference onto the parent class of this class node.
      *
-     * @param \PHP_Depend_Code_ASTClassReference
+     * @param \PHP\Depend\Source\AST\ASTClassReference
      * @return void
      * @throws \BadMethodCallException
      * @since 0.9.5
      */
-    public function setParentClassReference(\PHP_Depend_Code_ASTClassReference $classReference)
+    public function setParentClassReference(\PHP\Depend\Source\AST\ASTClassReference $classReference)
     {
         throw new \BadMethodCallException(
             'Unsupported method ' . __METHOD__ . '() called.'

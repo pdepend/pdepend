@@ -71,7 +71,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractTest
             ->current()
             ->getFunctions();
 
-        self::assertEquals(1, count($functions));
+        $this->assertEquals(1, count($functions));
     }
 
     /**
@@ -89,7 +89,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractTest
             ->current()
             ->getClasses();
 
-        self::assertEquals(1, count($classes));
+        $this->assertEquals(1, count($classes));
     }
 
     /**
@@ -107,6 +107,6 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractTest
             ->current()
             ->getInterfaces();
 
-        self::assertEquals(1, count($interfaces));
+        $this->assertEquals(1, count($interfaces));
     }
 }

@@ -68,7 +68,7 @@ class AnalyzerIteratorTest extends \PHP_Depend_AbstractTest
             ->will($this->returnValue(true));
 
         $iterator = new AnalyzerIterator(array($analyzer, $analyzer));
-        self::assertEquals(2, iterator_count($iterator));
+        $this->assertEquals(2, iterator_count($iterator));
     }
 
     /**
@@ -87,6 +87,6 @@ class AnalyzerIteratorTest extends \PHP_Depend_AbstractTest
             ->will($this->returnValue(false));
 
         $iterator = new AnalyzerIterator(array($analyzer, $analyzer));
-        self::assertEquals(1, iterator_count($iterator));
+        $this->assertEquals(1, iterator_count($iterator));
     }
 }

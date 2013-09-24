@@ -42,6 +42,9 @@
 
 namespace PHP\Depend\Bugs;
 
+use PHP\Depend\Source\AST\ASTLiteral;
+use PHP\Depend\Source\AST\ASTString;
+
 /**
  * Test case for ticket #114.
  *
@@ -138,7 +141,7 @@ class ComplexStringParsingBug114Test extends AbstractTest
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType(\PHP_Depend_Code_ASTString::CLAZZ);
-        $this->assertInstanceOf(\PHP_Depend_Code_ASTLiteral::CLAZZ, $string->getChild(1));
+        $string = $method->getFirstChildOfType(ASTString::CLAZZ);
+        $this->assertInstanceOf(ASTLiteral::CLAZZ, $string->getChild(1));
     }
 }

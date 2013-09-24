@@ -94,7 +94,7 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
         $builder0 = $this->parseSourceAndReturnBuilder('fileA.php');
         $builder1 = $this->parseSourceAndReturnBuilder('fileA.php');
 
-        self::assertEquals(
+        $this->assertEquals(
             count($builder0->getPackages()),
             count($builder1->getPackages())
         );
@@ -110,7 +110,7 @@ class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractT
         $builder0 = $this->parseSourceAndReturnBuilder('fileA.php');
         $builder1 = $this->parseSourceAndReturnBuilder('fileB.php');
 
-        self::assertEquals(
+        $this->assertEquals(
             count($builder0->getPackages()) + 1,
             count($builder1->getPackages())
         );

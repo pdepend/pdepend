@@ -43,6 +43,7 @@
 namespace PHP\Depend\TreeVisitor;
 
 use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTParameter;
 use PHP\Depend\Source\AST\ASTTrait;
 
 /**
@@ -224,7 +225,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
         $listener->expects($this->once())
             ->method('startVisitNode');
 
-        $parameter = $this->getMock('PHP_Depend_Code_Parameter', array(), array(null), '', false);
+        $parameter = $this->getMock(ASTParameter::CLAZZ, array(), array(null), '', false);
         $listener->startVisitParameter($parameter);
     }
 
@@ -239,7 +240,7 @@ class DefaultListenerTest extends \PHP_Depend_AbstractTest
         $listener->expects($this->once())
             ->method('endVisitNode');
 
-        $parameter = $this->getMock('PHP_Depend_Code_Parameter', array(), array(null), '', false);
+        $parameter = $this->getMock(ASTParameter::CLAZZ, array(), array(null), '', false);
         $listener->endVisitParameter($parameter);
     }
 

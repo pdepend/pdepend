@@ -44,6 +44,7 @@ namespace PHP\Depend\TextUI;
 
 use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\ProcessListener;
+use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\Builder\Builder;
 use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\TreeVisitor\AbstractTreeVisitListener;
@@ -179,10 +180,10 @@ class ResultPrinter extends AbstractTreeVisitListener implements ProcessListener
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param \PHP_Depend_Code_NodeI $node The context node instance.
+     * @param \PHP\Depend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    public function startVisitNode(\PHP_Depend_Code_NodeI $node)
+    public function startVisitNode(AbstractASTArtifact $node)
     {
         $this->step(self::STEP_SIZE);
     }

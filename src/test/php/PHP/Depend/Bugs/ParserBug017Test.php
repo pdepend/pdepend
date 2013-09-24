@@ -77,6 +77,6 @@ class ParserBug017Test extends AbstractTest
             ->current();
 
         $dependencies = $function->getDependencies();
-        self::assertEquals('OutOfBoundsException', $dependencies->current()->getName());
+        $this->assertEquals('OutOfBoundsException', $dependencies->current()->getName());
     }
 }

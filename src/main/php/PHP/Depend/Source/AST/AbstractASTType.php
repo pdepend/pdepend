@@ -52,7 +52,7 @@ use PHP\Depend\Source\Builder\BuilderContext;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     1.0.0
  */
-abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
+abstract class AbstractASTType extends AbstractASTArtifact
 {
     /**
      * The internal used cache instance.
@@ -94,7 +94,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
     /**
      * List of all parsed child nodes.
      *
-     * @var \PHP_Depend_Code_ASTNode[]
+     * @var \PHP\Depend\Source\AST\ASTNode[]
      */
     protected $nodes = array();
 
@@ -164,11 +164,11 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
     /**
      * Adds a parsed child node to this node.
      *
-     * @param \PHP_Depend_Code_ASTNode $node
+     * @param \PHP\Depend\Source\AST\ASTNode $node
      * @return void
      * @access private
      */
-    public function addChild(\PHP_Depend_Code_ASTNode $node)
+    public function addChild(\PHP\Depend\Source\AST\ASTNode $node)
     {
         $this->nodes[] = $node;
     }
@@ -176,7 +176,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
     /**
      * Returns all child nodes of this class.
      *
-     * @return \PHP_Depend_Code_ASTNode[]
+     * @return \PHP\Depend\Source\AST\ASTNode[]
      */
     public function getChildren()
     {
@@ -190,7 +190,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return \PHP_Depend_Code_ASTNode
+     * @return \PHP\Depend\Source\AST\ASTNode
      * @access private
      * @todo Refactor $_methods property to getAllMethods() when it exists.
      */
@@ -220,7 +220,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
      * @param string $targetType The target class or interface type.
      * @param array  &$results   The found children.
      *
-     * @return \PHP_Depend_Code_ASTNode[]
+     * @return \PHP\Depend\Source\AST\ASTNode[]
      * @access private
      * @todo Refactor $_methods property to getAllMethods() when it exists.
      */
@@ -270,7 +270,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
     public function getMethods()
     {
         if (is_array($this->methods)) {
-            return new \PHP_Depend_Code_NodeIterator($this->methods);
+            return new ASTArtifactList($this->methods);
         }
 
         $methods = (array) $this->cache
@@ -282,7 +282,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
             $method->setParent($this);
         }
 
-        return new \PHP_Depend_Code_NodeIterator($methods);
+        return new ASTArtifactList($methods);
     }
 
     /**
@@ -312,7 +312,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
         $methods = array();
 
         $uses = $this->findChildrenOfType(
-            \PHP_Depend_Code_ASTTraitUseStatement::CLAZZ
+            \PHP\Depend\Source\AST\ASTTraitUseStatement::CLAZZ
         );
 
         foreach ($uses as $use) {
@@ -326,9 +326,7 @@ abstract class AbstractASTType extends \PHP_Depend_Code_AbstractItem
                 $name = strtolower($method->getName());
 
                 if (isset($methods[$name])) {
-                    throw new \PHP_Depend_Code_Exceptions_MethodCollisionException(
-                        $method, $this
-                    );
+                    throw new ASTTraitMethodCollisionException($method, $this);
                 }
                 $methods[$name] = $method;
             }

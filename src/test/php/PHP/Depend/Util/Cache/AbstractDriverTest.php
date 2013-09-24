@@ -64,7 +64,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
     public function testTypeMethodReturnsSameObjectInstance()
     {
         $driver = $this->createDriver();
-        self::assertSame($driver, $driver->type(__FUNCTION__));
+        $this->assertSame($driver, $driver->type(__FUNCTION__));
     }
 
     /**
@@ -75,7 +75,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
     public function testRestoreMethodReturnsNullByDefault()
     {
         $driver = $this->createDriver();
-        self::assertNull($driver->restore(__FUNCTION__));
+        $this->assertNull($driver->restore(__FUNCTION__));
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
 
-        self::assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
+        $this->assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
     }
 
     /**
@@ -101,7 +101,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__, '#42');
 
-        self::assertEquals(__METHOD__, $driver->restore(__FUNCTION__, '#42'));
+        $this->assertEquals(__METHOD__, $driver->restore(__FUNCTION__, '#42'));
     }
 
     /**
@@ -114,7 +114,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
 
-        self::assertNull($driver->restore(__FUNCTION__, '#42'));
+        $this->assertNull($driver->restore(__FUNCTION__, '#42'));
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver = $this->createDriver();
         $driver->type('type')->store(__FUNCTION__, __CLASS__);
 
-        self::assertEquals(__CLASS__, $driver->type('type')->restore(__FUNCTION__));
+        $this->assertEquals(__CLASS__, $driver->type('type')->restore(__FUNCTION__));
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver->store(__FUNCTION__, __METHOD__);
         $driver->type('type')->store(__FUNCTION__, __CLASS__);
 
-        self::assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
+        $this->assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
     }
 
     /**
@@ -158,7 +158,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver->store($key, $data);
         $driver->remove($key);
 
-        self::assertNull($driver->restore($key));
+        $this->assertNull($driver->restore($key));
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver->store($key, $data);
         $driver->remove(__FUNCTION__);
 
-        self::assertNull($driver->restore($key));
+        $this->assertNull($driver->restore($key));
     }
 
     /**
@@ -192,7 +192,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver->type('foo')->store($key, $data);
         $driver->remove($key);
 
-        self::assertNull($driver->type('foo')->restore($key));
+        $this->assertNull($driver->type('foo')->restore($key));
     }
 
     /**
@@ -209,7 +209,7 @@ abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
         $driver->store($key, $data);
         $driver->remove($key . '.no-match');
 
-        self::assertSame($data, $driver->restore($key));
+        $this->assertSame($data, $driver->restore($key));
     }
 
     /**

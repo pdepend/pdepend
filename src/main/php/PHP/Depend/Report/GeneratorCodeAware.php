@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Report;
 
+use PHP\Depend\Source\AST\ASTArtifactList;
+
 /**
  * A logger that implements this interface needs the analyzed code structure.
  *
@@ -53,8 +55,8 @@ interface GeneratorCodeAware extends Generator
     /**
      * Sets the context code nodes.
      *
-     * @param \PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    function setCode(\PHP_Depend_Code_NodeIterator $code);
+    function setArtifacts(ASTArtifactList $artifacts);
 }

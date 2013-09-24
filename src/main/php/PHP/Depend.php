@@ -45,6 +45,9 @@ use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerLoader;
 use PHP\Depend\ProcessListener;
 use PHP\Depend\Report\GeneratorCodeAware;
+use PHP\Depend\Source\AST\ASTArtifactList\ArtifactFilter;
+use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
+use PHP\Depend\Source\AST\ASTArtifactList\NullArtifactFilter;
 use PHP\Depend\Source\Builder\Builder;
 use PHP\Depend\Source\Language\PHP\PHPBuilder;
 use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
@@ -127,7 +130,7 @@ class PHP_Depend
     /**
      * A filter for source packages.
      *
-     * @var PHP_Depend_Code_FilterI
+     * @var \PHP\Depend\Source\AST\ASTArtifactList\ArtifactFilter
      */
     private $codeFilter = null;
 
@@ -177,7 +180,7 @@ class PHP_Depend
     {
         $this->configuration = $configuration;
 
-        $this->codeFilter = new PHP_Depend_Code_Filter_Null();
+        $this->codeFilter = new NullArtifactFilter();
         $this->fileFilter = new \PHP\Depend\Input\CompositeFilter();
 
         $this->cacheFactory = new \PHP\Depend\Util\Cache\Factory($configuration);
@@ -249,11 +252,11 @@ class PHP_Depend
      * Sets an additional code filter. These filters could be used to hide
      * external libraries and global stuff from the PDepend output.
      *
-     * @param PHP_Depend_Code_FilterI $filter The code filter.
+     * @param \PHP\Depend\Source\AST\ASTArtifactList\ArtifactFilter $filter
      *
      * @return void
      */
-    public function setCodeFilter(PHP_Depend_Code_FilterI $filter)
+    public function setCodeFilter(ArtifactFilter $filter)
     {
         $this->codeFilter = $filter;
     }
@@ -297,7 +300,7 @@ class PHP_Depend
      * Analyzes the registered directories and returns the collection of
      * analyzed packages.
      *
-     * @return PHP_Depend_Code_NodeIterator
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public function analyze()
     {
@@ -306,7 +309,7 @@ class PHP_Depend
         $this->performParseProcess();
 
         // Get global filter collection
-        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+        $collection = CollectionArtifactFilter::getInstance();
         $collection->setFilter($this->codeFilter);
 
         $collection->setFilter();
@@ -323,7 +326,7 @@ class PHP_Depend
         foreach ($this->generators as $generator) {
             // Check for code aware loggers
             if ($generator instanceof GeneratorCodeAware) {
-                $generator->setCode($packages);
+                $generator->setArtifacts($packages);
             }
             $generator->close();
         }
@@ -573,7 +576,7 @@ class PHP_Depend
     {
         $analyzerLoader = $this->createAnalyzerLoader($this->options);
 
-        $collection = PHP_Depend_Code_Filter_Collection::getInstance();
+        $collection = CollectionArtifactFilter::getInstance();
 
         $this->fireStartAnalyzeProcess();
 

@@ -80,7 +80,7 @@ class PHPDependBug13405179Test extends AbstractTest
         $pdepend->addReportGenerator($generator);
         $pdepend->analyze();
 
-        self::assertFileExists($file);
+        $this->assertFileExists($file);
     }
 
     /**
