@@ -49,7 +49,7 @@ namespace PDepend\Source\AST;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers ASTPostfixExpression
+ * @covers \PDepend\Source\AST\ASTPostfixExpression
  * @group pdepend
  * @group pdepend::ast
  * @group unittest

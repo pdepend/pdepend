@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTTrait;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\TreeVisitor\AbstractVisitor
+ * @covers \PDepend\TreeVisitor\AbstractTreeVisitor
  * @group pdepend
  * @group pdepend::visitor
  * @group unittest

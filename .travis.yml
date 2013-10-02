@@ -9,6 +9,7 @@ env:
   - TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
+  - composer self-update
   - composer install
 
 script: phpunit --configuration $TEST_CONFIG
