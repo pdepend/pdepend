@@ -57,7 +57,7 @@ if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
    include_once 'phar://${archive.alias}/PHP/Depend/Autoload.php';
 
     // Initialize PHP_Depend's autoloader
-    $autoload = new PHP_Depend_Autoload();
+    $autoload = new \PHP\Depend\Autoload();
     $autoload->register();
 
     exit(\PHP\Depend\TextUI\Command::main($argv));

@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\AST\ASTArtifactList;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
@@ -57,7 +58,7 @@ use PHP\Depend\Source\AST\ASTNamespace;
  * @covers \PHP\Depend\Source\AST\ASTArtifactList\PackageArtifactFilter
  * @group unittest
  */
-class PackageArtifactFilterTest extends \PHP_Depend_AbstractTest
+class PackageArtifactFilterTest extends AbstractTest
 {
     /**
      * Tests that the package filter accepts valid packages.
@@ -184,7 +185,7 @@ class PackageArtifactFilterTest extends \PHP_Depend_AbstractTest
      */
     public function testFilterAcceptsPackageWithWildcard()
     {
-        $pdepend = new ASTNamespace('PHP_Depend_Code');
+        $pdepend = new ASTNamespace('PDepend_Code');
 
         $filter = new PackageArtifactFilter(array('ezc*', 'Zend_*'));
         $this->assertTrue($filter->accept($pdepend));
@@ -212,7 +213,7 @@ class PackageArtifactFilterTest extends \PHP_Depend_AbstractTest
     public function testFilterAcceptsAndNotAcceptsPackageWithWildcard()
     {
         $zendFW  = new ASTNamespace('Zend_Controller');
-        $pdepend = new ASTNamespace('PHP_Depend_Code');
+        $pdepend = new ASTNamespace('PDepend_Code');
 
         $filter = new PackageArtifactFilter(array('ezc*', 'Zend_*'));
         $this->assertFalse($filter->accept($zendFW));

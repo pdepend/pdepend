@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the code parameter class.
  *
@@ -51,7 +53,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\ASTParameter
  * @group unittest
  */
-class ASTParameterTest extends \PHP_Depend_AbstractTest
+class ASTParameterTest extends AbstractTest
 {
     /**
      * testGetUUIDReturnsExpectedObjectHash

@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class EndLessLoopBetweenForParentClassBug152Test extends AbstractTest
+class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
 {
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass

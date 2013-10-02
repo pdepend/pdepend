@@ -43,6 +43,7 @@
 
 namespace PHP\Depend\Source\AST\ASTArtifactList;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTClass;
 
 /**
@@ -54,12 +55,9 @@ use PHP\Depend\Source\AST\ASTClass;
  * @since     1.0.0
  *
  * @covers \PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter
- * @group pdepend
- * @group pdepend::code
- * @group pdepend::code::filter
  * @group unittest
  */
-class CollectionArtifactFilterTest extends \PHP_Depend_AbstractTest
+class CollectionArtifactFilterTest extends AbstractTest
 {
     /**
      * testAcceptsReturnsTrueByDefault

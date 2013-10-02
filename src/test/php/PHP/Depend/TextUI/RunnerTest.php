@@ -42,17 +42,18 @@
 
 namespace PHP\Depend\TextUI;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the text ui runner.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @covers \PHP\Depend\TextUI\Runner
- * @group pdepend
- * @group pdepend::textui
  * @group unittest
  */
-class RunnerTest extends \PHP_Depend_AbstractTest
+class RunnerTest extends AbstractTest
 {
     /**
      * Tests that the runner exits with an exception for an invalud source

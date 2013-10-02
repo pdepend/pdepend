@@ -52,7 +52,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ClassAndInterfaceNamesBug169Test extends AbstractTest
+class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
 {
     /**
      * testParserAcceptsNullAsClassName

@@ -56,7 +56,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractTest
+class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesNamespaceKeywordInFunctionParameterTypeHint

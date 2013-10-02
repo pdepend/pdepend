@@ -40,14 +40,44 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Issues;
+
+use PHP\Depend\AbstractTest;
+
 /**
- * Abstract base class for tests of the metrics package.
+ * Abstract base class for issue tests.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-abstract class PHP_Depend_Metrics_AbstractTest extends PHP_Depend_AbstractTest
+abstract class AbstractFeatureTest extends AbstractTest
 {
+    /**
+     * Returns the parameters of the first function in the test case file.
+     *
+     * @return \PHP\Depend\Source\AST\ASTParameter[]
+     */
+    protected function getParametersOfFirstFunction()
+    {
+        $packages = self::parseTestCase();
+        $functions = $packages[0]->getFunctions();
+        return $functions[0]->getParameters();
+    }
+    
+    /**
+     * Parses the sourse for the calling test case.
+     *
+     * @param string $testCase
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
+     */
+    protected static function parseTestCase($testCase = null)
+    {
+        if ($testCase === null) {
+            $testCase = self::getTestCaseMethod();
+        }
+        return self::parseTestCaseSource($testCase);
+    }
+
     /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
@@ -59,28 +89,25 @@ abstract class PHP_Depend_Metrics_AbstractTest extends PHP_Depend_AbstractTest
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
-
-        $parts = explode('_', $class);
-
-        try {
-            return parent::parseSource(
-                sprintf(
-                    'Metrics/%s/%s.php',
-                    $parts[count($parts) - 2],
-                    $method
-                ),
-                $ignoreAnnotations
-            );
-        } catch (Exception $e) {
+        if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
+            throw new \ErrorException('Unexpected class name format');
         }
-        
-        return parent::parseSource(
-            sprintf(
-                'Metrics/%s/%s',
-                $parts[count($parts) - 2],
-                $method
-            ),
-            $ignoreAnnotations
-        );
+        return self::parseSource('issues/' . $match[1] . '/' . $method . '.php');
+    }
+
+    /**
+     * Returns a php callback for the calling test case method.
+     *
+     * @return string
+     */
+    protected static function getTestCaseMethod()
+    {
+        $trace = debug_backtrace();
+        foreach ($trace as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return $frame['class'] . '::' . $frame['function'];
+            }
+        }
+        throw new \ErrorException('Cannot locate test case method.');
     }
 }

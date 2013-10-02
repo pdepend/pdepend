@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug016Test extends AbstractTest
+class ParserBug016Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser detect a type within an instance of operator.
@@ -94,7 +94,7 @@ class ParserBug016Test extends AbstractTest
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
      * @return void
-     * @todo TODO: It would be a cool feature if \PHP_Depend would replace such
+     * @todo TODO: It would be a cool feature if PDepend would replace such
      *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
      *             T_INSTANCEOF + T_VARIABLE).
      */

@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\Builder\BuilderContext;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
@@ -55,12 +56,9 @@ use PHP\Depend\Source\AST\ASTTrait;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Builder\BuilderContext\GlobalBuilderContext
- * @group pdepend
- * @group pdepend::builder
- * @group pdepend::builder::context
  * @group unittest
  */
-class GlobalBuilderContextTest extends \PHP_Depend_AbstractTest
+class GlobalBuilderContextTest extends AbstractTest
 {
     /**
      * testRegisterTraitCallsRestoreClassOnBuilder

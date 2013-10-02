@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class DefaultNamespaceBug106Test extends AbstractTest
+class DefaultNamespaceBug106Test extends AbstractRegressionTest
 {
     /**
      * testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile

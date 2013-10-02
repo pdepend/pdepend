@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Issues;
+
 /**
  * Test case for the Reflection API compatibility ticket #67.
  *
@@ -50,8 +52,7 @@
  * @covers \PHP\Depend\Source\AST\ASTParameter
  * @group unittest
  */
-class PHP_Depend_Issues_ReflectionCompatibilityIssue067Test
-    extends PHP_Depend_Issues_AbstractTest
+class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
 {
     /**
      * Tests that the parser sets the parameter flag by reference.

@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Report\Summary;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTArtifactList;
 
 /**
@@ -51,12 +52,9 @@ use PHP\Depend\Source\AST\ASTArtifactList;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Report\Summary\Xml
- * @group pdepend
- * @group pdepend::log
- * @group pdepend::log::summary
  * @group unittest
  */
-class XmlTest extends \PHP_Depend_AbstractTest
+class XmlTest extends AbstractTest
 {
     /**
      * Test code structure.

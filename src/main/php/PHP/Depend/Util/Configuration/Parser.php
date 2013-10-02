@@ -44,10 +44,10 @@
 namespace PHP\Depend\Util\Configuration;
 
 /**
- * Default implementation of a PHP_Depend configuration parser.
+ * Default implementation of a PDepend configuration parser.
  *
  * This class provides the default implementation of the configuration parser
- * used to handle PHP_Depend configuration files. This parses provides an
+ * used to handle PDepend configuration files. This parses provides an
  * adaptive parser that takes the default configuration tree as a constructor
  * argument and then overwrites the default settings during each call to the
  * <em>parse()</em> method with the newly specified values. This solutions
@@ -88,9 +88,9 @@ class Parser
     /**
      * Parses the given <b>$file</b> and overwrites all those default values that
      * are specified in the given configuration file. The return value of this
-     * method represents the updated PHP_Depend configuration values.
+     * method represents the updated PDepend configuration values.
      *
-     * @param string $file Path to a PHP_Depend configuration.
+     * @param string $file
      * @return \stdClass
      */
     public function parse($file)

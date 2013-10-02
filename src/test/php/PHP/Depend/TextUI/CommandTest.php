@@ -42,26 +42,26 @@
 
 namespace PHP\Depend\TextUI;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Util\ConfigurationInstance;
 
 /**
  * Test case for the text ui command.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @covers \PHP\Depend\TextUI\Command
- * @group pdepend
- * @group pdepend::textui
  * @group unittest
  */
-class CommandTest extends \PHP_Depend_AbstractTest
+class CommandTest extends AbstractTest
 {
     /**
      * Expected output of the --version option.
      *
      * @var string
      */
-    private $_versionOutput = "PHP_Depend @package_version@ by Manuel Pichler\n\n";
+    private $_versionOutput = "PDepend @package_version@\n\n";
 
     /**
      * Expected output of the --usage option.
@@ -535,7 +535,7 @@ class CommandTest extends \PHP_Depend_AbstractTest
         $startsWith = '/^' . preg_quote($startsWith) . '/';
         $this->assertRegExp($startsWith, $actual);
 
-        $this->assertRegExp('(  --configuration=<file>[ ]+Optional\s+PHP_Depend\s+configuration\s+file\.)', $actual);
+        $this->assertRegExp('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
         $this->assertRegExp('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
         $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
         $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+packages\.)', $actual);

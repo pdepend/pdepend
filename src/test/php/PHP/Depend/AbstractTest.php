@@ -40,9 +40,14 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+namespace PHP\Depend;
+
+use PHP\Depend\Input\ExcludePathFilter;
+use PHP\Depend\Input\Iterator;
 use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
+use PHP\Depend\Source\AST\ASTFormalParameters;
 use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTMethod;
@@ -56,12 +61,12 @@ use PHP\Depend\Util\Cache\Driver\Memory;
 use PHP\Depend\Util\Configuration\Factory;
 
 /**
- * Abstract test case implementation for the PHP_Depend package.
+ * Abstract test case implementation for the PDepend package.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
+abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * The current working directory.
@@ -86,8 +91,6 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         $this->clearRunResources($run);
-
-        include_once 'PHP/Depend.php';
 
         if (defined('STDERR') === false) {
             define('STDERR', fopen('php://stderr', true));
@@ -278,10 +281,8 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return array(string)
      */
-    protected static function collectChildNodes(
-        \PHP\Depend\Source\AST\ASTNode $node,
-        array $actual = array()
-    ) {
+    protected static function collectChildNodes(ASTNode $node, array $actual = array())
+    {
         foreach ($node->getChildren() as $child) {
             $actual[] = get_class($child);
             $actual   = self::collectChildNodes($child, $actual);
@@ -293,8 +294,8 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      * Tests that the given node and its children represent the expected ast
      * object graph.
      *
-     * @param \PHP\Depend\Source\AST\ASTNode $node     The root node.
-     * @param array(string)           $expected Expected class structure.
+     * @param \PHP\Depend\Source\AST\ASTNode $node
+     * @param array(string) $expected
      *
      * @return void
      */
@@ -310,7 +311,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    protected static function collectGraph(\PHP\Depend\Source\AST\ASTNode $node)
+    protected static function collectGraph(ASTNode $node)
     {
         $graph = array();
         foreach ($node->getChildren() as $child) {
@@ -331,7 +332,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    protected static function assertGraph(\PHP\Depend\Source\AST\ASTNode $node, $graph)
+    protected static function assertGraph(ASTNode $node, $graph)
     {
         $actual = self::collectGraph($node);
         self::assertEquals($graph, $actual);
@@ -399,7 +400,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $dir = dirname(__FILE__) . '/_run';
         }
 
-        foreach (new DirectoryIterator($dir) as $file) {
+        foreach (new \DirectoryIterator($dir) as $file) {
             if ($file == '.' || $file == '..' || $file == '.svn') {
                 continue;
             }
@@ -428,10 +429,10 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Creates a PHP_Depend instance configured with the code resource associated
+     * Creates a PDepend instance configured with the code resource associated
      * with the calling test case.
      *
-     * @return PHP_Depend
+     * @return \PHP\Depend\Application
      * @since 0.10.0
      */
     protected function createPDependFixture()
@@ -440,7 +441,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
             $this->createCodeResourceURI('config/')
         );
 
-        return new PHP_Depend($this->createConfigurationFixture());
+        return new Application($this->createConfigurationFixture());
     }
 
     /**
@@ -514,7 +515,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $function = new ASTFunction($name);
         $function->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $function->setCache(new Memory());
-        $function->addChild(new \PHP\Depend\Source\AST\ASTFormalParameters());
+        $function->addChild(new ASTFormalParameters());
 
         return $function;
     }
@@ -532,7 +533,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
 
         $method = new ASTMethod($name);
         $method->setCache(new Memory());
-        $method->addChild(new \PHP\Depend\Source\AST\ASTFormalParameters());
+        $method->addChild(new ASTFormalParameters());
 
         return $method;
     }
@@ -540,14 +541,15 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Creates a temporary resource for the given file name.
      *
-     * @param string $fileName Optional temporary local file name.
+     * @param string $fileName
      * @return string
+     * @throws \ErrorException
      */
     protected static function createRunResourceURI($fileName = null)
     {
         $uri = dirname(__FILE__) . '/_run/' . ($fileName ? $fileName : uniqid());
         if (file_exists($uri) === true) {
-            throw new ErrorException("File '{$fileName}' already exists.");
+            throw new \ErrorException("File '{$fileName}' already exists.");
         }
         return $uri;
     }
@@ -557,14 +559,14 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $fileName The code file name.
      * @return string
+     * @throws \ErrorException
      */
     protected static function createCodeResourceURI($fileName)
     {
-        $uri = dirname(__FILE__) . '/../../../resources/files/' . $fileName;
-        $uri = realpath($uri);
+        $uri = realpath(__DIR__ . '/../../../resources/files') . '/' . $fileName;
 
         if (file_exists($uri) === false) {
-            throw new ErrorException("File '{$fileName}' does not exists.");
+            throw new \ErrorException("File '{$fileName}' does not exists.");
         }
         return $uri;
     }
@@ -578,7 +580,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         list($class, $method) = explode('::', self::getCallingTestMethod());
 
-        if (1 === count($parts = explode('_', $class))) {
+        if (1 === count($parts = explode('\\', $class))) {
             $parts = explode('\\', $class);
         }
 
@@ -598,7 +600,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         $fileName = substr(join('/', $parts), 0, -4) . "/{$method}";
         try {
             return self::createCodeResourceURI($fileName);
-        } catch (ErrorException $e) {
+        } catch (\ErrorException $e) {
             return self::createCodeResourceURI("{$fileName}.php");
         }
     }
@@ -615,7 +617,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
                 return "{$frame['class']}::{$frame['function']}";
             }
         }
-        throw new ErrorException("No calling test case found.");
+        throw new \ErrorException("No calling test case found.");
     }
 
     /**
@@ -629,7 +631,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         spl_autoload_register(array(__CLASS__, 'autoload'));
 
         // Is it not installed?
-        if (is_file(dirname(__FILE__) . '/../../../../main/php/PHP/Depend.php')) {
+        if (is_file(dirname(__FILE__) . '/../../../../main/php/PHP/Depend/Application.php')) {
 
             $path  = realpath(dirname(__FILE__) . '/../../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
@@ -653,8 +655,8 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function autoload($className)
     {
-        $file = strtr($className, '_\\', '//') . '.php';
-        if (is_file(dirname(__FILE__) . '/../../../../main/php/PHP/Depend.php')) {
+        $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
+        if (is_file(dirname(__FILE__) . '/../../../../main/php/PHP/Depend/Application.php')) {
             $file = dirname(__FILE__) . '/../../../../main/php/' . $file;
         }
         if (file_exists($file)) {
@@ -671,7 +673,7 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
      */
     private static function _initVersionCompatibility()
     {
-        $reflection = new ReflectionClass('Iterator');
+        $reflection = new \ReflectionClass('Iterator');
         $extension  = strtolower($reflection->getExtensionName());
         $extension  = ($extension === '' ? 'standard' : $extension);
 
@@ -707,12 +709,12 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     {
         list($class, $method) = explode('::', $testCase);
 
-        $fileName = substr(strtolower($class), 11, strrpos($class, '_') - 11);
-        $fileName = str_replace('_', '/', $fileName) . '/' . $method;
+        $fileName = substr(strtolower($class), 11, strrpos($class, '\\') - 11);
+        $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $fileName) . DIRECTORY_SEPARATOR . $method;
 
         try {
             $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (ErrorException $e) {
+        } catch (\ErrorException $e) {
             $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
@@ -734,11 +736,11 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         if (is_dir($fileOrDirectory)) {
-            $it = new \PHP\Depend\Input\Iterator(
+            $it = new Iterator(
                 new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator($fileOrDirectory)
                 ),
-                new \PHP\Depend\Input\ExcludePathFilter(array('.svn'))
+                new ExcludePathFilter(array('.svn'))
             );
         } else {
             $it = new \ArrayIterator(array($fileOrDirectory));
@@ -776,4 +778,4 @@ abstract class PHP_Depend_AbstractTest extends PHPUnit_Framework_TestCase
     }
 }
 
-PHP_Depend_AbstractTest::init();
+AbstractTest::init();

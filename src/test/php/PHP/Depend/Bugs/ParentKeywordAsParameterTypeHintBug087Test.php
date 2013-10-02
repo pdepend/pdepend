@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParentKeywordAsParameterTypeHintBug087Test extends AbstractTest
+class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles the parent type hint as expected.

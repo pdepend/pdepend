@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Input;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the exclude path filter.
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Input;
  * @group pdepend::input
  * @group unittest
  */
-class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
+class ExcludePathFilterTest extends AbstractTest
 {
     /**
      * testAbsoluteUnixPathAsFilterPatternMatches
@@ -84,8 +86,8 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
      */
     public function testUnixPathAsFilterPatternNotMatchesPartial()
     {
-        $pattern  = 'PHP_Depend-git/PHP';
-        $absolute = '/home/manuel/workspace/PHP_Depend-git/PHP/Depend.php';
+        $pattern  = 'PDepend-git/PHP';
+        $absolute = '/home/manuel/workspace/PDepend-git/PHP/Depend.php';
         $relative = '/PHP/Depend.php';
 
         $filter = new ExcludePathFilter(array($pattern));
@@ -121,8 +123,8 @@ class ExcludePathFilterTest extends \PHP_Depend_AbstractTest
      */
     public function testWindowsPathAsFilterPatternNotMatchesPartial()
     {
-        $pattern  = 'PHP_Depend-git\PHP';
-        $absolute = 'c:\workspace\PHP_Depend-git\PHP\Depend.php';
+        $pattern  = 'PDepend-git\PHP';
+        $absolute = 'c:\workspace\PDepend-git\PHP\Depend.php';
         $relative = '\PHP\Depend.php';
 
         $filter = new ExcludePathFilter(array($pattern));

@@ -58,7 +58,7 @@ use PHP\Depend\Source\AST\ASTPropertyPostfix;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug8927377Test extends AbstractTest
+class ParserBug8927377Test extends AbstractRegressionTest
 {
     /**
      * testPropertyPostfixHasExpectedStartLine

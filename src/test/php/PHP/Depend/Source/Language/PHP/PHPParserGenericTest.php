@@ -43,6 +43,8 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Source\Language\PHP\PHPParserGeneric} class.
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Source\Language\PHP;
  * @covers \PHP\Depend\Source\Language\PHP\PHPParserGeneric
  * @group unittest
  */
-class PHPParserGenericTest extends \PHP_Depend_AbstractTest
+class PHPParserGenericTest extends AbstractTest
 {
     /**
      * testParserAcceptsStringAsClassName

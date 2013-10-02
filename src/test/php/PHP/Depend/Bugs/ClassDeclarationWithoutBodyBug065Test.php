@@ -52,7 +52,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ClassDeclarationWithoutBodyBug065Test extends AbstractTest
+class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser does not end in an endless loop when it detects an

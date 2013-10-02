@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserSetsIncorrectStartLineBug101Test extends AbstractTest
+class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTest
 {
     /**
      * testParserSetsExpectedStartLineNumber

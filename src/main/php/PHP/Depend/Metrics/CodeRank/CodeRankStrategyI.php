@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\CodeRank;
+
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
@@ -48,7 +50,7 @@ use PHP\Depend\TreeVisitor\TreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-interface PHP_Depend_Metrics_CodeRank_CodeRankStrategyI extends TreeVisitor
+interface CodeRankStrategyI extends TreeVisitor
 {
     /**
      * Returns the collected nodes.

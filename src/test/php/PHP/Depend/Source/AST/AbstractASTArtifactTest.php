@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Base test case for abstract item implementations.
  *
@@ -49,8 +51,9 @@ namespace PHP\Depend\Source\AST;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\AST\AbstractASTArtifact
+ * @group unittest
  */
-abstract class AbstractASTArtifactTest extends \PHP_Depend_AbstractTest
+abstract class AbstractASTArtifactTest extends AbstractTest
 {
     /**
      * testSetNameChangesPreviousName

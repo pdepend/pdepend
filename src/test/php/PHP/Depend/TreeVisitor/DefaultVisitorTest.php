@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\AST\ASTNamespace;
@@ -54,11 +55,9 @@ use PHP\Depend\Source\AST\ASTTrait;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\TreeVisitor\AbstractVisitor
- * @group pdepend
- * @group pdepend::visitor
  * @group unittest
  */
-class DefaultVisitorTest extends \PHP_Depend_AbstractTest
+class DefaultVisitorTest extends AbstractTest
 {
     /**
      * Tests the execution order of the default visitor implementation.

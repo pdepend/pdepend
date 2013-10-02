@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\TextUI;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTMethod;
 use PHP\Depend\Source\Language\PHP\PHPBuilder;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
@@ -53,8 +54,9 @@ use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\TextUI\ResultPrinter
+ * @group unittest
  */
-class ResultPrinterTest extends \PHP_Depend_AbstractTest
+class ResultPrinterTest extends AbstractTest
 {
     /**
      * Tests the output for a single file entry.
@@ -118,7 +120,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     {
         // Create dummy objects
         $method   = new ASTMethod('method');
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
 
         $printer = new ResultPrinter();
 
@@ -145,7 +147,7 @@ class ResultPrinterTest extends \PHP_Depend_AbstractTest
     {
         // Create dummy objects
         $method   = new ASTMethod('method');
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
 
         $printer = new ResultPrinter();
 

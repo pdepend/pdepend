@@ -43,6 +43,7 @@
 
 namespace PHP\Depend\Util\Cache\Driver\File;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Util\Cache\Driver;
 
 /**
@@ -55,7 +56,7 @@ use PHP\Depend\Util\Cache\Driver;
  * @covers \PHP\Depend\Util\Cache\Driver\File\Directory
  * @group unittest
  */
-class DirectoryTest extends \PHP_Depend_AbstractTest
+class DirectoryTest extends AbstractTest
 {
     /**
      * Temporary cache directory.

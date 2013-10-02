@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\CodeRank;
+
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the method strategy.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::coderank
+ * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
  * @group unittest
  */
-class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_AbstractTest
+class MethodStrategyTest extends AbstractTest
 {
     /**
      * testStrategyCountsCorrectTypes
@@ -142,7 +143,7 @@ class PHP_Depend_Metrics_CodeRank_MethodStrategyTest extends PHP_Depend_Abstract
             ),
         );
     
-        $strategy = new PHP_Depend_Metrics_CodeRank_MethodStrategy();
+        $strategy = new \PHP\Depend\Metrics\CodeRank\MethodStrategy();
         foreach ($packages as $package) {
             $package->accept($strategy);
         }

@@ -66,7 +66,6 @@ class CacheVersionUpdater
     private $_localPaths = array(
         '/Source',
         '/Metrics',
-        '/Parser',
     );
 
     /**

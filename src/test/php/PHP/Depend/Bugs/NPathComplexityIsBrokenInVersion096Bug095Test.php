@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractTest
+class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles an interface within an instanceof operator
@@ -70,7 +70,7 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractTest
             ->getFunctions()
             ->current();
 
-        $analyzer = new \PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\NPathComplexity\Analyzer();
         $analyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
         $analyzer->analyze($packages);
 

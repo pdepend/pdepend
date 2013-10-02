@@ -352,17 +352,17 @@ class Command
     }
 
     /**
-     * Outputs the current PHP_Depend version.
+     * Outputs the current PDepend version.
      *
      * @return void
      */
     protected function printVersion()
     {
-        echo 'PHP_Depend @package_version@ by Manuel Pichler', PHP_EOL, PHP_EOL;
+        echo 'PDepend @package_version@', PHP_EOL, PHP_EOL;
     }
 
     /**
-     * Outputs the base usage of PHP_Depend.
+     * Outputs the base usage of PDepend.
      *
      * @return void
      */
@@ -373,7 +373,7 @@ class Command
     }
 
     /**
-     * Outputs the main help of PHP_Depend.
+     * Outputs the main help of PDepend.
      *
      * @return void
      */
@@ -386,7 +386,7 @@ class Command
 
         $this->printOption(
             '--configuration=<file>',
-            'Optional PHP_Depend configuration file.',
+            'Optional PDepend configuration file.',
             $length
         );
         echo PHP_EOL;

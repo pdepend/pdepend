@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Issues;
+
 /**
  * Test case for issue #87. Handling of dependencies declared in inline comments.
  *
@@ -47,13 +49,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
- * @group pdepend
- * @group pdepend::issues
- * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Issues_HandlingOfIdeStyleDependenciesInCommentsIssue087Test
-    extends PHP_Depend_Issues_AbstractTest
+class HandlingOfIdeStyleDependenciesInCommentsIssue087Test
+    extends AbstractFeatureTest
 {
     /**
      * Tests that the parser recognizes a inline type definition within a comment.

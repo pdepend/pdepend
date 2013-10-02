@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Issues;
+
 use PHP\Depend\Input\ExtensionFilter;
 
 /**
@@ -47,18 +50,14 @@ use PHP\Depend\Input\ExtensionFilter;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend
- * @group pdepend
- * @group pdepend::issues
- * @group pdepend::textui
+ * @covers \PHP\Depend\Application
  * @group unittest
  */
-class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
-    extends PHP_Depend_Issues_AbstractTest
+class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 {
     /**
-     * Tests that the {@link PHP_Depend::getExceptions()} Returns a list with
-     * the expected exceptions.
+     * Tests that the {@link \PHP\Depend\Application::getExceptions()} returns a
+     * list with the expected exceptions.
      *
      * @return void
      */
@@ -168,7 +167,7 @@ class PHP_Depend_Issues_PHPDependCatchesParsingErrorsIssue061Test
     }
 
     /**
-     * Executes PHP_Depend's text ui command and returns the exit code and shell
+     * Executes PDepend's text ui command and returns the exit code and shell
      * output.
      *
      * @return array

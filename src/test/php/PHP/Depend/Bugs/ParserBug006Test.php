@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug006Test extends AbstractTest
+class ParserBug006Test extends AbstractRegressionTest
 {
     /**
      * testParserNotSetsReferenceForVariableObjectInstantiation

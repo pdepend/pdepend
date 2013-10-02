@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractTest
+class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesObjectPropertyAsForeachLoopKey

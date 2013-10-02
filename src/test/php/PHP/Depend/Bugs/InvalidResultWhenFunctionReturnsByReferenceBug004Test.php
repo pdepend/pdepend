@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractTest
+class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles function with reference return values

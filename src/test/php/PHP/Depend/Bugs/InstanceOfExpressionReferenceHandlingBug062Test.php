@@ -56,7 +56,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractTest
+class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles an interface within an instanceof operator

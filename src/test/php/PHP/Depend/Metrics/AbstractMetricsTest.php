@@ -38,19 +38,53 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     0.9.20
  */
 
-namespace PHP\Depend\Source\Parser;
+namespace PHP\Depend\Metrics;
+
+use PHP\Depend\AbstractTest;
 
 /**
- * Abstract test case class for this sub package.
+ * Abstract base class for tests of the metrics package.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     0.9.20
  */
-abstract class AbstractTest extends \PHP_Depend_AbstractTest
+abstract class AbstractMetricsTest extends AbstractTest
 {
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PHP\Depend\Source\AST\ASTNamespace[]
+     */
+    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
 
+        $parts = explode('\\', $class);
+
+        try {
+            return parent::parseSource(
+                sprintf(
+                    'Metrics/%s/%s.php',
+                    $parts[count($parts) - 2],
+                    $method
+                ),
+                $ignoreAnnotations
+            );
+        } catch (\Exception $e) {
+        }
+        
+        return parent::parseSource(
+            sprintf(
+                'Metrics/%s/%s',
+                $parts[count($parts) - 2],
+                $method
+            ),
+            $ignoreAnnotations
+        );
+    }
 }

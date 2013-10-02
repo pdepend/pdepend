@@ -43,20 +43,21 @@
 
 namespace PHP\Depend\Bugs;
 
+use PHP\Depend\Application;
+use PHP\Depend\Util\Configuration\Factory;
+
 /**
  * Test case for bug #13405179.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       https://www.pivotaltracker.com/story/show/13405179
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @link https://www.pivotaltracker.com/story/show/13405179
  *
  * @ticket 13405179
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::bugs
  * @group regressiontest
  */
-class PHPDependBug13405179Test extends AbstractTest
+class PHPDependBug13405179Test extends AbstractRegressionTest
 {
     /**
      * testLogFileIsCreatedForUnstructuredCode
@@ -74,11 +75,11 @@ class PHPDependBug13405179Test extends AbstractTest
         $generator = new $className();
         $generator->setLogFile($file);
 
-        $factory = new \PHP\Depend\Util\Configuration\Factory();
-        $pdepend = new \PHP_Depend($factory->createDefault());
-        $pdepend->addFile(self::createCodeResourceUriForTest());
-        $pdepend->addReportGenerator($generator);
-        $pdepend->analyze();
+        $factory = new Factory();
+        $application = new Application($factory->createDefault());
+        $application->addFile(self::createCodeResourceUriForTest());
+        $application->addReportGenerator($generator);
+        $application->analyze();
 
         $this->assertFileExists($file);
     }

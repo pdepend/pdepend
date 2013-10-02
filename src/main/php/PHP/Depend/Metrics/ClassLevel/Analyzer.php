@@ -39,9 +39,11 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\ClassLevel;
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AggregateAnalyzer;
-use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Source\AST\AbstractASTType;
@@ -62,11 +64,7 @@ use PHP\Depend\Source\AST\ASTTrait;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_ClassLevel_Analyzer
-       extends AbstractAnalyzer
-    implements AggregateAnalyzer,
-               AnalyzerFilterAware,
-               AnalyzerNodeAware
+class Analyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerFilterAware, AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.
@@ -112,7 +110,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
     /**
      * The internal used cyclomatic complexity analyzer.
      *
-     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @var \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer
      */
     private $cyclomaticAnalyzer = null;
 
@@ -154,9 +152,7 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      */
     public function getRequiredAnalyzers()
     {
-        return array(
-            PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ
-        );
+        return array(\PHP\Depend\Metrics\CyclomaticComplexity\Analyzer::CLAZZ);
     }
 
     /**
@@ -165,9 +161,9 @@ class PHP_Depend_Metrics_ClassLevel_Analyzer
      * @param \PHP\Depend\Metrics\Analyzer $analyzer The sub analyzer instance.
      * @return void
      */
-    public function addAnalyzer(Analyzer $analyzer)
+    public function addAnalyzer(\PHP\Depend\Metrics\Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
+        if ($analyzer instanceof \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer) {
             $this->cyclomaticAnalyzer = $analyzer;
         } else {
             throw new \InvalidArgumentException('CC Analyzer required.');

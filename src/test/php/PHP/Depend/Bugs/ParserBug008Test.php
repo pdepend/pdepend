@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug008Test extends AbstractTest
+class ParserBug008Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles curly braces in strings correct.

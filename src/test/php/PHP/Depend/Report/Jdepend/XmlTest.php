@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Report\Jdepend;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Report\DummyAnalyzer;
 
 /**
@@ -51,12 +52,9 @@ use PHP\Depend\Report\DummyAnalyzer;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Report\Jdepend\Xml
- * @group pdepend
- * @group pdepend::log
- * @group pdepend::log::jdepend
  * @group unittest
  */
-class XmlTest extends \PHP_Depend_AbstractTest
+class XmlTest extends AbstractTest
 {
     /**
      * Test code structure.
@@ -68,7 +66,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     /**
      * Test dependency analyzer.
      *
-     * @var PHP_Depend_Metrics_Dependency_Analyzer
+     * @var \PHP\Depend\Metrics\Dependency\Analyzer
      */
     protected $analyzer = null;
 
@@ -112,7 +110,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $exptected = array(\PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
+        $exptected = array(\PHP\Depend\Metrics\Dependency\Analyzer::CLAZZ);
 
         $this->assertEquals($exptected, $actual);
     }
@@ -145,7 +143,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
     {
         $this->packages = self::parseCodeResourceForTest();
 
-        $this->analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
+        $this->analyzer = new \PHP\Depend\Metrics\Dependency\Analyzer();
         $this->analyzer->analyze($this->packages);
 
         $log = new Xml();
@@ -171,7 +169,7 @@ class XmlTest extends \PHP_Depend_AbstractTest
         $logger = new Xml();
 
         $this->assertFalse($logger->log(new DummyAnalyzer()));
-        $this->assertTrue($logger->log(new \PHP_Depend_Metrics_Dependency_Analyzer()));
+        $this->assertTrue($logger->log(new \PHP\Depend\Metrics\Dependency\Analyzer()));
     }
 
     /**

@@ -45,8 +45,6 @@ namespace PHP\Depend;
 spl_autoload_register(function ($class) {
     if (0 === strpos($class, __NAMESPACE__)) {
         $file = __DIR__ . strtr(str_replace(__NAMESPACE__, '', $class), '\\', '/') . '.php';
-    } else if (0 === strpos($class, 'PHP_Depend_')) {
-        $file = __DIR__ . strtr(str_replace('PHP_Depend', '', $class), '_', '/') . '.php';
     } else {
         return;
     }

@@ -40,6 +40,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Integration;
+
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\Language\PHP\PHPBuilder;
 use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
 use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
@@ -50,12 +53,10 @@ use PHP\Depend\Source\Language\PHP\PHPTokenizerInternal;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
- * @group pdepend
- * @group pdepend::integration
+ * @covers \stdClass
  * @group integrationtest
  */
-class PHP_Depend_Integration_BuilderParserCacheTest extends PHP_Depend_AbstractTest
+class BuilderParserCacheTest extends AbstractTest
 {
     /**
      * The temporary cache directory.

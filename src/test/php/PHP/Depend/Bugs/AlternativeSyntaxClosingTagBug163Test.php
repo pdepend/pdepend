@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class AlternativeSyntaxClosingTagBug163Test extends AbstractTest
+class AlternativeSyntaxClosingTagBug163Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesAlternativeSyntaxTerminatedByClosingTag

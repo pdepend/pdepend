@@ -52,7 +52,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ClosureResultsInExceptionBug070Test extends AbstractTest
+class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser does not throw an exception when it detects a

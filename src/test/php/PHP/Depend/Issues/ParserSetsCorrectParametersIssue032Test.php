@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Issues;
+
 /**
  * Test case for parameter related ticker #32.
  *
@@ -47,12 +49,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
- * @group pdepend
- * @group pdepend::issues
  * @group unittest
  */
-class PHP_Depend_Issues_ParserSetsCorrectParametersIssue032Test
-    extends PHP_Depend_Issues_AbstractTest
+class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
 {
     /**
      * testParserSetsExpectedNumberOfFunctionParameters

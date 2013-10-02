@@ -40,13 +40,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\CodeRank;
+
 /**
  * Factory for the different code rank strategies.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_CodeRank_StrategyFactory
+class StrategyFactory
 {
     /**
      * The identifier for the inheritance strategy.
@@ -84,7 +86,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
     /**
      * Creates the default code rank strategy.
      *
-     * @return PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
+     * @return \PHP\Depend\Metrics\CodeRank\CodeRankStrategyI
      */
     public function createDefaultStrategy()
     {
@@ -95,15 +97,14 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
      * Creates a code rank strategy for the given identifier.
      *
      * @param string $strategyName The strategy identifier.
-     *
-     * @return PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
-     * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
+     * @return \PHP\Depend\Metrics\CodeRank\CodeRankStrategyI
+     * @throws \InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
      */
     public function createStrategy($strategyName)
     {
         if (in_array($strategyName, $this->validStrategies) === false) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 sprintf('Cannot load file for identifier "%s".', $strategyName)
             );
         }
@@ -112,7 +113,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactory
         $name = ucfirst(strtolower($strategyName));
 
         $fileName  = "PHP/Depend/Metrics/CodeRank/{$name}Strategy.php";
-        $className = "PHP_Depend_Metrics_CodeRank_{$name}Strategy";
+        $className = "PHP\\Depend\\Metrics\\CodeRank\\{$name}Strategy";
 
         include_once $fileName;
 

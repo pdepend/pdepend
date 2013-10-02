@@ -56,7 +56,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class IncorrectPropertyEndlineBug068Test extends AbstractTest
+class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser sets the expected start and end line for a property.

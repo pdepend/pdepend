@@ -43,6 +43,8 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Util\Configuration} class.
  *
@@ -51,12 +53,9 @@ namespace PHP\Depend\Util;
  * @since 0.10.0
  *
  * @covers \PHP\Depend\Util\Configuration
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::configuration
  * @group unittest
  */
-class ConfigurationTest extends \PHP_Depend_AbstractTest
+class ConfigurationTest extends AbstractTest
 {
     /**
      * testPropertyAccessForExistingValue

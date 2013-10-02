@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\Tokenizer\Tokenizer;
 use PHP\Depend\Source\Tokenizer\Tokens;
 
@@ -52,11 +53,9 @@ use PHP\Depend\Source\Tokenizer\Tokens;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\PHPTokenizerInternal
- * @group pdepend
- * @group pdepend::tokenizer
  * @group unittest
  */
-class PHPTokenizerInternalTest extends \PHP_Depend_AbstractTest
+class PHPTokenizerInternalTest extends AbstractTest
 {
     /**
      * testTokenizerReturnsExpectedConstantForTraitKeyword

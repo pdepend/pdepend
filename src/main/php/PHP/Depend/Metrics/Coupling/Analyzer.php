@@ -39,15 +39,18 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\Coupling;
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
-use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\AbstractASTCallable;
 use PHP\Depend\Source\AST\AbstractASTType;
 use PHP\Depend\Source\AST\ASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
+use PHP\Depend\Source\AST\ASTFunction;
 use PHP\Depend\Source\AST\ASTInterface;
 use PHP\Depend\Source\AST\ASTInvocation;
 use PHP\Depend\Source\AST\ASTMemberPrimaryPrefix;
@@ -78,7 +81,7 @@ use PHP\Depend\Source\AST\ASTProperty;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
+class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -259,7 +262,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
      * @param \PHP\Depend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(PHP\Depend\Source\AST\ASTFunction $function)
+    public function visitFunction(ASTFunction $function)
     {
         $this->fireStartFunction($function);
 
@@ -297,7 +300,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
     }
 
     /**
-     * Visit method for classes that will be called by PHP_Depend during the
+     * Visit method for classes that will be called by PDepend during the
      * analysis phase with the current context class.
      *
      * @param \PHP\Depend\Source\AST\ASTClass $class
@@ -311,7 +314,7 @@ class PHP_Depend_Metrics_Coupling_Analyzer extends AbstractAnalyzer implements A
     }
 
     /**
-     * Visit method for interfaces that will be called by PHP_Depend during the
+     * Visit method for interfaces that will be called by PDepend during the
      * analysis phase with the current context interface.
      *
      * @param \PHP\Depend\Source\AST\ASTInterface $interface

@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractTest
+class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegressionTest
 {
     /**
      * testParserNotThrowsAnExceptionForKeywordUse

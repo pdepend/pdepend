@@ -388,8 +388,8 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
      * Appends a file reference element to the given <b>$xml</b> element.
      *
      * <code>
-     *   <class name="PHP_Depend">
-     *     <file name="PHP/Depend.php" />
+     *   <class name="\PHP\Depend\Application">
+     *     <file name="PHP/Depend/Application.php" />
      *   </class>
      * </code>
      *

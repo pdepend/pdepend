@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util\Coverage;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Util\Coverage\Factory} class.
  *
@@ -49,12 +51,9 @@ namespace PHP\Depend\Util\Coverage;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Util\Coverage\Factory
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::coverage
  * @group unittest
  */
-class FactoryTest extends \PHP_Depend_AbstractTest
+class FactoryTest extends AbstractTest
 {
     /**
      * testCreateReturnsCloverReportInstanceForCloverInputFile

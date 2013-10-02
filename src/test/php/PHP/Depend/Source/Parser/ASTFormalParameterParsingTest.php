@@ -54,7 +54,7 @@ namespace PHP\Depend\Source\Parser;
  * @group pdepend::parser
  * @group unittest
  */
-class ASTFormalParameterParsingTest extends AbstractTest
+class ASTFormalParameterParsingTest extends AbstractParserTest
 {
     /**
      * testWithParentTypeHint

@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug017Test extends AbstractTest
+class ParserBug017Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser detects a type within a catch block.

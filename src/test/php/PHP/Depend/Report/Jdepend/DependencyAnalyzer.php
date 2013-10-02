@@ -50,7 +50,7 @@ use PHP\Depend\Source\AST\AbstractASTArtifact;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class DependencyAnalyzer extends \PHP_Depend_Metrics_Dependency_Analyzer
+class DependencyAnalyzer extends \PHP\Depend\Metrics\Dependency\Analyzer
 {
     /**
      * Dummy package statistics

@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug007Test extends AbstractTest
+class ParserBug007Test extends AbstractRegressionTest
 {
     /**
      * testParserCurlyBrace

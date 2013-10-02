@@ -1,5 +1,7 @@
 <?php
-class PHP_Depend_AutoloadLoadsClassInPhpDependNamespace
+namespace PHP\Depend;
+
+class AutoloadLoadsClassInPhpDependNamespace
 {
     
 }

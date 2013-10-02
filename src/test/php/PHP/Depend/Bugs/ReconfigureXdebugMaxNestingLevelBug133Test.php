@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractTest
+class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractRegressionTest
 {
     /**
      * testParserResetsReconfiguredXdebugMaxNestingLevel

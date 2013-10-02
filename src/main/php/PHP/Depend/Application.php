@@ -40,6 +40,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+namespace PHP\Depend;
+
 use PHP\Depend\Metrics\AnalyzerClassFileSystemLocator;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerLoader;
@@ -57,15 +59,15 @@ use PHP\Depend\Util\Configuration;
 use PHP\Depend\TreeVisitor\TreeVisitor;
 
 /**
- * PHP_Depend analyzes php class files and generates metrics.
+ * PDepend analyzes php class files and generates metrics.
  *
- * The PHP_Depend is a php port/adaption of the Java class file analyzer
+ * The PDepend is a php port/adaption of the Java class file analyzer
  * <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend
+class Application
 {
     /**
      * Marks the storage used for runtime tokens.
@@ -217,7 +219,7 @@ class PHP_Depend
         $fileName = realpath($file);
 
         if (!is_file($fileName)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 sprintf('The given file "%s" does not exist.', $file)
             );
         }
@@ -345,7 +347,7 @@ class PHP_Depend
     {
         if ($this->packages === null) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
-            throw new RuntimeException($msg);
+            throw new \RuntimeException($msg);
         }
 
         $classes = 0;
@@ -390,8 +392,9 @@ class PHP_Depend
     /**
      * Returns the analyzed package of the specified name.
      *
-     * @param string $name The package name.
+     * @param string $name
      * @return \PHP\Depend\Source\AST\ASTNamespace
+     * @throws \OutOfBoundsException
      */
     public function getPackage($name)
     {
@@ -404,7 +407,7 @@ class PHP_Depend
                 return $package;
             }
         }
-        throw new OutOfBoundsException(sprintf('Unknown package "%s".', $name));
+        throw new \OutOfBoundsException(sprintf('Unknown package "%s".', $name));
     }
 
     /**
@@ -416,7 +419,7 @@ class PHP_Depend
     {
         if ($this->packages === null) {
             $msg = 'getPackages() doesn\'t work before the source was analyzed.';
-            throw new RuntimeException($msg);
+            throw new \RuntimeException($msg);
         }
         return $this->packages;
     }
@@ -635,17 +638,17 @@ class PHP_Depend
     private function createFileIterator()
     {
         if (count($this->directories) === 0 && count($this->files) === 0) {
-            throw new RuntimeException('No source directory and file set.');
+            throw new \RuntimeException('No source directory and file set.');
         }
 
-        $fileIterator = new AppendIterator();
-        $fileIterator->append(new ArrayIterator($this->files));
+        $fileIterator = new \AppendIterator();
+        $fileIterator->append(new \ArrayIterator($this->files));
 
         foreach ($this->directories as $directory) {
             $fileIterator->append(
                 new \PHP\Depend\Input\Iterator(
-                    new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($directory . '/')
+                    new \RecursiveIteratorIterator(
+                        new \RecursiveDirectoryIterator($directory . '/')
                     ),
                     $this->fileFilter,
                     $directory
@@ -669,7 +672,7 @@ class PHP_Depend
         ksort($files);
         // END
 
-        return new ArrayIterator(array_values($files));
+        return new \ArrayIterator(array_values($files));
     }
 
     /**
@@ -704,24 +707,4 @@ class PHP_Depend
 
         return $this->initAnalyseListeners($loader);
     }
-
-    // @codeCoverageIgnoreStart
-
-    /**
-     * Helper method for PHP version < 5.3, this method can be used to
-     * unwire the complex object graph created by PHP_Depend, so that the
-     * garbage collector can free memory consumed by PHP_Depend. Please
-     * remember that this method will destroy all the data calculated by
-     * PHP_Depend, so it is unusable after a call to <b>free()</b>.
-     *
-     * @return void
-     * @since 0.9.12
-     * @deprecated Since 1.0.0
-     */
-    public function free()
-    {
-        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
-    }
-
-    // @codeCoverageIgnoreEnd
 }

@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util\Cache;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Abstract test case that validates the behavior of concrete driver
  * implementations.
@@ -54,7 +56,7 @@ namespace PHP\Depend\Util\Cache;
  * @group pdepend::util::cache
  * @group unittest
  */
-abstract class AbstractDriverTest extends \PHP_Depend_AbstractTest
+abstract class AbstractDriverTest extends AbstractTest
 {
     /**
      * testTypeMethodReturnsSameObjectInstance

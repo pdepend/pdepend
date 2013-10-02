@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Metrics;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Metrics\AnalyzerIterator} class.
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Metrics;
  * @group pdepend::metrics
  * @group unittest
  */
-class AnalyzerIteratorTest extends \PHP_Depend_AbstractTest
+class AnalyzerIteratorTest extends AbstractTest
 {
     /**
      * testIteratorReturnsEnabledAnalyzerInstances

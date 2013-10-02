@@ -43,7 +43,7 @@
 namespace PHP\Depend\Util;
 
 /**
- * Registry class for the PHP_Depend configuration class.
+ * Registry class for the PDepend configuration class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License

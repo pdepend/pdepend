@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Util\FileUtil} class.
  *
@@ -49,11 +51,9 @@ namespace PHP\Depend\Util;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Util\FileUtil
- * @group pdepend
- * @group pdepend::util
  * @group unittest
  */
-class FileUtilTest extends \PHP_Depend_AbstractTest
+class FileUtilTest extends AbstractTest
 {
     /**
      * testGetSysTempDirReturnsExpectedDirectory

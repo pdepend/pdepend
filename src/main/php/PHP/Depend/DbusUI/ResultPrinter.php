@@ -162,7 +162,7 @@ class ResultPrinter extends AbstractTreeVisitListener implements ProcessListener
             'PDepend',
             new DBusUInt32(0),
             'pdepend',
-            'PHP_Depend',
+            'PDepend',
             sprintf(
                 '%d files analyzed in %s minutes...',
                 $this->parsedFiles,

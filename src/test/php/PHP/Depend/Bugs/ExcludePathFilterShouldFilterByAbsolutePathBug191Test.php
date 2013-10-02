@@ -56,7 +56,7 @@ use PHP\Depend\Input\ExcludePathFilter;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractTest
+class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractRegressionTest
 {
     /**
      * testAbsoluteUnixPathAsFilterPattern

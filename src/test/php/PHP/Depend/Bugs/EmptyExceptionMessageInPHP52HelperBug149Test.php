@@ -52,7 +52,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractTest
+class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractRegressionTest
 {
     /**
      * Will skip this test for PHP versions >= 5.3

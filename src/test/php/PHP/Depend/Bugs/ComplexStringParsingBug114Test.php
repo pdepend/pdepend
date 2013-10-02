@@ -55,7 +55,7 @@ use PHP\Depend\Source\AST\ASTString;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ComplexStringParsingBug114Test extends AbstractTest
+class ComplexStringParsingBug114Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesStringWithEmbeddedBacktickExpression

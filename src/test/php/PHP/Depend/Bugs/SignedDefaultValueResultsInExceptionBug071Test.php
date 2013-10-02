@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class SignedDefaultValueResultsInExceptionBug071Test extends AbstractTest
+class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles a parameter with a signed default value.

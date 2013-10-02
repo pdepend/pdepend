@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Report\Jdepend;
 
+use PHP\Depend\AbstractTest;
+use PHP\Depend\Metrics\Dependency\Analyzer;
 use PHP\Depend\Report\DummyAnalyzer;
 use PHP\Depend\Source\AST\ASTArtifactList;
 
@@ -51,12 +53,9 @@ use PHP\Depend\Source\AST\ASTArtifactList;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @covers \PHP\Depend\Report\Jdepend\Chart
- * @group pdepend
- * @group pdepend::log
- * @group pdepend::log::jdepend
  * @group unittest
  */
-class ChartTest extends \PHP_Depend_AbstractTest
+class ChartTest extends AbstractTest
 {
     /**
      * Temporary output file.
@@ -103,7 +102,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     {
         $logger    = new Chart();
         $actual    = $logger->getAcceptedAnalyzers();
-        $exptected = array(\PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
+        $exptected = array(Analyzer::CLAZZ);
 
         $this->assertEquals($exptected, $actual);
     }
@@ -129,7 +128,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     public function testChartLogAcceptsValidAnalyzer()
     {
         $logger = new Chart();
-        $this->assertTrue($logger->log(new \PHP_Depend_Metrics_Dependency_Analyzer()));
+        $this->assertTrue($logger->log(new Analyzer()));
     }
 
     /**
@@ -152,7 +151,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     {
         $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
-        $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer = new Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
@@ -173,7 +172,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     {
         $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
-        $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer = new Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
@@ -201,7 +200,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
     {
         $nodes = new ASTArtifactList($this->_createPackages(true, false, true));
 
-        $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer = new Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
@@ -292,7 +291,7 @@ class ChartTest extends \PHP_Depend_AbstractTest
 
         $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
-        $analyzer = new \PHP_Depend_Metrics_Dependency_Analyzer();
+        $analyzer = new Analyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();

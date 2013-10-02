@@ -455,7 +455,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $function->addChild($node1);
         $function->addChild($node2);
 
-        $child = $function->getFirstChildOfType('PHP_Depend_' . md5(microtime()));
+        $child = $function->getFirstChildOfType('PHP\\Depend\\Class' . md5(microtime()));
         $this->assertNull($child);
     }
 

@@ -44,8 +44,8 @@
 namespace PHP\Depend\Metrics;
 
 /**
- * Locator that searches for PHP_Depend analyzers that follow the PHP_Depend
- * convention and are present the PHP_Depend source tree.
+ * Locator that searches for PDepend analyzers that follow the PDepend
+ * convention and are present the PDepend source tree.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -158,7 +158,7 @@ class AnalyzerClassFileSystemLocator implements AnalyzerClassLocator
     private function createClassNameFromPath($classPath, $path)
     {
         $localPath = substr($path, strlen($classPath), -4);
-        return 'PHP_Depend_Metrics_' . strtr($localPath, DIRECTORY_SEPARATOR, '_');
+        return 'PHP\\Depend\\Metrics\\' . strtr($localPath, DIRECTORY_SEPARATOR, '\\');
     }
 
     /**

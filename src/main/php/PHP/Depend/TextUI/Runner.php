@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\TextUI;
 
+use PHP\Depend\Application;
 use PHP\Depend\Input\ExcludePathFilter;
 use PHP\Depend\Input\ExtensionFilter;
 use PHP\Depend\ProcessListener;
@@ -127,7 +128,7 @@ class Runner
     private $options = array();
 
     /**
-     * This of process listeners that will be hooked into PHP_Depend's analyzing
+     * This of process listeners that will be hooked into PDepend's analyzing
      * process.
      *
      * @var ProcessListener[]
@@ -236,7 +237,7 @@ class Runner
     }
 
     /**
-     * Adds a process listener instance that will be hooked into PHP_Depends
+     * Adds a process listener instance that will be hooked into PDepend's
      * analyzing process.
      *
      * @param ProcessListener $processListener A process listener.
@@ -257,7 +258,7 @@ class Runner
      */
     public function run()
     {
-        $pdepend = new \PHP_Depend($this->configuration);
+        $pdepend = new Application($this->configuration);
         $pdepend->setOptions($this->options);
 
         if (count($this->extensions) > 0) {

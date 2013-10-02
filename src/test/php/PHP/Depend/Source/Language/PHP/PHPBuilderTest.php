@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTComment;
 use PHP\Depend\Source\AST\ASTFunction;
 
@@ -52,11 +53,9 @@ use PHP\Depend\Source\AST\ASTFunction;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\PHPBuilder
- * @group pdepend
- * @group pdepend::builder
  * @group unittest
  */
-class PHPBuilderTest extends \PHP_Depend_AbstractTest
+class PHPBuilderTest extends AbstractTest
 {
     /**
      * testBuilderAddsMultiplePackagesForClassesToListOfPackages
@@ -526,12 +525,12 @@ class PHPBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $class = $builder->buildClass('PHP_Depend_Parser');
+        $class = $builder->buildClass('PDepend_Parser');
         $class->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreClass($class);
 
-        $this->assertSame($class, $builder->getClass('php_Depend_parser'));
+        $this->assertSame($class, $builder->getClass('pDepend_parser'));
     }
 
     /**
@@ -543,14 +542,14 @@ class PHPBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $interface = $builder->buildInterface('PHP_Depend_Source_Tokenizer_Tokenizer');
+        $interface = $builder->buildInterface('PDepend_Source_Tokenizer_Tokenizer');
         $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
         $this->assertSame(
             $interface,
-            $builder->getInterface('PHP_Depend_Source_Tokenizer_ToKeNiZeR')
+            $builder->getInterface('PDepend_Source_Tokenizer_ToKeNiZeR')
         );
     }
 
@@ -608,14 +607,14 @@ class PHPBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $interface = $builder->buildInterface('PHP_Depend_Source_Tokenizer_Tokenizer');
+        $interface = $builder->buildInterface('PDepend_Source_Tokenizer_Tokenizer');
         $interface->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
         $this->assertSame(
             $interface,
-            $builder->getClassOrInterface('PHP_Depend_Source_Tokenizer_ToKeNiZeR')
+            $builder->getClassOrInterface('PDepend_Source_Tokenizer_ToKeNiZeR')
         );
     }
 
@@ -628,12 +627,12 @@ class PHPBuilderTest extends \PHP_Depend_AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $class = $builder->buildClass('PHP_Depend_Parser');
+        $class = $builder->buildClass('PDepend_Parser');
         $class->setPackage($builder->buildPackage(__FUNCTION__));
 
         $builder->restoreClass($class);
 
-        $this->assertSame($class, $builder->getClassOrInterface('php_Depend_parser'));
+        $this->assertSame($class, $builder->getClassOrInterface('pDepend_parser'));
     }
 
     /**

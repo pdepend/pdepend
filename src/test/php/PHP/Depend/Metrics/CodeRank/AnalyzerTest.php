@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
+
+namespace PHP\Depend\Metrics\CodeRank;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 use PHP\Depend\Source\AST\ASTClass;
 
 /**
@@ -47,13 +51,10 @@ use PHP\Depend\Source\AST\ASTClass;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_CodeRank_Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::coderank
+ * @covers \PHP\Depend\Metrics\CodeRank\Analyzer
  * @group unittest
  */
-class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * Test input data.
@@ -81,7 +82,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     /**
      * The code rank analyzer.
      *
-     * @var PHP_Depend_Metrics_CodeRank_Analyzer
+     * @var \PHP\Depend\Metrics\CodeRank\Analyzer
      */
     private $_analyzer = null;
 
@@ -89,7 +90,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfSimpleInheritanceExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testCodeRankOfSimpleInheritanceExample()
     {
@@ -107,7 +108,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfSimpleInheritanceExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testReverseCodeRankOfSimpleInheritanceExample()
     {
@@ -125,7 +126,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfNamespacedSameNameInheritanceExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testCodeRankOfNamespacedSameNameInheritanceExample()
     {
@@ -137,7 +138,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfNamespacedSameNamePropertyExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
      */
     public function testCodeRankOfNamespacedSameNamePropertyExample()
     {
@@ -151,7 +152,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfNamespacedSameNamePropertyExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNamePropertyExample()
     {
@@ -165,7 +166,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfNamespacedSameNameMethodParamExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
      */
     public function testCodeRankOfNamespacedSameNameMethodParamExample()
     {
@@ -179,7 +180,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfNamespacedSameNameMethodParamExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameMethodParamExample()
     {
@@ -193,7 +194,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfNamespacedSameNameMethodReturnExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
      */
     public function testCodeRankOfNamespacedSameNameMethodReturnExample()
     {
@@ -207,7 +208,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfNamespacedSameNameMethodReturnExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameMethodReturnExample()
     {
@@ -221,7 +222,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfNamespacedSameNameMethodExceptionExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
      */
     public function testCodeRankOfNamespacedSameNameMethodExceptionExample()
     {
@@ -235,7 +236,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfNamespacedSameNameMethodExceptionExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameMethodExceptionExample()
     {
@@ -249,7 +250,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfNamespacedSameNameInheritanceExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameInheritanceExample()
     {
@@ -261,8 +262,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy()
     {
@@ -284,8 +285,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy()
     {
@@ -307,8 +308,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy()
     {
@@ -330,8 +331,8 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy()
     {
@@ -353,9 +354,9 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testCodeRankOfInternalInterfaceExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testCodeRankOfInternalInterfaceExample()
     {
@@ -376,9 +377,9 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * testReverseCodeRankOfInternalInterfaceExample
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testReverseCodeRankOfInternalInterfaceExample()
     {
@@ -400,15 +401,15 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
      * values.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testGetNodeMetrics()
     {
         $packages = self::parseCodeResourceForTest();
         
-        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $this->_analyzer = new \PHP\Depend\Metrics\CodeRank\Analyzer();
         $this->_analyzer->analyze($packages);
 
         $expected = array();
@@ -434,19 +435,19 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     }
 
     /**
-     * Tests that {@link PHP_Depend_Metrics_CodeRank_Analyzer::getNodeMetrics()}
+     * Tests that {@link \PHP\Depend\Metrics\CodeRank\Analyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown identifier.
      *
      * @return void
-     * @covers PHP_Depend_Metrics_CodeRank_MethodStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
-     * @covers PHP_Depend_Metrics_CodeRank_InheritanceStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\MethodStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
+     * @covers \PHP\Depend\Metrics\CodeRank\InheritanceStrategy
      */
     public function testGetNodeMetricsInvalidIdentifier()
     {
         $packages = self::parseCodeResourceForTest();
 
-        $this->_analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer();
+        $this->_analyzer = new \PHP\Depend\Metrics\CodeRank\Analyzer();
         $this->_analyzer->analyze($packages);
         
         $class   = new ASTClass('PDepend');
@@ -470,7 +471,7 @@ class PHP_Depend_Metrics_CodeRank_AnalyzerTest extends PHP_Depend_Metrics_Abstra
     {
         $packages = self::parseTestCaseSource($testCase);
 
-        $analyzer = new PHP_Depend_Metrics_CodeRank_Analyzer($options);
+        $analyzer = new \PHP\Depend\Metrics\CodeRank\Analyzer($options);
         $analyzer->analyze($packages);
 
         $packages->rewind();

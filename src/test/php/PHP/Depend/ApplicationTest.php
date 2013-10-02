@@ -40,21 +40,22 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+namespace PHP\Depend;
+
 /**
- * Test case for PHP_Depend facade.
+ * Test case for \PHP\Depend\Application facade.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend
- * @group pdepend
+ * @covers \PHP\Depend\Application
  * @group unittest
  */
-class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
+class ApplicationTest extends AbstractTest
 {
     /**
-     * Tests that the {@link PHP_Depend::addDirectory()} method fails with an
-     * exception for an invalid directory.
+     * Tests that the {@link \PHP\Depend\Application::addDirectory()} method
+     * fails with an exception for an invalid directory.
      *
      * @return void
      */
@@ -69,8 +70,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
         $pdepend->addDirectory($dir);
     }
     /**
-     * Tests that the {@link PHP_Depend::addDirectory()} method with an existing
-     * directory.
+     * Tests that the {@link \PHP\Depend\Application::addDirectory()} method
+     * with an existing directory.
      *
      * @return void
      */
@@ -95,7 +96,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests the {@link PHP_Depend::analyze()} method and the return value. 
+     * Tests the {@link \PHP\Depend\Application::analyze()} method and the return
+     * value.
      *
      * @return void
      */
@@ -121,8 +123,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that {@PHP_Depend::analyze()} throws an exception if no source
-     * directory was set.
+     * Tests that {@link \PHP\Depend\Application::analyze()} throws an exception
+     * if no source directory was set.
      *
      * @return void
      */
@@ -148,8 +150,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that {PHP_Depend::analyze()} configures the ignore annotations
-     * option correct.
+     * Tests that {@link \PHP\Depend\Application::analyze()} configures the
+     * ignore annotations option correct.
      *
      * @return void
      */
@@ -172,8 +174,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::countClasses()} method returns the 
-     * expected number of classes.
+     * Tests that the {@link \PHP\Depend\Application::countClasses()} method
+     * returns the expected number of classes.
      *
      * @return void
      */
@@ -188,8 +190,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::countClasses()} method fails with an
-     * exception if the code was not analyzed before.
+     * Tests that the {@link \PHP\Depend\Application::countClasses()} method fails
+     * with an exception if the code was not analyzed before.
      *
      * @return void
      */
@@ -206,8 +208,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::countPackages()} method returns the 
-     * expected number of packages.
+     * Tests that the {@link \PHP\Depend\Application::countPackages()} method
+     * returns the expected number of packages.
      *
      * @return void
      */
@@ -221,8 +223,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::countPackages()} method fails with an
-     * exception if the code was not analyzed before.
+     * Tests that the {@link \PHP\Depend\Application::countPackages()} method
+     * fails with an exception if the code was not analyzed before.
      *
      * @return void
      */
@@ -239,8 +241,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::getPackage()} method returns the 
-     * expected {@link \PHP\Depend\Source\AST\ASTNamespace} objects.
+     * Tests that the {@link \PHP\Depend\Application::getPackage()} method
+     * returns the expected {@link \PHP\Depend\Source\AST\ASTNamespace} objects.
      *
      * @return void
      */
@@ -264,8 +266,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::getPackage()} method fails with an
-     * exception if the code was not analyzed before.
+     * Tests that the {@link \PHP\Depend\Application::getPackage()} method fails
+     * with an exception if the code was not analyzed before.
      *
      * @return void
      */
@@ -282,8 +284,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::getPackage()} method fails with an
-     * exception if you request an invalid package.
+     * Tests that the {@link \PHP\Depend\Application::getPackage()} method fails
+     * with an exception if you request an invalid package.
      *
      * @return void
      */
@@ -301,9 +303,9 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::getPackages()} method returns the 
-     * expected {@link \PHP\Depend\Source\AST\ASTNamespace} objects and reuses the result of
-     * {@link PHP_Depend::analyze()}.
+     * Tests that the {@link \PHP\Depend\Application::getPackages()} method
+     * returns the expected {@link \PHP\Depend\Source\AST\ASTNamespace} objects
+     * and reuses the result of {@link \PHP\Depend\Application::analyze()}.
      *
      * @return void
      */
@@ -322,8 +324,8 @@ class PHP_Depend_DependTest extends PHP_Depend_AbstractTest
     }
     
     /**
-     * Tests that the {@link PHP_Depend::getPackages()} method fails with an
-     * exception if the code was not analyzed before.
+     * Tests that the {@link \PHP\Depend\Application::getPackages()} method
+     * fails with an exception if the code was not analyzed before.
      *
      * @return void
      */

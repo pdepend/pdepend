@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug033Test extends AbstractTest
+class ParserBug033Test extends AbstractRegressionTest
 {
     /**
      * The type hint detection was broken when a constant was used as default

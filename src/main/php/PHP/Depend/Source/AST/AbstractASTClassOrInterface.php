@@ -375,7 +375,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     // @codeCoverageIgnoreStart
 
     /**
-     * This method can be called by the PHP_Depend runtime environment or a
+     * This method can be called by the PDepend runtime environment or a
      * utilizing component to free up memory. This methods are required for
      * PHP version < 5.3 where cyclic references can not be resolved
      * automatically by PHP's garbage collector.

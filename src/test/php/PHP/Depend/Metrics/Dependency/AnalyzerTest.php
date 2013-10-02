@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+namespace PHP\Depend\Metrics\Dependency;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
+
 /**
  * Tests the for the package metrics visitor.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_Dependency_Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::dependency
+ * @covers \PHP\Depend\Metrics\Dependency\Analyzer
  * @group unittest
  */
-class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * The used node builder.
@@ -116,7 +117,7 @@ class PHP_Depend_Metrics_Dependency_AnalyzerTest extends PHP_Depend_AbstractTest
      */
     public function testGenerateMetrics()
     {
-        $visitor = new PHP_Depend_Metrics_Dependency_Analyzer();
+        $visitor = new Analyzer();
 
         $packages = self::parseCodeResourceForTest();
         $visitor->analyze($packages);

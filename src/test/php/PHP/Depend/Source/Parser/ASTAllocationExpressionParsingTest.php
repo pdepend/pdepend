@@ -55,7 +55,7 @@ namespace PHP\Depend\Source\Parser;
  * @group pdepend::parser
  * @group unittest
  */
-class ASTAllocationExpressionParsingTest extends AbstractTest
+class ASTAllocationExpressionParsingTest extends AbstractParserTest
 {
     /**
      * testAllocationExpressionForSelfProperty

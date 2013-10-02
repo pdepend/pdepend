@@ -43,7 +43,7 @@
 namespace PHP\Depend\Util;
 
 /**
- * Simple container class that holds settings for PHP_Depend and all its sub
+ * Simple container class that holds settings for PDepend and all its sub
  * systems.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.

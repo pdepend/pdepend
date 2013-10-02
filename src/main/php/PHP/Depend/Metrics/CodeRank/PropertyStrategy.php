@@ -39,8 +39,12 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\CodeRank;
+
 use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\ASTProperty;
+use PHP\Depend\TreeVisitor\AbstractTreeVisitor;
 
 /**
  * Collects class and package metrics based on class properties.
@@ -48,9 +52,7 @@ use PHP\Depend\Source\AST\ASTProperty;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_CodeRank_PropertyStrategy
-       extends \PHP\Depend\TreeVisitor\AbstractTreeVisitor
-    implements PHP_Depend_Metrics_CodeRank_CodeRankStrategyI
+class PropertyStrategy extends AbstractTreeVisitor implements CodeRankStrategyI
 {
     /**
      * All found nodes.

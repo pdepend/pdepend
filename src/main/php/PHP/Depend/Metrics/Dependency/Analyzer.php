@@ -39,8 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\Dependency;
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
-use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\AbstractASTClassOrInterface;
 use PHP\Depend\Source\AST\ASTArtifactList;
@@ -55,7 +57,7 @@ use PHP\Depend\Source\AST\ASTNamespace;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Dependency_Analyzer extends AbstractAnalyzer
+class Analyzer extends AbstractAnalyzer
 {
     /**
      * Type of this analyzer class.

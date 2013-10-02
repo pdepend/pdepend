@@ -39,9 +39,11 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\Cohesion;
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
-use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifactList;
 
@@ -52,7 +54,7 @@ use PHP\Depend\Source\AST\ASTArtifactList;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Cohesion_Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
+class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.

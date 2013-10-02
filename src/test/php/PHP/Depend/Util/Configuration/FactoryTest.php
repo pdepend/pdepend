@@ -43,6 +43,7 @@
 
 namespace PHP\Depend\Util\Configuration;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Util\FileUtil;
 
 /**
@@ -53,12 +54,9 @@ use PHP\Depend\Util\FileUtil;
  * @since 0.10.0
  *
  * @covers \PHP\Depend\Util\Configuration\Factory
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::configuration
  * @group unittest
  */
-class FactoryTest extends \PHP_Depend_AbstractTest
+class FactoryTest extends AbstractTest
 {
     /**
      * The current working directory.

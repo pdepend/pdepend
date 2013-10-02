@@ -57,7 +57,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParameterStringDefaultValueBug103Test extends AbstractTest
+class ParameterStringDefaultValueBug103Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesStringDefaultValueWithEmbeddedExpression

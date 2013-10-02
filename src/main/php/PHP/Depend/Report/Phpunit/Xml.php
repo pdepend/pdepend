@@ -124,7 +124,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     );
 
     /**
-     * This translation table maps some PHP_Depend identifiers with the
+     * This translation table maps some PDepend identifiers with the
      * corresponding PHPUnit identifiers.
      *
      * @var array(string=>string)
@@ -418,7 +418,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     }
 
     /**
-     * Translates PHP_Depend metric names into PHPUnit names.
+     * Translates PDepend metric names into PHPUnit names.
      *
      * @param array(string=>mixed) $metrics Set of collected metric values.
      *

@@ -61,7 +61,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ShortArraySyntaxInitializerBug00000104Test extends AbstractTest
+class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTest
 {
     /**
      * testPropertyDefaultValue

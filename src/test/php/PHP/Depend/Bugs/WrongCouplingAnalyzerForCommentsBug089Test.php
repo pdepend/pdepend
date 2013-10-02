@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
+class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
 {
     /**
      * Tests that the analyzer calculates the expected result.
@@ -66,7 +66,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -82,7 +82,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -98,7 +98,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

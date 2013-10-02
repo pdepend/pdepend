@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class TraitsNotHandledCorrrectBug00000100Test extends AbstractTest
+class TraitsNotHandledCorrrectBug00000100Test extends AbstractRegressionTest
 {
     /**
      * testHandlingOfSelfReferenceInTrait

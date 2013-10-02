@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug069Test extends AbstractTest
+class ParserBug069Test extends AbstractRegressionTest
 {
     /**
      * Tests that parser handles a php 5.3 static method call correct.

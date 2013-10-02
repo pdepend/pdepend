@@ -55,7 +55,7 @@ namespace PHP\Depend\Source\Parser;
  * @group pdepend::parser
  * @group unittest
  */
-class UnstructuredCodeTest extends AbstractTest
+class UnstructuredCodeTest extends AbstractParserTest
 {
     /**
      * testParserHandlesNonPhpCodeInFileProlog

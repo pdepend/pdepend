@@ -61,7 +61,7 @@ use PHP\Depend\Source\AST\ASTInterface;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug23951621Test extends AbstractTest
+class ParserBug23951621Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesHeredocAsPropertyDefaultValue

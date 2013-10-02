@@ -38,75 +38,21 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since     0.9.20
  */
 
-namespace PHP\Depend\Bugs;
+namespace PHP\Depend\Source\Parser;
 
-use PHP\Depend\Report\Summary\Xml;
+use PHP\Depend\AbstractTest;
 
 /**
- * Abstract test case for the "Bugs" package.
+ * Abstract test case class for this sub package.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @since     0.9.20
  */
-abstract class AbstractTest extends \PHP_Depend_AbstractTest
+abstract class AbstractParserTest extends AbstractTest
 {
-    /**
-     * Creates the PDepend summary report for the source associated with the
-     * calling test case.
-     *
-     * @return string
-     * @since 0.10.0
-     */
-    protected function createSummaryXmlForCallingTest()
-    {
-        $this->changeWorkingDirectory(
-            $this->createCodeResourceURI('config/')
-        );
 
-        $file = self::createRunResourceURI('summary.xml');
-
-        $log = new Xml();
-        $log->setLogFile($file);
-
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addFile(self::createCodeResourceUriForTest());
-        $pdepend->addReportGenerator($log);
-        $pdepend->analyze();
-
-        return $file;
-    }
-
-    /**
-     * Parses the source of a test case file.
-     *
-     * @param string $testCase
-     * @param boolean $ignoreAnnotations
-     * @return \PHP\Depend\Source\AST\ASTNamespace[]
-     */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
-    {
-        return self::parseSource(
-            self::getSourceFileForTestCase($testCase), $ignoreAnnotations
-        );
-    }
-
-    /**
-     * Returns the source file for the given test case.
-     *
-     * @param string $testCase The qualified test case name.
-     *
-     * @return string
-     */
-    protected static function getSourceFileForTestCase($testCase)
-    {
-        list($class, $method) = explode('::', $testCase);
-
-        preg_match('(Bug(\d+)Test$)', $class, $match);
-
-        return self::createCodeResourceURI(
-            sprintf('bugs/%s/%s.php', $match[1], $method)
-        );
-    }
 }

@@ -45,7 +45,7 @@ namespace PHP\Depend\Report;
 use PHP\Depend\Metrics\Analyzer;
 
 /**
- * Base interface for all PHP_Depend loggers.
+ * Base interface for all PDepend report generators.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License

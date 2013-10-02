@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractTest
+class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegressionTest
 {
     /**
      * testIteratorOnlyPassesLocalPathToFilter

@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractTest
+class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractRegressionTest
 {
     /**
      * testSummaryReportFiltersClassesNotFlaggedUserDefined

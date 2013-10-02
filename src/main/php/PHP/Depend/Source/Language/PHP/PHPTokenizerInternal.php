@@ -469,7 +469,7 @@ class PHPTokenizerInternal implements Tokenizer
 
     /**
      * This method takes an array of tokens returned by <b>token_get_all()</b>
-     * and substitutes some of the tokens with those required by PHP_Depend's
+     * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
      * @param array(array) $tokens Unprepared array of php tokens.

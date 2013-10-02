@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Metrics;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the analyzer loader.
  *
@@ -51,7 +53,7 @@ namespace PHP\Depend\Metrics;
  * @covers \PHP\Depend\Metrics\AnalyzerLoader
  * @group unittest
  */
-class AnalyzerLoaderTest extends \PHP_Depend_AbstractTest
+class AnalyzerLoaderTest extends AbstractTest
 {
     /**
      * Tests that the analyzer loader loads the correct analyzer instances.
@@ -61,8 +63,8 @@ class AnalyzerLoaderTest extends \PHP_Depend_AbstractTest
     public function testLoadKnownAnalyzersByInstance()
     {
         $expected = array(
-            'PHP_Depend_Metrics_CodeRank_Analyzer',
-            'PHP_Depend_Metrics_Hierarchy_Analyzer',
+            'PHP\\Depend\\Metrics\\CodeRank\\Analyzer',
+            'PHP\\Depend\\Metrics\\Hierarchy\\Analyzer',
         );
         
         $loader = new AnalyzerLoader(

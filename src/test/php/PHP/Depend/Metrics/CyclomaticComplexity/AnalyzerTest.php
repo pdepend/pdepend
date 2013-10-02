@@ -39,7 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-use PHP\Depend\Source\AST\AbstractASTArtifact;
+
+namespace PHP\Depend\Metrics\CyclomaticComplexity;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 
 /**
  * Test case for the cyclomatic analyzer.
@@ -48,14 +51,13 @@ use PHP\Depend\Source\AST\AbstractASTArtifact;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Metrics\AbstractCachingAnalyzer
- * @covers PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+ * @covers \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer
  * @group pdepend
  * @group pdepend::metrics
  * @group pdepend::metrics::cyclomaticcomplexity
  * @group unittest
  */
-class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest 
-    extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * @var \PHP\Depend\Util\Cache\Driver
@@ -380,12 +382,12 @@ class PHP_Depend_Metrics_CyclomaticComplexity_AnalyzerTest
     /**
      * Returns a pre configured ccn analyzer.
      *
-     * @return PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @return \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer
      * @since 1.0.0
      */
     private function _createAnalyzer()
     {
-        $analyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $analyzer = new Analyzer();
         $analyzer->setCache($this->_cache);
 
         return $analyzer;

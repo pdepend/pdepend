@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class StringWithDollarStringLiteralBug162Test extends AbstractTest
+class StringWithDollarStringLiteralBug162Test extends AbstractRegressionTest
 {
     /**
      * testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString

@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\NodeCount;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTNamespace;
 
@@ -48,13 +52,13 @@ use PHP\Depend\Source\AST\ASTNamespace;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_NodeCount_Analyzer
+ * @covers \PHP\Depend\Metrics\NodeCount\Analyzer
  * @group pdepend
  * @group pdepend::metrics
  * @group pdepend::metrics::nodecount
  * @group unittest
  */
-class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * testVisitClassIgnoresClassesThatAreNotUserDefined
@@ -65,10 +69,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     {
         $notUserDefined = $this->createClassFixture();
 
-        $package = new ASTNamespace('PHP_Depend');
+        $package = new ASTNamespace('PDepend');
         $package->addType($notUserDefined);
 
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
@@ -85,10 +89,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $userDefined = $this->createClassFixture();
         $userDefined->setUserDefined();
 
-        $package = new ASTNamespace('PHP_Depend');
+        $package = new ASTNamespace('PDepend');
         $package->addType($userDefined);
 
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
@@ -104,10 +108,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     {
         $notUserDefined = $this->createInterfaceFixture();
 
-        $package = new ASTNamespace('PHP_Depend');
+        $package = new ASTNamespace('PDepend');
         $package->addType($notUserDefined);
 
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
@@ -124,10 +128,10 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
         $userDefined = $this->createInterfaceFixture();
         $userDefined->setUserDefined();
 
-        $package = new ASTNamespace('PHP_Depend');
+        $package = new ASTNamespace('PDepend');
         $package->addType($userDefined);
 
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(new ASTArtifactList(array($package)));
 
         $metrics = $analyzer->getNodeMetrics($package);
@@ -142,7 +146,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfPackages()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
@@ -157,7 +161,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfClassesInProject()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
@@ -172,7 +176,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfClassesInPackages()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $metrics = array();
@@ -198,7 +202,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfInterfacesInProject()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
@@ -213,7 +217,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfInterfacesInPackages()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $metrics = array();
@@ -239,7 +243,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfMethodsInProject()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
         
         $metrics = $analyzer->getProjectMetrics();
@@ -254,7 +258,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfMethodsInPackages()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $metrics = array();
@@ -280,7 +284,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfFunctionsInProject()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getProjectMetrics();
@@ -295,7 +299,7 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testCalculatesExpectedNumberOfFunctionsInPackages()
     {
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_NodeCount_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $metrics = array();
@@ -311,5 +315,13 @@ class PHP_Depend_Metrics_NodeCount_AnalyzerTest extends PHP_Depend_Metrics_Abstr
             ),
             $metrics
         );
+    }
+
+    /**
+     * @return \PHP\Depend\Metrics\NodeCount\Analyzer
+     */
+    private function createAnalyzer()
+    {
+        return new Analyzer();
     }
 }

@@ -74,35 +74,35 @@ class Pyramid implements GeneratorFileAware
     /**
      * The used coupling analyzer.
      *
-     * @var \PHP_Depend_Metrics_Coupling_Analyzer
+     * @var \PHP\Depend\Metrics\Coupling\Analyzer
      */
     private $coupling = null;
 
     /**
      * The used cyclomatic complexity analyzer.
      *
-     * @var \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @var \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer
      */
     private $cyclomaticComplexity = null;
 
     /**
      * The used inheritance analyzer.
      *
-     * @var \PHP_Depend_Metrics_Inheritance_Analyzer
+     * @var \PHP\Depend\Metrics\Inheritance\Analyzer
      */
     private $inheritance = null;
 
     /**
      * The used node count analyzer.
      *
-     * @var \PHP_Depend_Metrics_NodeCount_Analyzer
+     * @var \PHP\Depend\Metrics\NodeCount\Analyzer
      */
     private $nodeCount = null;
 
     /**
      * The used node loc analyzer.
      *
-     * @var \PHP_Depend_Metrics_NodeLoc_Analyzer
+     * @var \PHP\Depend\Metrics\NodeLoc\Analyzer
      */
     private $nodeLoc = null;
 
@@ -144,11 +144,11 @@ class Pyramid implements GeneratorFileAware
     public function getAcceptedAnalyzers()
     {
         return array(
-            'PHP_Depend_Metrics_Coupling_Analyzer',
-            'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer',
-            'PHP_Depend_Metrics_Inheritance_Analyzer',
-            'PHP_Depend_Metrics_NodeCount_Analyzer',
-            'PHP_Depend_Metrics_NodeLoc_Analyzer'
+            'PHP\\Depend\\Metrics\\Coupling\\Analyzer',
+            'PHP\\Depend\\Metrics\\CyclomaticComplexity\\Analyzer',
+            'PHP\\Depend\\Metrics\\Inheritance\\Analyzer',
+            'PHP\\Depend\\Metrics\\NodeCount\\Analyzer',
+            'PHP\\Depend\\Metrics\\NodeLoc\\Analyzer'
         );
     }
 
@@ -161,15 +161,15 @@ class Pyramid implements GeneratorFileAware
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer) {
+        if ($analyzer instanceof \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer) {
             $this->cyclomaticComplexity = $analyzer;
-        } else if ($analyzer instanceof \PHP_Depend_Metrics_Coupling_Analyzer) {
+        } else if ($analyzer instanceof \PHP\Depend\Metrics\Coupling\Analyzer) {
             $this->coupling = $analyzer;
-        } else if ($analyzer instanceof \PHP_Depend_Metrics_Inheritance_Analyzer) {
+        } else if ($analyzer instanceof \PHP\Depend\Metrics\Inheritance\Analyzer) {
             $this->inheritance = $analyzer;
-        } else if ($analyzer instanceof \PHP_Depend_Metrics_NodeCount_Analyzer) {
+        } else if ($analyzer instanceof \PHP\Depend\Metrics\NodeCount\Analyzer) {
             $this->nodeCount = $analyzer;
-        } else if ($analyzer instanceof \PHP_Depend_Metrics_NodeLoc_Analyzer) {
+        } else if ($analyzer instanceof \PHP\Depend\Metrics\NodeLoc\Analyzer) {
             $this->nodeLoc = $analyzer;
         } else {
             return false;

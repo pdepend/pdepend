@@ -40,19 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\CodeRank;
+
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the code rank property strategy.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_CodeRank_StrategyFactory
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::coderank
+ * @covers \PHP\Depend\Metrics\CodeRank\StrategyFactory
  * @group unittest
  */
-class PHP_Depend_Metrics_CodeRank_StrategyFactoryTest extends PHP_Depend_AbstractTest
+class StrategyFactoryTest extends AbstractTest
 {
     /**
      * Tests that the factory throws the expected exception for an invalid
@@ -62,7 +63,7 @@ class PHP_Depend_Metrics_CodeRank_StrategyFactoryTest extends PHP_Depend_Abstrac
      */
     public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier()
     {
-        $factory = new PHP_Depend_Metrics_CodeRank_StrategyFactory();
+        $factory = new \PHP\Depend\Metrics\CodeRank\StrategyFactory();
 
         $this->setExpectedException(
             'InvalidArgumentException',

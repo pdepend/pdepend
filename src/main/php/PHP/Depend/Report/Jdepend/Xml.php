@@ -104,7 +104,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
     /**
      * The dependency result set.
      *
-     * @var \PHP_Depend_Metrics_Dependency_Analyzer
+     * @var \PHP\Depend\Metrics\Dependency\Analyzer
      */
     protected $analyzer = null;
 
@@ -156,7 +156,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
      */
     public function getAcceptedAnalyzers()
     {
-        return array(\PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
+        return array(\PHP\Depend\Metrics\Dependency\Analyzer::CLAZZ);
     }
 
     /**
@@ -179,7 +179,7 @@ class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFi
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PHP_Depend_Metrics_Dependency_Analyzer) {
+        if ($analyzer instanceof \PHP\Depend\Metrics\Dependency\Analyzer) {
             $this->analyzer = $analyzer;
 
             return true;

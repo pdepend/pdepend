@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class InvalidNowdocSubstitutionBug150Test extends AbstractTest
+class InvalidNowdocSubstitutionBug150Test extends AbstractRegressionTest
 {
     /**
      * testTokenizerDoesNotDetectNowdocSyntaxInString

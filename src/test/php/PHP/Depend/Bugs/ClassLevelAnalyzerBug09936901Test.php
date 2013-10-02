@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ClassLevelAnalyzerBug09936901Test extends AbstractTest
+class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTest
 {
     /**
      * testWmciMetricIsCalculatedForCurrentAndNotParentClass
@@ -70,10 +70,10 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractTest
             ->getClasses()
             ->current();
 
-        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 

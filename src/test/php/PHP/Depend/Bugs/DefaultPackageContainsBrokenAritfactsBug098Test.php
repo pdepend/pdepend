@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractTest
+class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTest
 {
     /**
      * Tests that the result does not contain a function with a broken signature.

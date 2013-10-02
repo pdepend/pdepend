@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class CouplingAnalyzerBug014Test extends AbstractTest
+class CouplingAnalyzerBug014Test extends AbstractRegressionTest
 {
     /**
      * Test case for the execution chain bug 14.
@@ -67,7 +67,7 @@ class CouplingAnalyzerBug014Test extends AbstractTest
         $this->assertEquals(1, $packages->count());
         $this->assertEquals(1, $packages->current()->getFunctions()->count());
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

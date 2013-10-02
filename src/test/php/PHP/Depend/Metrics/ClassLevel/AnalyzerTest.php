@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\ClassLevel;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTNamespace;
 
@@ -48,16 +52,13 @@ use PHP\Depend\Source\AST\ASTNamespace;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_ClassLevel_Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::classlevel
+ * @covers \PHP\Depend\Metrics\ClassLevel\Analyzer
  * @group unittest
  */
-class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
-     * Tests that the {@link PHP_Depend_Metrics_ClassLevel_Analyzer::analyzer()}
+     * Tests that the {@link \PHP\Depend\Metrics\ClassLevel\Analyzer::analyzer()}
      * method fails with an exception if no cc analyzer was set.
      *
      * @return void
@@ -68,12 +69,12 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $package  = new ASTNamespace('package1');
         $packages = new ASTArtifactList(array($package));
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->analyze($packages);
     }
 
     /**
-     * Tests that {@link PHP_Depend_Metrics_ClassLevel_Analyzer::addAnalyzer()}
+     * Tests that {@link \PHP\Depend\Metrics\ClassLevel\Analyzer::addAnalyzer()}
      * fails for an invalid child analyzer.
      *
      * @return void
@@ -81,8 +82,8 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
     {
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
-        $analyzer->addAnalyzer(new PHP_Depend_Metrics_CodeRank_Analyzer());
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
+        $analyzer->addAnalyzer(new \PHP\Depend\Metrics\CodeRank\Analyzer());
     }
 
     /**
@@ -92,9 +93,9 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
      */
     public function testGetRequiredAnalyzersReturnsExpectedClassNames()
     {
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $this->assertEquals(
-            array(PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ),
+            array(\PHP\Depend\Metrics\CyclomaticComplexity\Analyzer::CLAZZ),
             $analyzer->getRequiredAnalyzers()
         );
     }
@@ -487,10 +488,10 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $packages = self::parseTestCaseSource(self::getCallingTestMethod());
         $package  = $packages->current();
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 
@@ -681,10 +682,10 @@ class PHP_Depend_Metrics_ClassLevel_AnalyzerTest extends PHP_Depend_Metrics_Abst
         $packages = $this->parseCodeResourceForTest();
         $package  = $packages->current();
 
-        $ccnAnalyzer = new PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 

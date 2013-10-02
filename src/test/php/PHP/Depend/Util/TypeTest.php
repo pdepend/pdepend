@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for type utility class.
  *
@@ -49,11 +51,9 @@ namespace PHP\Depend\Util;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PHP\Depend\Util\Type
- * @group pdepend
- * @group pdepend::util
  * @group unittest
  */
-class TypeTest extends \PHP_Depend_AbstractTest
+class TypeTest extends AbstractTest
 {
     /**
      * testIsInternalTypeDetectsInternalClassPrefixedWithBackslash

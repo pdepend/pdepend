@@ -41,19 +41,19 @@
   * @since     0.10.0
  */
 
+namespace PHP\Depend;
+
 /**
- * Test case for the {@link PHP_Depend_Autoload} class.
+ * Test case for the {@link \PHP\Depend\Autoload} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  *
- * @covers PHP_Depend_Autoload
- * @group pdepend
- * @group pdepend::autoload
+ * @covers \PHP\Depend\Autoload
  * @group unittest
  */
-class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
+class AutoloadTest extends AbstractTest
 {
     /**
      * The original include path.
@@ -84,7 +84,7 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
         set_include_path($this->includePath);
 
         foreach (spl_autoload_functions() as $callback) {
-            if (is_array($callback) && $callback[0] instanceof PHP_Depend_Autoload) {
+            if (is_array($callback) && $callback[0] instanceof Autoload) {
                 spl_autoload_unregister($callback);
             }
         }
@@ -99,9 +99,9 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
      */
     public function testAutoloadLoadsClassInPhpDependNamespace()
     {
-        $className = 'PHP_Depend_AutoloadLoadsClassInPhpDependNamespace';
+        $className = 'PHP\\Depend\\AutoloadLoadsClassInPhpDependNamespace';
 
-        $autoloader = new PHP_Depend_Autoload();
+        $autoloader = new Autoload();
         $autoloader->register();
 
         set_include_path(self::createCodeResourceUriForTest());
@@ -120,7 +120,7 @@ class PHP_Depend_AutoloadTest extends PHP_Depend_AbstractTest
     {
         $className = 'PHP_AutoloadNotLoadsClassFromDifferentNamespace';
 
-        $autoloader = new PHP_Depend_Autoload();
+        $autoloader = new Autoload();
         $autoloader->register();
 
         set_include_path(self::createCodeResourceUriForTest());

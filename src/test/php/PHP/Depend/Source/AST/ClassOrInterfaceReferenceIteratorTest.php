@@ -43,6 +43,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Source\AST\ASTClassOrInterfaceReferenceIterator}
  * class.
@@ -54,7 +56,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\ASTClassOrInterfaceReferenceIterator
  * @group unittest
  */
-class ASTClassOrInterfaceReferenceIteratorTest extends \PHP_Depend_AbstractTest
+class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTest
 {
     /**
      * testIteratorReturnsExpectedClasses

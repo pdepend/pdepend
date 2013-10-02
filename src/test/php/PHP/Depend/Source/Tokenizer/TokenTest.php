@@ -42,16 +42,17 @@
 
 namespace PHP\Depend\Source\Tokenizer;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Source\Tokenizer\Token} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @covers \PHP\Depend\Source\Tokenizer\Token
- * @group pdepend
  * @group unittest
  */
-class TokenTest extends \PHP_Depend_AbstractTest
+class TokenTest extends AbstractTest
 {
     /**
      * testConstructorSetsTypeProperty

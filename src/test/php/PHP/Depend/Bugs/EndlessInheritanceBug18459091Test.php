@@ -58,7 +58,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class EndlessInheritanceBug18459091Test extends AbstractTest
+class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
 {
     /**
      * Resets the execution time to -1.
@@ -82,10 +82,10 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -101,10 +101,10 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -119,10 +119,10 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -137,10 +137,10 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $ccnAnalyzer = new \PHP_Depend_Metrics_CyclomaticComplexity_Analyzer();
+        $ccnAnalyzer = new \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer();
         $ccnAnalyzer->setCache(new \PHP\Depend\Util\Cache\Driver\Memory());
 
-        $analyzer = new \PHP_Depend_Metrics_ClassLevel_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -156,7 +156,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Inheritance\Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 
@@ -170,7 +170,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Inheritance\Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 
@@ -183,7 +183,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Inheritance\Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 
@@ -196,7 +196,7 @@ class EndlessInheritanceBug18459091Test extends AbstractTest
     {
         set_time_limit(5);
 
-        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Inheritance\Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
     }
 

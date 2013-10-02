@@ -42,13 +42,15 @@
 
 namespace PHP\Depend\Report;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the logger factory.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class GeneratorFactoryTest extends \PHP_Depend_AbstractTest
+class GeneratorFactoryTest extends AbstractTest
 {
     /**
      * Tests that {@link \PHP\Depend\Report\GeneratorFactory::createGenerator()}

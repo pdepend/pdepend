@@ -58,7 +58,7 @@ use PHP\Depend\Source\Tokenizer\Tokens;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class TokenizerKeywordSubstitutionBug76Test extends AbstractTest
+class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTest
 {
     /**
      * This method tests that the parser does not substitute keyword tokens in

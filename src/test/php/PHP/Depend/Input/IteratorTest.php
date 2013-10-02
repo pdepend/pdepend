@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Input;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the php file filter iterator.
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Input;
  * @group pdepend::input
  * @group unittest
  */
-class IteratorTest extends \PHP_Depend_AbstractTest
+class IteratorTest extends AbstractTest
 {
     /**
      * testIteratorWithOneFileExtension

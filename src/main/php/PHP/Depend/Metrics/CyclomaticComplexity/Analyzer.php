@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\CyclomaticComplexity;
+
 use PHP\Depend\Metrics\AbstractCachingAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
@@ -59,7 +62,7 @@ use PHP\Depend\Source\AST\ASTVisitorI;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+class Analyzer
        extends AbstractCachingAnalyzer
     implements AnalyzerFilterAware,
                AnalyzerNodeAware,

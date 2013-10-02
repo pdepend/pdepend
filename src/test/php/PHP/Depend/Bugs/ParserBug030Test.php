@@ -56,7 +56,7 @@ use PHP\Depend\Source\Tokenizer\Tokens;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug030Test extends AbstractTest
+class ParserBug030Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser sets the correct type tokens.

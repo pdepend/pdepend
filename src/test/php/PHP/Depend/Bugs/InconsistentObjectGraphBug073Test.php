@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class InconsistentObjectGraphBug073Test extends AbstractTest
+class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles the following code correct:

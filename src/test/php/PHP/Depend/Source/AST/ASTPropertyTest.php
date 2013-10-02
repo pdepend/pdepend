@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the code property class.
  *
@@ -51,7 +53,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\ASTProperty
  * @group unittest
  */
-class ASTPropertyTest extends \PHP_Depend_AbstractTest
+class ASTPropertyTest extends AbstractTest
 {
     /**
      * testGetDeclaringClass

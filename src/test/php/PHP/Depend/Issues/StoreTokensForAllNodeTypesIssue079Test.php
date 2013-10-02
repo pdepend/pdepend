@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Issues;
+
 use PHP\Depend\Source\Tokenizer\Token;
 use PHP\Depend\Source\Tokenizer\Tokens;
 
@@ -52,11 +55,9 @@ use PHP\Depend\Source\Tokenizer\Tokens;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
- * @group pdepend
- * @group pdepend::issues
  * @group unittest
  */
-class PHP_Depend_Issues_StoreTokensForAllNodeTypesIssue079Test extends PHP_Depend_Issues_AbstractTest
+class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
 {
     /**
      * Tests that the parameter contains the start line of the first token.

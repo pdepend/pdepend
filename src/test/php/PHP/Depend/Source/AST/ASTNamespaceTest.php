@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\TreeVisitor\TestNodeVisitor;
 
 /**
@@ -53,7 +54,7 @@ use PHP\Depend\TreeVisitor\TestNodeVisitor;
  * @covers \PHP\Depend\Source\AST\ASTNamespace
  * @group unittest
  */
-class ASTNamespaceTest extends \PHP_Depend_AbstractTest
+class ASTNamespaceTest extends AbstractTest
 {
     /**
      * testGetUUIDReturnsExpectedObjectHash

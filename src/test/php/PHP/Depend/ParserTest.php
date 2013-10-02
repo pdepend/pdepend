@@ -40,7 +40,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+namespace PHP\Depend;
+
 use PHP\Depend\Source\AST\ASTArtifactList;
+use PHP\Depend\Source\AST\ASTForeachStatement;
+use PHP\Depend\Source\AST\ASTLiteral;
+use PHP\Depend\Source\AST\ASTString;
+use PHP\Depend\Source\AST\ASTVariable;
 use PHP\Depend\Source\AST\State;
 use PHP\Depend\Source\Language\PHP\PHPBuilder;
 use PHP\Depend\Source\Language\PHP\PHPParserGeneric;
@@ -50,7 +56,7 @@ use PHP\Depend\Source\Tokenizer\Tokens;
 use PHP\Depend\Util\Cache\Driver\Memory;
 
 /**
- * Test case implementation for the PHP_Depend code parser.
+ * Test case implementation for the PDepend code parser.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -60,7 +66,7 @@ use PHP\Depend\Util\Cache\Driver\Memory;
  * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
+class ParserTest extends AbstractTest
 {
     /**
      * testParserHandlesMaxNestingLevel
@@ -165,7 +171,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserWithInvalidFunction1Fail()
     {
         $this->setExpectedException(
-            'RuntimeException',
+            '\\RuntimeException',
             'Unexpected token: (, line: 3, col: 23, file: '
         );
 
@@ -181,7 +187,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
     public function testParserWithInvalidFunction2Fail()
     {
         $this->setExpectedException(
-            'RuntimeException',
+            '\\RuntimeException',
             "Unexpected token: Bar, line: 3, col: 18, file: "
         );
 
@@ -955,7 +961,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         $this->assertEquals('PHP\Depend', $functions0->current()->getPackage()->getName());
 
         $this->assertEquals(1, $functions1->count());
-        $this->assertEquals('PHP_Depend\Test', $functions1->current()->getPackage()->getName());
+        $this->assertEquals('PDepend\Test', $functions1->current()->getPackage()->getName());
     }
 
     /**
@@ -1048,7 +1054,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getMethods()
             ->current();
 
-        $foreach = $method->getFirstChildOfType(PHP\Depend\Source\AST\ASTForeachStatement::CLAZZ);
+        $foreach = $method->getFirstChildOfType(ASTForeachStatement::CLAZZ);
         $this->assertNotNull($foreach);
     }
 
@@ -1302,7 +1308,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
+        $string = $function->getFirstChildOfType(ASTString::CLAZZ);
         $image  = $string->getChild(0)->getImage();
 
         $this->assertEquals('\$foobar', $image);
@@ -1320,7 +1326,7 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
+        $string = $function->getFirstChildOfType(ASTString::CLAZZ);
         $image  = $string->getChild(0)->getImage();
 
         $this->assertEquals('\\\\\"', $image);
@@ -1338,10 +1344,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
+        $string   = $function->getFirstChildOfType(ASTString::CLAZZ);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(PHP\Depend\Source\AST\ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(ASTVariable::CLAZZ, $variable);
     }
 
     /**
@@ -1356,10 +1362,10 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
+        $string   = $function->getFirstChildOfType(ASTString::CLAZZ);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(PHP\Depend\Source\AST\ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf(ASTVariable::CLAZZ, $variable);
     }
 
     /**
@@ -1376,8 +1382,8 @@ class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType(PHP\Depend\Source\AST\ASTString::CLAZZ);
-        $this->assertInstanceOf(PHP\Depend\Source\AST\ASTLiteral::CLAZZ, $string->getChild(1));
+        $string = $method->getFirstChildOfType(ASTString::CLAZZ);
+        $this->assertInstanceOf(ASTLiteral::CLAZZ, $string->getChild(1));
     }
 
     /**

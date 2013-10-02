@@ -40,70 +40,74 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Bugs;
+
+use PHP\Depend\AbstractTest;
+use PHP\Depend\Report\Summary\Xml;
+
 /**
- * Abstract base class for issue tests.
+ * Abstract test case for the "Bugs" package.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-abstract class PHP_Depend_Issues_AbstractTest extends PHP_Depend_AbstractTest
+abstract class AbstractRegressionTest extends AbstractTest
 {
     /**
-     * Returns the parameters of the first function in the test case file.
+     * Creates the PDepend summary report for the source associated with the
+     * calling test case.
      *
-     * @return \PHP\Depend\Source\AST\ASTParameter[]
+     * @return string
+     * @since 0.10.0
      */
-    protected function getParametersOfFirstFunction()
+    protected function createSummaryXmlForCallingTest()
     {
-        $packages = self::parseTestCase();
-        $functions = $packages[0]->getFunctions();
-        return $functions[0]->getParameters();
-    }
-    
-    /**
-     * Parses the sourse for the calling test case.
-     *
-     * @param string $testCase
-     * @return \PHP\Depend\Source\AST\ASTNamespace[]
-     */
-    protected static function parseTestCase($testCase = null)
-    {
-        if ($testCase === null) {
-            $testCase = self::getTestCaseMethod();
-        }
-        return self::parseTestCaseSource($testCase);
+        $this->changeWorkingDirectory(
+            $this->createCodeResourceURI('config/')
+        );
+
+        $file = self::createRunResourceURI('summary.xml');
+
+        $log = new Xml();
+        $log->setLogFile($file);
+
+        $pdepend = $this->createPDependFixture();
+        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addReportGenerator($log);
+        $pdepend->analyze();
+
+        return $file;
     }
 
     /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
+     * Parses the source of a test case file.
      *
-     * @param string  $testCase
+     * @param string $testCase
      * @param boolean $ignoreAnnotations
      * @return \PHP\Depend\Source\AST\ASTNamespace[]
      */
     public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        list($class, $method) = explode('::', $testCase);
-        if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
-            throw new \ErrorException('Unexpected class name format');
-        }
-        return self::parseSource('issues/' . $match[1] . '/' . $method . '.php');
+        return self::parseSource(
+            self::getSourceFileForTestCase($testCase), $ignoreAnnotations
+        );
     }
 
     /**
-     * Returns a php callback for the calling test case method.
+     * Returns the source file for the given test case.
+     *
+     * @param string $testCase The qualified test case name.
      *
      * @return string
      */
-    protected static function getTestCaseMethod()
+    protected static function getSourceFileForTestCase($testCase)
     {
-        $trace = debug_backtrace();
-        foreach ($trace as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
-                return $frame['class'] . '::' . $frame['function'];
-            }
-        }
-        throw new ErrorException('Cannot locate test case method.');
+        list($class, $method) = explode('::', $testCase);
+
+        preg_match('(Bug(\d+)Test$)', $class, $match);
+
+        return self::createCodeResourceURI(
+            sprintf('bugs/%s/%s.php', $match[1], $method)
+        );
     }
 }

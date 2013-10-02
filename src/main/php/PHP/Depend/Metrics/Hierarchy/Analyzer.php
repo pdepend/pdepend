@@ -39,11 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\Hierarchy;
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
-use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
@@ -68,11 +70,7 @@ use PHP\Depend\Source\AST\ASTNamespace;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_Hierarchy_Analyzer
-       extends AbstractAnalyzer
-    implements AnalyzerFilterAware,
-               AnalyzerNodeAware,
-               AnalyzerProjectAware
+class Analyzer extends AbstractAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.

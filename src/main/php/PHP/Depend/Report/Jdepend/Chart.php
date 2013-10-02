@@ -81,7 +81,7 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
     /**
      * The context analyzer instance.
      *
-     * @var \PHP_Depend_Metrics_Dependency_Analyzer
+     * @var \PHP\Depend\Metrics\Dependency\Analyzer
      */
     private $analyzer = null;
 
@@ -105,7 +105,7 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
      */
     public function getAcceptedAnalyzers()
     {
-        return array(\PHP_Depend_Metrics_Dependency_Analyzer::CLAZZ);
+        return array(\PHP\Depend\Metrics\Dependency\Analyzer::CLAZZ);
     }
 
     /**
@@ -128,7 +128,7 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PHP_Depend_Metrics_Dependency_Analyzer) {
+        if ($analyzer instanceof \PHP\Depend\Metrics\Dependency\Analyzer) {
             $this->analyzer = $analyzer;
 
             return true;

@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ClosureReturnsByReferenceBug094Test extends AbstractTest
+class ClosureReturnsByReferenceBug094Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesClosureThatReturnsReference

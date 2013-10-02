@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the code file class.
  *
@@ -51,7 +53,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\ASTCompilationUnit
  * @group unittest
  */
-class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
+class ASTCompilationUnitTest extends AbstractTest
 {
     /**
      * testGetNameReturnsTheFileName
@@ -328,7 +330,7 @@ class ASTCompilationUnitTest extends \PHP_Depend_AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(360, $file->getEndLine());
+        $this->assertEquals(362, $file->getEndLine());
     }
 
     /**

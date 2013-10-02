@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Input;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the file extension filter.
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Input;
  * @group pdepend::input
  * @group unittest
  */
-class ExtensionFilterTest extends \PHP_Depend_AbstractTest
+class ExtensionFilterTest extends AbstractTest
 {
     /**
      * testExtensionFilterAcceptsOneFileExtension

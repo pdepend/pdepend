@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\TreeVisitor;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTParameter;
 use PHP\Depend\Source\AST\ASTTrait;
@@ -57,7 +58,7 @@ use PHP\Depend\Source\AST\ASTTrait;
  * @group pdepend::visitor
  * @group unittest
  */
-class DefaultListenerTest extends \PHP_Depend_AbstractTest
+class DefaultListenerTest extends AbstractTest
 {
     /**
      * testDefaultImplementationCallsListeners

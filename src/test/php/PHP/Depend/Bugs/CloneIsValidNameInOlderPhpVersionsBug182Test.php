@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractTest
+class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTest
 {
     /**
      * testParserAcceptsCloneAsFunctionName

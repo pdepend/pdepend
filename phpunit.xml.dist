@@ -18,16 +18,6 @@
                 Exclude some interfaces that are marked as uncovered.
             -->
             <exclude>
-                <file>src/main/php/PHP/Depend/BuilderI.php</file>
-                <file>src/main/php/PHP/Depend/ProcessListenerI.php</file>
-                <file>src/main/php/PHP/Depend/TokenizerI.php</file>
-                <file>src/main/php/PHP/Depend/VisitorI.php</file>
-
-                <file>src/main/php/PHP/Depend/Metrics/AggregateAnalyzerI.php</file>
-                <file>src/main/php/PHP/Depend/Metrics/ListenerI.php</file>
-
-                <file>src/main/php/PHP/Depend/Parser/TokenException.php</file>
-
                 <!-- Exclude this exotic result printer -->
                 <file>src/main/php/PHP/Depend/DbusUI/ResultPrinter.php</file>
             </exclude>

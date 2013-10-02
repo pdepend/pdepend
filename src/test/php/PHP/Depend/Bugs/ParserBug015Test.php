@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug015Test extends AbstractTest
+class ParserBug015Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser ignores backtick expressions.

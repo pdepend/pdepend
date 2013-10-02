@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case the node iterator.
  *
@@ -51,7 +53,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\ASTArtifactList
  * @group unittest
  */
-class ASTArtifactListTest extends \PHP_Depend_AbstractTest
+class ASTArtifactListTest extends AbstractTest
 {
     /**
      * Tests the ctor with an valid input array of {@link \PHP\Depend\Source\AST\AbstractASTArtifact}

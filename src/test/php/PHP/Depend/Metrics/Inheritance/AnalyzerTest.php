@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\Inheritance;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 use PHP\Depend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PHP\Depend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PHP\Depend\Source\AST\ASTClass;
@@ -49,13 +53,10 @@ use PHP\Depend\Source\AST\ASTClass;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_Inheritance_Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::inheritance
+ * @covers \PHP\Depend\Metrics\Inheritance\Analyzer
  * @group unittest
  */
-class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * Tests that the analyzer calculates the correct average number of derived
@@ -69,7 +70,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
         $filter->setFilter(new PackageArtifactFilter(array('library')));
 
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -88,7 +89,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
         $filter->setFilter(new PackageArtifactFilter(array('library')));
 
         $packages = self::parseTestCaseSource(__METHOD__);
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -197,7 +198,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
     }
 
     /**
-     * Tests that {@link PHP_Depend_Metrics_Inheritance_Analyzer::analyze()}
+     * Tests that {@link \PHP\Depend\Metrics\Inheritance\Analyzer::analyze()}
      * calculates the expected DIT values.
      *
      * @return void
@@ -207,7 +208,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
         $packages = self::parseTestCaseSource(__METHOD__);
         $package  = $packages->current();
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $actual = array();
@@ -236,7 +237,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
      */
     public function testCalculatesExpectedMaxDepthOfInheritanceTreeMetric()
     {
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -312,7 +313,7 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
     {
         $class = new ASTClass(null);
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -333,10 +334,18 @@ class PHP_Depend_Metrics_Inheritance_AnalyzerTest extends PHP_Depend_Metrics_Abs
         $packages = self::parseTestCaseSource($testCase);
         $package  = $packages->current();
 
-        $analyzer = new PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
         return $metrics[$metric];
+    }
+
+    /**
+     * @return \PHP\Depend\Metrics\Inheritance\Analyzer
+     */
+    private function createAnalyzer()
+    {
+        return new Analyzer();
     }
 }

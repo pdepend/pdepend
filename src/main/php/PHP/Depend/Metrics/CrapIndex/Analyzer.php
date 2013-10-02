@@ -40,11 +40,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\CrapIndex;
+
 use PHP\Depend\Metrics\AbstractAnalyzer;
 use PHP\Depend\Metrics\AggregateAnalyzer;
-use PHP\Depend\Metrics\Analyzer;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
-use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\AbstractASTCallable;
 use PHP\Depend\Source\AST\ASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifactList;
@@ -59,7 +59,7 @@ use PHP\Depend\Source\AST\ASTMethod;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
+class Analyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.
@@ -93,7 +93,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
 
     /**
      *
-     * @var PHP_Depend_Metrics_CyclomaticComplexity_Analyzer
+     * @var \PHP\Depend\Metrics\CyclomaticComplexity\Analyzer
      */
     private $ccnAnalyzer = array();
 
@@ -130,7 +130,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
      */
     public function getRequiredAnalyzers()
     {
-        return array(PHP_Depend_Metrics_CyclomaticComplexity_Analyzer::CLAZZ);
+        return array(\PHP\Depend\Metrics\CyclomaticComplexity\Analyzer::CLAZZ);
     }
 
     /**
@@ -139,7 +139,7 @@ class PHP_Depend_Metrics_CrapIndex_Analyzer extends AbstractAnalyzer implements 
      * @param \PHP\Depend\Metrics\Analyzer $analyzer
      * @return void
      */
-    public function addAnalyzer(Analyzer $analyzer)
+    public function addAnalyzer(\PHP\Depend\Metrics\Analyzer $analyzer)
     {
         $this->ccnAnalyzer = $analyzer;
     }

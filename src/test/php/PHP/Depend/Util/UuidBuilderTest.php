@@ -43,6 +43,7 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
@@ -57,11 +58,9 @@ use PHP\Depend\Source\AST\ASTMethod;
  * @since 0.9.12
  *
  * @covers \PHP\Depend\Util\UuidBuilder
- * @group pdepend
- * @group pdepend::util
  * @group unittest
  */
-class UuidBuilderTest extends \PHP_Depend_AbstractTest
+class UuidBuilderTest extends AbstractTest
 {
     /**
      * testBuilderCreatesExpectedIdentifierForFile

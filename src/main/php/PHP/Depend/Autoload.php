@@ -41,14 +41,16 @@
   * @since     0.10.0
  */
 
+namespace PHP\Depend;
+
 /**
- * Class that implements autoloading for PHP_Depend.
+ * Class that implements autoloading for PDepend.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class PHP_Depend_Autoload
+class Autoload
 {
     /**
      * Registers this autoload instance at the spl autoloader stack.
@@ -70,9 +72,7 @@ class PHP_Depend_Autoload
      */
     public function autoload($className)
     {
-        if (strpos($className, 'PHP_Depend') === 0) {
-            include strtr($className, '_', DIRECTORY_SEPARATOR) . '.php';
-        } else if (strpos($className, 'PHP\\Depend') === 0) {
+        if (strpos($className, 'PHP\\Depend') === 0) {
             include strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
         }
     }

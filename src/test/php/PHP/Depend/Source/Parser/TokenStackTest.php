@@ -55,7 +55,7 @@ use PHP\Depend\Source\Tokenizer\Token;
  * @covers \PHP\Depend\Source\Parser\TokenStack
  * @group unittest
  */
-class TokenStackTest extends AbstractTest
+class TokenStackTest extends AbstractParserTest
 {
     /**
      * testAddReturnsGivenTokenInstance

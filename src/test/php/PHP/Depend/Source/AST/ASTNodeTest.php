@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Abstract test case for classes derived {@link \PHP\Depend\Source\AST\ASTNode}ö
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Source\AST;
  * @group pdepend::ast
  * @group unittest
  */
-abstract class ASTNodeTest extends \PHP_Depend_AbstractTest
+abstract class ASTNodeTest extends AbstractTest
 {
 //    /**
 //     * testGetImageReturnsEmptyStringByDefault
@@ -673,7 +675,7 @@ abstract class ASTNodeTest extends \PHP_Depend_AbstractTest
             '\PHP\Depend\Source\AST\ASTNode',
             array(),
             array(),
-            'PHP_Depend_Source_AST_ASTNode_' . md5(microtime())
+            'PDepend_Source_AST_ASTNode_' . md5(microtime())
         );
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
@@ -697,7 +699,7 @@ abstract class ASTNodeTest extends \PHP_Depend_AbstractTest
             '\PHP\Depend\Source\AST\ASTNode',
             array(),
             array(),
-            'PHP_Depend_Source_AST_ASTNode_' . md5(microtime())
+            'PDepend_Source_AST_ASTNode_' . md5(microtime())
         );
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
@@ -706,7 +708,7 @@ abstract class ASTNodeTest extends \PHP_Depend_AbstractTest
             '\PHP\Depend\Source\AST\ASTNode',
             array(),
             array(),
-            'PHP_Depend_Source_AST_ASTNode_' . md5(microtime())
+            'PDepend_Source_AST_ASTNode_' . md5(microtime())
         );
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
@@ -726,7 +728,7 @@ abstract class ASTNodeTest extends \PHP_Depend_AbstractTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
-        $name = 'PHP_Depend_Source_AST_ASTNode_' . md5(microtime());
+        $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
         
         $node2 = $this->getMock(
             '\PHP\Depend\Source\AST\ASTNode',
@@ -751,7 +753,7 @@ abstract class ASTNodeTest extends \PHP_Depend_AbstractTest
      */
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
-        $name = 'PHP_Depend_Source_AST_ASTNode_' . md5(microtime());
+        $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
 
         $node2 = $this->getMock(
             '\PHP\Depend\Source\AST\ASTNode',

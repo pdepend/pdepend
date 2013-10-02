@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Util;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the image convert utility class.
  *
@@ -49,12 +51,9 @@ namespace PHP\Depend\Util;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Util\ImageConvert
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::imagick
  * @group unittest
  */
-class ImageConvertTest extends \PHP_Depend_AbstractTest
+class ImageConvertTest extends AbstractTest
 {
     /**
      * Tests the copy behaviour for same mime types.

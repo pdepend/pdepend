@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test extends AbstractTest
+class ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser does not throw an exception.

@@ -40,20 +40,23 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\CodeRank;
+
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the code rank property strategy.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_CodeRank_PropertyStrategy
+ * @covers \PHP\Depend\Metrics\CodeRank\PropertyStrategy
  * @group pdepend
  * @group pdepend::metrics
  * @group pdepend::metrics::coderank
  * @group unittest
  */
-class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
-    extends PHP_Depend_AbstractTest
+class PropertyStrategyTest extends AbstractTest
 {
     /**
      * testStrategyCountsCorrectTypes
@@ -143,7 +146,7 @@ class PHP_Depend_Metrics_CodeRank_PropertyStrategyTest
             ),
         );
     
-        $strategy = new PHP_Depend_Metrics_CodeRank_PropertyStrategy();
+        $strategy = new \PHP\Depend\Metrics\CodeRank\PropertyStrategy();
         foreach ($packages as $package) {
             $package->accept($strategy);
         }

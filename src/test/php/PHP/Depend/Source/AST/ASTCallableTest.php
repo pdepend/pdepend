@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\Tokenizer\Token;
 
 /**
@@ -53,7 +54,7 @@ use PHP\Depend\Source\Tokenizer\Token;
  * @covers \PHP\Depend\Source\AST\AbstractASTCallable
  * @group unittest
  */
-class ASTCallableTest extends \PHP_Depend_AbstractTest
+class ASTCallableTest extends AbstractTest
 {
     /**
      * testGetParametersReturnsEmptyArrayByDefault

@@ -43,6 +43,8 @@
 
 namespace PHP\Depend\Util\Configuration;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Util\Configuration\Parser} class.
  *
@@ -56,7 +58,7 @@ namespace PHP\Depend\Util\Configuration;
  * @group pdepend::util::configuration
  * @group unittest
  */
-class ParserTest extends \PHP_Depend_AbstractTest
+class ParserTest extends AbstractTest
 {
     /**
      * testParserHandlesEmptyConfigurationFile

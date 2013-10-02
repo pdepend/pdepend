@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\Language\PHP;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Source\Language\PHP\PHPTokenizerHelperVersion52} class.
  *
@@ -49,11 +51,9 @@ namespace PHP\Depend\Source\Language\PHP;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\PHPTokenizerHelperVersion52
- * @group pdepend
- * @group pdepend::tokenizer
  * @group unittest
  */
-class PHPTokenizerHelperVersion52Test extends \PHP_Depend_AbstractTest
+class PHPTokenizerHelperVersion52Test extends AbstractTest
 {
     /**
      * Tests that the helper class creates the expected token array with

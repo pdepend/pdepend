@@ -40,19 +40,19 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
+namespace PHP\Depend;
+
 /**
- * Test case that parses several files where we have found errors in PHP_Depend's
+ * Test case that parses several files where we have found errors in PDepend's
  * parser implementation.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
- * @group pdepend
- * @group pdepend::parser
+ * @covers \stdClass
  * @group regressiontest
  */
-class PHP_Depend_ParserRegressionTest extends PHP_Depend_AbstractTest
+class ParserRegressionTest extends AbstractTest
 {
     /**
      * Tests that the parser handles the given source file.
@@ -75,7 +75,7 @@ class PHP_Depend_ParserRegressionTest extends PHP_Depend_AbstractTest
     public static function dataProviderSourceFiles()
     {
         $files = array();
-        foreach (new DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {
+        foreach (new \DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {
             if ($file->isFile()) {
                 $files[] = array(realpath($file->getPathname()));
             }

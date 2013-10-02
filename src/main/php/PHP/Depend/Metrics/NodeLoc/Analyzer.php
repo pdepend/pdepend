@@ -39,11 +39,13 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\NodeLoc;
+
 use PHP\Depend\Metrics\AbstractCachingAnalyzer;
 use PHP\Depend\Metrics\AnalyzerFilterAware;
 use PHP\Depend\Metrics\AnalyzerNodeAware;
 use PHP\Depend\Metrics\AnalyzerProjectAware;
-use PHP\Depend\Source\AST\AbstractASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifact;
 use PHP\Depend\Source\AST\ASTArtifactList;
 use PHP\Depend\Source\AST\ASTClass;
@@ -75,11 +77,7 @@ use PHP\Depend\Source\Tokenizer\Tokens;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
-class PHP_Depend_Metrics_NodeLoc_Analyzer
-       extends AbstractCachingAnalyzer
-    implements AnalyzerNodeAware,
-               AnalyzerFilterAware,
-               AnalyzerProjectAware
+class Analyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerFilterAware, AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.

@@ -54,7 +54,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserBug001Test extends AbstractTest
+class ParserBug001Test extends AbstractRegressionTest
 {
     /**
      * Test case for parser bug 01 that doesn't add dependencies for static

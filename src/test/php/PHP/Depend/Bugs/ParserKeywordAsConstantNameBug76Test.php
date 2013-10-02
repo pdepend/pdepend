@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class ParserKeywordAsConstantNameBug76Test extends AbstractTest
+class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTest
 {
     /**
      * This method tests that the parser handles reserved keywords in type

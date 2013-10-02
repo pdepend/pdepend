@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
+
+namespace PHP\Depend\Metrics\Hierarchy;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 use PHP\Depend\Source\AST\ASTClass;
 
 /**
@@ -47,13 +51,13 @@ use PHP\Depend\Source\AST\ASTClass;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_Hierarchy_Analyzer
+ * @covers \PHP\Depend\Metrics\Hierarchy\Analyzer
  * @group pdepend
  * @group pdepend::metrics
  * @group pdepend::metrics::hierarchy
  * @group unittest
  */
-class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * testCalculatesExpectedNumberOfLeafClasses
@@ -62,7 +66,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testCalculatesExpectedNumberOfLeafClasses()
     {
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -76,7 +80,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testCalculatesExpectedNumberOfAbstractClasses()
     {
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -90,7 +94,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testCalculatesExpectedNumberOfConcreteClasses()
     {
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -104,7 +108,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testCalculatesExpectedNumberOfRootClasses()
     {
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -118,7 +122,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
      */
     public function testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses()
     {
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -134,7 +138,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     {
         $class = new ASTClass(null);
 
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -142,7 +146,7 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     }
 
     /**
-     * Tests that {@link PHP_Depend_Metrics_Hierarchy_Analyzer::getNodeMetrics()}
+     * Tests that {@link \PHP\Depend\Metrics\Hierarchy\Analyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown node uuid.
      *
      * @return void
@@ -150,8 +154,16 @@ class PHP_Depend_Metrics_Hierarchy_AnalyzerTest extends PHP_Depend_Metrics_Abstr
     public function testGetNodeMetricsForUnknownUUID()
     {
         $class    = new ASTClass('PDepend');
-        $analyzer = new PHP_Depend_Metrics_Hierarchy_Analyzer();
+        $analyzer = $this->createAnalyzer();
 
         $this->assertSame(array(), $analyzer->getNodeMetrics($class));
+    }
+
+    /**
+     * @return \PHP\Depend\Metrics\Hierarchy\Analyzer
+     */
+    private function createAnalyzer()
+    {
+        return new Analyzer();
     }
 }

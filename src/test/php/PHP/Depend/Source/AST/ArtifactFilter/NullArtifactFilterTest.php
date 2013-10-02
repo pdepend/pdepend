@@ -43,6 +43,7 @@
 
 namespace PHP\Depend\Source\AST\ASTArtifactList;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Source\AST\ASTClass;
 use PHP\Depend\Source\AST\ASTCompilationUnit;
 use PHP\Depend\Source\AST\ASTFunction;
@@ -61,7 +62,7 @@ use PHP\Depend\Source\AST\ASTTrait;
  * @covers \PHP\Depend\Source\AST\ASTArtifactList\NullArtifactFilter
  * @group unittest
  */
-class NullArtifactFilterTest extends \PHP_Depend_AbstractTest
+class NullArtifactFilterTest extends AbstractTest
 {
     /**
      * testAcceptsReturnsTrueForClass

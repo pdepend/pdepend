@@ -55,7 +55,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class VariableVariablesInForeachStatementBug128Test extends AbstractTest
+class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesVariableVariableAsForeachValue

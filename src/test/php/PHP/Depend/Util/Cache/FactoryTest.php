@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Util\Cache;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Util\Cache\Driver\File;
 use PHP\Depend\Util\Cache\Driver\Memory;
 
@@ -52,12 +53,9 @@ use PHP\Depend\Util\Cache\Driver\Memory;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Util\Cache\Factory
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::cache
  * @group unittest
  */
-class FactoryTest extends \PHP_Depend_AbstractTest
+class FactoryTest extends AbstractTest
 {
     /**
      * testCreateReturnsDriverInstance

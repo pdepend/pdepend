@@ -43,7 +43,7 @@
 namespace PHP\Depend\Bugs;
 
 /**
- * Test case for bug 081 where \PHP_Depend does not handle comma separated property
+ * Test case for bug 081 where PDepend does not handle comma separated property
  * declarations.
  *
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/81/
@@ -56,7 +56,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractTest
+class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles a comma separated property declaration.

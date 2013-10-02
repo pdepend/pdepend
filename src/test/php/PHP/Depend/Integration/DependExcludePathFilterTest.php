@@ -40,20 +40,23 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Integration;
+
+use PHP\Depend\AbstractTest;
+
 /**
- * Tests the integration of the {@link PHP_Depend} class and the input filter
- * class {@link \PHP\Depend\Input\ExcludePathFilter}.
+ * Tests the integration of the {@link \PHP\Depend\Application} class and the
+ * input filter class {@link \PHP\Depend\Input\ExcludePathFilter}.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers stdClass
+ * @covers \stdClass
  * @group pdepend
  * @group pdepend::integration
  * @group integrationtest
  */
-class PHP_Depend_Integration_DependExcludePathFilterTest
-    extends PHP_Depend_AbstractTest
+class DependExcludePathFilterTest extends AbstractTest
 {
     /**
      * testPDependFiltersByRelativePath

@@ -40,20 +40,20 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace PHP\Depend\Metrics\Coupling;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
+
 /**
  * Test case for the coupling analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers PHP_Depend_Metrics_Coupling_Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::coupling
+ * @covers \PHP\Depend\Metrics\Coupling\Analyzer
  * @group unittest
  */
-class PHP_Depend_Metrics_Coupling_AnalyzerTest
-    extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * testGetNodeMetricsReturnsAnEmptyArrayByDefault
@@ -62,7 +62,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
      */
     public function testGetNodeMetricsReturnsAnEmptyArrayByDefault()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $this->assertEquals(
             array(),
             $analyzer->getNodeMetrics(
@@ -84,7 +84,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
             ->getClasses()
             ->current();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $metrics = array_keys($analyzer->getNodeMetrics($class));
@@ -509,7 +509,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
             ->getTypes()
             ->current();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($node);
@@ -677,7 +677,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
      */
     public function testGetProjectMetricsForTrait()
     {
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
 
         $metrics = $analyzer->getProjectMetrics();
@@ -740,7 +740,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
         $packages = $this->parseCodeResourceForTest();
         $package  = $packages->current();
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         return $analyzer->getNodeMetrics($package->getTraits()->current());
@@ -780,7 +780,7 @@ class PHP_Depend_Metrics_Coupling_AnalyzerTest
     {
         $testCase = ($testCase ? $testCase : self::getCallingTestMethod());
 
-        $analyzer = new PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze(self::parseTestCaseSource($testCase));
 
         return $analyzer->getProjectMetrics();

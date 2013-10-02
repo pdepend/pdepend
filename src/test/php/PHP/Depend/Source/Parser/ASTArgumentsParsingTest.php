@@ -55,7 +55,7 @@ namespace PHP\Depend\Source\Parser;
  * @group pdepend::parser
  * @group unittest
  */
-class ASTArgumentsParsingTest extends AbstractTest
+class ASTArgumentsParsingTest extends AbstractParserTest
 {
     /**
      * Tests that the parser adds the expected children to an argument instance.

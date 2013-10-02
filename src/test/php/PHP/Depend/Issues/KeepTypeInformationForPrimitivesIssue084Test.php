@@ -39,6 +39,9 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Issues;
+
 use PHP\Depend\Source\AST\ASTFieldDeclaration;
 use PHP\Depend\Source\AST\ASTType;
 
@@ -50,13 +53,9 @@ use PHP\Depend\Source\AST\ASTType;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Source\Language\PHP\AbstractPHPParser
- * @group pdepend
- * @group pdepend::issues
- * @group pdepend::parser
  * @group unittest
  */
-class PHP_Depend_Issues_KeepTypeInformationForPrimitivesIssue084Test
-    extends PHP_Depend_Issues_AbstractTest
+class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
 {
     /**
      * Tests that the parser sets the expected primitive type information.

@@ -57,7 +57,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends AbstractTest
+class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends AbstractRegressionTest
 {
     /**
      * Tests that the analyzer calculates the expected result.
@@ -68,7 +68,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -84,7 +84,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -100,7 +100,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -116,7 +116,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -132,7 +132,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PHP_Depend_Metrics_Coupling_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Coupling\Analyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

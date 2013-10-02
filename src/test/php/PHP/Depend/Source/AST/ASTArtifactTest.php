@@ -42,6 +42,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Source\AST\AbstractASTArtifact} class.
  *
@@ -51,7 +53,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\AbstractASTArtifact
  * @group unittest
  */
-class ASTArtifactTest extends \PHP_Depend_AbstractTest
+class ASTArtifactTest extends AbstractTest
 {
     /**
      * testGetNameReturnsValueOfFirstConstructorArgument

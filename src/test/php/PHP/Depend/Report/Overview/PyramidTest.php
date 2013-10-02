@@ -42,6 +42,7 @@
 
 namespace PHP\Depend\Report\Overview;
 
+use PHP\Depend\AbstractTest;
 use PHP\Depend\Report\DummyAnalyzer;
 
 /**
@@ -49,13 +50,11 @@ use PHP\Depend\Report\DummyAnalyzer;
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @covers \PHP\Depend\Report\Overview\Pyramid
- * @group pdepend
- * @group pdepend::log
- * @group pdepend::log::overview
  * @group unittest
  */
-class PyramidTest extends \PHP_Depend_AbstractTest
+class PyramidTest extends AbstractTest
 {
     /**
      * Tests that the logger returns the expected set of analyzers.
@@ -67,11 +66,11 @@ class PyramidTest extends \PHP_Depend_AbstractTest
         $logger    = new Pyramid();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array(
-            'PHP_Depend_Metrics_Coupling_Analyzer',
-            'PHP_Depend_Metrics_CyclomaticComplexity_Analyzer',
-            'PHP_Depend_Metrics_Inheritance_Analyzer',
-            'PHP_Depend_Metrics_NodeCount_Analyzer',
-            'PHP_Depend_Metrics_NodeLoc_Analyzer'
+            'PHP\\Depend\\Metrics\\Coupling\\Analyzer',
+            'PHP\\Depend\\Metrics\\CyclomaticComplexity\\Analyzer',
+            'PHP\\Depend\\Metrics\\Inheritance\\Analyzer',
+            'PHP\\Depend\\Metrics\\NodeCount\\Analyzer',
+            'PHP\\Depend\\Metrics\\NodeLoc\\Analyzer'
         );
 
         $this->assertEquals($exptected, $actual);
@@ -266,7 +265,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
 
     private function createCouplingAnalyzer()
     {
-        $mock = $this->getMock('\\PHP_Depend_Metrics_Coupling_Analyzer');
+        $mock = $this->getMock('\\PHP\Depend\Metrics\Coupling\Analyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -281,7 +280,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
 
     private function createComplexityAnalyzer()
     {
-        $mock = $this->getMock('\\PHP_Depend_Metrics_CyclomaticComplexity_Analyzer');
+        $mock = $this->getMock('\\PHP\Depend\Metrics\CyclomaticComplexity\Analyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -295,7 +294,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
 
     private function createInheritanceAnalyzer()
     {
-        $mock = $this->getMock('\\PHP_Depend_Metrics_Inheritance_Analyzer');
+        $mock = $this->getMock('\\PHP\Depend\Metrics\Inheritance\Analyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -310,7 +309,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
 
     private function createNodeCountAnalyzer()
     {
-        $mock = $this->getMock('\\PHP_Depend_Metrics_NodeCount_Analyzer');
+        $mock = $this->getMock('\\PHP\\Depend\\Metrics\\NodeCount\\Analyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -327,7 +326,7 @@ class PyramidTest extends \PHP_Depend_AbstractTest
 
     private function createNodeLocAnalyzer()
     {
-        $mock = $this->getMock('\\PHP_Depend_Metrics_NodeLoc_Analyzer');
+        $mock = $this->getMock('\\PHP\\Depend\\Metrics\\NodeLoc\\Analyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(

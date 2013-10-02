@@ -53,7 +53,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractTest
+class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractRegressionTest
 {
     /**
      * testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten
@@ -65,7 +65,7 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractT
         $packages = self::parseCodeResourceForTest();
         $class    = $packages->current()->getClasses()->current();
 
-        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Inheritance\Analyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -82,7 +82,7 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractT
         $packages = self::parseCodeResourceForTest();
         $class    = $packages->current()->getClasses()->current();
 
-        $analyzer = new \PHP_Depend_Metrics_Inheritance_Analyzer();
+        $analyzer = new \PHP\Depend\Metrics\Inheritance\Analyzer();
         $analyzer->analyze($packages);
 
         $metrics = $analyzer->getNodeMetrics($class);

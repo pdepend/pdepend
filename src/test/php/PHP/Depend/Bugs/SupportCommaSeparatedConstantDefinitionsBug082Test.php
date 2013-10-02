@@ -43,7 +43,7 @@
 namespace PHP\Depend\Bugs;
 
 /**
- * Test case for bug #82 where \PHP_Depend does not handle comma separated
+ * Test case for bug #82 where PDepend does not handle comma separated
  * constant definitions.
  *
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/82/
@@ -56,7 +56,7 @@ namespace PHP\Depend\Bugs;
  * @group pdepend::bugs
  * @group regressiontest
  */
-class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractTest
+class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser handles a comma separated constant definition.

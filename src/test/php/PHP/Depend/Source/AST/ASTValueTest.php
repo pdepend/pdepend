@@ -43,6 +43,8 @@
 
 namespace PHP\Depend\Source\AST;
 
+use PHP\Depend\AbstractTest;
+
 /**
  * Test case for the {@link \PHP\Depend\Source\AST\ASTValue} class.
  *
@@ -53,7 +55,7 @@ namespace PHP\Depend\Source\AST;
  * @covers \PHP\Depend\Source\AST\ASTValue
  * @group unittest
  */
-class ASTValueTest extends \PHP_Depend_AbstractTest
+class ASTValueTest extends AbstractTest
 {
     /**
      * testIsValueAvailableReturnsFalseByDefault

@@ -54,7 +54,7 @@ namespace PHP\Depend\Source\Parser;
  * @group pdepend::parser
  * @group unittest
  */
-class NamespaceResovingTest extends AbstractTest
+class NamespaceResovingTest extends AbstractParserTest
 {
     /**
      * testNamespacesAreCorrectlyLookedUp

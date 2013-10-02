@@ -39,6 +39,10 @@
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
+namespace PHP\Depend\Metrics\NPathComplexity;
+
+use PHP\Depend\Metrics\AbstractMetricsTest;
 use PHP\Depend\Source\AST\AbstractASTCallable;
 
 /**
@@ -48,13 +52,10 @@ use PHP\Depend\Source\AST\AbstractASTCallable;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PHP\Depend\Metrics\AbstractCachingAnalyzer
- * @covers PHP_Depend_Metrics_NPathComplexity_Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::npathcomplexity
+ * @covers \PHP\Depend\Metrics\NPathComplexity\Analyzer
  * @group unittest
  */
-class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics_AbstractTest
+class AnalyzerTest extends AbstractMetricsTest
 {
     /**
      * @var \PHP\Depend\Util\Cache\Driver
@@ -585,12 +586,12 @@ class PHP_Depend_Metrics_NPathComplexity_AnalyzerTest extends PHP_Depend_Metrics
     /**
      * Creates a ready to use npath complexity analyzer.
      *
-     * @return PHP_Depend_Metrics_NPathComplexity_Analyzer
+     * @return \PHP\Depend\Metrics\NPathComplexity\Analyzer
      * @since 1.0.0
      */
     private function _createAnalyzer()
     {
-        $analyzer = new PHP_Depend_Metrics_NPathComplexity_Analyzer();
+        $analyzer = new Analyzer();
         $analyzer->setCache($this->_cache);
 
         return $analyzer;
