@@ -217,7 +217,7 @@ abstract class AbstractDriverTest extends AbstractTest
     /**
      * Creates a test fixture.
      *
-     * @return \PDepend\Util\Cache\Driver
+     * @return \PDepend\Util\Cache\CacheDriver
      */
     protected abstract function createDriver();
 }

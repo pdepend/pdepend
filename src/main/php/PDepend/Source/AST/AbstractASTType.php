@@ -44,6 +44,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Represents any valid complex php type.
@@ -57,7 +58,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      */
     protected $cache = null;
 
@@ -140,10 +141,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Setter method for the currently used token cache, where this class or
      * interface instance can store the associated tokens.
      *
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\AST\AbstractASTType
      */
-    public function setCache(\PDepend\Util\Cache\Driver $cache)
+    public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
         return $this;

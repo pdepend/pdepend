@@ -53,7 +53,7 @@ use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
-use PDepend\Util\Cache\Driver\Memory;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case implementation for the PDepend code parser.
@@ -81,7 +81,7 @@ class ParserTest extends AbstractTest
 
         ini_set('xdebug.max_nesting_level', '100');
 
-        $cache   = new Memory();
+        $cache   = new MemoryCacheDriver();
         $builder = new PHPBuilder();
 
         $tokenizer = new PHPTokenizerInternal();
@@ -1398,7 +1398,7 @@ class ParserTest extends AbstractTest
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('restore')
             ->will(self::returnValue(true));

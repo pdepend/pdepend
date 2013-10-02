@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+
 /**
  * Test case related to bug #9936901.
  *
@@ -71,7 +73,7 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTest
             ->current();
 
         $ccnAnalyzer = new \PDepend\Metrics\CyclomaticComplexity\Analyzer();
-        $ccnAnalyzer->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
         $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);

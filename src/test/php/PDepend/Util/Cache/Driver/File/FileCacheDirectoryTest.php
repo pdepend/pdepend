@@ -44,19 +44,19 @@
 namespace PDepend\Util\Cache\Driver\File;
 
 use PDepend\AbstractTest;
-use PDepend\Util\Cache\Driver;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Test case for the {@link \PDepend\Util\Cache\Driver\File\Directory} class.
+ * Test case for the {@link \PDepend\Util\Cache\Driver\File\FileCacheDirectory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.10.0
  *
- * @covers \PDepend\Util\Cache\Driver\File\Directory
+ * @covers \PDepend\Util\Cache\Driver\File\FileCacheDirectory
  * @group unittest
  */
-class DirectoryTest extends AbstractTest
+class FileCacheDirectoryTest extends AbstractTest
 {
     /**
      * Temporary cache directory.
@@ -92,7 +92,7 @@ class DirectoryTest extends AbstractTest
      */
     public function testCreatesNotExistingCacheDirectory()
     {
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertFileExists($this->cacheDir);
     }
 
@@ -103,7 +103,7 @@ class DirectoryTest extends AbstractTest
      */
     public function testAddsCacheVersionFileToNewlyCreatedCache()
     {
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertFileExists($this->versionFile);
     }
 
@@ -114,9 +114,9 @@ class DirectoryTest extends AbstractTest
      */
     public function testCacheVersionFileContainsExpectedVersionString()
     {
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertEquals(
-            Driver::VERSION,
+            CacheDriver::VERSION,
             file_get_contents($this->versionFile)
         );
     }
@@ -131,9 +131,9 @@ class DirectoryTest extends AbstractTest
         mkdir($this->cacheDir, 0755, true);
         file_put_contents($this->versionFile, '1234567890');
 
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertEquals(
-            Driver::VERSION,
+            CacheDriver::VERSION,
             file_get_contents($this->versionFile)
         );
     }
@@ -151,7 +151,7 @@ class DirectoryTest extends AbstractTest
         file_put_contents($cacheFile, 'Manuel Pichler');
         file_put_contents($this->versionFile, '1234567890');
 
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertFileNotExists($cacheFile);
     }
 
@@ -167,7 +167,7 @@ class DirectoryTest extends AbstractTest
         mkdir($cacheDir, 0755, true);
         file_put_contents($this->versionFile, '1234567890');
 
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertFileNotExists($cacheDir);
     }
 
@@ -185,7 +185,7 @@ class DirectoryTest extends AbstractTest
         file_put_contents($cacheFile, __FUNCTION__);
         file_put_contents($this->versionFile, '1234567890');
 
-        new Directory($this->cacheDir);
+        new FileCacheDirectory($this->cacheDir);
         $this->assertFileNotExists("{$this->cacheDir}/test");
     }
 
@@ -196,7 +196,7 @@ class DirectoryTest extends AbstractTest
      */
     public function testCreateCacheDirectoryReturnsExpectedSubDirectory()
     {
-        $dir  = new Directory($this->cacheDir);
+        $dir  = new FileCacheDirectory($this->cacheDir);
         $path = $dir->createCacheDirectory('abcdef0123456789');
 
         $this->assertEquals("{$this->cacheDir}/ab", $path);
@@ -209,7 +209,7 @@ class DirectoryTest extends AbstractTest
      */
     public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory()
     {
-        $dir = new Directory($this->cacheDir);
+        $dir = new FileCacheDirectory($this->cacheDir);
         $this->assertFileExists($dir->createCacheDirectory('abcdef0123456789'));
     }
 }

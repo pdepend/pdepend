@@ -41,68 +41,21 @@
  * @since     0.10.0
  */
 
-namespace PDepend\Util\Cache\Driver;
-
-use PDepend\Util\Cache\Driver;
+namespace PDepend\Util\Cache;
 
 /**
- * A memory based cache implementation.
- *
- * This class implements the {@link \PDepend\Util\Cache\Driver} interface based
- * on an in memory data structure. This means that all cached entries will get
- * lost when the php process exits.
+ * Base interface for a concrete cache driver.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class Memory implements Driver
+interface CacheDriver
 {
     /**
-     * The type of this class.
+     * The current cache version.
      */
-    const CLAZZ = __CLASS__;
-
-    /**
-     * Default cache entry type.
-     */
-    const ENTRY_TYPE = 'cache';
-
-    /**
-     * The in memory cache.
-     *
-     * @var array(string=>array)
-     */
-    protected $cache = array();
-
-    /**
-     * Current cache entry type.
-     *
-     * @var string
-     */
-    protected $type = self::ENTRY_TYPE;
-
-    /**
-     * Unique identifier within the same cache instance.
-     *
-     * @var string
-     */
-    protected $staticId = null;
-
-    /**
-     * Global stack, mainly used during testing.
-     *
-     * @var array
-     */
-    protected static $staticCache = array();
-
-    /**
-     * Instantiates a new in memory cache instance.
-     */
-    public function __construct()
-    {
-        $this->staticId = sha1(uniqid(rand(0, PHP_INT_MAX)));
-    }
+    const VERSION = '@version:d1f55cea93157d810a334434416168ae:@';
 
     /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method
@@ -112,14 +65,10 @@ class Memory implements Driver
      * you must invoke right before every call to <em>restore()</em> or
      * <em>store()</em>.
      *
-     * @param string $type The name or object type for the next storage method call.
-     * @return \PDepend\Util\Cache\Driver
+     * @param string $type
+     * @return \PDepend\Util\Cache\CacheDriver
      */
-    public function type($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
+    public function type($type);
 
     /**
      * This method will store the given <em>$data</em> under <em>$key</em>. This
@@ -131,12 +80,9 @@ class Memory implements Driver
      * @param string $key  The cache key for the given data.
      * @param mixed  $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
-     * @return void
+     * @return  void
      */
-    public function store($key, $data, $hash = null)
-    {
-        $this->cache[$this->getCacheKey($key)] = array($hash, $data);
-    }
+    public function store($key, $data, $hash = null);
 
     /**
      * This method tries to restore an existing cache entry for the given
@@ -149,14 +95,7 @@ class Memory implements Driver
      * @param string $hash Optional hash that will be used for verification.
      * @return mixed
      */
-    public function restore($key, $hash = null)
-    {
-        $cacheKey = $this->getCacheKey($key);
-        if (isset($this->cache[$cacheKey]) && $this->cache[$cacheKey][0] === $hash) {
-            return $this->cache[$cacheKey][1];
-        }
-        return null;
-    }
+    public function restore($key, $hash = null);
 
     /**
      * This method will remove an existing cache entry for the given identifier.
@@ -167,52 +106,5 @@ class Memory implements Driver
      * @param string $pattern The cache key pattern.
      * @return void
      */
-    public function remove($pattern)
-    {
-        foreach (array_keys($this->cache) as $key) {
-            if (0 === strpos($key, $pattern)) {
-                unset($this->cache[$key]);
-            }
-        }
-    }
-
-    /**
-     * Creates a prepared cache entry identifier, based on the given <em>$key</em>
-     * and the <em>$type</em> property. Note that this method resets the cache
-     * type, so that it is only valid for a single call.
-     *
-     * @param string $key The concrete object key.
-     * @return string
-     */
-    protected function getCacheKey($key)
-    {
-        $type       = $this->type;
-        $this->type = self::ENTRY_TYPE;
-
-        return "{$key}.{$type}";
-    }
-
-    /**
-     * PHP's magic serialize sleep method.
-     *
-     * @return array
-     * @since 1.0.2
-     */
-    public function __sleep()
-    {
-        self::$staticCache[$this->staticId] = $this->cache;
-
-        return array('staticId');
-    }
-
-    /**
-     * PHP's magic serialize wakeup method.
-     *
-     * @return void
-     * @since 1.0.2
-     */
-    public function __wakeup()
-    {
-        $this->cache = self::$staticCache[$this->staticId];
-    }
+    public function remove($pattern);
 }

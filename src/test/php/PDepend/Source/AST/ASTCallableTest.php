@@ -165,7 +165,7 @@ class ASTCallableTest extends AbstractTest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -187,7 +187,7 @@ class ASTCallableTest extends AbstractTest
     {
         $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -223,7 +223,7 @@ class ASTCallableTest extends AbstractTest
             new Token(2, 'b', 23, 42, 0, 0)
         );
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -258,7 +258,7 @@ class ASTCallableTest extends AbstractTest
             new Token(2, 'b', 23, 42, 0, 0)
         );
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));

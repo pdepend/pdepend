@@ -58,6 +58,7 @@ use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Log;
 use PDepend\Util\Type;
 
@@ -240,7 +241,7 @@ abstract class AbstractPHPParser
 
     /**
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 0.10.0
      */
     protected $cache;
@@ -257,13 +258,10 @@ abstract class AbstractPHPParser
      *
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      */
-    public function __construct(
-        Tokenizer $tokenizer,
-        Builder $builder,
-        \PDepend\Util\Cache\Driver $cache
-    ) {
+    public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
         $this->tokenizer = $tokenizer;
         $this->builder   = $builder;
         $this->cache     = $cache;

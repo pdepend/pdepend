@@ -55,6 +55,7 @@ use PDepend\Source\AST\ASTParentReference;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Log;
 use PDepend\Util\Type;
 
@@ -69,7 +70,7 @@ class PHPBuilder implements Builder
     /**
      * The internal used cache instance.
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -184,11 +185,11 @@ class PHPBuilder implements Builder
     /**
      * Setter method for the currently used token cache.
      *
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\Language\PHP\PHPBuilder
      * @since 0.10.0
      */
-    public function setCache(\PDepend\Util\Cache\Driver $cache)
+    public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
         return $this;

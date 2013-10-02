@@ -47,7 +47,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTTrait;
-use PDepend\Util\Cache\Driver;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Base interface for all code node builders.
@@ -65,11 +65,11 @@ interface Builder extends \IteratorAggregate
     /**
      * Setter method for the currently used token cache.
      *
-     * @param \PDepend\Util\Cache\Driver $cache Used token cache instance.
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\Builder\Builder
      * @since 0.10.0
      */
-    function setCache(Driver $cache);
+    function setCache(CacheDriver $cache);
 
     /**
      * Restores a function within the internal type scope.

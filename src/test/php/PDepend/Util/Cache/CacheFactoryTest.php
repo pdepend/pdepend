@@ -43,19 +43,19 @@
 namespace PDepend\Util\Cache;
 
 use PDepend\AbstractTest;
-use PDepend\Util\Cache\Driver\File;
-use PDepend\Util\Cache\Driver\Memory;
+use PDepend\Util\Cache\Driver\FileCacheDriver;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
- * Test case for the {@link \PDepend\Util\Cache\Factory} class.
+ * Test case for the {@link \PDepend\Util\Cache\CacheFactory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Util\Cache\Factory
+ * @covers \PDepend\Util\Cache\CacheFactory
  * @group unittest
  */
-class FactoryTest extends AbstractTest
+class CacheFactoryTest extends AbstractTest
 {
     /**
      * testCreateReturnsDriverInstance
@@ -64,10 +64,10 @@ class FactoryTest extends AbstractTest
      */
     public function testCreateReturnsDriverInstance()
     {
-        $factory = new Factory(
+        $factory = new CacheFactory(
             $this->createConfigurationFixture()
         );
-        $this->assertInstanceOf('\\PDepend\\Util\\Cache\\Driver', $factory->create());
+        $this->assertInstanceOf('\\PDepend\\Util\\Cache\\CacheDriver', $factory->create());
     }
 
     /**
@@ -77,7 +77,7 @@ class FactoryTest extends AbstractTest
      */
     public function testCreateHasSingletonBehaviorForIdenticalCacheNames()
     {
-        $factory = new Factory(
+        $factory = new CacheFactory(
             $this->createConfigurationFixture()
         );
 
@@ -94,7 +94,7 @@ class FactoryTest extends AbstractTest
      */
     public function testCreateReturnsDifferentInstancesForDifferentCacheNames()
     {
-        $factory = new Factory(
+        $factory = new CacheFactory(
             $this->createConfigurationFixture()
         );
 
@@ -113,7 +113,7 @@ class FactoryTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $this->assertInstanceOf(File::CLAZZ, $this->createFactoryFixture()->create());
+        $this->assertInstanceOf(FileCacheDriver::CLAZZ, $this->createFactoryFixture()->create());
     }
 
     /**
@@ -125,7 +125,7 @@ class FactoryTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $this->assertInstanceOf(Memory::CLAZZ, $this->createFactoryFixture()->create());
+        $this->assertInstanceOf(MemoryCacheDriver::CLAZZ, $this->createFactoryFixture()->create());
     }
 
     /**
@@ -145,10 +145,10 @@ class FactoryTest extends AbstractTest
     /**
      * Creates a prepared factory instance.
      *
-     * @return \PDepend\Util\Cache\Factory
+     * @return \PDepend\Util\Cache\CacheFactory
      */
     protected function createFactoryFixture()
     {
-        return new Factory($this->createConfigurationFixture());
+        return new CacheFactory($this->createConfigurationFixture());
     }
 }

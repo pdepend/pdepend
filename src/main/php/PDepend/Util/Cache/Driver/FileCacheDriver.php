@@ -43,20 +43,21 @@
 
 namespace PDepend\Util\Cache\Driver;
 
-use PDepend\Util\Cache\Driver;
+use PDepend\Util\Cache\CacheDriver;
+use PDepend\Util\Cache\Driver\File\FileCacheDirectory;
 
 /**
  * A file system based cache implementation.
  *
- * This class implements the {@link \PDepend\Util\Cache\Driver} interface based
- * on the local file system. It creates a special directory structure and stores
- * all cache entries in files under this directory structure.
+ * This class implements the {@link \PDepend\Util\Cache\CacheDriver} interface
+ * based on the local file system. It creates a special directory structure and
+ * stores all cache entries in files under this directory structure.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class File implements Driver
+class FileCacheDriver implements CacheDriver
 {
     /**
      * The type of this class.
@@ -71,7 +72,7 @@ class File implements Driver
     /**
      * The cache directory handler
      *
-     * @var \PDepend\Util\Cache\Driver\File\Directory
+     * @var FileCacheDirectory
      */
     protected $directory;
 
@@ -106,7 +107,7 @@ class File implements Driver
      */
     public function __construct($root, $cacheKey = null)
     {
-        $this->directory = new \PDepend\Util\Cache\Driver\File\Directory($root);
+        $this->directory = new FileCacheDirectory($root);
         $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
 
         $this->cacheKey = $cacheKey;
@@ -121,7 +122,7 @@ class File implements Driver
      * <em>store()</em>.
      *
      * @param string $type The name or object type for the next storage method call.
-     * @return \PDepend\Util\Cache\Driver
+     * @return \PDepend\Util\Cache\CacheDriver
      */
     public function type($type)
     {

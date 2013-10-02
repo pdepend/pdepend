@@ -44,6 +44,7 @@ namespace PDepend\Metrics;
 
 use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Metrics\AnalyzerIterator;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * This class provides a simple way to load all required analyzers by class,
@@ -68,7 +69,7 @@ class AnalyzerLoader implements \IteratorAggregate
     /**
      * The system wide used cache.
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 1.0.0
      */
     private $cache;
@@ -83,17 +84,14 @@ class AnalyzerLoader implements \IteratorAggregate
     /**
      * Constructs a new analyzer loader.
      *
-     * @param \PDepend\Metrics\AnalyzerClassLocator $classLocator  Class locator
-     *        used to find analyzer source files on the current system.
-     * @param \PDepend\Util\Cache\Driver $cache
-     * @param array                                   $acceptedTypes This property
-     *        contains the class names of the required analyzer.
-     * @param array                                   $options       Array with
-     *        additional options supplied on the command line.
+     * @param \PDepend\Metrics\AnalyzerClassLocator $classLocator
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @param array $acceptedTypes
+     * @param array $options
      */
     public function __construct(
         AnalyzerClassLocator $classLocator,
-        \PDepend\Util\Cache\Driver $cache,
+        CacheDriver $cache,
         array $acceptedTypes,
         array $options = array()
     ) {

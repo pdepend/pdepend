@@ -85,4 +85,3 @@ final class MathUtil
         return (string) ((int) $left + (int) $right);
     }
 }
-?>

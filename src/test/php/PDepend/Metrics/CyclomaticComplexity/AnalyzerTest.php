@@ -43,6 +43,7 @@
 namespace PDepend\Metrics\CyclomaticComplexity;
 
 use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case for the cyclomatic analyzer.
@@ -60,10 +61,10 @@ use PDepend\Metrics\AbstractMetricsTest;
 class AnalyzerTest extends AbstractMetricsTest
 {
     /**
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 1.0.0
      */
-    private $_cache;
+    private $cache;
 
     /**
      * Initializes a in memory cache.
@@ -74,7 +75,7 @@ class AnalyzerTest extends AbstractMetricsTest
     {
         parent::setUp();
 
-        $this->_cache = new \PDepend\Util\Cache\Driver\Memory();
+        $this->cache = new MemoryCacheDriver();
     }
 
     /**
@@ -388,7 +389,7 @@ class AnalyzerTest extends AbstractMetricsTest
     private function _createAnalyzer()
     {
         $analyzer = new Analyzer();
-        $analyzer->setCache($this->_cache);
+        $analyzer->setCache($this->cache);
 
         return $analyzer;
     }

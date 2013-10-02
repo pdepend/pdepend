@@ -74,17 +74,17 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Injected cache driver.
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      */
     private $cache;
 
     /**
      * Setter method for the system wide used cache.
      *
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return void
      */
-    public function setCache(\PDepend\Util\Cache\Driver $cache)
+    public function setCache(\PDepend\Util\Cache\CacheDriver $cache)
     {
         $this->cache = $cache;
     }

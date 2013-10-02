@@ -47,16 +47,16 @@ use PDepend\AbstractTest;
 use PDepend\Util\FileUtil;
 
 /**
- * Test case for the {@link \PDepend\Util\Configuration\Factory} class.
+ * Test case for the {@link \PDepend\Util\Configuration\ConfigurationFactory} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since 0.10.0
  *
- * @covers \PDepend\Util\Configuration\Factory
+ * @covers \PDepend\Util\Configuration\ConfigurationFactory
  * @group unittest
  */
-class FactoryTest extends AbstractTest
+class ConfigurationFactoryTest extends AbstractTest
 {
     /**
      * The current working directory.
@@ -98,7 +98,7 @@ class FactoryTest extends AbstractTest
      */
     public function testDefaultConfigurationHasExpectedCacheDriver()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals('file', $config->cache->driver);
@@ -111,7 +111,7 @@ class FactoryTest extends AbstractTest
      */
     public function testDefaultConfigurationHasExpectedCacheLocation()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals(
@@ -127,7 +127,7 @@ class FactoryTest extends AbstractTest
      */
     public function testDefaultConfigurationHasExpectedFontFamily()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals('Arial', $config->imageConvert->fontFamily);
@@ -140,7 +140,7 @@ class FactoryTest extends AbstractTest
      */
     public function testDefaultConfigurationHasExpectedFontSize()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals(11, $config->imageConvert->fontSize);
@@ -155,7 +155,7 @@ class FactoryTest extends AbstractTest
     {
         chdir(self::createCodeResourceUriForTest());
 
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals(23, $config->imageConvert->fontSize);
@@ -170,7 +170,7 @@ class FactoryTest extends AbstractTest
     {
         chdir(self::createCodeResourceUriForTest());
 
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals(42, $config->imageConvert->fontSize);
@@ -185,7 +185,7 @@ class FactoryTest extends AbstractTest
     {
         chdir(self::createCodeResourceUriForTest());
 
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals(42, $config->imageConvert->fontSize);
@@ -198,7 +198,7 @@ class FactoryTest extends AbstractTest
      */
     public function testDefaultConfigurationHasExpectedParserNesting()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         $this->assertEquals(8192, $config->parser->nesting);
@@ -212,7 +212,7 @@ class FactoryTest extends AbstractTest
      */
     public function testCreateForNotExistingFileThrowsExpectedException()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $factory->create(md5(microtime()) . '.xml');
     }
 
@@ -225,7 +225,7 @@ class FactoryTest extends AbstractTest
     {
         $file = self::createCodeResourceUriForTest() . '/pdepend.xml';
 
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->create($file);
 
         $this->assertEquals(42, $config->imageConvert->fontSize);

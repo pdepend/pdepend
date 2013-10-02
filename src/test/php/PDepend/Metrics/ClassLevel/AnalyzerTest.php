@@ -45,6 +45,7 @@ namespace PDepend\Metrics\ClassLevel;
 use PDepend\Metrics\AbstractMetricsTest;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case for the class level analyzer.
@@ -489,7 +490,7 @@ class AnalyzerTest extends AbstractMetricsTest
         $package  = $packages->current();
 
         $ccnAnalyzer = new \PDepend\Metrics\CyclomaticComplexity\Analyzer();
-        $ccnAnalyzer->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
         $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
@@ -683,7 +684,7 @@ class AnalyzerTest extends AbstractMetricsTest
         $package  = $packages->current();
 
         $ccnAnalyzer = new \PDepend\Metrics\CyclomaticComplexity\Analyzer();
-        $ccnAnalyzer->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
         $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);

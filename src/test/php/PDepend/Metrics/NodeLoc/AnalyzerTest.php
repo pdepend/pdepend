@@ -44,6 +44,7 @@ namespace PDepend\Metrics\NodeLoc;
 
 use PDepend\Metrics\AbstractMetricsTest;
 use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case for the node lines of code analyzer.
@@ -58,7 +59,7 @@ use PDepend\Source\AST\ASTCompilationUnit;
 class AnalyzerTest extends AbstractMetricsTest
 {
     /**
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 1.0.0
      */
     private $_cache;
@@ -72,7 +73,7 @@ class AnalyzerTest extends AbstractMetricsTest
     {
         parent::setUp();
 
-        $this->_cache = new \PDepend\Util\Cache\Driver\Memory();
+        $this->_cache = new MemoryCacheDriver();
     }
 
     /**

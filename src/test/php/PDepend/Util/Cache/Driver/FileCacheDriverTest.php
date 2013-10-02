@@ -45,15 +45,15 @@ namespace PDepend\Util\Cache\Driver;
 use PDepend\Util\Cache\AbstractDriverTest;
 
 /**
- * Test case for the {@link \PDepend\Util\Cache\Driver\File} class.
+ * Test case for the {@link \PDepend\Util\Cache\Driver\FileCacheDriver} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Cache\Driver\File
+ * @covers \PDepend\Util\Cache\Driver\FileCacheDriver
  * @group unittest
  */
-class FileTest extends AbstractDriverTest
+class FileCacheDriverTest extends AbstractDriverTest
 {
     /**
      * Temporary cache directory.
@@ -81,7 +81,7 @@ class FileTest extends AbstractDriverTest
      */
     protected function createDriver()
     {
-        return new File($this->cacheDir);
+        return new FileCacheDriver($this->cacheDir);
     }
 
     /**
@@ -92,7 +92,7 @@ class FileTest extends AbstractDriverTest
      */
     public function testFileDriverStoresFileWithCacheKeyIfPresent()
     {
-        $cache = new File($this->cacheDir, 'foo');
+        $cache = new FileCacheDriver($this->cacheDir, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
         $key = md5('baz' . 'foo');
@@ -109,7 +109,7 @@ class FileTest extends AbstractDriverTest
      */
     public function testFileDriverRestoresFileWithCacheKeyIfPresent()
     {
-        $cache = new File($this->cacheDir, 'foo');
+        $cache = new FileCacheDriver($this->cacheDir, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
         $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));

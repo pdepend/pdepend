@@ -1966,7 +1966,7 @@ class PHPBuilderTest extends AbstractTest
     protected function createBuilder()
     {
         $builder = new PHPBuilder();
-        $builder->setCache($this->getMock('\\PDepend\\Util\\Cache\\Driver'));
+        $builder->setCache($this->createCacheFixture());
 
         return $builder;
     }

@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Util\Cache\CacheDriver;
+
 /**
  * Abstract base class for callable objects.
  *
@@ -62,7 +64,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -126,11 +128,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * Setter method for the currently used token cache, where this callable
      * instance can store the associated tokens.
      *
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\AST\AbstractASTCallable
      * @since 0.10.0
      */
-    public function setCache(\PDepend\Util\Cache\Driver $cache)
+    public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
         return $this;

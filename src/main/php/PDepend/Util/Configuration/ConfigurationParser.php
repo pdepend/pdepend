@@ -55,10 +55,10 @@ namespace PDepend\Util\Configuration;
  * <em>pdepend.xml.dist</em> and a local customization <em>pdepend.xml</em>.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @since     0.10.0
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.10.0
  */
-class Parser
+class ConfigurationParser
 {
     /**
      * The default configuration settings.

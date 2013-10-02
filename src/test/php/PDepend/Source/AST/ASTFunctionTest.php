@@ -289,7 +289,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
     {
         $tokens = array(new Token(1, '$foo', 3, 3, 0, 0));
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -309,7 +309,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testGetTokensDelegatesToCacheRestoreMethod()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -330,7 +330,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));

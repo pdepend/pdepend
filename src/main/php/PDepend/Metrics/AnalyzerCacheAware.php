@@ -43,12 +43,12 @@
 
 namespace PDepend\Metrics;
 
-use PDepend\Util\Cache\Driver;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Simple marker interface that is used to mark an analyzer as cache aware. This
  * means that the loading infrastructure code will inject an instance of
- * {@link \PDepend\Util\Cache\Driver} into this analyzer.
+ * {@link \PDepend\Util\Cache\CacheDriver} into this analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -59,8 +59,8 @@ interface AnalyzerCacheAware extends Analyzer
     /**
      * Setter method for the system wide used cache.
      *
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return void
      */
-    public function setCache(Driver $cache);
+    public function setCache(CacheDriver $cache);
 }

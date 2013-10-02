@@ -47,6 +47,7 @@ use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\TreeVisitor\TestNodeVisitor;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTClass class.
@@ -693,7 +694,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $class = new ASTClass('Clazz');
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
         $class->addChild($node1);
         $class->addChild($node2);
 
@@ -953,7 +954,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetMethodsNodeIteratorIsEmptyByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
 
         $this->assertEquals(0, $class->getMethods()->count());
     }
@@ -968,7 +969,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testAddMethodStoresNewlyAddedMethodInCollection()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
         $class->addMethod(new ASTMethod(__FUNCTION__));
 
         $this->assertEquals(1, $class->getMethods()->count());
@@ -982,7 +983,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testAddMethodSetsParentOfNewlyAddedMethod()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
 
         $method = $class->addMethod(new ASTMethod(__FUNCTION__));
 
@@ -1271,7 +1272,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -1293,7 +1294,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -1325,7 +1326,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -1360,7 +1361,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -1568,7 +1569,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
         $class->setPackage(new ASTNamespace(__FUNCTION__));
 
         $this->assertEquals(
@@ -1600,7 +1601,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testMagicWakeupSetsSourceFileOnChildMethods()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
 
         $method = new ASTMethod(__FUNCTION__);
         $class->addMethod($method);
@@ -1639,7 +1640,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class = new ASTClass(__CLASS__);
         $class->setSourceFile(new ASTCompilationUnit(__FILE__));
-        $class->setCache(new \PDepend\Util\Cache\Driver\Memory());
+        $class->setCache(new MemoryCacheDriver());
         $class->setContext($this->getMock(BuilderContext::CLAZZ));
 
         return $class;

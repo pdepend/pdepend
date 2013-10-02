@@ -45,23 +45,23 @@ namespace PDepend\Util\Cache\Driver;
 use PDepend\Util\Cache\AbstractDriverTest;
 
 /**
- * Test case for the {@link \PDepend\Util\Cache\Driver\Memory} class.
+ * Test case for the {@link \PDepend\Util\Cache\Driver\MemoryCacheDriver} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Cache\Driver\Memory
+ * @covers \PDepend\Util\Cache\Driver\MemoryCacheDriver
  * @group unittest
  */
-class MemoryTest extends AbstractDriverTest
+class MemoryCacheDriverTest extends AbstractDriverTest
 {
     /**
      * Creates a test fixture.
      *
-     * @return \PDepend\Util\Cache\Driver
+     * @return \PDepend\Util\Cache\CacheDriver
      */
     protected function createDriver()
     {
-        return new Memory();
+        return new MemoryCacheDriver();
     }
 }

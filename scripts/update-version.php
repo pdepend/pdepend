@@ -56,14 +56,14 @@ class CacheVersionUpdater
      *
      * @var string
      */
-    private $_rootDirectory = null;
+    private $rootDirectory = null;
 
     /**
      * The source sub directories that we will process.
      *
      * @var array(string)
      */
-    private $_localPaths = array(
+    private $localPaths = array(
         '/Source',
         '/Metrics',
     );
@@ -73,21 +73,21 @@ class CacheVersionUpdater
      *
      * @var string
      */
-    private $_targetFile = '/Util/Cache/Driver.php';
+    private $targetFile = '/Util/Cache/CacheDriver.php';
 
     /**
      * Regular expression used to replace a previous cache version.
      *
      * @var string
      */
-    private $_targetRegexp = '(@version:[a-f0-9]{32}:@)';
+    private $targetRegexp = '(@version:[a-f0-9]{32}:@)';
 
     /**
      * Constructs a new cache version updater instance.
      */
     public function __construct()
     {
-        $this->_rootDirectory = realpath(dirname(__FILE__) . '/../src/main/php/PDepend');
+        $this->rootDirectory = realpath(dirname(__FILE__) . '/../src/main/php/PDepend');
     }
 
     /**
@@ -101,17 +101,17 @@ class CacheVersionUpdater
     {
         $checksum = '';
 
-        foreach ($this->_localPaths as $localPath) {
-            $path = $this->_rootDirectory . $localPath;
+        foreach ($this->localPaths as $localPath) {
+            $path = $this->rootDirectory . $localPath;
             foreach ($this->readFiles($path) as $file) {
                 $checksum = $this->hash($file, $checksum);
             }
         }
 
-        $file = $this->_rootDirectory . $this->_targetFile;
+        $file = $this->rootDirectory . $this->targetFile;
 
         $code = file_get_contents($file);
-        $code = preg_replace($this->_targetRegexp, "@version:{$checksum}:@", $code);
+        $code = preg_replace($this->targetRegexp, "@version:{$checksum}:@", $code);
         file_put_contents($file, $code);
     }
 

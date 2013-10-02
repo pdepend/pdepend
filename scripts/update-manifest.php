@@ -56,7 +56,7 @@ class ManifestUpdater
      *
      * @var string
      */
-    private $_manifestFile = null;
+    private $manifestFile = null;
 
     /**
      * Constructs a new updater.
@@ -64,7 +64,7 @@ class ManifestUpdater
      */
     public function __construct()
     {
-        $this->_manifestFile = dirname(__FILE__) . '/../src/conf/package.xml';
+        $this->manifestFile = dirname(__FILE__) . '/../src/conf/package.xml';
 
         $manifest = $this->_createManifest();
         $struct   = $this->_createContentStruct();
@@ -76,7 +76,7 @@ class ManifestUpdater
             $this->_insertContents($contents, array($key => $value[1]), $value[0]);
         }
 
-        $manifest->save($this->_manifestFile);
+        $manifest->save($this->manifestFile);
     }
 
     /**
@@ -126,7 +126,7 @@ class ManifestUpdater
         $manifest->formatOutput       = true;
         $manifest->preserveWhiteSpace = false;
 
-        $manifest->load($this->_manifestFile);
+        $manifest->load($this->manifestFile);
 
         $xpath = new \DOMXPath($manifest);
         $xpath->registerNamespace('a', 'http://pear.php.net/dtd/package-2.0');

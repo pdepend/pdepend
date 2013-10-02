@@ -57,8 +57,8 @@ use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
-use PDepend\Util\Cache\Driver\Memory;
-use PDepend\Util\Configuration\Factory;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PDepend\Util\Configuration\ConfigurationFactory;
 
 /**
  * Abstract test case implementation for the PDepend package.
@@ -422,10 +422,18 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConfigurationFixture()
     {
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $config  = $factory->createDefault();
 
         return $config;
+    }
+
+    /**
+     * @return \PDepend\Util\Cache\CacheDriver
+     */
+    protected function createCacheFixture()
+    {
+        return $this->getMock('\\PDepend\\Util\\Cache\\CacheDriver');
     }
 
     /**
@@ -458,7 +466,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $class = new ASTClass($name);
         $class->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
-        $class->setCache(new Memory());
+        $class->setCache(new MemoryCacheDriver());
         $class->setContext($this->getMock(BuilderContext::CLAZZ));
 
         return $class;
@@ -478,7 +486,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $interface = new ASTInterface($name);
         $interface->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
-        $interface->setCache(new Memory());
+        $interface->setCache(new MemoryCacheDriver());
 
         return $interface;
     }
@@ -495,7 +503,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $name = $name ? $name : get_class($this);
 
         $trait = new ASTTrait($name);
-        $trait->setCache(new Memory());
+        $trait->setCache(new MemoryCacheDriver());
 
         return $trait;
     }
@@ -514,7 +522,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $function = new ASTFunction($name);
         $function->setSourceFile(new ASTCompilationUnit($GLOBALS['argv'][0]));
-        $function->setCache(new Memory());
+        $function->setCache(new MemoryCacheDriver());
         $function->addChild(new ASTFormalParameters());
 
         return $function;
@@ -532,7 +540,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $name = $name ? $name : get_class($this);
 
         $method = new ASTMethod($name);
-        $method->setCache(new Memory());
+        $method->setCache(new MemoryCacheDriver());
         $method->addChild(new ASTFormalParameters());
 
         return $method;
@@ -755,7 +763,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         }
         sort($files);
 
-        $cache   = new Memory();
+        $cache   = new MemoryCacheDriver();
         $builder = new PHPBuilder();
 
         foreach ($files as $file) {

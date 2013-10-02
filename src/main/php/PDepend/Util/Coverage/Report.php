@@ -58,5 +58,5 @@ interface Report
      * @param \PDepend\Source\AST\AbstractASTArtifact $artifact
      * @return float
      */
-    function getCoverage(AbstractASTArtifact $artifact);
+    public function getCoverage(AbstractASTArtifact $artifact);
 }

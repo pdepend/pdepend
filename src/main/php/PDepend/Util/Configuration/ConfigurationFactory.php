@@ -64,12 +64,12 @@ use PDepend\Util\FileUtil;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class Factory
+class ConfigurationFactory
 {
     /**
      * The used configuration parser.
      *
-     * @var \PDepend\Util\Configuration\Parser
+     * @var \PDepend\Util\Configuration\ConfigurationParser
      */
     protected $parser = null;
 
@@ -166,12 +166,12 @@ class Factory
      * This method will create a new configuration parser or return a previously
      * created instance.
      *
-     * @return \PDepend\Util\Configuration\Parser
+     * @return \PDepend\Util\Configuration\ConfigurationParser
      */
     protected function createOrReturnParser()
     {
         if (null === $this->parser) {
-            $this->parser = new Parser($this->default);
+            $this->parser = new ConfigurationParser($this->default);
         }
         return $this->parser;
     }

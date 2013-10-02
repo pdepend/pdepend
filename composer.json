@@ -6,7 +6,8 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable"
+        "phpunit/phpunit": "@stable",
+        "squizlabs/php_codesniffer": "@stable"
     },
     "bin": ["src/bin/pdepend"]
 }

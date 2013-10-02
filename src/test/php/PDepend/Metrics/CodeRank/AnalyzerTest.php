@@ -61,7 +61,7 @@ class AnalyzerTest extends AbstractMetricsTest
      *
      * @var array(string=>array)
      */
-    private $_input = array(
+    private $input = array(
         'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
         'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
         'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
@@ -84,7 +84,7 @@ class AnalyzerTest extends AbstractMetricsTest
      *
      * @var \PDepend\Metrics\CodeRank\Analyzer
      */
-    private $_analyzer = null;
+    private $analyzer = null;
 
     /**
      * testCodeRankOfSimpleInheritanceExample
@@ -409,22 +409,22 @@ class AnalyzerTest extends AbstractMetricsTest
     {
         $packages = self::parseCodeResourceForTest();
         
-        $this->_analyzer = new \PDepend\Metrics\CodeRank\Analyzer();
-        $this->_analyzer->analyze($packages);
+        $this->analyzer = new \PDepend\Metrics\CodeRank\Analyzer();
+        $this->analyzer->analyze($packages);
 
         $expected = array();
         foreach ($packages as $package) {
             if ($package->getTypes()->count() === 0) {
                 continue;
             }
-            $expected[] = array($package, $this->_input[$package->getName()]);
+            $expected[] = array($package, $this->input[$package->getName()]);
             foreach ($package->getTypes() as $type) {
-                $expected[] = array($type, $this->_input[$type->getName()]);
+                $expected[] = array($type, $this->input[$type->getName()]);
             }
         }
 
         foreach ($expected as $key => $info) {
-            $metrics = $this->_analyzer->getNodeMetrics($info[0]);
+            $metrics = $this->analyzer->getNodeMetrics($info[0]);
 
             $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
             $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
@@ -447,11 +447,11 @@ class AnalyzerTest extends AbstractMetricsTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $this->_analyzer = new \PDepend\Metrics\CodeRank\Analyzer();
-        $this->_analyzer->analyze($packages);
+        $this->analyzer = new \PDepend\Metrics\CodeRank\Analyzer();
+        $this->analyzer->analyze($packages);
         
         $class   = new ASTClass('PDepend');
-        $metrics = $this->_analyzer->getNodeMetrics($class);
+        $metrics = $this->analyzer->getNodeMetrics($class);
 
         $this->assertInternalType('array', $metrics);
         $this->assertEquals(0, count($metrics));

@@ -43,6 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\TreeVisitor\TreeVisitor;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * This class provides an interface to a single source file.
@@ -62,7 +63,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var \PDepend\Util\Cache\Driver
+     * @var \PDepend\Util\Cache\CacheDriver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -185,11 +186,11 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Setter method for the used parser and token cache.
      *
-     * @param \PDepend\Util\Cache\Driver $cache
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\AST\ASTCompilationUnit
      * @since 0.10.0
      */
-    public function setCache(\PDepend\Util\Cache\Driver $cache)
+    public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
         return $this;

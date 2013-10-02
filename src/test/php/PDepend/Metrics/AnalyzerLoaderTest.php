@@ -69,7 +69,7 @@ class AnalyzerLoaderTest extends AbstractTest
         
         $loader = new AnalyzerLoader(
             new AnalyzerClassFileSystemLocator(),
-            $this->getMock('\\PDepend\\Util\\Cache\\Driver'),
+            $this->createCacheFixture(),
             $expected
         );
 
@@ -106,7 +106,7 @@ class AnalyzerLoaderTest extends AbstractTest
 
         $loader = new AnalyzerLoader(
             $locator,
-            $this->getMock( '\\PDepend\\Util\\Cache\\Driver' ),
+            $this->createCacheFixture(),
             array('\\PDepend\\Metrics\\Analyzer')
         );
 
@@ -138,7 +138,7 @@ class AnalyzerLoaderTest extends AbstractTest
 
         $loader = new AnalyzerLoader(
             $locator,
-            $this->getMock( '\\PDepend\\Util\\Cache\\Driver' ),
+            $this->createCacheFixture(),
             array('\\PDepend\\Metrics\\Analyzer')
         );
 

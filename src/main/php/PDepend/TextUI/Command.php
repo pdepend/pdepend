@@ -42,7 +42,7 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\Util\Configuration\Factory;
+use PDepend\Util\Configuration\ConfigurationFactory;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 
@@ -324,7 +324,7 @@ class Command
             unset($this->options['--bad-documentation']);
         }
 
-        $configurationFactory = new Factory();
+        $configurationFactory = new ConfigurationFactory();
 
         // Check for configuration option
         if (isset($this->options['--configuration'])) {

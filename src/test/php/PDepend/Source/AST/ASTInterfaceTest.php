@@ -44,7 +44,7 @@ namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
-use PDepend\Util\Cache\Driver\Memory;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case for the code interface class.
@@ -543,7 +543,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetTokensDelegatesCallToCacheRestore()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -565,7 +565,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     {
         $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
 
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -597,7 +597,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetStartLineReturnsStartLineOfFirstToken()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -751,7 +751,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetEndLineReturnsEndLineOfLastToken()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->will($this->returnValue($cache));
@@ -928,7 +928,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     {
         $interface = new ASTInterface(__CLASS__);
         $interface->setSourceFile(new ASTCompilationUnit(__FILE__));
-        $interface->setCache(new Memory());
+        $interface->setCache(new MemoryCacheDriver());
         $interface->setContext($this->getMock(BuilderContext::CLAZZ));
 
         return $interface;

@@ -46,6 +46,7 @@ use PDepend\AbstractTest;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Util\Cache\Driver\FileCacheDriver;
 
 /**
  * Tests the integration of parser and builder together with the cache component.
@@ -127,7 +128,7 @@ class BuilderParserCacheTest extends AbstractTest
     {
         copy(self::createCodeResourceUriForTest() . '/' . $file, $this->testFile);
 
-        $cache = new \PDepend\Util\Cache\Driver\File($this->cacheDir);
+        $cache = new FileCacheDriver($this->cacheDir);
 
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->testFile);

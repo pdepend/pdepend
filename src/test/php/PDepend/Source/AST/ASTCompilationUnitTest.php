@@ -132,7 +132,7 @@ class ASTCompilationUnitTest extends AbstractTest
      */
     public function testGetTokensDelegatesCallToCacheRestoreWithFileUuid()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))
@@ -155,7 +155,7 @@ class ASTCompilationUnitTest extends AbstractTest
      */
     public function testSetTokensDelegatesCallToCacheStoreWithFileUuid()
     {
-        $cache = $this->getMock('\\PDepend\\Util\\Cache\\Driver');
+        $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
             ->with(self::equalTo('tokens'))

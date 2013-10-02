@@ -43,6 +43,8 @@
 
 namespace PDepend\Util\Cache;
 
+use PDepend\Util\Cache\Driver\FileCacheDriver;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PDepend\Util\Configuration;
 
 /**
@@ -52,7 +54,7 @@ use PDepend\Util\Configuration;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class Factory
+class CacheFactory
 {
     /**
      * The system configuration.
@@ -64,7 +66,7 @@ class Factory
     /**
      * Singleton property that holds existing cache instances.
      *
-     * @var \PDepend\Util\Cache\Driver[]
+     * @var \PDepend\Util\Cache\CacheDriver[]
      */
     protected $caches = array();
 
@@ -84,7 +86,7 @@ class Factory
      *
      * @param string $cacheKey The name/identifier for the cache instance.
      *
-     * @return \PDepend\Util\Cache\Driver
+     * @return \PDepend\Util\Cache\CacheDriver
      */
     public function create($cacheKey = null)
     {
@@ -98,21 +100,19 @@ class Factory
      * Creates a cache instance based on the supplied configuration.
      *
      * @param string $cacheKey The name/identifier for the cache instance.
-     * @return \PDepend\Util\Cache\Driver
+     * @return \PDepend\Util\Cache\CacheDriver
      * @throws \InvalidArgumentException If the configured cache driver is unknown.
      */
     protected function createCache($cacheKey)
     {
         switch ($this->configuration->cache->driver) {
-
-        case 'file':
-            return $this->createFileCache(
-                $this->configuration->cache->location,
-                $cacheKey
-            );
-
-        case 'memory':
-            return $this->createMemoryCache();
+            case 'file':
+                return $this->createFileCache(
+                    $this->configuration->cache->location,
+                    $cacheKey
+                );
+            case 'memory':
+                return $this->createMemoryCache();
         }
         throw new \InvalidArgumentException(
             "Unknown cache driver '{$this->configuration->cache->driver}' given."
@@ -124,20 +124,20 @@ class Factory
      *
      * @param string $location Cache root directory.
      * @param string $cacheKey The name/identifier for the cache instance.
-     * @return \PDepend\Util\Cache\Driver\File
+     * @return \PDepend\Util\Cache\Driver\FileCacheDriver
      */
     protected function createFileCache($location, $cacheKey)
     {
-        return new \PDepend\Util\Cache\Driver\File($location, $cacheKey);
+        return new FileCacheDriver($location, $cacheKey);
     }
 
     /**
      * Creates an in memory cache instance.
      *
-     * @return \PDepend\Util\Cache\Driver\Memory
+     * @return \PDepend\Util\Cache\Driver\MemoryCacheDriver
      */
     protected function createMemoryCache()
     {
-        return new \PDepend\Util\Cache\Driver\Memory();
+        return new MemoryCacheDriver();
     }
 }

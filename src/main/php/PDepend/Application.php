@@ -168,7 +168,7 @@ class Application
     /**
      * The configured cache factory.
      *
-     * @var \PDepend\Util\Cache\Factory
+     * @var \PDepend\Util\Cache\CacheFactory
      * @since 1.0.0
      */
     private $cacheFactory;
@@ -185,7 +185,7 @@ class Application
         $this->codeFilter = new NullArtifactFilter();
         $this->fileFilter = new \PDepend\Input\CompositeFilter();
 
-        $this->cacheFactory = new \PDepend\Util\Cache\Factory($configuration);
+        $this->cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
     }
 
     /**

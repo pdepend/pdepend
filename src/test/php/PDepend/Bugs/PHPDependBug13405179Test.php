@@ -44,7 +44,7 @@
 namespace PDepend\Bugs;
 
 use PDepend\Application;
-use PDepend\Util\Configuration\Factory;
+use PDepend\Util\Configuration\ConfigurationFactory;
 
 /**
  * Test case for bug #13405179.
@@ -75,7 +75,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
         $generator = new $className();
         $generator->setLogFile($file);
 
-        $factory = new Factory();
+        $factory = new ConfigurationFactory();
         $application = new Application($factory->createDefault());
         $application->addFile(self::createCodeResourceUriForTest());
         $application->addReportGenerator($generator);

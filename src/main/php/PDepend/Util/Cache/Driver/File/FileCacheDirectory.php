@@ -43,7 +43,7 @@
 
 namespace PDepend\Util\Cache\Driver\File;
 
-use PDepend\Util\Cache\Driver;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Directory helper for the file system based cache implementation.
@@ -52,12 +52,12 @@ use PDepend\Util\Cache\Driver;
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since     0.10.0
  */
-class Directory
+class FileCacheDirectory
 {
     /**
      * The current cache version/hash number.
      */
-    const VERSION = Driver::VERSION;
+    const VERSION = CacheDriver::VERSION;
 
     /**
      * The cache root directory.
@@ -216,7 +216,7 @@ class Directory
         $path = $file->getRealPath();
         if ($file->isDot()) {
             return;
-        } else if ($file->isFile()) {
+        } elseif ($file->isFile()) {
             unlink($path);
         } else {
             $this->flushDirectory($path);
