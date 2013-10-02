@@ -32,7 +32,7 @@ PHP_Depend more useful, for example static callgraph analysis.
 * Fixed `#128`__: Variable variables in foreach statement cause an exception.
   Fixed in svn revision `#1237`__.
 * Fixed `#133`__: Fatal error: Maximum function nesting level of '100' reached,
-  aborting! in /usr/share/pear/PHP/Depend/Util/Log.php on line 109. Fixed
+  aborting! in /usr/share/pear/PDepend/Util/Log.php on line 109. Fixed
   in svn revision `#1257`__.
 * Fixed `#134`__: ASTReturnStatement is not derived from ASTStatement. Fixed
   in svn revision `#1250`__.

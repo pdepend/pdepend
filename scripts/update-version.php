@@ -41,7 +41,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace PHP\Depend;
+namespace PDepend;
 
 /**
  * Utility class that we use to recalculate the cache hash/version.
@@ -87,7 +87,7 @@ class CacheVersionUpdater
      */
     public function __construct()
     {
-        $this->_rootDirectory = realpath(dirname(__FILE__) . '/../src/main/php/PHP/Depend');
+        $this->_rootDirectory = realpath(dirname(__FILE__) . '/../src/main/php/PDepend');
     }
 
     /**

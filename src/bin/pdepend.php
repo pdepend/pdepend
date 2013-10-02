@@ -41,15 +41,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
   */
 
-use PHP\Depend\Autoload;
-use PHP\Depend\TextUI\Command;
+use PDepend\Autoload;
+use PDepend\TextUI\Command;
 
 // PEAR/svn workaround
 if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
 }
 
-require_once 'PHP/Depend/Autoload.php';
+require_once 'PDepend/Autoload.php';
 
 // Allow as much memory as possible by default
 if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {

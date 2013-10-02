@@ -1,5 +1,6 @@
 <?php
-class PHP_AutoloadNotLoadsClassFromDifferentNamespace
-{
-    
+namespace PHP {
+    class AutoloadNotLoadsClassFromDifferentNamespace {
+
+    }
 }

@@ -2,7 +2,7 @@
 /**
  * Simple test comment.
  *
- * @package    PHP
+ * @package PHP
  * @subpackage Depend
  */
 class PHP_Depend_Parser

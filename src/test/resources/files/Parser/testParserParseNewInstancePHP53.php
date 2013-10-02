@@ -1,6 +1,6 @@
 <?php
 function newTest()
 {
-    $obj1 = new php\depend1\Parser();
-    $obj2 = new php\depend2\Parser();
+    $obj1 = new PDepend1\Parser();
+    $obj2 = new PDepend2\Parser();
 } 

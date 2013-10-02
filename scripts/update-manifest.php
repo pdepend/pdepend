@@ -41,7 +41,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace PHP\Depend;
+namespace PDepend;
 
 /**
  * This script updates the PEAR-Package-Manifest.
@@ -70,6 +70,7 @@ class ManifestUpdater
         $struct   = $this->_createContentStruct();
 
         $contents = $manifest->getElementsByTagName('dir')->item(0);
+        //$contents = $contents->parentNode->replaceChild($contents->cloneNode(false), $contents);
 
         foreach ($struct as $key => $value) {
             $this->_insertContents($contents, array($key => $value[1]), $value[0]);
@@ -146,8 +147,8 @@ class ManifestUpdater
     private function _createContentStruct()
     {
         $struct = array(
-            'PHP'  =>  array('php', array()),
-            // 'tests/PHP/Depend'  =>  array('test', array()),
+            'PDepend'  =>  array('php', array()),
+            // 'tests/PDepend'  =>  array('test', array()),
         );
 
         foreach (array_keys($struct) as $name) {

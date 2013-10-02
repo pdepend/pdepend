@@ -1,6 +1,6 @@
 <?php
 function foo()
 {
-    \PHP\Depend\Parser::CONSTANT;
+    \PDepend\Parser::CONSTANT;
 }
 ?>

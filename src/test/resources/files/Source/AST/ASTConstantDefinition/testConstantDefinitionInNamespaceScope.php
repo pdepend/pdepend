@@ -1,4 +1,4 @@
 <?php
-namespace PHP\Depend\Tests {
+namespace PDepend\Tests {
     const VERSION = 42;
 }

@@ -1,3 +1,3 @@
 <?php
-function foo($foo = \PHP\Depend\Code::CONSTANT) {}
+function foo($foo = \PDepend\Code::CONSTANT) {}
 ?>

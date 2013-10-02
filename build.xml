@@ -54,7 +54,7 @@
     -->
     <target name="-package-execute">
         <echo message="Executing:" level="verbose" />
-        <echo message="  ${-package.executable} --summary-xml... PHP/Depend/Source" level="verbose" />
+        <echo message="  ${-package.executable} --summary-xml... PDepend/Source" level="verbose" />
 
         <exec dir="${commons.srcdir.php}" 
               executable="${commons.executable.php}" 
@@ -68,7 +68,7 @@
             <arg value="--jdepend-chart=${commons:tmpdir}/jdepend.svg" />
             <arg value="--overview-pyramid=${commons:tmpdir}/pyramid.svg" />
             <arg value="--coderank-mode=inheritance,property,method" />
-            <arg value="PHP/Depend/Source" />
+            <arg value="PDepend/Source" />
         </exec>
     </target>
 

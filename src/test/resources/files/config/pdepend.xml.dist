@@ -10,7 +10,7 @@
     
     <cache>
         <driver>file</driver>
-        <location>../../../php/PHP/Depend/_run/cache</location>
+        <location>../../../php/PDepend/_run/cache</location>
     </cache>
 
 </configuration>

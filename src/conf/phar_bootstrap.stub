@@ -54,12 +54,12 @@ if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
    ini_set('memory_limit', -1);
 
    // Load command line utility
-   include_once 'phar://${archive.alias}/PHP/Depend/Autoload.php';
+   include_once 'phar://${archive.alias}/PDepend/Autoload.php';
 
     // Initialize PDepend's autoloader
-    $autoload = new \PHP\Depend\Autoload();
+    $autoload = new \PDepend\Autoload();
     $autoload->register();
 
-    exit(\PHP\Depend\TextUI\Command::main($argv));
+    exit(\PDepend\TextUI\Command::main($argv));
 }
 __HALT_COMPILER();
