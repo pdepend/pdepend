@@ -56,7 +56,7 @@ if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
    // Load command line utility
    include_once 'phar://${archive.alias}/PHP/Depend/Autoload.php';
 
-    // Initialize PHP_Depend's autoloader
+    // Initialize PDepend's autoloader
     $autoload = new \PHP\Depend\Autoload();
     $autoload->register();
 
