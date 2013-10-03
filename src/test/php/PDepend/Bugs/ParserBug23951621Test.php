@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2011 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/23951621
  * @since     0.10.9
  */
@@ -57,8 +57,6 @@ use PDepend\Source\AST\ASTInterface;
  *
  * @ticket 23951621
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::bugs
  * @group regressiontest
  */
 class ParserBug23951621Test extends AbstractRegressionTest

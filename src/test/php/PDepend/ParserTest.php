@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
 namespace PDepend;
@@ -59,11 +59,9 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * Test case implementation for the PDepend code parser.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @group pdepend
- * @group pdepend::parser
  * @group unittest
  */
 class ParserTest extends AbstractTest

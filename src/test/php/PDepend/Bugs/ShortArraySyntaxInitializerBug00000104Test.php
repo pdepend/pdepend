@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
  * @since     1.1.1
@@ -49,7 +49,7 @@ namespace PDepend\Bugs;
  * Test case for bug #104 and #95.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
  * @since     1.1.1
@@ -57,8 +57,6 @@ namespace PDepend\Bugs;
  * @ticket 104
  * @ticket 95
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::bugs
  * @group regressiontest
  */
 class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTest

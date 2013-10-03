@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 
@@ -51,7 +51,7 @@ use PDepend\Util\Cache\CacheDriver;
  * {@link \PDepend\Util\Cache\CacheDriver} into this analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 interface AnalyzerCacheAware extends Analyzer

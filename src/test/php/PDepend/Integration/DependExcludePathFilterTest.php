@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Integration;
@@ -49,11 +49,9 @@ use PDepend\AbstractTest;
  * input filter class {@link \PDepend\Input\ExcludePathFilter}.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::integration
  * @group integrationtest
  */
 class DependExcludePathFilterTest extends AbstractTest

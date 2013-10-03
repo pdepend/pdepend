@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\TreeVisitor;
@@ -54,8 +54,6 @@ use PDepend\Source\AST\ASTTrait;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PDepend\TreeVisitor\AbstractTreeVisitor
- * @group pdepend
- * @group pdepend::visitor
  * @group unittest
  */
 class DefaultListenerTest extends AbstractTest

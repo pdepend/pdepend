@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util\Cache;
@@ -51,10 +51,7 @@ use PDepend\AbstractTest;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @group pdepend
- * @group pdepend::util
- * @group pdepend::util::cache
- * @group unittest
+   * @group unittest
  */
 abstract class AbstractDriverTest extends AbstractTest
 {

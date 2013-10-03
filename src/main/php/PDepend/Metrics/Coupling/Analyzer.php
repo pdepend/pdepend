@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Coupling;
@@ -79,7 +79,7 @@ use PDepend\Source\AST\ASTProperty;
  * Any type that is either a supertype or a subtype of the class is not counted.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {

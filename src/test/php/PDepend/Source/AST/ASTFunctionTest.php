@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
 namespace PDepend\Source\AST;
@@ -50,13 +50,11 @@ use PDepend\TreeVisitor\TestNodeVisitor;
  * Test case implementation for the \PDepend\Source\AST\ASTFunction class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\AbstractASTCallable
  * @covers \PDepend\Source\AST\ASTFunction
- * @group pdepend
- * @group pdepend::code
  * @group unittest
  */
 class ASTFunctionTest extends AbstractASTArtifactTest

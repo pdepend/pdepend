@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Inheritance;
@@ -61,7 +61,7 @@ use PDepend\Source\AST\ASTClass;
  * trees within the analyzed system, external classes or interfaces are ignored.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerFilterAware, AnalyzerProjectAware
 {

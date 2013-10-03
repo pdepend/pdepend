@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\NodeLoc;
@@ -50,7 +50,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * Test case for the node lines of code analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
  * @covers \PDepend\Metrics\NodeLoc\Analyzer

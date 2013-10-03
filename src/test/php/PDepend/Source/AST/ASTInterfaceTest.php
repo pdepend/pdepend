@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
 namespace PDepend\Source\AST;
@@ -50,7 +50,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * Test case for the code interface class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\AST\AbstractASTClassOrInterface
  * @covers \PDepend\Source\AST\AbstractASTType

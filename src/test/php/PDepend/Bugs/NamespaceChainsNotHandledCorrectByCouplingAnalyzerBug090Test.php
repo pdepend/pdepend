@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Bugs;
@@ -50,11 +50,9 @@ namespace PDepend\Bugs;
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/90/
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::bugs
  * @group regressiontest
  */
 class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends AbstractRegressionTest

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.20
  */
 
@@ -49,7 +49,7 @@ use PDepend\AbstractTest;
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.20
  *
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric

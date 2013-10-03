@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  */
 
@@ -47,7 +47,7 @@ namespace PDepend\Source\AST;
  * This node class represents a boolean or-expression.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  */
 class ASTBooleanOrExpression extends \PDepend\Source\AST\ASTNode

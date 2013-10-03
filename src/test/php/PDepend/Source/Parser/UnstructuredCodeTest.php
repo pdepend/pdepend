@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 
@@ -47,12 +47,10 @@ namespace PDepend\Source\Parser;
  * Tests for unstructured code handling in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @group pdepend
- * @group pdepend::parser
  * @group unittest
  */
 class UnstructuredCodeTest extends AbstractParserTest

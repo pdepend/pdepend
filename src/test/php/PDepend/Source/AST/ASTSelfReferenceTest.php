@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -49,12 +49,10 @@ use PDepend\Source\Builder\BuilderContext;
  * Test case for the {@link \PDepend\Source\AST\ASTSelfReference} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTSelfReference
- * @group pdepend
- * @group pdepend::ast
  * @group unittest
  */
 class ASTSelfReferenceTest extends \PDepend\Source\AST\ASTNodeTest

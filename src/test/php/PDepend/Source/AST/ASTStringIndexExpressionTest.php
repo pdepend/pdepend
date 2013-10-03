@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
 
@@ -47,14 +47,12 @@ namespace PDepend\Source\AST;
  * Test case for the {@link \PDepend\Source\AST\ASTStringIndexExpression} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIndexExpression
  * @covers \PDepend\Source\AST\ASTStringIndexExpression
- * @group pdepend
- * @group pdepend::ast
  * @group unittest
  */
 class ASTStringIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest

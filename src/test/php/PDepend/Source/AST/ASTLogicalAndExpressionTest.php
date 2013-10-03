@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  */
 
@@ -47,13 +47,11 @@ namespace PDepend\Source\AST;
  * Test case for the {@link \PDepend\Source\AST\ASTLogicalAndExpression} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLogicalAndExpression
- * @group pdepend
- * @group pdepend::ast
  * @group unittest
  */
 class ASTLogicalAndExpressionTest extends \PDepend\Source\AST\ASTNodeTest

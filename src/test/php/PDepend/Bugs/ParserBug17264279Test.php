@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/17264279
  */
 
@@ -47,13 +47,11 @@ namespace PDepend\Bugs;
  * Test case for bug #17264279.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/17264279
  *
  * @ticket 17264279
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::bugs
  * @group regressiontest
  */
 class ParserBug17264279Test extends AbstractRegressionTest

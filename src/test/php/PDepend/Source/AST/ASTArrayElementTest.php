@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 
@@ -47,14 +47,12 @@ namespace PDepend\Source\AST;
  * Test case for the {@link \PDepend\Source\AST\ASTArrayElement} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\ASTArrayElement
- * @group pdepend
- * @group pdepend::ast
  * @group unittest
  */
 class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest

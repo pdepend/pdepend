@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -48,11 +48,9 @@ use PDepend\AbstractTest;
  * Abstract test case for classes derived {@link \PDepend\Source\AST\ASTNode}ö
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\AST\ASTNode
- * @group pdepend
- * @group pdepend::ast
  * @group unittest
  */
 abstract class ASTNodeTest extends AbstractTest

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\CyclomaticComplexity;
@@ -53,10 +53,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
  * @covers \PDepend\Metrics\CyclomaticComplexity\Analyzer
- * @group pdepend
- * @group pdepend::metrics
- * @group pdepend::metrics::cyclomaticcomplexity
- * @group unittest
+   * @group unittest
  */
 class AnalyzerTest extends AbstractMetricsTest
 {

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -46,13 +46,11 @@ namespace PDepend\Source\AST;
  * Test case for the {@link \PDepend\Source\AST\ASTPreIncrementExpression} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\AST\ASTPreIncrementExpression
- * @group pdepend
- * @group pdepend::ast
  * @group unittest
  */
 class ASTPreIncrementExpressionTest extends ASTNodeTest

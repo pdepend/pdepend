@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since     0.10.0
  */
@@ -51,13 +51,11 @@ namespace PDepend\Bugs;
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since     0.10.0
  *
  * @covers \stdClass
- * @group pdepend
- * @group pdepend::bugs
  * @group regressiontest
  */
 class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTest
