@@ -443,7 +443,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return \PDepend\Source\AST\ASTMethod[]
      */
-    public abstract function getAllMethods();
+    abstract public function getAllMethods();
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b>
@@ -453,7 +453,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @return boolean
      * @since 1.0.6
      */
-    public abstract function isSubtypeOf(AbstractASTType $type);
+    abstract public function isSubtypeOf(AbstractASTType $type);
 
     /**
      * The magic sleep method is called by the PHP runtime environment before an

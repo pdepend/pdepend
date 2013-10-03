@@ -56,8 +56,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-class ASTStringIndexExpression
-    extends \PDepend\Source\AST\ASTIndexExpression
+class ASTStringIndexExpression extends ASTIndexExpression
 {
     /**
      * The type of this class.
@@ -73,7 +72,7 @@ class ASTStringIndexExpression
      *
      * @return mixed
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitStringIndexExpression($this, $data);
     }

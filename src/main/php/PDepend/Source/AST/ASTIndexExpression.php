@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\AST;
 
-// @codeCoverageIgnoreStart
-
 /**
  * This is an abstract base class for index nodes.
  *
@@ -52,13 +50,10 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-abstract class ASTIndexExpression
-    extends \PDepend\Source\AST\ASTExpression
+abstract class ASTIndexExpression extends ASTExpression
 {
     /**
      * The type of this class.
      */
     const CLAZZ = __CLASS__;
 }
-
-// @codeCoverageIgnoreEnd

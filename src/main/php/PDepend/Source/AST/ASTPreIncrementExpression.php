@@ -50,8 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
-class ASTPreIncrementExpression
-    extends \PDepend\Source\AST\ASTUnaryExpression
+class ASTPreIncrementExpression extends ASTUnaryExpression
 {
     /**
      * The type of this class.
@@ -67,7 +66,7 @@ class ASTPreIncrementExpression
      *
      * @return mixed
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitPreIncrementExpression($this, $data);
     }

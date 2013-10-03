@@ -57,7 +57,7 @@ interface AggregateAnalyzer extends Analyzer
      *
      * @return array(string)
      */
-    function getRequiredAnalyzers();
+    public function getRequiredAnalyzers();
     
     /**
      * Adds a required sub analyzer.
@@ -65,5 +65,5 @@ interface AggregateAnalyzer extends Analyzer
      * @param \PDepend\Metrics\Analyzer $analyzer The sub analyzer instance.
      * @return void
      */
-    function addAnalyzer(Analyzer $analyzer);
+    public function addAnalyzer(Analyzer $analyzer);
 }

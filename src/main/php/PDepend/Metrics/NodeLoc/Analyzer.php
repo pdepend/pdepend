@@ -447,30 +447,30 @@ class Analyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, Ana
 
             switch ($token->type) {
 
-            // These statement are terminated by a semicolon
-            //case \PDepend\Source\Tokenizer\Tokens::T_RETURN:
-            //case \PDepend\Source\Tokenizer\Tokens::T_THROW:
+                // These statement are terminated by a semicolon
+                //case \PDepend\Source\Tokenizer\Tokens::T_RETURN:
+                //case \PDepend\Source\Tokenizer\Tokens::T_THROW:
 
-            case Tokens::T_IF:
-            case Tokens::T_TRY:
-            case Tokens::T_CASE:
-            case Tokens::T_GOTO:
-            case Tokens::T_CATCH:
-            case Tokens::T_WHILE:
-            case Tokens::T_ELSEIF:
-            case Tokens::T_SWITCH:
-            case Tokens::T_DEFAULT:
-            case Tokens::T_FOREACH:
-            case Tokens::T_FUNCTION:
-            case Tokens::T_SEMICOLON:
-                ++$llines;
-                break;
+                case Tokens::T_IF:
+                case Tokens::T_TRY:
+                case Tokens::T_CASE:
+                case Tokens::T_GOTO:
+                case Tokens::T_CATCH:
+                case Tokens::T_WHILE:
+                case Tokens::T_ELSEIF:
+                case Tokens::T_SWITCH:
+                case Tokens::T_DEFAULT:
+                case Tokens::T_FOREACH:
+                case Tokens::T_FUNCTION:
+                case Tokens::T_SEMICOLON:
+                    ++$llines;
+                    break;
 
-            case Tokens::T_DO:
-            case Tokens::T_FOR:
-                // Because statements at least require one semicolon
-                --$llines;
-                break;
+                case Tokens::T_DO:
+                case Tokens::T_FOR:
+                    // Because statements at least require one semicolon
+                    --$llines;
+                    break;
             }
 
             if ($token->startLine === $token->endLine) {

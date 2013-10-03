@@ -129,7 +129,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @return void
      * @since 1.0.0
      */
-    public function setName( $name )
+    public function setName($name)
     {
         $this->name = $name;
     }

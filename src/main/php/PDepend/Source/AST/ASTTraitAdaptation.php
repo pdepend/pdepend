@@ -50,7 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
-class ASTTraitAdaptation extends \PDepend\Source\AST\ASTScope
+class ASTTraitAdaptation extends ASTScope
 {
     /**
      * The type of this class.
@@ -66,7 +66,7 @@ class ASTTraitAdaptation extends \PDepend\Source\AST\ASTScope
      *
      * @return mixed
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitTraitAdaptation($this, $data);
     }

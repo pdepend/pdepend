@@ -364,7 +364,7 @@ class ASTParameter extends AbstractASTArtifact
         $typeHint = '';
         if ($this->isArray() === true) {
             $typeHint = ' array';
-        } else if ($this->getClass() !== null) {
+        } elseif ($this->getClass() !== null) {
             $typeHint = ' ' . $this->getClass()->getName();
         }
 
@@ -376,13 +376,13 @@ class ASTParameter extends AbstractASTArtifact
             if ($value === null) {
                 $default  .= 'NULL';
                 $typeHint .= ($typeHint !== '' ? ' or NULL' : '');
-            } else if ($value === false) {
+            } elseif ($value === false) {
                 $default .= 'false';
-            } else if ($value === true) {
+            } elseif ($value === true) {
                 $default .= 'true';
-            } else if (is_array($value) === true) {
+            } elseif (is_array($value) === true) {
                 $default .= 'Array';
-            } else if (is_string($value) === true) {
+            } elseif (is_string($value) === true) {
                 $default .= "'" . $value . "'";
             } else {
                 $default .= $value;

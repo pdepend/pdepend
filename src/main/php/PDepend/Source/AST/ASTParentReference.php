@@ -51,8 +51,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-final class ASTParentReference
-    extends \PDepend\Source\AST\ASTClassOrInterfaceReference
+final class ASTParentReference extends ASTClassOrInterfaceReference
 {
     /**
      * The image type of this node.
@@ -79,9 +78,8 @@ final class ASTParentReference
      * 
      * @todo Call parent constructor, otherwise this could cause bad side effects.
      */
-    public function __construct(
-        \PDepend\Source\AST\ASTClassOrInterfaceReference $reference
-    ) {
+    public function __construct(ASTClassOrInterfaceReference $reference)
+    {
         $this->reference = $reference;
     }
 
@@ -110,13 +108,12 @@ final class ASTParentReference
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
+     * @param \PDepend\Source\AST\ASTVisitorI
+     * @param mixed $data
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitParentReference($this, $data);
     }

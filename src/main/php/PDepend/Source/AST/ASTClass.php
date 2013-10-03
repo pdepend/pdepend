@@ -96,19 +96,13 @@ class ASTClass extends AbstractASTClassOrInterface
         if ($this->properties === null) {
             $this->properties = array();
 
-            $declarations = $this->findChildrenOfType(
-                \PDepend\Source\AST\ASTFieldDeclaration::CLAZZ
-            );
+            $declarations = $this->findChildrenOfType(ASTFieldDeclaration::CLAZZ);
             foreach ($declarations as $declaration) {
-                $declarators = $declaration->findChildrenOfType(
-                    \PDepend\Source\AST\ASTVariableDeclarator::CLAZZ
-                );
+                $declarators = $declaration->findChildrenOfType(ASTVariableDeclarator::CLAZZ);
 
                 foreach ($declarators as $declarator) {
 
-                    $property = new ASTProperty(
-                        $declaration, $declarator
-                    );
+                    $property = new ASTProperty($declaration, $declarator);
                     $property->setDeclaringClass($this);
                     $property->setSourceFile($this->getSourceFile());
 
@@ -130,13 +124,13 @@ class ASTClass extends AbstractASTClassOrInterface
     {
         if ($type === $this) {
             return true;
-        } else if ($type instanceof ASTInterface) {
+        } elseif ($type instanceof ASTInterface) {
             foreach ($this->getInterfaces() as $interface) {
                 if ($interface === $type) {
                     return true;
                 }
             }
-        } else if (($parent = $this->getParentClass()) !== null) {
+        } elseif (($parent = $this->getParentClass()) !== null) {
             if ($parent === $type) {
                 return true;
             }

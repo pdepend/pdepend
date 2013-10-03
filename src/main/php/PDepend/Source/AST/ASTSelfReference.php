@@ -54,8 +54,7 @@ use PDepend\Source\Builder\BuilderContext;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTSelfReference
-    extends \PDepend\Source\AST\ASTClassOrInterfaceReference
+class ASTSelfReference extends ASTClassOrInterfaceReference
 {
     /**
      * The image type of this node.
@@ -148,7 +147,7 @@ class ASTSelfReference
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitSelfReference($this, $data);
     }

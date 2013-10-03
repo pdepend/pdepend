@@ -66,7 +66,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTClass $class The context class instance.
      * @return void
      */
-    function startVisitClass(ASTClass $class);
+    public function startVisitClass(ASTClass $class);
 
     /**
      * Is called when the visitor ends with a class instance.
@@ -74,7 +74,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTClass $class The context class instance.
      * @return void
      */
-    function endVisitClass(ASTClass $class);
+    public function endVisitClass(ASTClass $class);
 
     /**
      * Is called when the visitor starts a new trait instance.
@@ -83,7 +83,7 @@ interface TreeVisitListener
      * @return void
      * @since 1.0.0
      */
-    function startVisitTrait(ASTTrait $trait);
+    public function startVisitTrait(ASTTrait $trait);
 
     /**
      * Is called when the visitor ends with a trait instance.
@@ -92,7 +92,7 @@ interface TreeVisitListener
      * @return void
      * @since 1.0.0
      */
-    function endVisitTrait(ASTTrait $trait);
+    public function endVisitTrait(ASTTrait $trait);
 
     /**
      * Is called when the visitor starts a new file instance.
@@ -100,7 +100,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
      * @return void
      */
-    function startVisitFile(ASTCompilationUnit $compilationUnit);
+    public function startVisitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Is called when the visitor ends with a file instance.
@@ -108,7 +108,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
      * @return void
      */
-    function endVisitFile(ASTCompilationUnit $compilationUnit);
+    public function endVisitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Is called when the visitor starts a new function instance.
@@ -116,7 +116,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    function startVisitFunction(ASTFunction $function);
+    public function startVisitFunction(ASTFunction $function);
 
     /**
      * Is called when the visitor ends with a function instance.
@@ -124,7 +124,7 @@ interface TreeVisitListener
      * @param ASTFunction $function
      * @return void
      */
-    function endVisitFunction(ASTFunction $function);
+    public function endVisitFunction(ASTFunction $function);
 
     /**
      * Is called when the visitor starts a new interface instance.
@@ -132,7 +132,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function startVisitInterface(ASTInterface $interface);
+    public function startVisitInterface(ASTInterface $interface);
 
     /**
      * Is called when the visitor ends with an interface instance.
@@ -140,7 +140,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function endVisitInterface(ASTInterface $interface);
+    public function endVisitInterface(ASTInterface $interface);
 
     /**
      * Is called when the visitor starts a new method instance.
@@ -148,7 +148,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    function startVisitMethod(ASTMethod $method);
+    public function startVisitMethod(ASTMethod $method);
 
     /**
      * Is called when the visitor ends with a method instance.
@@ -156,7 +156,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    function endVisitMethod(ASTMethod $method);
+    public function endVisitMethod(ASTMethod $method);
 
     /**
      * Is called when the visitor starts a new package instance.
@@ -164,7 +164,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    function startVisitPackage(ASTNamespace $namespace);
+    public function startVisitPackage(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor ends with a package instance.
@@ -172,7 +172,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    function endVisitPackage(ASTNamespace $namespace);
+    public function endVisitPackage(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor starts a new parameter instance.
@@ -180,7 +180,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    function startVisitParameter(ASTParameter $parameter);
+    public function startVisitParameter(ASTParameter $parameter);
 
     /**
      * Is called when the visitor ends with a parameter instance.
@@ -188,7 +188,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    function endVisitParameter(ASTParameter $parameter);
+    public function endVisitParameter(ASTParameter $parameter);
 
     /**
      * Is called when the visitor starts a new property instance.
@@ -196,7 +196,7 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    function startVisitProperty(ASTProperty $property);
+    public function startVisitProperty(ASTProperty $property);
 
     /**
      * Is called when the visitor ends with a property instance.
@@ -204,5 +204,5 @@ interface TreeVisitListener
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    function endVisitProperty(ASTProperty $property);
+    public function endVisitProperty(ASTProperty $property);
 }

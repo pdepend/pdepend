@@ -50,8 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
-class ASTTraitReference
-    extends \PDepend\Source\AST\ASTClassOrInterfaceReference
+class ASTTraitReference extends ASTClassOrInterfaceReference
 {
     /**
      * The image type of this node.
@@ -81,7 +80,7 @@ class ASTTraitReference
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitTraitReference($this, $data);
     }

@@ -71,11 +71,7 @@ use PDepend\Util\MathUtil;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Analyzer
-       extends AbstractCachingAnalyzer
-    implements AnalyzerFilterAware,
-               AnalyzerNodeAware,
-               ASTVisitorI
+class Analyzer extends AbstractCachingAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, ASTVisitorI
 {
     /**
      * Type of this analyzer class.
@@ -352,7 +348,7 @@ class Analyzer
             if ($child instanceof ASTStatement) {
                 $stmt  = $child->accept($this, 1);
                 $npath = MathUtil::add($npath, $stmt);
-            } else if ($child instanceof ASTExpression) {
+            } elseif ($child instanceof ASTExpression) {
                 $expr  = $this->sumComplexity($child);
                 $npath = MathUtil::add($npath, $expr);
             }
@@ -582,7 +578,7 @@ class Analyzer
         $sum = '0';
         if ($node instanceof ASTConditionalExpression) {
             $sum = MathUtil::add($sum, $node->accept($this, 1));
-        } else if ($node instanceof ASTBooleanAndExpression
+        } elseif ($node instanceof ASTBooleanAndExpression
             || $node instanceof ASTBooleanOrExpression
             || $node instanceof ASTLogicalAndExpression
             || $node instanceof ASTLogicalOrExpression

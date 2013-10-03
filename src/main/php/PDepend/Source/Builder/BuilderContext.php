@@ -69,7 +69,7 @@ interface BuilderContext
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    function registerFunction(ASTFunction $function);
+    public function registerFunction(ASTFunction $function);
 
     /**
      * This method can be used to register an existing trait in the current
@@ -79,7 +79,7 @@ interface BuilderContext
      * @return void
      * @since 1.0.0
      */
-    function registerTrait(ASTTrait $trait);
+    public function registerTrait(ASTTrait $trait);
 
     /**
      * This method can be used to register an existing class in the current
@@ -88,7 +88,7 @@ interface BuilderContext
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      */
-    function registerClass(ASTClass $class);
+    public function registerClass(ASTClass $class);
 
     /**
      * This method can be used to register an existing interface in the current
@@ -97,7 +97,7 @@ interface BuilderContext
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function registerInterface(ASTInterface $interface);
+    public function registerInterface(ASTInterface $interface);
 
     /**
      * Returns the trait instance for the given qualified name.
@@ -106,7 +106,7 @@ interface BuilderContext
      * @return \PDepend\Source\AST\ASTTrait
      * @since 1.0.0
      */
-    function getTrait($qualifiedName);
+    public function getTrait($qualifiedName);
 
     /**
      * Returns the class instance for the given qualified name.
@@ -114,7 +114,7 @@ interface BuilderContext
      * @param string $qualifiedName
      * @return \PDepend\Source\AST\ASTClass
      */
-    function getClass($qualifiedName);
+    public function getClass($qualifiedName);
 
     /**
      * Returns a class or an interface instance for the given qualified name.
@@ -122,5 +122,5 @@ interface BuilderContext
      * @param string $qualifiedName
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface
      */
-    function getClassOrInterface($qualifiedName);
+    public function getClassOrInterface($qualifiedName);
 }

@@ -230,7 +230,7 @@ class Analyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNo
 
         if ($coverage == 0) {
             return pow($complexity, 2) + $complexity;
-        } else if ($coverage > 99.5) {
+        } elseif ($coverage > 99.5) {
             return $complexity;
         }
         return pow($complexity, 2) * pow(1 - $coverage / 100, 3) + $complexity;

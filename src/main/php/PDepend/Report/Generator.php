@@ -59,7 +59,7 @@ interface Generator
      * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
-    function log(Analyzer $analyzer);
+    public function log(Analyzer $analyzer);
     
     /**
      * Closes the logger process and writes the output file.
@@ -67,7 +67,7 @@ interface Generator
      * @return void
      * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
      */
-    function close();
+    public function close();
     
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
@@ -75,5 +75,5 @@ interface Generator
      *
      * @return array(string)
      */
-    function getAcceptedAnalyzers();
+    public function getAcceptedAnalyzers();
 }

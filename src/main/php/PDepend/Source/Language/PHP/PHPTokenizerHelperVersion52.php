@@ -90,10 +90,10 @@ final class PHPTokenizerHelperVersion52
         for ($i = 0, $c = count($tokens); $i < $c; ++$i) {
             if (is_string($tokens[$i])) {
                 $result[] = str_replace(':::', '\\', $tokens[$i]);
-            } else if ($tokens[$i][0] !== T_DOUBLE_COLON) {
+            } elseif ($tokens[$i][0] !== T_DOUBLE_COLON) {
                 $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
                 $result[]      = $tokens[$i];
-            } else if (!isset($tokens[$i + 1]) || $tokens[$i + 1] !== ':') {
+            } elseif (!isset($tokens[$i + 1]) || $tokens[$i + 1] !== ':') {
                 $tokens[$i][1] = str_replace(':::', '\\', $tokens[$i][1]);
                 $result[]      = $tokens[$i];
             } else {

@@ -50,8 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.5
  */
-class ASTClassReference
-    extends \PDepend\Source\AST\ASTClassOrInterfaceReference
+class ASTClassReference extends ASTClassOrInterfaceReference
 {
     /**
      * The image type of this node.
@@ -75,13 +74,12 @@ class ASTClassReference
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
+     * @param \PDepend\Source\AST\ASTVisitorI $visitor
+     * @param mixed $data
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitClassReference($this, $data);
     }

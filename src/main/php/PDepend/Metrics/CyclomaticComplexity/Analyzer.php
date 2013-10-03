@@ -43,7 +43,6 @@
 namespace PDepend\Metrics\CyclomaticComplexity;
 
 use PDepend\Metrics\AbstractCachingAnalyzer;
-use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
 use PDepend\Source\AST\AbstractASTArtifact;
@@ -62,12 +61,7 @@ use PDepend\Source\AST\ASTVisitorI;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Analyzer
-       extends AbstractCachingAnalyzer
-    implements AnalyzerFilterAware,
-               AnalyzerNodeAware,
-               AnalyzerProjectAware,
-               ASTVisitorI
+class Analyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware, ASTVisitorI
 {
     /**
      * Type of this analyzer class.

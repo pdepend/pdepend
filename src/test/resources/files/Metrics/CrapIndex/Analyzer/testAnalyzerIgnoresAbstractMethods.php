@@ -1,5 +1,5 @@
 <?php
 class testAnalyzerIgnoresAbstractMethods
 {
-    public abstract function foo();
+    abstract public function foo();
 }

@@ -128,7 +128,7 @@ interface Tokenizer
      *
      * @return string
      */
-    function getSourceFile();
+    public function getSourceFile();
 
     /**
      * Sets a new php source file.
@@ -137,7 +137,7 @@ interface Tokenizer
      *
      * @return void
      */
-    function setSourceFile($sourceFile);
+    public function setSourceFile($sourceFile);
 
     /**
      * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
@@ -145,7 +145,7 @@ interface Tokenizer
      *
      * @return \PDepend\Source\Tokenizer\Token
      */
-    function next();
+    public function next();
 
     /**
      * Returns the next token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
@@ -153,7 +153,7 @@ interface Tokenizer
      *
      * @return integer
      */
-    function peek();
+    public function peek();
     
     /**
      * Returns the type of next token, after the current token. This method
@@ -162,7 +162,7 @@ interface Tokenizer
      * @return integer
      * @since 0.9.12
      */
-    function peekNext();
+    public function peekNext();
 
     /**
      * Returns the previous token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_BOF}
@@ -170,5 +170,5 @@ interface Tokenizer
      *
      * @return integer
      */
-    function prev();
+    public function prev();
 }

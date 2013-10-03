@@ -89,4 +89,3 @@ class ASTFormalParameters extends ASTNode
         return $visitor->visitFormalParameters($this, $data);
     }
 }
-

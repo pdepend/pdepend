@@ -122,7 +122,7 @@ class PHPParserGeneric extends AbstractPHPParser
         
         if ($this->isClassName($type)) {
             return $this->consumeToken($type)->image;
-        } else if ($type === Tokenizer::T_EOF) {
+        } elseif ($type === Tokenizer::T_EOF) {
             throw new TokenStreamEndException($this->tokenizer);
         }
         

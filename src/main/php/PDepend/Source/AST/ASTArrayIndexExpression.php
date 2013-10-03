@@ -60,8 +60,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-class ASTArrayIndexExpression
-    extends \PDepend\Source\AST\ASTIndexExpression
+class ASTArrayIndexExpression extends ASTIndexExpression
 {
     /**
      * The type of this class.
@@ -78,7 +77,7 @@ class ASTArrayIndexExpression
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitArrayIndexExpression($this, $data);
     }

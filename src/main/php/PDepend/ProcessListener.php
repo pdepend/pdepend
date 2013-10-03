@@ -62,7 +62,7 @@ interface ProcessListener extends TreeVisitListener, AnalyzerListener
      * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
-    function startParseProcess(Builder $builder);
+    public function startParseProcess(Builder $builder);
     
     /**
      * Is called when PDepend has finished the file parsing process.
@@ -70,7 +70,7 @@ interface ProcessListener extends TreeVisitListener, AnalyzerListener
      * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
-    function endParseProcess(Builder $builder);
+    public function endParseProcess(Builder $builder);
     
     /**
      * Is called when PDepend starts parsing of a new file.
@@ -78,7 +78,7 @@ interface ProcessListener extends TreeVisitListener, AnalyzerListener
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    function startFileParsing(Tokenizer $tokenizer);
+    public function startFileParsing(Tokenizer $tokenizer);
     
     /**
      * Is called when PDepend has finished a file.
@@ -86,35 +86,35 @@ interface ProcessListener extends TreeVisitListener, AnalyzerListener
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
-    function endFileParsing(Tokenizer $tokenizer);
+    public function endFileParsing(Tokenizer $tokenizer);
     
     /**
      * Is called when PDepend starts the analyzing process.
      * 
      * @return void
      */
-    function startAnalyzeProcess();
+    public function startAnalyzeProcess();
     
     /**
      * Is called when PDepend has finished the analyzing process.
      * 
      * @return void
      */
-    function endAnalyzeProcess();
+    public function endAnalyzeProcess();
     
     /**
      * Is called when PDepend starts the logging process.
      *
      * @return void
      */
-    function startLogProcess();
+    public function startLogProcess();
     
     /**
      * Is called when PDepend has finished the logging process.
      *
      * @return void
      */
-    function endLogProcess();
+    public function endLogProcess();
 }
 
 // @codeCoverageIgnoreEnd

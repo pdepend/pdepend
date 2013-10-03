@@ -2266,7 +2266,7 @@ class PHPBuilder implements Builder
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return ltrim(substr($qualifiedName, 0, $pos), '\\');
-        } else if (Type::isInternalType($qualifiedName)) {
+        } elseif (Type::isInternalType($qualifiedName)) {
             return Type::getTypePackage($qualifiedName);
         }
         return self::DEFAULT_PACKAGE;

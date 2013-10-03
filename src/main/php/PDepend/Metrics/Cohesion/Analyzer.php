@@ -136,7 +136,7 @@ class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
                 && $variable->isThis()
             ) {
                 echo "\$this->";
-            } else if ($variable instanceof \PDepend\Source\AST\ASTSelfReference) {
+            } elseif ($variable instanceof \PDepend\Source\AST\ASTSelfReference) {
                 echo "self::";
             } else {
                 continue;
@@ -149,7 +149,7 @@ class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
             if ($next instanceof \PDepend\Source\AST\ASTPropertyPostfix) {
                 echo $next->getImage(), PHP_EOL;
-            } else if ($next instanceof \PDepend\Source\AST\ASTMethodPostfix) {
+            } elseif ($next instanceof \PDepend\Source\AST\ASTMethodPostfix) {
                 echo $next->getImage(), '()', PHP_EOL;
             }
         }
@@ -157,5 +157,4 @@ class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         $this->fireEndMethod($method);
     }
     */
-
 }

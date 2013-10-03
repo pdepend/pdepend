@@ -217,7 +217,7 @@ class ResultPrinter extends AbstractTreeVisitListener implements ProcessListener
 
         if ($diff === 0) {
             printf(".% 6s\n\n", $this->count);
-        } else if ($size === 1) {
+        } elseif ($size === 1) {
             $indent = 66 - ceil($diff / $size);
             printf(".% {$indent}s\n\n", $this->count);
         } else {

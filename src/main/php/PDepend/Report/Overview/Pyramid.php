@@ -163,13 +163,13 @@ class Pyramid implements GeneratorFileAware
     {
         if ($analyzer instanceof \PDepend\Metrics\CyclomaticComplexity\Analyzer) {
             $this->cyclomaticComplexity = $analyzer;
-        } else if ($analyzer instanceof \PDepend\Metrics\Coupling\Analyzer) {
+        } elseif ($analyzer instanceof \PDepend\Metrics\Coupling\Analyzer) {
             $this->coupling = $analyzer;
-        } else if ($analyzer instanceof \PDepend\Metrics\Inheritance\Analyzer) {
+        } elseif ($analyzer instanceof \PDepend\Metrics\Inheritance\Analyzer) {
             $this->inheritance = $analyzer;
-        } else if ($analyzer instanceof \PDepend\Metrics\NodeCount\Analyzer) {
+        } elseif ($analyzer instanceof \PDepend\Metrics\NodeCount\Analyzer) {
             $this->nodeCount = $analyzer;
-        } else if ($analyzer instanceof \PDepend\Metrics\NodeLoc\Analyzer) {
+        } elseif ($analyzer instanceof \PDepend\Metrics\NodeLoc\Analyzer) {
             $this->nodeLoc = $analyzer;
         } else {
             return false;
@@ -244,7 +244,7 @@ class Pyramid implements GeneratorFileAware
         $threshold = $this->thresholds[$name];
         if ($value <= $threshold[0]) {
             return 'low';
-        } else if ($value >= $threshold[2]) {
+        } elseif ($value >= $threshold[2]) {
             return 'high';
         } else {
             $low = $value - $threshold[0];

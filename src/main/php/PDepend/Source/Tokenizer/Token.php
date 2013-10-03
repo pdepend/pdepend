@@ -102,21 +102,15 @@ class Token
     /**
      * Constructs a new source token.
      *
-     * @param integer $type        The token type identifier.
-     * @param string  $image       The token image/textual representation.
-     * @param integer $startLine   The start line number for this token.
-     * @param integer $endLine     The end line number for this token.
+     * @param integer $type The token type identifier.
+     * @param string  $image The token image/textual representation.
+     * @param integer $startLine The start line number for this token.
+     * @param integer $endLine The end line number for this token.
      * @param integer $startColumn The start column number for this token.
-     * @param integer $endColumn   The end column number for this token.
+     * @param integer $endColumn The end column number for this token.
      */
-    public function __construct(
-        $type,
-        $image,
-        $startLine,
-        $endLine,
-        $startColumn, 
-        $endColumn
-    ) {
+    public function __construct($type, $image, $startLine, $endLine, $startColumn, $endColumn)
+    {
         $this->type        = $type;
         $this->image       = $image;
         $this->startLine   = $startLine;

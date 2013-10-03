@@ -58,5 +58,5 @@ interface GeneratorCodeAware extends Generator
      * @param \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    function setArtifacts(ASTArtifactList $artifacts);
+    public function setArtifacts(ASTArtifactList $artifacts);
 }

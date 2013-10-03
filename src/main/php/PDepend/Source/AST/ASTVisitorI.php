@@ -77,5 +77,5 @@ interface ASTVisitorI
      * @return mixed
      * @since 0.9.12
      */
-    function __call($method, $args);
+    public function __call($method, $args);
 }

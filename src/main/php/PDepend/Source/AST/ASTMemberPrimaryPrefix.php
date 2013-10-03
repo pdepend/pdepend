@@ -69,7 +69,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTMemberPrimaryPrefix extends \PDepend\Source\AST\ASTNode
+class ASTMemberPrimaryPrefix extends ASTNode
 {
     /**
      * Type of this node class.

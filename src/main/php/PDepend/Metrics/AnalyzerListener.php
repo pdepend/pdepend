@@ -59,7 +59,7 @@ interface AnalyzerListener extends TreeVisitListener
      * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
      * @return void
      */
-    function startAnalyzer(Analyzer $analyzer);
+    public function startAnalyzer(Analyzer $analyzer);
     
     /**
      * This method is called when the analyzer has finished code processing.
@@ -67,5 +67,5 @@ interface AnalyzerListener extends TreeVisitListener
      * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
      * @return void
      */
-    function endAnalyzer(Analyzer $analyzer);
+    public function endAnalyzer(Analyzer $analyzer);
 }

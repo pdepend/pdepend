@@ -50,7 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
-class ASTPostfixExpression extends \PDepend\Source\AST\ASTExpression
+class ASTPostfixExpression extends ASTExpression
 {
     /**
      * The type of this class.
@@ -61,12 +61,11 @@ class ASTPostfixExpression extends \PDepend\Source\AST\ASTExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
+     * @param \PDepend\Source\AST\ASTVisitorI $visitor
+     * @param mixed $data
      * @return mixed
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitPostfixExpression($this, $data);
     }

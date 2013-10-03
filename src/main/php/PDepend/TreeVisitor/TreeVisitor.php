@@ -70,7 +70,7 @@ interface TreeVisitor
      * @param \PDepend\TreeVisitor\TreeVisitListener $listener
      * @return void
      */
-    function addVisitListener(TreeVisitListener $listener);
+    public function addVisitListener(TreeVisitListener $listener);
 
     /**
      * Visits a class node.
@@ -78,7 +78,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      */
-    function visitClass(ASTClass $class);
+    public function visitClass(ASTClass $class);
 
     /**
      * Visits a trait node.
@@ -87,7 +87,7 @@ interface TreeVisitor
      * @return void
      * @since 1.0.0
      */
-    function visitTrait(ASTTrait $trait);
+    public function visitTrait(ASTTrait $trait);
 
     /**
      * Visits a file node.
@@ -95,7 +95,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    function visitFile(ASTCompilationUnit $compilationUnit);
+    public function visitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Visits a function node.
@@ -103,7 +103,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    function visitFunction(ASTFunction $function);
+    public function visitFunction(ASTFunction $function);
 
     /**
      * Visits a code interface object.
@@ -111,7 +111,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    function visitInterface(ASTInterface $interface);
+    public function visitInterface(ASTInterface $interface);
 
     /**
      * Visits a method node.
@@ -119,7 +119,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    function visitMethod(ASTMethod $method);
+    public function visitMethod(ASTMethod $method);
 
     /**
      * Visits a package node.
@@ -127,7 +127,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    function visitNamespace(ASTNamespace $namespace);
+    public function visitNamespace(ASTNamespace $namespace);
 
     /**
      * Visits a parameter node.
@@ -135,7 +135,7 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    function visitParameter(ASTParameter $parameter);
+    public function visitParameter(ASTParameter $parameter);
 
     /**
      * Visits a property node.
@@ -143,5 +143,5 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    function visitProperty(ASTProperty $property);
+    public function visitProperty(ASTProperty $property);
 }

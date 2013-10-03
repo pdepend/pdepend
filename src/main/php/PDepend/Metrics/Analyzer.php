@@ -58,7 +58,7 @@ interface Analyzer
      * @param array(string=>mixed) $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    function __construct(array $options = array());
+    public function __construct(array $options = array());
     
     /**
      * Adds a listener to this analyzer.
@@ -66,7 +66,7 @@ interface Analyzer
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    function addAnalyzeListener(AnalyzerListener $listener);
+    public function addAnalyzeListener(AnalyzerListener $listener);
     
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
@@ -74,7 +74,7 @@ interface Analyzer
      * @param \PDepend\Source\AST\ASTArtifactList $namespaces
      * @return void
      */
-    function analyze(ASTArtifactList $namespaces);
+    public function analyze(ASTArtifactList $namespaces);
 
     /**
      * An analyzer that is active must return <b>true</b> to recognized by
@@ -84,5 +84,5 @@ interface Analyzer
      * @return boolean
      * @since 0.9.10
      */
-    function isEnabled();
+    public function isEnabled();
 }

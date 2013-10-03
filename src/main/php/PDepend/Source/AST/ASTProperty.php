@@ -360,7 +360,7 @@ class ASTProperty extends AbstractASTArtifact
         $visibility = ' public';
         if ($this->isProtected() === true) {
             $visibility = ' protected';
-        } else if ($this->isPrivate() === true) {
+        } elseif ($this->isPrivate() === true) {
             $visibility = ' private';
         }
 

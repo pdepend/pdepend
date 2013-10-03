@@ -53,7 +53,7 @@ use PDepend\Source\AST\State;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
-class ASTTraitUseStatement extends \PDepend\Source\AST\ASTStatement
+class ASTTraitUseStatement extends ASTStatement
 {
     /**
      * The type of this class.
@@ -75,7 +75,7 @@ class ASTTraitUseStatement extends \PDepend\Source\AST\ASTStatement
         if (false === is_array($this->allMethods)) {
             $this->allMethods = array();
             foreach ($this->nodes as $node) {
-                if ($node instanceof \PDepend\Source\AST\ASTTraitReference) {
+                if ($node instanceof ASTTraitReference) {
                     $this->collectMethods($node);
                 }
             }
@@ -97,9 +97,7 @@ class ASTTraitUseStatement extends \PDepend\Source\AST\ASTStatement
         $methodName   = strtolower($method->getName());
         $methodParent = $method->getParent();
 
-        $precedences = $this->findChildrenOfType(
-            \PDepend\Source\AST\ASTTraitAdaptationPrecedence::CLAZZ
-        );
+        $precedences = $this->findChildrenOfType(ASTTraitAdaptationPrecedence::CLAZZ);
 
         foreach ($precedences as $precedence) {
             if (strtolower($precedence->getImage()) !== $methodName) {
@@ -123,7 +121,7 @@ class ASTTraitUseStatement extends \PDepend\Source\AST\ASTStatement
      *
      * @return void
      */
-    private function collectMethods(\PDepend\Source\AST\ASTTraitReference $reference)
+    private function collectMethods(ASTTraitReference $reference)
     {
         foreach ($reference->getType()->getAllMethods() as $method) {
             foreach ($this->getAliasesFor($method) as $alias) {
@@ -200,9 +198,7 @@ class ASTTraitUseStatement extends \PDepend\Source\AST\ASTStatement
      */
     private function getAliases()
     {
-        return $this->findChildrenOfType(
-            \PDepend\Source\AST\ASTTraitAdaptationAlias::CLAZZ
-        );
+        return $this->findChildrenOfType(ASTTraitAdaptationAlias::CLAZZ);
     }
 
     /**
@@ -214,7 +210,7 @@ class ASTTraitUseStatement extends \PDepend\Source\AST\ASTStatement
      *
      * @return mixed
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitorI $visitor, $data = null)
     {
         return $visitor->visitTraitUseStatement($this, $data);
     }

@@ -57,5 +57,5 @@ interface GeneratorFileAware extends Generator
      *
      * @return void
      */
-    function setLogFile($logFile);
+    public function setLogFile($logFile);
 }

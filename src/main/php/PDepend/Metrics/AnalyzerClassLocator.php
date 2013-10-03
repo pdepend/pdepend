@@ -55,5 +55,5 @@ interface AnalyzerClassLocator
      *
      * @return \ReflectionClass[]
      */
-    function findAll();
+    public function findAll();
 }

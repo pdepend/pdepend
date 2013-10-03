@@ -7,5 +7,5 @@ trait testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
 }
 
 trait testGetAllMethodsWithVisibilityChangedKeepsAbstractModifierUsedTraitOne {
-    public abstract function foo();
+    abstract public function foo();
 }

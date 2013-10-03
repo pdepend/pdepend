@@ -178,7 +178,7 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
             $size = $metrics['cc'] + $metrics['ac'];
             if ($size > $max) {
                 $max = $size;
-            } else if ($min === 0 || $size < $min) {
+            } elseif ($min === 0 || $size < $min) {
                 $min = $size;
             }
 
@@ -249,5 +249,4 @@ class Chart extends AbstractTreeVisitor implements GeneratorCodeAware, Generator
         // Remove temp file
         unlink($temp);
     }
-
 }

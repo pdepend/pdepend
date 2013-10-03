@@ -148,5 +148,4 @@ class InheritanceStrategy extends AbstractTreeVisitor implements CodeRankStrateg
             );
         }
     }
-
 }

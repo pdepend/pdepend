@@ -50,7 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
-class ASTTraitAdaptationAlias extends \PDepend\Source\AST\ASTStatement
+class ASTTraitAdaptationAlias extends ASTStatement
 {
     /**
      * The type of this class.

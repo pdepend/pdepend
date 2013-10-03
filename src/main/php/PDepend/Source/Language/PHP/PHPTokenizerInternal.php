@@ -553,14 +553,14 @@ class PHPTokenizerInternal implements Tokenizer
                 $type  = $tokenMap[$token[0]];
                 $image = $token[1];
                 $inTag = true;
-            } else if ($token[0] === T_CLOSE_TAG) {
+            } elseif ($token[0] === T_CLOSE_TAG) {
                 $type  = $tokenMap[$token[0]];
                 $image = $token[1];
                 $inTag = false;
-            } else if ($inTag === false) {
+            } elseif ($inTag === false) {
                 $type  = Tokens::T_NO_PHP;
                 $image = $this->consumeNonePhpTokens($tokens);
-            } else if ($token[0] === T_WHITESPACE) {
+            } elseif ($token[0] === T_WHITESPACE) {
                 // Count newlines in token
                 $lines = substr_count($token[1], "\n");
                 if ($lines === 0) {
@@ -583,7 +583,7 @@ class PHPTokenizerInternal implements Tokenizer
                         $type = self::$alternativeMap[$type][$previousType];
                     }
                     $image = $token[1];
-                } else if (isset($tokenMap[$token[0]])) {
+                } elseif (isset($tokenMap[$token[0]])) {
                     $type = $tokenMap[$token[0]];
                     // Check for a context sensitive alternative
                     if (isset(self::$alternativeMap[$type][$previousType])) {
@@ -612,14 +612,7 @@ class PHPTokenizerInternal implements Tokenizer
 
                 $endLine = $startLine + $lines;
 
-                $token = new Token(
-                    $type,
-                    $rtrim,
-                    $startLine,
-                    $endLine,
-                    $startColumn, 
-                    $endColumn
-                );
+                $token = new Token($type, $rtrim, $startLine, $endLine, $startColumn, $endColumn);
 
                 // Store token in internal list
                 $this->tokens[] = $token;

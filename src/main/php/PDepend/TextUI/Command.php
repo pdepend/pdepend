@@ -143,21 +143,21 @@ class Command
                 unset($options[$option]);
                 // Register logger
                 $this->runner->addReportGenerator(substr($option, 2), $value);
-            } else if (isset($analyzerOptions[$option])) {
+            } elseif (isset($analyzerOptions[$option])) {
                 // Reduce recieved option list
                 unset($options[$option]);
 
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
                     echo 'Option ', $option, ' requires a value.', PHP_EOL;
                     return self::INPUT_ERROR;
-                } else if ($analyzerOptions[$option]['value'] === 'file'
+                } elseif ($analyzerOptions[$option]['value'] === 'file'
                     && file_exists($value) === false
                 ) {
                     echo 'Specified file ', $option, '=', $value,
                          ' not exists.', PHP_EOL;
 
                     return self::INPUT_ERROR;
-                } else if ($analyzerOptions[$option]['value'] === '*') {
+                } elseif ($analyzerOptions[$option]['value'] === '*') {
                     $value = array_map('trim', explode(',', $value));
                 }
                 $this->runner->addOption(substr($option, 2), $value);
@@ -278,7 +278,7 @@ class Command
 
                     ini_set($key, $value);
                 }
-            } else if (strpos($argv[$i], '=') === false) {
+            } elseif (strpos($argv[$i], '=') === false) {
                 $this->options[$argv[$i]] = true;
             } else {
                 list($key, $value) = explode('=', $argv[$i]);
@@ -537,7 +537,7 @@ class Command
             if (isset($info['value'])) {
                 if ($info['value'] === '*') {
                     $option .= '=<*[,...]>';
-                } else if ($info['value'] === 'file') {
+                } elseif ($info['value'] === 'file') {
                     $option .= '=<file>';
                 } else {
                     $option .= '=<value>';

@@ -63,7 +63,7 @@ class AnalyzerClassFileSystemLocator implements AnalyzerClassLocator
     /**
      * Array containing reflection classes for all found analyzer implementations.
      *
-     * @var array(ReflectionClass)
+     * @var \ReflectionClass[]
      */
     private $analyzers = null;
 
@@ -130,9 +130,7 @@ class AnalyzerClassFileSystemLocator implements AnalyzerClassLocator
                     continue;
                 }
 
-                $className = $this->createClassNameFromPath(
-                    $dir, $file->getPathname()
-                );
+                $className = $this->createClassNameFromPath($dir, $file->getPathname());
                 if (!class_exists($className)) {
                     include_once $file->getPathname();
                 }

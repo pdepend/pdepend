@@ -308,14 +308,14 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @return boolean
      */
-    public abstract function isAbstract();
+    abstract public function isAbstract();
 
     /**
      * Returns the declared modifiers for this type.
      *
      * @return integer
      */
-    public abstract function getModifiers();
+    abstract public function getModifiers();
 
     /**
      * This method initializes the constants defined in this class or interface.

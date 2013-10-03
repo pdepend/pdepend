@@ -60,7 +60,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTMethodPostfix extends \PDepend\Source\AST\ASTInvocation
+class ASTMethodPostfix extends ASTInvocation
 {
     /**
      * Type of this node class.

@@ -1,5 +1,5 @@
 <?php
 abstract class testParserSetsAbstractFlagOnMethod
 {
-    public abstract function testParserSetsAbstractFlagOnMethod();
+    abstract public function testParserSetsAbstractFlagOnMethod();
 }

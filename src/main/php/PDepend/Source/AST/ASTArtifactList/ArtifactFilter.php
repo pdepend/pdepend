@@ -59,5 +59,5 @@ interface ArtifactFilter
      * @param \PDepend\Source\AST\ASTArtifact $node
      * @return boolean
      */
-    function accept(ASTArtifact $node);
+    public function accept(ASTArtifact $node);
 }

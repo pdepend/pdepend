@@ -57,5 +57,5 @@ interface CodeRankStrategyI extends TreeVisitor
      *
      * @return array(string=>array)
      */
-    function getCollectedNodes();
+    public function getCollectedNodes();
 }

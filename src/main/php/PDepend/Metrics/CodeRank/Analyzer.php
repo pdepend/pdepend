@@ -54,7 +54,6 @@ use PDepend\Source\AST\ASTArtifactList;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Analyzer extends AbstractAnalyzer implements AnalyzerNodeAware
-
 {
     /**
      * Type of this analyzer class.
