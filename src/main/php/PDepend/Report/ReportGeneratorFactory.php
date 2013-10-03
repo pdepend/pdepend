@@ -60,7 +60,7 @@ namespace PDepend\Report;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class GeneratorFactory
+class ReportGeneratorFactory
 {
     /**
      * Creates a new generator or returns an existing instance for the given
@@ -68,7 +68,7 @@ class GeneratorFactory
      *
      * @param string $identifier The generator identifier.
      * @param string $fileName The log output file name.
-     * @return \PDepend\Report\Generator
+     * @return \PDepend\Report\ReportGenerator
      * @throws \RuntimeException
      */
     public function createGenerator($identifier, $fileName)
@@ -106,7 +106,7 @@ class GeneratorFactory
 
             // TODO: Refactor this into an external log configurator or a similar
             //       concept.
-            if ($logger instanceof GeneratorFileAware) {
+            if ($logger instanceof FileAwareGenerator) {
                 $logger->setLogFile($fileName);
             }
 
@@ -118,7 +118,7 @@ class GeneratorFactory
     /**
      * Set of created logger instances.
      *
-     * @var \PDepend\Report\Generator[]
+     * @var \PDepend\Report\ReportGenerator[]
      */
     protected $instances = array();
 }

@@ -46,6 +46,7 @@ namespace PDepend\Metrics;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * This abstract class provides an analyzer that provides the basic infrastructure
@@ -84,7 +85,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return void
      */
-    public function setCache(\PDepend\Util\Cache\CacheDriver $cache)
+    public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
     }

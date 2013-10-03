@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -42,21 +42,60 @@
 
 namespace PDepend\Report;
 
-use PDepend\Source\AST\ASTArtifactList;
+use PDepend\AbstractTest;
 
 /**
- * A logger that implements this interface needs the analyzed code structure.
+ * Test case for the logger factory.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface GeneratorCodeAware extends Generator
+class ReportGeneratorFactoryTest extends AbstractTest
 {
     /**
-     * Sets the context code nodes.
+     * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
+     * returns the expected instance for a valid identifier.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    public function setArtifacts(ASTArtifactList $artifacts);
+    public function testCreateGeneratorWithValidIdentifier()
+    {
+        $factory = new ReportGeneratorFactory();
+        $generator = $factory->createGenerator('summary-xml', 'pdepend.xml');
+        
+        $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator);
+    }
+    
+    /**
+     * Tests the singleton behaviour of the logger factory method 
+     * {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}.
+     *
+     * @return void
+     */
+    public function testCreateGeneratorSingletonBehaviour()
+    {
+        $factory = new ReportGeneratorFactory();
+        $generator1 = $factory->createGenerator('summary-xml', 'pdepend1.xml');
+        $generator2 = $factory->createGenerator('summary-xml', 'pdepend2.xml');
+
+        $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator1);
+        $this->assertSame($generator1, $generator2);
+    }
+    
+    /**
+     * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
+     * fails with an exception for an invalid logger identifier.
+     *
+     * @return void
+     */
+    public function testCreateGeneratorWithInvalidIdentifierFail()
+    {
+        $this->setExpectedException(
+            '\RuntimeException',
+            "Unknown generator class '\\PDepend\\Report\\FooBar\\Xml'."
+        );
+        
+        $factory = new ReportGeneratorFactory();
+        $factory->createGenerator('foo-bar-xml', 'pdepend.xml');
+    }
 }

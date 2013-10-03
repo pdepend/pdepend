@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -42,38 +42,21 @@
 
 namespace PDepend\Report;
 
-use PDepend\Metrics\Analyzer;
+use PDepend\Source\AST\ASTArtifactList;
 
 /**
- * Base interface for all PDepend report generators.
+ * A logger that implements this interface needs the analyzed code structure.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface Generator
+interface CodeAwareGenerator extends ReportGenerator
 {
     /**
-     * Adds an analyzer to log. If this logger accepts the given analyzer it
-     * with return <b>true</b>, otherwise the return value is <b>false</b>.
+     * Sets the context code nodes.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return boolean
-     */
-    public function log(Analyzer $analyzer);
-    
-    /**
-     * Closes the logger process and writes the output file.
-     *
+     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
-     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
      */
-    public function close();
-    
-    /**
-     * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
-     *
-     * @return array(string)
-     */
-    public function getAcceptedAnalyzers();
+    public function setArtifacts(ASTArtifactList $artifacts);
 }

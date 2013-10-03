@@ -46,7 +46,7 @@ use PDepend\Application;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
 use PDepend\ProcessListener;
-use PDepend\Report\GeneratorFactory;
+use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Util\Configuration;
 
@@ -299,7 +299,7 @@ class Runner
             throw new \RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
-        $generatorFactory = new GeneratorFactory();
+        $generatorFactory = new ReportGeneratorFactory();
 
         // To append all registered loggers.
         try {

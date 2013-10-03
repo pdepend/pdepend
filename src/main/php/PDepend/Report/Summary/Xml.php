@@ -45,8 +45,8 @@ namespace PDepend\Report\Summary;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
-use PDepend\Report\GeneratorCodeAware;
-use PDepend\Report\GeneratorFileAware;
+use PDepend\Report\CodeAwareGenerator;
+use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
@@ -65,7 +65,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFileAware
+class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
      * The type of this class.

@@ -43,7 +43,7 @@
 namespace PDepend\Report\Overview;
 
 use PDepend\Metrics\Analyzer;
-use PDepend\Report\GeneratorFileAware;
+use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Util\FileUtil;
 use PDepend\Util\ImageConvert;
@@ -57,7 +57,7 @@ use PDepend\Util\ImageConvert;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Pyramid implements GeneratorFileAware
+class Pyramid implements FileAwareGenerator
 {
     /**
      * The type of this class.

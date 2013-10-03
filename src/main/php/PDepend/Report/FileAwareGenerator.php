@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -42,60 +42,20 @@
 
 namespace PDepend\Report;
 
-use PDepend\AbstractTest;
-
 /**
- * Test case for the logger factory.
+ * Marker interface for a log file aware logger.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class GeneratorFactoryTest extends AbstractTest
+interface FileAwareGenerator extends ReportGenerator
 {
     /**
-     * Tests that {@link \PDepend\Report\GeneratorFactory::createGenerator()}
-     * returns the expected instance for a valid identifier.
+     * Sets the output log file.
+     *
+     * @param string $logFile The output log file.
      *
      * @return void
      */
-    public function testCreateGeneratorWithValidIdentifier()
-    {
-        $factory = new GeneratorFactory();
-        $generator = $factory->createGenerator('summary-xml', 'pdepend.xml');
-        
-        $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator);
-    }
-    
-    /**
-     * Tests the singleton behaviour of the logger factory method 
-     * {@link \PDepend\Report\GeneratorFactory::createGenerator()}.
-     *
-     * @return void
-     */
-    public function testCreateGeneratorSingletonBehaviour()
-    {
-        $factory = new GeneratorFactory();
-        $generator1 = $factory->createGenerator('summary-xml', 'pdepend1.xml');
-        $generator2 = $factory->createGenerator('summary-xml', 'pdepend2.xml');
-
-        $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator1);
-        $this->assertSame($generator1, $generator2);
-    }
-    
-    /**
-     * Tests that {@link \PDepend\Report\GeneratorFactory::createGenerator()}
-     * fails with an exception for an invalid logger identifier.
-     *
-     * @return void
-     */
-    public function testCreateGeneratorWithInvalidIdentifierFail()
-    {
-        $this->setExpectedException(
-            '\RuntimeException',
-            "Unknown generator class '\\PDepend\\Report\\FooBar\\Xml'."
-        );
-        
-        $factory = new GeneratorFactory();
-        $factory->createGenerator('foo-bar-xml', 'pdepend.xml');
-    }
+    public function setLogFile($logFile);
 }

@@ -42,8 +42,8 @@
 
 namespace PDepend\Report\Dummy;
 
-use PDepend\Report\GeneratorCodeAware;
-use PDepend\Report\GeneratorFileAware;
+use PDepend\Report\CodeAwareGenerator;
+use PDepend\Report\FileAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList;
 
 /**
@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Logger implements GeneratorCodeAware, GeneratorFileAware
+class Logger implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
      * The output file name.

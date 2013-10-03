@@ -46,8 +46,8 @@ namespace PDepend\Report\Phpunit;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
-use PDepend\Report\GeneratorCodeAware;
-use PDepend\Report\GeneratorFileAware;
+use PDepend\Report\CodeAwareGenerator;
+use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
@@ -68,7 +68,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @deprecated Since release 0.10.5, please use the summary logger
  */
-class Xml extends AbstractTreeVisitor implements GeneratorCodeAware, GeneratorFileAware
+class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
      * The log output file.

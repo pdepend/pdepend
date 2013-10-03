@@ -751,19 +751,19 @@
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="Generator.php" role="php">
+          <file name="ReportGeneratorerator.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="NoLogOutputException.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="GeneratorCodeAware.php" role="php">
+          <file name="CodeAwareGenerator.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="GeneratorFileAware.php" role="php">
+          <file name="FileAwareGenerator.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="GeneratorFactory.php" role="php">
+          <file name="ReportGeneratorFactoryactory.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>

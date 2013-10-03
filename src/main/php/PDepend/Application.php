@@ -46,7 +46,7 @@ use PDepend\Metrics\AnalyzerClassFileSystemLocator;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerLoader;
 use PDepend\ProcessListener;
-use PDepend\Report\GeneratorCodeAware;
+use PDepend\Report\CodeAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\NullArtifactFilter;
@@ -116,9 +116,9 @@ class Application
     private $packages = null;
 
     /**
-     * List of all registered {@link \PDepend\Report\Generator} instances.
+     * List of all registered {@link \PDepend\Report\ReportGenerator} instances.
      *
-     * @var \PDepend\Report\Generator[]
+     * @var \PDepend\Report\ReportGenerator[]
      */
     private $generators = array();
 
@@ -230,10 +230,10 @@ class Application
     /**
      * Adds a logger to the output list.
      *
-     * @param \PDepend\Report\Generator $generator The logger instance.
+     * @param \PDepend\Report\ReportGenerator $generator The logger instance.
      * @return void
      */
-    public function addReportGenerator(\PDepend\Report\Generator $generator)
+    public function addReportGenerator(\PDepend\Report\ReportGenerator $generator)
     {
         $this->generators[] = $generator;
     }
@@ -327,7 +327,7 @@ class Application
 
         foreach ($this->generators as $generator) {
             // Check for code aware loggers
-            if ($generator instanceof GeneratorCodeAware) {
+            if ($generator instanceof CodeAwareGenerator) {
                 $generator->setArtifacts($packages);
             }
             $generator->close();
