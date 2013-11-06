@@ -512,8 +512,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Creates a ready to use function fixture.
      *
      * @param string $name Optional function name.
-     *
-     * @return ASTFunction
+     * @return \PDepend\Source\AST\ASTFunction
      * @since 1.0.2
      */
     protected function createFunctionFixture($name = null)
@@ -657,7 +656,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Autoloader for the test cases.
      *
      * @param string $className Name of the missing class.
-     *
      * @return void
      */
     public static function autoload($className)
@@ -684,7 +682,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $extension  = strtolower($reflection->getExtensionName());
         $extension  = ($extension === '' ? 'standard' : $extension);
 
-        if (defined('CORE_PACKAGE') === false ) {
+        if (defined('CORE_PACKAGE') === false) {
             define('CORE_PACKAGE', '+' . $extension);
         }
     }
