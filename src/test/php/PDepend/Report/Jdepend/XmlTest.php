@@ -43,6 +43,7 @@
 namespace PDepend\Report\Jdepend;
 
 use PDepend\AbstractTest;
+use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 
 /**
@@ -66,7 +67,7 @@ class XmlTest extends AbstractTest
     /**
      * Test dependency analyzer.
      *
-     * @var \PDepend\Metrics\Dependency\Analyzer
+     * @var \PDepend\Metrics\Analyzer\DependencyAnalyzer
      */
     protected $analyzer = null;
 
@@ -110,7 +111,7 @@ class XmlTest extends AbstractTest
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $exptected = array(\PDepend\Metrics\Dependency\Analyzer::CLAZZ);
+        $exptected = array(DependencyAnalyzer::CLAZZ);
 
         $this->assertEquals($exptected, $actual);
     }
@@ -143,7 +144,7 @@ class XmlTest extends AbstractTest
     {
         $this->packages = self::parseCodeResourceForTest();
 
-        $this->analyzer = new \PDepend\Metrics\Dependency\Analyzer();
+        $this->analyzer = new DependencyAnalyzer();
         $this->analyzer->analyze($this->packages);
 
         $log = new Xml();
@@ -169,7 +170,7 @@ class XmlTest extends AbstractTest
         $logger = new Xml();
 
         $this->assertFalse($logger->log(new DummyAnalyzer()));
-        $this->assertTrue($logger->log(new \PDepend\Metrics\Dependency\Analyzer()));
+        $this->assertTrue($logger->log(new DependencyAnalyzer()));
     }
 
     /**

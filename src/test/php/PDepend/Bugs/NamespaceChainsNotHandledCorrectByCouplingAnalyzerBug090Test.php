@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+
 /**
  * Test case for bug 090 where the coupling analyzer calculates wrong results
  * for functions calls and object allocations that use PHP 5.3's namespace
@@ -66,7 +68,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -82,7 +84,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -98,7 +100,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -114,7 +116,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -130,7 +132,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

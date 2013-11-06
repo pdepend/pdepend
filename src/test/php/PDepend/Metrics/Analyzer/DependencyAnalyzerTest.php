@@ -38,54 +38,95 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- */
+  */
 
-namespace PDepend\Bugs;
+namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\Analyzer\InheritanceAnalyzer;
+use PDepend\Metrics\AbstractMetricsTest;
 
 /**
- * Test case for bug #118
+ * Tests the for the package metrics visitor.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \stdClass
- * @group regressiontest
+ * @covers \PDepend\Metrics\Analyzer\DependencyAnalyzer
+ * @group unittest
  */
-class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractRegressionTest
+class DependencyAnalyzerTest extends AbstractMetricsTest
 {
     /**
-     * testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten
+     * The used node builder.
      *
-     * @return void
+     * @var \PDepend\Source\Builder\Builder
      */
-    public function testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten()
-    {
-        $packages = self::parseCodeResourceForTest();
-        $class    = $packages->current()->getClasses()->current();
-
-        $analyzer = new InheritanceAnalyzer();
-        $analyzer->analyze($packages);
-
-        $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(1, $metrics['noom']);
-    }
+    protected $builder = null;
 
     /**
-     * testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten
+     * Input test data.
+     *
+     * @var array(string=>array)
+     */
+    private $_input = array(
+        '+global'  =>  array(
+            'tc'  =>  0,
+            'cc'  =>  0,
+            'ac'  =>  0,
+            'ca'  =>  1,
+            'ce'  =>  0,
+            'a'   =>  0,
+            'i'   =>  0,
+            'd'   =>  1
+        ),
+        'pkg1'  =>  array(
+            'tc'  =>  1,
+            'cc'  =>  1,
+            'ac'  =>  0,
+            'ca'  =>  0,
+            'ce'  =>  2,
+            'a'   =>  0,
+            'i'   =>  1,
+            'd'   =>  0
+        ),
+        'pkg2'  =>  array(
+            'tc'  =>  1,
+            'cc'  =>  0,
+            'ac'  =>  1,
+            'ca'  =>  1,
+            'ce'  =>  0,
+            'a'   =>  1,
+            'i'   =>  0,
+            'd'   =>  0
+        ),
+        'pkg3'  =>  array(
+            'tc'  =>  1,
+            'cc'  =>  0,
+            'ac'  =>  1,
+            'ca'  =>  1,
+            'ce'  =>  1,
+            'a'   =>  1,
+            'i'   =>  0.5,
+            'd'   =>  0.5,
+        ),
+    );
+
+    /**
+     * Tests the generated package metrics.
      *
      * @return void
      */
-    public function testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten()
+    public function testGenerateMetrics()
     {
+        $visitor = new DependencyAnalyzer();
+
         $packages = self::parseCodeResourceForTest();
-        $class    = $packages->current()->getClasses()->current();
+        $visitor->analyze($packages);
 
-        $analyzer = new InheritanceAnalyzer();
-        $analyzer->analyze($packages);
+        $actual = array();
+        foreach ($packages as $package) {
+            $actual[$package->getName()] = $visitor->getStats($package);
+        }
 
-        $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(1, $metrics['noom']);
+        $this->assertEquals($this->_input, $actual);
     }
 }

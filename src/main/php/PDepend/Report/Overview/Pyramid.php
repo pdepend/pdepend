@@ -43,6 +43,11 @@
 namespace PDepend\Report\Overview;
 
 use PDepend\Metrics\Analyzer;
+use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
+use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+use PDepend\Metrics\Analyzer\InheritanceAnalyzer;
+use PDepend\Metrics\Analyzer\NodeCountAnalyzer;
+use PDepend\Metrics\Analyzer\NodeLocAnalyzer;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Util\FileUtil;
@@ -74,35 +79,35 @@ class Pyramid implements FileAwareGenerator
     /**
      * The used coupling analyzer.
      *
-     * @var \PDepend\Metrics\Coupling\Analyzer
+     * @var \PDepend\Metrics\Analyzer\CouplingAnalyzer
      */
     private $coupling = null;
 
     /**
      * The used cyclomatic complexity analyzer.
      *
-     * @var \PDepend\Metrics\CyclomaticComplexity\Analyzer
+     * @var \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
      */
     private $cyclomaticComplexity = null;
 
     /**
      * The used inheritance analyzer.
      *
-     * @var \PDepend\Metrics\Inheritance\Analyzer
+     * @var \PDepend\Metrics\Analyzer\InheritanceAnalyzer
      */
     private $inheritance = null;
 
     /**
      * The used node count analyzer.
      *
-     * @var \PDepend\Metrics\NodeCount\Analyzer
+     * @var \PDepend\Metrics\Analyzer\NodeCountAnalyzer
      */
     private $nodeCount = null;
 
     /**
      * The used node loc analyzer.
      *
-     * @var \PDepend\Metrics\NodeLoc\Analyzer
+     * @var \PDepend\Metrics\Analyzer\NodeLocAnalyzer
      */
     private $nodeLoc = null;
 
@@ -144,11 +149,11 @@ class Pyramid implements FileAwareGenerator
     public function getAcceptedAnalyzers()
     {
         return array(
-            'PDepend\\Metrics\\Coupling\\Analyzer',
-            'PDepend\\Metrics\\CyclomaticComplexity\\Analyzer',
-            'PDepend\\Metrics\\Inheritance\\Analyzer',
-            'PDepend\\Metrics\\NodeCount\\Analyzer',
-            'PDepend\\Metrics\\NodeLoc\\Analyzer'
+            'PDepend\\Metrics\\Analyzer\\CouplingAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer'
         );
     }
 
@@ -161,15 +166,15 @@ class Pyramid implements FileAwareGenerator
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PDepend\Metrics\CyclomaticComplexity\Analyzer) {
+        if ($analyzer instanceof CyclomaticComplexityAnalyzer) {
             $this->cyclomaticComplexity = $analyzer;
-        } elseif ($analyzer instanceof \PDepend\Metrics\Coupling\Analyzer) {
+        } elseif ($analyzer instanceof CouplingAnalyzer) {
             $this->coupling = $analyzer;
-        } elseif ($analyzer instanceof \PDepend\Metrics\Inheritance\Analyzer) {
+        } elseif ($analyzer instanceof InheritanceAnalyzer) {
             $this->inheritance = $analyzer;
-        } elseif ($analyzer instanceof \PDepend\Metrics\NodeCount\Analyzer) {
+        } elseif ($analyzer instanceof NodeCountAnalyzer) {
             $this->nodeCount = $analyzer;
-        } elseif ($analyzer instanceof \PDepend\Metrics\NodeLoc\Analyzer) {
+        } elseif ($analyzer instanceof NodeLocAnalyzer) {
             $this->nodeLoc = $analyzer;
         } else {
             return false;

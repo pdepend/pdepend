@@ -55,7 +55,7 @@ interface CacheDriver
     /**
      * The current cache version.
      */
-    const VERSION = '@version:d1f55cea93157d810a334434416168ae:@';
+    const VERSION = '@version:ab337539f9e495dfc560fa20352f91ee:@';
 
     /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method

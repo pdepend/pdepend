@@ -43,6 +43,7 @@
 namespace PDepend\Report\Jdepend;
 
 use PDepend\Metrics\Analyzer;
+use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
@@ -104,7 +105,7 @@ class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGe
     /**
      * The dependency result set.
      *
-     * @var \PDepend\Metrics\Dependency\Analyzer
+     * @var DependencyAnalyzer
      */
     protected $analyzer = null;
 
@@ -156,7 +157,7 @@ class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGe
      */
     public function getAcceptedAnalyzers()
     {
-        return array(\PDepend\Metrics\Dependency\Analyzer::CLAZZ);
+        return array(DependencyAnalyzer::CLAZZ);
     }
 
     /**
@@ -179,7 +180,7 @@ class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGe
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PDepend\Metrics\Dependency\Analyzer) {
+        if ($analyzer instanceof DependencyAnalyzer) {
             $this->analyzer = $analyzer;
 
             return true;

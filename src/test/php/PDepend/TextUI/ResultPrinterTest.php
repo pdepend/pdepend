@@ -43,6 +43,7 @@
 namespace PDepend\TextUI;
 
 use PDepend\AbstractTest;
+use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -120,7 +121,7 @@ class ResultPrinterTest extends AbstractTest
     {
         // Create dummy objects
         $method   = new ASTMethod('method');
-        $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
+        $analyzer = new ClassLevelAnalyzer();
 
         $printer = new ResultPrinter();
 
@@ -147,7 +148,7 @@ class ResultPrinterTest extends AbstractTest
     {
         // Create dummy objects
         $method   = new ASTMethod('method');
-        $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
+        $analyzer = new ClassLevelAnalyzer();
 
         $printer = new ResultPrinter();
 

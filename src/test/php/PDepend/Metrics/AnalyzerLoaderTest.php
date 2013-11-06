@@ -63,8 +63,8 @@ class AnalyzerLoaderTest extends AbstractTest
     public function testLoadKnownAnalyzersByInstance()
     {
         $expected = array(
-            'PDepend\\Metrics\\CodeRank\\Analyzer',
-            'PDepend\\Metrics\\Hierarchy\\Analyzer',
+            'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\HierarchyAnalyzer',
         );
         
         $loader = new AnalyzerLoader(

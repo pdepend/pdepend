@@ -66,11 +66,11 @@ class PyramidTest extends AbstractTest
         $logger    = new Pyramid();
         $actual    = $logger->getAcceptedAnalyzers();
         $exptected = array(
-            'PDepend\\Metrics\\Coupling\\Analyzer',
-            'PDepend\\Metrics\\CyclomaticComplexity\\Analyzer',
-            'PDepend\\Metrics\\Inheritance\\Analyzer',
-            'PDepend\\Metrics\\NodeCount\\Analyzer',
-            'PDepend\\Metrics\\NodeLoc\\Analyzer'
+            'PDepend\\Metrics\\Analyzer\\CouplingAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer',
+            'PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer'
         );
 
         $this->assertEquals($exptected, $actual);
@@ -265,7 +265,7 @@ class PyramidTest extends AbstractTest
 
     private function createCouplingAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\Metrics\Coupling\Analyzer');
+        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\CouplingAnalyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -280,7 +280,7 @@ class PyramidTest extends AbstractTest
 
     private function createComplexityAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\Metrics\CyclomaticComplexity\Analyzer');
+        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -294,7 +294,7 @@ class PyramidTest extends AbstractTest
 
     private function createInheritanceAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\Metrics\Inheritance\Analyzer');
+        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -309,7 +309,7 @@ class PyramidTest extends AbstractTest
 
     private function createNodeCountAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\NodeCount\\Analyzer');
+        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -326,7 +326,7 @@ class PyramidTest extends AbstractTest
 
     private function createNodeLocAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\NodeLoc\\Analyzer');
+        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer');
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(

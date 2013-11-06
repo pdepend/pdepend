@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+
 /**
  * Test case for bug 089 where the coupling analyzer calculates wrong results
  * when there are comments in method execution expressions.
@@ -65,7 +67,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -81,7 +83,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
@@ -97,7 +99,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
     {
         $packages = self::parseCodeResourceForTest();
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();

@@ -43,6 +43,7 @@
 namespace PDepend\Report\Jdepend;
 
 use PDepend\Metrics\Analyzer;
+use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
@@ -81,7 +82,7 @@ class Chart extends AbstractTreeVisitor implements CodeAwareGenerator, FileAware
     /**
      * The context analyzer instance.
      *
-     * @var \PDepend\Metrics\Dependency\Analyzer
+     * @var \PDepend\Metrics\Analyzer\DependencyAnalyzer
      */
     private $analyzer = null;
 
@@ -105,7 +106,7 @@ class Chart extends AbstractTreeVisitor implements CodeAwareGenerator, FileAware
      */
     public function getAcceptedAnalyzers()
     {
-        return array(\PDepend\Metrics\Dependency\Analyzer::CLAZZ);
+        return array(DependencyAnalyzer::CLAZZ);
     }
 
     /**
@@ -128,7 +129,7 @@ class Chart extends AbstractTreeVisitor implements CodeAwareGenerator, FileAware
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PDepend\Metrics\Dependency\Analyzer) {
+        if ($analyzer instanceof DependencyAnalyzer) {
             $this->analyzer = $analyzer;
 
             return true;

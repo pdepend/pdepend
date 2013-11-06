@@ -69,8 +69,9 @@ abstract class AbstractMetricsTest extends AbstractTest
         try {
             return parent::parseSource(
                 sprintf(
-                    'Metrics/%s/%s.php',
+                    'Metrics/%s/%s/%s.php',
                     $parts[count($parts) - 2],
+                    substr($parts[count($parts) - 1], 0, -4),
                     $method
                 ),
                 $ignoreAnnotations
@@ -80,8 +81,9 @@ abstract class AbstractMetricsTest extends AbstractTest
         
         return parent::parseSource(
             sprintf(
-                'Metrics/%s/%s',
+                'Metrics/%s/%s/%s',
                 $parts[count($parts) - 2],
+                substr($parts[count($parts) - 1], 0, -4),
                 $method
             ),
             $ignoreAnnotations

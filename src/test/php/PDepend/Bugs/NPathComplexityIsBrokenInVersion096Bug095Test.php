@@ -42,6 +42,7 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Metrics\Analyzer\NPathComplexityAnalyzer;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -70,7 +71,7 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTe
             ->getFunctions()
             ->current();
 
-        $analyzer = new \PDepend\Metrics\NPathComplexity\Analyzer();
+        $analyzer = new NPathComplexityAnalyzer();
         $analyzer->setCache(new MemoryCacheDriver());
         $analyzer->analyze($packages);
 

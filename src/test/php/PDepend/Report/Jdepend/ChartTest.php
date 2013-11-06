@@ -43,8 +43,9 @@
 namespace PDepend\Report\Jdepend;
 
 use PDepend\AbstractTest;
-use PDepend\Metrics\Dependency\Analyzer;
+use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
+use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 
 /**
@@ -102,10 +103,7 @@ class ChartTest extends AbstractTest
     public function testReturnsExceptedAnalyzers()
     {
         $logger    = new Chart();
-        $actual    = $logger->getAcceptedAnalyzers();
-        $exptected = array(Analyzer::CLAZZ);
-
-        $this->assertEquals($exptected, $actual);
+        $this->assertEquals(array(DependencyAnalyzer::CLAZZ), $logger->getAcceptedAnalyzers());
     }
 
     /**
@@ -129,7 +127,7 @@ class ChartTest extends AbstractTest
     public function testChartLogAcceptsValidAnalyzer()
     {
         $logger = new Chart();
-        $this->assertTrue($logger->log(new Analyzer()));
+        $this->assertTrue($logger->log(new DependencyAnalyzer()));
     }
 
     /**
@@ -152,7 +150,7 @@ class ChartTest extends AbstractTest
     {
         $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
-        $analyzer = new Analyzer();
+        $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
@@ -173,7 +171,7 @@ class ChartTest extends AbstractTest
     {
         $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
-        $analyzer = new Analyzer();
+        $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
@@ -201,7 +199,7 @@ class ChartTest extends AbstractTest
     {
         $nodes = new ASTArtifactList($this->_createPackages(true, false, true));
 
-        $analyzer = new Analyzer();
+        $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
@@ -228,23 +226,36 @@ class ChartTest extends AbstractTest
     {
         $nodes = $this->_createPackages(true, true);
 
-        $analyzer = new DependencyAnalyzer();
-        $analyzer->stats = array(
-            $nodes[0]->getUuid()  =>  array(
-                'a'   =>  0,
-                'i'   =>  0,
-                'd'   =>  0,
-                'cc'  =>  250,
-                'ac'  =>  250
-            ),
-            $nodes[1]->getUuid()  =>  array(
-                'a'   =>  0,
-                'i'   =>  0,
-                'd'   =>  0,
-                'cc'  =>  50,
-                'ac'  =>  50
-            ),
-        );
+        $analyzer = $this->getMock('\\PDepend\\Metrics\\Analyzer\\DependencyAnalyzer');
+        $analyzer->expects($this->atLeastOnce())
+            ->method('getStats')
+            ->will(
+                $this->returnCallback(
+                    function (AbstractASTArtifact $node) use ($nodes) {
+                        $data = array(
+                            $nodes[0]->getUuid()  =>  array(
+                                'a'   =>  0,
+                                'i'   =>  0,
+                                'd'   =>  0,
+                                'cc'  =>  250,
+                                'ac'  =>  250
+                            ),
+                            $nodes[1]->getUuid()  =>  array(
+                                'a'   =>  0,
+                                'i'   =>  0,
+                                'd'   =>  0,
+                                'cc'  =>  50,
+                                'ac'  =>  50
+                            ),
+                        );
+
+                        if (isset($data[$node->getUuid()])) {
+                            return $data[$node->getUuid()];
+                        }
+                        return array();
+                    }
+                )
+            );
 
         $nodes = new ASTArtifactList($nodes);
 
@@ -292,7 +303,7 @@ class ChartTest extends AbstractTest
 
         $nodes = new ASTArtifactList($this->_createPackages(true, true));
 
-        $analyzer = new Analyzer();
+        $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
 
         $logger = new Chart();

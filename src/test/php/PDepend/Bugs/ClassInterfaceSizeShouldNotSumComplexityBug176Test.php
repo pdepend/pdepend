@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
+use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -70,10 +72,10 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
             ->getClasses()
             ->current();
 
-        $ccnAnalyzer = new \PDepend\Metrics\CyclomaticComplexity\Analyzer();
+        $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
-        $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
+        $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($packages);
@@ -96,10 +98,10 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
             ->getClasses()
             ->current();
 
-        $ccnAnalyzer = new \PDepend\Metrics\CyclomaticComplexity\Analyzer();
+        $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
-        $analyzer = new \PDepend\Metrics\ClassLevel\Analyzer();
+        $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 

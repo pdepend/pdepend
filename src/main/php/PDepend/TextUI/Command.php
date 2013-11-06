@@ -565,11 +565,13 @@ class Command
 
         // Get all include paths
         $paths   = explode(PATH_SEPARATOR, get_include_path());
-        $paths[] = dirname(__FILE__) . '/../../../';
+        $paths[] = dirname(__FILE__) . '/../../';
+
+        $paths = array_unique(array_map('realpath', $paths));
 
         foreach ($paths as $path) {
 
-            $path .= '/PDepend/Metrics';
+            $path .= '/PDepend/Metrics/Analyzer';
 
             if (is_dir($path) === false) {
                 continue;
@@ -578,7 +580,11 @@ class Command
             foreach (new \DirectoryIterator($path) as $dir) {
 
                 // Create analyzer xml config filename
-                $file = $dir->getPathname() . '/Analyzer.xml';
+                $file = sprintf(
+                    '%s/%s.xml',
+                    $dir->getPath(),
+                    pathinfo($dir->getFilename(), PATHINFO_FILENAME)
+                );
 
                 if (is_file($file) === false) {
                     continue;

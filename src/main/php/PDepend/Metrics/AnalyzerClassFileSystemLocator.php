@@ -126,7 +126,7 @@ class AnalyzerClassFileSystemLocator implements AnalyzerClassLocator
             foreach ($iterator as $file) {
 
                 $pathName = strtr($file->getPathname(), '\\', '/');
-                if (0 === preg_match('(/Metrics/[^/]+/Analyzer\.php$)', $pathName)) {
+                if (0 === preg_match('(/Metrics/Analyzer/[^/]+Analyzer\.php$)', $pathName)) {
                     continue;
                 }
 

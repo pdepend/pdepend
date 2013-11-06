@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+
 /**
  * Test case related to bug 14.
  *
@@ -65,7 +67,7 @@ class CouplingAnalyzerBug014Test extends AbstractRegressionTest
         $this->assertEquals(1, $packages->count());
         $this->assertEquals(1, $packages->current()->getFunctions()->count());
 
-        $analyzer = new \PDepend\Metrics\Coupling\Analyzer();
+        $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($packages);
 
         $project = $analyzer->getProjectMetrics();
