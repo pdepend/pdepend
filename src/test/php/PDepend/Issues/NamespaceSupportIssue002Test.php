@@ -60,10 +60,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesSimpleUseDeclaration()
     {
-        $package = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
+        $package = $this->getFirstClassForTestCase()
             ->getParentClass()
             ->getPackage();
 

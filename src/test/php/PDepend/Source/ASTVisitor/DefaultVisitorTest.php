@@ -108,7 +108,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor->expects($this->exactly(2))
             ->method('visitParameter');
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -124,7 +124,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor->expects($this->exactly(3))
             ->method('visitParameter');
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -143,7 +143,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -162,7 +162,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -181,7 +181,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -200,7 +200,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -219,7 +219,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**
@@ -238,7 +238,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages->current());
+        $visitor->visitNamespace($packages[0]);
     }
 
     /**

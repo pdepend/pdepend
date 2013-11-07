@@ -260,6 +260,22 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the first method that could be found in the source file
+     * associated with the calling test case.
+     *
+     * @return \PDepend\Source\AST\ASTMethod
+     */
+    protected function getFirstClassMethodForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current()
+            ->getMethods()
+            ->current();
+    }
+
+    /**
      * Returns the first interface that could be found in the source file
      * associated with the calling test case.
      *
@@ -270,6 +286,22 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         return self::parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
+            ->current();
+    }
+
+    /**
+     * Returns the first method that could be found in the source file
+     * associated with the calling test case.
+     *
+     * @return \PDepend\Source\AST\ASTMethod
+     */
+    protected function getFirstInterfaceMethodForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getInterfaces()
+            ->current()
+            ->getMethods()
             ->current();
     }
 
@@ -390,8 +422,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Clears all temporary resources.
      *
-     * @param string $dir The root directory.
-     *
+     * @param string $dir
      * @return void
      */
     private function clearRunResources($dir = null)

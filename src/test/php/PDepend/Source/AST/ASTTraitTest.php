@@ -383,10 +383,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
      */
     protected function getFirstTraitForTest()
     {
-        return $this->parseCodeResourceForTest()
-            ->current()
-            ->getTypes()
-            ->current();
+        return parent::getFirstTraitForTestCase();
     }
 
     /**

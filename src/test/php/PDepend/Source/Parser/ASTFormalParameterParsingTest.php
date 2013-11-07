@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\Parser;
 
+use PDepend\Source\AST\ASTFormalParameter;
+
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
@@ -100,6 +102,6 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
             ->current()
             ->getMethods()
             ->current()
-            ->getFirstChildOfType(\PDepend\Source\AST\ASTFormalParameter::CLAZZ);
+            ->getFirstChildOfType(ASTFormalParameter::CLAZZ);
     }
 }

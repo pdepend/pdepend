@@ -68,9 +68,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
      */
     public function testParserSetsExpectedPrimitivePropertyType($actual, $expected)
     {
-        $packages = self::parseTestCase(__METHOD__ . '_' . $actual);
-        
-        $type = $packages->current()
+        $type = self::parseTestCase(__METHOD__ . '_' . $actual)
+            ->current()
             ->getClasses()
             ->current()
             ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
@@ -86,11 +85,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
      */
     public function testParserSetsExpectedArrayPropertyType()
     {
-        $packages = self::parseTestCase();
-
-        $type = $packages->current()
-            ->getClasses()
-            ->current()
+        $type = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
             ->getFirstChildOfType(ASTType::CLAZZ);
 
@@ -104,11 +99,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
      */
     public function testParserSetsExpectedArrayWithParenthesisPropertyType()
     {
-        $packages = self::parseTestCase();
-
-        $type = $packages->current()
-            ->getClasses()
-            ->current()
+        $type = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
             ->getFirstChildOfType(ASTType::CLAZZ);
 

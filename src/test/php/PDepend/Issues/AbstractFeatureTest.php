@@ -59,13 +59,12 @@ abstract class AbstractFeatureTest extends AbstractTest
      */
     protected function getParametersOfFirstFunction()
     {
-        $packages = self::parseTestCase();
-        $functions = $packages[0]->getFunctions();
-        return $functions[0]->getParameters();
+        return $this->getFirstFunctionForTestCase()
+            ->getParameters();
     }
     
     /**
-     * Parses the sourse for the calling test case.
+     * Parses the source for the calling test case.
      *
      * @param string $testCase
      * @return \PDepend\Source\AST\ASTNamespace[]
@@ -82,7 +81,7 @@ abstract class AbstractFeatureTest extends AbstractTest
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase
+     * @param string $testCase
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */

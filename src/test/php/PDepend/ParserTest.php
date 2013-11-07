@@ -1160,13 +1160,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesParentKeywordInMethodParameterDefaultValue()
     {
-        $parameters = self::parseCodeResourceForTest()->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
         $this->assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
@@ -1177,13 +1171,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesSelfKeywordAsParameterTypeHint()
     {
-        $parameters = self::parseCodeResourceForTest()->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
-            ->getParameters();
-
+        $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
         $this->assertNotNull($parameters[0]);
     }
 
@@ -1194,19 +1182,13 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals()
     {
-        $classes = self::parseCodeResourceForTest()->current()
-            ->getClasses();
+        $namespaces = $this->parseCodeResourceForTest();
+        $classes = $namespaces[0]->getClasses();
+        $methods = $classes[1]->getMethods();
+        $parameters = $methods[0]->getParameters();
 
-        $class1 = $classes->current();
-        $classes->next();
-        $class2 = $classes->current();
-
-        $parameters = $class2->getMethods()
-            ->current()
-            ->getParameters();
-
-        $this->assertSame($class1, $parameters[0]->getClass());
-        $this->assertNotSame($class2, $parameters[0]->getClass());
+        $this->assertSame($classes[0], $parameters[0]->getClass());
+        $this->assertNotSame($classes[1], $parameters[0]->getClass());
     }
 
     /**
@@ -1217,14 +1199,9 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf()
     {
-        $class = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current();
-
-        $parameters = $class->getMethods()
-            ->current()
-            ->getParameters();
+        $class = $this->getFirstClassForTestCase();
+        $methods = $class->getMethods();
+        $parameters = $methods[0]->getParameters();
 
         $this->assertSame($class, $parameters[0]->getClass());
     }

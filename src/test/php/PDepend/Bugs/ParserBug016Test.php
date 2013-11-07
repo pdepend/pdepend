@@ -69,14 +69,11 @@ class ParserBug016Test extends AbstractRegressionTest
      */
     public function testParserDetectsTypeWithinInstanceOfOperator()
     {
-        $packages = self::parseCodeResourceForTest();
-
-        $functions = $packages->current()->getFunctions();
-        $function  = $functions->current();
-
+        $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
+
         $this->assertEquals(1, $dependencies->count());
-        $this->assertEquals('SplObjectStorage', $dependencies->current()->getName());
+        $this->assertEquals('SplObjectStorage', $dependencies[0]->getName());
     }
 
     /**
@@ -98,12 +95,9 @@ class ParserBug016Test extends AbstractRegressionTest
      */
     public function testParserIgnoresDynamicInstanceOfOperator()
     {
-        $packages = self::parseCodeResourceForTest();
-
-        $functions = $packages->current()->getFunctions();
-        $function  = $functions->current();
-
+        $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
+
         $this->assertEquals(0, $dependencies->count());
     }
 }

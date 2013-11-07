@@ -72,11 +72,7 @@ class UnstructuredCodeTest extends AbstractParserTest
      */
     public function testParserHandlesConditionalClassDeclaration()
     {
-        $class = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current();
-
+        $class = $this->getFirstClassForTestCase();
         $this->assertEquals(5, $class->getEndLine());
     }
 
@@ -87,11 +83,7 @@ class UnstructuredCodeTest extends AbstractParserTest
      */
     public function testParserHandlesConditionalInterfaceDeclaration()
     {
-        $interface = self::parseCodeResourceForTest()
-            ->current()
-            ->getInterfaces()
-            ->current();
-
+        $interface = $this->getFirstInterfaceForTestCase();
         $this->assertEquals(6, $interface->getEndLine());
     }
 
@@ -102,11 +94,7 @@ class UnstructuredCodeTest extends AbstractParserTest
      */
     public function testParserHandlesConditionalFunctionDeclaration()
     {
-        $function = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current();
-
+        $function = $this->getFirstFunctionForTestCase();
         $this->assertEquals(6, $function->getEndLine());
     }
 }

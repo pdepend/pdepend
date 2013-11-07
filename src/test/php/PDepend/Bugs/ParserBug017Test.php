@@ -69,12 +69,9 @@ class ParserBug017Test extends AbstractRegressionTest
      */
     public function testDetectsTypeWithinCatchBlock()
     {
-        $function = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current();
-
+        $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
-        $this->assertEquals('OutOfBoundsException', $dependencies->current()->getName());
+
+        $this->assertEquals('OutOfBoundsException', $dependencies[0]->getName());
     }
 }

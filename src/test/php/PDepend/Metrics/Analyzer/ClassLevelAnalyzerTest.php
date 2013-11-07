@@ -487,7 +487,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
     private function _calculateClassMetrics()
     {
         $packages = self::parseTestCaseSource(self::getCallingTestMethod());
-        $package  = $packages->current();
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());
@@ -496,7 +495,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 
-        return $analyzer->getNodeMetrics($package->getClasses()->current());
+        return $analyzer->getNodeMetrics($packages[0]->getClasses()->current());
     }
 
     /**
@@ -681,7 +680,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
     private function _calculateTraitMetrics()
     {
         $packages = $this->parseCodeResourceForTest();
-        $package  = $packages->current();
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());
@@ -690,6 +688,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
         $analyzer->addAnalyzer($ccnAnalyzer);
         $analyzer->analyze($packages);
 
-        return $analyzer->getNodeMetrics($package->getTraits()->current());
+        return $analyzer->getNodeMetrics($packages[0]->getTraits()->current());
     }
 }

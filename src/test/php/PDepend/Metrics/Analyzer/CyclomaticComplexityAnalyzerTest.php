@@ -104,8 +104,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
+        $packages = $this->parseCodeResourceForTest();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
@@ -116,7 +115,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
             'pdepend2' => array('ccn' => 7, 'ccn2' => 10)
         );
         
-        foreach ($package->getFunctions() as $function) {
+        foreach ($packages[0]->getFunctions() as $function) {
             $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
         }
 
@@ -149,14 +148,13 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateMethodCCNAndCNN2()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
+        $packages = $this->parseCodeResourceForTest();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $classes = $package->getClasses();
-        $methods = $classes->current()->getMethods();
+        $classes = $packages[0]->getClasses();
+        $methods = $classes[0]->getMethods();
 
         $actual   = array();
         $expected = array(
@@ -198,15 +196,13 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateExpectedCCNForDoWhileStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $packages = $this->parseCodeResourceForTest();
+        $functions = $packages[0]->getFunctions();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $this->assertEquals(3, $analyzer->getCcn($function));
+        $this->assertEquals(3, $analyzer->getCcn($functions[0]));
     }
 
     /**
@@ -216,15 +212,13 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateExpectedCCN2ForDoWhileStatement()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $packages = $this->parseCodeResourceForTest();
+        $functions = $packages[0]->getFunctions();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $this->assertEquals(3, $analyzer->getCcn2($function));
+        $this->assertEquals(3, $analyzer->getCcn2($functions[0]));
     }
 
     /**
@@ -331,20 +325,18 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
     {
-        $packages = self::parseCodeResourceForTest();
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $packages = $this->parseCodeResourceForTest();
+        $functions = $packages[0]->getFunctions();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $metrics0 = $analyzer->getNodeMetrics($function);
+        $metrics0 = $analyzer->getNodeMetrics($functions[0]);
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $metrics1 = $analyzer->getNodeMetrics($function);
+        $metrics1 = $analyzer->getNodeMetrics($functions[0]);
 
         $this->assertEquals($metrics0, $metrics1);
     }
@@ -357,22 +349,19 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
     {
-        $packages = self::parseCodeResourceForTest();
-        $method   = $packages->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current();
+        $packages = $this->parseCodeResourceForTest();
+        $classes = $packages[0]->getClasses();
+        $methods = $classes[0]->getMethods();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $metrics0 = $analyzer->getNodeMetrics($method);
+        $metrics0 = $analyzer->getNodeMetrics($methods[0]);
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
 
-        $metrics1 = $analyzer->getNodeMetrics($method);
+        $metrics1 = $analyzer->getNodeMetrics($methods[0]);
 
         $this->assertEquals($metrics0, $metrics1);
     }

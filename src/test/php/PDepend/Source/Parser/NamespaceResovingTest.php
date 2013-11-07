@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\Parser;
 
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+
 /**
  * Test case for the namespace resolving in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
@@ -61,15 +63,10 @@ class NamespaceResovingTest extends AbstractParserTest
      */
     public function testNamespacesAreCorrectlyLookedUp()
     {
-        $method = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current();
+        $method = $this->getFirstClassMethodForTestCase();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(\PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -93,15 +90,10 @@ class NamespaceResovingTest extends AbstractParserTest
      */
     public function testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces()
     {
-        $method = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current();
+        $method = $this->getFirstClassMethodForTestCase();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(\PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -135,7 +127,7 @@ class NamespaceResovingTest extends AbstractParserTest
             ->current();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(\PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -171,7 +163,7 @@ class NamespaceResovingTest extends AbstractParserTest
             ->current();
 
         $actual = array();
-        foreach ($method->findChildrenOfType(\PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ) as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::CLAZZ) as $reference) {
             $actual[] = $reference->getImage();
         }
 

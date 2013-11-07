@@ -205,14 +205,13 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDepthOfInheritanceForSeveralClasses()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $package  = $packages->current();
+        $packages = $this->parseCodeResourceForTest();
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($packages);
 
         $actual = array();
-        foreach ($package->getClasses() as $class) {
+        foreach ($packages[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
             
             $actual[$class->getName()] = $metrics['dit'];

@@ -69,8 +69,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithWhitespace()
     {
-        $packages   = self::parseTestCase();
-        $function   = $packages->current()->getFunctions()->current();
+        $function = $this->getFirstFunctionForTestCase();
         $dependency = $function->getDependencies()->current();
 
         $this->assertSame('Bar', $dependency->getName());
@@ -91,8 +90,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespace()
     {
-        $packages   = self::parseTestCase();
-        $function   = $packages->current()->getFunctions()->current();
+        $function = $this->getFirstFunctionForTestCase();
         $dependency = $function->getDependencies()->current();
 
         $this->assertSame('Bar', $dependency->getName());
@@ -116,10 +114,9 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserIgnoresDependencyDefinedInMultilineComment()
     {
-        $packages = self::parseTestCase();
-        $function = $packages->current()->getFunctions()->current();
-
+        $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
+
         $this->assertSame(0, $dependencies->count());
     }
 
@@ -139,10 +136,9 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test
      */
     public function testParserIgnoresDependencyDefinedWithinAnotherComment()
     {
-        $packages = self::parseTestCase();
-        $function = $packages->current()->getFunctions()->current();
-
+        $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
+
         $this->assertSame(0, $dependencies->count());
     }
 }

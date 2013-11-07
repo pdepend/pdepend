@@ -290,10 +290,7 @@ class ASTCallableTest extends AbstractTest
      */
     protected function getFirstCallableForTest()
     {
-        return self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current();
+        return $this->getFirstFunctionForTestCase();
     }
 
     /**
