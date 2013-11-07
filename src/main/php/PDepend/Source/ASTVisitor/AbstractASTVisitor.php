@@ -40,7 +40,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\TreeVisitor;
+namespace PDepend\Source\ASTVisitor;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
@@ -59,12 +59,12 @@ use PDepend\Source\AST\ASTTrait;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTreeVisitor implements TreeVisitor
+abstract class AbstractASTVisitor implements ASTVisitor
 {
     /**
      * List of all registered listeners.
      *
-     * @var \PDepend\TreeVisitor\TreeVisitListener
+     * @var \PDepend\Source\ASTVisitor\ASTVisitListener[]
      */
     private $listeners = array();
 
@@ -81,10 +81,10 @@ abstract class AbstractTreeVisitor implements TreeVisitor
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param \PDepend\TreeVisitor\TreeVisitListener $listener
+     * @param \PDepend\Source\ASTVisitor\ASTVisitListener $listener
      * @return void
      */
-    public function addVisitListener(TreeVisitListener $listener)
+    public function addVisitListener(ASTVisitListener $listener)
     {
         if (in_array($listener, $this->listeners, true) === false) {
             $this->listeners[] = $listener;

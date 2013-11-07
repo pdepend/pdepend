@@ -44,7 +44,7 @@ namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
-use PDepend\TreeVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\TestNodeVisitor;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTFunction class.

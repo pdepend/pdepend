@@ -178,7 +178,7 @@ class ASTCompilationUnitTest extends AbstractTest
      */
     public function testAcceptInvokesVisitFileOnGivenVisitor()
     {
-        $visitor = $this->getMock('\\PDepend\\TreeVisitor\\TreeVisitor');
+        $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('visitFile')
             ->with(self::isInstanceOf(ASTCompilationUnit::CLAZZ));

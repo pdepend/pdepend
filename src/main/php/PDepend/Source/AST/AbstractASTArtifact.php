@@ -42,8 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\TreeVisitor\TreeVisitor;
-
 /**
  * Abstract base class for code item.
  *

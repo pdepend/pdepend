@@ -46,7 +46,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
-use PDepend\TreeVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\TestNodeVisitor;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**

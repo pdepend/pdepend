@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics;
 
-use PDepend\TreeVisitor\AbstractTreeVisitor;
+use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
  * This abstract class provides a base implementation of an analyzer.
@@ -50,7 +50,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractAnalyzer extends AbstractTreeVisitor implements Analyzer
+abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
 {
     /**
      * Global options array.

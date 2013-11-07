@@ -248,7 +248,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testAcceptInvokesVisitParameterOnSuppliedVisitor()
     {
-        $visitor = $this->getMock('\\PDepend\\TreeVisitor\\TreeVisitor');
+        $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('visitParameter')
             ->with($this->isInstanceOf('\\PDepend\\Source\\AST\\ASTParameter'));

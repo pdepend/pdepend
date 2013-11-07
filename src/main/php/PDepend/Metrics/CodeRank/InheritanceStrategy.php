@@ -46,7 +46,7 @@ use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
-use PDepend\TreeVisitor\AbstractTreeVisitor;
+use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
  * Collects class and package metrics based on inheritance.
@@ -54,7 +54,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class InheritanceStrategy extends AbstractTreeVisitor implements CodeRankStrategyI
+class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 {
     /**
      * All found nodes.

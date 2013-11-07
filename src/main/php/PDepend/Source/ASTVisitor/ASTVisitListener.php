@@ -40,9 +40,8 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\TreeVisitor;
+namespace PDepend\Source\ASTVisitor;
 
-use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
@@ -54,35 +53,28 @@ use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
 
 /**
- * This abstract class provides a default implementation of the node visitor
- * listener.
+ * Base interface for a visitor listener.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTreeVisitListener implements TreeVisitListener
+interface ASTVisitListener
 {
     /**
      * Is called when the visitor starts a new class instance.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
      * @return void
      */
-    public function startVisitClass(ASTClass $class)
-    {
-        $this->startVisitNode($class);
-    }
+    public function startVisitClass(ASTClass $class);
 
     /**
      * Is called when the visitor ends with a class instance.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
      * @return void
      */
-    public function endVisitClass(ASTClass $class)
-    {
-        $this->endVisitNode($class);
-    }
+    public function endVisitClass(ASTClass $class);
 
     /**
      * Is called when the visitor starts a new trait instance.
@@ -91,10 +83,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @return void
      * @since 1.0.0
      */
-    public function startVisitTrait(ASTTrait $trait)
-    {
-        $this->startVisitNode($trait);
-    }
+    public function startVisitTrait(ASTTrait $trait);
 
     /**
      * Is called when the visitor ends with a trait instance.
@@ -103,54 +92,39 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @return void
      * @since 1.0.0
      */
-    public function endVisitTrait(ASTTrait $trait)
-    {
-        $this->endVisitNode($trait);
-    }
+    public function endVisitTrait(ASTTrait $trait);
 
     /**
      * Is called when the visitor starts a new file instance.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
      * @return void
      */
-    public function startVisitFile(ASTCompilationUnit $compilationUnit)
-    {
-        $this->startVisitNode($compilationUnit);
-    }
+    public function startVisitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Is called when the visitor ends with a file instance.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
      * @return void
      */
-    public function endVisitFile(ASTCompilationUnit $compilationUnit)
-    {
-        $this->endVisitNode($compilationUnit);
-    }
+    public function endVisitFile(ASTCompilationUnit $compilationUnit);
 
     /**
      * Is called when the visitor starts a new function instance.
      *
-     * @param ASTFunction $function
+     * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function startVisitFunction(ASTFunction $function)
-    {
-        $this->startVisitNode($function);
-    }
+    public function startVisitFunction(ASTFunction $function);
 
     /**
      * Is called when the visitor ends with a function instance.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param ASTFunction $function
      * @return void
      */
-    public function endVisitFunction(ASTFunction $function)
-    {
-        $this->endVisitNode($function);
-    }
+    public function endVisitFunction(ASTFunction $function);
 
     /**
      * Is called when the visitor starts a new interface instance.
@@ -158,10 +132,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function startVisitInterface(ASTInterface $interface)
-    {
-        $this->startVisitNode($interface);
-    }
+    public function startVisitInterface(ASTInterface $interface);
 
     /**
      * Is called when the visitor ends with an interface instance.
@@ -169,10 +140,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function endVisitInterface(ASTInterface $interface)
-    {
-        $this->endVisitNode($interface);
-    }
+    public function endVisitInterface(ASTInterface $interface);
 
     /**
      * Is called when the visitor starts a new method instance.
@@ -180,10 +148,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function startVisitMethod(ASTMethod $method)
-    {
-        $this->startVisitNode($method);
-    }
+    public function startVisitMethod(ASTMethod $method);
 
     /**
      * Is called when the visitor ends with a method instance.
@@ -191,10 +156,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function endVisitMethod(ASTMethod $method)
-    {
-        $this->endVisitNode($method);
-    }
+    public function endVisitMethod(ASTMethod $method);
 
     /**
      * Is called when the visitor starts a new package instance.
@@ -202,10 +164,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function startVisitPackage(ASTNamespace $namespace)
-    {
-        $this->startVisitNode($namespace);
-    }
+    public function startVisitPackage(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor ends with a package instance.
@@ -213,10 +172,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function endVisitPackage(ASTNamespace $namespace)
-    {
-        $this->endVisitNode($namespace);
-    }
+    public function endVisitPackage(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor starts a new parameter instance.
@@ -224,10 +180,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function startVisitParameter(ASTParameter $parameter)
-    {
-        $this->startVisitNode($parameter);
-    }
+    public function startVisitParameter(ASTParameter $parameter);
 
     /**
      * Is called when the visitor ends with a parameter instance.
@@ -235,10 +188,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function endVisitParameter(ASTParameter $parameter)
-    {
-        $this->endVisitNode($parameter);
-    }
+    public function endVisitParameter(ASTParameter $parameter);
 
     /**
      * Is called when the visitor starts a new property instance.
@@ -246,10 +196,7 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function startVisitProperty(ASTProperty $property)
-    {
-        $this->startVisitNode($property);
-    }
+    public function startVisitProperty(ASTProperty $property);
 
     /**
      * Is called when the visitor ends with a property instance.
@@ -257,30 +204,5 @@ abstract class AbstractTreeVisitListener implements TreeVisitListener
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function endVisitProperty(ASTProperty $property)
-    {
-        $this->endVisitNode($property);
-    }
-
-    /**
-     * Generic notification method that is called for every node start.
-     *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return void
-     */
-    protected function startVisitNode(AbstractASTArtifact $node)
-    {
-
-    }
-
-    /**
-     * Generic notification method that is called when the node processing ends.
-     *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return void
-     */
-    protected function endVisitNode(AbstractASTArtifact $node)
-    {
-
-    }
+    public function endVisitProperty(ASTProperty $property);
 }

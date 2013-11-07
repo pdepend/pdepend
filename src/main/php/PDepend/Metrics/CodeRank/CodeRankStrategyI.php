@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\CodeRank;
 
-use PDepend\TreeVisitor\TreeVisitor;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * The code rank strategy provides an interface for dependency collection. 
@@ -50,7 +50,7 @@ use PDepend\TreeVisitor\TreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface CodeRankStrategyI extends TreeVisitor
+interface CodeRankStrategyI extends ASTVisitor
 {
     /**
      * Returns the collected nodes.

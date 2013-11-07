@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\TreeVisitor\TreeVisitor;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Representation of a code interface.
@@ -124,12 +124,12 @@ class ASTInterface extends AbstractASTClassOrInterface
     }
 
     /**
-     * TreeVisitor method for node tree traversal.
+     * ASTVisitor method for node tree traversal.
      *
-     * @param \PDepend\TreeVisitor\TreeVisitor $visitor
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
-    public function accept(TreeVisitor $visitor)
+    public function accept(ASTVisitor $visitor)
     {
         $visitor->visitInterface($this);
     }

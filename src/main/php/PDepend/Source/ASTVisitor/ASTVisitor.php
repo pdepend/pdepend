@@ -40,7 +40,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
-namespace PDepend\TreeVisitor;
+namespace PDepend\Source\ASTVisitor;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
@@ -53,79 +53,24 @@ use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
 
 /**
- * Simple test node visitor implementation.
+ * Base interface for visitors that work on the generated node tree.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class TestNodeVisitor implements TreeVisitor
+interface ASTVisitor
 {
     /**
-     * The last visited class instance.
-     *
-     * @var \PDepend\Source\AST\ASTClass
+     * The type of this interface
      */
-    public $class;
-
-    /**
-     * The last visited trait instance.
-     *
-     * @var \PDepend\Source\AST\ASTTrait
-     * @since 1.0.0
-     */
-    public $trait;
-
-    /**
-     * The last visited interface instance.
-     *
-     * @var \PDepend\Source\AST\ASTInterface
-     */
-    public $interface;
-
-    /**
-     * The last visited method instance.
-     *
-     * @var \PDepend\Source\AST\ASTMethod
-     */
-    public $method;
-
-    /**
-     * The last visited package instance.
-     *
-     * @var \PDepend\Source\AST\ASTNamespace
-     */
-    public $package;
-
-    /**
-     * The last visited parameter instance.
-     *
-     * @var \PDepend\Source\AST\ASTParameter
-     */
-    public $parameter;
-
-    /**
-     * The last visited property instance.
-     *
-     * @var \PDepend\Source\AST\ASTProperty
-     */
-    public $property;
-
-    /**
-     * The last visited function instance.
-     *
-     * @var \PDepend\Source\AST\ASTFunction
-     */
-    public $function;
+    const CLAZZ = __CLASS__;
 
     /**
      * Adds a new listener to this node visitor.
-     *
-     * @param \PDepend\TreeVisitor\TreeVisitListener $listener
+     * @param \PDepend\Source\ASTVisitor\ASTVisitListener $listener
      * @return void
      */
-    public function addVisitListener(TreeVisitListener $listener)
-    {
-    }
+    public function addVisitListener(ASTVisitListener $listener);
 
     /**
      * Visits a class node.
@@ -133,10 +78,7 @@ class TestNodeVisitor implements TreeVisitor
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(ASTClass $class)
-    {
-        $this->class = $class;
-    }
+    public function visitClass(ASTClass $class);
 
     /**
      * Visits a trait node.
@@ -145,77 +87,7 @@ class TestNodeVisitor implements TreeVisitor
      * @return void
      * @since 1.0.0
      */
-    public function visitTrait(ASTTrait $trait)
-    {
-        $this->trait = $trait;
-    }
-
-
-    /**
-     * Visits a code interface object.
-     *
-     * @param \PDepend\Source\AST\ASTInterface $interface
-     * @return void
-     */
-    public function visitInterface(ASTInterface $interface)
-    {
-        $this->interface = $interface;
-    }
-
-    /**
-     * Visits a method node.
-     *
-     * @param \PDepend\Source\AST\ASTMethod $method
-     * @return void
-     */
-    public function visitMethod(ASTMethod $method)
-    {
-        $this->method = $method;
-    }
-
-    /**
-     * Visits a package node.
-     *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
-     * @return void
-     */
-    public function visitNamespace(ASTNamespace $namespace)
-    {
-        $this->package = $namespace;
-    }
-
-    /**
-     * Visits a parameter node.
-     *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
-     * @return void
-     */
-    public function visitParameter(ASTParameter $parameter)
-    {
-        $this->parameter = $parameter;
-    }
-
-    /**
-     * Visits a property node.
-     *
-     * @param \PDepend\Source\AST\ASTProperty $property
-     * @return void
-     */
-    public function visitProperty(ASTProperty $property)
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * Visits a function node.
-     *
-     * @param \PDepend\Source\AST\ASTFunction $function
-     * @return void
-     */
-    public function visitFunction(ASTFunction $function)
-    {
-        $this->function = $function;
-    }
+    public function visitTrait(ASTTrait $trait);
 
     /**
      * Visits a file node.
@@ -223,8 +95,53 @@ class TestNodeVisitor implements TreeVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(ASTCompilationUnit $compilationUnit)
-    {
+    public function visitFile(ASTCompilationUnit $compilationUnit);
 
-    }
+    /**
+     * Visits a function node.
+     *
+     * @param \PDepend\Source\AST\ASTFunction $function
+     * @return void
+     */
+    public function visitFunction(ASTFunction $function);
+
+    /**
+     * Visits a code interface object.
+     *
+     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @return void
+     */
+    public function visitInterface(ASTInterface $interface);
+
+    /**
+     * Visits a method node.
+     *
+     * @param \PDepend\Source\AST\ASTMethod $method
+     * @return void
+     */
+    public function visitMethod(ASTMethod $method);
+
+    /**
+     * Visits a package node.
+     *
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @return void
+     */
+    public function visitNamespace(ASTNamespace $namespace);
+
+    /**
+     * Visits a parameter node.
+     *
+     * @param \PDepend\Source\AST\ASTParameter $parameter
+     * @return void
+     */
+    public function visitParameter(ASTParameter $parameter);
+
+    /**
+     * Visits a property node.
+     *
+     * @param \PDepend\Source\AST\ASTProperty $property
+     * @return void
+     */
+    public function visitProperty(ASTProperty $property);
 }

@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\TreeVisitor\AbstractTreeVisitor;
+use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
  * This logger provides a xml log file, that is compatible with the files
@@ -68,7 +68,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @deprecated Since release 0.10.5, please use the summary logger
  */
-class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGenerator
+class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
      * The log output file.

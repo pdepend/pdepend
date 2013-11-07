@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNamespace;
-use PDepend\TreeVisitor\AbstractTreeVisitor;
+use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -60,7 +60,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Xml extends AbstractTreeVisitor implements CodeAwareGenerator, FileAwareGenerator
+class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
      * The type of this class.

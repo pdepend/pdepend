@@ -38,9 +38,9 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
-namespace PDepend\TreeVisitor;
+namespace PDepend\Source\ASTVisitor;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
@@ -48,29 +48,22 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
-use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTProperty;
-use PDepend\Source\AST\ASTTrait;
 
 /**
- * Base interface for visitors that work on the generated node tree.
+ * Dummy implementation of the default visitor.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface TreeVisitor
+class DefaultVisitorDummy extends AbstractASTVisitor
 {
     /**
-     * The type of this interface
+     * Collected visit order.
+     *
+     * @var array(string=>integer)
      */
-    const CLAZZ = __CLASS__;
-
-    /**
-     * Adds a new listener to this node visitor.
-     * @param \PDepend\TreeVisitor\TreeVisitListener $listener
-     * @return void
-     */
-    public function addVisitListener(TreeVisitListener $listener);
+    public $visits = array();
 
     /**
      * Visits a class node.
@@ -78,16 +71,12 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(ASTClass $class);
+    public function visitClass(ASTClass $class)
+    {
+        $this->visits[] = $class->getName();
 
-    /**
-     * Visits a trait node.
-     *
-     * @param \PDepend\Source\AST\ASTTrait $trait
-     * @return void
-     * @since 1.0.0
-     */
-    public function visitTrait(ASTTrait $trait);
+        parent::visitClass($class);
+    }
 
     /**
      * Visits a file node.
@@ -95,7 +84,12 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(ASTCompilationUnit $compilationUnit);
+    public function visitFile(ASTCompilationUnit $compilationUnit)
+    {
+        $this->visits[] = get_class($compilationUnit);
+
+        parent::visitFile($compilationUnit);
+    }
 
     /**
      * Visits a function node.
@@ -103,7 +97,12 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(ASTFunction $function);
+    public function visitFunction(ASTFunction $function)
+    {
+        $this->visits[] = $function->getName();
+
+        parent::visitFunction($function);
+    }
 
     /**
      * Visits a code interface object.
@@ -111,7 +110,12 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(ASTInterface $interface);
+    public function visitInterface(ASTInterface $interface)
+    {
+        $this->visits[] = $interface->getName();
+
+        parent::visitInterface($interface);
+    }
 
     /**
      * Visits a method node.
@@ -119,23 +123,25 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(ASTMethod $method);
+    public function visitMethod(ASTMethod $method)
+    {
+        $this->visits[] = $method->getName();
+
+        parent::visitMethod($method);
+    }
 
     /**
      * Visits a package node.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
      * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace);
+    public function visitNamespace(ASTNamespace $namespace)
+    {
+        $this->visits[] = $namespace->getName();
 
-    /**
-     * Visits a parameter node.
-     *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
-     * @return void
-     */
-    public function visitParameter(ASTParameter $parameter);
+        parent::visitNamespace($namespace);
+    }
 
     /**
      * Visits a property node.
@@ -143,5 +149,10 @@ interface TreeVisitor
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(ASTProperty $property);
+    public function visitProperty(ASTProperty $property)
+    {
+        $this->visits[] = $property->getName();
+
+        parent::visitProperty($property);
+    }
 }

@@ -47,7 +47,7 @@ use PDepend\ProcessListener;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\TreeVisitor\AbstractTreeVisitListener;
+use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 
 /**
  * Prints current the PDepend status information.
@@ -55,7 +55,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitListener;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ResultPrinter extends AbstractTreeVisitListener implements ProcessListener
+class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 {
     /**
      * The step size.

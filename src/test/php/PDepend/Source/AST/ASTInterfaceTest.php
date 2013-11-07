@@ -910,7 +910,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testAcceptInvokesVisitInterfaceOnGivenVisitor()
     {
-        $visitor = $this->getMock('\\PDepend\\TreeVisitor\\TreeVisitor');
+        $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('visitInterface')
             ->with(self::isInstanceOf(ASTInterface::CLAZZ));

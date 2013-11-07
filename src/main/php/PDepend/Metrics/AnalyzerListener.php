@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics;
 
-use PDepend\TreeVisitor\TreeVisitListener;
+use PDepend\Source\ASTVisitor\ASTVisitListener;
 
 /**
  * An implementation of this listener can be used to recieve informations about
@@ -51,7 +51,7 @@ use PDepend\TreeVisitor\TreeVisitListener;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface AnalyzerListener extends TreeVisitListener
+interface AnalyzerListener extends ASTVisitListener
 {
     /**
      * This method is called when the analyzer starts code processing.

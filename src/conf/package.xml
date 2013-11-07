@@ -471,17 +471,17 @@
             </file>
           </dir>
         </dir>
-        <dir name="TreeVisitor">
-          <file name="AbstractTreeVisitListener.php" role="php">
+        <dir name="ASTVisitor">
+          <file name="AbstractASTVisitListener.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="TreeVisitListener.php" role="php">
+          <file name="ASTVisitListener.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="TreeVisitor.php" role="php">
+          <file name="ASTVisitor.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
-          <file name="AbstractTreeVisitor.php" role="php">
+          <file name="AbstractASTVisitor.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
         </dir>
@@ -751,7 +751,7 @@
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
           </dir>
-          <file name="ReportGeneratorerator.php" role="php">
+          <file name="ReportGenerator.php" role="php">
             <tasks:replace from="@package_version@" to="version" type="package-info"/>
           </file>
           <file name="NoLogOutputException.php" role="php">

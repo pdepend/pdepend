@@ -43,7 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTest;
-use PDepend\TreeVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\TestNodeVisitor;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTNamespace class.

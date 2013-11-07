@@ -55,8 +55,8 @@ use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Util\Configuration;
-use PDepend\TreeVisitor\TreeVisitor;
 
 /**
  * PDepend analyzes php class files and generates metrics.
@@ -620,7 +620,7 @@ class Application
             foreach ($this->listeners as $listener) {
                 $analyzer->addAnalyzeListener($listener);
 
-                if ($analyzer instanceof TreeVisitor) {
+                if ($analyzer instanceof ASTVisitor) {
                     $analyzer->addVisitListener($listener);
                 }
             }

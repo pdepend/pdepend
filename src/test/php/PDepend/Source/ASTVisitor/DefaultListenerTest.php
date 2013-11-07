@@ -40,7 +40,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\TreeVisitor;
+namespace PDepend\Source\ASTVisitor;
 
 use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTCompilationUnit;
@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTTrait;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\TreeVisitor\AbstractTreeVisitor
+ * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
  * @group unittest
  */
 class DefaultListenerTest extends AbstractTest
@@ -220,7 +220,7 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerCallsStartVisitNodeForPassedParameterInstance()
     {
-        $listener = $this->getMock('\\PDepend\\TreeVisitor\\AbstractTreeVisitListener', array('startVisitNode'));
+        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('startVisitNode'));
         $listener->expects($this->once())
             ->method('startVisitNode');
 
@@ -235,7 +235,7 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerCallsEndVisitNodeForPassedParameterInstance()
     {
-        $listener = $this->getMock('\\PDepend\\TreeVisitor\\AbstractTreeVisitListener', array('endVisitNode'));
+        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('endVisitNode'));
         $listener->expects($this->once())
             ->method('endVisitNode');
 
@@ -251,7 +251,7 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerInvokesStartVisitNotForTrait()
     {
-        $listener = $this->getMock('\\PDepend\\TreeVisitor\\AbstractTreeVisitListener', array('startVisitNode'));
+        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('startVisitNode'));
         $listener->expects($this->once())
             ->method('startVisitNode');
 
@@ -266,7 +266,7 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerInvokesEndVisitNotForTrait()
     {
-        $listener = $this->getMock('\\PDepend\\TreeVisitor\\AbstractTreeVisitListener', array('endVisitNode'));
+        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('endVisitNode'));
         $listener->expects($this->once())
             ->method('endVisitNode');
 

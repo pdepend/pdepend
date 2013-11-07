@@ -44,7 +44,7 @@ namespace PDepend\Metrics\CodeRank;
 
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTProperty;
-use PDepend\TreeVisitor\AbstractTreeVisitor;
+use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
  * Collects class and package metrics based on class properties.
@@ -52,7 +52,7 @@ use PDepend\TreeVisitor\AbstractTreeVisitor;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class PropertyStrategy extends AbstractTreeVisitor implements CodeRankStrategyI
+class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 {
     /**
      * All found nodes.

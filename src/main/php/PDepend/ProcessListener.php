@@ -46,7 +46,7 @@ namespace PDepend;
 use PDepend\Metrics\AnalyzerListener;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\TreeVisitor\TreeVisitListener;
+use PDepend\Source\ASTVisitor\ASTVisitListener;
 
 /**
  * This listener can be used to get informations about the current pdepend process.
@@ -54,7 +54,7 @@ use PDepend\TreeVisitor\TreeVisitListener;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface ProcessListener extends TreeVisitListener, AnalyzerListener
+interface ProcessListener extends ASTVisitListener, AnalyzerListener
 {
     /**
      * Is called when PDepend starts the file parsing process.

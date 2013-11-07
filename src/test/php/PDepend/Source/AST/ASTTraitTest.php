@@ -44,7 +44,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
-use PDepend\TreeVisitor\TreeVisitor;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTrait} class.
@@ -346,7 +346,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
      */
     public function testAcceptInvokesVisitTraitOnGivenVisitor()
     {
-        $visitor = $this->getMockBuilder(TreeVisitor::CLAZZ)
+        $visitor = $this->getMockBuilder(ASTVisitor::CLAZZ)
             ->disableOriginalClone()
             ->getMock();
         $visitor->expects($this->once())
