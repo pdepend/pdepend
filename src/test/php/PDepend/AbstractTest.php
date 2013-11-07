@@ -440,16 +440,16 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Creates a PDepend instance configured with the code resource associated
      * with the calling test case.
      *
-     * @return \PDepend\Application
+     * @return \PDepend\Engine
      * @since 0.10.0
      */
-    protected function createPDependFixture()
+    protected function createEngineFixture()
     {
         $this->changeWorkingDirectory(
             $this->createCodeResourceURI('config/')
         );
 
-        return new Application($this->createConfigurationFixture());
+        return new Engine($this->createConfigurationFixture());
     }
 
     /**
@@ -637,7 +637,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         spl_autoload_register(array(__CLASS__, 'autoload'));
 
         // Is it not installed?
-        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Application.php')) {
+        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
 
             $path  = realpath(dirname(__FILE__) . '/../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
@@ -661,7 +661,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     public static function autoload($className)
     {
         $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
-        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Application.php')) {
+        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
             $file = dirname(__FILE__) . '/../../../main/php/' . $file;
         }
         if (file_exists($file)) {

@@ -388,8 +388,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Appends a file reference element to the given <b>$xml</b> element.
      *
      * <code>
-     *   <class name="\PDepend\Application">
-     *     <file name="PDepend/Application.php" />
+     *   <class name="\PDepend\Engine">
+     *     <file name="PDepend/Engine.php" />
      *   </class>
      * </code>
      *

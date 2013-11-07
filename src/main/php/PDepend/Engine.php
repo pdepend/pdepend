@@ -45,17 +45,16 @@ namespace PDepend;
 use PDepend\Metrics\AnalyzerClassFileSystemLocator;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerLoader;
-use PDepend\ProcessListener;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\NullArtifactFilter;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Util\Configuration;
 
 /**
@@ -67,7 +66,7 @@ use PDepend\Util\Configuration;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Application
+class Engine
 {
     /**
      * Marks the storage used for runtime tokens.

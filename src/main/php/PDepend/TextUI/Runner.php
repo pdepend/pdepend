@@ -42,7 +42,7 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\Application;
+use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
 use PDepend\ProcessListener;
@@ -258,37 +258,37 @@ class Runner
      */
     public function run()
     {
-        $pdepend = new Application($this->configuration);
-        $pdepend->setOptions($this->options);
+        $engine = new Engine($this->configuration);
+        $engine->setOptions($this->options);
 
         if (count($this->extensions) > 0) {
             $filter = new ExtensionFilter($this->extensions);
-            $pdepend->addFileFilter($filter);
+            $engine->addFileFilter($filter);
         }
 
         if (count($this->excludeDirectories) > 0) {
             $exclude = $this->excludeDirectories;
             $filter  = new ExcludePathFilter($exclude);
-            $pdepend->addFileFilter($filter);
+            $engine->addFileFilter($filter);
         }
 
         if (count($this->excludePackages) > 0) {
             $exclude = $this->excludePackages;
             $filter  = new PackageArtifactFilter($exclude);
-            $pdepend->setCodeFilter($filter);
+            $engine->setCodeFilter($filter);
         }
 
         if ($this->withoutAnnotations === true) {
-            $pdepend->setWithoutAnnotations();
+            $engine->setWithoutAnnotations();
         }
 
         // Try to set all source directories.
         try {
             foreach ($this->sourceArguments as $sourceArgument) {
                 if (is_file($sourceArgument)) {
-                    $pdepend->addFile($sourceArgument);
+                    $engine->addFile($sourceArgument);
                 } else {
-                    $pdepend->addDirectory($sourceArgument);
+                    $engine->addDirectory($sourceArgument);
                 }
             }
         } catch (\Exception $e) {
@@ -307,20 +307,20 @@ class Runner
                 // Create a new logger
                 $generator = $generatorFactory->createGenerator($generatorId, $reportFile);
 
-                $pdepend->addReportGenerator($generator);
+                $engine->addReportGenerator($generator);
             }
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         foreach ($this->processListeners as $processListener) {
-            $pdepend->addProcessListener($processListener);
+            $engine->addProcessListener($processListener);
         }
 
         try {
-            $pdepend->analyze();
+            $engine->analyze();
 
-            foreach ($pdepend->getExceptions() as $exception) {
+            foreach ($engine->getExceptions() as $exception) {
                 $this->parseErrors[] = $exception->getMessage();
             }
         } catch (\Exception $e) {

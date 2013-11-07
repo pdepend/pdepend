@@ -767,7 +767,7 @@
         <file name="Autoload.php" role="php">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
-        <file name="Application.php" role="php">
+        <file name="Engine.php" role="php">
           <tasks:replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="ProcessListener.php" role="php">

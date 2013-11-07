@@ -45,7 +45,7 @@ namespace PDepend\Integration;
 use PDepend\AbstractTest;
 
 /**
- * Tests the integration of the {@link \PDepend\Application} class and the
+ * Tests the integration of the {@link \PDepend\Engine} class and the
  * input filter class {@link \PDepend\Input\ExcludePathFilter}.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
@@ -68,7 +68,7 @@ class DependExcludePathFilterTest extends AbstractTest
         $directory = self::createCodeResourceUriForTest();
         $pattern   = DIRECTORY_SEPARATOR . 'Integration';
 
-        $pdepend = $this->createPDependFixture();
+        $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
             new \PDepend\Input\ExcludePathFilter(array($pattern))
@@ -93,7 +93,7 @@ class DependExcludePathFilterTest extends AbstractTest
             $this->markTestSkipped('Not sure why, but this test fails @CloudBees');
         }
 
-        $pdepend = $this->createPDependFixture();
+        $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
             new \PDepend\Input\ExcludePathFilter(array($pattern))
@@ -122,7 +122,7 @@ class DependExcludePathFilterTest extends AbstractTest
         $directory = self::createCodeResourceUriForTest();
         $pattern   = __FUNCTION__ . DIRECTORY_SEPARATOR . 'Integration';
 
-        $pdepend = $this->createPDependFixture();
+        $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
             new \PDepend\Input\ExcludePathFilter(array($pattern))

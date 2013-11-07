@@ -50,20 +50,20 @@ use PDepend\Input\ExtensionFilter;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Application
+ * @covers \PDepend\Engine
  * @group unittest
  */
 class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 {
     /**
-     * Tests that the {@link \PDepend\Application::getExceptions()} returns a
+     * Tests that the {@link \PDepend\Engine::getExceptions()} returns a
      * list with the expected exceptions.
      *
      * @return void
      */
     public function testPHPDependReturnsExpectedExceptionInstances()
     {
-        $pdepend = $this->createPDependFixture();
+        $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory(self::createCodeResourceUriForTest());
         $pdepend->addFileFilter(new ExtensionFilter(array('php')));
         $pdepend->addReportGenerator(new \PDepend\Report\Dummy\Logger());

@@ -43,7 +43,7 @@
 
 namespace PDepend\Bugs;
 
-use PDepend\Application;
+use PDepend\Engine;
 use PDepend\Util\Configuration\ConfigurationFactory;
 
 /**
@@ -76,10 +76,10 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
         $generator->setLogFile($file);
 
         $factory = new ConfigurationFactory();
-        $application = new Application($factory->createDefault());
-        $application->addFile(self::createCodeResourceUriForTest());
-        $application->addReportGenerator($generator);
-        $application->analyze();
+        $engine = new Engine($factory->createDefault());
+        $engine->addFile(self::createCodeResourceUriForTest());
+        $engine->addReportGenerator($generator);
+        $engine->analyze();
 
         $this->assertFileExists($file);
     }

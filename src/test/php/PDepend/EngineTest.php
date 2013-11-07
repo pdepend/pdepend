@@ -43,18 +43,18 @@
 namespace PDepend;
 
 /**
- * Test case for \PDepend\Application facade.
+ * Test case for \PDepend\Engine facade.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Application
+ * @covers \PDepend\Engine
  * @group unittest
  */
-class ApplicationTest extends AbstractTest
+class EngineTest extends AbstractTest
 {
     /**
-     * Tests that the {@link \PDepend\Application::addDirectory()} method
+     * Tests that the {@link \PDepend\Engine::addDirectory()} method
      * fails with an exception for an invalid directory.
      *
      * @return void
@@ -66,19 +66,19 @@ class ApplicationTest extends AbstractTest
         
         $this->setExpectedException('InvalidArgumentException', $msg);
         
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory($dir);
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory($dir);
     }
     /**
-     * Tests that the {@link \PDepend\Application::addDirectory()} method
+     * Tests that the {@link \PDepend\Engine::addDirectory()} method
      * with an existing directory.
      *
      * @return void
      */
     public function testAddDirectory()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
     }
 
     /**
@@ -88,26 +88,26 @@ class ApplicationTest extends AbstractTest
      */
     public function testAnalyzeMethodReturnsAnIterator()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
 
-        $this->assertInstanceOf('Iterator', $pdepend->analyze());
+        $this->assertInstanceOf('Iterator', $engine->analyze());
     }
     
     /**
-     * Tests the {@link \PDepend\Application::analyze()} method and the return
+     * Tests the {@link \PDepend\Engine::analyze()} method and the return
      * value.
      *
      * @return void
      */
     public function testAnalyze()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
         
-        $metrics = $pdepend->analyze();
+        $metrics = $engine->analyze();
         
         $expected = array(
             'package1'  =>  true,
@@ -123,16 +123,16 @@ class ApplicationTest extends AbstractTest
     }
     
     /**
-     * Tests that {@link \PDepend\Application::analyze()} throws an exception
+     * Tests that {@link \PDepend\Engine::analyze()} throws an exception
      * if no source directory was set.
      *
      * @return void
      */
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
     {
-        $pdepend = $this->createPDependFixture();
+        $engine = $this->createEngineFixture();
         $this->setExpectedException('RuntimeException', 'No source directory and file set.');
-        $pdepend->analyze();
+        $engine->analyze();
     }
     
     /**
@@ -142,26 +142,26 @@ class ApplicationTest extends AbstractTest
      */
     public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new \PDepend\Input\ExtensionFilter(array(__METHOD__)));
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array(__METHOD__)));
        
-        $this->assertEquals(0, $pdepend->analyze()->count()); 
+        $this->assertEquals(0, $engine->analyze()->count()); 
     }
     
     /**
-     * Tests that {@link \PDepend\Application::analyze()} configures the
+     * Tests that {@link \PDepend\Engine::analyze()} configures the
      * ignore annotations option correct.
      *
      * @return void
      */
     public function testAnalyzeSetsWithoutAnnotations()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new \PDepend\Input\ExtensionFilter(array('inc')));
-        $pdepend->setWithoutAnnotations();
-        $packages = $pdepend->analyze();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('inc')));
+        $engine->setWithoutAnnotations();
+        $packages = $engine->analyze();
         
         $this->assertEquals(2, $packages->count());
         $this->assertEquals('pdepend.test', $packages->current()->getName());
@@ -174,23 +174,23 @@ class ApplicationTest extends AbstractTest
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::countClasses()} method
+     * Tests that the {@link \PDepend\Engine::countClasses()} method
      * returns the expected number of classes.
      *
      * @return void
      */
     public function testCountClasses()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
-        $pdepend->analyze();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
+        $engine->analyze();
         
-        $this->assertEquals(10, $pdepend->countClasses());
+        $this->assertEquals(10, $engine->countClasses());
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::countClasses()} method fails
+     * Tests that the {@link \PDepend\Engine::countClasses()} method fails
      * with an exception if the code was not analyzed before.
      *
      * @return void
@@ -202,28 +202,28 @@ class ApplicationTest extends AbstractTest
             'countClasses() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->countClasses();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->countClasses();
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::countPackages()} method
+     * Tests that the {@link \PDepend\Engine::countPackages()} method
      * returns the expected number of packages.
      *
      * @return void
      */
     public function testCountPackages()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->analyze();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->analyze();
         
-        $this->assertEquals(4, $pdepend->countPackages());
+        $this->assertEquals(4, $engine->countPackages());
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::countPackages()} method
+     * Tests that the {@link \PDepend\Engine::countPackages()} method
      * fails with an exception if the code was not analyzed before.
      *
      * @return void
@@ -235,22 +235,22 @@ class ApplicationTest extends AbstractTest
             'countPackages() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->countPackages();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->countPackages();
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::getPackage()} method
+     * Tests that the {@link \PDepend\Engine::getPackage()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects.
      *
      * @return void
      */
     public function testGetPackage()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->analyze();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->analyze();
         
         $packages = array(
             'package1', 
@@ -261,12 +261,12 @@ class ApplicationTest extends AbstractTest
         $className = '\\PDepend\\Source\\AST\\ASTNamespace';
         
         foreach ($packages as $package) {
-            $this->assertInstanceOf($className, $pdepend->getPackage($package));
+            $this->assertInstanceOf($className, $engine->getPackage($package));
         }
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::getPackage()} method fails
+     * Tests that the {@link \PDepend\Engine::getPackage()} method fails
      * with an exception if the code was not analyzed before.
      *
      * @return void
@@ -274,17 +274,17 @@ class ApplicationTest extends AbstractTest
     public function testGetPackageWithoutAnalyzeFail()
     {
         $this->setExpectedException(
-            'RuntimeException', 
+            'RuntimeException',
             'getPackage() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->getPackage('package1');
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->getPackage('package1');
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::getPackage()} method fails
+     * Tests that the {@link \PDepend\Engine::getPackage()} method fails
      * with an exception if you request an invalid package.
      *
      * @return void
@@ -292,30 +292,30 @@ class ApplicationTest extends AbstractTest
     public function testGetPackageWithUnknownPackageFail()
     {
         $this->setExpectedException(
-            'OutOfBoundsException', 
+            'OutOfBoundsException',
             'Unknown package "package0".'
         );
         
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->analyze();
-        $pdepend->getPackage('package0');
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->analyze();
+        $engine->getPackage('package0');
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::getPackages()} method
+     * Tests that the {@link \PDepend\Engine::getPackages()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects
-     * and reuses the result of {@link \PDepend\Application::analyze()}.
+     * and reuses the result of {@link \PDepend\Engine::analyze()}.
      *
      * @return void
      */
     public function testGetPackages()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
         
-        $package1 = $pdepend->analyze();
-        $package2 = $pdepend->getPackages();
+        $package1 = $engine->analyze();
+        $package2 = $engine->getPackages();
         
         $this->assertNotNull($package1);
         $this->assertNotNull($package2);
@@ -324,7 +324,7 @@ class ApplicationTest extends AbstractTest
     }
     
     /**
-     * Tests that the {@link \PDepend\Application::getPackages()} method
+     * Tests that the {@link \PDepend\Engine::getPackages()} method
      * fails with an exception if the code was not analyzed before.
      *
      * @return void
@@ -336,9 +336,9 @@ class ApplicationTest extends AbstractTest
             'getPackages() doesn\'t work before the source was analyzed.'
         );
         
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addDirectory(self::createCodeResourceUriForTest());
-        $pdepend->getPackages();
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->getPackages();
     }
 
     /**
@@ -348,11 +348,11 @@ class ApplicationTest extends AbstractTest
      */
     public function testSupportForSingleFileIssue90()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addFile(self::createCodeResourceUriForTest());
-        $pdepend->analyze();
+        $engine = $this->createEngineFixture();
+        $engine->addFile(self::createCodeResourceUriForTest());
+        $engine->analyze();
 
-        $packages = $pdepend->getPackages();
+        $packages = $engine->getPackages();
         $this->assertSame(1, $packages->count());
 
         $package = $packages->current();
@@ -369,7 +369,7 @@ class ApplicationTest extends AbstractTest
      */
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
     {
-        $pdepend = $this->createPDependFixture();
-        $pdepend->addFile(self::createRunResourceURI('pdepend_'));
+        $engine = $this->createEngineFixture();
+        $engine->addFile(self::createRunResourceURI('pdepend_'));
     }
 }

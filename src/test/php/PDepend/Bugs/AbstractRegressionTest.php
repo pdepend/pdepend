@@ -71,7 +71,7 @@ abstract class AbstractRegressionTest extends AbstractTest
         $log = new Xml();
         $log->setLogFile($file);
 
-        $pdepend = $this->createPDependFixture();
+        $pdepend = $this->createEngineFixture();
         $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->addReportGenerator($log);
         $pdepend->analyze();
