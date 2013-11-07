@@ -634,7 +634,7 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $methodName = 'visit' . substr(get_class($this), 22, -4);
 
-        $visitor = $this->getMock('\PDepend\Source\AST\ASTVisitorI');
+        $visitor = $this->getMock('\\PDepend\\Source\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('__call')
             ->with($this->equalTo($methodName));
@@ -652,7 +652,7 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $methodName = 'visit' . substr(get_class($this), 22, -4);
 
-        $visitor = $this->getMock('\PDepend\Source\AST\ASTVisitorI');
+        $visitor = $this->getMock('\\PDepend\\Source\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('__call')
             ->with($this->equalTo($methodName))

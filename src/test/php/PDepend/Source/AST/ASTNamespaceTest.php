@@ -43,7 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTest;
-use PDepend\Source\ASTVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\StubASTVisitor;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTNamespace class.
@@ -403,7 +403,7 @@ class ASTNamespaceTest extends AbstractTest
     public function testVisitorAccept()
     {
         $package = new ASTNamespace('package1');
-        $visitor = new TestNodeVisitor();
+        $visitor = new StubASTVisitor();
         
         $package->accept($visitor);
         $this->assertSame($package, $visitor->package);

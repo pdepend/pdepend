@@ -68,7 +68,7 @@ class DefaultVisitorTest extends AbstractTest
     {
         $packages = self::parseCodeResourceForTest();
         
-        $visitor = new DefaultVisitorDummy();
+        $visitor = new StubAbstractASTVisitor();
         foreach ($packages as $package) {
             $package->accept($visitor);
         }

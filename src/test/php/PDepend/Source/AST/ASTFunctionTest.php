@@ -44,7 +44,7 @@ namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
-use PDepend\Source\ASTVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\StubASTVisitor;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTFunction class.
@@ -635,7 +635,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
     public function testVisitorAccept()
     {
         $function = $this->createItem();
-        $visitor  = new TestNodeVisitor();
+        $visitor  = new StubASTVisitor();
 
         $function->accept($visitor);
         $this->assertSame($function, $visitor->function);

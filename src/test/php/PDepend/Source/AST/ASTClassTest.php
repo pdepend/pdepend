@@ -46,7 +46,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
-use PDepend\Source\ASTVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\StubASTVisitor;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -1259,7 +1259,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testVisitorAccept()
     {
         $class   = new ASTClass(__CLASS__);
-        $visitor = new TestNodeVisitor();
+        $visitor = new StubASTVisitor();
 
         $class->accept($visitor);
         $this->assertSame($class, $visitor->class);

@@ -68,8 +68,8 @@ class DefaultListenerTest extends AbstractTest
         $codeUri  = self::createCodeResourceUriForTest();
         $packages = self::parseSource($codeUri);
 
-        $listener = new TestListener();
-        $visitor  = new DefaultVisitorDummy();
+        $listener = new StubAbstractASTVisitListener();
+        $visitor  = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
         $visitor->visitNamespace($packages->current());
 
@@ -114,8 +114,8 @@ class DefaultListenerTest extends AbstractTest
         $class = $this->createClassFixture(__FUNCTION__);
         $class->setSourceFile(new ASTCompilationUnit(__FILE__));
 
-        $listener = new TestListener();
-        $visitor  = new DefaultVisitorDummy();
+        $listener = new StubAbstractASTVisitListener();
+        $visitor  = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $class->accept($visitor);
@@ -142,8 +142,8 @@ class DefaultListenerTest extends AbstractTest
         $interface = $this->createInterfaceFixture(__FUNCTION__);
         $interface->setSourceFile(new ASTCompilationUnit(__FILE__));
 
-        $listener = new TestListener();
-        $visitor  = new DefaultVisitorDummy();
+        $listener = new StubAbstractASTVisitListener();
+        $visitor  = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $interface->accept($visitor);
@@ -170,8 +170,8 @@ class DefaultListenerTest extends AbstractTest
         $function = $this->createFunctionFixture(__FUNCTION__);
         $function->setSourceFile(new ASTCompilationUnit(__FILE__));
 
-        $listener = new TestListener();
-        $visitor  = new DefaultVisitorDummy();
+        $listener = new StubAbstractASTVisitListener();
+        $visitor  = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $function->accept($visitor);
@@ -198,8 +198,8 @@ class DefaultListenerTest extends AbstractTest
         $method = $this->createMethodFixture(__FUNCTION__);
         $method->setSourceFile(new ASTCompilationUnit(__FILE__));
 
-        $listener = new TestListener();
-        $visitor  = new DefaultVisitorDummy();
+        $listener = new StubAbstractASTVisitListener();
+        $visitor  = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $method->accept($visitor);

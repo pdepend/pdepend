@@ -394,9 +394,6 @@
             <file name="ASTFormalParameter.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>
-            <file name="ASTVisitorI.php" role="php">
-              <tasks:replace from="@package_version@" to="version" type="package-info"/>
-            </file>
             <file name="ASTForeachStatement.php" role="php">
               <tasks:replace from="@package_version@" to="version" type="package-info"/>
             </file>

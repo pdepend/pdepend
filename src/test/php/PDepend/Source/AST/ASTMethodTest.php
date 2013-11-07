@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\TestNodeVisitor;
+use PDepend\Source\ASTVisitor\StubASTVisitor;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTMethod class.
@@ -386,7 +386,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     public function testVisitorAccept()
     {
         $method  = new ASTMethod('method', 0);
-        $visitor = new TestNodeVisitor();
+        $visitor = new StubASTVisitor();
         $method->accept($visitor);
 
         $this->assertSame($method, $visitor->method);
