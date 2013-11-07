@@ -59,14 +59,14 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @var string
      */
-    private $_logFile = null;
+    private $logFile = null;
 
     /**
      * The logger input data.
      *
      * @var array(string=>mixed)
      */
-    private $_input = array(
+    private $input = array(
         'code'       =>  null,
         'analyzers'  =>  array()
     );
@@ -87,7 +87,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function setLogFile($logFile)
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     /**
@@ -109,7 +109,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function setArtifacts(ASTArtifactList $artifacts)
     {
-        $this->_input['code'] = $artifacts;
+        $this->input['code'] = $artifacts;
     }
 
     /**
@@ -121,7 +121,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function log(\PDepend\Metrics\Analyzer $analyzer)
     {
-        $this->_input['analyzers'][] = $analyzer;
+        $this->input['analyzers'][] = $analyzer;
         return true;
     }
 
@@ -132,8 +132,8 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function close()
     {
-        if ($this->_logFile) {
-            file_put_contents($this->_logFile, serialize($this->_input));
+        if ($this->logFile) {
+            file_put_contents($this->logFile, serialize($this->input));
         }
     }
 }

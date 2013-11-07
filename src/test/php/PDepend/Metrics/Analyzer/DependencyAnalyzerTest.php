@@ -67,7 +67,7 @@ class DependencyAnalyzerTest extends AbstractMetricsTest
      *
      * @var array(string=>array)
      */
-    private $_input = array(
+    private $input = array(
         '+global'  =>  array(
             'tc'  =>  0,
             'cc'  =>  0,
@@ -127,6 +127,6 @@ class DependencyAnalyzerTest extends AbstractMetricsTest
             $actual[$package->getName()] = $visitor->getStats($package);
         }
 
-        $this->assertEquals($this->_input, $actual);
+        $this->assertEquals($this->input, $actual);
     }
 }

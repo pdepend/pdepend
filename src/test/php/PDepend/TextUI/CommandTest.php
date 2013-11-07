@@ -61,14 +61,14 @@ class CommandTest extends AbstractTest
      *
      * @var string
      */
-    private $_versionOutput = "PDepend @package_version@\n\n";
+    private $versionOutput = "PDepend @package_version@\n\n";
 
     /**
      * Expected output of the --usage option.
      *
      * @var string
      */
-    private $_usageOutput = "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";
+    private $usageOutput = "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";
 
     /**
      * Tests the result of the print version option.
@@ -78,7 +78,7 @@ class CommandTest extends AbstractTest
     public function testPrintVersion()
     {
         list(, $actual) = $this->_executeCommand(array('--version'));
-        $this->assertEquals($this->_versionOutput, $actual);
+        $this->assertEquals($this->versionOutput, $actual);
     }
 
     /**
@@ -100,7 +100,7 @@ class CommandTest extends AbstractTest
     public function testPrintUsage()
     {
         list(, $actual) = $this->_executeCommand(array('--usage'));
-        $this->assertEquals($this->_versionOutput . $this->_usageOutput, $actual);
+        $this->assertEquals($this->versionOutput . $this->usageOutput, $actual);
     }
 
     /**
@@ -531,7 +531,7 @@ class CommandTest extends AbstractTest
      */
     protected function assertHelpOutput($actual, $prologText = '')
     {
-        $startsWith = $prologText . $this->_versionOutput . $this->_usageOutput;
+        $startsWith = $prologText . $this->versionOutput . $this->usageOutput;
         $startsWith = '/^' . preg_quote($startsWith) . '/';
         $this->assertRegExp($startsWith, $actual);
 

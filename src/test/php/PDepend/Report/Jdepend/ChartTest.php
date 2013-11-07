@@ -64,7 +64,7 @@ class ChartTest extends AbstractTest
      *
      * @var string
      */
-    private $_outputFile = null;
+    private $outputFile = null;
 
     /**
      * setUp()
@@ -75,9 +75,9 @@ class ChartTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->_outputFile = self::createRunResourceURI('jdepend-test-out.svg');
-        if (file_exists($this->_outputFile)) {
-            unlink($this->_outputFile);
+        $this->outputFile = self::createRunResourceURI('jdepend-test-out.svg');
+        if (file_exists($this->outputFile)) {
+            unlink($this->outputFile);
         }
     }
 
@@ -88,8 +88,8 @@ class ChartTest extends AbstractTest
      */
     protected function tearDown()
     {
-        if (file_exists($this->_outputFile)) {
-            unlink($this->_outputFile);
+        if (file_exists($this->outputFile)) {
+            unlink($this->outputFile);
         }
         parent::tearDown();
     }
@@ -154,12 +154,12 @@ class ChartTest extends AbstractTest
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
-        $logger->setLogFile($this->_outputFile);
+        $logger->setLogFile($this->outputFile);
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
         $logger->close();
 
-        $this->assertFileExists($this->_outputFile);
+        $this->assertFileExists($this->outputFile);
     }
 
     /**
@@ -175,13 +175,13 @@ class ChartTest extends AbstractTest
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
-        $logger->setLogFile($this->_outputFile);
+        $logger->setLogFile($this->outputFile);
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
         $logger->close();
 
         $svg = new \DOMDocument();
-        $svg->load($this->_outputFile);
+        $svg->load($this->outputFile);
 
         $xpath = new \DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
@@ -203,13 +203,13 @@ class ChartTest extends AbstractTest
         $analyzer->analyze($nodes);
 
         $logger = new Chart();
-        $logger->setLogFile($this->_outputFile);
+        $logger->setLogFile($this->outputFile);
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
         $logger->close();
 
         $svg = new \DOMDocument();
-        $svg->load($this->_outputFile);
+        $svg->load($this->outputFile);
 
         $xpath = new \DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
@@ -260,14 +260,14 @@ class ChartTest extends AbstractTest
         $nodes = new ASTArtifactList($nodes);
 
         $logger = new Chart();
-        $logger->setLogFile($this->_outputFile);
+        $logger->setLogFile($this->outputFile);
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
 
         $logger->close();
 
         $svg = new \DOMDocument();
-        $svg->load($this->_outputFile);
+        $svg->load($this->outputFile);
 
         $xpath = new \DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');

@@ -62,7 +62,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      * @var \PDepend\Util\Cache\CacheDriver
      * @since 1.0.0
      */
-    private $_cache;
+    private $cache;
 
     /**
      * Initializes a in memory cache.
@@ -73,7 +73,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
     {
         parent::setUp();
 
-        $this->_cache = new MemoryCacheDriver();
+        $this->cache = new MemoryCacheDriver();
     }
 
     /**
@@ -726,7 +726,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
     private function _createAnalyzer()
     {
         $analyzer = new NodeLocAnalyzer();
-        $analyzer->setCache($this->_cache);
+        $analyzer->setCache($this->cache);
 
         return $analyzer;
     }

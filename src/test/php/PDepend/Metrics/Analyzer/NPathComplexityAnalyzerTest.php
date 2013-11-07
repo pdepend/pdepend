@@ -62,7 +62,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @var \PDepend\Util\Cache\CacheDriver
      * @since 1.0.0
      */
-    private $_cache;
+    private $cache;
 
     /**
      * Initializes a in memory cache.
@@ -73,7 +73,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
     {
         parent::setUp();
 
-        $this->_cache = new MemoryCacheDriver();
+        $this->cache = new MemoryCacheDriver();
     }
 
     /**
@@ -593,7 +593,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
     private function _createAnalyzer()
     {
         $analyzer = new NPathComplexityAnalyzer();
-        $analyzer->setCache($this->_cache);
+        $analyzer->setCache($this->cache);
 
         return $analyzer;
     }
