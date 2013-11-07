@@ -143,7 +143,8 @@ class RunnerTest extends AbstractTest
         $runner->setWithoutAnnotations();
 
         $actual = $this->_runRunnerAndReturnStatistics(
-            $runner, self::createCodeResourceUriForTest()
+            $runner,
+            self::createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
@@ -180,7 +181,8 @@ class RunnerTest extends AbstractTest
 
         $runner = $this->createTextUiRunnerFixture();
         $actual = $this->_runRunnerAndReturnStatistics(
-            $runner, self::createCodeResourceUriForTest()
+            $runner,
+            self::createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
