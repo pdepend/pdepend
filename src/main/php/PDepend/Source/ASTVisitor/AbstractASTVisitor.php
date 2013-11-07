@@ -139,7 +139,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
     {
         $this->fireStartFile($compilationUnit);
         $this->fireEndFile($compilationUnit);

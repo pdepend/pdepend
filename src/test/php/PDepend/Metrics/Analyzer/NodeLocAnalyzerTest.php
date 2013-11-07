@@ -688,7 +688,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $file->setUuid(42);
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->visitFile($file);
+        $analyzer->visitCompilationUnit($file);
 
         $metrics = $analyzer->getNodeMetrics($file);
         $this->assertEquals(array(), $metrics);

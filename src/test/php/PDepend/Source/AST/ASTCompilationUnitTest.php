@@ -180,7 +180,7 @@ class ASTCompilationUnitTest extends AbstractTest
     {
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
-            ->method('visitFile')
+            ->method('visitCompilationUnit')
             ->with(self::isInstanceOf(ASTCompilationUnit::CLAZZ));
 
         $file = new ASTCompilationUnit(null);

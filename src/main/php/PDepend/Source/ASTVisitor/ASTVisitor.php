@@ -95,7 +95,7 @@ interface ASTVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(ASTCompilationUnit $compilationUnit);
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit);
 
     /**
      * Visits a function node.

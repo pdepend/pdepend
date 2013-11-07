@@ -235,7 +235,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
     {
         // Skip for dummy files
         if ($compilationUnit->getFileName() === null) {

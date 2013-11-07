@@ -269,7 +269,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitFile(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
     {
         $metricsXml = end($this->xmlStack);
         $document   = $metricsXml->ownerDocument;

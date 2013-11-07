@@ -320,7 +320,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function accept(ASTVisitor $visitor)
     {
-        $visitor->visitFile($this);
+        $visitor->visitCompilationUnit($this);
     }
 
     /**
