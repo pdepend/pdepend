@@ -309,7 +309,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     public function visitFunction(ASTFunction $function)
     {
         // First visit function file
-        $function->getSourceFile()->accept($this);
+        $function->getCompilationUnit()->accept($this);
 
         $fileXml  = end($this->xmlStack);
         $document = $fileXml->ownerDocument;
@@ -366,7 +366,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     private function visitType(AbstractASTClassOrInterface $type)
     {
-        $type->getSourceFile()->accept($this);
+        $type->getCompilationUnit()->accept($this);
 
         $fileXml  = end($this->xmlStack);
         $document = $fileXml->ownerDocument;

@@ -105,7 +105,7 @@ class UuidBuilder
      */
     protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
     {
-        $fileHash = $artifact->getSourceFile()->getUuid();
+        $fileHash = $artifact->getCompilationUnit()->getUuid();
         $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getName()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);

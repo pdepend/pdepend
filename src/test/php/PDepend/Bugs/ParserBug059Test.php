@@ -62,15 +62,18 @@ class ParserBug059Test extends AbstractRegressionTest
      */
     public function testParserSetsSourceFileForInterfaceMethod()
     {
-        $sourceFile = self::parseCodeResourceForTest()
+        $compilationUnit = self::parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current()
             ->getMethods()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
-        $this->assertEquals(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
+        $this->assertEquals(
+            self::createCodeResourceUriForTest(),
+            $compilationUnit->getFileName()
+        );
     }
 
     /**
@@ -80,15 +83,18 @@ class ParserBug059Test extends AbstractRegressionTest
      */
     public function testParserSetsSourceFileForClassMethod()
     {
-        $sourceFile = self::parseCodeResourceForTest()
+        $compilationUnit = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
-        $this->assertSame(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
+        $this->assertSame(
+            self::createCodeResourceUriForTest(),
+            $compilationUnit->getFileName()
+        );
     }
 
     /**
@@ -98,14 +104,17 @@ class ParserBug059Test extends AbstractRegressionTest
      */
     public function testParserSetsSourceFileForClassProperty()
     {
-        $sourceFile = self::parseCodeResourceForTest()
+        $compilationUnit = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getProperties()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
-        $this->assertSame(self::createCodeResourceUriForTest(), $sourceFile->getFileName());
+        $this->assertSame(
+            self::createCodeResourceUriForTest(),
+            $compilationUnit->getFileName()
+        );
     }
 }

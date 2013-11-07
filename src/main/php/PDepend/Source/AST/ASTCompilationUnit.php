@@ -359,7 +359,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
         $this->cached = true;
 
         foreach ($this->childNodes as $childNode) {
-            $childNode->setSourceFile($this);
+            $childNode->setCompilationUnit($this);
         }
     }
 

@@ -112,7 +112,7 @@ class DefaultListenerTest extends AbstractTest
     public function testListenerCallsStartNodeEndNodeForClass()
     {
         $class = $this->createClassFixture(__FUNCTION__);
-        $class->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $class->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
         $visitor  = new StubAbstractASTVisitor();
@@ -140,7 +140,7 @@ class DefaultListenerTest extends AbstractTest
     public function testListenerCallsStartNodeEndNodeForInterface()
     {
         $interface = $this->createInterfaceFixture(__FUNCTION__);
-        $interface->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
         $visitor  = new StubAbstractASTVisitor();
@@ -168,7 +168,7 @@ class DefaultListenerTest extends AbstractTest
     public function testListenerCallsStartNodeEndNodeForFunction()
     {
         $function = $this->createFunctionFixture(__FUNCTION__);
-        $function->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $function->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
         $visitor  = new StubAbstractASTVisitor();
@@ -196,7 +196,7 @@ class DefaultListenerTest extends AbstractTest
     public function testListenerCallsStartNodeEndNodeForMethod()
     {
         $method = $this->createMethodFixture(__FUNCTION__);
-        $method->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $method->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
         $visitor  = new StubAbstractASTVisitor();

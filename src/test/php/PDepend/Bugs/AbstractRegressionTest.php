@@ -97,7 +97,6 @@ abstract class AbstractRegressionTest extends AbstractTest
      * Returns the source file for the given test case.
      *
      * @param string $testCase The qualified test case name.
-     *
      * @return string
      */
     protected static function getSourceFileForTestCase($testCase)

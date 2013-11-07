@@ -200,7 +200,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
     {
         $this->fireStartClass($class);
 
-        $class->getSourceFile()->accept($this);
+        $class->getCompilationUnit()->accept($this);
 
         $this->classExecutableLines = 0;
         $this->classLogicalLines    = 0;
@@ -282,7 +282,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
     {
         $this->fireStartFunction($function);
 
-        $function->getSourceFile()->accept($this);
+        $function->getCompilationUnit()->accept($this);
 
         if ($this->restoreFromCache($function)) {
             return $this->fireEndFunction($function);
@@ -317,7 +317,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
     {
         $this->fireStartInterface($interface);
 
-        $interface->getSourceFile()->accept($this);
+        $interface->getCompilationUnit()->accept($this);
 
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);

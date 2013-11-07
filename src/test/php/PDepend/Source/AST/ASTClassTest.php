@@ -773,8 +773,8 @@ class ASTClassTest extends AbstractASTArtifactTest
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
-            $copy->getSourceFile(),
-            $copy->getMethods()->current()->getSourceFile()
+            $copy->getCompilationUnit(),
+            $copy->getMethods()->current()->getCompilationUnit()
         );
     }
 
@@ -1608,10 +1608,10 @@ class ASTClassTest extends AbstractASTArtifactTest
         $class->setContext($this->getMock(BuilderContext::CLAZZ));
 
         $file = new ASTCompilationUnit(__FILE__);
-        $class->setSourceFile($file);
+        $class->setCompilationUnit($file);
         $class->__wakeup();
 
-        $this->assertSame($file, $method->getSourceFile());
+        $this->assertSame($file, $method->getCompilationUnit());
     }
 
     /**
@@ -1639,7 +1639,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     protected function createItem()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $class->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $class->setCache(new MemoryCacheDriver());
         $class->setContext($this->getMock(BuilderContext::CLAZZ));
 

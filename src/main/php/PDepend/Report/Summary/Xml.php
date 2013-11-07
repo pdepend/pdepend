@@ -263,7 +263,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $classXml->setAttribute('name', $class->getName());
 
         $this->writeNodeMetrics($classXml, $class);
-        $this->writeFileReference($classXml, $class->getSourceFile());
+        $this->writeFileReference($classXml, $class->getCompilationUnit());
 
         $xml->appendChild($classXml);
 
@@ -294,7 +294,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $functionXml->setAttribute('name', $function->getName());
 
         $this->writeNodeMetrics($functionXml, $function);
-        $this->writeFileReference($functionXml, $function->getSourceFile());
+        $this->writeFileReference($functionXml, $function->getCompilationUnit());
 
         $xml->appendChild($functionXml);
     }

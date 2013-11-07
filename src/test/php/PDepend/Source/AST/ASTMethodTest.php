@@ -302,7 +302,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()
     {
         $method = new ASTMethod('method');
-        $method->getSourceFile();
+        $method->getCompilationUnit();
     }
 
     /**
@@ -316,12 +316,12 @@ class ASTMethodTest extends AbstractASTArtifactTest
         $file = new ASTCompilationUnit(__FILE__);
 
         $class = new ASTClass(__CLASS__);
-        $class->setSourceFile($file);
+        $class->setCompilationUnit($file);
 
         $method = new ASTMethod(__FUNCTION__);
         $method->setParent($class);
 
-        $this->assertSame($file, $method->getSourceFile());
+        $this->assertSame($file, $method->getCompilationUnit());
     }
 
     /**
@@ -829,7 +829,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     protected function createItem()
     {
         $method = new ASTMethod('method');
-        $method->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $method->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         return $method;
     }

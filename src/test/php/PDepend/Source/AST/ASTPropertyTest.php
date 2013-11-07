@@ -149,10 +149,10 @@ class ASTPropertyTest extends AbstractTest
      *
      * @return void
      */
-    public function testGetSourceFileReturnsNullByDefault()
+    public function testGetCompilationUnitReturnsNullByDefault()
     {
         $property = $this->getMockWithoutConstructor(ASTProperty::CLAZZ);
-        $this->assertNull($property->getSourceFile());
+        $this->assertNull($property->getCompilationUnit());
     }
 
     /**
@@ -160,14 +160,14 @@ class ASTPropertyTest extends AbstractTest
      *
      * @return void
      */
-    public function testGetSourceFileReturnsInjectedFileInstance()
+    public function testGetCompilationUnitReturnsInjectedFileInstance()
     {
-        $file = new ASTCompilationUnit(__FILE__);
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
 
         $property = $this->getMockWithoutConstructor(ASTProperty::CLAZZ);
-        $property->setSourceFile($file);
+        $property->setCompilationUnit($compilationUnit);
 
-        $this->assertSame($file, $property->getSourceFile());
+        $this->assertSame($compilationUnit, $property->getCompilationUnit());
     }
 
     /**

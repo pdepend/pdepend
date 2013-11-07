@@ -78,6 +78,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
      * @return \PDepend\Source\AST\ASTClass
+     * @throws \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function getParentClass()
     {
@@ -110,6 +111,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * and parent of this parent the second element and so on.
      *
      * @return \PDepend\Source\AST\ASTClass[]
+     * @throws \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.0.0
      */
     public function getParentClasses()
@@ -145,9 +147,8 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @return void
      * @since 0.9.5
      */
-    public function setParentClassReference(
-        \PDepend\Source\AST\ASTClassReference $classReference
-    ) {
+    public function setParentClassReference(ASTClassReference $classReference)
+    {
         $this->nodes[]              = $classReference;
         $this->parentClassReference = $classReference;
     }
@@ -194,16 +195,13 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Adds a interface reference node.
      *
-     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $interfaceReference The
-     *        extended or implemented interface reference.
-     *
+     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $interfaceReference
      * @return void
      * @since 0.9.5
      */
-    public function addInterfaceReference(
-        \PDepend\Source\AST\ASTClassOrInterfaceReference $interfaceReference
-    ) {
-        $this->nodes[]               = $interfaceReference;
+    public function addInterfaceReference(ASTClassOrInterfaceReference $interfaceReference)
+    {
+        $this->nodes[] = $interfaceReference;
         $this->interfaceReferences[] = $interfaceReference;
     }
 
@@ -337,14 +335,10 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
             );
         }
 
-        $definitions = $this->findChildrenOfType(
-            \PDepend\Source\AST\ASTConstantDefinition::CLAZZ
-        );
+        $definitions = $this->findChildrenOfType(ASTConstantDefinition::CLAZZ);
 
         foreach ($definitions as $definition) {
-            $declarators = $definition->findChildrenOfType(
-                \PDepend\Source\AST\ASTConstantDeclarator::CLAZZ
-            );
+            $declarators = $definition->findChildrenOfType(ASTConstantDeclarator::CLAZZ);
 
             foreach ($declarators as $declarator) {
                 $image = $declarator->getImage();
@@ -371,23 +365,4 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
             parent::__sleep()
         );
     }
-
-    // @codeCoverageIgnoreStart
-
-    /**
-     * This method can be called by the PDepend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     * @since 0.9.12
-     * @deprecated Since 1.0.0
-     */
-    public function free()
-    {
-        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
-    }
-
-    // @codeCoverageIgnoreEnd
 }

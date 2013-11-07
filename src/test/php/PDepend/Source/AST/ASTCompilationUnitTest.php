@@ -240,16 +240,16 @@ class ASTCompilationUnitTest extends AbstractTest
     {
         $node = $this->getMock(
             ASTClass::CLAZZ,
-            array('setSourceFile'),
+            array('setCompilationUnit'),
             array(__CLASS__)
         );
         $node->expects($this->once())
-            ->method('setSourceFile')
+            ->method('setCompilationUnit')
             ->with(self::isInstanceOf(ASTCompilationUnit::CLAZZ));
 
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->addChild($node);
-        $file->__wakeup();
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->addChild($node);
+        $compilationUnit->__wakeup();
     }
 
     /**

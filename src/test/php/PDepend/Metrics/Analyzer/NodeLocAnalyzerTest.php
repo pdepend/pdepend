@@ -143,7 +143,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $file     = $packages->current()
             ->getFunctions()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
@@ -228,7 +228,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $file     = $packages->current()
             ->getClasses()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
@@ -281,7 +281,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $file     = $packages->current()
             ->getInterfaces()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);
@@ -453,7 +453,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $file     = $packages->current()
             ->getClasses()
             ->current()
-            ->getSourceFile();
+            ->getCompilationUnit();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($packages);

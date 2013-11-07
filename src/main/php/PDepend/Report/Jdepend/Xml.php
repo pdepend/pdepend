@@ -233,7 +233,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $doc = $this->packages->ownerDocument;
 
         $classXml = $doc->createElement('Class');
-        $classXml->setAttribute('sourceFile', (string) $class->getSourceFile());
+        $classXml->setAttribute('sourceFile', (string) $class->getCompilationUnit());
         $classXml->appendChild($doc->createTextNode($class->getName()));
 
         if ($class->isAbstract()) {
@@ -258,7 +258,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $doc = $this->abstractClasses->ownerDocument;
 
         $classXml = $doc->createElement('Class');
-        $classXml->setAttribute('sourceFile', (string) $interface->getSourceFile());
+        $classXml->setAttribute('sourceFile', (string) $interface->getCompilationUnit());
         $classXml->appendChild($doc->createTextNode($interface->getName()));
 
         $this->abstractClasses->appendChild($classXml);

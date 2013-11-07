@@ -251,9 +251,9 @@ class DefaultVisitorTest extends AbstractTest
     {
         $package = new ASTNamespace('MyPackage');
         $package->addType(new ASTTrait('MyTraitOne'))
-            ->setSourceFile(new ASTCompilationUnit(__FILE__));
+            ->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $package->addType(new ASTTrait('MyTraitTwo'))
-            ->setSourceFile(new ASTCompilationUnit(__FILE__));
+            ->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('visitTrait'));
         $visitor->expects($this->exactly(2))
@@ -271,7 +271,7 @@ class DefaultVisitorTest extends AbstractTest
     public function testVisitorInvokesAcceptOnTraitMethods()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $trait->addMethod($method0 = new ASTMethod('m0'));
         $trait->addMethod($method1 = new ASTMethod('m1'));
 
@@ -295,7 +295,7 @@ class DefaultVisitorTest extends AbstractTest
     public function testVisitorInvokesStartTraitOnListener()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $package = new ASTNamespace('MyPackage');
         $package->addType($trait);
@@ -319,7 +319,7 @@ class DefaultVisitorTest extends AbstractTest
     public function testVisitorInvokesEndTraitOnListener()
     {
         $trait = $this->createTraitFixture();
-        $trait->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $package = new ASTNamespace('MyPackage');
         $package->addType($trait);

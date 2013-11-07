@@ -88,9 +88,9 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The source file for this item.
      *
-     * @var ASTCompilationUnit
+     * @var \PDepend\Source\AST\ASTCompilationUnit
      */
-    protected $sourceFile = null;
+    protected $compilationUnit = null;
 
     /**
      * The comment for this type.
@@ -161,11 +161,11 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns the source file for this item.
      *
-     * @return ASTCompilationUnit
+     * @return \PDepend\Source\AST\ASTCompilationUnit
      */
-    public function getSourceFile()
+    public function getCompilationUnit()
     {
-        return $this->sourceFile;
+        return $this->compilationUnit;
     }
 
     /**
@@ -174,10 +174,10 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function setSourceFile(ASTCompilationUnit $compilationUnit)
+    public function setCompilationUnit(ASTCompilationUnit $compilationUnit)
     {
-        if ($this->sourceFile === null || $this->sourceFile->getName() === null) {
-            $this->sourceFile = $compilationUnit;
+        if ($this->compilationUnit === null || $this->compilationUnit->getName() === null) {
+            $this->compilationUnit = $compilationUnit;
         }
     }
 

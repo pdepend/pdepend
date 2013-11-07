@@ -279,7 +279,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             ->restore($this->getUuid());
 
         foreach ($methods as $method) {
-            $method->sourceFile = $this->sourceFile;
+            $method->compilationUnit = $this->compilationUnit;
             $method->setParent($this);
         }
 
@@ -435,7 +435,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function isCached()
     {
-        return $this->sourceFile->isCached();
+        return $this->compilationUnit->isCached();
     }
 
     /**

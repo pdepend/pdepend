@@ -101,7 +101,7 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid('FooBar');
 
         $class = new ASTClass(__FUNCTION__);
-        $class->setSourceFile($file);
+        $class->setCompilationUnit($file);
 
         $builder = new UuidBuilder();
 
@@ -119,7 +119,7 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid('FooBar');
 
         $class = new ASTClass(__FUNCTION__);
-        $class->setSourceFile($file);
+        $class->setCompilationUnit($file);
 
         $builder = new UuidBuilder();
         $builder->forClassOrInterface($class);
@@ -138,10 +138,10 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid('FooBar');
 
         $class1 = new ASTClass(__FUNCTION__);
-        $class1->setSourceFile($file);
+        $class1->setCompilationUnit($file);
 
         $class2 = new ASTClass(__CLASS__);
-        $class2->setSourceFile($file);
+        $class2->setCompilationUnit($file);
 
         $builder = new UuidBuilder();
         $builder->forClassOrInterface($class1);
@@ -160,10 +160,10 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid(__FUNCTION__);
         
         $class0 = new ASTClass(__FUNCTION__);
-        $class0->setSourceFile($file);
+        $class0->setCompilationUnit($file);
         
         $class1 = new ASTClass(strtolower(__FUNCTION__));
-        $class1->setSourceFile($file);
+        $class1->setCompilationUnit($file);
 
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
@@ -185,10 +185,10 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid(__FUNCTION__);
 
         $interface0 = new ASTInterface(__FUNCTION__);
-        $interface0->setSourceFile($file);
+        $interface0->setCompilationUnit($file);
 
         $interface1 = new ASTInterface(strtolower(__FUNCTION__));
-        $interface1->setSourceFile($file);
+        $interface1->setCompilationUnit($file);
 
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
@@ -210,7 +210,7 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid('FooBar');
 
         $function = new ASTFunction(__FUNCTION__);
-        $function->setSourceFile($file);
+        $function->setCompilationUnit($file);
 
         $builder = new UuidBuilder();
 
@@ -228,10 +228,10 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid(__FUNCTION__);
 
         $function0 = new ASTFunction(__FUNCTION__);
-        $function0->setSourceFile($file);
+        $function0->setCompilationUnit($file);
 
         $function1 = new ASTFunction(strtolower(__FUNCTION__));
-        $function1->setSourceFile($file);
+        $function1->setCompilationUnit($file);
 
         $builder0 = new UuidBuilder();
         $builder1 = new UuidBuilder();
@@ -271,7 +271,7 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid('FooBar');
 
         $function = new ASTFunction(__FUNCTION__);
-        $function->setSourceFile($file);
+        $function->setCompilationUnit($file);
 
         $builder = new UuidBuilder();
         $builder->forFunction($function);
@@ -290,10 +290,10 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid('FooBar');
 
         $function1 = new ASTFunction(__FUNCTION__);
-        $function1->setSourceFile($file);
+        $function1->setCompilationUnit($file);
 
         $function2 = new ASTFunction(__CLASS__);
-        $function2->setSourceFile($file);
+        $function2->setCompilationUnit($file);
 
         $builder = new UuidBuilder();
         $builder->forFunction($function1);
@@ -312,7 +312,7 @@ class UuidBuilderTest extends AbstractTest
         $file->setUuid(__FUNCTION__);
 
         $class = new ASTClass(__FUNCTION__);
-        $class->setSourceFile($file);
+        $class->setCompilationUnit($file);
 
         $method0 = new ASTMethod(__FUNCTION__);
         $method0->setParent($class);

@@ -663,7 +663,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
     protected function createItem()
     {
         $function = new ASTFunction(__FUNCTION__);
-        $function->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $function->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $function->setContext($this->getMock(BuilderContext::CLAZZ));
 
         return $function;

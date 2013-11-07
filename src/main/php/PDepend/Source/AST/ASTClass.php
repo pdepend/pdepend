@@ -104,7 +104,7 @@ class ASTClass extends AbstractASTClassOrInterface
 
                     $property = new ASTProperty($declaration, $declarator);
                     $property->setDeclaringClass($this);
-                    $property->setSourceFile($this->getSourceFile());
+                    $property->setCompilationUnit($this->getCompilationUnit());
 
                     $this->properties[] = $property;
                 }

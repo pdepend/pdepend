@@ -455,8 +455,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
-            $copy->getSourceFile(),
-            $copy->getMethods()->current()->getSourceFile()
+            $copy->getCompilationUnit(),
+            $copy->getMethods()->current()->getCompilationUnit()
         );
     }
 
@@ -883,7 +883,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
 
         $interface->__wakeup();
 
-        $this->assertSame($interface->getSourceFile(), $method->getSourceFile());
+        $this->assertSame($interface->getCompilationUnit(), $method->getCompilationUnit());
     }
 
     /**
@@ -927,7 +927,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     protected function createItem()
     {
         $interface = new ASTInterface(__CLASS__);
-        $interface->setSourceFile(new ASTCompilationUnit(__FILE__));
+        $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $interface->setCache(new MemoryCacheDriver());
         $interface->setContext($this->getMock(BuilderContext::CLAZZ));
 

@@ -255,7 +255,7 @@ class PHPBuilder implements Builder
         $trait = new ASTTrait($this->extractTypeName($qualifiedName));
         $trait->setCache($this->cache)
             ->setContext($this->context)
-            ->setSourceFile($this->defaultCompilationUnit);
+            ->setCompilationUnit($this->defaultCompilationUnit);
 
         return $trait;
     }
@@ -332,7 +332,7 @@ class PHPBuilder implements Builder
         $class = new ASTClass($this->extractTypeName($name));
         $class->setCache($this->cache)
             ->setContext($this->context)
-            ->setSourceFile($this->defaultCompilationUnit);
+            ->setCompilationUnit($this->defaultCompilationUnit);
 
         return $class;
     }
@@ -416,7 +416,7 @@ class PHPBuilder implements Builder
         $interface = new ASTInterface($this->extractTypeName($name));
         $interface->setCache($this->cache)
             ->setContext($this->context)
-            ->setSourceFile($this->defaultCompilationUnit);
+            ->setCompilationUnit($this->defaultCompilationUnit);
 
         return $interface;
     }
@@ -495,7 +495,7 @@ class PHPBuilder implements Builder
         $function = new ASTFunction($name);
         $function->setCache($this->cache)
             ->setContext($this->context)
-            ->setSourceFile($this->defaultCompilationUnit);
+            ->setCompilationUnit($this->defaultCompilationUnit);
  
         return $function;
     }

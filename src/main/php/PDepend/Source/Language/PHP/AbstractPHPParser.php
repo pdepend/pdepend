@@ -510,7 +510,7 @@ abstract class AbstractPHPParser
         $qualifiedName = $this->createQualifiedTypeName($this->parseClassName());
 
         $trait = $this->builder->buildTrait($qualifiedName);
-        $trait->setSourceFile($this->compilationUnit);
+        $trait->setCompilationUnit($this->compilationUnit);
         $trait->setDocComment($this->docComment);
         $trait->setUuid($this->uuidBuilder->forClassOrInterface($trait));
         $trait->setUserDefined();
@@ -551,7 +551,7 @@ abstract class AbstractPHPParser
         $qualifiedName = $this->createQualifiedTypeName($this->parseClassName());
 
         $interface = $this->builder->buildInterface($qualifiedName);
-        $interface->setSourceFile($this->compilationUnit);
+        $interface->setCompilationUnit($this->compilationUnit);
         $interface->setDocComment($this->docComment);
         $interface->setUuid($this->uuidBuilder->forClassOrInterface($interface));
         $interface->setUserDefined();
@@ -615,7 +615,7 @@ abstract class AbstractPHPParser
         $qualifiedName = $this->createQualifiedTypeName($this->parseClassName());
 
         $class = $this->builder->buildClass($qualifiedName);
-        $class->setSourceFile($this->compilationUnit);
+        $class->setCompilationUnit($this->compilationUnit);
         $class->setModifiers($this->modifiers);
         $class->setDocComment($this->docComment);
         $class->setUuid($this->uuidBuilder->forClassOrInterface($class));
@@ -875,7 +875,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_FUNCTION:
                     $method = $this->parseMethodDeclaration();
                     $method->setModifiers($modifiers);
-                    $method->setSourceFile($this->compilationUnit);
+                    $method->setCompilationUnit($this->compilationUnit);
                     $method->setUuid($this->uuidBuilder->forMethod($method));
                     $method->setTokens($this->tokenStack->pop());
                     return $method;
@@ -1059,7 +1059,7 @@ abstract class AbstractPHPParser
         $functionName = $this->parseFunctionName();
 
         $function = $this->builder->buildFunction($functionName);
-        $function->setSourceFile($this->compilationUnit);
+        $function->setCompilationUnit($this->compilationUnit);
         $function->setUuid($this->uuidBuilder->forFunction($function));
 
         $this->parseCallableDeclaration($function);
@@ -1103,7 +1103,7 @@ abstract class AbstractPHPParser
 
         $method = $this->builder->buildMethod($methodName);
         $method->setDocComment($this->docComment);
-        $method->setSourceFile($this->compilationUnit);
+        $method->setCompilationUnit($this->compilationUnit);
 
         $this->classOrInterface->addMethod($method);
 

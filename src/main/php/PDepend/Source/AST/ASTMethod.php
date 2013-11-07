@@ -199,12 +199,12 @@ class ASTMethod extends AbstractASTCallable
      * @throws \PDepend\Source\AST\ASTCompilationUnitNotFoundException When no parent was set.
      * @since 0.10.0
      */
-    public function getSourceFile()
+    public function getCompilationUnit()
     {
         if ($this->parent === null) {
             throw new ASTCompilationUnitNotFoundException($this);
         }
-        return $this->parent->getSourceFile();
+        return $this->parent->getCompilationUnit();
     }
 
     /**

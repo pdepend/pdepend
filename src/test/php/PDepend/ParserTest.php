@@ -266,7 +266,7 @@ class ParserTest extends AbstractTest
         $class = $package->getClasses()->current();
         $this->assertNotNull($class);
 
-        $actual = $class->getSourceFile()->getDocComment();
+        $actual = $class->getCompilationUnit()->getDocComment();
         $this->assertNotNull($actual);
 
         $expected = "/**\n"
@@ -296,7 +296,7 @@ class ParserTest extends AbstractTest
         $class = $package->getClasses()->current();
         $this->assertNotNull($class);
 
-        $actual = $class->getSourceFile()->getDocComment();
+        $actual = $class->getCompilationUnit()->getDocComment();
         $this->assertNull($actual);
     }
 
@@ -316,7 +316,7 @@ class ParserTest extends AbstractTest
         $function = $package->getFunctions()->current();
         $this->assertNotNull($function);
 
-        $actual = $function->getSourceFile()->getDocComment();
+        $actual = $function->getCompilationUnit()->getDocComment();
         $this->assertNull($actual);
     }
 

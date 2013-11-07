@@ -111,7 +111,7 @@ class ASTArtifactTest extends AbstractTest
     public function testGetSourceFileReturnsNullByDefault()
     {
         $item = $this->getItemMock();
-        $this->assertNull($item->getSourceFile());
+        $this->assertNull($item->getCompilationUnit());
     }
 
     /**
@@ -124,9 +124,9 @@ class ASTArtifactTest extends AbstractTest
         $file = new ASTCompilationUnit(__FILE__);
 
         $item = $this->getItemMock();
-        $item->setSourceFile($file);
+        $item->setCompilationUnit($file);
 
-        $this->assertSame($file, $item->getSourceFile());
+        $this->assertSame($file, $item->getCompilationUnit());
     }
 
     /**

@@ -411,7 +411,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      */
     public function isCached()
     {
-        return $this->sourceFile->isCached();
+        return $this->compilationUnit->isCached();
     }
 
     /**
