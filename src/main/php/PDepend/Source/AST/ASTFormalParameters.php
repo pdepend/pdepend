@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This ast class represents a list for formal parameters. This means the
  * parameters of a method, function or closure declaration.
@@ -78,13 +80,12 @@ class ASTFormalParameters extends ASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param mixed $data
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitFormalParameters($this, $data);
     }

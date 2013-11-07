@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>parent</b> is used to reference a class or interface.
@@ -108,12 +110,12 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @param mixed $data
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitParentReference($this, $data);
     }

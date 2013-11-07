@@ -169,7 +169,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @return void
      * @access private
      */
-    public function addChild(\PDepend\Source\AST\ASTNode $node)
+    public function addChild(ASTNode $node)
     {
         $this->nodes[] = $node;
     }

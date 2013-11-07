@@ -109,13 +109,13 @@ class ASTDeclareStatement extends \PDepend\Source\AST\ASTStatement
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @param mixed $data
      *
      * @return mixed
      * @since 0.10.0
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitDeclareStatement($this, $data);
     }

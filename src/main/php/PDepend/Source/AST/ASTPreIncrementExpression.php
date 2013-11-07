@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This node class represents a pre-increment-expression.
  *
@@ -61,12 +63,11 @@ class ASTPreIncrementExpression extends ASTUnaryExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
-     *
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param mixed $data
      * @return mixed
      */
-    public function accept(ASTVisitorI $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitPreIncrementExpression($this, $data);
     }

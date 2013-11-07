@@ -60,7 +60,6 @@ use PDepend\Source\AST\ASTLogicalXorExpression;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchLabel;
-use PDepend\Source\AST\ASTVisitorI;
 use PDepend\Util\MathUtil;
 
 /**
@@ -71,7 +70,7 @@ use PDepend\Util\MathUtil;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, ASTVisitorI
+class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware
 {
     /**
      * Type of this analyzer class.
@@ -196,25 +195,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     }
 
     /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * @param string $method Name of the called method.
-     * @param array  $args   Array with method argument.
-     *
-     * @return mixed
-     * @since 0.9.12
-     */
-    public function __call($method, $args)
-    {
-        $value = $args[1];
-        foreach ($args[0]->getChildren() as $child) {
-            $value = $child->accept($this, $value);
-        }
-        return $value;
-    }
-
-    /**
      * This method calculates the NPath Complexity of a conditional-statement,
      * the meassured value is then returned as a string.
      *
@@ -224,9 +204,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
-     *
+     * @param \PDepend\Source\AST\ASTNode
+     * @param string $data
      * @return string
      * @since 0.9.12
      */

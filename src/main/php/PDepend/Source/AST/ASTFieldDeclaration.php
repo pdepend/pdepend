@@ -161,13 +161,13 @@ class ASTFieldDeclaration extends \PDepend\Source\AST\ASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTVisitorI $visitor The calling visitor instance.
-     * @param mixed                       $data    Optional previous calculated data.
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param mixed $data
      *
      * @return mixed
      * @since 0.9.12
      */
-    public function accept(\PDepend\Source\AST\ASTVisitorI $visitor, $data = null)
+    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitFieldDeclaration($this, $data);
     }

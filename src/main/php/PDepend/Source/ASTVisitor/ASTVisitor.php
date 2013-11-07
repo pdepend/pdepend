@@ -144,4 +144,29 @@ interface ASTVisitor
      * @return void
      */
     public function visitProperty(ASTProperty $property);
+
+    /**
+     * Magic call method used to provide simplified visitor implementations.
+     * With this method we can call <b>visit${NodeClassName}</b> on each node.
+     *
+     * <code>
+     * $visitor->visitAllocationExpression($alloc);
+     *
+     * $visitor->visitStatement($stmt);
+     * </code>
+     *
+     * All visit methods takes two argument. The first argument is the current
+     * context ast node and the second argument is a data array or object that
+     * is used to collect data.
+     *
+     * The return value of this method is the second input argument, modified
+     * by the concrete visit method.
+     *
+     * @param string $method Name of the called method.
+     * @param array  $args   Array with method argument.
+     *
+     * @return mixed
+     * @since 0.9.12
+     */
+    public function __call($method, $args);
 }

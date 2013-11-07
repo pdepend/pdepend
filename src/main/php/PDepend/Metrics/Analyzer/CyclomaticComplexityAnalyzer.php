@@ -51,7 +51,6 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTVisitorI;
 
 /**
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
@@ -60,7 +59,7 @@ use PDepend\Source\AST\ASTVisitorI;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware, ASTVisitorI
+class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
      * Type of this analyzer class.
@@ -254,25 +253,6 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     {
         $this->ccn  += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_1];
         $this->ccn2 += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_2];
-    }
-
-    /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * @param string $method Name of the called method.
-     * @param array  $args   Array with method argument.
-     *
-     * @return mixed
-     * @since 0.9.12
-     */
-    public function __call($method, $args)
-    {
-        $value = $args[1];
-        foreach ($args[0]->getChildren() as $child) {
-            $value = $child->accept($this, $value);
-        }
-        return $value;
     }
 
     /**
