@@ -53,7 +53,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\NPathComplexity\Analyzer
+ * @covers \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
  * @group unittest
  */
 class NPathComplexityAnalyzerTest extends AbstractMetricsTest
