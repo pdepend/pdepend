@@ -40,20 +40,21 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics\CodeRank;
+namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\AbstractTest;
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy;
 
 /**
- * Test case for the method strategy.
+ * Test case for the code rank property strategy.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\CodeRank\MethodStrategy
- * @group unittest
+ * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
+   * @group unittest
  */
-class MethodStrategyTest extends AbstractTest
+class PropertyStrategyTest extends AbstractTest
 {
     /**
      * testStrategyCountsCorrectTypes
@@ -143,7 +144,7 @@ class MethodStrategyTest extends AbstractTest
             ),
         );
     
-        $strategy = new \PDepend\Metrics\CodeRank\MethodStrategy();
+        $strategy = new PropertyStrategy();
         foreach ($packages as $package) {
             $package->accept($strategy);
         }

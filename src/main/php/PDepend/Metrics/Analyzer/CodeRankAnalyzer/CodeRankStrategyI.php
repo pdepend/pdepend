@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- *
+ * 
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -40,36 +40,22 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics\CodeRank;
+namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
-use PDepend\AbstractTest;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * Test case for the code rank property strategy.
+ * The code rank strategy provides an interface for dependency collection. 
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PDepend\Metrics\CodeRank\StrategyFactory
- * @group unittest
  */
-class StrategyFactoryTest extends AbstractTest
+interface CodeRankStrategyI extends ASTVisitor
 {
     /**
-     * Tests that the factory throws the expected exception for an invalid
-     * strategy identifier.
+     * Returns the collected nodes.
      *
-     * @return void
+     * @return array(string=>array)
      */
-    public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier()
-    {
-        $factory = new \PDepend\Metrics\CodeRank\StrategyFactory();
-
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Cannot load file for identifier "foo_bar_baz".'
-        );
-
-        $factory->createStrategy('foo_bar_baz');
-    }
+    public function getCollectedNodes();
 }

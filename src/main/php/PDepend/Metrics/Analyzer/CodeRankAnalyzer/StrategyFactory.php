@@ -40,7 +40,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics\CodeRank;
+namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 /**
  * Factory for the different code rank strategies.
@@ -86,7 +86,7 @@ class StrategyFactory
     /**
      * Creates the default code rank strategy.
      *
-     * @return \PDepend\Metrics\CodeRank\CodeRankStrategyI
+     * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
      */
     public function createDefaultStrategy()
     {
@@ -97,7 +97,7 @@ class StrategyFactory
      * Creates a code rank strategy for the given identifier.
      *
      * @param string $strategyName The strategy identifier.
-     * @return \PDepend\Metrics\CodeRank\CodeRankStrategyI
+     * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
      * @throws \InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
      */
@@ -112,8 +112,8 @@ class StrategyFactory
         // Prepare identifier
         $name = ucfirst(strtolower($strategyName));
 
-        $fileName  = "PDepend/Metrics/CodeRank/{$name}Strategy.php";
-        $className = "PDepend\\Metrics\\CodeRank\\{$name}Strategy";
+        $fileName  = "PDepend/Metrics/Analyzer/CodeRankAnalyzer/{$name}Strategy.php";
+        $className = "PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\{$name}Strategy";
 
         include_once $fileName;
 

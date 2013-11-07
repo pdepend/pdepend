@@ -40,7 +40,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics\CodeRank;
+namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTProperty;

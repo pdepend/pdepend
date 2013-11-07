@@ -40,21 +40,20 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics\CodeRank;
+namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
-use PDepend\Source\AST\ASTClass;
-use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
- * Collects class and package metrics based on inheritance.
+ * Collects class and package metrics based on class and interface methods.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategyI
+class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 {
     /**
      * All found nodes.
@@ -74,60 +73,58 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     }
 
     /**
-     * Visits a code class object.
+     * Visits a method node.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitMethod(ASTMethod $method)
     {
-        $this->fireStartClass($class);
-        $this->visitType($class);
-        $this->fireEndClass($class);
+        $this->fireStartMethod($method);
+
+        // Get owner type
+        $type = $method->getParent();
+
+        if (($depType = $method->getReturnClass()) !== null) {
+            $this->processType($type, $depType);
+        }
+        foreach ($method->getExceptionClasses() as $depType) {
+            $this->processType($type, $depType);
+        }
+        foreach ($method->getDependencies() as $depType) {
+            $this->processType($type, $depType);
+        }
+
+        $this->fireEndMethod($method);
     }
 
     /**
-     * Visits a code interface object.
-     *
-     * @param \PDepend\Source\AST\ASTInterface $interface
-     * @return void
-     */
-    public function visitInterface(ASTInterface $interface)
-    {
-        $this->fireStartInterface($interface);
-        $this->visitType($interface);
-        $this->fireEndInterface($interface);
-    }
-
-    /**
-     * Generic visitor method for classes and interfaces. Both visit methods
-     * delegate calls to this method.
+     * Extracts the coupling information between the two given types and their
+     * parent packages.
      *
      * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $depType
      * @return void
      */
-    protected function visitType(AbstractASTClassOrInterface $type)
+    private function processType(AbstractASTClassOrInterface $type, AbstractASTClassOrInterface $depType)
     {
-        $pkg = $type->getPackage();
+        if ($type !== $depType) {
+            $this->initNode($type);
+            $this->initNode($depType);
 
-        $this->initNode($pkg);
-        $this->initNode($type);
+            $this->nodes[$type->getUuid()]['in'][]     = $depType->getUuid();
+            $this->nodes[$depType->getUuid()]['out'][] = $type->getUuid();
+        }
 
-        foreach ($type->getDependencies() as $dep) {
+        $package    = $type->getPackage();
+        $depPackage = $depType->getPackage();
 
-            $depPkg = $dep->getPackage();
+        if ($package !== $depPackage) {
+            $this->initNode($package);
+            $this->initNode($depPackage);
 
-            $this->initNode($dep);
-            $this->initNode($depPkg);
-
-            $this->nodes[$type->getUuid()]['in'][] = $dep->getUuid();
-            $this->nodes[$dep->getUuid()]['out'][] = $type->getUuid();
-
-            // No self references
-            if ($pkg !== $depPkg) {
-                $this->nodes[$pkg->getUuid()]['in'][]     = $depPkg->getUuid();
-                $this->nodes[$depPkg->getUuid()]['out'][] = $pkg->getUuid();
-            }
+            $this->nodes[$package->getUuid()]['in'][]     = $depPackage->getUuid();
+            $this->nodes[$depPackage->getUuid()]['out'][] = $package->getUuid();
         }
     }
 
@@ -137,12 +134,12 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      * @param \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
-    protected function initNode(AbstractASTArtifact $node)
+    private function initNode(AbstractASTArtifact $node)
     {
         if (!isset($this->nodes[$node->getUuid()])) {
             $this->nodes[$node->getUuid()] = array(
-                'in'    =>  array(),
-                'out'   =>  array(),
+                'in'   =>  array(),
+                'out'  =>  array(),
                 'name'  =>  $node->getName(),
                 'type'  =>  get_class($node)
             );

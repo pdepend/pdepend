@@ -44,7 +44,7 @@ namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
-use PDepend\Metrics\CodeRank\StrategyFactory;
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 
@@ -92,7 +92,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * List of node collect strategies.
      *
-     * @var \PDepend\Metrics\CodeRank\CodeRankStrategyI[]
+     * @var \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI[]
      */
     private $strategies = array();
 
