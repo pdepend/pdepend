@@ -77,7 +77,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesEmptyConfigurationFile()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser(new stdClass());
+        $parser = $this->createParserFixture(new stdClass());
         $this->assertNotNull($parser->parse($this->getTestConfiguration('pdepend.xml')));
     }
 
@@ -88,7 +88,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesCacheDriverConfigurationValue()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals('memory', $values->cache->driver);
@@ -101,7 +101,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesCacheLocationConfigurationValue()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals('/foo/bar/baz', $values->cache->location);
@@ -114,7 +114,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesImagickFontFamilyConfigurationValue()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals('Courier New', $values->imageConvert->fontFamily);
@@ -127,7 +127,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesImagickFontSizeConfigurationValue()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals(23, $values->imageConvert->fontSize);
@@ -140,7 +140,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserHandlesParserNestingConfigurationValue()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         self::assertEquals(423, $values->parser->nesting);
@@ -153,7 +153,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserModifiesConfigurationAdaptive()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
 
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
@@ -168,7 +168,7 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
      */
     public function testParserOverwritesAlreadyDefinedConfigurationValues()
     {
-        $parser = new PHP_Depend_Util_Configuration_Parser($this->createFixture());
+        $parser = $this->createParserFixture();
         $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
 
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
@@ -189,11 +189,23 @@ class PHP_Depend_Util_Configuration_ParserTest extends PHP_Depend_AbstractTest
     }
 
     /**
+     * @param stdClass $dataFixture
+     * @return PHP_Depend_Util_Configuration_Parser
+     */
+    protected function createParserFixture(stdClass $dataFixture = null)
+    {
+        return new PHP_Depend_Util_Configuration_Parser(
+            new PHP_Depend_Util_Workarounds(),
+            $dataFixture ?: $this->createDataFixture()
+        );
+    }
+
+    /**
      * Creates a test configuration fixture.
      *
      * @return stdClass
      */
-    protected function createFixture()
+    protected function createDataFixture()
     {
         return json_decode(
             '{

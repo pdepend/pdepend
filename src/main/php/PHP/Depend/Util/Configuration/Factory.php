@@ -73,6 +73,8 @@
  */
 class PHP_Depend_Util_Configuration_Factory
 {
+    protected $workarounds;
+
     /**
      * The used configuration parser.
      *
@@ -89,9 +91,13 @@ class PHP_Depend_Util_Configuration_Factory
 
     /**
      * Constructs a new factory instance and initializes the default configuration.
+     *
+     * @param PHP_Depend_Util_Workarounds $workarounds
      */
-    public function __construct()
+    public function __construct(PHP_Depend_Util_Workarounds $workarounds = null)
     {
+        $this->workarounds = $workarounds ?: new PHP_Depend_Util_Workarounds();
+
         $home = PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir();
 
         $this->default = new stdClass();
@@ -180,7 +186,10 @@ class PHP_Depend_Util_Configuration_Factory
     protected function createOrReturnParser()
     {
         if (null === $this->parser) {
-            $this->parser = new PHP_Depend_Util_Configuration_Parser($this->default);
+            $this->parser = new PHP_Depend_Util_Configuration_Parser(
+                $this->workarounds,
+                $this->default
+            );
         }
         return $this->parser;
     }

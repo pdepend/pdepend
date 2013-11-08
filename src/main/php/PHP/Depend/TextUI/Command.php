@@ -200,6 +200,7 @@ class PHP_Depend_TextUI_Command
         try {
             // Output current pdepend version and author
             $this->printVersion();
+            $this->printWorkarounds();
 
             $startTime = time();
 
@@ -365,6 +366,27 @@ class PHP_Depend_TextUI_Command
     protected function printVersion()
     {
         echo 'PHP_Depend @package_version@ by Manuel Pichler', PHP_EOL, PHP_EOL;
+    }
+
+    /**
+     * If the current PHP installation requires some workarounds or limitations,
+     * this method will output a message on STDOUT.
+     *
+     * @return void
+     */
+    protected function printWorkarounds()
+    {
+        $workarounds = new PHP_Depend_Util_Workarounds();
+
+        if ($workarounds->isNotRequired()) {
+            return;
+        }
+
+        echo 'Your PHP version requires some workaround:', PHP_EOL;
+        foreach ($workarounds->getRequiredWorkarounds() as $workaround) {
+            echo '- ', $workaround, PHP_EOL;
+        }
+        echo PHP_EOL;
     }
 
     /**

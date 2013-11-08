@@ -8,7 +8,17 @@
         <author email="mapi@pdepend.org">Manuel Pichler</author>
     </properties>
 
-	<body>
+    <body>
+        <release version="1.1.2"
+                 date="2013/11/08"
+                 description="Disables the file cache on affected PHP version">
+            <action date="5bbd201" dev="mapi" type="fix" issue="94" system="github">
+                With this fix we provide a workaround for issue 94 which is caused by a
+                bug in PHP's unserialize/serialize implementation in all PHP versions
+                5.4.0 and 5.4.4. With this workaround we deactivate the file cache in
+                all affected PHP versions.
+            </action>
+        </release>
         <release version="1.1.1"
                  date="2013/07/25"
                  description="Closes several PHP 5.4 issues.">

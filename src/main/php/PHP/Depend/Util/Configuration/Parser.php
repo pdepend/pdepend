@@ -71,6 +71,11 @@
 class PHP_Depend_Util_Configuration_Parser
 {
     /**
+     * @var PHP_Depend_Util_Workarounds
+     */
+    protected $workarounds;
+
+    /**
      * The default configuration settings.
      *
      * @var stdClass
@@ -88,10 +93,12 @@ class PHP_Depend_Util_Configuration_Parser
      * Constructs a new parser instance that uses the given settings as a default
      * configuration.
      *
+     * @param PHP_Depend_Util_Workarounds $workarounds
      * @param stdClass $settings The default configuration values.
      */
-    public function __construct(stdClass $settings)
+    public function __construct(PHP_Depend_Util_Workarounds $workarounds, stdClass $settings)
     {
+        $this->workarounds = $workarounds;
         $this->settings = $settings;
     }
 
@@ -122,6 +129,11 @@ class PHP_Depend_Util_Configuration_Parser
      */
     protected function parseCache()
     {
+        if ($this->workarounds->hasSerializeReferenceIssue()) {
+            $this->settings->cache->driver = 'memory';
+            return;
+        }
+
         if (isset($this->sxml->cache->driver)) {
             $this->settings->cache->driver = (string) $this->sxml->cache->driver;
         }
