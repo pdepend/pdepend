@@ -12,7 +12,7 @@ before_script:
   - composer self-update
   - composer install
 
-script: phpunit --configuration $TEST_CONFIG
+script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
 
 notifications:
   irc: "irc.freenode.org#pdepend"
