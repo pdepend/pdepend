@@ -43,6 +43,8 @@
 
 namespace PDepend\Util\Configuration;
 
+use PDepend\Util\Workarounds;
+
 /**
  * Default implementation of a PDepend configuration parser.
  *
@@ -61,6 +63,11 @@ namespace PDepend\Util\Configuration;
 class ConfigurationParser
 {
     /**
+     * @var \PDepend\Util\Workarounds
+     */
+    protected $workarounds;
+
+    /**
      * The default configuration settings.
      *
      * @var stdClass
@@ -78,10 +85,12 @@ class ConfigurationParser
      * Constructs a new parser instance that uses the given settings as a default
      * configuration.
      *
-     * @param \stdClass $settings The default configuration values.
+     * @param \PDepend\Util\Workarounds $workarounds
+     * @param \stdClass $settings
      */
-    public function __construct(\stdClass $settings)
+    public function __construct(Workarounds $workarounds, \stdClass $settings)
     {
+        $this->workarounds = $workarounds;
         $this->settings = $settings;
     }
 
@@ -111,6 +120,11 @@ class ConfigurationParser
      */
     protected function parseCache()
     {
+        if ($this->workarounds->hasSerializeReferenceIssue()) {
+            $this->settings->cache->driver = 'memory';
+            return;
+        }
+
         if (isset($this->sxml->cache->driver)) {
             $this->settings->cache->driver = (string) $this->sxml->cache->driver;
         }

@@ -45,6 +45,7 @@ namespace PDepend\TextUI;
 use PDepend\Util\Configuration\ConfigurationFactory;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
+use PDepend\Util\Workarounds;
 
 /**
  * Handles the command line stuff and starts the text ui runner.
@@ -194,6 +195,7 @@ class Command
         try {
             // Output current pdepend version and author
             $this->printVersion();
+            $this->printWorkarounds();
 
             $startTime = time();
 
@@ -359,6 +361,27 @@ class Command
     protected function printVersion()
     {
         echo 'PDepend @package_version@', PHP_EOL, PHP_EOL;
+    }
+
+    /**
+     * If the current PHP installation requires some workarounds or limitations,
+     * this method will output a message on STDOUT.
+     *
+     * @return void
+     */
+    protected function printWorkarounds()
+    {
+        $workarounds = new Workarounds();
+
+        if ($workarounds->isNotRequired()) {
+            return;
+        }
+
+        echo 'Your PHP version requires some workaround:', PHP_EOL;
+        foreach ($workarounds->getRequiredWorkarounds() as $workaround) {
+            echo '- ', $workaround, PHP_EOL;
+        }
+        echo PHP_EOL;
     }
 
     /**

@@ -44,6 +44,7 @@
 namespace PDepend\Util\Configuration;
 
 use PDepend\AbstractTest;
+use PDepend\Util\Workarounds;
 
 /**
  * Test case for the {@link \PDepend\Util\Configuration\ConfigurationParser} class.
@@ -64,7 +65,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserHandlesEmptyConfigurationFile()
     {
-        $parser = new ConfigurationParser(new \stdClass());
+        $parser = $this->createParserFixture(new \stdClass());
         $this->assertNotNull($parser->parse($this->getTestConfiguration('pdepend.xml')));
     }
 
@@ -75,7 +76,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserHandlesCacheDriverConfigurationValue()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         $this->assertEquals('memory', $values->cache->driver);
@@ -88,7 +89,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserHandlesCacheLocationConfigurationValue()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         $this->assertEquals('/foo/bar/baz', $values->cache->location);
@@ -101,7 +102,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserHandlesImagickFontFamilyConfigurationValue()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         $this->assertEquals('Courier New', $values->imageConvert->fontFamily);
@@ -114,7 +115,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserHandlesImagickFontSizeConfigurationValue()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         $this->assertEquals(23, $values->imageConvert->fontSize);
@@ -127,7 +128,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserHandlesParserNestingConfigurationValue()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
 
         $this->assertEquals(423, $values->parser->nesting);
@@ -140,7 +141,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserModifiesConfigurationAdaptive()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
 
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
@@ -155,7 +156,7 @@ class ConfigurationParserTest extends AbstractTest
      */
     public function testParserOverwritesAlreadyDefinedConfigurationValues()
     {
-        $parser = new ConfigurationParser($this->createFixture());
+        $parser = $this->createParserFixture();
         $parser->parse($this->getTestConfiguration('pdepend.xml.dist'));
 
         $values = $parser->parse($this->getTestConfiguration('pdepend.xml'));
@@ -175,11 +176,23 @@ class ConfigurationParserTest extends AbstractTest
     }
 
     /**
+     * @param \stdClass $dataFixture
+     * @return \PDepend\Util\Configuration\ConfigurationParser
+     */
+    protected function createParserFixture(\stdClass $dataFixture = null)
+    {
+        return new ConfigurationParser(
+            new Workarounds(),
+            $dataFixture ?: $this->createDataFixture()
+        );
+    }
+
+    /**
      * Creates a test configuration fixture.
      *
      * @return \stdClass
      */
-    protected function createFixture()
+    protected function createDataFixture()
     {
         return json_decode(
             '{

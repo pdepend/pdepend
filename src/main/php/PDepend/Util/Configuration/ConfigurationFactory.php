@@ -45,6 +45,7 @@ namespace PDepend\Util\Configuration;
 
 use PDepend\Util\Configuration;
 use PDepend\Util\FileUtil;
+use PDepend\Util\Workarounds;
 
 /**
  * This class provides the default factory for configuration creation.
@@ -67,6 +68,11 @@ use PDepend\Util\FileUtil;
 class ConfigurationFactory
 {
     /**
+     * @var \PDepend\Util\Workarounds
+     */
+    protected $workarounds;
+
+    /**
      * The used configuration parser.
      *
      * @var \PDepend\Util\Configuration\ConfigurationParser
@@ -82,9 +88,13 @@ class ConfigurationFactory
 
     /**
      * Constructs a new factory instance and initializes the default configuration.
+     *
+     * @param \PDepend\Util\Workarounds
      */
-    public function __construct()
+    public function __construct(Workarounds $workarounds = null)
     {
+        $this->workarounds = $workarounds ?: new Workarounds();
+
         $home = FileUtil::getUserHomeDirOrSysTempDir();
 
         $this->default = new \stdClass();
@@ -171,7 +181,10 @@ class ConfigurationFactory
     protected function createOrReturnParser()
     {
         if (null === $this->parser) {
-            $this->parser = new ConfigurationParser($this->default);
+            $this->parser = new ConfigurationParser(
+                $this->workarounds,
+                $this->default
+            );
         }
         return $this->parser;
     }
