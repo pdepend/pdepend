@@ -163,9 +163,11 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
         $this->count = 0;
 
         $parts = explode('\\', get_class($analyzer));
-        $name  = preg_replace('(Analyzer$)', '', end($parts));
 
-        echo "Executing {$name}-Analyzer:\n";
+        $name = preg_replace('(Analyzer$)', '', end($parts));
+        $name = preg_replace('/([a-zA-Z])([a-z])(?=[A-Z])/', '$1$2 ', $name);
+
+        echo "Calculating {$name} metrics:\n";
     }
 
     /**
