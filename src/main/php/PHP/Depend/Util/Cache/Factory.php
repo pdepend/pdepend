@@ -79,7 +79,7 @@ class PHP_Depend_Util_Cache_Factory
     /**
      * Constructs a new cache factory instance for the given configuration.
      *
-     * @param PHP_Depend_Util_Configuration $configuration The system configuration.
+     * @param PHP_Depend_Util_Configuration $configuration
      */
     public function __construct(PHP_Depend_Util_Configuration $configuration)
     {
