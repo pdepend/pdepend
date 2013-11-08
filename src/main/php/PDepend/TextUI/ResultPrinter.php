@@ -72,7 +72,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param \PDepend\Source\Builder\Builder $builder
      * @return void
      */
     public function startParseProcess(Builder $builder)
@@ -85,7 +85,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param \PDepend\Source\Builder\Builder $builder
      * @return void
      */
     public function endParseProcess(Builder $builder)
@@ -155,21 +155,23 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts a new analyzer.
      *
-     * @param Analyzer $analyzer The context analyzer instance.
+     * @param \PDepend\Metrics\Analyzer $analyzer
      * @return void
      */
     public function startAnalyzer(Analyzer $analyzer)
     {
         $this->count = 0;
 
-        $name = substr(get_class($analyzer), 19, -9);
+        $parts = explode('\\', get_class($analyzer));
+        $name  = preg_replace('(Analyzer$)', '', end($parts));
+
         echo "Executing {$name}-Analyzer:\n";
     }
 
     /**
      * Is called when PDepend has finished one analyzing process.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
+     * @param \PDepend\Metrics\Analyzer $analyzer
      * @return void
      */
     public function endAnalyzer(Analyzer $analyzer)
@@ -191,7 +193,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Prints a single dot for the current step.
      *
-     * @param integer $size The number of processed items that result in a new dot.
+     * @param integer $size
      * @return void
      */
     protected function step($size = 1)
@@ -208,7 +210,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Closes the current dot line.
      *
-     * @param integer $size The number of processed items that result in a new dot.
+     * @param integer $size
      * @return void
      */
     protected function finish($size = 1)
