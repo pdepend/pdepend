@@ -65,11 +65,6 @@ if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) 
     ini_set('memory_limit', -1);
 }
 
-// Disable E_STRICT for all PHP versions < 5.3.x
-if (version_compare(phpversion(), '5.3.0')) {
-    error_reporting(error_reporting() & ~E_STRICT);
-}
-
 $autoload = new Autoload();
 $autoload->register();
 
