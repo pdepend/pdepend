@@ -12,8 +12,11 @@
         <release version="2.0.0"
                  date=""
                  description="">
-            <action date="3ba9c9e" dev="robocoder" type="fix" issue="113" system="github">
+            <action date="3ba9c9e" dev="robocoder" type="add" issue="113" system="github">
                 Specify license, BSD license was missing in composer.json file.
+            </action>
+            <action date="e624f8e" dev="ajgarlag" type="add" issue="117" system="github">
+                Adds composer autoload info
             </action>
         </release>
         <release version="1.1.1"

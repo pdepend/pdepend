@@ -10,6 +10,9 @@
         "phpunit/phpunit": "@stable",
         "squizlabs/php_codesniffer": "@stable"
     },
-    "bin": ["src/bin/pdepend"]
+    "bin": ["src/bin/pdepend"],
+    "autoload": {
+        "psr-0": {"PHP_": "src/main/php/"}
+    }
 }
 
