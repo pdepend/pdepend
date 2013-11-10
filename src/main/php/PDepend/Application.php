@@ -95,6 +95,8 @@ class Application
         $container = new ContainerBuilder(new ParameterBag(array()));
         $container->prependExtensionConfig('pdepend', array());
 
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../resources'));
+
         foreach ($extensions as $extension) {
             $container->registerExtension($extension);
         }

@@ -42,7 +42,6 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\Util\Configuration\ConfigurationFactory;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PDepend\Util\Workarounds;

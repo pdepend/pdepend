@@ -75,8 +75,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
         $generator = new $className();
         $generator->setLogFile($file);
 
-        $factory = new ConfigurationFactory();
-        $engine = new Engine($factory->createDefault());
+        $engine = new Engine($this->createConfigurationFixture());
         $engine->addFile(self::createCodeResourceUriForTest());
         $engine->addReportGenerator($generator);
         $engine->analyze();

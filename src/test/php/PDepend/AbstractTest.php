@@ -466,10 +466,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConfigurationFixture()
     {
-        $factory = new ConfigurationFactory();
-        $config  = $factory->createDefault();
+        $application = new \PDepend\Application();
 
-        return $config;
+        return $application->getConfiguration();
     }
 
     /**
