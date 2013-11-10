@@ -561,7 +561,6 @@ class CommandTest extends AbstractTest
         $command = new Command();
         $command->addConfigurationFile(__DIR__ . '/../../../resources/testservices.xml');
         $exitCode = $command->run();
-        $exitCode = Command::main();
         $output   = ob_get_contents();
         ob_end_clean();
 
