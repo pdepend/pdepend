@@ -189,6 +189,19 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Create a TextUi Runner
+     *
+     * @return Runner
+     */
+    protected function createTextUiRunner()
+    {
+        $application = new \PDepend\Application();
+        $application->addConfigurationFile(__DIR__ . '/../../resources/testservices.xml');
+
+        return $application->getRunner();
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $nodeType The searched node class.

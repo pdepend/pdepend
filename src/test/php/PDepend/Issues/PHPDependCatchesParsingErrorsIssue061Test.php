@@ -85,7 +85,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
      */
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
-        $runner = new \PDepend\TextUI\Runner();
+        $runner = $this->createTextUiRunner();
         $runner->setConfiguration($this->createConfigurationFixture());
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
@@ -103,7 +103,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
      */
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
-        $runner = new \PDepend\TextUI\Runner();
+        $runner = $this->createTextUiRunner();
         $runner->setConfiguration($this->createConfigurationFixture());
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
@@ -175,6 +175,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
     protected function runTextUICommand()
     {
         $command = new \PDepend\TextUI\Command();
+        $command->addConfigurationFile(__DIR__ . '/../../../resources/testservices.xml');
 
         ob_start();
         $exitCode = $command->run();

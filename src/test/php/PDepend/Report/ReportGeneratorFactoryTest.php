@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -52,6 +52,13 @@ use PDepend\AbstractTest;
  */
 class ReportGeneratorFactoryTest extends AbstractTest
 {
+    private function createReportGeneratorFactory()
+    {
+        $application = new \PDepend\Application();
+
+        return $application->getContainer()->get('pdepend.report_generator_factory');
+    }
+
     /**
      * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
      * returns the expected instance for a valid identifier.
@@ -60,28 +67,28 @@ class ReportGeneratorFactoryTest extends AbstractTest
      */
     public function testCreateGeneratorWithValidIdentifier()
     {
-        $factory = new ReportGeneratorFactory();
+        $factory = $this->createReportGeneratorFactory();
         $generator = $factory->createGenerator('summary-xml', 'pdepend.xml');
-        
+
         $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator);
     }
-    
+
     /**
-     * Tests the singleton behaviour of the logger factory method 
+     * Tests the singleton behaviour of the logger factory method
      * {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}.
      *
      * @return void
      */
     public function testCreateGeneratorSingletonBehaviour()
     {
-        $factory = new ReportGeneratorFactory();
+        $factory = $this->createReportGeneratorFactory();
         $generator1 = $factory->createGenerator('summary-xml', 'pdepend1.xml');
         $generator2 = $factory->createGenerator('summary-xml', 'pdepend2.xml');
 
         $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator1);
         $this->assertSame($generator1, $generator2);
     }
-    
+
     /**
      * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
      * fails with an exception for an invalid logger identifier.
@@ -92,10 +99,10 @@ class ReportGeneratorFactoryTest extends AbstractTest
     {
         $this->setExpectedException(
             '\RuntimeException',
-            "Unknown generator class '\\PDepend\\Report\\FooBar\\Xml'."
+            'Unknown generator with identifier "foo-bar-xml".'
         );
-        
-        $factory = new ReportGeneratorFactory();
+
+        $factory = $this->createReportGeneratorFactory();
         $factory->createGenerator('foo-bar-xml', 'pdepend.xml');
     }
 }

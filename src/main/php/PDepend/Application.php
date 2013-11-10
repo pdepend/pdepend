@@ -56,6 +56,8 @@ class Application
 {
     private $container;
 
+    private $configurationFiles = array();
+
     public function getContainer()
     {
         if ($this->container === null) {
@@ -63,6 +65,14 @@ class Application
         }
 
         return $this->container;
+    }
+
+    /**
+     * @param string $configurationFile
+     */
+    public function addConfigurationFile($configurationFile)
+    {
+        $this->configurationFiles[] = $configurationFile;
     }
 
     /**
@@ -75,6 +85,10 @@ class Application
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../resources'));
         $loader->load('services.xml');
 
+        foreach ($this->configurationFiles as $configurationFile) {
+            $loader->load($configurationFile);
+        }
+
         $container->compile();
 
         return $container;
@@ -86,13 +100,33 @@ class Application
     }
 
     /**
-     * @return array
+     * Returns available logger options and documentation messages.
+     *
+     * @return array(string => string)
      */
     public function getAvailableLoggerOptions()
     {
+        return $this->getAvailableOptionsFor('pdepend.logger');
+    }
+
+    /**
+     * Returns available analyzer options and documentation messages.
+     *
+     * @return array(string => string)
+     */
+    public function getAvailableAnalyzerOptions()
+    {
+        return $this->getAvailableOptionsFor('pdepend.analyzer');
+    }
+
+    /**
+     * @return array(string => string)
+     */
+    private function getAvailableOptionsFor($serviceTag)
+    {
         $container = $this->getContainer();
 
-        $loggerServices = $container->findTaggedServiceIds('pdepend.logger');
+        $loggerServices = $container->findTaggedServiceIds($serviceTag);
 
         $options = array();
 
@@ -103,19 +137,5 @@ class Application
         }
 
         return $options;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableAnalyzerOptions()
-    {
-        $container = $this->getContainer();
-
-        $loggerServices = $container->findTaggedServiceIds('pdepend.analyzer');
-
-        return array_map(function ($tag) {
-            return $tag['option'];
-        }, $loggerServices);
     }
 }

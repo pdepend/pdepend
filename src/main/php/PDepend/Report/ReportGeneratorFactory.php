@@ -47,17 +47,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * This factory creates singleton instances of available loggers.
  *
- * The identifiers used for loggers follow a simple convention. Every upper case
- * word in the class file name and the logger directory is separated by a hyphen.
- * Only the last word of an identifier is used for the class file name, all
- * other words are used for the directory name.
+ * The identifiers are used to find a matching service in the DIC
+ * that is tagged with 'pdepend.logger' and has an option attribute
+ * named after the identifier, prefixed with --:
  *
- * <code>
- *   --my-custom-log-xml
- * </code>
+ * Identifier "my-custom-logger" searchs for:
  *
- * Refers to the following file: <b>PDepend/Log/MyCustomLog/Xml.php</b>, but
- * you can not reference a file named <b>PDepend/Log/MyCustom/LogXml.php</b>.
+ *  <tag name="pdepend.logger" option="--my-custom-logger" />
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -88,12 +84,18 @@ class ReportGeneratorFactory
         if (!isset($this->instances[$identifier])) {
             $loggerServices = $this->container->findTaggedServiceIds('pdepend.logger');
 
+            $logger = null;
+
             foreach ($loggerServices as $id => $loggerServiceTags) {
                 foreach ($loggerServiceTags as $loggerServiceTag) {
                     if ($loggerServiceTag['option'] === '--' . $identifier) {
                         $logger = $this->container->get($id);
                     }
                 }
+            }
+
+            if (!$logger) {
+                throw new \RuntimeException(sprintf('Unknown generator with identifier "%s".', $identifier));
             }
 
             // TODO: Refactor this into an external log configurator or a similar

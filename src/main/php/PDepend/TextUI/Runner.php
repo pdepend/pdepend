@@ -147,7 +147,7 @@ class Runner
      */
     private $reportGeneratorFactory;
 
-    public function __construct(ReportGeneratorFactory $reportGeneratorFactory = null)
+    public function __construct(ReportGeneratorFactory $reportGeneratorFactory)
     {
         $this->reportGeneratorFactory = $reportGeneratorFactory;
     }

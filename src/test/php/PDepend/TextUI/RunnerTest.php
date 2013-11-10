@@ -255,7 +255,7 @@ class RunnerTest extends AbstractTest
      */
     protected function createTextUiRunnerFixture()
     {
-        $fixture = new Runner();
+        $fixture = $this->createTextUiRunner();
         $fixture->setConfiguration($this->createConfigurationFixture());
 
         return $fixture;

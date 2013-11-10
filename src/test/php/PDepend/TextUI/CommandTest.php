@@ -558,6 +558,9 @@ class CommandTest extends AbstractTest
         $this->_prepareArgv($argv);
 
         ob_start();
+        $command = new Command();
+        $command->addConfigurationFile(__DIR__ . '/../../../resources/testservices.xml');
+        $exitCode = $command->run();
         $exitCode = Command::main();
         $output   = ob_get_contents();
         ob_end_clean();

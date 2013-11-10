@@ -93,6 +93,19 @@ class Command
     private $application;
 
     /**
+     * @var array(string)
+     */
+    private $configurationFiles = array();
+
+    /**
+     * @param string $configurationFile
+     */
+    public function addConfigurationFile($configurationFile)
+    {
+        $this->configurationFiles[] = $configurationFile;
+    }
+
+    /**
      * Performs the main cli process and returns the exit code.
      *
      * @return integer
@@ -100,6 +113,16 @@ class Command
     public function run()
     {
         $this->application = new Application();
+
+        foreach ($this->configurationFiles as $configurationFile) {
+            $this->application->addConfigurationFile($configurationFile);
+        }
+
+        /*if (isset($this->options['--dic-configuration'])) {
+            $this->application->addConfigurationFile($this>options['--dic-configuration']);
+            unset($this->options['--dic-configuration']);
+        }*/
+
         // Create a new text ui runner
         $this->runner = $this->application->getRunner();
 

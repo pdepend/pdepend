@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="pdepend.test.dummy_logger" class="PDepend\Report\Dummy\Logger">
+            <tag name="pdepend.logger" option="--dummy-logger" message="Dummy logger for tests" />
+        </service>
+    </services>
+</container>
