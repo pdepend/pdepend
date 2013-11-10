@@ -42,6 +42,8 @@
 
 namespace PDepend\Report;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * This factory creates singleton instances of available loggers.
  *
@@ -63,6 +65,16 @@ namespace PDepend\Report;
 class ReportGeneratorFactory
 {
     /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
      * Creates a new generator or returns an existing instance for the given
      * <b>$identifier</b>.
      *
@@ -74,35 +86,15 @@ class ReportGeneratorFactory
     public function createGenerator($identifier, $fileName)
     {
         if (!isset($this->instances[$identifier])) {
-            // Extract all parts from the logger identifier
-            $words = explode('-', $identifier);
+            $loggerServices = $this->container->findTaggedServiceIds('pdepend.logger');
 
-            // Change all words to upper case
-            $words = array_map('ucfirst', $words);
-
-            // By definition the logger class name must be a single word.
-            // Everything else is part of the package name.
-            $class   = array_pop($words);
-            $package = implode('', $words);
-
-            $className = sprintf('\\PDepend\\Report\\%s\\%s', $package, $class);
-            $classFile = sprintf('PDepend/Report/%s/%s.php', $package, $class);
-
-            if (class_exists($className) === false) {
-
-                if (($handle = @fopen($classFile, 'r', true)) === false) {
-                    throw new \RuntimeException(
-                        "Unknown generator class '{$className}'."
-                    );
+            foreach ($loggerServices as $id => $loggerServiceTags) {
+                foreach ($loggerServiceTags as $loggerServiceTag) {
+                    if ($loggerServiceTag['option'] === '--' . $identifier) {
+                        $logger = $this->container->get($id);
+                    }
                 }
-
-                // Close file pointer and include class file
-                fclose($handle);
-                include $classFile;
             }
-
-            // Create a new logger instance.
-            $logger = new $className();
 
             // TODO: Refactor this into an external log configurator or a similar
             //       concept.

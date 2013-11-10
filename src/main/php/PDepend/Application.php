@@ -54,10 +54,21 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
  */
 class Application
 {
+    private $container;
+
+    public function getContainer()
+    {
+        if ($this->container === null) {
+            $this->container = $this->createContainer();
+        }
+
+        return $this->container;
+    }
+
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    public function createContainer()
+    private function createContainer()
     {
         $container = new ContainerBuilder();
 
@@ -67,5 +78,44 @@ class Application
         $container->compile();
 
         return $container;
+    }
+
+    public function getRunner()
+    {
+        return $this->getContainer()->get('pdepend.textui.runner'); // TODO: Use standard name? textui is detail.
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailableLoggerOptions()
+    {
+        $container = $this->getContainer();
+
+        $loggerServices = $container->findTaggedServiceIds('pdepend.logger');
+
+        $options = array();
+
+        foreach ($loggerServices as $loggerServiceTags) {
+            foreach ($loggerServiceTags as $loggerServiceTag) {
+                $options[$loggerServiceTag['option']] = $loggerServiceTag['message'];
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailableAnalyzerOptions()
+    {
+        $container = $this->getContainer();
+
+        $loggerServices = $container->findTaggedServiceIds('pdepend.analyzer');
+
+        return array_map(function ($tag) {
+            return $tag['option'];
+        }, $loggerServices);
     }
 }

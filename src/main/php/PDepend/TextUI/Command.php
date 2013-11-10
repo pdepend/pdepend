@@ -67,13 +67,6 @@ class Command
     const INPUT_ERROR = 1743;
 
     /**
-     * Collected log options.
-     *
-     * @var array(string=>string)
-     */
-    private $logOptions = null;
-
-    /**
      * Collected analyzer options.
      *
      * @var array(string=>string)
@@ -95,16 +88,20 @@ class Command
     private $runner = null;
 
     /**
+     * @var \PDepend\Application
+     */
+    private $application;
+
+    /**
      * Performs the main cli process and returns the exit code.
      *
      * @return integer
      */
     public function run()
     {
-        $application = new Application();
-        $container = $application->createContainer();
+        $this->application = new Application();
         // Create a new text ui runner
-        $this->runner = $container->get('pdepend.textui.runner');
+        $this->runner = $this->application->getRunner();
 
         try {
             if ($this->handleArguments() === false) {
@@ -135,7 +132,7 @@ class Command
         $options = $this->options;
 
         // Get an array with all available log options
-        $logOptions = $this->collectLogOptions();
+        $logOptions = $this->application->getAvailableLoggerOptions();
 
         // Get an array with all available analyzer options
         $analyzerOptions = $this->collectAnalyzerOptions();
@@ -460,11 +457,12 @@ class Command
     {
         $maxLength = 0;
         $options   = array();
-        foreach ($this->collectLogOptions() as $option => $path) {
+        $logOptions = $this->application->getAvailableLoggerOptions();
+        foreach ($logOptions as $option => $message) {
             // Build log option identifier
             $identifier = "{$option}=<file>";
             // Store in options array
-            $options[$identifier] = (string) simplexml_load_file($path)->message;
+            $options[$identifier] = $message;
 
             $length = strlen($identifier);
             if ($length > $maxLength) {
@@ -488,57 +486,6 @@ class Command
         echo PHP_EOL;
 
         return $maxLength;
-    }
-
-    /**
-     * Collects all logger options and the configuration name.
-     *
-     * @return array(string=>string)
-     */
-    protected function collectLogOptions()
-    {
-        if ($this->logOptions !== null) {
-            return $this->logOptions;
-        }
-
-        $this->logOptions = array();
-
-        // Get all include paths
-        $paths   = explode(PATH_SEPARATOR, get_include_path());
-        $paths[] = dirname(__FILE__) . '/../../../';
-
-        foreach ($paths as $path) {
-
-            $path .= '/PDepend/Report';
-
-            if (is_dir($path) === false) {
-                continue;
-            }
-
-            $dirs = new \DirectoryIterator($path);
-
-            foreach ($dirs as $dir) {
-                if (!$dir->isDir() || substr($dir->getFilename(), 0, 1) === '.') {
-                    continue;
-                }
-
-                $files = new \DirectoryIterator($dir->getPathname());
-                foreach ($files as $file) {
-                    if (!$file->isFile()) {
-                        continue;
-                    }
-                    if (substr($file->getFilename(), -4, 4) !== '.xml') {
-                        continue;
-                    }
-
-                    $option = '--' . strtolower($dir->getFilename())
-                            . '-' . strtolower(substr($file->getFilename(), 0, -4));
-
-                    $this->logOptions[$option] = $file->getPathname();
-                }
-            }
-        }
-        return $this->logOptions;
     }
 
     /**

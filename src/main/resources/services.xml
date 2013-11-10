@@ -5,11 +5,37 @@
 
     <services>
         <service id="pdepend.textui.runner" class="PDepend\TextUI\Runner">
+            <argument type="service" id="pdepend.report_generator_factory" />
+
             <call method="addProcessListener">
                 <argument type="service" id="pdepend.textui.result_printer" />
             </call>
         </service>
 
         <service id="pdepend.textui.result_printer" class="PDepend\TextUI\ResultPrinter" />
+
+        <service id="pdepend.report.phpunit.xml" class="PDepend\Report\Phpunit\Xml">
+            <tag name="pdepend.logger" option="--phpunit-xml" message="Generates a metrics xml log that is compatible with PHPUnit --log-metrics." />
+        </service>
+
+        <service id="pdepend.report.summary.xml" class="PDepend\Report\Summary\Xml">
+            <tag name="pdepend.logger" option="--summary-xml" message="Generates a xml log with all metrics." />
+        </service>
+
+        <service id="pdepend.report.jdepend.xml" class="PDepend\Report\Jdepend\Xml">
+            <tag name="pdepend.logger" option="--jdepend-xml" message="Generates the package dependency log." />
+        </service>
+
+        <service id="pdepend.report.jdepend.chart" class="PDepend\Report\Jdepend\Chart">
+            <tag name="pdepend.logger" option="--jdepend-chart" message="Generates a diagram of the analyzed packages." />
+        </service>
+
+        <service id="pdepend.report.overview.pyramid" class="PDepend\Report\Overview\Pyramid">
+            <tag name="pdepend.logger" option="--overview-pyramid" message="Generates a chart with an Overview Pyramid for the analyzed project." />
+        </service>
+
+        <service id="pdepend.report_generator_factory" class="PDepend\Report\ReportGeneratorFactory">
+            <argument type="service" id="service_container" />
+        </service>
     </services>
 </container>

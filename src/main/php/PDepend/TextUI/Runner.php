@@ -143,6 +143,16 @@ class Runner
     private $parseErrors = array();
 
     /**
+     * @var PDepend\Report\ReportGeneratorFactory
+     */
+    private $reportGeneratorFactory;
+
+    public function __construct(ReportGeneratorFactory $reportGeneratorFactory = null)
+    {
+        $this->reportGeneratorFactory = $reportGeneratorFactory;
+    }
+
+    /**
      * Sets the system configuration.
      *
      * @param \PDepend\Util\Configuration $configuration The system configuration.
@@ -299,13 +309,11 @@ class Runner
             throw new \RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
-        $generatorFactory = new ReportGeneratorFactory();
-
         // To append all registered loggers.
         try {
             foreach ($this->loggerMap as $generatorId => $reportFile) {
                 // Create a new logger
-                $generator = $generatorFactory->createGenerator($generatorId, $reportFile);
+                $generator = $this->reportGeneratorFactory->createGenerator($generatorId, $reportFile);
 
                 $engine->addReportGenerator($generator);
             }
