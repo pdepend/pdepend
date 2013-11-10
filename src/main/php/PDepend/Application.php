@@ -45,6 +45,8 @@ namespace PDepend;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\Compiler\MergeExtensionConfigurationPass;
 
 /**
  * PDepend Application
@@ -76,14 +78,26 @@ class Application
     }
 
     /**
+     * @return \PDepend\Util\Configuration
+     */
+    public function getConfiguration()
+    {
+        return $this->getContainer()->get('pdepend.configuration');
+    }
+
+    /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
     private function createContainer()
     {
-        $container = new ContainerBuilder();
+        $extensions = array(new DependencyInjection\PdependExtension());
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../resources'));
-        $loader->load('services.xml');
+        $container = new ContainerBuilder(new ParameterBag(array()));
+        $container->prependExtensionConfig('pdepend', array());
+
+        foreach ($extensions as $extension) {
+            $container->registerExtension($extension);
+        }
 
         foreach ($this->configurationFiles as $configurationFile) {
             $loader->load($configurationFile);

@@ -254,6 +254,8 @@ class Command
                  '=============== ', PHP_EOL,
                   $e->getMessage(),  PHP_EOL;
 
+            Log::debug($e->getTraceAsString());
+
             return $e->getCode();
         }
     }
@@ -348,23 +350,10 @@ class Command
             unset($this->options['--bad-documentation']);
         }
 
-        $configurationFactory = new ConfigurationFactory();
+        $configuration = $this->application->getConfiguration();
 
-        // Check for configuration option
-        if (isset($this->options['--configuration'])) {
-            // Get config file
-            $configFile = $this->options['--configuration'];
-
-            unset($this->options['--configuration']);
-
-            $configuration = $configurationFactory->create($configFile);
-        } else {
-            $configuration = $configurationFactory->createDefault();
-        }
         // Store in config registry
         ConfigurationInstance::set($configuration);
-
-        $this->runner->setConfiguration($configuration);
 
         if (isset($this->options['--debug'])) {
             unset($this->options['--debug']);

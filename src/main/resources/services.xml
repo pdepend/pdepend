@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pdepend="http://pdepend.org/schema/dic/pdepend"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
@@ -10,6 +11,13 @@
             <call method="addProcessListener">
                 <argument type="service" id="pdepend.textui.result_printer" />
             </call>
+
+            <call method="setConfiguration">
+                <argument type="service" id="pdepend.configuration" />
+            </call>
+        </service>
+
+        <service id="pdepend.configuration" class="PDepend\Util\Configuration">
         </service>
 
         <service id="pdepend.textui.result_printer" class="PDepend\TextUI\ResultPrinter" />
