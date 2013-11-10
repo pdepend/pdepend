@@ -105,7 +105,6 @@ class Command
         $container = $application->createContainer();
         // Create a new text ui runner
         $this->runner = $container->get('pdepend.textui.runner');
-        $this->runner->addProcessListener(new ResultPrinter());
 
         try {
             if ($this->handleArguments() === false) {
