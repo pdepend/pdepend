@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of PDepend.
@@ -39,34 +38,34 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
-use PDepend\Autoload;
-use PDepend\TextUI\Command;
+namespace PDepend;
 
-// PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
-}
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once 'PDepend/Autoload.php';
+/**
+ * PDepend Application
+ *
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ */
+class Application
+{
+    /**
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    public function createContainer()
+    {
+        $container = new ContainerBuilder();
 
-// Allow as much memory as possible by default
-if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
-    $limit = ini_get('memory_limit');
-    if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
-        $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
-        $limit = ($match[1] * (1 << $shift[$match[2]]));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../resources'));
+        $loader->load('services.xml');
+
+        $container->compile();
+
+        return $container;
     }
-    if (ini_get('suhosin.memory_limit') > $limit && $limit > -1) {
-        ini_set('memory_limit', ini_get('suhosin.memory_limit'));
-    }
-} else {
-    ini_set('memory_limit', -1);
 }
-
-$autoload = new Autoload();
-$autoload->register();
-
-exit(Command::main());

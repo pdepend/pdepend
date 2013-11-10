@@ -6,6 +6,10 @@
     "require": {
         "php": ">=5.3.7"
     },
+    "require": {
+        "symfony/dependency-injection": "@stable",
+        "symfony/config": "@stable"
+    },
     "require-dev": {
         "phpunit/phpunit": "@stable",
         "squizlabs/php_codesniffer": "@stable"

@@ -46,6 +46,7 @@ use PDepend\Util\Configuration\ConfigurationFactory;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PDepend\Util\Workarounds;
+use PDepend\Application;
 
 /**
  * Handles the command line stuff and starts the text ui runner.
@@ -100,8 +101,10 @@ class Command
      */
     public function run()
     {
+        $application = new Application();
+        $container = $application->createContainer();
         // Create a new text ui runner
-        $this->runner = new Runner();
+        $this->runner = $container->get('pdepend.textui.runner');
         $this->runner->addProcessListener(new ResultPrinter());
 
         try {
