@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://pdepend.org/schema/dic/pdepend"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <config>
+        <cache>
+            <driver>fail</driver>
+        </cache>
+    </config>
+</symfony:container>
 
-    <cache>
-        <driver>fail</driver>
-    </cache>
-</configuration>

@@ -74,6 +74,12 @@ class Application
      */
     public function addConfigurationFile($configurationFile)
     {
+        if (!file_exists($configurationFile)) {
+            throw new \InvalidArgumentException(
+                sprintf('The configuration file "%s" doesn\'t exist.', $configurationFile)
+            );
+        }
+
         $this->configurationFiles[] = $configurationFile;
     }
 

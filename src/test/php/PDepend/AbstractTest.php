@@ -468,6 +468,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $application = new \PDepend\Application();
 
+        if (file_exists(getcwd() . '/pdepend.xml')) {
+            $application->addConfigurationFile(getcwd() . '/pdepend.xml');
+        }
+
         return $application->getConfiguration();
     }
 

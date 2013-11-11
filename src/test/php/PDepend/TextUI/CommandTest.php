@@ -432,11 +432,16 @@ class CommandTest extends AbstractTest
         file_put_contents(
             $configFile,
             '<?xml version="1.0"?>
-             <configuration>
-               <cache>
-                 <driver>memory</driver>
-               </cache>
-             </configuration>'
+             <symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://pdepend.org/schema/dic/pdepend"
+                 xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+               <config>
+                   <cache>
+                     <driver>memory</driver>
+                   </cache>
+               </config>
+             </symfony:container>'
         );
 
         $argv = array(

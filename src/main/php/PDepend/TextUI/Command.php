@@ -113,8 +113,15 @@ class Command
     {
         $this->application = new Application();
 
-        foreach ($this->configurationFiles as $configurationFile) {
-            $this->application->addConfigurationFile($configurationFile);
+        try {
+            foreach ($this->configurationFiles as $configurationFile) {
+                $this->application->addConfigurationFile($configurationFile);
+            }
+        } catch(\Exception $e) {
+            echo $e->getMessage(), PHP_EOL, PHP_EOL;
+
+            $this->printHelp();
+            return self::CLI_ERROR;
         }
 
         try {
@@ -142,9 +149,26 @@ class Command
             return Runner::SUCCESS_EXIT;
         }
 
+        $configurationFile = false;
         if (isset($this->options['--configuration'])) {
-            $this->application->addConfigurationFile($this->options['--configuration']);
+            $configurationFile = $this->options['--configuration'];
+
             unset($this->options['--configuration']);
+        } else if (file_exists(getcwd() . '/pdepend.xml')) {
+            $configurationFile = getcwd() . '/pdepend.xml';
+        } else if (file_exists(getcwd() . '/pdepend.xml.dist')) {
+            $configurationFile = getcwd() . '/pdepend.xml.dist';
+        }
+
+        if ($configurationFile) {
+            try {
+                $this->application->addConfigurationFile($configurationFile);
+            } catch(\Exception $e) {
+                echo $e->getMessage(), PHP_EOL, PHP_EOL;
+
+                $this->printHelp();
+                return self::CLI_ERROR;
+            }
         }
 
         // Create a new text ui runner
@@ -324,7 +348,9 @@ class Command
      */
     protected function assignArguments()
     {
-        $this->runner->setSourceArguments($this->source);
+        if ($this->source) {
+            $this->runner->setSourceArguments($this->source);
+        }
 
         // Check for suffix option
         if (isset($this->options['--suffix'])) {
