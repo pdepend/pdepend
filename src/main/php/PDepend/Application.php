@@ -148,7 +148,12 @@ class Application
 
         foreach ($loggerServices as $loggerServiceTags) {
             foreach ($loggerServiceTags as $loggerServiceTag) {
-                $options[$loggerServiceTag['option']] = $loggerServiceTag['message'];
+                if (isset($loggerServiceTag['option']) && isset($loggerServiceTag['message'])) {
+                    $options[$loggerServiceTag['option']] = array(
+                        'message' => $loggerServiceTag['message'],
+                        'value' => isset($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file'
+                    );
+                }
             }
         }
 
