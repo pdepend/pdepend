@@ -31,17 +31,6 @@ class AnalyzerFactory
             }
         }
 
-        //$cacheKey = md5(serialize($this->files) . serialize($this->directories));
-        $cacheKey = 'pdepend';
-
-        $cache = $this->cacheFactory->create($cacheKey);
-
-        foreach ($analyzers as $analyzer) {
-            if ($analyzer instanceof AnalyzerCacheAware) {
-                $analyzer->setCache($cache);
-            }
-        }
-
         return $analyzers;
     }
 }
