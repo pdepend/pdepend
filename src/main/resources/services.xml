@@ -14,8 +14,13 @@
             </call>
         </service>
 
+        <service id="pdepend.util.cache_factory" class="PDepend\Util\Cache\CacheFactory">
+            <argument type="service" id="pdepend.configuration" />
+        </service>
+
         <service id="pdepend.engine" class="PDepend\Engine">
             <argument type="service" id="pdepend.configuration" />
+            <argument type="service" id="pdepend.util.cache_factory" />
         </service>
 
         <service id="pdepend.configuration" class="PDepend\Util\Configuration">

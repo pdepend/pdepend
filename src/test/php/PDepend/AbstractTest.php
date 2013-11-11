@@ -496,7 +496,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $this->createCodeResourceURI('config/')
         );
 
-        return new Engine($this->createConfigurationFixture());
+        $configuration = $this->createConfigurationFixture();
+        $cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+
+        return new Engine($configuration, $cacheFactory);
     }
 
     /**

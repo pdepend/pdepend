@@ -45,6 +45,7 @@ namespace PDepend;
 use PDepend\Metrics\AnalyzerClassFileSystemLocator;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerLoader;
+use PDepend\Metrics\AnalyzerFactory;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
@@ -56,6 +57,7 @@ use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Configuration;
+use PDepend\Util\Cache\CacheFactory;
 
 /**
  * PDepend analyzes php class files and generates metrics.
@@ -177,14 +179,15 @@ class Engine
      *
      * @param \PDepend\Util\Configuration $configuration The system configuration.
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, CacheFactory $cacheFactory)
     {
         $this->configuration = $configuration;
 
         $this->codeFilter = new NullArtifactFilter();
         $this->fileFilter = new \PDepend\Input\CompositeFilter();
 
-        $this->cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+        $this->cacheFactory = $cacheFactory;
+        //$this->cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
     }
 
     /**
