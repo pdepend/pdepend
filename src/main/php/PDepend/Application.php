@@ -98,6 +98,14 @@ class Application
         return $this->getContainer()->get('pdepend.report_generator_factory');
     }
 
+    /**
+     * @return \PDepend\Metrics\AnalyzerFactory
+     */
+    public function getAnalyzerFactory()
+    {
+        return $this->getContainer()->get('pdepend.analyzer_factory');
+    }
+
     private function getContainer()
     {
         if ($this->container === null) {

@@ -179,7 +179,7 @@ class Engine
      *
      * @param \PDepend\Util\Configuration $configuration The system configuration.
      */
-    public function __construct(Configuration $configuration, CacheFactory $cacheFactory)
+    public function __construct(Configuration $configuration, CacheFactory $cacheFactory, AnalyzerFactory $analyzerFactory)
     {
         $this->configuration = $configuration;
 
@@ -187,7 +187,7 @@ class Engine
         $this->fileFilter = new \PDepend\Input\CompositeFilter();
 
         $this->cacheFactory = $cacheFactory;
-        //$this->cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+        $this->analzyerFactory = $analyzerFactory;
     }
 
     /**
@@ -708,5 +708,21 @@ class Engine
         );
 
         return $this->initAnalyseListeners($loader);
+    }
+
+    private function createAnalyzers()
+    {
+        $analyzers = $this->analyzerFactory->createRequiredForGenerators($this->generators);
+
+        $cacheKey = md5(serialize($this->files) . serialize($this->directories));
+        $cache = $this->cacheFactory->create($cacheKey);
+
+        foreach ($analyzers as $analyzer) {
+            if ($analyzer instanceof AnalyzerCacheAware) {
+                $analyzer->setCache($cache);
+            }
+        }
+
+        return $analyzers;
     }
 }

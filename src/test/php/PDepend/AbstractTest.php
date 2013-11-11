@@ -195,10 +195,21 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createTextUiRunner()
     {
+        $application = $this->createTestApplication();
+
+        return $application->getRunner();
+    }
+
+    protected function createTestApplication()
+    {
         $application = new \PDepend\Application();
         $application->addConfigurationFile(__DIR__ . '/../../resources/testservices.xml');
 
-        return $application->getRunner();
+        if (file_exists(getcwd() . '/pdepend.xml')) {
+            $application->addConfigurationFile(getcwd() . '/pdepend.xml');
+        }
+
+        return $application;
     }
 
     /**
@@ -466,11 +477,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConfigurationFixture()
     {
-        $application = new \PDepend\Application();
-
-        if (file_exists(getcwd() . '/pdepend.xml')) {
-            $application->addConfigurationFile(getcwd() . '/pdepend.xml');
-        }
+        $application = $this->createTestApplication();
 
         return $application->getConfiguration();
     }
@@ -496,10 +503,13 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $this->createCodeResourceURI('config/')
         );
 
-        $configuration = $this->createConfigurationFixture();
-        $cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+        $application = $this->createTestApplication();
 
-        return new Engine($configuration, $cacheFactory);
+        $configuration = $application->getConfiguration();
+        $cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+        $analyzerFactory = $application->getAnalyzerFactory();
+
+        return new Engine($configuration, $cacheFactory, $analyzerFactory);
     }
 
     /**
