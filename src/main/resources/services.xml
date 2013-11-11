@@ -7,14 +7,15 @@
     <services>
         <service id="pdepend.textui.runner" class="PDepend\TextUI\Runner">
             <argument type="service" id="pdepend.report_generator_factory" />
+            <argument type="service" id="pdepend.engine" />
 
             <call method="addProcessListener">
                 <argument type="service" id="pdepend.textui.result_printer" />
             </call>
+        </service>
 
-            <call method="setConfiguration">
-                <argument type="service" id="pdepend.configuration" />
-            </call>
+        <service id="pdepend.engine" class="PDepend\Engine">
+            <argument type="service" id="pdepend.configuration" />
         </service>
 
         <service id="pdepend.configuration" class="PDepend\Util\Configuration">

@@ -64,7 +64,7 @@ class RunnerTest extends AbstractTest
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->setSourceArguments(array('foo/bar'));
         $runner->run();
     }
@@ -77,7 +77,7 @@ class RunnerTest extends AbstractTest
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
     }
@@ -104,7 +104,7 @@ class RunnerTest extends AbstractTest
             )
         );
 
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->setWithoutAnnotations();
         $runner->setFileExtensions(array('inc'));
 
@@ -139,7 +139,7 @@ class RunnerTest extends AbstractTest
             )
         );
 
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->setWithoutAnnotations();
 
         $actual = $this->_runRunnerAndReturnStatistics(
@@ -179,7 +179,7 @@ class RunnerTest extends AbstractTest
             )
         );
 
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
             self::createCodeResourceUriForTest()
@@ -195,7 +195,7 @@ class RunnerTest extends AbstractTest
      */
     public function testRunnerHasParseErrorsReturnsFalseForValidSource()
     {
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
@@ -210,7 +210,7 @@ class RunnerTest extends AbstractTest
      */
     public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
     {
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
@@ -225,7 +225,7 @@ class RunnerTest extends AbstractTest
      */
     public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
     {
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
         $runner->run();
@@ -242,23 +242,9 @@ class RunnerTest extends AbstractTest
      */
     public function testRunnerThrowsExceptionForUndefinedLoggerClass()
     {
-        $runner = $this->createTextUiRunnerFixture();
+        $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('FooBarLogger', self::createRunResourceURI());
         $runner->run();
-    }
-
-    /**
-     * Creates a test fixture of the {@link \PDepend\TextUI\Runner} class.
-     *
-     * @return \PDepend\TextUI\Runner
-     * @since 0.10.0
-     */
-    protected function createTextUiRunnerFixture()
-    {
-        $fixture = $this->createTextUiRunner();
-        $fixture->setConfiguration($this->createConfigurationFixture());
-
-        return $fixture;
     }
 
     /**

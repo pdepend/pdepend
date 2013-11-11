@@ -48,7 +48,6 @@ use PDepend\Input\ExtensionFilter;
 use PDepend\ProcessListener;
 use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
-use PDepend\Util\Configuration;
 
 /**
  * The command line runner starts a PDepend process.
@@ -67,14 +66,6 @@ class Runner
      * Marks an internal exception exit.
      */
     const EXCEPTION_EXIT = 2;
-
-    /**
-     * The system configuration.
-     *
-     * @var Configuration
-     * @since 0.10.0
-     */
-    protected $configuration = null;
 
     /**
      * List of allowed file extensions. Default file extensions are <b>php</b>
@@ -147,21 +138,15 @@ class Runner
      */
     private $reportGeneratorFactory;
 
-    public function __construct(ReportGeneratorFactory $reportGeneratorFactory)
+    /**
+     * @var PDepend\Engine
+     */
+    private $engine;
+
+    public function __construct(ReportGeneratorFactory $reportGeneratorFactory, Engine $engine)
     {
         $this->reportGeneratorFactory = $reportGeneratorFactory;
-    }
-
-    /**
-     * Sets the system configuration.
-     *
-     * @param \PDepend\Util\Configuration $configuration The system configuration.
-     * @return void
-     * @since 0.10.0
-     */
-    public function setConfiguration(Configuration $configuration)
-    {
-        $this->configuration = $configuration;
+        $this->engine = $engine;
     }
 
     /**
@@ -268,7 +253,7 @@ class Runner
      */
     public function run()
     {
-        $engine = new Engine($this->configuration);
+        $engine = $this->engine;
         $engine->setOptions($this->options);
 
         if (count($this->extensions) > 0) {
