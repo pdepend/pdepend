@@ -181,8 +181,14 @@ class Engine
      * Constructs a new php depend facade.
      *
      * @param \PDepend\Util\Configuration $configuration The system configuration.
+     * @param \PDepend\Util\Cache\CacheFactory $cacheFactory
+     * @param \PDepend\Metrics\AnalyzerFactory $analyzerFactory
      */
-    public function __construct(Configuration $configuration, CacheFactory $cacheFactory, AnalyzerFactory $analyzerFactory)
+    public function __construct(
+        Configuration $configuration,
+        CacheFactory $cacheFactory,
+        AnalyzerFactory $analyzerFactory
+    )
     {
         $this->configuration = $configuration;
 

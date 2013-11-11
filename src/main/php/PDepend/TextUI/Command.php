@@ -117,7 +117,7 @@ class Command
             foreach ($this->configurationFiles as $configurationFile) {
                 $this->application->addConfigurationFile($configurationFile);
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
             $this->printHelp();
@@ -154,16 +154,16 @@ class Command
             $configurationFile = $this->options['--configuration'];
 
             unset($this->options['--configuration']);
-        } else if (file_exists(getcwd() . '/pdepend.xml')) {
+        } elseif (file_exists(getcwd() . '/pdepend.xml')) {
             $configurationFile = getcwd() . '/pdepend.xml';
-        } else if (file_exists(getcwd() . '/pdepend.xml.dist')) {
+        } elseif (file_exists(getcwd() . '/pdepend.xml.dist')) {
             $configurationFile = getcwd() . '/pdepend.xml.dist';
         }
 
         if ($configurationFile) {
             try {
                 $this->application->addConfigurationFile($configurationFile);
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
                 $this->printHelp();
