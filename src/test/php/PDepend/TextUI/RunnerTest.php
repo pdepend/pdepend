@@ -198,7 +198,8 @@ class RunnerTest extends AbstractTest
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
-        $runner->run();
+
+        $this->silentRun($runner);
 
         $this->assertFalse($runner->hasParseErrors());
     }
@@ -213,7 +214,8 @@ class RunnerTest extends AbstractTest
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
-        $runner->run();
+
+        $this->silentRun($runner);
 
         $this->assertTrue($runner->hasParseErrors());
     }
@@ -228,7 +230,10 @@ class RunnerTest extends AbstractTest
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
+
+        ob_start();
         $runner->run();
+        ob_end_clean();
 
         $errors = $runner->getParseErrors();
         $this->assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
@@ -261,9 +266,7 @@ class RunnerTest extends AbstractTest
         $runner->setSourceArguments(array($pathName));
         $runner->addReportGenerator('dummy-logger', $logFile);
 
-        ob_start();
-        $runner->run();
-        ob_end_clean();
+        $this->silentRun($runner);
 
         $data = unserialize(file_get_contents($logFile));
         $code = $data['code'];

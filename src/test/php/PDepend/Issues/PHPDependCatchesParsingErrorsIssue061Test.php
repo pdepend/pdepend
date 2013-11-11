@@ -88,7 +88,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
-        $runner->run();
+        $this->silentRun($runner);
 
         $this->assertFalse($runner->hasParseErrors());
     }
@@ -105,7 +105,8 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
-        $runner->run();
+
+        $this->silentRun($runner);
 
         $this->assertTrue($runner->hasParseErrors());
     }

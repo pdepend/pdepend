@@ -512,6 +512,15 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         return new Engine($configuration, $cacheFactory, $analyzerFactory);
     }
 
+    protected function silentRun($runner)
+    {
+        ob_start();
+        $exitCode = $runner->run();
+        ob_end_clean();
+
+        return $exitCode;
+    }
+
     /**
      * Creates a ready to use class fixture.
      *
