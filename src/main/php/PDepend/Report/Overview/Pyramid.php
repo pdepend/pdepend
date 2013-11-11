@@ -149,11 +149,11 @@ class Pyramid implements FileAwareGenerator
     public function getAcceptedAnalyzers()
     {
         return array(
-            'PDepend\\Metrics\\Analyzer\\CouplingAnalyzer',
-            'PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer',
-            'PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer',
-            'PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer',
-            'PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer'
+            'pdepend.analyzer.coupling',
+            'pdepend.analyzer.cyclomatic_complexity',
+            'pdepend.analyzer.inheritance',
+            'pdepend.analyzer.node_count',
+            'pdepend.analyzer.node_loc',
         );
     }
 

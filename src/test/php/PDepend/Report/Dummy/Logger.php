@@ -98,7 +98,19 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PDepend\\Metrics\\AnalyzerNodeAware');
+        return array(
+            'pdepend.analyzer.cyclomatic_complexity',
+            'pdepend.analyzer.node_loc',
+            'pdepend.analyzer.npath_complexity',
+            'pdepend.analyzer.inheritance',
+            'pdepend.analyzer.node_count',
+            'pdepend.analyzer.hierarchy',
+            'pdepend.analyzer.crap_index',
+            'pdepend.analyzer.code_rank',
+            'pdepend.analyzer.coupling',
+            'pdepend.analyzer.class_level',
+            'pdepend.analyzer.cohesion',
+        );
     }
 
     /**

@@ -33,10 +33,6 @@
 
         <service id="pdepend.textui.result_printer" class="PDepend\TextUI\ResultPrinter" />
 
-        <service id="pdepend.report.phpunit.xml" class="PDepend\Report\Phpunit\Xml">
-            <tag name="pdepend.logger" option="--phpunit-xml" message="Generates a metrics xml log that is compatible with PHPUnit --log-metrics." />
-        </service>
-
         <service id="pdepend.report.summary.xml" class="PDepend\Report\Summary\Xml">
             <tag name="pdepend.logger" option="--summary-xml" message="Generates a xml log with all metrics." />
         </service>
@@ -59,6 +55,10 @@
 
         <service id="pdepend.analyzer.class_level" class="PDepend\Metrics\Analyzer\ClassLevelAnalyzer">
             <tag name="pdepend.analyzer" />
+
+            <call method="addAnalyzer">
+                <argument type="service" id="pdepend.analyzer.cyclomatic_complexity" />
+            </call>
         </service>
 
         <service id="pdepend.analyzer.code_rank" class="PDepend\Metrics\Analyzer\CodeRankAnalyzer">
@@ -69,12 +69,15 @@
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.coupling" class="PDepend\Metrics\Analyzer\Coupling">
+        <service id="pdepend.analyzer.coupling" class="PDepend\Metrics\Analyzer\CouplingAnalyzer">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.crap_index" class="PDepend\Metrics\Analyzer\CrapIndex">
+        <service id="pdepend.analyzer.crap_index" class="PDepend\Metrics\Analyzer\CrapIndexAnalyzer">
             <tag name="pdepend.analyzer" option="--coverage-report" message="Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover option." />
+            <call method="addAnalyzer">
+                <argument type="service" id="pdepend.analyzer.cyclomatic_complexity" />
+            </call>
         </service>
 
         <service id="pdepend.analyzer.cyclomatic_complexity" class="PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer">

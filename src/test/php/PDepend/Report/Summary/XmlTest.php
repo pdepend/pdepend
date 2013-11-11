@@ -104,8 +104,17 @@ class XmlTest extends AbstractTest
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $expected = array(
-            'PDepend\\Metrics\\AnalyzerNodeAware',
-            'PDepend\\Metrics\\AnalyzerProjectAware'
+            'pdepend.analyzer.cyclomatic_complexity',
+            'pdepend.analyzer.node_loc',
+            'pdepend.analyzer.npath_complexity',
+            'pdepend.analyzer.inheritance',
+            'pdepend.analyzer.node_count',
+            'pdepend.analyzer.hierarchy',
+            'pdepend.analyzer.crap_index',
+            'pdepend.analyzer.code_rank',
+            'pdepend.analyzer.coupling',
+            'pdepend.analyzer.class_level',
+            'pdepend.analyzer.cohesion',
         );
 
         $this->assertEquals($expected, $actual);

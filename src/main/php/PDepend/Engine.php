@@ -46,6 +46,7 @@ use PDepend\Metrics\AnalyzerClassFileSystemLocator;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerLoader;
 use PDepend\Metrics\AnalyzerFactory;
+use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
@@ -174,6 +175,8 @@ class Engine
      */
     private $cacheFactory;
 
+    private $analyzerFactory;
+
     /**
      * Constructs a new php depend facade.
      *
@@ -187,7 +190,7 @@ class Engine
         $this->fileFilter = new \PDepend\Input\CompositeFilter();
 
         $this->cacheFactory = $cacheFactory;
-        $this->analzyerFactory = $analyzerFactory;
+        $this->analyzerFactory = $analyzerFactory;
     }
 
     /**
@@ -579,7 +582,7 @@ class Engine
      */
     private function performAnalyzeProcess()
     {
-        $analyzerLoader = $this->createAnalyzerLoader($this->options);
+        $analyzerLoader = $this->createAnalyzers($this->options);
 
         $collection = CollectionArtifactFilter::getInstance();
 
@@ -606,29 +609,6 @@ class Engine
         ini_restore('xdebug.max_nesting_level');
 
         $this->fireEndAnalyzeProcess();
-    }
-
-    /**
-     * This method will initialize all code analysers and register the
-     * interested listeners.
-     *
-     * @param \PDepend\Metrics\AnalyzerLoader $analyzerLoader
-     * @return \PDepend\Metrics\AnalyzerLoader
-     */
-    private function initAnalyseListeners(AnalyzerLoader $analyzerLoader)
-    {
-        // Append all listeners
-        foreach ($analyzerLoader as $analyzer) {
-            foreach ($this->listeners as $listener) {
-                $analyzer->addAnalyzeListener($listener);
-
-                if ($analyzer instanceof ASTVisitor) {
-                    $analyzer->addVisitListener($listener);
-                }
-            }
-        }
-
-        return $analyzerLoader;
     }
 
     /**
@@ -677,40 +657,7 @@ class Engine
         return new \ArrayIterator(array_values($files));
     }
 
-    /**
-     * Creates a {@link \PDepend\Metrics\AnalyzerLoader} instance that will be
-     * used to create all analyzers required for the actually registered logger
-     * instances.
-     *
-     * @param array $options The command line options recieved for this run.
-     * @return \PDepend\Metrics\AnalyzerLoader
-     */
-    private function createAnalyzerLoader(array $options)
-    {
-        $analyzerSet = array();
-
-        foreach ($this->generators as $logger) {
-            foreach ($logger->getAcceptedAnalyzers() as $type) {
-                // Check for type existence
-                if (in_array($type, $analyzerSet) === false) {
-                    $analyzerSet[] = $type;
-                }
-            }
-        }
-
-        $cacheKey = md5(serialize($this->files) . serialize($this->directories));
-
-        $loader = new AnalyzerLoader(
-            new AnalyzerClassFileSystemLocator(),
-            $this->cacheFactory->create($cacheKey),
-            $analyzerSet,
-            $options
-        );
-
-        return $this->initAnalyseListeners($loader);
-    }
-
-    private function createAnalyzers()
+    private function createAnalyzers($options)
     {
         $analyzers = $this->analyzerFactory->createRequiredForGenerators($this->generators);
 
@@ -720,6 +667,15 @@ class Engine
         foreach ($analyzers as $analyzer) {
             if ($analyzer instanceof AnalyzerCacheAware) {
                 $analyzer->setCache($cache);
+            }
+            $analyzer->setOptions($options);
+
+            foreach ($this->listeners as $listener) {
+                $analyzer->addAnalyzeListener($listener);
+
+                if ($analyzer instanceof ASTVisitor) {
+                    $analyzer->addVisitListener($listener);
+                }
             }
         }
 
