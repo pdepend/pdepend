@@ -56,7 +56,7 @@ class ReportGeneratorFactoryTest extends AbstractTest
     {
         $application = new \PDepend\Application();
 
-        return $application->getContainer()->get('pdepend.report_generator_factory');
+        return $application->getReportGeneratorFactory();
     }
 
     /**

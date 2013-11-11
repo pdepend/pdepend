@@ -60,15 +60,6 @@ class Application
 
     private $configurationFiles = array();
 
-    public function getContainer()
-    {
-        if ($this->container === null) {
-            $this->container = $this->createContainer();
-        }
-
-        return $this->container;
-    }
-
     /**
      * @param string $configurationFile
      */
@@ -89,6 +80,31 @@ class Application
     public function getConfiguration()
     {
         return $this->getContainer()->get('pdepend.configuration');
+    }
+
+    /**
+     * @return \PDepend\TextUI\Runner
+     */
+    public function getRunner()
+    {
+        return $this->getContainer()->get('pdepend.textui.runner'); // TODO: Use standard name? textui is detail.
+    }
+
+    /**
+     * @return \PDepend\Report\ReportGeneratorFactory
+     */
+    public function getReportGeneratorFactory()
+    {
+        return $this->getContainer()->get('pdepend.report_generator_factory');
+    }
+
+    private function getContainer()
+    {
+        if ($this->container === null) {
+            $this->container = $this->createContainer();
+        }
+
+        return $this->container;
     }
 
     /**
@@ -114,11 +130,6 @@ class Application
         $container->compile();
 
         return $container;
-    }
-
-    public function getRunner()
-    {
-        return $this->getContainer()->get('pdepend.textui.runner'); // TODO: Use standard name? textui is detail.
     }
 
     /**
