@@ -49,7 +49,7 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
 }
 
-require_once 'PDepend/Autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 // Allow as much memory as possible by default
 if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
@@ -64,8 +64,5 @@ if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) 
 } else {
     ini_set('memory_limit', -1);
 }
-
-$autoload = new Autoload();
-$autoload->register();
 
 exit(Command::main());
