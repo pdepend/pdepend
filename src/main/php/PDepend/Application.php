@@ -58,12 +58,15 @@ class Application
 {
     private $container;
 
-    private $configurationFiles = array();
+    /**
+     * @var string
+     */
+    private $configurationFile;
 
     /**
      * @param string $configurationFile
      */
-    public function addConfigurationFile($configurationFile)
+    public function setConfigurationFile($configurationFile)
     {
         if (!file_exists($configurationFile)) {
             throw new \InvalidArgumentException(
@@ -71,7 +74,7 @@ class Application
             );
         }
 
-        $this->configurationFiles[] = $configurationFile;
+        $this->configurationFile = $configurationFile;
     }
 
     /**
@@ -131,8 +134,8 @@ class Application
             $container->registerExtension($extension);
         }
 
-        foreach ($this->configurationFiles as $configurationFile) {
-            $loader->load($configurationFile);
+        if ($this->configurationFile) {
+            $loader->load($this->configurationFile);
         }
 
         $container->compile();

@@ -203,11 +203,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createTestApplication()
     {
         $application = new \PDepend\Application();
-        $application->addConfigurationFile(__DIR__ . '/../../resources/testservices.xml');
-
-        if (file_exists(getcwd() . '/pdepend.xml')) {
-            $application->addConfigurationFile(getcwd() . '/pdepend.xml');
-        }
+        $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.xml.dist');
 
         return $application;
     }

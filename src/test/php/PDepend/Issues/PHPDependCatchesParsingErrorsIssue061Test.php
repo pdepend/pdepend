@@ -143,6 +143,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
         $this->prepareArgv(
             array(
                 '--dummy-logger=' . self::createRunResourceURI('pdepend.log'),
+                '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
                 self::createCodeResourceUriForTest()
             )
         );
@@ -174,7 +175,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
     protected function runTextUICommand()
     {
         $command = new \PDepend\TextUI\Command();
-        $command->addConfigurationFile(__DIR__ . '/../../../resources/testservices.xml');
 
         ob_start();
         $exitCode = $command->run();

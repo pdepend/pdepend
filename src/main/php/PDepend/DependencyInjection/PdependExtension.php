@@ -43,6 +43,7 @@
 namespace PDepend\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader;
@@ -67,8 +68,12 @@ class PdependExtension extends Extension
                 continue;
             }
 
-            foreach ($config['extensions'] as $extension => $config) {
-                $extensionManager->activateExtension($extension);
+            foreach ($config['extensions'] as $config) {
+                if (!isset($config['class'])) {
+                    continue;
+                }
+
+                $extensionManager->activateExtension($config['class']);
             }
         }
 
@@ -77,6 +82,19 @@ class PdependExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../resources'));
         $loader->load('services.xml');
+
+        foreach ($extensionManager->getActivatedExtensions() as $extension) {
+            $extensionConfig = $config['extensions'][$extension->getName()];
+
+            $tempContainer = new ContainerBuilder(new ParameterBag(array()));
+            $tempContainer->addObjectResource($extension);
+
+            // load extension into temporary container
+            $extension->load($extensionConfig, $tempContainer);
+
+            // merge temporary container into normal one
+            $container->merge($tempContainer);
+        }
 
         $settings = $this->createSettings($config);
 

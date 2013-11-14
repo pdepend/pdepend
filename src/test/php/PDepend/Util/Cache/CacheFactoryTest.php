@@ -150,6 +150,8 @@ class CacheFactoryTest extends AbstractTest
      */
     protected function createFactoryFixture()
     {
-        return new CacheFactory($this->createConfigurationFixture());
+        $application = new \PDepend\Application();
+        $application->setConfigurationFile(getcwd() . '/pdepend.xml');
+        return new CacheFactory($application->getConfiguration());
     }
 }

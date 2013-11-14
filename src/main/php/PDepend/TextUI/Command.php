@@ -92,19 +92,6 @@ class Command
     private $application;
 
     /**
-     * @var array(string)
-     */
-    private $configurationFiles = array();
-
-    /**
-     * @param string $configurationFile
-     */
-    public function addConfigurationFile($configurationFile)
-    {
-        $this->configurationFiles[] = $configurationFile;
-    }
-
-    /**
      * Performs the main cli process and returns the exit code.
      *
      * @return integer
@@ -112,17 +99,6 @@ class Command
     public function run()
     {
         $this->application = new Application();
-
-        try {
-            foreach ($this->configurationFiles as $configurationFile) {
-                $this->application->addConfigurationFile($configurationFile);
-            }
-        } catch (\Exception $e) {
-            echo $e->getMessage(), PHP_EOL, PHP_EOL;
-
-            $this->printHelp();
-            return self::CLI_ERROR;
-        }
 
         try {
             if ($this->parseArguments() === false) {
@@ -150,11 +126,12 @@ class Command
         }
 
         $configurationFile = false;
+
         if (isset($this->options['--configuration'])) {
             $configurationFile = $this->options['--configuration'];
 
             unset($this->options['--configuration']);
-        } elseif (file_exists(getcwd() . '/pdepend.xml')) {
+        }elseif (file_exists(getcwd() . '/pdepend.xml')) {
             $configurationFile = getcwd() . '/pdepend.xml';
         } elseif (file_exists(getcwd() . '/pdepend.xml.dist')) {
             $configurationFile = getcwd() . '/pdepend.xml.dist';
@@ -162,7 +139,7 @@ class Command
 
         if ($configurationFile) {
             try {
-                $this->application->addConfigurationFile($configurationFile);
+                $this->application->setConfigurationFile($configurationFile);
             } catch (\Exception $e) {
                 echo $e->getMessage(), PHP_EOL, PHP_EOL;
 

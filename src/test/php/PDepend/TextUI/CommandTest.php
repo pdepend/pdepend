@@ -197,6 +197,7 @@ class CommandTest extends AbstractTest
             '--suffix=inc',
             '--ignore=code-5.2.x',
             '--exclude=pdepend.test2',
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             '--dummy-logger=' . $logFile,
             $resource
         );
@@ -219,7 +220,12 @@ class CommandTest extends AbstractTest
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
 
-        $argv = array('--suffix=inc', '--dummy-logger=' . $logFile, $resource);
+        $argv = array(
+            '--suffix=inc',
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+            '--dummy-logger=' . $logFile,
+            $resource
+        );
 
         list($exitCode, ) = $this->_executeCommand($argv);
         $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
@@ -320,6 +326,7 @@ class CommandTest extends AbstractTest
         $logFile = self::createRunResourceURI();
 
         $argv[] = '--dummy-logger=' . $logFile;
+        $argv[] = '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist';
         $argv[] = $pathName;
 
         if (file_exists($logFile)) {
@@ -498,6 +505,7 @@ class CommandTest extends AbstractTest
         $argv = array(
             '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
             '--dummy-logger=' . self::createRunResourceURI(),
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
         );
 
@@ -564,7 +572,6 @@ class CommandTest extends AbstractTest
 
         ob_start();
         $command = new Command();
-        $command->addConfigurationFile(__DIR__ . '/../../../resources/testservices.xml');
         $exitCode = $command->run();
         $output   = ob_get_contents();
         ob_end_clean();
