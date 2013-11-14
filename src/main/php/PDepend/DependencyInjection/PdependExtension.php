@@ -60,7 +60,19 @@ class PdependExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $extensionManager = new ExtensionManager();
+
+        foreach ($configs as $config) {
+            if (!isset($config['extensions'])) {
+                continue;
+            }
+
+            foreach ($config['extensions'] as $extension => $config) {
+                $extensionManager->activateExtension($extension);
+            }
+        }
+
+        $configuration = new Configuration($extensionManager->getActivatedExtensions());
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../resources'));

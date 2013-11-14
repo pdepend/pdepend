@@ -57,6 +57,16 @@ use PDepend\Util\Workarounds;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @var array(Extension)
+     */
+    private $extension = array();
+
+    public function __construct(array $extensions)
+    {
+        $this->extensions = $extensions;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getConfigTreeBuilder()
@@ -93,6 +103,17 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+
+        $extensionsNode = $rootNode
+            ->children()
+                ->arrayNode('extensions')
+                ->addDefaultsIfNotSet()
+                    ->children();
+
+        foreach ($this->extensions as $extension) {
+            $extensionNode = $extensionsNode->arrayNode($extension->getName());
+            $extension->getConfig($extensionNode);
+        }
 
         return $treeBuilder;
     }
