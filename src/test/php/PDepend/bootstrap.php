@@ -53,3 +53,5 @@ spl_autoload_register(function ($class) {
         include_once $file;
     }
 });
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';

@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of PDepend.
@@ -39,30 +38,40 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
-use PDepend\Autoload;
-use PDepend\TextUI\Command;
+namespace PDepend;
 
-// PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
-}
+/**
+ * Test cases for the {@link \PDepend\Application} class.
+ *
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @covers \PDepend\Application
+ * @group integration
+ */
+class ApplicationTest extends AbstractTest
+{
+    public function testGetRunner()
+    {
+        $application = $this->createTestApplication();
+        $runner = $application->getRunner();
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
-// Allow as much memory as possible by default
-if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
-    $limit = ini_get('memory_limit');
-    if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
-        $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
-        $limit = ($match[1] * (1 << $shift[$match[2]]));
+        $this->assertInstanceOf('PDepend\TextUI\Runner', $runner);
     }
-    if (ini_get('suhosin.memory_limit') > $limit && $limit > -1) {
-        ini_set('memory_limit', ini_get('suhosin.memory_limit'));
-    }
-} else {
-    ini_set('memory_limit', -1);
-}
 
-exit(Command::main());
+    public function testAnalyzerFactory()
+    {
+        $application = $this->createTestApplication();
+
+        $this->assertInstanceOf('PDepend\Metrics\AnalyzerFactory', $application->getAnalyzerFactory());
+    }
+
+    public function testReportGeneratorFactory()
+    {
+        $application = $this->createTestApplication();
+
+        $this->assertInstanceOf('PDepend\Report\ReportGeneratorFactory', $application->getReportGeneratorFactory());
+    }
+}

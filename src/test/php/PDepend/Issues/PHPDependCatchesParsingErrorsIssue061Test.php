@@ -85,11 +85,10 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
      */
     public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
     {
-        $runner = new \PDepend\TextUI\Runner();
-        $runner->setConfiguration($this->createConfigurationFixture());
+        $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
-        $runner->run();
+        $this->silentRun($runner);
 
         $this->assertFalse($runner->hasParseErrors());
     }
@@ -103,11 +102,11 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
      */
     public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
     {
-        $runner = new \PDepend\TextUI\Runner();
-        $runner->setConfiguration($this->createConfigurationFixture());
+        $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', self::createRunResourceURI('pdepend.log'));
         $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
-        $runner->run();
+
+        $this->silentRun($runner);
 
         $this->assertTrue($runner->hasParseErrors());
     }
@@ -144,6 +143,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
         $this->prepareArgv(
             array(
                 '--dummy-logger=' . self::createRunResourceURI('pdepend.log'),
+                '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
                 self::createCodeResourceUriForTest()
             )
         );

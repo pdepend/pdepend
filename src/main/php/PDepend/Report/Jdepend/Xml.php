@@ -157,7 +157,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function getAcceptedAnalyzers()
     {
-        return array(DependencyAnalyzer::CLAZZ);
+        return array('pdepend.analyzer.dependency');
     }
 
     /**

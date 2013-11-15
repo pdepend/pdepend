@@ -111,9 +111,9 @@ class XmlTest extends AbstractTest
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $exptected = array(DependencyAnalyzer::CLAZZ);
+        $expected =  array('pdepend.analyzer.dependency');
 
-        $this->assertEquals($exptected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**

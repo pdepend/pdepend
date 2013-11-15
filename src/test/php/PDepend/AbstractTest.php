@@ -189,6 +189,26 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Create a TextUi Runner
+     *
+     * @return Runner
+     */
+    protected function createTextUiRunner()
+    {
+        $application = $this->createTestApplication();
+
+        return $application->getRunner();
+    }
+
+    protected function createTestApplication()
+    {
+        $application = new \PDepend\Application();
+        $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.xml.dist');
+
+        return $application;
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $nodeType The searched node class.
@@ -453,10 +473,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConfigurationFixture()
     {
-        $factory = new ConfigurationFactory();
-        $config  = $factory->createDefault();
+        $application = $this->createTestApplication();
 
-        return $config;
+        return $application->getConfiguration();
     }
 
     /**
@@ -480,7 +499,22 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $this->createCodeResourceURI('config/')
         );
 
-        return new Engine($this->createConfigurationFixture());
+        $application = $this->createTestApplication();
+
+        $configuration = $application->getConfiguration();
+        $cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+        $analyzerFactory = $application->getAnalyzerFactory();
+
+        return new Engine($configuration, $cacheFactory, $analyzerFactory);
+    }
+
+    protected function silentRun($runner)
+    {
+        ob_start();
+        $exitCode = $runner->run();
+        ob_end_clean();
+
+        return $exitCode;
     }
 
     /**

@@ -48,7 +48,6 @@ use PDepend\Input\ExtensionFilter;
 use PDepend\ProcessListener;
 use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
-use PDepend\Util\Configuration;
 
 /**
  * The command line runner starts a PDepend process.
@@ -67,14 +66,6 @@ class Runner
      * Marks an internal exception exit.
      */
     const EXCEPTION_EXIT = 2;
-
-    /**
-     * The system configuration.
-     *
-     * @var Configuration
-     * @since 0.10.0
-     */
-    protected $configuration = null;
 
     /**
      * List of allowed file extensions. Default file extensions are <b>php</b>
@@ -143,15 +134,19 @@ class Runner
     private $parseErrors = array();
 
     /**
-     * Sets the system configuration.
-     *
-     * @param \PDepend\Util\Configuration $configuration The system configuration.
-     * @return void
-     * @since 0.10.0
+     * @var PDepend\Report\ReportGeneratorFactory
      */
-    public function setConfiguration(Configuration $configuration)
+    private $reportGeneratorFactory;
+
+    /**
+     * @var PDepend\Engine
+     */
+    private $engine;
+
+    public function __construct(ReportGeneratorFactory $reportGeneratorFactory, Engine $engine)
     {
-        $this->configuration = $configuration;
+        $this->reportGeneratorFactory = $reportGeneratorFactory;
+        $this->engine = $engine;
     }
 
     /**
@@ -258,7 +253,7 @@ class Runner
      */
     public function run()
     {
-        $engine = new Engine($this->configuration);
+        $engine = $this->engine;
         $engine->setOptions($this->options);
 
         if (count($this->extensions) > 0) {
@@ -299,13 +294,11 @@ class Runner
             throw new \RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
-        $generatorFactory = new ReportGeneratorFactory();
-
         // To append all registered loggers.
         try {
             foreach ($this->loggerMap as $generatorId => $reportFile) {
                 // Create a new logger
-                $generator = $generatorFactory->createGenerator($generatorId, $reportFile);
+                $generator = $this->reportGeneratorFactory->createGenerator($generatorId, $reportFile);
 
                 $engine->addReportGenerator($generator);
             }

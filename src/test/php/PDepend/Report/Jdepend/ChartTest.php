@@ -103,7 +103,7 @@ class ChartTest extends AbstractTest
     public function testReturnsExceptedAnalyzers()
     {
         $logger    = new Chart();
-        $this->assertEquals(array(DependencyAnalyzer::CLAZZ), $logger->getAcceptedAnalyzers());
+        $this->assertEquals(array('pdepend.analyzer.dependency'), $logger->getAcceptedAnalyzers());
     }
 
     /**

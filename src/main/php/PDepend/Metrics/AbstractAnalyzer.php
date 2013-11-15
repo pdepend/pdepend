@@ -78,6 +78,17 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
     }
 
     /**
+     * Set global options
+     *
+     * @param array(string=>mixed) $options Global option array, every analyzer
+     *                                      can extract the required options.
+     */
+    public function setOptions(array $options = array())
+    {
+        $this->options = $options;
+    }
+
+    /**
      * Adds a listener to this analyzer.
      *
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.

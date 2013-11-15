@@ -106,7 +106,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      */
     public function getAcceptedAnalyzers()
     {
-        return array(DependencyAnalyzer::CLAZZ);
+        return array('pdepend.analyzer.dependency');
     }
 
     /**

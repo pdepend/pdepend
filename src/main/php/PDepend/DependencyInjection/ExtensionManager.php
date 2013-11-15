@@ -40,20 +40,54 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics;
+namespace PDepend\DependencyInjection;
 
 /**
- * Base interface for an analyzer source locator.
+ * Manage activation and registration of extensions for PDepend.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface AnalyzerClassLocator
+class ExtensionManager
 {
+    private $extensions = array();
+
     /**
-     * Returns an array with reflection instances for all analyzer classes.
+     * Activate an extension based on a class name.
      *
-     * @return \ReflectionClass[]
+     * @throws RuntimeException
+     * @param string $className
+     * @return void
      */
-    public function findAll();
+    public function activateExtension($className)
+    {
+        if (!class_exists($className)) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Cannot find extension class %s" for PDepend. Maybe the plugin is not installed?',
+                    $className
+                )
+            );
+        }
+
+        $extension = new $className;
+
+        if (!($extension instanceof Extension)) {
+            throw new \RuntimeException(
+                sprintf('Class "%s" is not a valid Extension', $className)
+            );
+        }
+
+        $this->extensions[$extension->getName()] = $extension;
+    }
+
+    /**
+     * Return all activated extensions.
+     *
+     * @return array(\PDepend\DependencyInjection\Extension)
+     */
+    public function getActivatedExtensions()
+    {
+        return $this->extensions;
+    }
 }

@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of PDepend.
@@ -39,30 +38,51 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
-use PDepend\Autoload;
-use PDepend\TextUI\Command;
+namespace PDepend\Metrics;
 
-// PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
-}
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+/**
+ * Creates Analyzer instances
+ *
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ */
+class AnalyzerFactory
+{
+    /**
+     * @var Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
 
-// Allow as much memory as possible by default
-if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
-    $limit = ini_get('memory_limit');
-    if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
-        $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
-        $limit = ($match[1] * (1 << $shift[$match[2]]));
+    /**
+     * Create a new Analyzer Factory
+     *
+     * @param Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
     }
-    if (ini_get('suhosin.memory_limit') > $limit && $limit > -1) {
-        ini_set('memory_limit', ini_get('suhosin.memory_limit'));
-    }
-} else {
-    ini_set('memory_limit', -1);
-}
 
-exit(Command::main());
+    /**
+     * Create and configure all analyzers required for given set of loggers.
+     *
+     * @param array(PDepend\Report\ReportGenerator) $generators
+     * @return array(PDepend\Metrics\Analyzer)
+     */
+    public function createRequiredForGenerators(array $generators)
+    {
+        $analyzers = array();
+
+        foreach ($generators as $logger) {
+            foreach ($logger->getAcceptedAnalyzers() as $type) {
+                $analyzers[$type] = $this->container->get($type);
+            }
+        }
+
+        return $analyzers;
+    }
+}

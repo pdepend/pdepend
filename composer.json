@@ -6,13 +6,17 @@
     "require": {
         "php": ">=5.3.7"
     },
+    "require": {
+        "symfony/dependency-injection": "@stable",
+        "symfony/config": "@stable"
+    },
     "require-dev": {
         "phpunit/phpunit": "@stable",
         "squizlabs/php_codesniffer": "@stable"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {
-        "psr-0": {"PHP_": "src/main/php/"}
+        "psr-0": {"PDepend\\": "src/main/php/"}
     }
 }
 
