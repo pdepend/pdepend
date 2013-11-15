@@ -66,13 +66,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
     {
         $notUserDefined = $this->createClassFixture();
 
-        $package = new ASTNamespace('PDepend');
-        $package->addType($notUserDefined);
+        $namespace = new ASTNamespace('PDepend');
+        $namespace->addType($notUserDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($namespace)));
 
-        $metrics = $analyzer->getNodeMetrics($package);
+        $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(0, $metrics['noc']);
     }
 
@@ -86,13 +86,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
         $userDefined = $this->createClassFixture();
         $userDefined->setUserDefined();
 
-        $package = new ASTNamespace('PDepend');
-        $package->addType($userDefined);
+        $namespace = new ASTNamespace('PDepend');
+        $namespace->addType($userDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($namespace)));
 
-        $metrics = $analyzer->getNodeMetrics($package);
+        $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(1, $metrics['noc']);
     }
 
@@ -105,13 +105,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
     {
         $notUserDefined = $this->createInterfaceFixture();
 
-        $package = new ASTNamespace('PDepend');
-        $package->addType($notUserDefined);
+        $namespace = new ASTNamespace('PDepend');
+        $namespace->addType($notUserDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($namespace)));
 
-        $metrics = $analyzer->getNodeMetrics($package);
+        $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(0, $metrics['noi']);
     }
 
@@ -125,13 +125,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
         $userDefined = $this->createInterfaceFixture();
         $userDefined->setUserDefined();
 
-        $package = new ASTNamespace('PDepend');
-        $package->addType($userDefined);
+        $namespace = new ASTNamespace('PDepend');
+        $namespace->addType($userDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($package)));
+        $analyzer->analyze(new ASTArtifactList(array($namespace)));
 
-        $metrics = $analyzer->getNodeMetrics($package);
+        $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(1, $metrics['noi']);
     }
 
@@ -142,9 +142,9 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfPackages()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
         
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(3, $metrics['nop']);
@@ -157,9 +157,9 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfClassesInProject()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
         
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(6, $metrics['noc']);
@@ -172,13 +172,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfClassesInPackages()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = array();
-        foreach ($packages as $package) {
-            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        foreach ($namespaces as $namespace) {
+            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
@@ -198,9 +198,9 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfInterfacesInProject()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
         
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(9, $metrics['noi']);
@@ -213,13 +213,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfInterfacesInPackages()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = array();
-        foreach ($packages as $package) {
-            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        foreach ($namespaces as $namespace) {
+            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
@@ -239,9 +239,9 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfMethodsInProject()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
         
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(9, $metrics['nom']);
@@ -254,13 +254,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfMethodsInPackages()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = array();
-        foreach ($packages as $package) {
-            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        foreach ($namespaces as $namespace) {
+            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
@@ -280,9 +280,9 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfFunctionsInProject()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(6, $metrics['nof']);
@@ -295,13 +295,13 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfFunctionsInPackages()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = array();
-        foreach ($packages as $package) {
-            $metrics[$package->getName()] = $analyzer->getNodeMetrics($package);
+        foreach ($namespaces as $namespace) {
+            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(

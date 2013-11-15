@@ -65,7 +65,7 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testStaticMethodCallInFunctionBody()
     {
-        $package = self::parseCodeResourceForTest()
+        $namespace = self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
@@ -73,7 +73,7 @@ class ParserBug069Test extends AbstractRegressionTest
             ->current()
             ->getPackage();
 
-        $this->assertEquals('PDepend', $package->getName());
+        $this->assertEquals('PDepend', $namespace->getName());
     }
 
     /**
@@ -87,7 +87,7 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testStaticMethodLeadingBackslashCallInFunctionBody()
     {
-        $package = self::parseCodeResourceForTest()
+        $namespace = self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
@@ -95,7 +95,7 @@ class ParserBug069Test extends AbstractRegressionTest
             ->current()
             ->getPackage();
 
-        $this->assertEquals('PDepend', $package->getName());
+        $this->assertEquals('PDepend', $namespace->getName());
     }
 
     /**
@@ -128,7 +128,7 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testQualifiedPropertyAccessAsDependencyInFunctionBody()
     {
-        $package = self::parseCodeResourceForTest()
+        $namespace = self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
@@ -136,7 +136,7 @@ class ParserBug069Test extends AbstractRegressionTest
             ->current()
             ->getPackage();
 
-        $this->assertEquals('PDepend', $package->getName());
+        $this->assertEquals('PDepend', $namespace->getName());
     }
 
     /**
@@ -150,7 +150,7 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testQualifiedConstantAccessAsDependencyInFunctionBody()
     {
-        $package = self::parseCodeResourceForTest()
+        $namespace = self::parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
@@ -158,6 +158,6 @@ class ParserBug069Test extends AbstractRegressionTest
             ->current()
             ->getPackage();
 
-        $this->assertEquals('PDepend', $package->getName());
+        $this->assertEquals('PDepend', $namespace->getName());
     }
 }

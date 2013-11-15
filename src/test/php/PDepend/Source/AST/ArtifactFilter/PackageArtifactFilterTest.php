@@ -101,8 +101,8 @@ class PackageArtifactFilterTest extends AbstractTest
      */
     public function testFilterAcceptsClass()
     {
-        $package = new ASTNamespace(__FUNCTION__);
-        $class   = $package->addType(new ASTClass('Clazz'));
+        $namespace = new ASTNamespace(__FUNCTION__);
+        $class   = $namespace->addType(new ASTClass('Clazz'));
 
         $filter = new PackageArtifactFilter(array(__CLASS__));
         $this->assertTrue($filter->accept($class));
@@ -115,8 +115,8 @@ class PackageArtifactFilterTest extends AbstractTest
      */
     public function testFilterNotAcceptsClass()
     {
-        $package = new ASTNamespace(__FUNCTION__);
-        $class   = $package->addType(new ASTClass('Clazz'));
+        $namespace = new ASTNamespace(__FUNCTION__);
+        $class   = $namespace->addType(new ASTClass('Clazz'));
 
         $filter = new PackageArtifactFilter(array(__FUNCTION__));
         $this->assertFalse($filter->accept($class));
@@ -129,8 +129,8 @@ class PackageArtifactFilterTest extends AbstractTest
      */
     public function testFilterAcceptsInterface()
     {
-        $package   = new ASTNamespace(__FUNCTION__);
-        $interface = $package->addType(new ASTInterface('Iface'));
+        $namespace   = new ASTNamespace(__FUNCTION__);
+        $interface = $namespace->addType(new ASTInterface('Iface'));
 
         $filter = new PackageArtifactFilter(array(__CLASS__));
         $this->assertTrue($filter->accept($interface));
@@ -143,8 +143,8 @@ class PackageArtifactFilterTest extends AbstractTest
      */
     public function testFilterNotAcceptsInterface()
     {
-        $package   = new ASTNamespace(__FUNCTION__);
-        $interface = $package->addType(new ASTInterface('Iface'));
+        $namespace   = new ASTNamespace(__FUNCTION__);
+        $interface = $namespace->addType(new ASTInterface('Iface'));
 
         $filter = new PackageArtifactFilter(array(__FUNCTION__));
         $this->assertFalse($filter->accept($interface));
@@ -157,8 +157,8 @@ class PackageArtifactFilterTest extends AbstractTest
      */
     public function testFilterAcceptsFunction()
     {
-        $package  = new ASTNamespace(__FUNCTION__);
-        $function = $package->addFunction(new ASTFunction('Func'));
+        $namespace  = new ASTNamespace(__FUNCTION__);
+        $function = $namespace->addFunction(new ASTFunction('Func'));
 
         $filter = new PackageArtifactFilter(array(__CLASS__));
         $this->assertTrue($filter->accept($function));
@@ -171,8 +171,8 @@ class PackageArtifactFilterTest extends AbstractTest
      */
     public function testFilterNotAcceptsFunction()
     {
-        $package  = new ASTNamespace(__FUNCTION__);
-        $function = $package->addFunction(new ASTFunction('Func'));
+        $namespace  = new ASTNamespace(__FUNCTION__);
+        $function = $namespace->addFunction(new ASTFunction('Func'));
 
         $filter = new PackageArtifactFilter(array(__FUNCTION__));
         $this->assertFalse($filter->accept($function));

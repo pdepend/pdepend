@@ -69,9 +69,9 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $filter = CollectionArtifactFilter::getInstance();
         $filter->setFilter(new PackageArtifactFilter(array('library')));
 
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
 
@@ -88,9 +88,9 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $filter = CollectionArtifactFilter::getInstance();
         $filter->setFilter(new PackageArtifactFilter(array('library')));
 
-        $packages = self::parseTestCaseSource(__METHOD__);
+        $namespaces = self::parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
 
@@ -205,13 +205,13 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDepthOfInheritanceForSeveralClasses()
     {
-        $packages = $this->parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $actual = array();
-        foreach ($packages[0]->getClasses() as $class) {
+        foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
             
             $actual[$class->getName()] = $metrics['dit'];
@@ -330,13 +330,13 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     private function _getCalculatedMetric($testCase, $metric)
     {
-        $packages = self::parseTestCaseSource($testCase);
-        $package  = $packages->current();
+        $namespaces = self::parseTestCaseSource($testCase);
+        $namespace  = $namespaces->current();
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        $metrics = $analyzer->getNodeMetrics($package->getClasses()->current());
+        $metrics = $analyzer->getNodeMetrics($namespace->getClasses()->current());
         return $metrics[$metric];
     }
 

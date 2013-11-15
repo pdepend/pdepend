@@ -301,7 +301,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     }
 
     /**
-     * Calculates metrics for the given <b>$package</b> instance.
+     * Calculates metrics for the given <b>$namespace</b> instance.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void

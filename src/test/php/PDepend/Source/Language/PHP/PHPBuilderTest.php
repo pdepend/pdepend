@@ -66,11 +66,11 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $package = $builder->buildPackage(__FUNCTION__);
-        $package->addType($builder->buildClass(__FUNCTION__));
+        $namespace = $builder->buildPackage(__FUNCTION__);
+        $namespace->addType($builder->buildClass(__FUNCTION__));
 
-        $package = $builder->buildPackage(__CLASS__);
-        $package->addType($builder->buildClass(__CLASS__));
+        $namespace = $builder->buildPackage(__CLASS__);
+        $namespace->addType($builder->buildClass(__CLASS__));
 
         $this->assertEquals(2, $builder->getPackages()->count());
     }
@@ -84,10 +84,10 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $package = $builder->buildPackage(__FUNCTION__);
+        $namespace = $builder->buildPackage(__FUNCTION__);
         $builder->buildFunction(__FUNCTION__);
 
-        $package = $builder->buildPackage(__CLASS__);
+        $namespace = $builder->buildPackage(__CLASS__);
         $builder->buildFunction(__CLASS__);
 
         $this->assertEquals(2, $builder->getPackages()->count());
@@ -102,13 +102,13 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $package = $builder->buildPackage(__FUNCTION__);
-        $package->addFunction($builder->buildFunction(__FUNCTION__));
+        $namespace = $builder->buildPackage(__FUNCTION__);
+        $namespace->addFunction($builder->buildFunction(__FUNCTION__));
 
         $builder->getPackages();
 
-        $package = $builder->buildPackage(__CLASS__);
-        $package->addType($builder->buildClass(__CLASS__));
+        $namespace = $builder->buildPackage(__CLASS__);
+        $namespace->addType($builder->buildClass(__CLASS__));
 
         $this->assertEquals(1, $builder->getPackages()->count());
     }
@@ -121,13 +121,13 @@ class PHPBuilderTest extends AbstractTest
     public function testRestoreFunctionAddsFunctionToPackage()
     {
         $builder = $this->createBuilder();
-        $package = $builder->buildPackage(__CLASS__);
+        $namespace = $builder->buildPackage(__CLASS__);
 
         $function = new ASTFunction(__FUNCTION__);
-        $function->setPackage($package);
+        $function->setPackage($namespace);
 
         $builder->restoreFunction($function);
-        $this->assertEquals(1, count($package->getFunctions()));
+        $this->assertEquals(1, count($namespace->getFunctions()));
     }
 
     /**
@@ -332,17 +332,17 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $package1 = $builder->buildPackage('package1');
-        $package2 = $builder->buildPackage('package2');
+        $namespace1 = $builder->buildPackage('package1');
+        $namespace2 = $builder->buildPackage('package2');
 
         $class = $builder->buildClass('Parser');
-        $package1->addType($class);
+        $namespace1->addType($class);
 
-        $this->assertEquals(1, $package1->getTypes()->count());
+        $this->assertEquals(1, $namespace1->getTypes()->count());
 
         $interface = $builder->buildInterface('Parser');
 
-        $this->assertEquals(1, $package1->getTypes()->count());
+        $this->assertEquals(1, $namespace1->getTypes()->count());
     }
 
     /**
@@ -426,10 +426,10 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildPackageUnique()
     {
         $builder  = $this->createBuilder();
-        $package1 = $builder->buildPackage('package1');
-        $package2 = $builder->buildPackage('package1');
+        $namespace1 = $builder->buildPackage('package1');
+        $namespace2 = $builder->buildPackage('package1');
 
-        $this->assertSame($package1, $package2);
+        $this->assertSame($namespace1, $namespace2);
     }
 
     /**
@@ -441,14 +441,14 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $packages = array(
+        $namespaces = array(
             'package1'  =>  $builder->buildPackage('package1'),
             'package2'  =>  $builder->buildPackage('package2'),
             'package3'  =>  $builder->buildPackage('package3')
         );
 
-        foreach ($builder as $name => $package) {
-            $this->assertSame($packages[$name], $package);
+        foreach ($builder as $name => $namespace) {
+            $this->assertSame($namespaces[$name], $namespace);
         }
     }
 
@@ -462,14 +462,14 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $packages = array(
+        $namespaces = array(
             'package1'  =>  $builder->buildPackage('package1'),
             'package2'  =>  $builder->buildPackage('package2'),
             'package3'  =>  $builder->buildPackage('package3')
         );
 
-        foreach ($builder->getPackages() as $name => $package) {
-            $this->assertSame($packages[$name], $package);
+        foreach ($builder->getPackages() as $name => $namespace) {
+            $this->assertSame($namespaces[$name], $namespace);
         }
     }
 

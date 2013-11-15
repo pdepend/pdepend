@@ -117,10 +117,10 @@ class NamespaceResovingTest extends AbstractParserTest
      */
     public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
+        $namespaces = self::parseCodeResourceForTest();
+        $namespaces->next();
 
-        $method = $packages->current()
+        $method = $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -152,11 +152,11 @@ class NamespaceResovingTest extends AbstractParserTest
      */
     public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
-        $packages->next();
+        $namespaces = self::parseCodeResourceForTest();
+        $namespaces->next();
+        $namespaces->next();
 
-        $method = $packages->current()
+        $method = $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()

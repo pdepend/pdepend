@@ -67,9 +67,9 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTest
      */
     public function testWmciMetricIsCalculatedForCurrentAndNotParentClass()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $class = $packages->current()
+        $class = $namespaces->current()
             ->getClasses()
             ->current();
 
@@ -78,7 +78,7 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTest
 
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
 

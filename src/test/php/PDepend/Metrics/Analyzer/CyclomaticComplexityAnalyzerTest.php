@@ -104,10 +104,10 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateFunctionCCNAndCNN2()
     {
-        $packages = $this->parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $actual   = array();
         $expected = array(
@@ -115,7 +115,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
             'pdepend2' => array('ccn' => 7, 'ccn2' => 10)
         );
         
-        foreach ($packages[0]->getFunctions() as $function) {
+        foreach ($namespaces[0]->getFunctions() as $function) {
             $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
         }
 
@@ -148,12 +148,12 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateMethodCCNAndCNN2()
     {
-        $packages = $this->parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        $classes = $packages[0]->getClasses();
+        $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
         $actual   = array();
@@ -196,11 +196,11 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateExpectedCCNForDoWhileStatement()
     {
-        $packages = $this->parseCodeResourceForTest();
-        $functions = $packages[0]->getFunctions();
+        $namespaces = $this->parseCodeResourceForTest();
+        $functions = $namespaces[0]->getFunctions();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $this->assertEquals(3, $analyzer->getCcn($functions[0]));
     }
@@ -212,11 +212,11 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateExpectedCCN2ForDoWhileStatement()
     {
-        $packages = $this->parseCodeResourceForTest();
-        $functions = $packages[0]->getFunctions();
+        $namespaces = $this->parseCodeResourceForTest();
+        $functions = $namespaces[0]->getFunctions();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $this->assertEquals(3, $analyzer->getCcn2($functions[0]));
     }
@@ -325,16 +325,16 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
     {
-        $packages = $this->parseCodeResourceForTest();
-        $functions = $packages[0]->getFunctions();
+        $namespaces = $this->parseCodeResourceForTest();
+        $functions = $namespaces[0]->getFunctions();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($functions[0]);
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($functions[0]);
 
@@ -349,17 +349,17 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
     {
-        $packages = $this->parseCodeResourceForTest();
-        $classes = $packages[0]->getClasses();
+        $namespaces = $this->parseCodeResourceForTest();
+        $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($methods[0]);
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($methods[0]);
 

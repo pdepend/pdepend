@@ -66,9 +66,9 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
      */
     public function testAnalyzerCountsNumberOfMethodsForClassInterfaceSize()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $class = $packages->current()
+        $class = $namespaces->current()
             ->getClasses()
             ->current();
 
@@ -78,7 +78,7 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
 
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
         
         $metrics = $analyzer->getNodeMetrics($class);
 
@@ -92,9 +92,9 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
      */
     public function testAnalyzerCountsNumberOfMethodsForClassSize()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $class = $packages->current()
+        $class = $namespaces->current()
             ->getClasses()
             ->current();
 
@@ -103,7 +103,7 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
 
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
 

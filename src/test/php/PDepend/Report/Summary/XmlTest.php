@@ -61,7 +61,7 @@ class XmlTest extends AbstractTest
      *
      * @var \PDepend\Source\AST\ASTNamespace[]
      */
-    protected $packages = null;
+    protected $namespaces = null;
 
     /**
      * The temporary file name for the logger result.
@@ -172,11 +172,11 @@ class XmlTest extends AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
-        $this->packages = self::parseCodeResourceForTest();
+        $this->namespaces = self::parseCodeResourceForTest();
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setArtifacts($this->packages);
+        $log->setArtifacts($this->namespaces);
         $log->close();
 
         $fileName = 'xml-log-without-metrics.xml';
@@ -222,7 +222,7 @@ class XmlTest extends AbstractTest
      */
     public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
     {
-        $this->packages = self::parseCodeResourceForTest();
+        $this->namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new AnalyzerNodeAndProjectAwareDummy(
             array('foo' => 42, 'bar' => 23),
@@ -231,7 +231,7 @@ class XmlTest extends AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setArtifacts($this->packages);
+        $log->setArtifacts($this->namespaces);
         $log->log($analyzer);
 
         $log->close();
@@ -250,7 +250,7 @@ class XmlTest extends AbstractTest
      */
     public function testNodeAwareAnalyzer()
     {
-        $this->packages = self::parseCodeResourceForTest();
+        $this->namespaces = self::parseCodeResourceForTest();
 
         $input = array(
             array('loc'  =>  42),  array('ncloc'  =>  23),
@@ -268,10 +268,10 @@ class XmlTest extends AbstractTest
 
         $metricsOne = array();
         $metricsTwo = array();
-        foreach ($this->packages as $package) {
-            $metricsOne[$package->getUuid()] = array_shift($input);
-            $metricsTwo[$package->getUuid()] = array_shift($input);
-            foreach ($package->getClasses() as $class) {
+        foreach ($this->namespaces as $namespace) {
+            $metricsOne[$namespace->getUuid()] = array_shift($input);
+            $metricsTwo[$namespace->getUuid()] = array_shift($input);
+            foreach ($namespace->getClasses() as $class) {
                 $metricsOne[$class->getUuid()] = array_shift($input);
                 $metricsTwo[$class->getUuid()] = array_shift($input);
                 foreach ($class->getMethods() as $method) {
@@ -279,7 +279,7 @@ class XmlTest extends AbstractTest
                     $metricsTwo[$method->getUuid()] = array_shift($input);
                 }
             }
-            foreach ($package->getFunctions() as $function) {
+            foreach ($namespace->getFunctions() as $function) {
                 $metricsOne[$function->getUuid()] = array_shift($input);
                 $metricsTwo[$function->getUuid()] = array_shift($input);
             }
@@ -290,7 +290,7 @@ class XmlTest extends AbstractTest
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setArtifacts($this->packages);
+        $log->setArtifacts($this->namespaces);
         $log->log($resultOne);
         $log->log($resultTwo);
 

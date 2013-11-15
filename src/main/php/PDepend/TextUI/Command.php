@@ -352,9 +352,9 @@ class Command
         // Check for exclude package option
         if (isset($this->options['--exclude'])) {
             // Get exclude directories
-            $packages = explode(',', $this->options['--exclude']);
+            $namespaces = explode(',', $this->options['--exclude']);
             // Set exclude packages
-            $this->runner->setExcludePackages($packages);
+            $this->runner->setExcludePackages($namespaces);
 
             unset($this->options['--exclude']);
         }

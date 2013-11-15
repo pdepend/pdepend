@@ -65,13 +65,13 @@ class PackageArtifactFilter implements ArtifactFilter
     /**
      * Constructs a new package filter for the given list of package names.
      *
-     * @param array(string) $packages Package names.
+     * @param array(string) $namespaces
      */
-    public function __construct(array $packages)
+    public function __construct(array $namespaces)
     {
         $patterns = array();
-        foreach ($packages as $package) {
-            $patterns[] = str_replace('\*', '\S*', preg_quote($package));
+        foreach ($namespaces as $namespace) {
+            $patterns[] = str_replace('\*', '\S*', preg_quote($namespace));
         }
         $this->pattern = '#^(' . join('|', $patterns) . ')$#D';
     }
@@ -85,18 +85,18 @@ class PackageArtifactFilter implements ArtifactFilter
      */
     public function accept(ASTArtifact $node)
     {
-        $package = null;
+        $namespace = null;
         // NOTE: This looks a little bit ugly and it seems better to exclude
         //       \PDepend\Source\AST\ASTMethod and \PDepend\Source\AST\ASTProperty,
         //       but when PDepend supports more node types, this could produce errors.
         if ($node instanceof AbstractASTClassOrInterface) {
-            $package = $node->getPackage()->getName();
+            $namespace = $node->getPackage()->getName();
         } elseif ($node instanceof ASTFunction) {
-            $package = $node->getPackage()->getName();
+            $namespace = $node->getPackage()->getName();
         } elseif ($node instanceof ASTNamespace) {
-            $package = $node->getName();
+            $namespace = $node->getName();
         }
 
-        return (preg_match($this->pattern, $package) === 0);
+        return (preg_match($this->pattern, $namespace) === 0);
     }
 }

@@ -63,7 +63,7 @@ class MethodStrategyTest extends AbstractTest
      */
     public function testStrategyCountsCorrectTypes()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
         
         $uuidMap = array(
             'PDepend::CodeRankA'       =>  null,
@@ -73,13 +73,13 @@ class MethodStrategyTest extends AbstractTest
             'PDepend_CodeRank_ClassC'  =>  null,
         );
         
-        foreach ($packages as $package) {
-            foreach ($package->getClasses() as $class) {
+        foreach ($namespaces as $namespace) {
+            foreach ($namespace->getClasses() as $class) {
                 $this->assertArrayHasKey($class->getName(), $uuidMap);
                 $uuidMap[$class->getName()] = $class->getUuid();
             }
-            if (array_key_exists($package->getName(), $uuidMap)) {
-                $uuidMap[$package->getName()] = $package->getUuid();
+            if (array_key_exists($namespace->getName(), $uuidMap)) {
+                $uuidMap[$namespace->getName()] = $namespace->getUuid();
             }
         }
 
@@ -145,8 +145,8 @@ class MethodStrategyTest extends AbstractTest
         );
     
         $strategy = new MethodStrategy();
-        foreach ($packages as $package) {
-            $package->accept($strategy);
+        foreach ($namespaces as $namespace) {
+            $namespace->accept($strategy);
         }
 
         $actual = $strategy->getCollectedNodes();

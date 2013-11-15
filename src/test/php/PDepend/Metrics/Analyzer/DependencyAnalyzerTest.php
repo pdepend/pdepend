@@ -119,12 +119,12 @@ class DependencyAnalyzerTest extends AbstractMetricsTest
     {
         $visitor = new DependencyAnalyzer();
 
-        $packages = self::parseCodeResourceForTest();
-        $visitor->analyze($packages);
+        $namespaces = self::parseCodeResourceForTest();
+        $visitor->analyze($namespaces);
 
         $actual = array();
-        foreach ($packages as $package) {
-            $actual[$package->getName()] = $visitor->getStats($package);
+        foreach ($namespaces as $namespace) {
+            $actual[$namespace->getName()] = $visitor->getStats($namespace);
         }
 
         $this->assertEquals($this->input, $actual);

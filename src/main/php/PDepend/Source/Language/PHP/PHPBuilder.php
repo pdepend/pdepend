@@ -132,7 +132,7 @@ class PHPBuilder implements Builder
      *
      * @var \PDepend\Source\AST\ASTNamespace[]
      */
-    private $packages = array();
+    private $namespaces = array();
 
     /**
      * Internal status flag used to check that a build request is internal.
@@ -177,7 +177,7 @@ class PHPBuilder implements Builder
         $this->defaultPackage = new ASTNamespace(self::DEFAULT_PACKAGE);
         $this->defaultCompilationUnit = new ASTCompilationUnit(null);
 
-        $this->packages[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+        $this->namespaces[self::DEFAULT_PACKAGE] = $this->defaultPackage;
 
         $this->context = new GlobalBuilderContext($this);
     }
@@ -467,15 +467,15 @@ class PHPBuilder implements Builder
      */
     public function buildPackage($name)
     {
-        if (!isset($this->packages[$name])) {
+        if (!isset($this->namespaces[$name])) {
             // Debug package creation
             Log::debug(
                 'Creating: \\PDepend\\Source\\AST\\ASTNamespace(' . $name . ')'
             );
 
-            $this->packages[$name] = new ASTNamespace($name);
+            $this->namespaces[$name] = new ASTNamespace($name);
         }
-        return $this->packages[$name];
+        return $this->namespaces[$name];
     }
 
     /**
@@ -1763,15 +1763,15 @@ class PHPBuilder implements Builder
     private function getPreparedPackages()
     {
         // Create a package array copy
-        $packages = $this->packages;
+        $namespaces = $this->namespaces;
 
         // Remove default package if empty
         if ($this->defaultPackage->getTypes()->count() === 0
             && $this->defaultPackage->getFunctions()->count() === 0
         ) {
-            unset($packages[self::DEFAULT_PACKAGE]);
+            unset($namespaces[self::DEFAULT_PACKAGE]);
         }
-        return $packages;
+        return $namespaces;
     }
 
     /**
@@ -2051,8 +2051,8 @@ class PHPBuilder implements Builder
     private function copyTypesWithPackage(array $originalTypes)
     {
         $copiedTypes = array();
-        foreach ($originalTypes as $typeName => $packages) {
-            foreach ($packages as $package => $types) {
+        foreach ($originalTypes as $typeName => $namespaces) {
+            foreach ($namespaces as $package => $types) {
                 foreach ($types as $index => $type) {
                     if (is_object($type->getPackage())) {
                         $copiedTypes[$typeName][$package][$index] = $type;

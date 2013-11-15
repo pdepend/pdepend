@@ -62,13 +62,13 @@ class CouplingAnalyzerBug014Test extends AbstractRegressionTest
      */
     public function testAnalyzerExecutionChain()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $this->assertEquals(1, $packages->count());
-        $this->assertEquals(1, $packages->current()->getFunctions()->count());
+        $this->assertEquals(1, $namespaces->count());
+        $this->assertEquals(1, $namespaces->current()->getFunctions()->count());
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
 

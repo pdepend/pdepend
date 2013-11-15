@@ -66,10 +66,10 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerIgnoresObjectAllocation()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(0, $project['calls']);
@@ -82,10 +82,10 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsIdenticalFunctionCalls()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(1, $project['calls']);
@@ -98,10 +98,10 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsDifferentFunctionCalls()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(2, $project['calls']);
@@ -114,10 +114,10 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsIdenticalMethodCalls()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(1, $project['calls']);
@@ -130,10 +130,10 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsDifferentMethodCalls()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(2, $project['calls']);

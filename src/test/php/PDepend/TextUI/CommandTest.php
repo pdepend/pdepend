@@ -339,25 +339,25 @@ class CommandTest extends AbstractTest
         $code = $data['code'];
 
         $actual = array();
-        foreach ($code as $package) {
+        foreach ($code as $namespace) {
             $statistics = array(
                 'functions'   =>  array(),
                 'classes'     =>  array(),
                 'interfaces'  =>  array(),
                 'exceptions'  =>  array()
             );
-            foreach ($package->getFunctions() as $function) {
+            foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();
                 foreach ($function->getExceptionClasses() as $exception) {
                     $statistics['exceptions'][] = $exception->getName();
                 }
             }
 
-            foreach ($package->getClasses() as $class) {
+            foreach ($namespace->getClasses() as $class) {
                 $statistics['classes'][] = $class->getName();
             }
 
-            foreach ($package->getInterfaces() as $interface) {
+            foreach ($namespace->getInterfaces() as $interface) {
                 $statistics['interfaces'][] = $interface->getName();
             }
 
@@ -366,7 +366,7 @@ class CommandTest extends AbstractTest
             sort($statistics['interfaces']);
             sort($statistics['exceptions']);
 
-            $actual[$package->getName()] = $statistics;
+            $actual[$namespace->getName()] = $statistics;
         }
         ksort($actual);
 

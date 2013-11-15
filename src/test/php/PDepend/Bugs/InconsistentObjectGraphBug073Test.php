@@ -67,16 +67,15 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(2, $package->getTypes()->count());
-        $this->assertEquals(2, $package->getClasses()->count());
+        $namespace = $namespaces[0];
+        $this->assertEquals(2, $namespace->getTypes()->count());
+        $this->assertEquals(2, $namespace->getClasses()->count());
 
-        $packages->next();
-        $package = $packages->current();
-        $this->assertEquals(1, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespace = $namespaces[1];
+        $this->assertEquals(1, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -92,12 +91,12 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(3, $package->getTypes()->count());
-        $this->assertEquals(2, $package->getClasses()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespace = $namespaces->current();
+        $this->assertEquals(3, $namespace->getTypes()->count());
+        $this->assertEquals(2, $namespace->getClasses()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -113,17 +112,17 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(2, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespace = $namespaces[0];
+        $this->assertEquals(2, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getClasses()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
 
-        $packages->next();
-        $package = $packages->current();
-        $this->assertEquals(1, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
+        $namespaces->next();
+        $namespace = $namespaces[1];
+        $this->assertEquals(1, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getClasses()->count());
     }
 
     /**
@@ -139,12 +138,12 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(3, $package->getTypes()->count());
-        $this->assertEquals(2, $package->getClasses()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespace = $namespaces->current();
+        $this->assertEquals(3, $namespace->getTypes()->count());
+        $this->assertEquals(2, $namespace->getClasses()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -160,16 +159,16 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(2, $package->getTypes()->count());
-        $this->assertEquals(2, $package->getClasses()->count());
+        $namespace = $namespaces->current();
+        $this->assertEquals(2, $namespace->getTypes()->count());
+        $this->assertEquals(2, $namespace->getClasses()->count());
 
-        $packages->next();
-        $package = $packages->current();
-        $this->assertEquals(1, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
+        $namespaces->next();
+        $namespace = $namespaces->current();
+        $this->assertEquals(1, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getClasses()->count());
     }
 
     /**
@@ -185,16 +184,16 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(2, $package->getTypes()->count());
-        $this->assertEquals(2, $package->getInterfaces()->count());
+        $namespace = $namespaces->current();
+        $this->assertEquals(2, $namespace->getTypes()->count());
+        $this->assertEquals(2, $namespace->getInterfaces()->count());
 
-        $packages->next();
-        $package = $packages->current();
-        $this->assertEquals(1, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespaces->next();
+        $namespace = $namespaces->current();
+        $this->assertEquals(1, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -214,16 +213,16 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(2, $package->getTypes()->count());
-        $this->assertEquals(2, $package->getClasses()->count());
+        $namespace = $namespaces->current();
+        $this->assertEquals(2, $namespace->getTypes()->count());
+        $this->assertEquals(2, $namespace->getClasses()->count());
 
-        $packages->next();
-        $package = $packages->current();
-        $this->assertEquals(1, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespaces->next();
+        $namespace = $namespaces->current();
+        $this->assertEquals(1, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -243,17 +242,17 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package = $packages->current();
-        $this->assertEquals(2, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
-        $this->assertEquals(1, $package->getInterfaces()->count());
+        $namespace = $namespaces->current();
+        $this->assertEquals(2, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getClasses()->count());
+        $this->assertEquals(1, $namespace->getInterfaces()->count());
 
-        $packages->next();
-        $package = $packages->current();
-        $this->assertEquals(1, $package->getTypes()->count());
-        $this->assertEquals(1, $package->getClasses()->count());
+        $namespaces->next();
+        $namespace = $namespaces->current();
+        $this->assertEquals(1, $namespace->getTypes()->count());
+        $this->assertEquals(1, $namespace->getClasses()->count());
     }
 
     /**

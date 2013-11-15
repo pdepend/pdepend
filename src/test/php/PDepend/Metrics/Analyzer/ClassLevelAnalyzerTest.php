@@ -67,11 +67,11 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
-        $package  = new ASTNamespace('package1');
-        $packages = new ASTArtifactList(array($package));
+        $namespace = new ASTNamespace('package1');
+        $namespaces = new ASTArtifactList(array($namespace));
 
         $analyzer = new ClassLevelAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
     }
 
     /**
@@ -486,16 +486,16 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateClassMetrics()
     {
-        $packages = self::parseTestCaseSource(self::getCallingTestMethod());
+        $namespaces = self::parseTestCaseSource(self::getCallingTestMethod());
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        return $analyzer->getNodeMetrics($packages[0]->getClasses()->current());
+        return $analyzer->getNodeMetrics($namespaces[0]->getClasses()->current());
     }
 
     /**
@@ -679,15 +679,15 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateTraitMetrics()
     {
-        $packages = $this->parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());
 
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer($ccnAnalyzer);
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        return $analyzer->getNodeMetrics($packages[0]->getTraits()->current());
+        return $analyzer->getNodeMetrics($namespaces[0]->getTraits()->current());
     }
 }

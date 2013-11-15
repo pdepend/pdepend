@@ -64,14 +64,14 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterface()
     {
-        $package = self::parseCodeResourceForTest()->current();
+        $namespace = self::parseCodeResourceForTest()->current();
 
-        $this->assertSame(1, $package->getClasses()->count());
-        $class = $package->getClasses()->current();
+        $this->assertSame(1, $namespace->getClasses()->count());
+        $class = $namespace->getClasses()->current();
         $this->assertSame('Bar', $class->getName());
 
-        $this->assertSame(1, $package->getInterfaces()->count());
-        $interface = $package->getInterfaces()->current();
+        $this->assertSame(1, $namespace->getInterfaces()->count());
+        $interface = $namespace->getInterfaces()->current();
         $this->assertSame('IFoo', $interface->getName());
 
         $this->assertSame(1, $class->getMethods()->count());
@@ -91,9 +91,9 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithClass()
     {
-        $package = self::parseCodeResourceForTest()->current();
+        $namespace = self::parseCodeResourceForTest()->current();
 
-        $classes = $package->getClasses();
+        $classes = $namespace->getClasses();
         $this->assertSame(2, $classes->count());
         $class1 = $classes->current();
         $this->assertSame('Foo', $class1->getName());

@@ -62,11 +62,11 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
      */
     public function testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten()
     {
-        $packages = self::parseCodeResourceForTest();
-        $class    = $packages->current()->getClasses()->current();
+        $namespaces = self::parseCodeResourceForTest();
+        $class    = $namespaces->current()->getClasses()->current();
 
         $analyzer = new InheritanceAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
         $this->assertEquals(1, $metrics['noom']);
@@ -79,11 +79,11 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
      */
     public function testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten()
     {
-        $packages = self::parseCodeResourceForTest();
-        $class    = $packages->current()->getClasses()->current();
+        $namespaces = self::parseCodeResourceForTest();
+        $class    = $namespaces->current()->getClasses()->current();
 
         $analyzer = new InheritanceAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
         $this->assertEquals(1, $metrics['noom']);

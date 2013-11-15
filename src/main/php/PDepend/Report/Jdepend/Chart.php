@@ -164,13 +164,13 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $min = 0;
 
         $items = array();
-        foreach ($this->code as $package) {
+        foreach ($this->code as $namespace) {
 
-            if (!$package->isUserDefined()) {
+            if (!$namespace->isUserDefined()) {
                 continue;
             }
 
-            $metrics = $this->analyzer->getStats($package);
+            $metrics = $this->analyzer->getStats($namespace);
 
             if (count($metrics) === 0) {
                 continue;
@@ -188,7 +188,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 'abstraction'  =>  $metrics['a'],
                 'instability'  =>  $metrics['i'],
                 'distance'     =>  $metrics['d'],
-                'name'         =>  $package->getName()
+                'name'         =>  $namespace->getName()
             );
         }
 

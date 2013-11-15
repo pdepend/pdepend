@@ -1010,11 +1010,11 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetSetPackage()
     {
-        $package = new ASTNamespace(__FUNCTION__);
+        $namespace = new ASTNamespace(__FUNCTION__);
         $class   = new ASTClass(__CLASS__);
 
-        $class->setPackage($package);
-        $this->assertSame($package, $class->getPackage());
+        $class->setPackage($namespace);
+        $this->assertSame($namespace, $class->getPackage());
     }
 
     /**

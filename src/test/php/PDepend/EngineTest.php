@@ -42,6 +42,8 @@
 
 namespace PDepend;
 
+use PDepend\Source\AST\ASTNamespace;
+
 /**
  * Test case for \PDepend\Engine facade.
  *
@@ -161,12 +163,12 @@ class EngineTest extends AbstractTest
         $engine->addDirectory(self::createCodeResourceUriForTest());
         $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('inc')));
         $engine->setWithoutAnnotations();
-        $packages = $engine->analyze();
+        $namespaces = $engine->analyze();
         
-        $this->assertEquals(2, $packages->count());
-        $this->assertEquals('pdepend.test', $packages->current()->getName());
+        $this->assertEquals(2, $namespaces->count());
+        $this->assertEquals('pdepend.test', $namespaces->current()->getName());
         
-        $function = $packages->current()->getFunctions()->current();
+        $function = $namespaces->current()->getFunctions()->current();
         
         $this->assertNotNull($function);
         $this->assertEquals('foo', $function->getName());
@@ -252,7 +254,7 @@ class EngineTest extends AbstractTest
         $engine->addDirectory(self::createCodeResourceUriForTest());
         $engine->analyze();
         
-        $packages = array(
+        $namespaces = array(
             'package1', 
             'package2', 
             'package3'
@@ -260,8 +262,8 @@ class EngineTest extends AbstractTest
         
         $className = '\\PDepend\\Source\\AST\\ASTNamespace';
         
-        foreach ($packages as $package) {
-            $this->assertInstanceOf($className, $engine->getPackage($package));
+        foreach ($namespaces as $namespace) {
+            $this->assertInstanceOf($className, $engine->getPackage($namespace));
         }
     }
     
@@ -314,13 +316,13 @@ class EngineTest extends AbstractTest
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
         
-        $package1 = $engine->analyze();
-        $package2 = $engine->getPackages();
+        $namespace1 = $engine->analyze();
+        $namespace2 = $engine->getPackages();
         
-        $this->assertNotNull($package1);
-        $this->assertNotNull($package2);
+        $this->assertNotNull($namespace1);
+        $this->assertNotNull($namespace2);
         
-        $this->assertSame($package1, $package2);
+        $this->assertSame($namespace1, $namespace2);
     }
     
     /**
@@ -344,7 +346,7 @@ class EngineTest extends AbstractTest
     /**
      * Tests the newly added support for single file handling.
      *
-     * @return void
+     * @return \PDepend\Source\AST\ASTNamespace
      */
     public function testSupportForSingleFileIssue90()
     {
@@ -352,12 +354,30 @@ class EngineTest extends AbstractTest
         $engine->addFile(self::createCodeResourceUriForTest());
         $engine->analyze();
 
-        $packages = $engine->getPackages();
-        $this->assertSame(1, $packages->count());
+        $namespaces = $engine->getPackages();
+        $this->assertSame(1, count($namespaces));
 
-        $package = $packages->current();
-        $this->assertSame(1, $package->getClasses()->count());
-        $this->assertSame(1, $package->getInterfaces()->count());
+        return $namespaces[0];
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @return void
+     * @depends PDepend\EngineTest::testSupportForSingleFileIssue90
+     */
+    public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace)
+    {
+        $this->assertSame(1, count($namespace->getClasses()));
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @return void
+     * @depends PDepend\EngineTest::testSupportForSingleFileIssue90
+     */
+    public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace)
+    {
+        $this->assertSame(1, count($namespace->getInterfaces()));
     }
 
     /**

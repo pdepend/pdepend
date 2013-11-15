@@ -695,8 +695,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstInterface()
     {
-        $packages = self::parseTestCase();
-        return $packages->current()
+        $namespaces = self::parseTestCase();
+        return $namespaces->current()
             ->getInterfaces()
             ->current();
     }
@@ -708,8 +708,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstClass()
     {
-        $packages = self::parseTestCase();
-        return $packages->current()
+        $namespaces = self::parseTestCase();
+        return $namespaces->current()
             ->getClasses()
             ->current();
     }
@@ -721,8 +721,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstMethod()
     {
-        $packages = self::parseTestCase();
-        return $packages->current()
+        $namespaces = self::parseTestCase();
+        return $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()
@@ -736,8 +736,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstFunction()
     {
-        $packages = self::parseTestCase();
-        return $packages->current()
+        $namespaces = self::parseTestCase();
+        return $namespaces->current()
             ->getFunctions()
             ->current();
     }

@@ -137,8 +137,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
             $this->nodeMetrics = array();
 
-            foreach ($namespaces as $package) {
-                $package->accept($this);
+            foreach ($namespaces as $namespace) {
+                $namespace->accept($this);
             }
 
             $this->postProcess();
@@ -229,9 +229,9 @@ class DependencyAnalyzer extends AbstractAnalyzer
     {
         $this->fireStartMethod($method);
 
-        $package = $method->getParent()->getPackage();
-        foreach ($method->getDependencies() as $dep) {
-            $this->collectDependencies($package, $dep->getPackage());
+        $namespace = $method->getParent()->getPackage();
+        foreach ($method->getDependencies() as $dependency) {
+            $this->collectDependencies($namespace, $dependency->getPackage());
         }
 
         $this->fireEndMethod($method);
@@ -319,22 +319,22 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Collects the dependencies between the two given packages.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $packageA Context/owning package.
-     * @param \PDepend\Source\AST\ASTNamespace $packageB Dependent package.
+     * @param \PDepend\Source\AST\ASTNamespace $namespaceA
+     * @param \PDepend\Source\AST\ASTNamespace $namespaceB
      *
      * @return void
      */
-    private function collectDependencies(ASTNamespace $packageA, ASTNamespace $packageB)
+    private function collectDependencies(ASTNamespace $namespaceA, ASTNamespace $namespaceB)
     {
-        $idA = $packageA->getUuid();
-        $idB = $packageB->getUuid();
+        $idA = $namespaceA->getUuid();
+        $idB = $namespaceB->getUuid();
 
         if ($idB === $idA) {
             return;
         }
 
         // Create a container for this dependency
-        $this->initPackageMetric($packageB);
+        $this->initPackageMetric($namespaceB);
 
         if (!in_array($idB, $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING])) {
             $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING][] = $idB;
@@ -343,7 +343,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     }
 
     /**
-     * Initializes the node metric record for the given <b>$package</b>.
+     * Initializes the node metric record for the given <b>$namespace</b>.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void

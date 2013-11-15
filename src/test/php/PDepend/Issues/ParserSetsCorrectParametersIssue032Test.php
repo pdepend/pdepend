@@ -166,8 +166,8 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
      */
     private function _getParametersOfFirstMethod()
     {
-        $packages = self::parseTestCase();
-        return $packages->current()
+        $namespaces = $this->parseTestCase();
+        return $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()

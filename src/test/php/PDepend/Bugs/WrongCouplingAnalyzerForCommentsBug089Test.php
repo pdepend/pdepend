@@ -65,10 +65,10 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
      */
     public function testAnalyzerDetectsIdenticalMethodCallWithFunctionComment()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(1, $project['calls']);
@@ -81,10 +81,10 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
      */
     public function testAnalyzerDetectsFunctionCallWithCommentBetweenParenthesisAndIdentifier()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(2, $project['calls']);
@@ -97,10 +97,10 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
      */
     public function testAnalyzerDetectsObjectAllocation()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
         $this->assertEquals(0, $project['calls']);

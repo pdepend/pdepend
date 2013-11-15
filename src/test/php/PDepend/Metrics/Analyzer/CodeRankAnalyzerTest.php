@@ -406,18 +406,18 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetrics()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
         
         $this->analyzer = new CodeRankAnalyzer();
-        $this->analyzer->analyze($packages);
+        $this->analyzer->analyze($namespaces);
 
         $expected = array();
-        foreach ($packages as $package) {
-            if (count($package->getTypes()) === 0) {
+        foreach ($namespaces as $namespace) {
+            if (count($namespace->getTypes()) === 0) {
                 continue;
             }
-            $expected[] = array($package, $this->input[$package->getName()]);
-            foreach ($package->getTypes() as $type) {
+            $expected[] = array($namespace, $this->input[$namespace->getName()]);
+            foreach ($namespace->getTypes() as $type) {
                 $expected[] = array($type, $this->input[$type->getName()]);
             }
         }
@@ -444,10 +444,10 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsInvalidIdentifier()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $this->analyzer = new CodeRankAnalyzer();
-        $this->analyzer->analyze($packages);
+        $this->analyzer->analyze($namespaces);
         
         $class   = new ASTClass('PDepend');
         $metrics = $this->analyzer->getNodeMetrics($class);
@@ -468,15 +468,15 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
 
     protected function getCodeRankOrReverseCodeRank($metricName, array $options = array())
     {
-        $packages = $this->parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CodeRankAnalyzer($options);
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        $packages->rewind();
+        $namespaces->rewind();
 
         $actual = array();
-        foreach ($packages[0]->getTypes() as $type) {
+        foreach ($namespaces[0]->getTypes() as $type) {
             $metrics = $analyzer->getNodeMetrics($type);
             $actual[$type->getName()] = round($metrics[$metricName], 5);
         }

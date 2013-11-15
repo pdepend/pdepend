@@ -277,7 +277,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * the return value of this callable. The returned value will be <b>null</b>
      * if there is no return value or the return value is scalat.
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
      * @since 0.9.5
      */
     public function getReturnClass()

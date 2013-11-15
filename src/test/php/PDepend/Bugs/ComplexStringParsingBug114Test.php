@@ -133,8 +133,8 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
     {
-        $packages = self::parseCodeResourceForTest();
-        $method   = $packages->current()
+        $namespaces = self::parseCodeResourceForTest();
+        $method   = $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()

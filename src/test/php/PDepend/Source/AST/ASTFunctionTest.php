@@ -147,10 +147,10 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnsetPackageWithNullWillResetPreviousPackage()
     {
-        $package  = new ASTNamespace('package');
+        $namespace  = new ASTNamespace('package');
         $function = $this->createItem();
 
-        $function->setPackage($package);
+        $function->setPackage($namespace);
         $function->unsetPackage();
 
         $this->assertNull($function->getPackage());
@@ -177,16 +177,16 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testSetPackageNotEstablishesBackReference()
     {
-        $package = $this->getMock(
+        $namespace = $this->getMock(
             ASTNamespace::CLAZZ,
             array(),
             array(__FUNCTION__)
         );
-        $package->expects($this->never())
+        $namespace->expects($this->never())
             ->method('addFunction');
 
         $function = $this->createItem();
-        $function->setPackage($package);
+        $function->setPackage($namespace);
     }
 
     /**
@@ -197,11 +197,11 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testGetSetPackage()
     {
-        $package  = new ASTNamespace('package');
+        $namespace  = new ASTNamespace('package');
         $function = $this->createItem();
 
-        $function->setPackage($package);
-        $this->assertSame($package, $function->getPackage());
+        $function->setPackage($namespace);
+        $this->assertSame($namespace, $function->getPackage());
     }
 
     /**

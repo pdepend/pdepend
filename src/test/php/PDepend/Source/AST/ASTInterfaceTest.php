@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
@@ -183,13 +184,12 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesZeroInheritance()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
+        $namespaces = self::parseCodeResourceForTest();
+        $namespace = $namespaces[0];
 
-        $interface = $package->getInterfaces()
-            ->current();
+        $interfaces = $namespace->getInterfaces();
 
-        $this->assertSame(0, $interface->getInterfaces()->count());
+        $this->assertSame(0, count($interfaces[0]->getInterfaces()));
     }
 
     /**
@@ -199,10 +199,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesOneLevelInheritance()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
+        $namespaces = self::parseCodeResourceForTest();
+        $namespace = $namespaces[0];
 
-        $interface = $package->getInterfaces()
+        $interface = $namespace->getInterfaces()
             ->current();
 
         $this->assertSame(1, $interface->getInterfaces()->count());
@@ -215,10 +215,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesTwoLevelInheritance()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
-
-        $interface = $package->getInterfaces()
+        $namespaces = self::parseCodeResourceForTest();
+        $interface = $namespaces[0]->getInterfaces()
             ->current();
 
         $this->assertSame(4, $interface->getInterfaces()->count());
@@ -231,10 +229,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesComplexInheritance()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
-
-        $interface = $package->getInterfaces()
+        $namespaces = self::parseCodeResourceForTest();
+        $interface = $namespaces[0]->getInterfaces()
             ->current();
 
         $this->assertSame(5, $interface->getInterfaces()->count());
@@ -248,14 +244,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
+        $namespaces = self::parseCodeResourceForTest();
+        $interfaces = $namespaces[0]->getInterfaces();
 
-        $interfaces = $package->getInterfaces();
-        $interface  = $interfaces->current();
-
-        $interfaces->next();
-        $this->assertFalse($interface->isSubtypeOf($interfaces->current()));
+        $this->assertFalse($interfaces[0]->isSubtypeOf($interfaces[1]));
     }
 
     /**
@@ -344,12 +336,12 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     private function _testIsSubtypeOnInheritanceHierarchy(array $expected)
     {
-        $packages = self::parseCodeResourceForTest();
-        $package  = $packages->current();
-        $current  = $package->getInterfaces()->current();
+        $namespaces = self::parseCodeResourceForTest();
+        $namespace = $namespaces->current();
+        $current  = $namespace->getInterfaces()->current();
 
         $actual = array();
-        foreach ($package->getInterfaces() as $interface) {
+        foreach ($namespace->getInterfaces() as $interface) {
             $actual[$interface->getName()] = $current->isSubtypeOf($interface);
         }
 
@@ -366,15 +358,15 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $class = $packages->current()
+        $class = $namespaces->current()
             ->getInterfaces()
             ->current();
 
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ,
-            $class->getFirstChildOfType(\PDepend\Source\AST\ASTFormalParameter::CLAZZ)
+            ASTFormalParameter::CLAZZ,
+            $class->getFirstChildOfType(ASTFormalParameter::CLAZZ)
         );
     }
 
@@ -391,7 +383,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->current();
 
         $parameters = $class->findChildrenOfType(
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ
+            ASTFormalParameter::CLAZZ
         );
         $this->assertEquals(4, count($parameters));
     }

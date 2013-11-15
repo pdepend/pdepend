@@ -88,8 +88,8 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
         $depPackage = $depClass->getPackage();
 
-        $class   = $property->getDeclaringClass();
-        $package = $class->getPackage();
+        $class = $property->getDeclaringClass();
+        $namespace = $class->getPackage();
 
         if ($depClass !== $class) {
             $this->initNode($class);
@@ -99,12 +99,12 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->nodes[$depClass->getUuid()]['out'][] = $class->getUuid();
         }
 
-        if ($depPackage !== $package) {
-            $this->initNode($package);
+        if ($depPackage !== $namespace) {
+            $this->initNode($namespace);
             $this->initNode($depPackage);
 
-            $this->nodes[$package->getUuid()]['in'][]     = $depPackage->getUuid();
-            $this->nodes[$depPackage->getUuid()]['out'][] = $package->getUuid();
+            $this->nodes[$namespace->getUuid()]['in'][]     = $depPackage->getUuid();
+            $this->nodes[$depPackage->getUuid()]['out'][] = $namespace->getUuid();
         }
 
         $this->fireEndProperty($property);

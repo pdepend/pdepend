@@ -187,8 +187,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
             $this->nodeMetrics = array();
 
             // Process all packages
-            foreach ($namespaces as $package) {
-                $package->accept($this);
+            foreach ($namespaces as $namespace) {
+                $namespace->accept($this);
             }
 
             $this->fireEndAnalyzer();
@@ -213,8 +213,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->noc;
 
         // Update parent package
-        $packageUUID = $class->getPackage()->getUuid();
-        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_CLASSES];
+        $id = $class->getPackage()->getUuid();
+        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
         $this->nodeMetrics[$class->getUuid()] = array(
             self::M_NUMBER_OF_METHODS  =>  0
@@ -241,8 +241,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nof;
 
         // Update parent package
-        $packageUUID = $function->getPackage()->getUuid();
-        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_FUNCTIONS];
+        $id = $function->getPackage()->getUuid();
+        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
     }
@@ -265,8 +265,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->noi;
 
         // Update parent package
-        $packageUUID = $interface->getPackage()->getUuid();
-        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_INTERFACES];
+        $id = $interface->getPackage()->getUuid();
+        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_INTERFACES];
 
         $this->nodeMetrics[$interface->getUuid()] = array(
             self::M_NUMBER_OF_METHODS  =>  0
@@ -299,8 +299,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nodeMetrics[$parentUUID][self::M_NUMBER_OF_METHODS];
 
         // Update parent package
-        $packageUUID = $parent->getPackage()->getUuid();
-        ++$this->nodeMetrics[$packageUUID][self::M_NUMBER_OF_METHODS];
+        $id = $parent->getPackage()->getUuid();
+        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
     }

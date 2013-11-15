@@ -66,11 +66,11 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testDefaultVisitOrder()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
         
         $visitor = new StubAbstractASTVisitor();
-        foreach ($packages as $package) {
-            $package->accept($visitor);
+        foreach ($namespaces as $namespace) {
+            $namespace->accept($visitor);
         }
         
         $expected = array(
@@ -102,13 +102,13 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorVisitsFunctionParameter()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('visitParameter'));
         $visitor->expects($this->exactly(2))
             ->method('visitParameter');
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -118,13 +118,13 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorVisitsMethodParameter()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('visitParameter'));
         $visitor->expects($this->exactly(3))
             ->method('visitParameter');
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -134,7 +134,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorInvokesStartVisitParameterOnListener()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
         
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->exactly(2))
@@ -143,7 +143,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -153,7 +153,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorInvokesEndVisitParameterOnListener()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->exactly(3))
@@ -162,7 +162,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -172,7 +172,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorInvokesStartVisitInterfaceOnListener()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->once())
@@ -181,7 +181,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -191,7 +191,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorInvokesEndVisitInterfaceOnListener()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->once())
@@ -200,7 +200,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -210,7 +210,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorInvokesStartVisitPropertyOnListener()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->once())
@@ -219,7 +219,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -229,7 +229,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorInvokesEndVisitPropertyOnListener()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->once())
@@ -238,7 +238,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($packages[0]);
+        $visitor->visitNamespace($namespaces[0]);
     }
 
     /**
@@ -249,17 +249,17 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testVisitorVisitsTrait()
     {
-        $package = new ASTNamespace('MyPackage');
-        $package->addType(new ASTTrait('MyTraitOne'))
+        $namespace = new ASTNamespace('MyPackage');
+        $namespace->addType(new ASTTrait('MyTraitOne'))
             ->setCompilationUnit(new ASTCompilationUnit(__FILE__));
-        $package->addType(new ASTTrait('MyTraitTwo'))
+        $namespace->addType(new ASTTrait('MyTraitTwo'))
             ->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('visitTrait'));
         $visitor->expects($this->exactly(2))
             ->method('visitTrait');
 
-        $package->accept($visitor);
+        $namespace->accept($visitor);
     }
 
     /**
@@ -297,8 +297,8 @@ class DefaultVisitorTest extends AbstractTest
         $trait = $this->createTraitFixture();
         $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
-        $package = new ASTNamespace('MyPackage');
-        $package->addType($trait);
+        $namespace = new ASTNamespace('MyPackage');
+        $namespace->addType($trait);
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->once())
@@ -307,7 +307,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($package);
+        $visitor->visitNamespace($namespace);
     }
 
     /**
@@ -321,8 +321,8 @@ class DefaultVisitorTest extends AbstractTest
         $trait = $this->createTraitFixture();
         $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
-        $package = new ASTNamespace('MyPackage');
-        $package->addType($trait);
+        $namespace = new ASTNamespace('MyPackage');
+        $namespace->addType($trait);
 
         $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener');
         $listener->expects($this->once())
@@ -331,7 +331,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor', array('getVisitListeners'));
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($package);
+        $visitor->visitNamespace($namespace);
     }
 
     /**

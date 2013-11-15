@@ -60,11 +60,11 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesSimpleUseDeclaration()
     {
-        $package = $this->getFirstClassForTestCase()
+        $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
             ->getPackage();
 
-        $this->assertEquals('foo', $package->getName());
+        $this->assertEquals('foo', $namespace->getName());
     }
 
     /**
@@ -95,9 +95,9 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesUseDeclarationCaseInsensitive()
     {
-        $packages = self::parseSource('issues/002-003-use-declaration.php');
+        $namespaces = self::parseSource('issues/002-003-use-declaration.php');
 
-        $class = $packages->current()
+        $class = $namespaces->current()
                           ->getClasses()
                           ->current();
 
@@ -129,8 +129,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $this->assertEquals('foo', $packages->current()->getName());
+        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $this->assertEquals('foo', $namespaces->current()->getName());
     }
 
     /**
@@ -140,8 +140,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserDoesNotAddEmptyNamespaceToResultSet()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $this->assertEquals(0, count($packages));
+        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $this->assertEquals(0, count($namespaces));
     }
 
     /**
@@ -152,8 +152,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax()
     {
-        $packages = self::parseTestCaseSource(__METHOD__);
-        $this->assertEquals(__FUNCTION__, $packages->current()->getName());
+        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $this->assertEquals(__FUNCTION__, $namespaces->current()->getName());
     }
 
     /**
@@ -164,9 +164,9 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesNamespaceDeclarationWithoutIdentifierAndCurlyBraceSyntax()
     {
-        $packages = self::parseSource('issues/002-007-namespace-declaration.php');
+        $namespaces = self::parseSource('issues/002-007-namespace-declaration.php');
 
-        $this->assertEquals('', $packages->current()->getName());
+        $this->assertEquals('', $namespaces->current()->getName());
     }
 
     /**
@@ -211,9 +211,9 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testNamespaceHasHigherPriorityThanPackageAnnotationSemicolonSyntax()
     {
-        $packages = self::parseSource('issues/002-010-namespace-has-higher-priority.php');
+        $namespaces = self::parseSource('issues/002-010-namespace-has-higher-priority.php');
 
-        $class = $packages->current()
+        $class = $namespaces->current()
                           ->getClasses()
                           ->current();
 
@@ -228,9 +228,9 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testNamespaceHasHigherPriorityThanPackageAnnotationCurlyBraceSyntax()
     {
-        $packages = self::parseSource('issues/002-011-namespace-has-higher-priority.php');
+        $namespaces = self::parseSource('issues/002-011-namespace-has-higher-priority.php');
 
-        $class = $packages->current()
+        $class = $namespaces->current()
                           ->getClasses()
                           ->current();
 
@@ -244,27 +244,27 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesFileWithMultipleNamespacesCorrectSemicolonSyntax()
     {
-        $packages = self::parseSource('issues/002-012-multiple-namespaces.php');
+        $namespaces = self::parseSource('issues/002-012-multiple-namespaces.php');
 
-        $this->assertEquals(3, $packages->count());
+        $this->assertEquals(3, $namespaces->count());
         
-        $package = $packages->current();
-        $types   = $package->getTypes();
-        $this->assertEquals('bar', $package->getName());
+        $namespace = $namespaces->current();
+        $types = $namespace->getTypes();
+        $this->assertEquals('bar', $namespace->getName());
         $this->assertEquals('BarFoo', $types->current()->getName());
 
-        $packages->next();
+        $namespaces->next();
 
-        $package = $packages->current();
-        $types   = $package->getTypes();
-        $this->assertEquals('foo', $package->getName());
+        $namespace = $namespaces->current();
+        $types   = $namespace->getTypes();
+        $this->assertEquals('foo', $namespace->getName());
         $this->assertEquals('FooBar', $types->current()->getName());
 
-        $packages->next();
+        $namespaces->next();
 
-        $package = $packages->current();
-        $types   = $package->getTypes();
-        $this->assertEquals('baz', $package->getName());
+        $namespace = $namespaces->current();
+        $types   = $namespace->getTypes();
+        $this->assertEquals('baz', $namespace->getName());
         $this->assertEquals('FooBaz', $types->current()->getName());
     }
 
@@ -275,27 +275,27 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserHandlesFileWithMultipleNamespacesCorrectCurlyBraceSyntax()
     {
-        $packages = self::parseSource('issues/002-013-multiple-namespaces.php');
+        $namespaces = self::parseSource('issues/002-013-multiple-namespaces.php');
 
-        $this->assertEquals(3, $packages->count());
+        $this->assertEquals(3, $namespaces->count());
 
-        $package = $packages->current();
-        $types   = $package->getTypes();
-        $this->assertEquals('bar', $package->getName());
+        $namespace = $namespaces->current();
+        $types   = $namespace->getTypes();
+        $this->assertEquals('bar', $namespace->getName());
         $this->assertEquals('BarFoo', $types->current()->getName());
 
-        $packages->next();
+        $namespaces->next();
 
-        $package = $packages->current();
-        $types   = $package->getTypes();
-        $this->assertEquals('foo', $package->getName());
+        $namespace = $namespaces->current();
+        $types   = $namespace->getTypes();
+        $this->assertEquals('foo', $namespace->getName());
         $this->assertEquals('FooBar', $types->current()->getName());
 
-        $packages->next();
+        $namespaces->next();
 
-        $package = $packages->current();
-        $types   = $package->getTypes();
-        $this->assertEquals('baz', $package->getName());
+        $namespace = $namespaces->current();
+        $types   = $namespace->getTypes();
+        $this->assertEquals('baz', $namespace->getName());
         $this->assertEquals('FooBaz', $types->current()->getName());
     }
 
@@ -306,8 +306,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserAddsFunctionToDeclaredNamespaceSemicolonSyntax()
     {
-        $packages = self::parseSource('issues/002-014-namespace-function.php');
-        $function = $packages->current()
+        $namespaces = self::parseSource('issues/002-014-namespace-function.php');
+        $function = $namespaces->current()
                              ->getFunctions()
                              ->current();
 
@@ -348,8 +348,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName)
     {
-        $packages = self::parseSource($fileName);
-        $function = $packages->current()
+        $namespaces = self::parseSource($fileName);
+        $function = $namespaces->current()
                              ->getFunctions()
                              ->current();
 

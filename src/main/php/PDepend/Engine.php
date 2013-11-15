@@ -117,7 +117,7 @@ class Engine
      *
      * @var Iterator
      */
-    private $packages = null;
+    private $namespaces = null;
 
     /**
      * List of all registered {@link \PDepend\Report\ReportGenerator} instances.
@@ -328,21 +328,21 @@ class Engine
         // Set global filter for logging
         $collection->setFilter($this->codeFilter);
 
-        $packages = $this->builder->getPackages();
+        $namespaces = $this->builder->getPackages();
 
         $this->fireStartLogProcess();
 
         foreach ($this->generators as $generator) {
             // Check for code aware loggers
             if ($generator instanceof CodeAwareGenerator) {
-                $generator->setArtifacts($packages);
+                $generator->setArtifacts($namespaces);
             }
             $generator->close();
         }
 
         $this->fireEndLogProcess();
 
-        return ($this->packages = $packages);
+        return ($this->namespaces = $namespaces);
     }
 
     /**
@@ -352,14 +352,14 @@ class Engine
      */
     public function countClasses()
     {
-        if ($this->packages === null) {
+        if ($this->namespaces === null) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
 
         $classes = 0;
-        foreach ($this->packages as $package) {
-            $classes += $package->getTypes()->count();
+        foreach ($this->namespaces as $namespace) {
+            $classes += $namespace->getTypes()->count();
         }
         return $classes;
     }
@@ -382,14 +382,14 @@ class Engine
      */
     public function countPackages()
     {
-        if ($this->packages === null) {
+        if ($this->namespaces === null) {
             $msg = 'countPackages() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
 
         $count = 0;
-        foreach ($this->packages as $package) {
-            if ($package->isUserDefined()) {
+        foreach ($this->namespaces as $namespace) {
+            if ($namespace->isUserDefined()) {
                 ++$count;
             }
         }
@@ -405,13 +405,13 @@ class Engine
      */
     public function getPackage($name)
     {
-        if ($this->packages === null) {
+        if ($this->namespaces === null) {
             $msg = 'getPackage() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
-        foreach ($this->packages as $package) {
-            if ($package->getName() === $name) {
-                return $package;
+        foreach ($this->namespaces as $namespace) {
+            if ($namespace->getName() === $name) {
+                return $namespace;
             }
         }
         throw new \OutOfBoundsException(sprintf('Unknown package "%s".', $name));
@@ -420,15 +420,15 @@ class Engine
     /**
      * Returns an iterator of the analyzed packages.
      *
-     * @return \Iterator
+     * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function getPackages()
     {
-        if ($this->packages === null) {
+        if ($this->namespaces === null) {
             $msg = 'getPackages() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
-        return $this->packages;
+        return $this->namespaces;
     }
 
     /**

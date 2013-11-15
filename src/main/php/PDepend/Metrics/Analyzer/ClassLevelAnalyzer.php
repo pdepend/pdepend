@@ -136,8 +136,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
             $this->nodeMetrics = array();
 
             // Visit all nodes
-            foreach ($namespaces as $package) {
-                $package->accept($this);
+            foreach ($namespaces as $namespace) {
+                $namespace->accept($this);
             }
 
             $this->fireEndAnalyzer();

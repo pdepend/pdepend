@@ -79,12 +79,12 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $classes = $packages[0]->getClasses();
+        $classes = $namespaces[0]->getClasses();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = array_keys($analyzer->getNodeMetrics($classes[0]));
         sort($metrics);
@@ -502,11 +502,11 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateTypeMetric($name)
     {
-        $packages = $this->parseCodeResourceForTest();
-        $types = $packages[0]->getTypes();
+        $namespaces = $this->parseCodeResourceForTest();
+        $types = $namespaces[0]->getTypes();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($types[0]);
         return $metrics[$name];
@@ -733,12 +733,12 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateTraitMetrics()
     {
-        $packages = $this->parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        return $analyzer->getNodeMetrics($packages[0]->getTraits()->current());
+        return $analyzer->getNodeMetrics($namespaces[0]->getTraits()->current());
     }
 
     /**

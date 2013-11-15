@@ -116,15 +116,15 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->nodes[$depType->getUuid()]['out'][] = $type->getUuid();
         }
 
-        $package    = $type->getPackage();
+        $namespace = $type->getPackage();
         $depPackage = $depType->getPackage();
 
-        if ($package !== $depPackage) {
-            $this->initNode($package);
+        if ($namespace !== $depPackage) {
+            $this->initNode($namespace);
             $this->initNode($depPackage);
 
-            $this->nodes[$package->getUuid()]['in'][]     = $depPackage->getUuid();
-            $this->nodes[$depPackage->getUuid()]['out'][] = $package->getUuid();
+            $this->nodes[$namespace->getUuid()]['in'][]     = $depPackage->getUuid();
+            $this->nodes[$depPackage->getUuid()]['out'][] = $namespace->getUuid();
         }
     }
 

@@ -105,26 +105,26 @@ class ParserTest extends AbstractTest
         );
 
         $tmp = self::parseCodeResourceForTest();
-        $packages = array();
+        $namespaces = array();
 
-        $this->assertEquals(4, $tmp->count());
+        $this->assertEquals(4, count($tmp));
 
-        foreach ($tmp as $package) {
-            $this->assertArrayHasKey($package->getName(), $expected);
-            unset($expected[$package->getName()]);
-            $packages[$package->getName()] = $package;
+        foreach ($tmp as $namespace) {
+            $this->assertArrayHasKey($namespace->getName(), $expected);
+            unset($expected[$namespace->getName()]);
+            $namespaces[$namespace->getName()] = $namespace;
         }
         $this->assertEquals(0, count($expected));
 
-        $this->assertEquals(1, $packages['pkg1']->getFunctions()->count());
-        $this->assertEquals(1, $packages['pkg1']->getTypes()->count());
-        $this->assertFalse($packages['pkg1']->getTypes()->current()->isAbstract());
+        $this->assertEquals(1, $namespaces['pkg1']->getFunctions()->count());
+        $this->assertEquals(1, $namespaces['pkg1']->getTypes()->count());
+        $this->assertFalse($namespaces['pkg1']->getTypes()->current()->isAbstract());
 
-        $this->assertEquals(1, $packages['pkg2']->getTypes()->count());
-        $this->assertTrue($packages['pkg2']->getTypes()->current()->isAbstract());
+        $this->assertEquals(1, $namespaces['pkg2']->getTypes()->count());
+        $this->assertTrue($namespaces['pkg2']->getTypes()->current()->isAbstract());
 
-        $this->assertEquals(1, $packages['pkg3']->getTypes()->count());
-        $this->assertTrue($packages['pkg3']->getTypes()->current()->isAbstract());
+        $this->assertEquals(1, $namespaces['pkg3']->getTypes()->count());
+        $this->assertTrue($namespaces['pkg3']->getTypes()->current()->isAbstract());
     }
 
     /**
@@ -199,11 +199,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFunctionLineNumber()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
+        $namespaces = self::parseCodeResourceForTest();
+        $functions = $namespaces[1]->getFunctions();
 
-        $function = $packages->current()->getFunctions()->current();
-        $this->assertEquals(7, $function->getStartLine());
+        $this->assertEquals(7, $functions[0]->getStartLine());
     }
 
     /**
@@ -242,12 +241,10 @@ class ParserTest extends AbstractTest
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
         );
 
-        $packages = self::parseSource('/Parser/parser-sets-expected-function-tokens.php');
-        $function = $packages->current()
-            ->getFunctions()
-            ->current();
+        $namespaces = self::parseSource('/Parser/parser-sets-expected-function-tokens.php');
+        $functions = $namespaces[0]->getFunctions();
 
-        $this->assertEquals($tokens, $function->getTokens());
+        $this->assertEquals($tokens, $functions[0]->getTokens());
     }
 
     /**
@@ -257,13 +254,13 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFileComment()
     {
-        $packages = self::parseCodeResourceForTest();
-        $this->assertEquals(1, $packages->count()); // default
+        $namespaces = self::parseCodeResourceForTest();
+        $this->assertEquals(1, $namespaces->count()); // default
 
-        $package = $packages->current();
-        $this->assertEquals('default\package', $package->getName());
+        $namespace = $namespaces[0];
+        $this->assertEquals('default\package', $namespace->getName());
 
-        $class = $package->getClasses()->current();
+        $class = $namespace->getClasses()->current();
         $this->assertNotNull($class);
 
         $actual = $class->getCompilationUnit()->getDocComment();
@@ -287,13 +284,13 @@ class ParserTest extends AbstractTest
      */
     public function testParserDoesntReuseTypeComment()
     {
-        $packages = self::parseCodeResourceForTest();
-        $this->assertEquals(1, $packages->count()); // +global
+        $namespaces = self::parseCodeResourceForTest();
+        $this->assertEquals(1, $namespaces->count()); // +global
 
-        $package = $packages->current();
-        $this->assertEquals('+global', $package->getName());
+        $namespace = $namespaces[0];
+        $this->assertEquals('+global', $namespace->getName());
 
-        $class = $package->getClasses()->current();
+        $class = $namespace->getClasses()->current();
         $this->assertNotNull($class);
 
         $actual = $class->getCompilationUnit()->getDocComment();
@@ -307,13 +304,13 @@ class ParserTest extends AbstractTest
      */
     public function testParserDoesntReuseFunctionComment()
     {
-        $packages = self::parseCodeResourceForTest();
-        $this->assertEquals(1, $packages->count()); // +global
+        $namespaces = self::parseCodeResourceForTest();
+        $this->assertEquals(1, $namespaces->count()); // +global
 
-        $package = $packages->current();
-        $this->assertEquals('+global', $package->getName());
+        $namespace = $namespaces[0];
+        $this->assertEquals('+global', $namespace->getName());
 
-        $function = $package->getFunctions()->current();
+        $function = $namespace->getFunctions()->current();
         $this->assertNotNull($function);
 
         $actual = $function->getCompilationUnit()->getDocComment();
@@ -459,11 +456,9 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectMethodLineNumber()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
-        $packages->next();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $method = $packages->current()
+        $method = $namespaces[2]
             ->getTypes()
             ->current()
             ->getMethods()
@@ -508,8 +503,8 @@ class ParserTest extends AbstractTest
      */
     public function testParserParseNewInstancePHP53()
     {
-        $packages = self::parseCodeResourceForTest();
-        $function = $packages->current()
+        $namespaces = self::parseCodeResourceForTest();
+        $function = $namespaces->current()
             ->getFunctions()
             ->current();
 
@@ -526,32 +521,82 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFunctionDocComment()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $nodes = $packages->current()->getFunctions();
+        $nodes = $namespaces->current()->getFunctions();
         $this->doTestParserSetsCorrectDocComment($nodes, 0);
     }
 
     /**
      * Tests that the parser sets the correct function return type.
      *
-     * @return void
+     * @return \PDepend\Source\AST\ASTFunction[]
      */
     public function testParserSetsCorrectFunctionReturnType()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $nodes = $packages->current()->getFunctions();
-        $this->assertEquals(3, $nodes->count());
+        $functions = $namespaces[0]->getFunctions();
+        $this->assertEquals(3, count($functions));
 
-        $this->assertEquals('func1', $nodes->current()->getName());
-        $this->assertNull($nodes->current()->getReturnClass());
-        $nodes->next();
-        $this->assertEquals('func2', $nodes->current()->getName());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
-        $nodes->next();
-        $this->assertEquals('func3', $nodes->current()->getName());
-        $this->assertEquals('SplObjectStore', $nodes->current()->getReturnClass()->getName());
+        return $functions;
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTFunction[] $functions
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsCorrectFunctionReturnType
+     */
+    public function testParserSetsFunctionReturnTypeToNull($functions)
+    {
+        $this->assertSame(
+            array(
+                'function' => 'func1',
+                'returnClass' => null
+            ),
+            array(
+                'function' => $functions[0]->getName(),
+                'returnClass' => $functions[0]->getReturnClass()
+            )
+        );
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTFunction[] $functions
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsCorrectFunctionReturnType
+     */
+    public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions)
+    {
+        $this->assertSame(
+            array(
+                'function' => 'func2',
+                'returnClass' => 'SplObjectStore'
+            ),
+            array(
+                'function' => $functions[1]->getName(),
+                'returnClass' => $functions[1]->getReturnClass()->getName()
+            )
+        );
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTFunction[] $functions
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsCorrectFunctionReturnType
+     */
+    public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions)
+    {
+        $this->assertSame(
+            array(
+                'function' => 'func3',
+                'returnClass' => 'SplObjectStore'
+            ),
+            array(
+                'function' => $functions[2]->getName(),
+                'returnClass' => $functions[2]->getReturnClass()->getName()
+            )
+        );
     }
 
     /**
@@ -684,7 +729,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
     {
-        $methods = self::parseCodeResourceForTest( true)
+        $methods = self::parseCodeResourceForTest(true)
             ->current()
             ->getTypes()
             ->current()
@@ -917,8 +962,8 @@ class ParserTest extends AbstractTest
             "/**\n * A second comment...\n */",
         );
 
-        $packages = self::parseCodeResourceForTest();
-        foreach ($packages->current()->getTypes() as $type) {
+        $namespaces = self::parseCodeResourceForTest();
+        foreach ($namespaces[0]->getTypes() as $type) {
             $actual[] = $type->getDocComment();
         }
 
@@ -932,34 +977,80 @@ class ParserTest extends AbstractTest
      */
     public function testParserSubpackageSupport()
     {
-        $package = self::parseCodeResourceForTest()->current();
-        $this->assertEquals('PHP\Depend', $package->getName());
+        $namespace = self::parseCodeResourceForTest()->current();
+        $this->assertEquals('PHP\Depend', $namespace->getName());
     }
 
     /**
      * Tests that the parser supports sub packages.
      *
-     * @return void
+     * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function testParserSetsFileLevelFunctionPackage()
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
-        $package0   = $packages->current();
-        $functions0 = $package0->getFunctions();
+        $this->assertEquals(2, count($namespaces));
 
-        $packages->next();
+        return $namespaces;
+    }
 
-        $package1   = $packages->current();
-        $functions1 = $package1->getFunctions();
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     */
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces)
+    {
+        $functions = $namespaces[0]->getFunctions();
+        $this->assertEquals(2, count($functions));
+    }
 
-        $this->assertEquals(2, $functions0->count());
-        $this->assertEquals('PHP\Depend', $functions0->current()->getPackage()->getName());
-        $functions0->next();
-        $this->assertEquals('PHP\Depend', $functions0->current()->getPackage()->getName());
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     */
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces)
+    {
+        $functions = $namespaces[1]->getFunctions();
+        $this->assertEquals(1, count($functions));
+    }
 
-        $this->assertEquals(1, $functions1->count());
-        $this->assertEquals('PDepend\Test', $functions1->current()->getPackage()->getName());
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     */
+    public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace($namespaces)
+    {
+        $functions = $namespaces[0]->getFunctions();
+
+        $this->assertEquals('PHP\\Depend', $functions[0]->getPackage()->getName());
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     */
+    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace($namespaces)
+    {
+        $functions = $namespaces[0]->getFunctions();
+
+        $this->assertEquals('PHP\\Depend', $functions[1]->getPackage()->getName());
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @return void
+     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     */
+    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace($namespaces)
+    {
+        $functions = $namespaces[1]->getFunctions();
+
+        $this->assertEquals('PDepend\\Test', $functions[0]->getPackage()->getName());
     }
 
     /**
@@ -1213,8 +1304,8 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsLeadingSlashFromNamespacedClassName()
     {
-        $package = self::parseCodeResourceForTest()->current();
-        $this->assertEquals('foo', $package->getName());
+        $namespace = self::parseCodeResourceForTest()->current();
+        $this->assertEquals('foo', $namespace->getName());
     }
 
     /**
@@ -1224,13 +1315,13 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsLeadingSlashFromNamespaceAliasedClassName()
     {
-        $package = self::parseCodeResourceForTest()->current()
+        $namespace = self::parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getParentClass()
             ->getPackage();
 
-        $this->assertEquals('foo\bar\baz', $package->getName());
+        $this->assertEquals('foo\bar\baz', $namespace->getName());
     }
 
     /**
@@ -1240,14 +1331,14 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsLeadingSlashFromInheritNamespacedClassName()
     {
-        $package = self::parseCodeResourceForTest()
+        $namespace = self::parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getParentClass()
             ->getPackage();
 
-        $this->assertEquals('bar', $package->getName());
+        $this->assertEquals('bar', $namespace->getName());
     }
 
     /**
@@ -1492,11 +1583,9 @@ class ParserTest extends AbstractTest
      */
     protected function getInterfaceForTest()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
-        $packages->next();
+        $namespaces = self::parseCodeResourceForTest();
 
-        return $packages->current()->getTypes()->current();
+        return $namespaces[2]->getTypes()->current();
     }
 
     /**
@@ -1506,11 +1595,9 @@ class ParserTest extends AbstractTest
      */
     protected function getInterfaceMethodsForTest()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
-        $packages->next();
+        $namespaces = self::parseCodeResourceForTest();
 
-        return $packages->current()
+        return $namespaces[2]
             ->getInterfaces()
             ->current()
             ->getMethods();
@@ -1523,10 +1610,8 @@ class ParserTest extends AbstractTest
      */
     protected function getClassForTest()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
-
-        return $packages->current()->getTypes()->current();
+        $namespaces = self::parseCodeResourceForTest();
+        return $namespaces[1]->getTypes()->current();
     }
 
     /**
@@ -1536,10 +1621,8 @@ class ParserTest extends AbstractTest
      */
     protected function getClassMethodsForTest()
     {
-        $packages = self::parseCodeResourceForTest();
-        $packages->next();
-
-        return $packages->current()->getClasses()->current()->getMethods();
+        $namespaces = self::parseCodeResourceForTest();
+        return $namespaces[1]->getClasses()->current()->getMethods();
     }
 
     /**

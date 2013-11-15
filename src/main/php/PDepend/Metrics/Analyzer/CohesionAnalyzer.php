@@ -108,8 +108,8 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     {
         $this->fireStartAnalyzer();
 
-        foreach ($namespaces as $package) {
-            $package->accept($this);
+        foreach ($namespaces as $namespace) {
+            $namespace->accept($this);
         }
 
         $this->fireEndAnalyzer();

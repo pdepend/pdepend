@@ -181,8 +181,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
             $this->fireStartAnalyzer();
 
             $this->metrics = array();
-            foreach ($namespaces as $package) {
-                $package->accept($this);
+            foreach ($namespaces as $namespace) {
+                $namespace->accept($this);
             }
 
             $this->fireEndAnalyzer();

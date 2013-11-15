@@ -66,14 +66,14 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTe
      */
     public function testAnalyzerReturnsExpectedNPathValue()
     {
-        $packages = self::parseCodeResourceForTest();
-        $function = $packages->current()
+        $namespaces = self::parseCodeResourceForTest();
+        $function = $namespaces->current()
             ->getFunctions()
             ->current();
 
         $analyzer = new NPathComplexityAnalyzer();
         $analyzer->setCache(new MemoryCacheDriver());
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $this->assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));
     }

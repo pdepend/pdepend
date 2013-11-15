@@ -191,18 +191,18 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateCrapIndex($testCase, $ccn)
     {
-        $packages = self::parseCodeResourceForTest();
+        $namespaces = self::parseCodeResourceForTest();
 
         $options  = array('coverage-report' => $this->_createCloverReportFile());
         $analyzer = new CrapIndexAnalyzer($options);
         $analyzer->addAnalyzer($this->_createCyclomaticComplexityAnalyzerMock($ccn));
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
-        $packages->rewind();
+        $namespaces->rewind();
 
-        if ($packages->current()->getTypes()->count() > 0) {
+        if ($namespaces->current()->getTypes()->count() > 0) {
             return $analyzer->getNodeMetrics(
-                $packages->current()
+                $namespaces->current()
                     ->getTypes()
                     ->current()
                     ->getMethods()
@@ -210,7 +210,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
             );
         }
         return $analyzer->getNodeMetrics(
-            $packages->current()
+            $namespaces->current()
                 ->getFunctions()
                 ->current()
         );

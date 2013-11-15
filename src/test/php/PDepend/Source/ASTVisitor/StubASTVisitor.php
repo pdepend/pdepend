@@ -94,7 +94,7 @@ class StubASTVisitor implements ASTVisitor
      *
      * @var \PDepend\Source\AST\ASTNamespace
      */
-    public $package;
+    public $namespace;
 
     /**
      * The last visited parameter instance.
@@ -181,7 +181,7 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->package = $namespace;
+        $this->namespace = $namespace;
     }
 
     /**

@@ -84,18 +84,18 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
     {
-        $packages = self::parseCodeResourceForTest();
-        $function = $packages->current()
+        $namespaces = self::parseCodeResourceForTest();
+        $function = $namespaces->current()
             ->getFunctions()
             ->current();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($function);
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($function);
 
@@ -110,20 +110,20 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
     {
-        $packages = self::parseCodeResourceForTest();
-        $method   = $packages->current()
+        $namespaces = self::parseCodeResourceForTest();
+        $method   = $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current();
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($method);
 
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze($packages);
+        $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($method);
 
