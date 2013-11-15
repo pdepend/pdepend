@@ -63,13 +63,10 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
      */
     public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current()
+        $parameters = $this->getFirstFunctionForTestCase()
             ->getParameters();
 
-        $this->assertEquals('foo\bar', $parameters[0]->getClass()->getPackage()->getName());
+        $this->assertEquals('foo\bar', $parameters[0]->getClass()->getNamespace()->getName());
     }
 
     /**
@@ -79,14 +76,9 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
      */
     public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint()
     {
-        $parameters = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
-            ->getMethods()
-            ->current()
+        $parameters = $this->getFirstClassMethodForTestCase()
             ->getParameters();
 
-        $this->assertEquals('foo\bar', $parameters[0]->getClass()->getPackage()->getName());
+        $this->assertEquals('foo\bar', $parameters[0]->getClass()->getNamespace()->getName());
     }
 }

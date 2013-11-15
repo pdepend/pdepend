@@ -84,11 +84,11 @@ class Runner
     private $excludeDirectories = array('.git', '.svn', 'CVS');
 
     /**
-     * List of exclude packages.
+     * List of exclude namespaces.
      *
      * @var array(string)
      */
-    private $excludePackages = array();
+    private $excludeNamespaces = array();
 
     /**
      * List of source code directories and files.
@@ -181,9 +181,9 @@ class Runner
      * @param array(string) $excludePackages Exclude packages.
      * @return void
      */
-    public function setExcludePackages(array $excludePackages)
+    public function setExcludeNamespaces(array $excludePackages)
     {
-        $this->excludePackages = $excludePackages;
+        $this->excludeNamespaces = $excludePackages;
     }
 
     /**
@@ -267,8 +267,8 @@ class Runner
             $engine->addFileFilter($filter);
         }
 
-        if (count($this->excludePackages) > 0) {
-            $exclude = $this->excludePackages;
+        if (count($this->excludeNamespaces) > 0) {
+            $exclude = $this->excludeNamespaces;
             $filter  = new PackageArtifactFilter($exclude);
             $engine->setCodeFilter($filter);
         }

@@ -339,7 +339,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     }
 
     /**
-     * Visits a package node.
+     * Visits a namespace node.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void

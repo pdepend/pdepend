@@ -63,7 +63,7 @@ class ASTClassOrInterfaceRecursiveInheritanceException extends \RuntimeException
         parent::__construct(
             sprintf(
                 'Type %s\%s is part of an endless inheritance hierarchy.',
-                preg_replace('(\W+)', '\\', $type->getPackage()->getName()),
+                preg_replace('(\W+)', '\\', $type->getNamespace()->getName()),
                 $type->getName()
             )
         );

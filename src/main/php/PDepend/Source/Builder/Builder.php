@@ -60,7 +60,7 @@ interface Builder extends \IteratorAggregate
     /**
      * The default package name.
      */
-    const DEFAULT_PACKAGE = '+global';
+    const DEFAULT_NAMESPACE = '+global';
 
     /**
      * Setter method for the currently used token cache.
@@ -196,12 +196,12 @@ interface Builder extends \IteratorAggregate
     public function getInterface($qualifiedName);
 
     /**
-     * Builds a new package instance.
+     * Builds a new namespace instance.
      *
-     * @param string $name The package name.
-     * @return \PDepend\Source\AST\ASTNamespace The created package object.
+     * @param string $name
+     * @return \PDepend\Source\AST\ASTNamespace
      */
-    public function buildPackage($name);
+    public function buildNamespace($name);
 
     /**
      * Builds a new method instance.

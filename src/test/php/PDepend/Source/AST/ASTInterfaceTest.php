@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
@@ -497,8 +496,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
-            $orig->getPackage(),
-            $copy->getPackage()
+            $orig->getNamespace(),
+            $copy->getNamespace()
         );
     }
 
@@ -512,7 +511,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($copy, $orig->getPackage()->getInterfaces()->current());
+        $this->assertSame($copy, $orig->getNamespace()->getInterfaces()->current());
     }
 
     /**
@@ -525,7 +524,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, $orig->getPackage()->getInterfaces()->count());
+        $this->assertEquals(1, $orig->getNamespace()->getInterfaces()->count());
     }
 
     /**
@@ -839,7 +838,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
     {
         $interface = $this->createItem();
-        $interface->setPackage(new ASTNamespace(__FUNCTION__));
+        $interface->setNamespace(new ASTNamespace(__FUNCTION__));
 
         $this->assertEquals(
             array(
@@ -853,7 +852,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
                 'modifiers',
                 'name',
                 'nodes',
-                'packageName',
+                'namespaceName',
                 'startLine',
                 'userDefined',
                 'uuid'

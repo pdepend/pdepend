@@ -303,7 +303,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
     public function testTraitHasExpectedPackage()
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals('org.pdepend', $trait->getPackage()->getName());
+        $this->assertEquals('org.pdepend', $trait->getNamespace()->getName());
     }
 
     /**
@@ -314,18 +314,18 @@ class ASTTraitTest extends AbstractASTArtifactTest
     public function testTraitHasExpectedNamespace()
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals('org\pdepend\code', $trait->getPackage()->getName());
+        $this->assertEquals('org\pdepend\code', $trait->getNamespace()->getName());
     }
 
     /**
-     * testGetPackageNameReturnsExpectedName
+     * testGetNamespaceNameReturnsExpectedName
      *
      * @return void
      */
-    public function testGetPackageNameReturnsExpectedName()
+    public function testGetNamespaceNameReturnsExpectedName()
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals('org\pdepend\code', $trait->getPackageName());
+        $this->assertEquals('org\pdepend\code', $trait->getNamespaceName());
     }
 
     /**

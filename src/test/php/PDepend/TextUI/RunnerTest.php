@@ -253,7 +253,7 @@ class RunnerTest extends AbstractTest
     }
 
     /**
-     * Executes the runner class and returns an array with package statistics.
+     * Executes the runner class and returns an array with namespace statistics.
      *
      * @param \PDepend\TextUI\Runner $runner The runner instance.
      * @param $pathName The source path.

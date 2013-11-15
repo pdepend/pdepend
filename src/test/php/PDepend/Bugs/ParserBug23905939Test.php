@@ -72,7 +72,7 @@ class ParserBug23905939Test extends AbstractRegressionTest
             ->getClasses()
             ->current();
 
-        $this->assertEquals('my.package', $class->getPackage()->getName());
+        $this->assertEquals('my.package', $class->getNamespace()->getName());
     }
 
     /**
@@ -89,6 +89,6 @@ class ParserBug23905939Test extends AbstractRegressionTest
             ->getInterfaces()
             ->current();
 
-        $this->assertEquals('my.package', $interface->getPackage()->getName());
+        $this->assertEquals('my.package', $interface->getNamespace()->getName());
     }
 }

@@ -47,7 +47,6 @@ use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTBooleanAndExpression;
 use PDepend\Source\AST\ASTBooleanOrExpression;
 use PDepend\Source\AST\ASTConditionalExpression;
@@ -85,10 +84,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->metrics === null) {
             $this->loadCache();

@@ -131,13 +131,13 @@ final class Type
     private static $typeNameToExtension = null;
 
     /**
-     * Hash with all internal packages/extensions. Key and value are identical
+     * Hash with all internal namespaces/extensions. Key and value are identical
      * and contain the name of the extension.
      *
      * @var array(string=>string)
      * @since 0.9.10
      */
-    private static $internalPackages = null;
+    private static $internalNamespaces = null;
 
     /**
      * List of scalar php types.
@@ -272,15 +272,15 @@ final class Type
      *
      * @return array(string)
      */
-    public static function getInternalPackages()
+    public static function getInternalNamespaces()
     {
-        if (self::$internalPackages === null) {
+        if (self::$internalNamespaces === null) {
             $extensions = array_values(self::initTypeToExtension());
             $extensions = array_unique($extensions);
 
-            self::$internalPackages = array_combine($extensions, $extensions);
+            self::$internalNamespaces = array_combine($extensions, $extensions);
         }
-        return self::$internalPackages;
+        return self::$internalNamespaces;
     }
 
     /**
@@ -293,7 +293,7 @@ final class Type
      */
     public static function isInternalPackage($packageName)
     {
-        $packageNames = self::getInternalPackages();
+        $packageNames = self::getInternalNamespaces();
         return isset($packageNames[strtolower($packageName)]);
     }
 

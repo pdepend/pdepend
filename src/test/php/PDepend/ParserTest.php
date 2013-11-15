@@ -101,7 +101,7 @@ class ParserTest extends AbstractTest
             'pkg1'                               =>  true,
             'pkg2'                               =>  true,
             'pkg3'                               =>  true,
-            \PDepend\Source\Builder\Builder::DEFAULT_PACKAGE  =>  true
+            \PDepend\Source\Builder\Builder::DEFAULT_NAMESPACE  =>  true
         );
 
         $tmp = self::parseCodeResourceForTest();
@@ -509,9 +509,9 @@ class ParserTest extends AbstractTest
             ->current();
 
         $dependencies = $function->getDependencies();
-        $this->assertEquals('PDepend1', $dependencies->current()->getPackage()->getName());
+        $this->assertEquals('PDepend1', $dependencies->current()->getNamespace()->getName());
         $dependencies->next();
-        $this->assertEquals('PDepend2', $dependencies->current()->getPackage()->getName());
+        $this->assertEquals('PDepend2', $dependencies->current()->getNamespace()->getName());
     }
 
     /**
@@ -1026,7 +1026,7 @@ class ParserTest extends AbstractTest
     {
         $functions = $namespaces[0]->getFunctions();
 
-        $this->assertEquals('PHP\\Depend', $functions[0]->getPackage()->getName());
+        $this->assertEquals('PHP\\Depend', $functions[0]->getNamespace()->getName());
     }
 
     /**
@@ -1038,7 +1038,7 @@ class ParserTest extends AbstractTest
     {
         $functions = $namespaces[0]->getFunctions();
 
-        $this->assertEquals('PHP\\Depend', $functions[1]->getPackage()->getName());
+        $this->assertEquals('PHP\\Depend', $functions[1]->getNamespace()->getName());
     }
 
     /**
@@ -1050,7 +1050,7 @@ class ParserTest extends AbstractTest
     {
         $functions = $namespaces[1]->getFunctions();
 
-        $this->assertEquals('PDepend\\Test', $functions[0]->getPackage()->getName());
+        $this->assertEquals('PDepend\\Test', $functions[0]->getNamespace()->getName());
     }
 
     /**
@@ -1315,11 +1315,9 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsLeadingSlashFromNamespaceAliasedClassName()
     {
-        $namespace = self::parseCodeResourceForTest()->current()
-            ->getClasses()
-            ->current()
+        $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('foo\bar\baz', $namespace->getName());
     }
@@ -1331,12 +1329,9 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsLeadingSlashFromInheritNamespacedClassName()
     {
-        $namespace = self::parseCodeResourceForTest()
-            ->current()
-            ->getClasses()
-            ->current()
+        $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('bar', $namespace->getName());
     }

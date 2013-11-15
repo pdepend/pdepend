@@ -349,12 +349,12 @@ class Command
             unset($this->options['--ignore']);
         }
 
-        // Check for exclude package option
+        // Check for exclude namespace option
         if (isset($this->options['--exclude'])) {
             // Get exclude directories
             $namespaces = explode(',', $this->options['--exclude']);
-            // Set exclude packages
-            $this->runner->setExcludePackages($namespaces);
+            // Set exclude namespace
+            $this->runner->setExcludeNamespaces($namespaces);
 
             unset($this->options['--exclude']);
         }
@@ -451,7 +451,7 @@ class Command
         );
         $this->printOption(
             '--exclude=<pkg[,...]>',
-            'List of exclude packages.',
+            'List of exclude namespaces.',
             $length
         );
         echo PHP_EOL;

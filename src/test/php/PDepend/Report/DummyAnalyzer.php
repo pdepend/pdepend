@@ -42,9 +42,9 @@
 
 namespace PDepend\Report;
 
+use PDepend\Metrics\AnalyzerListener;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
-use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 
@@ -111,7 +111,8 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(\PDepend\Metrics\AnalyzerListener $listener) {
+    public function addAnalyzeListener(AnalyzerListener $listener)
+    {
     }
     
     /**
@@ -120,16 +121,17 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(\PDepend\Metrics\AnalyzerListener $listener) {
+    public function removeAnalyzeListener(AnalyzerListener $listener)
+    {
     }
     
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces All code packages.
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
     }
 

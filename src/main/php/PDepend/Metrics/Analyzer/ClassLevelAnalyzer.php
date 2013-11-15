@@ -117,10 +117,10 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
             // First check for the require cc analyzer

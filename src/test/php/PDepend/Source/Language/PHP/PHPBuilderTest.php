@@ -66,13 +66,13 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $namespace = $builder->buildPackage(__FUNCTION__);
+        $namespace = $builder->buildNamespace(__FUNCTION__);
         $namespace->addType($builder->buildClass(__FUNCTION__));
 
-        $namespace = $builder->buildPackage(__CLASS__);
+        $namespace = $builder->buildNamespace(__CLASS__);
         $namespace->addType($builder->buildClass(__CLASS__));
 
-        $this->assertEquals(2, $builder->getPackages()->count());
+        $this->assertEquals(2, count($builder->getNamespaces()));
     }
 
     /**
@@ -84,13 +84,13 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $namespace = $builder->buildPackage(__FUNCTION__);
+        $builder->buildNamespace(__FUNCTION__);
         $builder->buildFunction(__FUNCTION__);
 
-        $namespace = $builder->buildPackage(__CLASS__);
+        $builder->buildNamespace(__CLASS__);
         $builder->buildFunction(__CLASS__);
 
-        $this->assertEquals(2, $builder->getPackages()->count());
+        $this->assertEquals(2, count($builder->getNamespaces()));
     }
 
     /**
@@ -102,15 +102,15 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $namespace = $builder->buildPackage(__FUNCTION__);
+        $namespace = $builder->buildNamespace(__FUNCTION__);
         $namespace->addFunction($builder->buildFunction(__FUNCTION__));
 
-        $builder->getPackages();
+        $builder->getNamespaces();
 
-        $namespace = $builder->buildPackage(__CLASS__);
+        $namespace = $builder->buildNamespace(__CLASS__);
         $namespace->addType($builder->buildClass(__CLASS__));
 
-        $this->assertEquals(1, $builder->getPackages()->count());
+        $this->assertEquals(1, $builder->getNamespaces()->count());
     }
 
     /**
@@ -121,27 +121,29 @@ class PHPBuilderTest extends AbstractTest
     public function testRestoreFunctionAddsFunctionToPackage()
     {
         $builder = $this->createBuilder();
-        $namespace = $builder->buildPackage(__CLASS__);
+        $namespace = $builder->buildNamespace(__CLASS__);
 
         $function = new ASTFunction(__FUNCTION__);
-        $function->setPackage($namespace);
+        $function->setNamespace($namespace);
 
         $builder->restoreFunction($function);
         $this->assertEquals(1, count($namespace->getFunctions()));
     }
 
     /**
-     * testRestoreFunctionUsesGetPackageNameMethod
+     * testRestoreFunctionUsesGetNamespaceNameMethod
      *
      * @return void
      */
-    public function testRestoreFunctionUsesGetPackageNameMethod()
+    public function testRestoreFunctionUsesGetNamespaceNameMethod()
     {
         $function = $this->getMock(
-            ASTFunction::CLAZZ, array(), array(__FUNCTION__)
+            ASTFunction::CLAZZ,
+            array(),
+            array(__FUNCTION__)
         );
         $function->expects($this->once())
-            ->method('getPackageName');
+            ->method('getNamespaceName');
 
         $builder = $this->createBuilder();
         $builder->restoreFunction($function);
@@ -158,7 +160,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $trait = $builder->buildTrait(__FUNCTION__);
-        $trait->setPackage($builder->buildPackage(__FUNCTION__));
+        $trait->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreTrait($trait);
 
@@ -206,13 +208,13 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $trait = $builder->buildTrait('PDepend\Parser');
-        $trait->setPackage($builder->buildPackage(__FUNCTION__));
+        $trait->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreTrait($trait);
 
         $this->assertSame(
-            $trait->getPackage(),
-            $builder->getTrait('Parser')->getPackage()
+            $trait->getNamespace(),
+            $builder->getTrait('Parser')->getNamespace()
         );
     }
 
@@ -226,7 +228,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $class = $builder->buildClass(__FUNCTION__);
-        $class->setPackage($builder->buildPackage(__FUNCTION__));
+        $class->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreClass($class);
 
@@ -277,13 +279,13 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $class1 = $builder->buildClass('PDepend\Parser');
-        $class1->setPackage($builder->buildPackage(__FUNCTION__));
+        $class1->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreClass($class1);
 
         $this->assertSame(
-            $class1->getPackage(),
-            $builder->getClass('Parser')->getPackage()
+            $class1->getNamespace(),
+            $builder->getClass('Parser')->getNamespace()
         );
     }
 
@@ -298,7 +300,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $interface = $builder->buildInterface(__FUNCTION__);
-        $interface->setPackage($builder->buildPackage(__FUNCTION__));
+        $interface->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
@@ -332,15 +334,15 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $namespace1 = $builder->buildPackage('package1');
-        $namespace2 = $builder->buildPackage('package2');
+        $namespace1 = $builder->buildNamespace('package1');
+        $namespace2 = $builder->buildNamespace('package2');
 
         $class = $builder->buildClass('Parser');
         $namespace1->addType($class);
 
         $this->assertEquals(1, $namespace1->getTypes()->count());
 
-        $interface = $builder->buildInterface('Parser');
+        $builder->buildInterface('Parser');
 
         $this->assertEquals(1, $namespace1->getTypes()->count());
     }
@@ -377,8 +379,8 @@ class PHPBuilderTest extends AbstractTest
 
         $this->assertNotSame($interface1, $interface2);
         $this->assertSame(
-            $interface1->getPackage(),
-            $interface2->getPackage()
+            $interface1->getNamespace(),
+            $interface2->getNamespace()
         );
     }
 
@@ -394,14 +396,14 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $interface = $builder->buildInterface('PDepend\ParserI');
-        $interface->setPackage($builder->buildPackage(__FUNCTION__));
+        $interface->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
         $this->assertSame($builder->getInterface('ParserI'), $interface);
         $this->assertSame(
-            $builder->getInterface('ParserI')->getPackage(),
-            $interface->getPackage()
+            $builder->getInterface('ParserI')->getNamespace(),
+            $interface->getNamespace()
         );
     }
 
@@ -426,8 +428,8 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildPackageUnique()
     {
         $builder  = $this->createBuilder();
-        $namespace1 = $builder->buildPackage('package1');
-        $namespace2 = $builder->buildPackage('package1');
+        $namespace1 = $builder->buildNamespace('package1');
+        $namespace2 = $builder->buildNamespace('package1');
 
         $this->assertSame($namespace1, $namespace2);
     }
@@ -441,36 +443,42 @@ class PHPBuilderTest extends AbstractTest
     {
         $builder = $this->createBuilder();
 
-        $namespaces = array(
-            'package1'  =>  $builder->buildPackage('package1'),
-            'package2'  =>  $builder->buildPackage('package2'),
-            'package3'  =>  $builder->buildPackage('package3')
+        $expected = array(
+            'package1'  =>  $builder->buildNamespace('package1'),
+            'package2'  =>  $builder->buildNamespace('package2'),
+            'package3'  =>  $builder->buildNamespace('package3')
         );
 
+        $actual = array();
         foreach ($builder as $name => $namespace) {
-            $this->assertSame($namespaces[$name], $namespace);
+            $actual[$name] = $namespace;
         }
+
+        $this->assertSame($expected, $actual);
     }
 
     /**
-     * Tests the {@link \PDepend\Source\Language\PHP\PHPBuilder::getPackages()}
+     * Tests the {@link \PDepend\Source\Language\PHP\PHPBuilder::getNamespaces()}
      * method.
      *
      * @return void
      */
-    public function testGetPackages()
+    public function testGetNamespaces()
     {
         $builder = $this->createBuilder();
 
-        $namespaces = array(
-            'package1'  =>  $builder->buildPackage('package1'),
-            'package2'  =>  $builder->buildPackage('package2'),
-            'package3'  =>  $builder->buildPackage('package3')
+        $expected = array(
+            'package1'  =>  $builder->buildNamespace('package1'),
+            'package2'  =>  $builder->buildNamespace('package2'),
+            'package3'  =>  $builder->buildNamespace('package3')
         );
 
-        foreach ($builder->getPackages() as $name => $namespace) {
-            $this->assertSame($namespaces[$name], $namespace);
+        $actual = array();
+        foreach ($builder->getNamespaces() as $name => $namespace) {
+            $actual[$name] = $namespace;
         }
+
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -484,12 +492,12 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $class0 = $builder->buildClass('FooBar');
-        $class0->setPackage($builder->buildPackage(__FUNCTION__));
+        $class0->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreClass($class0);
 
         $class1 = $builder->buildClass('FooBar');
-        $class1->setPackage($builder->buildPackage(__FUNCTION__));
+        $class1->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreClass($class1);
 
@@ -508,7 +516,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $interface = $builder->buildInterface('FooBar');
-        $interface->setPackage($builder->buildPackage(__FUNCTION__));
+        $interface->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
@@ -526,7 +534,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $class = $builder->buildClass('PDepend_Parser');
-        $class->setPackage($builder->buildPackage(__FUNCTION__));
+        $class->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreClass($class);
 
@@ -543,7 +551,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $interface = $builder->buildInterface('PDepend_Source_Tokenizer_Tokenizer');
-        $interface->setPackage($builder->buildPackage(__FUNCTION__));
+        $interface->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
@@ -579,7 +587,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
         $this->assertEquals(
             '+reflection',
-            $builder->getClassOrInterface('Reflection')->getPackage()->getName()
+            $builder->getClassOrInterface('Reflection')->getNamespace()->getName()
         );
     }
 
@@ -594,7 +602,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
         $this->assertEquals(
             'foo\bar',
-            $builder->getClassOrInterface('\foo\bar\Baz')->getPackage()->getName()
+            $builder->getClassOrInterface('\foo\bar\Baz')->getNamespace()->getName()
         );
     }
 
@@ -608,7 +616,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $interface = $builder->buildInterface('PDepend_Source_Tokenizer_Tokenizer');
-        $interface->setPackage($builder->buildPackage(__FUNCTION__));
+        $interface->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreInterface($interface);
 
@@ -628,7 +636,7 @@ class PHPBuilderTest extends AbstractTest
         $builder = $this->createBuilder();
 
         $class = $builder->buildClass('PDepend_Parser');
-        $class->setPackage($builder->buildPackage(__FUNCTION__));
+        $class->setNamespace($builder->buildNamespace(__FUNCTION__));
 
         $builder->restoreClass($class);
 

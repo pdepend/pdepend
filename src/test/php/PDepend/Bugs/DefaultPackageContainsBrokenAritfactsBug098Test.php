@@ -66,7 +66,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
         $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
-        $functions = $pdepend->getPackages()
+        $functions = $pdepend->getNamespaces()
             ->current()
             ->getFunctions();
 
@@ -84,7 +84,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
         $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
-        $classes = $pdepend->getPackages()
+        $classes = $pdepend->getNamespaces()
             ->current()
             ->getClasses();
 
@@ -102,7 +102,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
         $pdepend->addFile(self::createCodeResourceUriForTest());
         $pdepend->analyze();
 
-        $interfaces = $pdepend->getPackages()
+        $interfaces = $pdepend->getNamespaces()
             ->current()
             ->getInterfaces();
 

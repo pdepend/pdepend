@@ -99,17 +99,17 @@ class ASTNamespaceTest extends AbstractTest
     }
 
     /**
-     * testAddTypeSetPackageOnAddedInstance
+     * testAddTypeSetNamespaceOnAddedInstance
      *
      * @return void
      */
-    public function testAddTypeSetPackageOnAddedInstance()
+    public function testAddTypeSetNamespaceOnAddedInstance()
     {
         $namespace = new ASTNamespace('package1');
         $class = new ASTClass('Class', 0, 'class.php');
 
         $namespace->addType($class);
-        $this->assertSame($namespace, $class->getPackage());
+        $this->assertSame($namespace, $class->getNamespace());
     }
     
     /**
@@ -127,7 +127,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace1->addType($class);
         $namespace2->addType($class);
 
-        $this->assertSame($namespace2, $class->getPackage());
+        $this->assertSame($namespace2, $class->getNamespace());
     }
 
     /**
@@ -231,7 +231,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace->addType($class);
         $namespace->removeType($class);
 
-        $this->assertNull($class->getPackage());
+        $this->assertNull($class->getNamespace());
     }
 
     /**
@@ -277,7 +277,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace = new ASTNamespace('package');
         $trait   = $namespace->addType(new ASTTrait('Trait'));
 
-        $this->assertSame($namespace, $trait->getPackage());
+        $this->assertSame($namespace, $trait->getNamespace());
     }
     
     /**
@@ -321,7 +321,7 @@ class ASTNamespaceTest extends AbstractTest
         $function = new ASTFunction('function', 0);
 
         $namespace->addFunction($function);
-        $this->assertSame($namespace, $function->getPackage());
+        $this->assertSame($namespace, $function->getNamespace());
     }
     
     /**
@@ -339,7 +339,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace1->addFunction($function);
         $namespace2->addFunction($function);
 
-        $this->assertSame($namespace2, $function->getPackage());
+        $this->assertSame($namespace2, $function->getNamespace());
     }
 
     /**
@@ -386,13 +386,13 @@ class ASTNamespaceTest extends AbstractTest
      */
     public function testRemoveFunctionSetsParentPackageToNull()
     {
-        $namespace  = new ASTNamespace('package');
+        $namespace  = new ASTNamespace('nspace');
         $function = new ASTFunction('func', 0);
 
         $namespace->addFunction($function);
         $namespace->removeFunction($function);
 
-        $this->assertNull($function->getPackage());
+        $this->assertNull($function->getNamespace());
     }
     
     /**

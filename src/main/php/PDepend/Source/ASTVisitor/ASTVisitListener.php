@@ -159,20 +159,20 @@ interface ASTVisitListener
     public function endVisitMethod(ASTMethod $method);
 
     /**
-     * Is called when the visitor starts a new package instance.
+     * Is called when the visitor starts a new namespace instance.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function startVisitPackage(ASTNamespace $namespace);
+    public function startVisitNamespace(ASTNamespace $namespace);
 
     /**
-     * Is called when the visitor ends with a package instance.
+     * Is called when the visitor ends with a namespace instance.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function endVisitPackage(ASTNamespace $namespace);
+    public function endVisitNamespace(ASTNamespace $namespace);
 
     /**
      * Is called when the visitor starts a new parameter instance.

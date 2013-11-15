@@ -17,7 +17,7 @@ abstract class PHP_Depend_ParserTest extends PHP_Depend_AbstractTest
         
         $parser->parse();
         
-        $package = $builder->getPackages()->current();
+        $package = $builder->getNamespaces()->current();
         $classes = $package->getClasses();
         
         $this->assertEquals(1, $classes->count());

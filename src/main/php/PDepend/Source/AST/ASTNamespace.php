@@ -46,7 +46,7 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * Represents a php package node.
+ * Represents a php namespace node.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -61,7 +61,7 @@ class ASTNamespace extends AbstractASTArtifact
     const CLAZZ = __CLASS__;
 
     /**
-     * The package name.
+     * The namespace name.
      *
      * @var string
      */
@@ -76,7 +76,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * List of all {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
-     * objects for this package.
+     * objects for this namespace.
      *
      * @var \PDepend\Source\AST\AbstractASTClassOrInterface[]
      */
@@ -84,23 +84,23 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * List of all standalone {@link \PDepend\Source\AST\ASTFunction} objects
-     * in this package.
+     * in this namespace.
      *
      * @var \PDepend\Source\AST\ASTFunction[]
      */
     protected $functions = array();
 
     /**
-     * Does this package contain user defined functions, classes or interfaces?
+     * Does this namespace contain user defined functions, classes or interfaces?
      *
      * @var boolean
      */
     private $userDefined = null;
 
     /**
-     * Constructs a new package for the given <b>$name</b>
+     * Constructs a new namespace for the given <b>$name</b>
      *
-     * @param string $name The package name.
+     * @param string $name
      */
     public function __construct($name)
     {
@@ -109,7 +109,7 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Returns the package name.
+     * Returns the namespace name.
      *
      * @return string
      */
@@ -164,7 +164,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Returns an array with all {@link \PDepend\Source\AST\ASTTrait}
-     * instances declared in this package.
+     * instances declared in this namespace.
      *
      * @return array
      * @since 1.0.0
@@ -176,7 +176,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Returns an iterator with all {@link \PDepend\Source\AST\ASTClass}
-     * instances within this package.
+     * instances within this namespace.
      *
      * @return \PDepend\Source\AST\ASTClass[]
      */
@@ -187,7 +187,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Returns an iterator with all {@link \PDepend\Source\AST\ASTInterface}
-     * instances within this package.
+     * instances within this namespace.
      *
      * @return \PDepend\Source\AST\ASTInterface[]
      */
@@ -198,10 +198,9 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Returns an iterator with all types of the given <b>$className</b> in this
-     * package.
+     * namespace.
      *
      * @param string $className The class/type we are looking for.
-     *
      * @return \PDepend\Source\AST\ASTArtifactList
      * @since 1.0.0
      */
@@ -218,7 +217,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Returns all {@link \PDepend\Source\AST\AbstractASTType} objects in
-     * this package.
+     * this namespace.
      *
      * @return \PDepend\Source\AST\AbstractASTType[]
      */
@@ -228,24 +227,24 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Adds the given type to this package and returns the input type instance.
+     * Adds the given type to this namespace and returns the input type instance.
      *
      * @param \PDepend\Source\AST\AbstractASTType $type
      * @return \PDepend\Source\AST\AbstractASTType
      */
     public function addType(AbstractASTType $type)
     {
-        // Skip if this package already contains this type
+        // Skip if this namespace already contains this type
         if (in_array($type, $this->types, true)) {
             return $type;
         }
 
-        if ($type->getPackage() !== null) {
-            $type->getPackage()->removeType($type);
+        if ($type->getNamespace() !== null) {
+            $type->getNamespace()->removeType($type);
         }
 
-        // Set this as class package
-        $type->setPackage($this);
+        // Set this as class namespace
+        $type->setNamespace($this);
         // Append class to internal list
         $this->types[$type->getUuid()] = $type;
 
@@ -253,7 +252,7 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Removes the given type instance from this package.
+     * Removes the given type instance from this namespace.
      *
      * @param \PDepend\Source\AST\AbstractASTType $type
      * @return void
@@ -264,12 +263,13 @@ class ASTNamespace extends AbstractASTArtifact
             // Remove class from internal list
             unset($this->types[$index]);
             // Remove this as parent
-            $type->unsetPackage();
+            $type->unsetNamespace();
         }
     }
 
     /**
-     * Returns all {@link \PDepend\Source\AST\ASTFunction} objects in this package.
+     * Returns all {@link \PDepend\Source\AST\ASTFunction} objects in this
+     * namespace.
      *
      * @return \PDepend\Source\AST\ASTFunction[]
      */
@@ -279,19 +279,18 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Adds the given function to this package and returns the input instance.
+     * Adds the given function to this namespace and returns the input instance.
      *
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return \PDepend\Source\AST\ASTFunction
      */
     public function addFunction(ASTFunction $function)
     {
-        if ($function->getPackage() !== null) {
-            $function->getPackage()->removeFunction($function);
+        if ($function->getNamespace() !== null) {
+            $function->getNamespace()->removeFunction($function);
         }
 
-        // Set this as function package
-        $function->setPackage($this);
+        $function->setNamespace($this);
         // Append function to internal list
         $this->functions[$function->getUuid()] = $function;
 
@@ -299,7 +298,7 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Removes the given function from this package.
+     * Removes the given function from this namespace.
      *
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
@@ -310,7 +309,7 @@ class ASTNamespace extends AbstractASTArtifact
             // Remove function from internal list
             unset($this->functions[$index]);
             // Remove this as parent
-            $function->unsetPackage();
+            $function->unsetNamespace();
         }
     }
 

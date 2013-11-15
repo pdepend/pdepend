@@ -61,12 +61,12 @@ class ASTFunction extends AbstractASTCallable
     const CLAZZ = __CLASS__;
 
     /**
-     * The parent package for this function.
+     * The parent namespace for this function.
      *
      * @var \PDepend\Source\AST\ASTNamespace
      * @since 0.10.0
      */
-    private $package = null;
+    private $namespace = null;
 
     /**
      * The currently used builder context.
@@ -77,12 +77,12 @@ class ASTFunction extends AbstractASTCallable
     protected $context = null;
 
     /**
-     * The name of the parent package for this function. We use this property
-     * to restore the parent package while we unserialize a cached object tree.
+     * The name of the parent namespace for this function. We use this property
+     * to restore the parent namespace while we unserialize a cached object tree.
      *
      * @var string
      */
-    protected $packageName = null;
+    protected $namespaceName = null;
 
     /**
      * Sets the currently active builder context.
@@ -98,49 +98,49 @@ class ASTFunction extends AbstractASTCallable
     }
 
     /**
-     * Returns the parent package for this function.
+     * Returns the parent namespace for this function.
      *
      * @return \PDepend\Source\AST\ASTNamespace
      */
-    public function getPackage()
+    public function getNamespace()
     {
-        return $this->package;
+        return $this->namespace;
     }
 
     /**
-     * Sets the parent package for this function.
+     * Sets the parent namespace for this function.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $package
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function setPackage(ASTNamespace $package)
+    public function setNamespace(ASTNamespace $namespace)
     {
-        $this->packageName = $package->getName();
-        $this->package    = $package;
+        $this->namespaceName = $namespace->getName();
+        $this->namespace = $namespace;
     }
 
     /**
-     * Resets the package associated with this function node.
+     * Resets the namespace associated with this function node.
      *
      * @return void
      * @since 0.10.2
      */
-    public function unsetPackage()
+    public function unsetNamespace()
     {
-        $this->packageName = null;
-        $this->package    = null;
+        $this->namespaceName = null;
+        $this->namespace = null;
     }
 
     /**
      * Returns the name of the parent namespace/package or <b>NULL</b> when this
-     * function does not belong to a package.
+     * function does not belong to a namespace.
      *
      * @return string
      * @since 0.10.0
      */
-    public function getPackageName()
+    public function getNamespaceName()
     {
-        return $this->packageName;
+        return $this->namespaceName;
     }
 
     /**
@@ -164,7 +164,7 @@ class ASTFunction extends AbstractASTCallable
      */
     public function __sleep()
     {
-        return array_merge(array('context', 'packageName'), parent::__sleep());
+        return array_merge(array('context', 'namespaceName'), parent::__sleep());
     }
 
     /**

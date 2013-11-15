@@ -65,13 +65,10 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testStaticMethodCallInFunctionBody()
     {
-        $namespace = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current()
+        $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
             ->current()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('PDepend', $namespace->getName());
     }
@@ -87,13 +84,10 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testStaticMethodLeadingBackslashCallInFunctionBody()
     {
-        $namespace = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current()
+        $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
             ->current()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('PDepend', $namespace->getName());
     }
@@ -128,13 +122,10 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testQualifiedPropertyAccessAsDependencyInFunctionBody()
     {
-        $namespace = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current()
+        $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
             ->current()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('PDepend', $namespace->getName());
     }
@@ -150,13 +141,10 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testQualifiedConstantAccessAsDependencyInFunctionBody()
     {
-        $namespace = self::parseCodeResourceForTest()
-            ->current()
-            ->getFunctions()
-            ->current()
+        $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
             ->current()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('PDepend', $namespace->getName());
     }

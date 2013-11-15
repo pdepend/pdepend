@@ -134,7 +134,7 @@ class Engine
     private $fileFilter = null;
 
     /**
-     * A filter for source packages.
+     * A filter for namespace.
      *
      * @var \PDepend\Source\AST\ASTArtifactList\ArtifactFilter
      */
@@ -307,7 +307,7 @@ class Engine
 
     /**
      * Analyzes the registered directories and returns the collection of
-     * analyzed packages.
+     * analyzed namespace.
      *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
@@ -328,7 +328,7 @@ class Engine
         // Set global filter for logging
         $collection->setFilter($this->codeFilter);
 
-        $namespaces = $this->builder->getPackages();
+        $namespaces = $this->builder->getNamespaces();
 
         $this->fireStartLogProcess();
 
@@ -376,14 +376,14 @@ class Engine
     }
 
     /**
-     *  Returns the number of analyzed packages.
+     *  Returns the number of analyzed namespaces.
      *
      * @return integer
      */
-    public function countPackages()
+    public function countNamespaces()
     {
         if ($this->namespaces === null) {
-            $msg = 'countPackages() doesn\'t work before the source was analyzed.';
+            $msg = 'countNamespaces() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
 
@@ -397,16 +397,17 @@ class Engine
     }
 
     /**
-     * Returns the analyzed package of the specified name.
+     * Returns the analyzed namespace for the given name.
      *
      * @param string $name
      * @return \PDepend\Source\AST\ASTNamespace
      * @throws \OutOfBoundsException
+     * @throws \RuntimeException
      */
-    public function getPackage($name)
+    public function getNamespace($name)
     {
         if ($this->namespaces === null) {
-            $msg = 'getPackage() doesn\'t work before the source was analyzed.';
+            $msg = 'getNamespace() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
         foreach ($this->namespaces as $namespace) {
@@ -414,18 +415,19 @@ class Engine
                 return $namespace;
             }
         }
-        throw new \OutOfBoundsException(sprintf('Unknown package "%s".', $name));
+        throw new \OutOfBoundsException(sprintf('Unknown namespace "%s".', $name));
     }
 
     /**
-     * Returns an iterator of the analyzed packages.
+     * Returns an array with the analyzed namespace.
      *
      * @return \PDepend\Source\AST\ASTNamespace[]
+     * @throws \RuntimeException
      */
-    public function getPackages()
+    public function getNamespaces()
     {
         if ($this->namespaces === null) {
-            $msg = 'getPackages() doesn\'t work before the source was analyzed.';
+            $msg = 'getNamespaces() doesn\'t work before the source was analyzed.';
             throw new \RuntimeException($msg);
         }
         return $this->namespaces;
@@ -598,7 +600,7 @@ class Engine
                 $collection->setFilter($this->codeFilter);
             }
 
-            $analyzer->analyze($this->builder->getPackages());
+            $analyzer->analyze($this->builder->getNamespaces());
 
             // Remove filters if this analyzer is filter aware
             $collection->setFilter();

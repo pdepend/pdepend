@@ -47,7 +47,7 @@ use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
- * Collects class and package metrics based on class properties.
+ * Collects class and namespace metrics based on class properties.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -86,10 +86,10 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             return;
         }
 
-        $depPackage = $depClass->getPackage();
+        $depNamespace = $depClass->getNamespace();
 
         $class = $property->getDeclaringClass();
-        $namespace = $class->getPackage();
+        $namespace = $class->getNamespace();
 
         if ($depClass !== $class) {
             $this->initNode($class);
@@ -99,12 +99,12 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->nodes[$depClass->getUuid()]['out'][] = $class->getUuid();
         }
 
-        if ($depPackage !== $namespace) {
+        if ($depNamespace !== $namespace) {
             $this->initNode($namespace);
-            $this->initNode($depPackage);
+            $this->initNode($depNamespace);
 
-            $this->nodes[$namespace->getUuid()]['in'][]     = $depPackage->getUuid();
-            $this->nodes[$depPackage->getUuid()]['out'][] = $namespace->getUuid();
+            $this->nodes[$namespace->getUuid()]['in'][]     = $depNamespace->getUuid();
+            $this->nodes[$depNamespace->getUuid()]['out'][] = $namespace->getUuid();
         }
 
         $this->fireEndProperty($property);

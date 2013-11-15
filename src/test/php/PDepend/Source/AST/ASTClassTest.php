@@ -839,8 +839,8 @@ class ASTClassTest extends AbstractASTArtifactTest
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
-            $orig->getPackage(),
-            $copy->getPackage()
+            $orig->getNamespace(),
+            $copy->getNamespace()
         );
     }
 
@@ -854,7 +854,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($copy, $orig->getPackage()->getClasses()->current());
+        $this->assertSame($copy, $orig->getNamespace()->getClasses()->current());
     }
 
     /**
@@ -867,7 +867,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, $orig->getPackage()->getClasses()->count());
+        $this->assertEquals(1, count($orig->getNamespace()->getClasses()));
     }
 
     /**
@@ -991,61 +991,61 @@ class ASTClassTest extends AbstractASTArtifactTest
     }
 
     /**
-     * testGetPackageReturnsNullByDefault
+     * testGetNamespaceReturnsNullByDefault
      *
      * @return void
      */
-    public function testGetPackageReturnsNullByDefault()
+    public function testGetNamespaceReturnsNullByDefault()
     {
         $class = new ASTClass(__CLASS__);
-        $this->assertNull($class->getPackage());
+        $this->assertNull($class->getNamespace());
     }
 
     /**
-     * Tests that the {@link \PDepend\Source\AST\ASTClass::getPackage()}
-     * returns as default value <b>null</b> and that the package could be set
+     * Tests that the {@link \PDepend\Source\AST\ASTClass::getNamespace()}
+     * returns as default value <b>null</b> and that the namespace could be set
      * and unset.
      *
      * @return void
      */
-    public function testGetSetPackage()
+    public function testGetSetNamespace()
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $class   = new ASTClass(__CLASS__);
 
-        $class->setPackage($namespace);
-        $this->assertSame($namespace, $class->getPackage());
+        $class->setNamespace($namespace);
+        $this->assertSame($namespace, $class->getNamespace());
     }
 
     /**
-     * testUnsetPackageResetsPackageReference
+     * testUnsetNamespaceResetsNamespaceReference
      *
      * @return void
      */
-    public function testUnsetPackageResetsPackageReference()
+    public function testUnsetNamespaceResetsNamespaceReference()
     {
         $class = new ASTClass(__CLASS__);
 
-        $class->setPackage(new ASTNamespace(__FUNCTION__));
-        $class->unsetPackage();
+        $class->setNamespace(new ASTNamespace(__FUNCTION__));
+        $class->unsetNamespace();
 
-        $this->assertNull($class->getPackage());
+        $this->assertNull($class->getNamespace());
     }
 
     /**
-     * testUnsetPackageResetsPackageNameProperty
+     * testUnsetNamespaceResetsNamespaceNameProperty
      *
      * @return void
      * @since 0.10.2
      */
-    public function testUnsetPackageResetsPackageNameProperty()
+    public function testUnsetNamespaceResetsNamespaceNameProperty()
     {
         $class = new ASTClass(__CLASS__);
 
-        $class->setPackage(new ASTNamespace(__FUNCTION__));
-        $class->unsetPackage();
+        $class->setNamespace(new ASTNamespace(__FUNCTION__));
+        $class->unsetNamespace();
 
-        $this->assertNull($class->getPackageName());
+        $this->assertNull($class->getNamespaceName());
     }
 
     /**
@@ -1073,7 +1073,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      *
      * @return void
      */
-    public function testGetInterfacesByInheritence()
+    public function testGetInterfacesByInheritance()
     {
         $classes = self::parseCodeResourceForTest()
             ->current()
@@ -1570,7 +1570,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class = new ASTClass(__CLASS__);
         $class->setCache(new MemoryCacheDriver());
-        $class->setPackage(new ASTNamespace(__FUNCTION__));
+        $class->setNamespace(new ASTNamespace(__FUNCTION__));
 
         $this->assertEquals(
             array(
@@ -1584,7 +1584,7 @@ class ASTClassTest extends AbstractASTArtifactTest
                 'modifiers',
                 'name',
                 'nodes',
-                'packageName',
+                'namespaceName',
                 'startLine',
                 'userDefined',
                 'uuid'

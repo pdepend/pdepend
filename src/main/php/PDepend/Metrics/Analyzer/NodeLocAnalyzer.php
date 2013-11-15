@@ -171,10 +171,10 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces All code packages.
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->metrics === null) {
             $this->loadCache();

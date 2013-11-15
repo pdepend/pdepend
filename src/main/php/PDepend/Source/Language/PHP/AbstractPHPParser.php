@@ -161,14 +161,14 @@ abstract class AbstractPHPParser
      *
      * @var string
      */
-    private $packageName = Builder::DEFAULT_PACKAGE;
+    private $packageName = Builder::DEFAULT_NAMESPACE;
 
     /**
      * The package defined in the file level comment.
      *
      * @var string
      */
-    private $globalPackageName = Builder::DEFAULT_PACKAGE;
+    private $globalPackageName = Builder::DEFAULT_NAMESPACE;
 
     /**
      * The used data structure builder.
@@ -435,7 +435,7 @@ abstract class AbstractPHPParser
      */
     protected function reset($modifiers = 0)
     {
-        $this->packageName = Builder::DEFAULT_PACKAGE;
+        $this->packageName = Builder::DEFAULT_NAMESPACE;
         $this->docComment  = null;
         $this->modifiers   = $modifiers;
     }
@@ -1067,14 +1067,14 @@ abstract class AbstractPHPParser
         // First check for an existing namespace
         if ($this->namespaceName !== null) {
             $packageName = $this->namespaceName;
-        } elseif ($this->packageName !== Builder::DEFAULT_PACKAGE) {
+        } elseif ($this->packageName !== Builder::DEFAULT_NAMESPACE) {
             $packageName = $this->packageName;
         } else {
             $packageName = $this->globalPackageName;
         }
 
         $this->builder
-            ->buildPackage($packageName)
+            ->buildNamespace($packageName)
             ->addFunction($function);
 
         // Store function in source file, because we need them during the file's
@@ -6338,7 +6338,7 @@ abstract class AbstractPHPParser
      */
     private function getNamespaceOrPackage()
     {
-        return $this->builder->buildPackage($this->getNamespaceOrPackageName());
+        return $this->builder->buildNamespace($this->getNamespaceOrPackageName());
     }
 
     /**
@@ -6350,7 +6350,7 @@ abstract class AbstractPHPParser
      */
     private function parsePackageAnnotation($comment)
     {
-        $package = Builder::DEFAULT_PACKAGE;
+        $package = Builder::DEFAULT_NAMESPACE;
         if (preg_match('#\*\s*@package\s+(\S+)#', $comment, $match)) {
             $package = trim($match[1]);
             if (preg_match('#\*\s*@subpackage\s+(\S+)#', $comment, $match)) {
@@ -6359,7 +6359,7 @@ abstract class AbstractPHPParser
         }
 
         // Check for doc level comment
-        if ($this->globalPackageName === Builder::DEFAULT_PACKAGE
+        if ($this->globalPackageName === Builder::DEFAULT_NAMESPACE
             && $this->isFileComment() === true
         ) {
             $this->globalPackageName = $package;

@@ -44,7 +44,6 @@ namespace PDepend\Report\Summary;
 
 use PDepend\Metrics\AnalyzerListener;
 use PDepend\Metrics\AnalyzerProjectAware;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Dummy implementation of an analyzer.
@@ -77,7 +76,8 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener) {
+    public function addAnalyzeListener(AnalyzerListener $listener)
+    {
     }
 
     /**
@@ -86,16 +86,17 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(AnalyzerListener $listener) {
+    public function removeAnalyzeListener(AnalyzerListener $listener)
+    {
     }
 
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
     }
 

@@ -89,7 +89,7 @@ class PHPBuilder implements Builder
      * @param \PDepend\Source\AST\ASTNamespace[]
      * @since 0.9.12
      */
-    private $preparedPackages = null;
+    private $preparedNamespaces = null;
 
     /**
      * Default package which contains all functions and classes with an unknown
@@ -174,10 +174,10 @@ class PHPBuilder implements Builder
      */
     public function __construct()
     {
-        $this->defaultPackage = new ASTNamespace(self::DEFAULT_PACKAGE);
+        $this->defaultPackage = new ASTNamespace(self::DEFAULT_NAMESPACE);
         $this->defaultCompilationUnit = new ASTCompilationUnit(null);
 
-        $this->namespaces[self::DEFAULT_PACKAGE] = $this->defaultPackage;
+        $this->namespaces[self::DEFAULT_NAMESPACE] = $this->defaultPackage;
 
         $this->context = new GlobalBuilderContext($this);
     }
@@ -465,7 +465,7 @@ class PHPBuilder implements Builder
      * @param string $name The package name.
      * @return \PDepend\Source\AST\ASTNamespace
      */
-    public function buildPackage($name)
+    public function buildNamespace($name)
     {
         if (!isset($this->namespaces[$name])) {
             // Debug package creation
@@ -1736,7 +1736,7 @@ class PHPBuilder implements Builder
      */
     public function getIterator()
     {
-        return $this->getPackages();
+        return $this->getNamespaces();
     }
 
     /**
@@ -1745,12 +1745,12 @@ class PHPBuilder implements Builder
      *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public function getPackages()
+    public function getNamespaces()
     {
-        if ($this->preparedPackages === null) {
-            $this->preparedPackages = $this->getPreparedPackages();
+        if ($this->preparedNamespaces === null) {
+            $this->preparedNamespaces = $this->getPreparedNamespaces();
         }
-        return new ASTArtifactList($this->preparedPackages);
+        return new ASTArtifactList($this->preparedNamespaces);
     }
 
     /**
@@ -1760,7 +1760,7 @@ class PHPBuilder implements Builder
      * @return \PDepend\Source\AST\ASTArtifactList
      * @since 0.9.12
      */
-    private function getPreparedPackages()
+    private function getPreparedNamespaces()
     {
         // Create a package array copy
         $namespaces = $this->namespaces;
@@ -1769,7 +1769,7 @@ class PHPBuilder implements Builder
         if ($this->defaultPackage->getTypes()->count() === 0
             && $this->defaultPackage->getFunctions()->count() === 0
         ) {
-            unset($namespaces[self::DEFAULT_PACKAGE]);
+            unset($namespaces[self::DEFAULT_NAMESPACE]);
         }
         return $namespaces;
     }
@@ -1807,8 +1807,8 @@ class PHPBuilder implements Builder
         $this->internal = true;
 
         $trait = $this->buildTrait($qualifiedName);
-        $trait->setPackage(
-            $this->buildPackage($this->extractPackageName($qualifiedName))
+        $trait->setNamespace(
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName))
         );
 
         $this->restoreTrait($trait);
@@ -1879,8 +1879,8 @@ class PHPBuilder implements Builder
         $this->internal = true;
 
         $interface = $this->buildInterface($qualifiedName);
-        $interface->setPackage(
-            $this->buildPackage($this->extractPackageName($qualifiedName))
+        $interface->setNamespace(
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName))
         );
 
         $this->restoreInterface($interface);
@@ -1948,8 +1948,8 @@ class PHPBuilder implements Builder
         $this->internal = true;
 
         $class = $this->buildClass($qualifiedName);
-        $class->setPackage(
-            $this->buildPackage($this->extractPackageName($qualifiedName))
+        $class->setNamespace(
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName))
         );
 
         $this->restoreClass($class);
@@ -1994,7 +1994,7 @@ class PHPBuilder implements Builder
     protected function findType(array $instances, $qualifiedName)
     {
         $classOrInterfaceName = $this->extractTypeName($qualifiedName);
-        $packageName          = $this->extractPackageName($qualifiedName);
+        $namespaceName = $this->extractNamespaceName($qualifiedName);
 
         $caseInsensitiveName = strtolower($classOrInterfaceName);
 
@@ -2003,11 +2003,11 @@ class PHPBuilder implements Builder
         }
 
         // Check for exact match and return first matching instance
-        if (isset($instances[$caseInsensitiveName][$packageName])) {
-            return reset($instances[$caseInsensitiveName][$packageName]);
+        if (isset($instances[$caseInsensitiveName][$namespaceName])) {
+            return reset($instances[$caseInsensitiveName][$namespaceName]);
         }
 
-        if (!$this->isDefault($packageName)) {
+        if (!$this->isDefault($namespaceName)) {
             return null;
         }
 
@@ -2052,10 +2052,10 @@ class PHPBuilder implements Builder
     {
         $copiedTypes = array();
         foreach ($originalTypes as $typeName => $namespaces) {
-            foreach ($namespaces as $package => $types) {
+            foreach ($namespaces as $namespaceName => $types) {
                 foreach ($types as $index => $type) {
-                    if (is_object($type->getPackage())) {
-                        $copiedTypes[$typeName][$package][$index] = $type;
+                    if (is_object($type->getNamespace())) {
+                        $copiedTypes[$typeName][$namespaceName][$index] = $type;
                     }
                 }
             }
@@ -2072,7 +2072,7 @@ class PHPBuilder implements Builder
      */
     public function restoreFunction(ASTFunction $function)
     {
-        $this->buildPackage($function->getPackageName())
+        $this->buildNamespace($function->getNamespaceName())
             ->addFunction($function);
     }
 
@@ -2087,7 +2087,7 @@ class PHPBuilder implements Builder
     {
         $this->storeTrait(
             $trait->getName(),
-            $trait->getPackageName(),
+            $trait->getNamespaceName(),
             $trait
         );
     }
@@ -2103,7 +2103,7 @@ class PHPBuilder implements Builder
     {
         $this->storeClass(
             $class->getName(),
-            $class->getPackageName(),
+            $class->getNamespaceName(),
             $class
         );
     }
@@ -2119,7 +2119,7 @@ class PHPBuilder implements Builder
     {
         $this->storeInterface(
             $interface->getName(),
-            $interface->getPackageName(),
+            $interface->getNamespaceName(),
             $interface
         );
     }
@@ -2128,64 +2128,64 @@ class PHPBuilder implements Builder
      * This method will persist a trait instance for later reuse.
      *
      * @param string $traitName
-     * @param string $packageName
+     * @param string $namespaceName
      * @param \PDepend\Source\AST\ASTTrait $trait
      * @return void
      * @@since 1.0.0
      */
-    protected function storeTrait($traitName, $packageName, ASTTrait $trait)
+    protected function storeTrait($traitName, $namespaceName, ASTTrait $trait)
     {
         $traitName = strtolower($traitName);
-        if (!isset($this->traits[$traitName][$packageName])) {
-            $this->traits[$traitName][$packageName] = array();
+        if (!isset($this->traits[$traitName][$namespaceName])) {
+            $this->traits[$traitName][$namespaceName] = array();
         }
-        $this->traits[$traitName][$packageName][$trait->getUuid()] = $trait;
+        $this->traits[$traitName][$namespaceName][$trait->getUuid()] = $trait;
 
-        $package = $this->buildPackage($packageName);
-        $package->addType($trait);
+        $namespace = $this->buildNamespace($namespaceName);
+        $namespace->addType($trait);
     }
 
     /**
      * This method will persist a class instance for later reuse.
      *
      * @param string $className
-     * @param string $packageName
+     * @param string $namespaceName
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      * @@since 0.9.5
      */
-    protected function storeClass($className, $packageName, ASTClass $class)
+    protected function storeClass($className, $namespaceName, ASTClass $class)
     {
         $className = strtolower($className);
-        if (!isset($this->classes[$className][$packageName])) {
-            $this->classes[$className][$packageName] = array();
+        if (!isset($this->classes[$className][$namespaceName])) {
+            $this->classes[$className][$namespaceName] = array();
         }
-        $this->classes[$className][$packageName][$class->getUuid()] = $class;
+        $this->classes[$className][$namespaceName][$class->getUuid()] = $class;
 
-        $package = $this->buildPackage($packageName);
-        $package->addType($class);
+        $namespace = $this->buildNamespace($namespaceName);
+        $namespace->addType($class);
     }
 
     /**
      * This method will persist an interface instance for later reuse.
      *
      * @param string $interfaceName
-     * @param string $packageName
+     * @param string $namespaceName
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      * @@since 0.9.5
      */
-    protected function storeInterface($interfaceName, $packageName, ASTInterface $interface)
+    protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface)
     {
         $interfaceName = strtolower($interfaceName);
-        if (!isset($this->interfaces[$interfaceName][$packageName])) {
-            $this->interfaces[$interfaceName][$packageName] = array();
+        if (!isset($this->interfaces[$interfaceName][$namespaceName])) {
+            $this->interfaces[$interfaceName][$namespaceName] = array();
         }
-        $this->interfaces[$interfaceName][$packageName][$interface->getUuid()]
+        $this->interfaces[$interfaceName][$namespaceName][$interface->getUuid()]
             = $interface;
 
-        $package = $this->buildPackage($packageName);
-        $package->addType($interface);
+        $namespace = $this->buildNamespace($namespaceName);
+        $namespace->addType($interface);
     }
 
     /**
@@ -2210,12 +2210,12 @@ class PHPBuilder implements Builder
     /**
      * Returns <b>true</b> if the given package is the default package.
      *
-     * @param string $packageName The package name.
+     * @param string $namespaceName The package name.
      * @return boolean
      */
-    protected function isDefault($packageName)
+    protected function isDefault($namespaceName)
     {
-        return ($packageName === self::DEFAULT_PACKAGE);
+        return ($namespaceName === self::DEFAULT_NAMESPACE);
     }
 
     /**
@@ -2247,13 +2247,13 @@ class PHPBuilder implements Builder
      * return the default identifier.
      *
      * <code>
-     *   $packageName = $this->extractPackageName('foo\bar\foobar');
-     *   var_dump($packageName);
+     *   $namespaceName = $this->extractPackageName('foo\bar\foobar');
+     *   var_dump($namespaceName);
      *   // Results in:
      *   // string(8) "foo\bar"
      *
-     *   $packageName = $this->extractPackageName('foobar');
-     *   var_dump($packageName);
+     *   $namespaceName = $this->extractPackageName('foobar');
+     *   var_dump($namespaceName);
      *   // Results in:
      *   // string(6) "+global"
      * </code>
@@ -2262,14 +2262,14 @@ class PHPBuilder implements Builder
      *
      * @return string
      */
-    protected function extractPackageName($qualifiedName)
+    protected function extractNamespaceName($qualifiedName)
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return ltrim(substr($qualifiedName, 0, $pos), '\\');
         } elseif (Type::isInternalType($qualifiedName)) {
             return Type::getTypePackage($qualifiedName);
         }
-        return self::DEFAULT_PACKAGE;
+        return self::DEFAULT_NAMESPACE;
     }
 
     /**

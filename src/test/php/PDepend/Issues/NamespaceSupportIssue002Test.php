@@ -62,7 +62,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
-            ->getPackage();
+            ->getNamespace();
 
         $this->assertEquals('foo', $namespace->getName());
     }
@@ -81,11 +81,11 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
 
         $parentClass = $class->getParentClass();
         $this->assertEquals('FooBar', $parentClass->getName());
-        $this->assertEquals('foo', $parentClass->getPackage()->getName());
+        $this->assertEquals('foo', $parentClass->getNamespace()->getName());
 
         $interface = $class->getInterfaces()->current();
         $this->assertEquals('Bar', $interface->getName());
-        $this->assertEquals('foo', $interface->getPackage()->getName());
+        $this->assertEquals('foo', $interface->getNamespace()->getName());
     }
 
     /**
@@ -103,7 +103,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
 
         $parentClass = $class->getParentClass();
         $this->assertEquals('Bar', $parentClass->getName());
-        $this->assertEquals('foo\bar', $parentClass->getPackage()->getName());
+        $this->assertEquals('foo\bar', $parentClass->getNamespace()->getName());
     }
 
     /**
@@ -217,7 +217,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
                           ->getClasses()
                           ->current();
 
-        $this->assertEquals('bar', $class->getPackage()->getName());
+        $this->assertEquals('bar', $class->getNamespace()->getName());
     }
 
     /**
@@ -234,7 +234,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
                           ->getClasses()
                           ->current();
 
-        $this->assertEquals('bar', $class->getPackage()->getName());
+        $this->assertEquals('bar', $class->getNamespace()->getName());
     }
 
     /**
@@ -311,7 +311,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
                              ->getFunctions()
                              ->current();
 
-        $this->assertEquals('foo\bar', $function->getPackage()->getName());
+        $this->assertEquals('foo\bar', $function->getNamespace()->getName());
     }
 
     /**
@@ -333,7 +333,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
         
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**
@@ -356,10 +356,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
         $dependency = $function->getDependencies()
                                ->current();
 
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
         $this->assertContains(
-            $function->getPackage()->getName(),
-            $dependency->getPackage()->getName()
+            $function->getNamespace()->getName(),
+            $dependency->getNamespace()->getName()
         );
     }
 
@@ -382,7 +382,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
         
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**
@@ -404,7 +404,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
 
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**
@@ -426,7 +426,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
 
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**
@@ -448,7 +448,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
 
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**
@@ -470,7 +470,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
         
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**
@@ -492,7 +492,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->getDependencies()
             ->current();
 
-        $this->assertEquals($namespaceName, $dependency->getPackage()->getName());
+        $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
     /**

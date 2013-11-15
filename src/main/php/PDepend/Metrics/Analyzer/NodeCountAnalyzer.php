@@ -56,7 +56,7 @@ use PDepend\Source\AST\ASTNamespace;
 
 /**
  * This analyzer collects different count metrics for code artifacts like
- * classes, methods, functions or packages.
+ * classes, methods, functions or namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -173,20 +173,18 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         // Check for previous run
         if ($this->nodeMetrics === null) {
 
             $this->fireStartAnalyzer();
 
-            // Init node metrics
             $this->nodeMetrics = array();
 
-            // Process all packages
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
             }
@@ -212,8 +210,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global class count
         ++$this->noc;
 
-        // Update parent package
-        $id = $class->getPackage()->getUuid();
+        $id = $class->getNamespace()->getUuid();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
         $this->nodeMetrics[$class->getUuid()] = array(
@@ -240,8 +237,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global function count
         ++$this->nof;
 
-        // Update parent package
-        $id = $function->getPackage()->getUuid();
+        $id = $function->getNamespace()->getUuid();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
@@ -264,8 +260,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global class count
         ++$this->noi;
 
-        // Update parent package
-        $id = $interface->getPackage()->getUuid();
+        $id = $interface->getNamespace()->getUuid();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_INTERFACES];
 
         $this->nodeMetrics[$interface->getUuid()] = array(
@@ -298,24 +293,22 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $parentUUID = $parent->getUuid();
         ++$this->nodeMetrics[$parentUUID][self::M_NUMBER_OF_METHODS];
 
-        // Update parent package
-        $id = $parent->getPackage()->getUuid();
+        $id = $parent->getNamespace()->getUuid();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
     }
 
     /**
-     * Visits a package node.
+     * Visits a namespace node.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($namespace);
+        $this->fireStartNamespace($namespace);
 
-        // Update package count
         ++$this->nop;
 
         $this->nodeMetrics[$namespace->getUuid()] = array(
@@ -336,6 +329,6 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
             $function->accept($this);
         }
 
-        $this->fireEndPackage($namespace);
+        $this->fireEndNamespace($namespace);
     }
 }

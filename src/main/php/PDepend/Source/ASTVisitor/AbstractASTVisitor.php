@@ -201,14 +201,14 @@ abstract class AbstractASTVisitor implements ASTVisitor
     }
 
     /**
-     * Visits a package node.
+     * Visits a namespace node.
      *
      * @param ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($namespace);
+        $this->fireStartNamespace($namespace);
 
         foreach ($namespace->getClasses() as $class) {
             $class->accept($this);
@@ -223,7 +223,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
             $function->accept($this);
         }
 
-        $this->fireEndPackage($namespace);
+        $this->fireEndNamespace($namespace);
     }
 
     /**
@@ -440,28 +440,28 @@ abstract class AbstractASTVisitor implements ASTVisitor
     }
 
     /**
-     * Sends a start package event.
+     * Sends a start namespace event.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    protected function fireStartPackage(ASTNamespace $namespace)
+    protected function fireStartNamespace(ASTNamespace $namespace)
     {
         foreach ($this->listeners as $listener) {
-            $listener->startVisitPackage($namespace);
+            $listener->startVisitNamespace($namespace);
         }
     }
 
     /**
-     * Sends an end package event.
+     * Sends an end namespace event.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    protected function fireEndPackage(ASTNamespace $namespace)
+    protected function fireEndNamespace(ASTNamespace $namespace)
     {
         foreach ($this->listeners as $listener) {
-            $listener->endVisitPackage($namespace);
+            $listener->endVisitNamespace($namespace);
         }
     }
 

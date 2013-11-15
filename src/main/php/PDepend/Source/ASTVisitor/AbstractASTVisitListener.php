@@ -197,23 +197,23 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     }
 
     /**
-     * Is called when the visitor starts a new package instance.
+     * Is called when the visitor starts a new namespace instance.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function startVisitPackage(ASTNamespace $namespace)
+    public function startVisitNamespace(ASTNamespace $namespace)
     {
         $this->startVisitNode($namespace);
     }
 
     /**
-     * Is called when the visitor ends with a package instance.
+     * Is called when the visitor ends with a namespace instance.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function endVisitPackage(ASTNamespace $namespace)
+    public function endVisitNamespace(ASTNamespace $namespace)
     {
         $this->endVisitNode($namespace);
     }

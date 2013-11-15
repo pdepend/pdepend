@@ -92,7 +92,7 @@ class EngineTest extends AbstractTest
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
+        $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
 
         $this->assertInstanceOf('Iterator', $engine->analyze());
     }
@@ -107,7 +107,7 @@ class EngineTest extends AbstractTest
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
+        $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
         
         $metrics = $engine->analyze();
         
@@ -146,9 +146,9 @@ class EngineTest extends AbstractTest
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array(__METHOD__)));
+        $engine->addFileFilter(new Input\ExtensionFilter(array(__METHOD__)));
        
-        $this->assertEquals(0, $engine->analyze()->count()); 
+        $this->assertEquals(0, count($engine->analyze()));
     }
     
     /**
@@ -161,7 +161,7 @@ class EngineTest extends AbstractTest
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('inc')));
+        $engine->addFileFilter(new Input\ExtensionFilter(array('inc')));
         $engine->setWithoutAnnotations();
         $namespaces = $engine->analyze();
         
@@ -185,7 +185,7 @@ class EngineTest extends AbstractTest
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->addFileFilter(new \PDepend\Input\ExtensionFilter(array('php')));
+        $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
         $engine->analyze();
         
         $this->assertEquals(10, $engine->countClasses());
@@ -210,45 +210,45 @@ class EngineTest extends AbstractTest
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::countPackages()} method
-     * returns the expected number of packages.
+     * Tests that the {@link \PDepend\Engine::countNamespaces()} method
+     * returns the expected number of namespaces.
      *
      * @return void
      */
-    public function testCountPackages()
+    public function testCountNamespaces()
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
         $engine->analyze();
         
-        $this->assertEquals(4, $engine->countPackages());
+        $this->assertEquals(4, $engine->countNamespaces());
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::countPackages()} method
+     * Tests that the {@link \PDepend\Engine::countNamespaces()} method
      * fails with an exception if the code was not analyzed before.
      *
      * @return void
      */
-    public function testCountPackagesWithoutAnalyzeFail()
+    public function testCountNamespacesWithoutAnalyzeFail()
     {
         $this->setExpectedException(
-            'RuntimeException', 
-            'countPackages() doesn\'t work before the source was analyzed.'
+            'RuntimeException',
+            'countNamespaces() doesn\'t work before the source was analyzed.'
         );
         
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->countPackages();
+        $engine->countNamespaces();
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::getPackage()} method
+     * Tests that the {@link \PDepend\Engine::getNamespace()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects.
      *
      * @return void
      */
-    public function testGetPackage()
+    public function testGetNamespace()
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
@@ -263,84 +263,83 @@ class EngineTest extends AbstractTest
         $className = '\\PDepend\\Source\\AST\\ASTNamespace';
         
         foreach ($namespaces as $namespace) {
-            $this->assertInstanceOf($className, $engine->getPackage($namespace));
+            $this->assertInstanceOf($className, $engine->getNamespace($namespace));
         }
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::getPackage()} method fails
+     * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if the code was not analyzed before.
      *
      * @return void
      */
-    public function testGetPackageWithoutAnalyzeFail()
+    public function testGetNamespaceWithoutAnalyzeFail()
     {
         $this->setExpectedException(
             'RuntimeException',
-            'getPackage() doesn\'t work before the source was analyzed.'
+            'getNamespace() doesn\'t work before the source was analyzed.'
         );
         
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->getPackage('package1');
+        $engine->getNamespace('package1');
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::getPackage()} method fails
+     * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if you request an invalid package.
      *
      * @return void
      */
-    public function testGetPackageWithUnknownPackageFail()
+    public function testGetNamespacesWithUnknownPackageFail()
     {
         $this->setExpectedException(
             'OutOfBoundsException',
-            'Unknown package "package0".'
+            'Unknown namespace "nspace".'
         );
         
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
         $engine->analyze();
-        $engine->getPackage('package0');
+        $engine->getNamespace('nspace');
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::getPackages()} method
+     * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects
      * and reuses the result of {@link \PDepend\Engine::analyze()}.
      *
      * @return void
      */
-    public function testGetPackages()
+    public function testGetNamespaces()
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
         
         $namespace1 = $engine->analyze();
-        $namespace2 = $engine->getPackages();
+        $namespace2 = $engine->getNamespaces();
         
         $this->assertNotNull($namespace1);
-        $this->assertNotNull($namespace2);
         
         $this->assertSame($namespace1, $namespace2);
     }
     
     /**
-     * Tests that the {@link \PDepend\Engine::getPackages()} method
+     * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * fails with an exception if the code was not analyzed before.
      *
      * @return void
      */
-    public function testGetPackagesWithoutAnalyzeFail()
+    public function testGetNamespacesWithoutAnalyzeFail()
     {
         $this->setExpectedException(
-            'RuntimeException', 
-            'getPackages() doesn\'t work before the source was analyzed.'
+            'RuntimeException',
+            'getNamespaces() doesn\'t work before the source was analyzed.'
         );
         
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceUriForTest());
-        $engine->getPackages();
+        $engine->getNamespaces();
     }
 
     /**
@@ -354,7 +353,7 @@ class EngineTest extends AbstractTest
         $engine->addFile(self::createCodeResourceUriForTest());
         $engine->analyze();
 
-        $namespaces = $engine->getPackages();
+        $namespaces = $engine->getNamespaces();
         $this->assertSame(1, count($namespaces));
 
         return $namespaces[0];

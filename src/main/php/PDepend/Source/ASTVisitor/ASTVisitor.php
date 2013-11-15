@@ -122,7 +122,7 @@ interface ASTVisitor
     public function visitMethod(ASTMethod $method);
 
     /**
-     * Visits a package node.
+     * Visits a namespace node.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void

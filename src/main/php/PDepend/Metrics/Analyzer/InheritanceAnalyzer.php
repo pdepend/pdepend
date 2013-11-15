@@ -172,10 +172,10 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
             $this->nodeMetrics = array();
@@ -188,15 +188,14 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
 
     /**
      * Calculates several inheritance related metrics for the given source
-     * packages.
+     * namespaces.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      * @since 0.9.10
      */
-    private function doAnalyze(ASTArtifactList $namespaces)
+    private function doAnalyze($namespaces)
     {
-        // Process all packages
         foreach ($namespaces as $namespace) {
             $namespace->accept($this);
         }

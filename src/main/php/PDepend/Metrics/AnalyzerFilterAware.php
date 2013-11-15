@@ -43,9 +43,10 @@
 namespace PDepend\Metrics;
 
 /**
- * Simple marker interface that is used to mark an analyzer as package filter
- * aware. This means that a defined package filter for external dependencies on
- * packages an its classes and interfaces must be set before this analyzer starts.
+ * Simple marker interface that is used to mark an analyzer as namespace filter
+ * aware. This means that a defined namespace filter for external dependencies
+ * on namespaces an its classes and interfaces must be set before this analyzer
+ * starts.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License

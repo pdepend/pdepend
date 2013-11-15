@@ -97,8 +97,8 @@ class BuilderParserCacheTest extends AbstractTest
         $builder1 = $this->parseSourceAndReturnBuilder('fileA.php');
 
         $this->assertEquals(
-            count($builder0->getPackages()),
-            count($builder1->getPackages())
+            count($builder0->getNamespaces()),
+            count($builder1->getNamespaces())
         );
     }
 
@@ -113,8 +113,8 @@ class BuilderParserCacheTest extends AbstractTest
         $builder1 = $this->parseSourceAndReturnBuilder('fileB.php');
 
         $this->assertEquals(
-            count($builder0->getPackages()) + 1,
-            count($builder1->getPackages())
+            count($builder0->getNamespaces()) + 1,
+            count($builder1->getNamespaces())
         );
     }
 

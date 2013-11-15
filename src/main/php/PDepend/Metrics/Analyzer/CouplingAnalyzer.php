@@ -184,10 +184,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->uninitialized) {
             $this->doAnalyze($namespaces);
@@ -196,14 +196,14 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     }
 
     /**
-     * This method traverses all packages in the given iterator and calculates
+     * This method traverses all namespaces in the given iterator and calculates
      * the coupling metrics for them.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      * @since 0.10.2
      */
-    private function doAnalyze(ASTArtifactList $namespaces)
+    private function doAnalyze($namespaces)
     {
         $this->fireStartAnalyzer();
         $this->reset();

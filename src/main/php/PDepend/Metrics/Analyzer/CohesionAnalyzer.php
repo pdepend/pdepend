@@ -49,7 +49,7 @@ use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * This analyzer implements several metrics that describe cohesion of classes
- * and packages.
+ * and namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -100,11 +100,11 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      *
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         $this->fireStartAnalyzer();
 

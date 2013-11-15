@@ -314,11 +314,10 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * Executes the command class and returns an array with package statistics.
+     * Executes the command class and returns an array with namespace statistics.
      *
-     * @param array  $argv     The cli arguments.
-     * @param string $pathName The source path.
-     *
+     * @param array $argv
+     * @param string $pathName
      * @return array
      */
     private function _runCommandAndReturnStatistics(array $argv, $pathName)
@@ -551,7 +550,7 @@ class CommandTest extends AbstractTest
         $this->assertRegExp('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
         $this->assertRegExp('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
         $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
-        $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+packages\.)', $actual);
+        $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
         $this->assertRegExp('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
         $this->assertRegExp('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
         $this->assertRegExp('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);

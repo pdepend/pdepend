@@ -44,9 +44,7 @@ namespace PDepend\Report\Summary;
 
 use PDepend\Metrics\AnalyzerListener;
 use PDepend\Metrics\AnalyzerNodeAware;
-use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Dummy implementation of an analyzer.
@@ -94,10 +92,10 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces All code packages.
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
     }
 

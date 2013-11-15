@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 
 /**
- * This visitor generates the metrics for the analyzed packages.
+ * This visitor generates the metrics for the analyzed namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -108,11 +108,11 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * <code>
      * array(
-     *     <package-uuid> => array(
+     *     <namespace-uuid> => array(
      *         \PDepend\Source\AST\ASTNamespace {},
      *         \PDepend\Source\AST\ASTNamespace {},
      *     ),
-     *     <package-uuid> => array(
+     *     <namespace-uuid> => array(
      *         \PDepend\Source\AST\ASTNamespace {},
      *         \PDepend\Source\AST\ASTNamespace {},
      *     ),
@@ -126,10 +126,10 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
 
@@ -229,25 +229,25 @@ class DependencyAnalyzer extends AbstractAnalyzer
     {
         $this->fireStartMethod($method);
 
-        $namespace = $method->getParent()->getPackage();
+        $namespace = $method->getParent()->getNamespace();
         foreach ($method->getDependencies() as $dependency) {
-            $this->collectDependencies($namespace, $dependency->getPackage());
+            $this->collectDependencies($namespace, $dependency->getNamespace());
         }
 
         $this->fireEndMethod($method);
     }
 
     /**
-     * Visits a package node.
+     * Visits a namespace node.
      *
-     * @param PDepend\Source\AST\ASTNamespace $namespace
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($namespace);
+        $this->fireStartNamespace($namespace);
 
-        $this->initPackageMetric($namespace);
+        $this->initNamespaceMetric($namespace);
 
         $this->nodeSet[$namespace->getUuid()] = $namespace;
 
@@ -255,7 +255,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
             $type->accept($this);
         }
 
-        $this->fireEndPackage($namespace);
+        $this->fireEndNamespace($namespace);
     }
 
     /**
@@ -293,22 +293,24 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function visitType(AbstractASTClassOrInterface $type)
     {
-        // Get context package uuid
-        $pkgUUID = $type->getPackage()->getUuid();
+        $id = $type->getNamespace()->getUuid();
 
         // Increment total classes count
-        ++$this->nodeMetrics[$pkgUUID][self::M_NUMBER_OF_CLASSES];
+        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
         // Check for abstract or concrete class
         if ($type->isAbstract()) {
-            ++$this->nodeMetrics[$pkgUUID][self::M_NUMBER_OF_ABSTRACT_CLASSES];
+            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_ABSTRACT_CLASSES];
         } else {
-            ++$this->nodeMetrics[$pkgUUID][self::M_NUMBER_OF_CONCRETE_CLASSES];
+            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
         
-        foreach ($type->getDependencies() as $dep) {
-            $this->collectDependencies($type->getPackage(), $dep->getPackage());
+        foreach ($type->getDependencies() as $dependency) {
+            $this->collectDependencies(
+                $type->getNamespace(),
+                $dependency->getNamespace()
+            );
         }
 
         foreach ($type->getMethods() as $method) {
@@ -317,7 +319,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     }
 
     /**
-     * Collects the dependencies between the two given packages.
+     * Collects the dependencies between the two given namespaces.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespaceA
      * @param \PDepend\Source\AST\ASTNamespace $namespaceB
@@ -334,7 +336,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
         }
 
         // Create a container for this dependency
-        $this->initPackageMetric($namespaceB);
+        $this->initNamespaceMetric($namespaceB);
 
         if (!in_array($idB, $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING])) {
             $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING][] = $idB;
@@ -348,15 +350,13 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    protected function initPackageMetric(ASTNamespace $namespace)
+    protected function initNamespaceMetric(ASTNamespace $namespace)
     {
         $uuid = $namespace->getUuid();
 
         if (!isset($this->nodeMetrics[$uuid])) {
-            // Store a package reference
             $this->nodeSet[$uuid] = $namespace;
 
-            // Create empty metrics for this package
             $this->nodeMetrics[$uuid] = array(
                 self::M_NUMBER_OF_CLASSES           =>  0,
                 self::M_NUMBER_OF_CONCRETE_CLASSES  =>  0,
@@ -456,7 +456,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     }
 
     /**
-     * Collects a single cycle that is reachable by this package. All packages
+     * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
      * @param \PDepend\Source\AST\ASTNamespace[] &$list

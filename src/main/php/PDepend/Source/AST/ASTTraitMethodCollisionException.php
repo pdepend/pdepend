@@ -35,7 +35,7 @@ class ASTTraitMethodCollisionException extends \RuntimeException
                 'Trait method %s has not been applied, because there are ' .
                 'collisions with other trait methods on %s\%s.',
                 $method->getName(),
-                preg_replace('(\W+)', '\\', $type->getPackage()->getName()),
+                preg_replace('(\W+)', '\\', $type->getNamespace()->getName()),
                 $type->getName()
             )
         );

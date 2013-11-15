@@ -61,7 +61,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PDepend\Util\Configuration\ConfigurationFactory;
 
 /**
- * Abstract test case implementation for the PDepend package.
+ * Abstract test case implementation for the PDepend namespace.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -844,7 +844,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
             $parser->parse();
         }
-        return $builder->getPackages();
+        return $builder->getNamespaces();
     }
 }
 

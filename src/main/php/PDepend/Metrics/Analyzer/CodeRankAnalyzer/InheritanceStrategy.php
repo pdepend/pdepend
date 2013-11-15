@@ -49,7 +49,7 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
- * Collects class and package metrics based on inheritance.
+ * Collects class and namespace metrics based on inheritance.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -108,25 +108,25 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      */
     protected function visitType(AbstractASTClassOrInterface $type)
     {
-        $pkg = $type->getPackage();
+        $namespace = $type->getNamespace();
 
-        $this->initNode($pkg);
+        $this->initNode($namespace);
         $this->initNode($type);
 
-        foreach ($type->getDependencies() as $dep) {
+        foreach ($type->getDependencies() as $dependency) {
 
-            $depPkg = $dep->getPackage();
+            $depPkg = $dependency->getNamespace();
 
-            $this->initNode($dep);
+            $this->initNode($dependency);
             $this->initNode($depPkg);
 
-            $this->nodes[$type->getUuid()]['in'][] = $dep->getUuid();
-            $this->nodes[$dep->getUuid()]['out'][] = $type->getUuid();
+            $this->nodes[$type->getUuid()]['in'][] = $dependency->getUuid();
+            $this->nodes[$dependency->getUuid()]['out'][] = $type->getUuid();
 
             // No self references
-            if ($pkg !== $depPkg) {
-                $this->nodes[$pkg->getUuid()]['in'][]     = $depPkg->getUuid();
-                $this->nodes[$depPkg->getUuid()]['out'][] = $pkg->getUuid();
+            if ($namespace !== $depPkg) {
+                $this->nodes[$namespace->getUuid()]['in'][]     = $depPkg->getUuid();
+                $this->nodes[$depPkg->getUuid()]['out'][] = $namespace->getUuid();
             }
         }
     }

@@ -48,7 +48,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
- * Collects class and package metrics based on class and interface methods.
+ * Collects class and namespace metrics based on class and interface methods.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -100,31 +100,31 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
     /**
      * Extracts the coupling information between the two given types and their
-     * parent packages.
+     * parent namespacess.
      *
      * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $depType
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $dependency
      * @return void
      */
-    private function processType(AbstractASTClassOrInterface $type, AbstractASTClassOrInterface $depType)
+    private function processType(AbstractASTClassOrInterface $type, AbstractASTClassOrInterface $dependency)
     {
-        if ($type !== $depType) {
+        if ($type !== $dependency) {
             $this->initNode($type);
-            $this->initNode($depType);
+            $this->initNode($dependency);
 
-            $this->nodes[$type->getUuid()]['in'][]     = $depType->getUuid();
-            $this->nodes[$depType->getUuid()]['out'][] = $type->getUuid();
+            $this->nodes[$type->getUuid()]['in'][] = $dependency->getUuid();
+            $this->nodes[$dependency->getUuid()]['out'][] = $type->getUuid();
         }
 
-        $namespace = $type->getPackage();
-        $depPackage = $depType->getPackage();
+        $namespace = $type->getNamespace();
+        $dependencyNamespace = $dependency->getNamespace();
 
-        if ($namespace !== $depPackage) {
+        if ($namespace !== $dependencyNamespace) {
             $this->initNode($namespace);
-            $this->initNode($depPackage);
+            $this->initNode($dependencyNamespace);
 
-            $this->nodes[$namespace->getUuid()]['in'][]     = $depPackage->getUuid();
-            $this->nodes[$depPackage->getUuid()]['out'][] = $namespace->getUuid();
+            $this->nodes[$namespace->getUuid()]['in'][] = $dependencyNamespace->getUuid();
+            $this->nodes[$dependencyNamespace->getUuid()]['out'][] = $namespace->getUuid();
         }
     }
 

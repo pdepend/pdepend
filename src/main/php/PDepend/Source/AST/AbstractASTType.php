@@ -70,11 +70,11 @@ abstract class AbstractASTType extends AbstractASTArtifact
     protected $context = null;
 
     /**
-     * The parent package for this class.
+     * The parent namespace for this class.
      *
      * @var \PDepend\Source\AST\ASTNamespace
      */
-    private $package = null;
+    private $namespace = null;
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
@@ -114,12 +114,12 @@ abstract class AbstractASTType extends AbstractASTArtifact
     protected $endLine = 0;
 
     /**
-     * Name of the parent package for this class or interface instance. Or
-     * <b>NULL</b> when no package was specified.
+     * Name of the parent namespace for this class or interface instance. Or
+     * <b>NULL</b> when no namespace was specified.
      *
      * @var string
      */
-    protected $packageName = null;
+    protected $namespaceName = null;
 
     /**
      * The modifiers for this class instance.
@@ -384,46 +384,46 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
-     * Returns the name of the parent package.
+     * Returns the name of the parent namespace.
      *
      * @return string
      */
-    public function getPackageName()
+    public function getNamespaceName()
     {
-        return $this->packageName;
+        return $this->namespaceName;
     }
 
     /**
-     * Returns the parent package for this class.
+     * Returns the parent namespace for this class.
      *
      * @return \PDepend\Source\AST\ASTNamespace
      */
-    public function getPackage()
+    public function getNamespace()
     {
-        return $this->package;
+        return $this->namespace;
     }
 
     /**
-     * Sets the parent package for this class.
+     * Sets the parent namespace for this type.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
-    public function setPackage(ASTNamespace $namespace)
+    public function setNamespace(ASTNamespace $namespace)
     {
-        $this->package    = $namespace;
-        $this->packageName = $namespace->getName();
+        $this->namespace = $namespace;
+        $this->namespaceName = $namespace->getName();
     }
 
     /**
-     * Resets the associated package reference.
+     * Resets the associated namespace reference.
      *
      * @return void
      */
-    public function unsetPackage()
+    public function unsetNamespace()
     {
-        $this->package    = null;
-        $this->packageName = null;
+        $this->namespace = null;
+        $this->namespaceName = null;
     }
 
     /**
@@ -481,7 +481,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             'modifiers',
             'name',
             'nodes',
-            'packageName',
+            'namespaceName',
             'startLine',
             'userDefined',
             'uuid'

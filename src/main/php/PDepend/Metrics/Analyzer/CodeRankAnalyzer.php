@@ -49,7 +49,7 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 
 /**
- * Calculates the code rank metric for classes and packages.
+ * Calculates the code rank metric for classes and namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -121,10 +121,10 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
 
@@ -146,7 +146,6 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
                 }
             }
 
-            // First traverse package tree
             foreach ($namespaces as $namespace) {
                 // Traverse all strategies
                 foreach ($this->strategies as $strategy) {

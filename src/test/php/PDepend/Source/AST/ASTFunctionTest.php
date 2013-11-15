@@ -134,48 +134,48 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      *
      * @return void
      */
-    public function testGetPackageReturnsNullByDefault()
+    public function testGetNamespaceReturnsNullByDefault()
     {
         $function = $this->createItem();
-        $this->assertNull($function->getPackage());
+        $this->assertNull($function->getNamespace());
     }
 
     /**
-     * testUnsetPackageWithNullWillResetPreviousPackage
+     * testUnsetNamespaceWithNullWillResetPreviousPackage
      *
      * @return void
      */
-    public function testUnsetPackageWithNullWillResetPreviousPackage()
+    public function testUnsetNamespaceWithNullWillResetPreviousPackage()
     {
-        $namespace  = new ASTNamespace('package');
+        $namespace  = new ASTNamespace('nspace');
         $function = $this->createItem();
 
-        $function->setPackage($namespace);
-        $function->unsetPackage();
+        $function->setNamespace($namespace);
+        $function->unsetNamespace();
 
-        $this->assertNull($function->getPackage());
+        $this->assertNull($function->getNamespace());
     }
 
     /**
-     * testUnsetPackageWithNullWillResetPackageNameProperty
+     * testUnsetNamespaceWithNullWillResetNamespaceNameProperty
      *
      * @return void
      */
-    public function testUnsetPackageWithNullWillResetPackageNameProperty()
+    public function testUnsetNamespaceWithNullWillResetNamespaceNameProperty()
     {
         $function = $this->createItem();
-        $function->setPackage(new ASTNamespace(__FUNCTION__));
-        $function->unsetPackage();
+        $function->setNamespace(new ASTNamespace(__FUNCTION__));
+        $function->unsetNamespace();
 
-        $this->assertNull($function->getPackageName());
+        $this->assertNull($function->getNamespaceName());
     }
 
     /**
-     * testSetPackageNotEstablishesBackReference
+     * testSetNamespaceNotEstablishesBackReference
      *
      * @return void
      */
-    public function testSetPackageNotEstablishesBackReference()
+    public function testSetNamespaceNotEstablishesBackReference()
     {
         $namespace = $this->getMock(
             ASTNamespace::CLAZZ,
@@ -186,45 +186,45 @@ class ASTFunctionTest extends AbstractASTArtifactTest
             ->method('addFunction');
 
         $function = $this->createItem();
-        $function->setPackage($namespace);
+        $function->setNamespace($namespace);
     }
 
     /**
-     * Tests that the {@link \PDepend\Source\AST\ASTFunction::getPackage()} returns as
-     * default value <b>null</b> and that the package could be set and unset.
+     * Tests that the {@link \PDepend\Source\AST\ASTFunction::getNamespace()} returns as
+     * default value <b>null</b> and that the namespace could be set and unset.
      *
      * @return void
      */
-    public function testGetSetPackage()
+    public function testGetSetNamespace()
     {
-        $namespace  = new ASTNamespace('package');
+        $namespace  = new ASTNamespace('nspace');
         $function = $this->createItem();
 
-        $function->setPackage($namespace);
-        $this->assertSame($namespace, $function->getPackage());
+        $function->setNamespace($namespace);
+        $this->assertSame($namespace, $function->getNamespace());
     }
 
     /**
-     * testGetPackageNameReturnsNullByDefault
+     * testGetNamespaceNameReturnsNullByDefault
      *
      * @return void
      */
-    public function testGetPackageNameReturnsNullByDefault()
+    public function testGetNamespaceNameReturnsNullByDefault()
     {
-        $this->assertNull($this->createItem()->getPackageName());
+        $this->assertNull($this->createItem()->getNamespaceName());
     }
 
     /**
-     * testGetPackageNameReturnsNameOfInjectedPackage
+     * testGetNamespaceNameReturnsNameOfInjectedPackage
      *
      * @return void
      */
-    public function testGetPackageNameReturnsNameOfInjectedPackage()
+    public function testGetNamespaceNameReturnsNameOfInjectedPackage()
     {
         $function = $this->createItem();
-        $function->setPackage(new ASTNamespace(__FUNCTION__));
+        $function->setNamespace(new ASTNamespace(__FUNCTION__));
 
-        $this->assertEquals(__FUNCTION__, $function->getPackageName());
+        $this->assertEquals(__FUNCTION__, $function->getNamespaceName());
     }
 
     /**
@@ -262,7 +262,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $this->assertEquals(
             array(
                 'context',
-                'packageName',
+                'namespaceName',
                 'cache',
                 'uuid',
                 'name',
@@ -582,7 +582,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($orig->getPackage(), $copy->getPackage());
+        $this->assertSame($orig->getNamespace(), $copy->getNamespace());
     }
 
     /**
@@ -597,7 +597,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
 
         $this->assertEquals(
             'Baz',
-            $copy->getPackage()->getClasses()->current()->getName()
+            $copy->getNamespace()->getClasses()->current()->getName()
         );
     }
 
@@ -611,7 +611,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, count($copy->getPackage()->getFunctions()));
+        $this->assertEquals(1, count($copy->getNamespace()->getFunctions()));
     }
 
     /**
@@ -624,7 +624,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $orig = $this->_getFirstFunctionForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($copy, $orig->getPackage()->getFunctions()->current());
+        $this->assertSame($copy, $orig->getNamespace()->getFunctions()->current());
     }
 
     /**

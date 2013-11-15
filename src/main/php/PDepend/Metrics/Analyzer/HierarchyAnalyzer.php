@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 
 /**
- * This analyzer calculates class/package hierarchy metrics.
+ * This analyzer calculates class/namespace hierarchy metrics.
  *
  * This analyzer expects that a node list filter is set, before it starts the
  * analyze process. This filter will suppress PHP internal and external library
@@ -159,10 +159,10 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
-    public function analyze(ASTArtifactList $namespaces)
+    public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
 
@@ -308,7 +308,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      */
     public function visitNamespace(ASTNamespace $namespace)
     {
-        $this->fireStartPackage($namespace);
+        $this->fireStartNamespace($namespace);
 
         foreach ($namespace->getTypes() as $type) {
             $type->accept($this);
@@ -318,6 +318,6 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
             $function->accept($this);
         }
 
-        $this->fireEndPackage($namespace);
+        $this->fireEndNamespace($namespace);
     }
 }

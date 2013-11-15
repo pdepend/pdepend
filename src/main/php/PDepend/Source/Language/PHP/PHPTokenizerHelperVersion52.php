@@ -111,7 +111,7 @@ final class PHPTokenizerHelperVersion52
      * @param string $source The raw php source code.
      * @return array
      * @throws \PDepend\Source\Parser\TokenException
-     * @todo Exception should be moved into a general package.
+     * @todo Exception should be moved into a general namespace.
      */
     private static function doTokenize($source)
     {

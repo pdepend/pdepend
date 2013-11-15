@@ -76,7 +76,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     protected $context = null;
 
     /**
-     * The full qualified class name, including the namespace or package name.
+     * The full qualified class name, including the namespace or namespace name.
      *
      * @var string
      * @since 0.10.0
@@ -132,7 +132,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
      */
     public function __sleep()
     {
-        $this->qualifiedName = $this->getType()->getPackageName() . '\\' .
+        $this->qualifiedName = $this->getType()->getNamespaceName() . '\\' .
                                $this->getType()->getName();
 
         return array_merge(array('qualifiedName'), parent::__sleep());

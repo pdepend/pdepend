@@ -48,7 +48,7 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTNamespace;
 
 /**
- * This class implements a filter that is based on the package.
+ * This class implements a filter that is based on the namespace.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -56,14 +56,14 @@ use PDepend\Source\AST\ASTNamespace;
 class PackageArtifactFilter implements ArtifactFilter
 {
     /**
-     * Regexp with ignorable package names and package name fragments.
+     * Regexp with ignorable namespace names and namespace name fragments.
      *
      * @var string
      */
     private $pattern = '';
 
     /**
-     * Constructs a new package filter for the given list of package names.
+     * Constructs a new namespace filter for the given list of namespace names.
      *
      * @param array(string) $namespaces
      */
@@ -90,9 +90,9 @@ class PackageArtifactFilter implements ArtifactFilter
         //       \PDepend\Source\AST\ASTMethod and \PDepend\Source\AST\ASTProperty,
         //       but when PDepend supports more node types, this could produce errors.
         if ($node instanceof AbstractASTClassOrInterface) {
-            $namespace = $node->getPackage()->getName();
+            $namespace = $node->getNamespace()->getName();
         } elseif ($node instanceof ASTFunction) {
-            $namespace = $node->getPackage()->getName();
+            $namespace = $node->getNamespace()->getName();
         } elseif ($node instanceof ASTNamespace) {
             $namespace = $node->getName();
         }
