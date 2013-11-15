@@ -72,6 +72,15 @@
         </exec>
     </target>
 
+    <target name="do-copy-files-for-xyz-archive">
+        <move todir="${output.dir}/src/main/php">
+            <fileset dir="${output.dir}/" includes="PDepend/**/*.*" />
+        </move>
+        <copy todir="${output.dir}/src/main/resources">
+            <fileset dir="${commons.srcdir.resource}" includes="**/*.*" />
+        </copy>
+    </target>
+
     <!--
         UTILIZED EXTENSION POINTS
     -->

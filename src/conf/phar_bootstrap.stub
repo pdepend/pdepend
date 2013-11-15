@@ -54,11 +54,7 @@ if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
     ini_set('memory_limit', -1);
 
     // Load command line utility
-    include_once 'phar://${archive.alias}/PDepend/Autoload.php';
-
-    // Initialize PDepend's autoloader
-    $autoload = new \PDepend\Autoload();
-    $autoload->register();
+    include_once 'phar://${archive.alias}/vendor/autoload.php';
 
     exit(\PDepend\TextUI\Command::main($argv));
 }
