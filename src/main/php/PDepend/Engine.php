@@ -42,6 +42,8 @@
 
 namespace PDepend;
 
+use PDepend\Input\CompositeFilter;
+use PDepend\Input\Filter;
 use PDepend\Metrics\AnalyzerClassFileSystemLocator;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerLoader;
@@ -148,7 +150,7 @@ class Engine
     /**
      * List or registered listeners.
      *
-     * @var ProcessListener[]
+     * @var \PDepend\ProcessListener[]
      */
     private $listeners = array();
 
@@ -175,6 +177,9 @@ class Engine
      */
     private $cacheFactory;
 
+    /**
+     * @var \PDepend\Metrics\AnalyzerFactory
+     */
     private $analyzerFactory;
 
     /**
@@ -188,12 +193,11 @@ class Engine
         Configuration $configuration,
         CacheFactory $cacheFactory,
         AnalyzerFactory $analyzerFactory
-    )
-    {
+    ) {
         $this->configuration = $configuration;
 
         $this->codeFilter = new NullArtifactFilter();
-        $this->fileFilter = new \PDepend\Input\CompositeFilter();
+        $this->fileFilter = new CompositeFilter();
 
         $this->cacheFactory = $cacheFactory;
         $this->analyzerFactory = $analyzerFactory;
@@ -210,9 +214,7 @@ class Engine
         $dir = realpath($directory);
 
         if (!is_dir($dir)) {
-            throw new \InvalidArgumentException(
-                "Invalid directory '{$directory}' added."
-            );
+            throw new \InvalidArgumentException("Invalid directory '{$directory}' added.");
         }
 
         $this->directories[] = $dir;
@@ -222,7 +224,6 @@ class Engine
      * Adds a single source code file to the list of files to be analysed.
      *
      * @param string $file The source file name.
-     *
      * @return void
      */
     public function addFile($file)
@@ -230,9 +231,7 @@ class Engine
         $fileName = realpath($file);
 
         if (!is_file($fileName)) {
-            throw new \InvalidArgumentException(
-                sprintf('The given file "%s" does not exist.', $file)
-            );
+            throw new \InvalidArgumentException(sprintf('The given file "%s" does not exist.', $file));
         }
 
         $this->files[] = $fileName;
@@ -253,10 +252,9 @@ class Engine
      * Adds a new input/file filter.
      *
      * @param \PDepend\Input\Filter $filter New input/file filter instance.
-     *
      * @return void
      */
-    public function addFileFilter(\PDepend\Input\Filter $filter)
+    public function addFileFilter(Filter $filter)
     {
         $this->fileFilter->append($filter);
     }
@@ -266,7 +264,6 @@ class Engine
      * external libraries and global stuff from the PDepend output.
      *
      * @param \PDepend\Source\AST\ASTArtifactList\ArtifactFilter $filter
-     *
      * @return void
      */
     public function setCodeFilter(ArtifactFilter $filter)
@@ -278,7 +275,6 @@ class Engine
      * Sets analyzer options.
      *
      * @param array(string=>mixed) $options The analyzer options.
-     *
      * @return void
      */
     public function setOptions(array $options = array())
@@ -299,7 +295,7 @@ class Engine
     /**
      * Adds a process listener.
      *
-     * @param ProcessListener $listener The listener instance.
+     * @param \PDepend\ProcessListener $listener The listener instance.
      * @return void
      */
     public function addProcessListener(ProcessListener $listener)
@@ -424,7 +420,7 @@ class Engine
     /**
      * Returns an iterator of the analyzed packages.
      *
-     * @return Iterator
+     * @return \Iterator
      */
     public function getPackages()
     {
