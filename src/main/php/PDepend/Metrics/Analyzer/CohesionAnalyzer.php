@@ -75,7 +75,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
     /**
      * This method will return an <b>array</b> with all generated metric values
-     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * for the node with the given <b>$id</b> identifier. If there are no
      * metrics for the requested node, this method will return an empty <b>array</b>.
      *
      * <code>
@@ -91,8 +91,8 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            return $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            return $this->nodeMetrics[$artifact->getId()];
         }
         return array();
     }

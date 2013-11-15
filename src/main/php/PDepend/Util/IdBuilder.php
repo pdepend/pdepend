@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTMethod;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-class UuidBuilder
+class IdBuilder
 {
     /**
      * Generates an identifier for the given file instance.
@@ -105,7 +105,7 @@ class UuidBuilder
      */
     protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
     {
-        $fileHash = $artifact->getCompilationUnit()->getUuid();
+        $fileHash = $artifact->getCompilationUnit()->getId();
         $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getName()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);
@@ -123,7 +123,7 @@ class UuidBuilder
     {
         return sprintf(
             '%s-%s',
-            $method->getParent()->getUuid(),
+            $method->getParent()->getId(),
             $this->hash(strtolower($method->getName()))
         );
     }

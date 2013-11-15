@@ -80,27 +80,27 @@ class ASTArtifactTest extends AbstractTest
     }
 
     /**
-     * testGetUuidReturnsMd5HashByDefault
+     * testGetIdReturnsMd5HashByDefault
      *
      * @return void
      */
-    public function testGetUuidReturnsMd5HashByDefault()
+    public function testGetIdReturnsMd5HashByDefault()
     {
         $item = $this->getItemMock();
-        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getUuid());
+        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getId());
     }
 
     /**
-     * testGetUuidReturnsInjectedUuidValue
+     * testGetIdReturnsInjectedIdValue
      *
      * @return void
      */
-    public function testGetUuidReturnsInjectedUuidValue()
+    public function testGetIdReturnsInjectedIdValue()
     {
         $item = $this->getItemMock();
-        $item->setUuid(__METHOD__);
+        $item->setId(__METHOD__);
 
-        $this->assertEquals(__METHOD__, $item->getUuid());
+        $this->assertEquals(__METHOD__, $item->getId());
     }
 
     /**

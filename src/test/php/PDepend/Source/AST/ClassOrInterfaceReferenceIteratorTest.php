@@ -66,10 +66,10 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTest
     public function testIteratorReturnsExpectedClasses()
     {
         $class1 = new ASTClass('c1');
-        $class1->setUuid(md5(23));
+        $class1->setId(md5(23));
 
         $class2 = new ASTClass('c2');
-        $class2->setUuid(md5(42));
+        $class2->setId(md5(42));
 
         $reference1 = $this->getMockBuilder(\PDepend\Source\AST\ASTSelfReference::CLAZZ)
             ->disableOriginalConstructor()
@@ -90,10 +90,10 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTest
         $refs  = new ASTClassOrInterfaceReferenceIterator($references);
         $types = array();
         foreach ($refs as $type) {
-            $types[] = $type->getUuid();
+            $types[] = $type->getId();
         }
 
-        $this->assertEquals(array($class1->getUuid(), $class2->getUuid()), $types);
+        $this->assertEquals(array($class1->getId(), $class2->getId()), $types);
     }
 
     /**
@@ -104,10 +104,10 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTest
     public function testIteratorReturnsSameClassOnlyOnce()
     {
         $class1 = new ASTClass('c1');
-        $class1->setUuid(md5(23));
+        $class1->setId(md5(23));
 
         $class2 = new ASTClass('c2');
-        $class2->setUuid(md5(23));
+        $class2->setId(md5(23));
 
         $reference1 = $this->getMockBuilder(\PDepend\Source\AST\ASTSelfReference::CLAZZ)
             ->disableOriginalConstructor()
@@ -128,9 +128,9 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTest
         $refs  = new ASTClassOrInterfaceReferenceIterator($references);
         $types = array();
         foreach ($refs as $type) {
-            $types[] = $type->getUuid();
+            $types[] = $type->getId();
         }
 
-        $this->assertEquals(array($class1->getUuid()), $types);
+        $this->assertEquals(array($class1->getId()), $types);
     }
 }

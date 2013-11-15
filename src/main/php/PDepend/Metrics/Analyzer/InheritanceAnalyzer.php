@@ -142,8 +142,8 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            return $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            return $this->nodeMetrics[$artifact->getId()];
         }
         return array();
     }
@@ -240,17 +240,17 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
      */
     private function calculateNumberOfDerivedClasses(ASTClass $class)
     {
-        $uuid = $class->getUuid();
-        if (isset($this->derivedClasses[$uuid]) === false) {
-            $this->derivedClasses[$uuid] = 0;
+        $id = $class->getId();
+        if (isset($this->derivedClasses[$id]) === false) {
+            $this->derivedClasses[$id] = 0;
         }
 
         $parentClass = $class->getParentClass();
         if ($parentClass !== null && $parentClass->isUserDefined()) {
-            $uuid = $parentClass->getUuid();
+            $id = $parentClass->getId();
 
             ++$this->numberOfDerivedClasses;
-            ++$this->nodeMetrics[$uuid][self::M_NUMBER_OF_DERIVED_CLASSES];
+            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_DERIVED_CLASSES];
         }
     }
 
@@ -264,15 +264,15 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
     private function calculateDepthOfInheritanceTree(ASTClass $class)
     {
         $dit  = 0;
-        $uuid = $class->getUuid();
-        $root = $class->getUuid();
+        $id = $class->getId();
+        $root = $class->getId();
 
         foreach ($class->getParentClasses() as $parent) {
             if (!$parent->isUserDefined()) {
                 ++$dit;
             }
             ++$dit;
-            $root = $parent->getUuid();
+            $root = $parent->getId();
         }
         
         // Collect max dit value
@@ -281,7 +281,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
         if (empty($this->rootClasses[$root]) || $this->rootClasses[$root] < $dit) {
             $this->rootClasses[$root] = $dit;
         }
-        $this->nodeMetrics[$uuid][self::M_DEPTH_OF_INHERITANCE_TREE] = $dit;
+        $this->nodeMetrics[$id][self::M_DEPTH_OF_INHERITANCE_TREE] = $dit;
     }
 
     /**
@@ -321,12 +321,10 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
             }
         }
 
-        $uuid = $class->getUuid();
+        $id = $class->getId();
 
-        $this->nodeMetrics[$uuid][self::M_NUMBER_OF_ADDED_METHODS]
-            = $numberOfAddedMethods;
-        $this->nodeMetrics[$uuid][self::M_NUMBER_OF_OVERWRITTEN_METHODS]
-            = $numberOfOverwrittenMethods;
+        $this->nodeMetrics[$id][self::M_NUMBER_OF_ADDED_METHODS] = $numberOfAddedMethods;
+        $this->nodeMetrics[$id][self::M_NUMBER_OF_OVERWRITTEN_METHODS] = $numberOfOverwrittenMethods;
     }
 
     /**
@@ -338,14 +336,14 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware,
      */
     private function initNodeMetricsForClass(ASTClass $class)
     {
-        $uuid = $class->getUuid();
-        if (isset($this->nodeMetrics[$uuid])) {
+        $id = $class->getId();
+        if (isset($this->nodeMetrics[$id])) {
             return;
         }
 
         ++$this->numberOfClasses;
 
-        $this->nodeMetrics[$uuid] = array(
+        $this->nodeMetrics[$id] = array(
             self::M_DEPTH_OF_INHERITANCE_TREE     => 0,
             self::M_NUMBER_OF_ADDED_METHODS       => 0,
             self::M_NUMBER_OF_DERIVED_CLASSES     => 0,

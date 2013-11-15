@@ -269,19 +269,19 @@ class XmlTest extends AbstractTest
         $metricsOne = array();
         $metricsTwo = array();
         foreach ($this->namespaces as $namespace) {
-            $metricsOne[$namespace->getUuid()] = array_shift($input);
-            $metricsTwo[$namespace->getUuid()] = array_shift($input);
+            $metricsOne[$namespace->getId()] = array_shift($input);
+            $metricsTwo[$namespace->getId()] = array_shift($input);
             foreach ($namespace->getClasses() as $class) {
-                $metricsOne[$class->getUuid()] = array_shift($input);
-                $metricsTwo[$class->getUuid()] = array_shift($input);
+                $metricsOne[$class->getId()] = array_shift($input);
+                $metricsTwo[$class->getId()] = array_shift($input);
                 foreach ($class->getMethods() as $method) {
-                    $metricsOne[$method->getUuid()] = array_shift($input);
-                    $metricsTwo[$method->getUuid()] = array_shift($input);
+                    $metricsOne[$method->getId()] = array_shift($input);
+                    $metricsTwo[$method->getId()] = array_shift($input);
                 }
             }
             foreach ($namespace->getFunctions() as $function) {
-                $metricsOne[$function->getUuid()] = array_shift($input);
-                $metricsTwo[$function->getUuid()] = array_shift($input);
+                $metricsOne[$function->getId()] = array_shift($input);
+                $metricsTwo[$function->getId()] = array_shift($input);
             }
         }
 

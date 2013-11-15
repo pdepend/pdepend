@@ -108,11 +108,11 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * <code>
      * array(
-     *     <namespace-uuid> => array(
+     *     <namespace-id> => array(
      *         \PDepend\Source\AST\ASTNamespace {},
      *         \PDepend\Source\AST\ASTNamespace {},
      *     ),
-     *     <namespace-uuid> => array(
+     *     <namespace-id> => array(
      *         \PDepend\Source\AST\ASTNamespace {},
      *         \PDepend\Source\AST\ASTNamespace {},
      *     ),
@@ -160,8 +160,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
     public function getStats(AbstractASTArtifact $node)
     {
         $stats = array();
-        if (isset($this->nodeMetrics[$node->getUuid()])) {
-            $stats = $this->nodeMetrics[$node->getUuid()];
+        if (isset($this->nodeMetrics[$node->getId()])) {
+            $stats = $this->nodeMetrics[$node->getId()];
         }
         return $stats;
     }
@@ -175,8 +175,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
     public function getAfferents(AbstractASTArtifact $node)
     {
         $afferents = array();
-        if (isset($this->afferentNodes[$node->getUuid()])) {
-            $afferents = $this->afferentNodes[$node->getUuid()];
+        if (isset($this->afferentNodes[$node->getId()])) {
+            $afferents = $this->afferentNodes[$node->getId()];
         }
         return $afferents;
     }
@@ -190,8 +190,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
     public function getEfferents(AbstractASTArtifact $node)
     {
         $efferents = array();
-        if (isset($this->efferentNodes[$node->getUuid()])) {
-            $efferents = $this->efferentNodes[$node->getUuid()];
+        if (isset($this->efferentNodes[$node->getId()])) {
+            $efferents = $this->efferentNodes[$node->getId()];
         }
         return $efferents;
     }
@@ -205,18 +205,18 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     public function getCycle(AbstractASTArtifact $node)
     {
-        if (array_key_exists($node->getUuid(), $this->collectedCycles)) {
-            return $this->collectedCycles[$node->getUuid()];
+        if (array_key_exists($node->getId(), $this->collectedCycles)) {
+            return $this->collectedCycles[$node->getId()];
         }
 
         $list = array();
         if ($this->collectCycle($list, $node)) {
-            $this->collectedCycles[$node->getUuid()] = $list;
+            $this->collectedCycles[$node->getId()] = $list;
         } else {
-            $this->collectedCycles[$node->getUuid()] = null;
+            $this->collectedCycles[$node->getId()] = null;
         }
 
-        return $this->collectedCycles[$node->getUuid()];
+        return $this->collectedCycles[$node->getId()];
     }
 
     /**
@@ -249,7 +249,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
         $this->initNamespaceMetric($namespace);
 
-        $this->nodeSet[$namespace->getUuid()] = $namespace;
+        $this->nodeSet[$namespace->getId()] = $namespace;
 
         foreach ($namespace->getTypes() as $type) {
             $type->accept($this);
@@ -293,7 +293,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function visitType(AbstractASTClassOrInterface $type)
     {
-        $id = $type->getNamespace()->getUuid();
+        $id = $type->getNamespace()->getId();
 
         // Increment total classes count
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
@@ -328,8 +328,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     private function collectDependencies(ASTNamespace $namespaceA, ASTNamespace $namespaceB)
     {
-        $idA = $namespaceA->getUuid();
-        $idB = $namespaceB->getUuid();
+        $idA = $namespaceA->getId();
+        $idB = $namespaceB->getId();
 
         if ($idB === $idA) {
             return;
@@ -352,12 +352,12 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function initNamespaceMetric(ASTNamespace $namespace)
     {
-        $uuid = $namespace->getUuid();
+        $id = $namespace->getId();
 
-        if (!isset($this->nodeMetrics[$uuid])) {
-            $this->nodeSet[$uuid] = $namespace;
+        if (!isset($this->nodeMetrics[$id])) {
+            $this->nodeSet[$id] = $namespace;
 
-            $this->nodeMetrics[$uuid] = array(
+            $this->nodeMetrics[$id] = array(
                 self::M_NUMBER_OF_CLASSES           =>  0,
                 self::M_NUMBER_OF_CONCRETE_CLASSES  =>  0,
                 self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  0,
@@ -377,27 +377,25 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function postProcess()
     {
-        foreach ($this->nodeMetrics as $uuid => $metrics) {
+        foreach ($this->nodeMetrics as $id => $metrics) {
 
-            // Store afferent nodes for uuid
-            $this->afferentNodes[$uuid] = array();
-            foreach ($metrics[self::M_AFFERENT_COUPLING] as $caUUID) {
-                $this->afferentNodes[$uuid][] = $this->nodeSet[$caUUID];
+            $this->afferentNodes[$id] = array();
+            foreach ($metrics[self::M_AFFERENT_COUPLING] as $caId) {
+                $this->afferentNodes[$id][] = $this->nodeSet[$caId];
             }
-            sort($this->afferentNodes[$uuid]);
+            sort($this->afferentNodes[$id]);
 
-            // Store efferent nodes for uuid
-            $this->efferentNodes[$uuid] = array();
-            foreach ($metrics[self::M_EFFERENT_COUPLING] as $ceUUID) {
-                $this->efferentNodes[$uuid][] = $this->nodeSet[$ceUUID];
+            $this->efferentNodes[$id] = array();
+            foreach ($metrics[self::M_EFFERENT_COUPLING] as $ceId) {
+                $this->efferentNodes[$id][] = $this->nodeSet[$ceId];
             }
-            sort($this->efferentNodes[$uuid]);
+            sort($this->efferentNodes[$id]);
 
             $afferent = count($metrics[self::M_AFFERENT_COUPLING]);
             $efferent = count($metrics[self::M_EFFERENT_COUPLING]);
 
-            $this->nodeMetrics[$uuid][self::M_AFFERENT_COUPLING] = $afferent;
-            $this->nodeMetrics[$uuid][self::M_EFFERENT_COUPLING] = $efferent;
+            $this->nodeMetrics[$id][self::M_AFFERENT_COUPLING] = $afferent;
+            $this->nodeMetrics[$id][self::M_EFFERENT_COUPLING] = $efferent;
         }
     }
 
@@ -408,9 +406,9 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function calculateAbstractness()
     {
-        foreach ($this->nodeMetrics as $uuid => $metrics) {
+        foreach ($this->nodeMetrics as $id => $metrics) {
             if ($metrics[self::M_NUMBER_OF_CLASSES] !== 0) {
-                $this->nodeMetrics[$uuid][self::M_ABSTRACTION] = (
+                $this->nodeMetrics[$id][self::M_ABSTRACTION] = (
                     $metrics[self::M_NUMBER_OF_ABSTRACT_CLASSES] /
                     $metrics[self::M_NUMBER_OF_CLASSES]
                 );
@@ -426,7 +424,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function calculateInstability()
     {
-        foreach ($this->nodeMetrics as $uuid => $metrics) {
+        foreach ($this->nodeMetrics as $id => $metrics) {
             // Count total incoming and outgoing dependencies
             $total = (
                 $metrics[self::M_AFFERENT_COUPLING] +
@@ -434,7 +432,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
             );
 
             if ($total !== 0) {
-                $this->nodeMetrics[$uuid][self::M_INSTABILITY] = (
+                $this->nodeMetrics[$id][self::M_INSTABILITY] = (
                     $metrics[self::M_EFFERENT_COUPLING] / $total
                 );
             }
@@ -448,8 +446,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function calculateDistance()
     {
-        foreach ($this->nodeMetrics as $uuid => $metrics) {
-            $this->nodeMetrics[$uuid][self::M_DISTANCE] = abs(
+        foreach ($this->nodeMetrics as $id => $metrics) {
+            $this->nodeMetrics[$id][self::M_DISTANCE] = abs(
                 ($metrics[self::M_ABSTRACTION] + $metrics[self::M_INSTABILITY]) - 1
             );
         }

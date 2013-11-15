@@ -69,7 +69,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      *
      * @var string
      */
-    protected $uuid = null;
+    protected $id = null;
 
     /**
      * The line number where the item declaration starts.
@@ -133,29 +133,28 @@ abstract class AbstractASTArtifact implements ASTArtifact
     }
 
     /**
-     * Returns a uuid for this code node.
+     * Returns a id for this code node.
      *
      * @return string
      */
-    public function getUuid()
+    public function getId()
     {
-        if ($this->uuid === null) {
-            $this->uuid = md5(microtime());
+        if ($this->id === null) {
+            $this->id = md5(microtime());
         }
-        return $this->uuid;
+        return $this->id;
     }
 
     /**
      * Sets the unique identifier for this node instance.
      *
-     * @param string $uuid Identifier for this node.
-     *
+     * @param string $id Identifier for this node.
      * @return void
      * @since 0.9.12
      */
-    public function setUuid($uuid)
+    public function setId($id)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
     }
 
     /**

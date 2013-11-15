@@ -93,7 +93,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
             array(
                 'modifiers',
                 'cache',
-                'uuid',
+                'id',
                 'name',
                 'nodes',
                 'startLine',

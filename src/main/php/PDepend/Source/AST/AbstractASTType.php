@@ -276,7 +276,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         $methods = (array) $this->cache
             ->type('methods')
-            ->restore($this->getUuid());
+            ->restore($this->getId());
 
         foreach ($methods as $method) {
             $method->compilationUnit = $this->compilationUnit;
@@ -344,7 +344,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->uuid);
+            ->restore($this->id);
     }
 
     /**
@@ -360,7 +360,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         $this->cache
             ->type('tokens')
-            ->store($this->uuid, $tokens);
+            ->store($this->id, $tokens);
     }
 
     /**
@@ -468,7 +468,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         if (is_array($this->methods)) {
             $this->cache
                 ->type('methods')
-                ->store($this->uuid, $this->methods);
+                ->store($this->id, $this->methods);
 
             $this->methods = null;
         }
@@ -484,7 +484,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             'namespaceName',
             'startLine',
             'userDefined',
-            'uuid'
+            'id'
         );
     }
 

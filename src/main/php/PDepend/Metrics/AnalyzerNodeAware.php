@@ -54,7 +54,7 @@ interface AnalyzerNodeAware extends Analyzer
 {
     /**
      * This method will return an <b>array</b> with all generated metric values
-     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * for the node with the given <b>$id</b> identifier. If there are no
      * metrics for the requested node, this method will return an empty <b>array</b>.
      *
      * <code>

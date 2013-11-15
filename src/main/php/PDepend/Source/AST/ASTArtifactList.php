@@ -91,14 +91,14 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
 
         $nodeKeys = array();
         foreach ($artifacts as $artifact) {
-            $uuid = $artifact->getUuid();
+            $id = $artifact->getId();
 
-            if (isset($nodeKeys[$uuid])) {
+            if (isset($nodeKeys[$id])) {
                 continue;
             }
 
             if ($filter->accept($artifact)) {
-                $nodeKeys[$uuid] = $uuid;
+                $nodeKeys[$id] = $id;
                 $this->artifacts[]  = $artifact;
 
                 ++$this->count;

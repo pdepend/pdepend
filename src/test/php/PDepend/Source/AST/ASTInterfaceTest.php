@@ -855,7 +855,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
                 'namespaceName',
                 'startLine',
                 'userDefined',
-                'uuid'
+                'id'
             ),
             $interface->__sleep()
         );

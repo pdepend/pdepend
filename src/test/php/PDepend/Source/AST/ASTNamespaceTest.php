@@ -57,15 +57,15 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
 class ASTNamespaceTest extends AbstractTest
 {
     /**
-     * testGetUUIDReturnsExpectedObjectHash
+     * testGetIdReturnsExpectedObjectHash
      *
      * @return void
      * @since 1.0.0
      */
-    public function testGetUUIDReturnsExpectedObjectHash()
+    public function testGetIdReturnsExpectedObjectHash()
     {
         $namespace = new ASTNamespace(__FUNCTION__);
-        $this->assertEquals(spl_object_hash($namespace), $namespace->getUuid());
+        $this->assertEquals(spl_object_hash($namespace), $namespace->getId());
     }
 
     /**

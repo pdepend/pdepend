@@ -208,8 +208,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            return $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            return $this->nodeMetrics[$artifact->getId()];
         }
         return array();
     }
@@ -237,13 +237,13 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $parentClass = $class->getParentClass();
         if ($parentClass !== null) {
             if ($parentClass->getParentClass() === null) {
-                $this->roots[$parentClass->getUuid()] = true;
+                $this->roots[$parentClass->getId()] = true;
             }
-            $this->noneLeafs[$parentClass->getUuid()] = true;
+            $this->noneLeafs[$parentClass->getId()] = true;
         }
 
         // Store node metric
-        $this->nodeMetrics[$class->getUuid()] = array();
+        $this->nodeMetrics[$class->getId()] = array();
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);

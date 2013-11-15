@@ -56,15 +56,15 @@ use PDepend\AbstractTest;
 class ASTParameterTest extends AbstractTest
 {
     /**
-     * testGetUUIDReturnsExpectedObjectHash
+     * testGetIdReturnsExpectedObjectHash
      *
      * @return void
      * @since 1.0.0
      */
-    public function testGetUUIDReturnsExpectedObjectHash()
+    public function testGetIdReturnsExpectedObjectHash()
     {
         $parameters = $this->_getFirstMethodInClass()->getParameters();
-        $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getUuid());
+        $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getId());
     }
 
     /**

@@ -217,7 +217,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->uuid);
+            ->restore($this->id);
     }
 
     /**
@@ -234,7 +234,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
 
         $this->cache
             ->type('tokens')
-            ->store($this->uuid, $tokens);
+            ->store($this->id, $tokens);
     }
 
     /**
@@ -463,7 +463,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     {
         return array(
             'cache',
-            'uuid',
+            'id',
             'name',
             'nodes',
             'startLine',

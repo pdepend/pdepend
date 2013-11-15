@@ -78,27 +78,27 @@ class ASTCompilationUnitTest extends AbstractTest
     }
 
     /**
-     * testGetUuidReturnsNullByDefault
+     * testGetIdReturnsNullByDefault
      *
      * @return void
      */
-    public function testGetUuidReturnsNullByDefault()
+    public function testGetIdReturnsNullByDefault()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertNull($file->getUuid());
+        $this->assertNull($file->getId());
     }
 
     /**
-     * testGetUuidReturnsInjectedUuidValue
+     * testGetIdReturnsInjectedIdValue
      *
      * @return void
      */
-    public function testGetUuidReturnsInjectedUuidValue()
+    public function testGetIdReturnsInjectedIdValue()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId(__FUNCTION__);
 
-        $this->assertEquals(__FUNCTION__, $file->getUuid());
+        $this->assertEquals(__FUNCTION__, $compilationUnit->getId());
     }
 
     /**
@@ -126,11 +126,11 @@ class ASTCompilationUnitTest extends AbstractTest
     }
 
     /**
-     * testGetTokensDelegatesCallToCacheRestoreWithFileUuid
+     * testGetTokensDelegatesCallToCacheRestoreWithFileId
      *
      * @return void
      */
-    public function testGetTokensDelegatesCallToCacheRestoreWithFileUuid()
+    public function testGetTokensDelegatesCallToCacheRestoreWithFileId()
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -141,19 +141,19 @@ class ASTCompilationUnitTest extends AbstractTest
             ->method('restore')
             ->with(self::equalTo(__FUNCTION__));
 
-        $file = new ASTCompilationUnit(null);
-        $file->setCache($cache);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(null);
+        $compilationUnit->setCache($cache);
+        $compilationUnit->setId(__FUNCTION__);
 
-        $file->getTokens();
+        $compilationUnit->getTokens();
     }
 
     /**
-     * testSetTokensDelegatesCallToCacheStoreWithFileUuid
+     * testSetTokensDelegatesCallToCacheStoreWithFileId
      *
      * @return void
      */
-    public function testSetTokensDelegatesCallToCacheStoreWithFileUuid()
+    public function testSetTokensDelegatesCallToCacheStoreWithFileId()
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -164,11 +164,11 @@ class ASTCompilationUnitTest extends AbstractTest
             ->method('store')
             ->with(self::equalTo(__FUNCTION__), self::equalTo(array(1, 2, 3)));
 
-        $file = new ASTCompilationUnit(null);
-        $file->setCache($cache);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(null);
+        $compilationUnit->setCache($cache);
+        $compilationUnit->setId(__FUNCTION__);
 
-        $file->setTokens(array(1, 2, 3));
+        $compilationUnit->setTokens(array(1, 2, 3));
     }
 
     /**
@@ -225,7 +225,7 @@ class ASTCompilationUnitTest extends AbstractTest
                 'endLine',
                 'fileName',
                 'startLine',
-                'uuid'
+                'id'
             ),
             $file->__sleep()
         );

@@ -144,11 +144,11 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
 
     /**
      * Tests that {@link \PDepend\Metrics\Analyzer\HierarchyAnalyzer::getNodeMetrics()}
-     * returns an empty <b>array</b> for an unknown node uuid.
+     * returns an empty <b>array</b> for an unknown node id.
      *
      * @return void
      */
-    public function testGetNodeMetricsForUnknownUUID()
+    public function testGetNodeMetricsForUnknownId()
     {
         $class    = new ASTClass('PDepend');
         $analyzer = $this->createAnalyzer();

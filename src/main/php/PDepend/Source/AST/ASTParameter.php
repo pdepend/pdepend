@@ -119,7 +119,7 @@ class ASTParameter extends AbstractASTArtifact
             \PDepend\Source\AST\ASTVariableDeclarator::CLAZZ
         );
 
-        $this->uuid = spl_object_hash($this);
+        $this->id = spl_object_hash($this);
     }
 
     /**

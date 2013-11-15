@@ -117,8 +117,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->metrics[$artifact->getUuid()])) {
-            return $this->metrics[$artifact->getUuid()];
+        if (isset($this->metrics[$artifact->getId()])) {
+            return $this->metrics[$artifact->getId()];
         }
         return array();
     }
@@ -211,7 +211,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     private function visitCallable(AbstractASTCallable $callable)
     {
-        $this->metrics[$callable->getUuid()] = array(
+        $this->metrics[$callable->getId()] = array(
             self::M_CRAP_INDEX => $this->calculateCrapIndex($callable)
         );
     }

@@ -65,7 +65,7 @@ class MethodStrategyTest extends AbstractTest
     {
         $namespaces = self::parseCodeResourceForTest();
         
-        $uuidMap = array(
+        $idMap = array(
             'PDepend::CodeRankA'       =>  null,
             'PDepend::CodeRankB'       =>  null,
             'PDepend_CodeRank_ClassA'  =>  null,
@@ -75,69 +75,69 @@ class MethodStrategyTest extends AbstractTest
         
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getClasses() as $class) {
-                $this->assertArrayHasKey($class->getName(), $uuidMap);
-                $uuidMap[$class->getName()] = $class->getUuid();
+                $this->assertArrayHasKey($class->getName(), $idMap);
+                $idMap[$class->getName()] = $class->getId();
             }
-            if (array_key_exists($namespace->getName(), $uuidMap)) {
-                $uuidMap[$namespace->getName()] = $namespace->getUuid();
+            if (array_key_exists($namespace->getName(), $idMap)) {
+                $idMap[$namespace->getName()] = $namespace->getId();
             }
         }
 
         $expected = array(
-            $uuidMap['PDepend_CodeRank_ClassA']  =>  array(
+            $idMap['PDepend_CodeRank_ClassA']  =>  array(
                 'in'  =>  array(
-                    $uuidMap['PDepend_CodeRank_ClassB'],
-                    $uuidMap['PDepend_CodeRank_ClassC']
+                    $idMap['PDepend_CodeRank_ClassB'],
+                    $idMap['PDepend_CodeRank_ClassC']
                 ),
                 'out'  =>  array(
-                    $uuidMap['PDepend_CodeRank_ClassC']
+                    $idMap['PDepend_CodeRank_ClassC']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassA',
                 'type'  =>  'PDepend\\Source\\AST\\ASTClass'
             ),
-            $uuidMap['PDepend_CodeRank_ClassB']  =>  array(
+            $idMap['PDepend_CodeRank_ClassB']  =>  array(
                 'in'  =>  array(
-                    $uuidMap['PDepend_CodeRank_ClassC'],
-                    $uuidMap['PDepend_CodeRank_ClassC']
+                    $idMap['PDepend_CodeRank_ClassC'],
+                    $idMap['PDepend_CodeRank_ClassC']
                 ),
                 'out'  =>  array(
-                    $uuidMap['PDepend_CodeRank_ClassA']
+                    $idMap['PDepend_CodeRank_ClassA']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassB',
                 'type'  =>  'PDepend\\Source\\AST\\ASTClass'
             ),
-            $uuidMap['PDepend_CodeRank_ClassC']  =>  array(
+            $idMap['PDepend_CodeRank_ClassC']  =>  array(
                 'in'  =>  array(
-                    $uuidMap['PDepend_CodeRank_ClassA']
+                    $idMap['PDepend_CodeRank_ClassA']
                 ),
                 'out'  =>  array(
-                    $uuidMap['PDepend_CodeRank_ClassA'],
-                    $uuidMap['PDepend_CodeRank_ClassB'],
-                    $uuidMap['PDepend_CodeRank_ClassB']
+                    $idMap['PDepend_CodeRank_ClassA'],
+                    $idMap['PDepend_CodeRank_ClassB'],
+                    $idMap['PDepend_CodeRank_ClassB']
                 ),
                 'name'  =>  'PDepend_CodeRank_ClassC',
                 'type'  =>  'PDepend\\Source\\AST\\ASTClass'
             ),
-            $uuidMap['PDepend::CodeRankA']  =>  array(
+            $idMap['PDepend::CodeRankA']  =>  array(
                 'in'  =>  array(
-                    $uuidMap['PDepend::CodeRankB'],
-                    $uuidMap['PDepend::CodeRankB'],
-                    $uuidMap['PDepend::CodeRankB']
+                    $idMap['PDepend::CodeRankB'],
+                    $idMap['PDepend::CodeRankB'],
+                    $idMap['PDepend::CodeRankB']
                 ),
                 'out'  =>  array(
-                    $uuidMap['PDepend::CodeRankB'],
+                    $idMap['PDepend::CodeRankB'],
                 ),
                 'name'  =>  'PDepend::CodeRankA',
                 'type'  =>  'PDepend\\Source\\AST\\ASTNamespace'
             ),
-            $uuidMap['PDepend::CodeRankB']  =>  array(
+            $idMap['PDepend::CodeRankB']  =>  array(
                 'in'  =>  array(
-                    $uuidMap['PDepend::CodeRankA'],
+                    $idMap['PDepend::CodeRankA'],
                 ),
                 'out'  =>  array(
-                    $uuidMap['PDepend::CodeRankA'],
-                    $uuidMap['PDepend::CodeRankA'],
-                    $uuidMap['PDepend::CodeRankA']
+                    $idMap['PDepend::CodeRankA'],
+                    $idMap['PDepend::CodeRankA'],
+                    $idMap['PDepend::CodeRankA']
                 ),
                 'name'  =>  'PDepend::CodeRankB',
                 'type'  =>  'PDepend\\Source\\AST\\ASTNamespace'

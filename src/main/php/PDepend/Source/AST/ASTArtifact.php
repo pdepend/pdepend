@@ -60,11 +60,11 @@ interface ASTArtifact
     public function getName();
 
     /**
-     * Returns a uuid for this code node.
+     * Returns a id for this code node.
      *
      * @return string
      */
-    public function getUuid();
+    public function getId();
 
     /**
      * ASTVisitor method for node tree traversal.

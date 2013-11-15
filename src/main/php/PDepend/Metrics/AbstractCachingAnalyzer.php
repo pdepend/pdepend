@@ -100,9 +100,9 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      */
     protected function restoreFromCache(AbstractASTArtifact $node)
     {
-        $uuid = $node->getUuid();
-        if ($node->isCached() && isset($this->metricsCached[$uuid])) {
-            $this->metrics[$uuid] = $this->metricsCached[$uuid];
+        $id = $node->getId();
+        if ($node->isCached() && isset($this->metricsCached[$id])) {
+            $this->metrics[$id] = $this->metricsCached[$id];
             return true;
         }
         return false;

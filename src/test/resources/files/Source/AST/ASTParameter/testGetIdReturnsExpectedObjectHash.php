@@ -1,5 +1,5 @@
 <?php
-class testGetUUIDReturnsExpectedObjectHash
+class testGetIdReturnsExpectedObjectHash
 {
     public function foo($bar)
     {

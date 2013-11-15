@@ -179,8 +179,8 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            return $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            return $this->nodeMetrics[$artifact->getId()];
         }
         return array();
     }
@@ -192,17 +192,17 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      */
     protected function buildCodeRankMetrics()
     {
-        foreach (array_keys($this->nodes) as $uuid) {
-            $this->nodeMetrics[$uuid] = array(
+        foreach (array_keys($this->nodes) as $id) {
+            $this->nodeMetrics[$id] = array(
                 self::M_CODE_RANK          =>  0,
                 self::M_REVERSE_CODE_RANK  =>  0
             );
         }
-        foreach ($this->computeCodeRank('out', 'in') as $uuid => $rank) {
-            $this->nodeMetrics[$uuid][self::M_CODE_RANK] = $rank;
+        foreach ($this->computeCodeRank('out', 'in') as $id => $rank) {
+            $this->nodeMetrics[$id][self::M_CODE_RANK] = $rank;
         }
-        foreach ($this->computeCodeRank('in', 'out') as $uuid => $rank) {
-            $this->nodeMetrics[$uuid][self::M_REVERSE_CODE_RANK] = $rank;
+        foreach ($this->computeCodeRank('in', 'out') as $id => $rank) {
+            $this->nodeMetrics[$id][self::M_REVERSE_CODE_RANK] = $rank;
         }
     }
 

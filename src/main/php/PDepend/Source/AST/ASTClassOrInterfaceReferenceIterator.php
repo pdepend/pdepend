@@ -78,10 +78,10 @@ class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
         foreach ($references as $reference) {
             $classOrInterface = $reference->getType();
 
-            if (isset($classesAndInterfaces[$classOrInterface->getUuid()])) {
+            if (isset($classesAndInterfaces[$classOrInterface->getId()])) {
                 continue;
             }
-            $classesAndInterfaces[$classOrInterface->getUuid()] = $classOrInterface;
+            $classesAndInterfaces[$classOrInterface->getId()] = $classOrInterface;
         }
 
         return $classesAndInterfaces;

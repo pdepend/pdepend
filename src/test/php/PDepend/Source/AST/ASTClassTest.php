@@ -1587,7 +1587,7 @@ class ASTClassTest extends AbstractASTArtifactTest
                 'namespaceName',
                 'startLine',
                 'userDefined',
-                'uuid'
+                'id'
             ),
             $class->__sleep()
         );

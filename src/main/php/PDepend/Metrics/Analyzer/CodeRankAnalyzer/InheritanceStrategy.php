@@ -120,13 +120,13 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
             $this->initNode($dependency);
             $this->initNode($depPkg);
 
-            $this->nodes[$type->getUuid()]['in'][] = $dependency->getUuid();
-            $this->nodes[$dependency->getUuid()]['out'][] = $type->getUuid();
+            $this->nodes[$type->getId()]['in'][] = $dependency->getId();
+            $this->nodes[$dependency->getId()]['out'][] = $type->getId();
 
             // No self references
             if ($namespace !== $depPkg) {
-                $this->nodes[$namespace->getUuid()]['in'][]     = $depPkg->getUuid();
-                $this->nodes[$depPkg->getUuid()]['out'][] = $namespace->getUuid();
+                $this->nodes[$namespace->getId()]['in'][]     = $depPkg->getId();
+                $this->nodes[$depPkg->getId()]['out'][] = $namespace->getId();
             }
         }
     }
@@ -139,8 +139,8 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      */
     protected function initNode(AbstractASTArtifact $node)
     {
-        if (!isset($this->nodes[$node->getUuid()])) {
-            $this->nodes[$node->getUuid()] = array(
+        if (!isset($this->nodes[$node->getId()])) {
+            $this->nodes[$node->getId()] = array(
                 'in'    =>  array(),
                 'out'   =>  array(),
                 'name'  =>  $node->getName(),

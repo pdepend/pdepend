@@ -120,7 +120,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     private $fanout = 0;
 
     /**
-     * Temporary map that is used to hold the uuid combinations of dependee and
+     * Temporary map that is used to hold the id combinations of dependee and
      * depender.
      *
      * @var array(string=>array)
@@ -175,8 +175,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            return $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            return $this->nodeMetrics[$artifact->getId()];
         }
         return array();
     }
@@ -232,7 +232,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     }
 
     /**
-     * This method takes the temporary coupling map with node UUIDs and calculates
+     * This method takes the temporary coupling map with node IDs and calculates
      * the concrete node metrics.
      *
      * @return void
@@ -240,11 +240,11 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     private function postProcessTemporaryCouplingMap()
     {
-        foreach ($this->dependencyMap as $uuid => $metrics) {
+        foreach ($this->dependencyMap as $id => $metrics) {
             $afferentCoupling = count($metrics['ca']);
             $efferentCoupling = count($metrics['ce']);
 
-            $this->nodeMetrics[$uuid] = array(
+            $this->nodeMetrics[$id] = array(
                 self::M_CA   =>  $afferentCoupling,
                 self::M_CBO  =>  $efferentCoupling,
                 self::M_CE   =>  $efferentCoupling
@@ -287,11 +287,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         foreach ($fanouts as $fanout) {
             $this->initDependencyMap($fanout);
 
-            $this->dependencyMap[
-                $fanout->getUuid()
-            ]['ca'][
-                $function->getUuid()
-            ] = true;
+            $this->dependencyMap[$fanout->getId()]['ca'][$function->getId()] = true;
         }
 
         $this->countCalls($function);
@@ -400,15 +396,15 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         $this->initDependencyMap($coupledType);
 
         $this->dependencyMap[
-            $declaringType->getUuid()
+            $declaringType->getId()
         ]['ce'][
-            $coupledType->getUuid()
+            $coupledType->getId()
         ] = true;
 
         $this->dependencyMap[
-            $coupledType->getUuid()
+            $coupledType->getId()
         ]['ca'][
-            $declaringType->getUuid()
+            $declaringType->getId()
         ] = true;
     }
 
@@ -422,11 +418,11 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     private function initDependencyMap(AbstractASTType $type)
     {
-        if (isset($this->dependencyMap[$type->getUuid()])) {
+        if (isset($this->dependencyMap[$type->getId()])) {
             return;
         }
 
-        $this->dependencyMap[$type->getUuid()] = array(
+        $this->dependencyMap[$type->getId()] = array(
             'ce' => array(),
             'ca' => array()
         );

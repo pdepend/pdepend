@@ -138,8 +138,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metrics = array();
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            $metrics = $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            $metrics = $this->nodeMetrics[$artifact->getId()];
         }
         return $metrics;
     }
@@ -210,10 +210,10 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global class count
         ++$this->noc;
 
-        $id = $class->getNamespace()->getUuid();
+        $id = $class->getNamespace()->getId();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
-        $this->nodeMetrics[$class->getUuid()] = array(
+        $this->nodeMetrics[$class->getId()] = array(
             self::M_NUMBER_OF_METHODS  =>  0
         );
 
@@ -237,7 +237,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global function count
         ++$this->nof;
 
-        $id = $function->getNamespace()->getUuid();
+        $id = $function->getNamespace()->getId();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
@@ -260,10 +260,10 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global class count
         ++$this->noi;
 
-        $id = $interface->getNamespace()->getUuid();
+        $id = $interface->getNamespace()->getId();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_INTERFACES];
 
-        $this->nodeMetrics[$interface->getUuid()] = array(
+        $this->nodeMetrics[$interface->getId()] = array(
             self::M_NUMBER_OF_METHODS  =>  0
         );
 
@@ -290,10 +290,10 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $parent = $method->getParent();
 
         // Update parent class or interface
-        $parentUUID = $parent->getUuid();
-        ++$this->nodeMetrics[$parentUUID][self::M_NUMBER_OF_METHODS];
+        $parentId = $parent->getId();
+        ++$this->nodeMetrics[$parentId][self::M_NUMBER_OF_METHODS];
 
-        $id = $parent->getNamespace()->getUuid();
+        $id = $parent->getNamespace()->getId();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
@@ -311,7 +311,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
         ++$this->nop;
 
-        $this->nodeMetrics[$namespace->getUuid()] = array(
+        $this->nodeMetrics[$namespace->getId()] = array(
             self::M_NUMBER_OF_CLASSES     =>  0,
             self::M_NUMBER_OF_INTERFACES  =>  0,
             self::M_NUMBER_OF_METHODS     =>  0,

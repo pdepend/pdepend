@@ -144,8 +144,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
     public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metrics = array();
-        if (isset($this->metrics[$artifact->getUuid()])) {
-            $metrics = $this->metrics[$artifact->getUuid()];
+        if (isset($this->metrics[$artifact->getId()])) {
+            $metrics = $this->metrics[$artifact->getId()];
         }
         return $metrics;
     }
@@ -218,7 +218,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
         $loc   = $class->getEndLine() - $class->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$class->getUuid()] = array(
+        $this->metrics[$class->getId()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $this->classExecutableLines,
@@ -242,15 +242,15 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
             return;
         }
         // Check for initial file
-        $uuid = $compilationUnit->getUuid();
-        if (isset($this->metrics[$uuid])) {
+        $id = $compilationUnit->getId();
+        if (isset($this->metrics[$id])) {
             return;
         }
 
         $this->fireStartFile($compilationUnit);
 
         if ($this->restoreFromCache($compilationUnit)) {
-            $this->updateProjectMetrics($uuid);
+            $this->updateProjectMetrics($id);
             return $this->fireEndFile($compilationUnit);
         }
 
@@ -259,7 +259,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
         $loc   = $compilationUnit->getEndLine();
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$uuid] = array(
+        $this->metrics[$id] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -267,7 +267,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
             self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
         );
 
-        $this->updateProjectMetrics($uuid);
+        $this->updateProjectMetrics($id);
 
         $this->fireEndFile($compilationUnit);
     }
@@ -296,7 +296,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
         $loc   = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$function->getUuid()] = array(
+        $this->metrics[$function->getId()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -332,7 +332,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
         $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$interface->getUuid()] = array(
+        $this->metrics[$interface->getId()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
@@ -370,7 +370,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
-        $this->metrics[$method->getUuid()] = array(
+        $this->metrics[$method->getId()] = array(
             self::M_LINES_OF_CODE              =>  $loc,
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
@@ -386,14 +386,14 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAwa
 
     /**
      * Updates the project metrics based on the node metrics identifier by the
-     * given <b>$uuid</b>.
+     * given <b>$id</b>.
      *
-     * @param string $uuid The unique identifier of a node.
+     * @param string $id The unique identifier of a node.
      * @return void
      */
-    private function updateProjectMetrics($uuid)
+    private function updateProjectMetrics($id)
     {
-        foreach ($this->metrics[$uuid] as $metric => $value) {
+        foreach ($this->metrics[$id] as $metric => $value) {
             $this->projectMetrics[$metric] += $value;
         }
     }

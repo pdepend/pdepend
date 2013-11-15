@@ -230,10 +230,10 @@ abstract class AbstractPHPParser
     /**
      * Used identifier builder instance.
      *
-     * @var \PDepend\Util\UuidBuilder
+     * @var \PDepend\Util\IdBuilder
      * @since 0.9.12
      */
-    private $uuidBuilder = null;
+    private $idBuilder = null;
 
     /**
      * The maximum valid nesting level allowed.
@@ -270,7 +270,7 @@ abstract class AbstractPHPParser
         $this->builder   = $builder;
         $this->cache     = $cache;
 
-        $this->uuidBuilder    = new \PDepend\Util\UuidBuilder();
+        $this->idBuilder    = new \PDepend\Util\IdBuilder();
         $this->tokenStack     = new \PDepend\Source\Parser\TokenStack();
         $this->useSymbolTable = new \PDepend\Source\Parser\SymbolTable();
 
@@ -323,15 +323,15 @@ abstract class AbstractPHPParser
         $this->compilationUnit = $this->tokenizer->getSourceFile();
         $this->compilationUnit
             ->setCache($this->cache)
-            ->setUuid($this->uuidBuilder->forFile($this->compilationUnit));
+            ->setId($this->idBuilder->forFile($this->compilationUnit));
 
         $hash = md5_file($this->compilationUnit->getFileName());
 
-        if ($this->cache->restore($this->compilationUnit->getUuid(), $hash)) {
+        if ($this->cache->restore($this->compilationUnit->getId(), $hash)) {
             return;
         }
 
-        $this->cache->remove($this->compilationUnit->getUuid());
+        $this->cache->remove($this->compilationUnit->getId());
 
         $this->setUpEnvironment();
 
@@ -390,7 +390,7 @@ abstract class AbstractPHPParser
 
         $this->compilationUnit->setTokens($this->tokenStack->pop());
         $this->cache->store(
-            $this->compilationUnit->getUuid(),
+            $this->compilationUnit->getId(),
             $this->compilationUnit,
             $hash
         );
@@ -512,7 +512,7 @@ abstract class AbstractPHPParser
         $trait = $this->builder->buildTrait($qualifiedName);
         $trait->setCompilationUnit($this->compilationUnit);
         $trait->setDocComment($this->docComment);
-        $trait->setUuid($this->uuidBuilder->forClassOrInterface($trait));
+        $trait->setId($this->idBuilder->forClassOrInterface($trait));
         $trait->setUserDefined();
 
         return $trait;
@@ -553,7 +553,7 @@ abstract class AbstractPHPParser
         $interface = $this->builder->buildInterface($qualifiedName);
         $interface->setCompilationUnit($this->compilationUnit);
         $interface->setDocComment($this->docComment);
-        $interface->setUuid($this->uuidBuilder->forClassOrInterface($interface));
+        $interface->setId($this->idBuilder->forClassOrInterface($interface));
         $interface->setUserDefined();
 
         return $this->parseOptionalExtendsList($interface);
@@ -618,7 +618,7 @@ abstract class AbstractPHPParser
         $class->setCompilationUnit($this->compilationUnit);
         $class->setModifiers($this->modifiers);
         $class->setDocComment($this->docComment);
-        $class->setUuid($this->uuidBuilder->forClassOrInterface($class));
+        $class->setId($this->idBuilder->forClassOrInterface($class));
         $class->setUserDefined();
 
         $this->consumeComments();
@@ -876,7 +876,7 @@ abstract class AbstractPHPParser
                     $method = $this->parseMethodDeclaration();
                     $method->setModifiers($modifiers);
                     $method->setCompilationUnit($this->compilationUnit);
-                    $method->setUuid($this->uuidBuilder->forMethod($method));
+                    $method->setId($this->idBuilder->forMethod($method));
                     $method->setTokens($this->tokenStack->pop());
                     return $method;
 
@@ -1060,7 +1060,7 @@ abstract class AbstractPHPParser
 
         $function = $this->builder->buildFunction($functionName);
         $function->setCompilationUnit($this->compilationUnit);
-        $function->setUuid($this->uuidBuilder->forFunction($function));
+        $function->setId($this->idBuilder->forFunction($function));
 
         $this->parseCallableDeclaration($function);
 

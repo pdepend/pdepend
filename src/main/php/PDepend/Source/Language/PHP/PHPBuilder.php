@@ -2139,7 +2139,7 @@ class PHPBuilder implements Builder
         if (!isset($this->traits[$traitName][$namespaceName])) {
             $this->traits[$traitName][$namespaceName] = array();
         }
-        $this->traits[$traitName][$namespaceName][$trait->getUuid()] = $trait;
+        $this->traits[$traitName][$namespaceName][$trait->getId()] = $trait;
 
         $namespace = $this->buildNamespace($namespaceName);
         $namespace->addType($trait);
@@ -2160,7 +2160,7 @@ class PHPBuilder implements Builder
         if (!isset($this->classes[$className][$namespaceName])) {
             $this->classes[$className][$namespaceName] = array();
         }
-        $this->classes[$className][$namespaceName][$class->getUuid()] = $class;
+        $this->classes[$className][$namespaceName][$class->getId()] = $class;
 
         $namespace = $this->buildNamespace($namespaceName);
         $namespace->addType($class);
@@ -2181,7 +2181,7 @@ class PHPBuilder implements Builder
         if (!isset($this->interfaces[$interfaceName][$namespaceName])) {
             $this->interfaces[$interfaceName][$namespaceName] = array();
         }
-        $this->interfaces[$interfaceName][$namespaceName][$interface->getUuid()]
+        $this->interfaces[$interfaceName][$namespaceName][$interface->getId()]
             = $interface;
 
         $namespace = $this->buildNamespace($namespaceName);

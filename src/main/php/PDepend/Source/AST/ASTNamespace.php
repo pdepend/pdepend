@@ -72,7 +72,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var string
      */
-    protected $uuid = null;
+    protected $id = null;
 
     /**
      * List of all {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
@@ -105,7 +105,7 @@ class ASTNamespace extends AbstractASTArtifact
     public function __construct($name)
     {
         $this->name = $name;
-        $this->uuid = spl_object_hash($this);
+        $this->id = spl_object_hash($this);
     }
 
     /**
@@ -119,13 +119,13 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Returns a uuid for this code node.
+     * Returns a id for this code node.
      *
      * @return string
      */
-    public function getUuid()
+    public function getId()
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     /**
@@ -246,7 +246,7 @@ class ASTNamespace extends AbstractASTArtifact
         // Set this as class namespace
         $type->setNamespace($this);
         // Append class to internal list
-        $this->types[$type->getUuid()] = $type;
+        $this->types[$type->getId()] = $type;
 
         return $type;
     }
@@ -292,7 +292,7 @@ class ASTNamespace extends AbstractASTArtifact
 
         $function->setNamespace($this);
         // Append function to internal list
-        $this->functions[$function->getUuid()] = $function;
+        $this->functions[$function->getId()] = $function;
 
         return $function;
     }

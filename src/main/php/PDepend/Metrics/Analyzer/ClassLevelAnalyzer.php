@@ -181,8 +181,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metrics = array();
-        if (isset($this->nodeMetrics[$artifact->getUuid()])) {
-            $metrics = $this->nodeMetrics[$artifact->getUuid()];
+        if (isset($this->nodeMetrics[$artifact->getId()])) {
+            $metrics = $this->nodeMetrics[$artifact->getId()];
         }
         return $metrics;
     }
@@ -201,7 +201,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         $varsi = $this->calculateVarsi($class);
         $wmci  = $this->calculateWmciForClass($class);
 
-        $this->nodeMetrics[$class->getUuid()] = array(
+        $this->nodeMetrics[$class->getId()] = array(
             self::M_IMPLEMENTED_INTERFACES       => $impl,
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
@@ -248,7 +248,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
         $wmci = $this->calculateWmciForTrait($trait);
 
-        $this->nodeMetrics[$trait->getUuid()] = array(
+        $this->nodeMetrics[$trait->getId()] = array(
             self::M_IMPLEMENTED_INTERFACES       => 0,
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
@@ -281,23 +281,22 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     {
         $this->fireStartMethod($method);
 
-        // Get parent class uuid
-        $uuid = $method->getParent()->getUuid();
+        $id = $method->getParent()->getId();
 
         $ccn = $this->cyclomaticAnalyzer->getCcn2($method);
 
         // Increment Weighted Methods Per Class(WMC) value
-        $this->nodeMetrics[$uuid][self::M_WEIGHTED_METHODS] += $ccn;
+        $this->nodeMetrics[$id][self::M_WEIGHTED_METHODS] += $ccn;
         // Increment Class Size(CSZ) value
-        ++$this->nodeMetrics[$uuid][self::M_CLASS_SIZE];
+        ++$this->nodeMetrics[$id][self::M_CLASS_SIZE];
 
         // Increment Non Private values
         if ($method->isPublic()) {
-            ++$this->nodeMetrics[$uuid][self::M_NUMBER_OF_PUBLIC_METHODS];
+            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_PUBLIC_METHODS];
             // Increment Non Private WMC value
-            $this->nodeMetrics[$uuid][self::M_WEIGHTED_METHODS_NON_PRIVATE] += $ccn;
+            $this->nodeMetrics[$id][self::M_WEIGHTED_METHODS_NON_PRIVATE] += $ccn;
             // Increment Class Interface Size(CIS) value
-            ++$this->nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE];
+            ++$this->nodeMetrics[$id][self::M_CLASS_INTERFACE_SIZE];
         }
 
         $this->fireEndMethod($method);
@@ -313,20 +312,19 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     {
         $this->fireStartProperty($property);
 
-        // Get parent class uuid
-        $uuid = $property->getDeclaringClass()->getUuid();
+        $id = $property->getDeclaringClass()->getId();
 
         // Increment VARS value
-        ++$this->nodeMetrics[$uuid][self::M_PROPERTIES];
+        ++$this->nodeMetrics[$id][self::M_PROPERTIES];
         // Increment Class Size(CSZ) value
-        ++$this->nodeMetrics[$uuid][self::M_CLASS_SIZE];
+        ++$this->nodeMetrics[$id][self::M_CLASS_SIZE];
 
         // Increment Non Private values
         if ($property->isPublic()) {
             // Increment Non Private VARS value
-            ++$this->nodeMetrics[$uuid][self::M_PROPERTIES_NON_PRIVATE];
+            ++$this->nodeMetrics[$id][self::M_PROPERTIES_NON_PRIVATE];
             // Increment Class Interface Size(CIS) value
-            ++$this->nodeMetrics[$uuid][self::M_CLASS_INTERFACE_SIZE];
+            ++$this->nodeMetrics[$id][self::M_CLASS_INTERFACE_SIZE];
         }
 
         $this->fireEndProperty($property);

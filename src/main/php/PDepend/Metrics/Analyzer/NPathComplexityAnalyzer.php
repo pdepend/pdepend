@@ -105,7 +105,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
     /**
      * This method will return an <b>array</b> with all generated metric values
-     * for the node with the given <b>$uuid</b> identifier. If there are no
+     * for the node with the given <b>$id</b> identifier. If there are no
      * metrics for the requested node, this method will return an empty <b>array</b>.
      *
      * <code>
@@ -120,10 +120,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     public function getNodeMetrics(ASTArtifact $artifact)
     {
         $metric = array();
-        if (isset($this->metrics[$artifact->getUuid()])) {
-            $metric = array(
-                self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getUuid()]
-            );
+        if (isset($this->metrics[$artifact->getId()])) {
+            $metric = array(self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getId()]);
         }
         return $metric;
     }
@@ -190,7 +188,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             $npath = MathUtil::mul($npath, $stmt);
         }
 
-        $this->metrics[$callable->getUuid()] = $npath;
+        $this->metrics[$callable->getId()] = $npath;
     }
 
     /**

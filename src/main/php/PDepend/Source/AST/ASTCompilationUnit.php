@@ -73,7 +73,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      *
      * @var string
      */
-    protected $uuid = null;
+    protected $id = null;
 
     /**
      * The source file name/path.
@@ -161,26 +161,25 @@ class ASTCompilationUnit extends AbstractASTArtifact
     }
 
     /**
-     * Returns a uuid for this code node.
+     * Returns a id for this code node.
      *
      * @return string
      */
-    public function getUuid()
+    public function getId()
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     /**
      * Sets the unique identifier for this file instance.
      *
-     * @param string $uuid Identifier for this file.
-     *
+     * @param string $id Identifier for this file.
      * @return void
      * @since 0.9.12
      */
-    public function setUuid($uuid)
+    public function setId($id)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
     }
 
     /**
@@ -216,7 +215,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->getUuid());
+            ->restore($this->getId());
     }
 
     /**
@@ -230,7 +229,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     {
         return $this->cache
             ->type('tokens')
-            ->store($this->getUuid(), $tokens);
+            ->store($this->getId(), $tokens);
     }
 
     /**
@@ -264,7 +263,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function addChild(AbstractASTArtifact $artifact)
     {
-        $this->childNodes[$artifact->getUuid()] = $artifact;
+        $this->childNodes[$artifact->getId()] = $artifact;
     }
 
     /**
@@ -340,7 +339,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
             'endLine',
             'fileName',
             'startLine',
-            'uuid'
+            'id'
         );
     }
 

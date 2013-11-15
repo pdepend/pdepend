@@ -264,7 +264,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
                 'context',
                 'namespaceName',
                 'cache',
-                'uuid',
+                'id',
                 'name',
                 'nodes',
                 'startLine',

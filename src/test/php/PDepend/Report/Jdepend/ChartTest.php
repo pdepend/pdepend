@@ -233,14 +233,14 @@ class ChartTest extends AbstractTest
                 $this->returnCallback(
                     function (AbstractASTArtifact $node) use ($nodes) {
                         $data = array(
-                            $nodes[0]->getUuid()  =>  array(
+                            $nodes[0]->getId()  =>  array(
                                 'a'   =>  0,
                                 'i'   =>  0,
                                 'd'   =>  0,
                                 'cc'  =>  250,
                                 'ac'  =>  250
                             ),
-                            $nodes[1]->getUuid()  =>  array(
+                            $nodes[1]->getId()  =>  array(
                                 'a'   =>  0,
                                 'i'   =>  0,
                                 'd'   =>  0,
@@ -249,8 +249,8 @@ class ChartTest extends AbstractTest
                             ),
                         );
 
-                        if (isset($data[$node->getUuid()])) {
-                            return $data[$node->getUuid()];
+                        if (isset($data[$node->getId()])) {
+                            return $data[$node->getId()];
                         }
                         return array();
                     }
@@ -323,6 +323,9 @@ class ChartTest extends AbstractTest
         unlink($fileName);
     }
 
+    /**
+     * @return \PDepend\Source\AST\ASTNamespace[]
+     */
     private function _createPackages()
     {
         $packages = array();
@@ -335,6 +338,11 @@ class ChartTest extends AbstractTest
         return $packages;
     }
 
+    /**
+     * @param boolean $userDefined
+     * @param string $packageName
+     * @return \PDepend\Source\AST\ASTNamespace
+     */
     private function _createPackage($userDefined, $packageName)
     {
         $packageA = $this->getMock(

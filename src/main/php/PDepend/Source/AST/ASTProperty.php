@@ -98,7 +98,7 @@ class ASTProperty extends AbstractASTArtifact
         $this->fieldDeclaration   = $fieldDeclaration;
         $this->variableDeclarator = $variableDeclarator;
 
-        $this->uuid = spl_object_hash($this);
+        $this->id = spl_object_hash($this);
     }
 
     /**

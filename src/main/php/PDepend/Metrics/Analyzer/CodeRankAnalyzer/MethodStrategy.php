@@ -112,8 +112,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->initNode($type);
             $this->initNode($dependency);
 
-            $this->nodes[$type->getUuid()]['in'][] = $dependency->getUuid();
-            $this->nodes[$dependency->getUuid()]['out'][] = $type->getUuid();
+            $this->nodes[$type->getId()]['in'][] = $dependency->getId();
+            $this->nodes[$dependency->getId()]['out'][] = $type->getId();
         }
 
         $namespace = $type->getNamespace();
@@ -123,8 +123,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->initNode($namespace);
             $this->initNode($dependencyNamespace);
 
-            $this->nodes[$namespace->getUuid()]['in'][] = $dependencyNamespace->getUuid();
-            $this->nodes[$dependencyNamespace->getUuid()]['out'][] = $namespace->getUuid();
+            $this->nodes[$namespace->getId()]['in'][] = $dependencyNamespace->getId();
+            $this->nodes[$dependencyNamespace->getId()]['out'][] = $namespace->getId();
         }
     }
 
@@ -136,8 +136,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
      */
     private function initNode(AbstractASTArtifact $node)
     {
-        if (!isset($this->nodes[$node->getUuid()])) {
-            $this->nodes[$node->getUuid()] = array(
+        if (!isset($this->nodes[$node->getId()])) {
+            $this->nodes[$node->getId()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),

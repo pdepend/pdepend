@@ -95,16 +95,16 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->initNode($class);
             $this->initNode($depClass);
 
-            $this->nodes[$class->getUuid()]['in'][]     = $depClass->getUuid();
-            $this->nodes[$depClass->getUuid()]['out'][] = $class->getUuid();
+            $this->nodes[$class->getId()]['in'][]     = $depClass->getId();
+            $this->nodes[$depClass->getId()]['out'][] = $class->getId();
         }
 
         if ($depNamespace !== $namespace) {
             $this->initNode($namespace);
             $this->initNode($depNamespace);
 
-            $this->nodes[$namespace->getUuid()]['in'][]     = $depNamespace->getUuid();
-            $this->nodes[$depNamespace->getUuid()]['out'][] = $namespace->getUuid();
+            $this->nodes[$namespace->getId()]['in'][]     = $depNamespace->getId();
+            $this->nodes[$depNamespace->getId()]['out'][] = $namespace->getId();
         }
 
         $this->fireEndProperty($property);
@@ -118,8 +118,8 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
      */
     protected function initNode(AbstractASTArtifact $node)
     {
-        if (!isset($this->nodes[$node->getUuid()])) {
-            $this->nodes[$node->getUuid()] = array(
+        if (!isset($this->nodes[$node->getId()])) {
+            $this->nodes[$node->getId()] = array(
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),

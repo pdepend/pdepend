@@ -151,8 +151,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->metrics[$artifact->getUuid()])) {
-            return $this->metrics[$artifact->getUuid()];
+        if (isset($this->metrics[$artifact->getId()])) {
+            return $this->metrics[$artifact->getId()];
         }
         return array();
     }
@@ -183,7 +183,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (false === $this->restoreFromCache($function)) {
             $this->calculateComplexity($function);
         }
-        $this->updateProjectMetrics($function->getUuid());
+        $this->updateProjectMetrics($function->getId());
 
         $this->fireEndFunction($function);
     }
@@ -212,7 +212,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (false === $this->restoreFromCache($method)) {
             $this->calculateComplexity($method);
         }
-        $this->updateProjectMetrics($method->getUuid());
+        $this->updateProjectMetrics($method->getId());
 
         $this->fireEndMethod($method);
     }
@@ -235,7 +235,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
             $data = $child->accept($this, $data);
         }
 
-        $this->metrics[$callable->getUuid()] = $data;
+        $this->metrics[$callable->getId()] = $data;
     }
 
     /**

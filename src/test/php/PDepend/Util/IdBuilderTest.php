@@ -51,16 +51,16 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 
 /**
- * Test case for the {@link \PDepend\Util\UuidBuilder} class.
+ * Test case for the {@link \PDepend\Util\IdBuilder} class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since 0.9.12
  *
- * @covers \PDepend\Util\UuidBuilder
+ * @covers \PDepend\Util\IdBuilder
  * @group unittest
  */
-class UuidBuilderTest extends AbstractTest
+class IdBuilderTest extends AbstractTest
 {
     /**
      * testBuilderCreatesExpectedIdentifierForFile
@@ -70,7 +70,7 @@ class UuidBuilderTest extends AbstractTest
     public function testBuilderCreatesExpectedIdentifierForFile()
     {
         $file    = new ASTCompilationUnit(__FILE__);
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
 
         $this->assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
     }
@@ -82,7 +82,7 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesCaseSensitiveFileIdentifiers()
     {
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
 
         $identifier0 = $builder->forFile(new ASTCompilationUnit(__FILE__));
         $identifier1 = $builder->forFile(new ASTCompilationUnit(strtolower(__FILE__)));
@@ -97,13 +97,13 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForClass()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid('FooBar');
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId('FooBar');
 
         $class = new ASTClass(__FUNCTION__);
-        $class->setCompilationUnit($file);
+        $class->setCompilationUnit($compilationUnit);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class));
     }
@@ -115,13 +115,13 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid('FooBar');
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId('FooBar');
 
         $class = new ASTClass(__FUNCTION__);
-        $class->setCompilationUnit($file);
+        $class->setCompilationUnit($compilationUnit);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
         $builder->forClassOrInterface($class);
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forClassOrInterface($class));
@@ -134,16 +134,16 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondClass()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid('FooBar');
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId('FooBar');
 
         $class1 = new ASTClass(__FUNCTION__);
-        $class1->setCompilationUnit($file);
+        $class1->setCompilationUnit($compilationUnit);
 
         $class2 = new ASTClass(__CLASS__);
-        $class2->setCompilationUnit($file);
+        $class2->setCompilationUnit($compilationUnit);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
         $builder->forClassOrInterface($class1);
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class2));
@@ -156,17 +156,17 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveClassIdentifiers()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId(__FUNCTION__);
         
         $class0 = new ASTClass(__FUNCTION__);
-        $class0->setCompilationUnit($file);
+        $class0->setCompilationUnit($compilationUnit);
         
         $class1 = new ASTClass(strtolower(__FUNCTION__));
-        $class1->setCompilationUnit($file);
+        $class1->setCompilationUnit($compilationUnit);
 
-        $builder0 = new UuidBuilder();
-        $builder1 = new UuidBuilder();
+        $builder0 = new IdBuilder();
+        $builder1 = new IdBuilder();
 
         $this->assertEquals(
             $builder0->forClassOrInterface($class0),
@@ -181,17 +181,17 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId(__FUNCTION__);
 
         $interface0 = new ASTInterface(__FUNCTION__);
-        $interface0->setCompilationUnit($file);
+        $interface0->setCompilationUnit($compilationUnit);
 
         $interface1 = new ASTInterface(strtolower(__FUNCTION__));
-        $interface1->setCompilationUnit($file);
+        $interface1->setCompilationUnit($compilationUnit);
 
-        $builder0 = new UuidBuilder();
-        $builder1 = new UuidBuilder();
+        $builder0 = new IdBuilder();
+        $builder1 = new IdBuilder();
 
         $this->assertEquals(
             $builder0->forClassOrInterface($interface0),
@@ -206,13 +206,13 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForFunction()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid('FooBar');
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId('FooBar');
 
         $function = new ASTFunction(__FUNCTION__);
-        $function->setCompilationUnit($file);
+        $function->setCompilationUnit($compilationUnit);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function));
     }
@@ -224,17 +224,17 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId(__FUNCTION__);
 
         $function0 = new ASTFunction(__FUNCTION__);
-        $function0->setCompilationUnit($file);
+        $function0->setCompilationUnit($compilationUnit);
 
         $function1 = new ASTFunction(strtolower(__FUNCTION__));
-        $function1->setCompilationUnit($file);
+        $function1->setCompilationUnit($compilationUnit);
 
-        $builder0 = new UuidBuilder();
-        $builder1 = new UuidBuilder();
+        $builder0 = new IdBuilder();
+        $builder1 = new IdBuilder();
 
         $this->assertEquals(
             $builder0->forFunction($function0),
@@ -250,12 +250,12 @@ class UuidBuilderTest extends AbstractTest
     public function testBuilderCreatesExpectedIdentifierForMethod()
     {
         $class = new ASTClass(__CLASS__);
-        $class->setUuid('FooBar');
+        $class->setId('FooBar');
 
         $method = new ASTMethod(__FUNCTION__);
         $method->setParent($class);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}$/', $builder->forMethod($method));
     }
@@ -267,13 +267,13 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid('FooBar');
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId('FooBar');
 
         $function = new ASTFunction(__FUNCTION__);
-        $function->setCompilationUnit($file);
+        $function->setCompilationUnit($compilationUnit);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
         $builder->forFunction($function);
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forFunction($function));
@@ -286,16 +286,16 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesExpectedIdentifierForSecondFunction()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid('FooBar');
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId('FooBar');
 
         $function1 = new ASTFunction(__FUNCTION__);
-        $function1->setCompilationUnit($file);
+        $function1->setCompilationUnit($compilationUnit);
 
         $function2 = new ASTFunction(__CLASS__);
-        $function2->setCompilationUnit($file);
+        $function2->setCompilationUnit($compilationUnit);
 
-        $builder = new UuidBuilder();
+        $builder = new IdBuilder();
         $builder->forFunction($function1);
 
         $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function2));
@@ -308,11 +308,11 @@ class UuidBuilderTest extends AbstractTest
      */
     public function testBuilderCreatesCaseInSensitiveMethodIdentifiers()
     {
-        $file = new ASTCompilationUnit(__FILE__);
-        $file->setUuid(__FUNCTION__);
+        $compilationUnit = new ASTCompilationUnit(__FILE__);
+        $compilationUnit->setId(__FUNCTION__);
 
         $class = new ASTClass(__FUNCTION__);
-        $class->setCompilationUnit($file);
+        $class->setCompilationUnit($compilationUnit);
 
         $method0 = new ASTMethod(__FUNCTION__);
         $method0->setParent($class);
@@ -320,8 +320,8 @@ class UuidBuilderTest extends AbstractTest
         $method1 = new ASTMethod(strtolower(__FUNCTION__));
         $method1->setParent($class);
 
-        $builder0 = new UuidBuilder();
-        $builder1 = new UuidBuilder();
+        $builder0 = new IdBuilder();
+        $builder1 = new IdBuilder();
 
         $this->assertEquals(
             $builder0->forMethod($method0),
