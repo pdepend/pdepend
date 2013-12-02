@@ -84,7 +84,7 @@ class ParserBug124Test extends AbstractRegressionTest
              Tokens::T_EQUAL,
              Tokens::T_STRING,
              Tokens::T_DOUBLE_COLON,
-             Tokens::T_CLASS_FQN_CONSTANT,
+             Tokens::T_STRING,/*Tokens::T_CLASS_FQN_CONSTANT,*/
              Tokens::T_SEMICOLON
         );
 
