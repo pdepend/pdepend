@@ -127,6 +127,7 @@ class Application
 
         $container = new ContainerBuilder(new ParameterBag(array()));
         $container->prependExtensionConfig('pdepend', array());
+        $container->addCompilerPass(new DependencyInjection\Compiler\ProcessListenerPass());
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../resources'));
 
