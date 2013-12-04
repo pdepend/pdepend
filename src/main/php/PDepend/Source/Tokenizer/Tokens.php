@@ -838,7 +838,7 @@ interface Tokens
     /**
      * Token that represents the stdClass::class and $class::class constant.
      */
-    const T_CLASS_FQN_CONSTANT = 158;
+    const T_CLASS_FQN = 158;
 
     /**
      * Marks any content not between php tags.

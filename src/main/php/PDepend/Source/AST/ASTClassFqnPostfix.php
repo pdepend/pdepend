@@ -38,56 +38,49 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 2.0.0
  */
 
-namespace PDepend\Bugs;
+namespace PDepend\Source\AST;
 
-use PDepend\Source\Language\PHP\PHPTokenizerInternal;
-use PDepend\Source\Tokenizer\Tokens;
-
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * Test case for bug #124.
+ * This class represents the full qualified class name postfix.
  *
+ * <code>
+ * //   -----
+ * Foo::class
+ * //   -----
+ *
+ * //     -----
+ * $bar:: class;
+ * //     -----
+ * </code>
+ *
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @ticket 124
- * @covers \stdClass
- * @group regressiontest
+ * @since 2.0.0
  */
-class ParserBug124Test extends AbstractRegressionTest
+class ASTClassFqnPostfix extends ASTNode
 {
     /**
-     * Tests that the parser detects the classname scalar.
-     *
-     * <code>
-     * $className = stdClass::class;
-     * </code>
-     *
-     * @return void
+     * Type of this node class.
      */
-    public function testClassNameScalarKeyword()
+    const CLAZZ = __CLASS__;
+
+    /**
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
+     *
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param mixed $data
+     *
+     * @return mixed
+     * @since 0.9.12
+     */
+    public function accept(ASTVisitor $visitor, $data = null)
     {
-
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile($this->createCodeResourceURI('bugs/124/testClassNameScalarKeyword.php'));
-
-        $actual = array();
-        while (is_object($token = $tokenizer->next())) {
-            $actual[] = $token->type;
-        }
-
-
-         $tokenTypes = array(
-             Tokens::T_OPEN_TAG,
-             Tokens::T_VARIABLE,
-             Tokens::T_EQUAL,
-             Tokens::T_STRING,
-             Tokens::T_DOUBLE_COLON,
-             Tokens::T_CLASS_FQN,
-             Tokens::T_SEMICOLON
-        );
-
-        $this->assertEquals($tokenTypes, $actual);
+        return $visitor->visitClassFqnPostfix($this, $data);
     }
 }

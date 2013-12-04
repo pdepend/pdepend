@@ -1627,7 +1627,6 @@ abstract class AbstractPHPParser
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
      * @param array &$expressions List of previous parsed expression nodes.
-     *
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
      */
@@ -3924,6 +3923,10 @@ abstract class AbstractPHPParser
                 $postfix = $this->parseMethodOrConstantPostfix();
                 break;
 
+            case Tokens::T_CLASS_FQN:
+                $postfix = $this->parseFullQualifiedClassNamePostfix();
+                break;
+
             default:
                 $postfix = $this->parseMethodOrPropertyPostfix(
                     $this->parsePostfixIdentifier()
@@ -4015,6 +4018,23 @@ abstract class AbstractPHPParser
         $postfix->setStartColumn($node->getStartColumn());
 
         return $postfix;
+    }
+
+    /**
+     * Parses a full qualified class name postfix.
+     *
+     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @since 2.0.0
+     */
+    private function parseFullQualifiedClassNamePostfix()
+    {
+        $this->tokenStack->push();
+
+        $this->consumeToken(Tokens::T_CLASS_FQN);
+
+        return $this->setNodePositionsAndReturn(
+            $this->builder->buildAstClassFqnPostfix()
+        );
     }
 
     /**
@@ -6228,6 +6248,10 @@ abstract class AbstractPHPParser
                     $this->consumeToken(Tokens::T_DOUBLE_COLON);
                     break;
 
+                case Tokens::T_CLASS_FQN:
+                    $this->consumeToken(Tokens::T_CLASS_FQN);
+                    break;
+
                 case Tokens::T_PLUS:
                     $this->consumeToken(Tokens::T_PLUS);
                     break;
@@ -6266,6 +6290,7 @@ abstract class AbstractPHPParser
                     );
                     break;
 
+
                 default:
                     throw new UnexpectedTokenException(
                         $this->tokenizer->next(),
@@ -6285,6 +6310,7 @@ abstract class AbstractPHPParser
     /**
      * Checks if the given expression is a read/write variable as defined in
      * the PHP zend_language_parser.y definition.
+     *
      *
      * @param \PDepend\Source\AST\ASTNode $expr The context node instance.
      *

@@ -1352,6 +1352,27 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new full qualified class name postfix expression.
+     *
+     * <code>
+     * //   -----
+     * Foo::class;
+     * //   -----
+     *
+     * //       -----
+     * $object::class;
+     * //       -----
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @since 2.0.0
+     */
+    public function buildAstClassFqnPostfix()
+    {
+        return $this->buildAstNodeInstance('ASTClassFqnPostfix', 'class');
+    }
+
+    /**
      * Builds a new arguments list.
      *
      * <code>

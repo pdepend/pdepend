@@ -859,6 +859,24 @@ interface Builder extends \IteratorAggregate
     public function buildAstPropertyPostfix($image);
 
     /**
+     * Builds a new full qualified class name postfix expression.
+     *
+     * <code>
+     * //   -----
+     * Foo::class;
+     * //   -----
+     *
+     * //       -----
+     * $object::class;
+     * //       -----
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @since 2.0.0
+     */
+    public function buildAstClassFqnPostfix();
+
+    /**
      * Builds a new arguments list.
      *
      * <code>

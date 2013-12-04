@@ -43,7 +43,9 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTComment;
+use PDepend\Source\AST\ASTConstantPostfix;
 use PDepend\Source\AST\ASTFunction;
 
 /**
@@ -1020,8 +1022,21 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTConstantPostfixReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTConstantPostfix::CLAZZ,
+            ASTConstantPostfix::CLAZZ,
             $this->createBuilder()->buildAstConstantPostfix('X')
+        );
+    }
+
+    /**
+     * testBuildASTClassFqnPostfixReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTClassFqnPostfixReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            ASTClassFqnPostfix::CLAZZ,
+            $this->createBuilder()->buildAstClassFqnPostfix()
         );
     }
 
