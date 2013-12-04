@@ -10,11 +10,14 @@
 
     <body>
         <release version="1.1.3"  
-                 date=""                                                 
-                 description=""> 
+                 date="2013/12/04"
+                 description="Bug fix release of PDepend.">
             <action date="226d8f1" dev="mapi" type="fix" issue="127" system="github" due-to="cweiske">
                 package.xml date invalid: 2011/02/12
-            </action>                                                           
+            </action>
+            <action date="0a2435b" dev="mapi" type="fix" issue="137" system="github" due-to="WebconsultsEU">
+                PHP 5.2 - Syntax Error in Util/Configuration/Factory
+            </action>
         </release>
 
         <release version="1.1.2"
