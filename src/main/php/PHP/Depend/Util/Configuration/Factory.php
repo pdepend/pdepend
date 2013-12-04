@@ -96,7 +96,7 @@ class PHP_Depend_Util_Configuration_Factory
      */
     public function __construct(PHP_Depend_Util_Workarounds $workarounds = null)
     {
-        $this->workarounds = $workarounds ?: new PHP_Depend_Util_Workarounds();
+        $this->workarounds = $workarounds ? $workarounds : new PHP_Depend_Util_Workarounds();
 
         $home = PHP_Depend_Util_FileUtil::getUserHomeDirOrSysTempDir();
 
