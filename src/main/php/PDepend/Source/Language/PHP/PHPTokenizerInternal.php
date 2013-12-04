@@ -341,6 +341,9 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_CONST            =>  Tokens::T_STRING,
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
+        Tokens::T_CLASS => array(
+            Tokens::T_DOUBLE_COLON     => Tokens::T_STRING,
+        ),
     );
 
     /**

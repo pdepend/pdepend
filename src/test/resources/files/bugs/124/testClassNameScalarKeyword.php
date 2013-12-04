@@ -1,0 +1,3 @@
+<?php
+
+$className = stdClass::class;
