@@ -5548,6 +5548,9 @@ abstract class AbstractPHPParser
                 $this->builder->restoreClass($class);
                 $this->compilationUnit->addChild($class);
                 return $class;
+
+            case Tokens::T_YIELD:
+                return $this->parseYield();
         }
 
         $this->tokenStack->push();
@@ -6501,6 +6504,32 @@ abstract class AbstractPHPParser
             }
         }
         return null;
+    }
+
+    /**
+     * This method parses a yield-statement node.
+     *
+     * @return \PDepend\Source\AST\ASTYieldStatmenet
+     */
+    private function parseYield()
+    {
+        $this->tokenStack->push();
+
+        $token = $this->consumeToken(Tokens::T_YIELD);
+        $this->consumeComments();
+
+        $yield = $this->builder->buildAstYieldStatement($token->image);
+
+        $yield->addChild($this->parseOptionalExpression());
+
+        if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+            $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+
+            $yield->addChild($this->parseOptionalExpression());
+        }
+
+        $this->parseStatementTermination();
+        return $this->setNodePositionsAndReturn($yield);
     }
 
     /**

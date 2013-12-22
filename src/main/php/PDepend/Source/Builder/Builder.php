@@ -1188,4 +1188,14 @@ interface Builder extends \IteratorAggregate
      * @since 0.9.12
      */
     public function buildAstEchoStatement($image);
+
+    /**
+     * Builds a new yield-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return \PDepend\Source\AST\ASTYieldStatement
+     * @since $version$
+     */
+    public function buildAstYieldStatement($image);
 }
