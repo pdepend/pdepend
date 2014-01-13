@@ -41,7 +41,6 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
-use PDepend\Autoload;
 use PDepend\TextUI\Command;
 
 // PEAR/svn workaround
