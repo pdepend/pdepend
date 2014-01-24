@@ -53,14 +53,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AnalyzerFactory
 {
     /**
-     * @var Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     private $container;
 
     /**
      * Create a new Analyzer Factory
      *
-     * @param Symfony\Component\DependencyInjection\ContainerInterface
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -70,8 +70,8 @@ class AnalyzerFactory
     /**
      * Create and configure all analyzers required for given set of loggers.
      *
-     * @param array(PDepend\Report\ReportGenerator) $generators
-     * @return array(PDepend\Metrics\Analyzer)
+     * @param \PDepend\Report\ReportGenerator[] $generators
+     * @return \PDepend\Metrics\Analyzer[]
      */
     public function createRequiredForGenerators(array $generators)
     {

@@ -85,6 +85,14 @@ class Application
     }
 
     /**
+     * @return \PDepend\Engine
+     */
+    public function getEngine()
+    {
+        return $this->getContainer()->get('pdepend.engine');
+    }
+
+    /**
      * @return \PDepend\TextUI\Runner
      */
     public function getRunner()
