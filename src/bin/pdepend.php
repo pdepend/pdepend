@@ -48,7 +48,16 @@ if (strpos('@php_bin@', '@php_bin') === 0) {
     set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
 }
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+$autoloadFiles = array(
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../../autoload.php'
+);
+foreach ($autoloadFiles as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+        break;
+    }
+}
 
 // Allow as much memory as possible by default
 if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
