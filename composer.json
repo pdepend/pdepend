@@ -17,6 +17,11 @@
     "bin": ["src/bin/pdepend"],
     "autoload": {
         "psr-0": {"PDepend\\": "src/main/php/"}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.0-dev"
+        }
     }
 }
 
