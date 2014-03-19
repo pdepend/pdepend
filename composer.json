@@ -8,6 +8,7 @@
     },
     "require": {
         "symfony/dependency-injection": "@stable",
+        "symfony/filesystem": "@stable",
         "symfony/config": "@stable"
     },
     "require-dev": {
