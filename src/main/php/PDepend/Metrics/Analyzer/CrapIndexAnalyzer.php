@@ -70,7 +70,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_CRAP_INDEX = 'crap';
+    const M_CRAP_INDEX = 'crap',
+          M_COVERAGE = 'cov';
 
     /**
      * The report option name.
@@ -212,7 +213,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     private function visitCallable(AbstractASTCallable $callable)
     {
         $this->metrics[$callable->getId()] = array(
-            self::M_CRAP_INDEX => $this->calculateCrapIndex($callable)
+            self::M_CRAP_INDEX => $this->calculateCrapIndex($callable),
+            self::M_COVERAGE   => $this->calculateCoverage($callable)
         );
     }
 
@@ -235,6 +237,17 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
             return $complexity;
         }
         return pow($complexity, 2) * pow(1 - $coverage / 100, 3) + $complexity;
+    }
+
+    /**
+     * Calculates the code coverage for the given callable object.
+     *
+     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @return float
+     */
+    private function calculateCoverage(AbstractASTCallable $callable)
+    {
+        return $this->createOrReturnCoverageReport()->getCoverage($callable);
     }
 
     /**

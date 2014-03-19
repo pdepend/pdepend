@@ -2,7 +2,7 @@
     "name": "pdepend/pdepend",
     "description": "Official version of pdepend to be handled with Composer",
     "license": "BSD-3-Clause",
-    "version": "2.0.0-beta.2",
+    "version": "2.0.0-beta.3",
     "require": {
         "php": ">=5.3.7"
     },
@@ -17,6 +17,11 @@
     "bin": ["src/bin/pdepend"],
     "autoload": {
         "psr-0": {"PDepend\\": "src/main/php/"}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.0-dev"
+        }
     }
 }
 
