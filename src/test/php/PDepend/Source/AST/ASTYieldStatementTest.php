@@ -61,7 +61,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYield()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTYieldStatement', $stmt);
     }
 
@@ -72,7 +72,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldWithLiteral()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $stmt->getChild(0));
     }
 
@@ -83,7 +83,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldWithVariable()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(0));
     }
 
@@ -94,7 +94,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldWithKeyValue()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(0));
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(1));
     }
@@ -106,7 +106,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldWithFunctionCalls()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $stmt->getChild(0));
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $stmt->getChild(1));
     }
@@ -118,7 +118,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldInsideForeach()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForeachStatement', $stmt->getParent()->getParent());
     }
 
@@ -129,7 +129,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldKeyValue()
     {
-        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $stmt->getChildren();
 
         $this->assertEquals(2, count($nodes));
@@ -157,7 +157,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldValueAssignmentSimple()
     {
-        $yield = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $yield->getChildren();
 
         $this->assertEquals(1, count($nodes));
@@ -187,7 +187,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testYieldValueAssignmentKeyValue()
     {
-        $yield = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $yield->getChildren();
 
         $this->assertEquals(2, count($nodes));
@@ -231,7 +231,7 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
      * @param string $testCase Name of the calling test case.
      * @return \PDepend\Source\AST\ASTYieldStatement
      */
-    private function _getFirstYieldStatementInFunction($testCase)
+    private function getFirstYieldStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
