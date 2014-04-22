@@ -234,12 +234,13 @@ class PHPTokenizerInternal implements Tokenizer
         'array'          =>  Tokens::T_ARRAY,
         'false'          =>  Tokens::T_FALSE,
         'trait'          =>  Tokens::T_TRAIT,
+        'yield'          =>  Tokens::T_YIELD,
         'parent'         =>  Tokens::T_PARENT,
         'insteadof'      =>  Tokens::T_INSTEADOF,
         'namespace'      =>  Tokens::T_NAMESPACE,
         '__dir__'        =>  Tokens::T_DIR,
         '__trait__'      =>  Tokens::T_TRAIT_C,
-        '__namespace__'  =>  Tokens::T_NS_C
+        '__namespace__'  =>  Tokens::T_NS_C,
     );
 
     /**
