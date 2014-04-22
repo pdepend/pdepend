@@ -48,13 +48,8 @@ namespace PDepend\Source\AST;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTSwitchStatement extends \PDepend\Source\AST\ASTStatement
+class ASTSwitchStatement extends ASTStatement
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

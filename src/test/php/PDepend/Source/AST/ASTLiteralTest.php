@@ -272,7 +272,7 @@ class ASTLiteralTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             self::getCallingTestMethod(),
-            \PDepend\Source\AST\ASTLiteral::CLAZZ
+            'PDepend\\Source\\AST\\ASTLiteral'
         );
     }
 }

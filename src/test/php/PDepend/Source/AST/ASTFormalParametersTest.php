@@ -110,7 +110,8 @@ class ASTFormalParametersTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstFormalParametersInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTFormalParameters::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTFormalParameters'
         );
     }
 }

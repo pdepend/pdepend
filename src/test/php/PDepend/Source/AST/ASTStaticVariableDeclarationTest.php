@@ -63,7 +63,7 @@ class ASTStaticVariableDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
     public function testStaticVariableDeclaration()
     {
         $declaration = $this->_getFirstStaticVariableDeclarationInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTStaticVariableDeclaration::CLAZZ, $declaration);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticVariableDeclaration', $declaration);
 
         return $declaration;
     }
@@ -129,7 +129,7 @@ class ASTStaticVariableDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTStaticVariableDeclaration::CLAZZ
+            'PDepend\\Source\\AST\\ASTStaticVariableDeclaration'
         );
     }
 

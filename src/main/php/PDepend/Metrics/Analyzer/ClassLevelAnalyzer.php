@@ -67,11 +67,6 @@ use PDepend\Source\AST\ASTTrait;
 class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerFilterAware, AnalyzerNodeAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_IMPLEMENTED_INTERFACES       = 'impl',
@@ -152,7 +147,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     public function getRequiredAnalyzers()
     {
-        return array(\PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer::CLAZZ);
+        return array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
     }
 
     /**

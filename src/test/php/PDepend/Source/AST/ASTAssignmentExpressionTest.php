@@ -64,12 +64,12 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstAssignmentExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments'
             )
         );
     }
@@ -84,11 +84,11 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstAssignmentExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTPropertyPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier'
             )
         );
     }
@@ -103,13 +103,13 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstAssignmentExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTFunctionPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTFunctionPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTPropertyPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier'
             )
         );
     }
@@ -124,8 +124,8 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstAssignmentExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -140,8 +140,8 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstAssignmentExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -299,7 +299,7 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testVariableAssignmentExpression()
     {
         $expr = $this->_getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTAssignmentExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
     }
@@ -365,7 +365,7 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testStaticPropertyAssignmentExpression()
     {
         $expr = $this->_getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTAssignmentExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
     }
@@ -431,7 +431,7 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testObjectPropertyAssignmentExpression()
     {
         $expr = $this->_getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTAssignmentExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
     }
@@ -497,7 +497,7 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testChainedPropertyAssignmentExpression()
     {
         $expr = $this->_getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTAssignmentExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
     }
@@ -563,7 +563,7 @@ class ASTAssignmentExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTAssignmentExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTAssignmentExpression'
         );
     }
 }

@@ -201,7 +201,8 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
     private function _getFirstPreDecrementExpressionInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, ASTPreDecrementExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTPreDecrementExpression'
         );
     }
 
@@ -215,7 +216,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
     private function _getFirstPreDecrementExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, ASTPreDecrementExpression::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTPreDecrementExpression'
         );
     }
 }

@@ -53,11 +53,6 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * List of {@link \PDepend\Source\AST\ASTArtifact} objects in
      * this iterator.
      *

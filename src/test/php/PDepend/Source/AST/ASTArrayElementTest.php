@@ -79,7 +79,7 @@ class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstArrayElementInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($foo)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
             )
         );
     }
@@ -106,7 +106,7 @@ class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstArrayElementInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($foo)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
             )
         );
     }
@@ -134,8 +134,8 @@ class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstArrayElementInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($key)',
-                \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($value)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
             )
         );
     }
@@ -163,8 +163,8 @@ class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstArrayElementInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($key)',
-                \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($value)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
             )
         );
     }
@@ -211,21 +211,21 @@ class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstArrayElementInFunction(),
             array(
-                \PDepend\Source\AST\ASTLiteral::CLAZZ                              . ' ("bar")',
-                \PDepend\Source\AST\ASTArray::CLAZZ                                . ' ()', array(
-                    \PDepend\Source\AST\ASTArrayElement::CLAZZ                     . ' ()', array(
-                        \PDepend\Source\AST\ASTAllocationExpression::CLAZZ         . ' (new)', array(
-                            \PDepend\Source\AST\ASTClassReference::CLAZZ           . ' (Object)')),
-                    \PDepend\Source\AST\ASTArrayElement::CLAZZ                     . ' ()', array(
-                        \PDepend\Source\AST\ASTLiteral::CLAZZ                      . ' (23)',
-                        \PDepend\Source\AST\ASTAllocationExpression::CLAZZ         . ' (new)', array(
-                            \PDepend\Source\AST\ASTClassReference::CLAZZ           . ' (Object)')),
-                    \PDepend\Source\AST\ASTArrayElement::CLAZZ                     . ' ()', array(
-                        \PDepend\Source\AST\ASTArray::CLAZZ                        . ' ()', array(
-                            \PDepend\Source\AST\ASTArrayElement::CLAZZ             . ' ()', array(
-                                \PDepend\Source\AST\ASTLiteral::CLAZZ              . ' ("foo")',
-                                \PDepend\Source\AST\ASTAllocationExpression::CLAZZ . ' (new)', array(
-                                    \PDepend\Source\AST\ASTClassReference::CLAZZ   . ' (Object)'))))
+                'PDepend\\Source\\AST\\ASTLiteral'                              . ' ("bar")',
+                'PDepend\\Source\\AST\\ASTArray'                                . ' ()', array(
+                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', array(
+                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', array(
+                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)')),
+                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', array(
+                        'PDepend\\Source\\AST\\ASTLiteral'                      . ' (23)',
+                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', array(
+                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)')),
+                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', array(
+                        'PDepend\\Source\\AST\\ASTArray'                        . ' ()', array(
+                            'PDepend\\Source\\AST\\ASTArrayElement'             . ' ()', array(
+                                'PDepend\\Source\\AST\\ASTLiteral'              . ' ("foo")',
+                                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', array(
+                                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (Object)'))))
             )
             )
         );
@@ -328,7 +328,7 @@ class ASTArrayElementTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTArrayElement::CLAZZ
+            'PDepend\\Source\\AST\\ASTArrayElement'
         );
     }
 }

@@ -151,7 +151,7 @@ class ASTPropertyTest extends AbstractTest
      */
     public function testGetCompilationUnitReturnsNullByDefault()
     {
-        $property = $this->getMockWithoutConstructor(ASTProperty::CLAZZ);
+        $property = $this->getMockWithoutConstructor('PDepend\\Source\\AST\\ASTProperty');
         $this->assertNull($property->getCompilationUnit());
     }
 
@@ -164,7 +164,7 @@ class ASTPropertyTest extends AbstractTest
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
 
-        $property = $this->getMockWithoutConstructor(ASTProperty::CLAZZ);
+        $property = $this->getMockWithoutConstructor('PDepend\\Source\\AST\\ASTProperty');
         $property->setCompilationUnit($compilationUnit);
 
         $this->assertSame($compilationUnit, $property->getCompilationUnit());
@@ -476,7 +476,7 @@ class ASTPropertyTest extends AbstractTest
         $visitor->expects($this->once())
             ->method('visitProperty');
 
-        $property = $this->getMockWithoutConstructor(ASTProperty::CLAZZ);
+        $property = $this->getMockWithoutConstructor('PDepend\\Source\\AST\\ASTProperty');
         $property->accept($visitor);
     }
 

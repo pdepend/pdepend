@@ -56,13 +56,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTVariable extends \PDepend\Source\AST\ASTNode
+class ASTVariable extends ASTExpression
 {
-    /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * This method will return <b>true</b> when this variable instance represents
      * the <b>$this</b> scope of a class instance.

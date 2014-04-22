@@ -106,7 +106,7 @@ class ASTRequireExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testRequireExpression()
     {
         $expr = $this->_getFirstRequireExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTRequireExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTRequireExpression', $expr);
 
         return $expr;
     }
@@ -172,7 +172,7 @@ class ASTRequireExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testRequireExpressionWithParenthesis()
     {
         $expr = $this->_getFirstRequireExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTRequireExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTRequireExpression', $expr);
 
         return $expr;
     }
@@ -238,7 +238,7 @@ class ASTRequireExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTRequireExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTRequireExpression'
         );
     }
 }

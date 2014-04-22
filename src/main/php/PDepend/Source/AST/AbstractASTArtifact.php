@@ -51,13 +51,6 @@ namespace PDepend\Source\AST;
 abstract class AbstractASTArtifact implements ASTArtifact
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The name for this item.
      *
      * @var string

@@ -53,11 +53,6 @@ namespace PDepend\Source\AST;
 class ASTExitExpression extends \PDepend\Source\AST\ASTExpression
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

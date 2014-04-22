@@ -53,11 +53,6 @@ namespace PDepend\Source\AST;
 class ASTElseIfStatement extends \PDepend\Source\AST\ASTStatement
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Returns <b>true</b> when this <b>elseif</b>-statement is followed by an
      * <b>else</b>-statement.
      *

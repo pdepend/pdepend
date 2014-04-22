@@ -60,11 +60,6 @@ use PDepend\Util\Cache\Driver\File\FileCacheDirectory;
 class FileCacheDriver implements CacheDriver
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Default cache entry type.
      */
     const ENTRY_TYPE = 'cache';

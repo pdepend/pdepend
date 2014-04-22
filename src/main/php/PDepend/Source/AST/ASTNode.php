@@ -53,13 +53,6 @@ namespace PDepend\Source\AST;
 abstract class ASTNode
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Parsed child nodes of this node.
      *
      * @var \PDepend\Source\AST\ASTNode[]

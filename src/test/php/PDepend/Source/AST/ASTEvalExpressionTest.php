@@ -108,7 +108,8 @@ class ASTEvalExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstEvalExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTEvalExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTEvalExpression'
         );
     }
 }

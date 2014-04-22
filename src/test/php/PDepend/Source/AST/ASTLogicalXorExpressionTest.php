@@ -108,7 +108,8 @@ class ASTLogicalXorExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstLogicalXorExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTLogicalXorExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTLogicalXorExpression'
         );
     }
 }

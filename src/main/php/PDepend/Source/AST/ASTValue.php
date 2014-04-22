@@ -55,13 +55,6 @@ namespace PDepend\Source\AST;
 class ASTValue
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Boolean flag that is <b>true</b> when a PHP-value was set.
      *
      * @var boolean

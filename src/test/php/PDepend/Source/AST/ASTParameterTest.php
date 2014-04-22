@@ -253,7 +253,7 @@ class ASTParameterTest extends AbstractTest
             ->method('visitParameter')
             ->with($this->isInstanceOf('\\PDepend\\Source\\AST\\ASTParameter'));
 
-        $parameter = new ASTParameter($this->getMock(ASTFormalParameter::CLAZZ));
+        $parameter = new ASTParameter($this->getMock('PDepend\\Source\\AST\\ASTFormalParameter'));
         $parameter->accept($visitor);
     }
 }

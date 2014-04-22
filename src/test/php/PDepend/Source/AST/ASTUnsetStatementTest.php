@@ -63,7 +63,7 @@ class ASTUnsetStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testUnsetStatement()
     {
         $stmt = $this->_getFirstUnsetStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTUnsetStatement::CLAZZ, $stmt);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnsetStatement', $stmt);
 
         return $stmt;
     }
@@ -130,7 +130,7 @@ class ASTUnsetStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstUnsetStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTUnsetStatement::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTUnsetStatement'
         );
     }
 }

@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  */
-class ASTSwitchLabel extends \PDepend\Source\AST\ASTNode
+class ASTSwitchLabel extends ASTNode
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Is this switch label the default label?
      *

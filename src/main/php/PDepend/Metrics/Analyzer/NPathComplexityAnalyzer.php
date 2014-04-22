@@ -72,11 +72,6 @@ use PDepend\Util\MathUtil;
 class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_NPATH_COMPLEXITY = 'npath';

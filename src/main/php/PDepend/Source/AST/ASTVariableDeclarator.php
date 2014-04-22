@@ -52,13 +52,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTVariableDeclarator extends ASTNode
+class ASTVariableDeclarator extends ASTExpression
 {
-    /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * The initial declaration value for this node or <b>null</b>.
      *

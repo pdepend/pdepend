@@ -108,7 +108,8 @@ class ASTBreakStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstBreakStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTBreakStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTBreakStatement'
         );
     }
 }

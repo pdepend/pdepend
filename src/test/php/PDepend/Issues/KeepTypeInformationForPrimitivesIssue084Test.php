@@ -72,8 +72,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(ASTType::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertEquals($expected, $type->getImage());
     }
@@ -86,8 +86,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
     public function testParserSetsExpectedArrayPropertyType()
     {
         $type = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(ASTType::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertTrue($type->isArray());
     }
@@ -100,8 +100,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
     public function testParserSetsExpectedArrayWithParenthesisPropertyType()
     {
         $type = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType(ASTFieldDeclaration::CLAZZ)
-            ->getFirstChildOfType(ASTType::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertTrue($type->isArray());
     }

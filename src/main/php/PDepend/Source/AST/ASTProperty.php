@@ -53,13 +53,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTProperty extends AbstractASTArtifact
 {
     /**
-     * The type of this class.
-     * 
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-    
-    /**
      * The parent type object.
      *
      * @var ASTClass
@@ -177,7 +170,7 @@ class ASTProperty extends AbstractASTArtifact
     public function isArray()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
-            \PDepend\Source\AST\ASTType::CLAZZ
+            'PDepend\\Source\\AST\\ASTType'
         );
         if ($typeNode === null) {
             return false;
@@ -195,7 +188,7 @@ class ASTProperty extends AbstractASTArtifact
     public function isPrimitive()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
-            \PDepend\Source\AST\ASTType::CLAZZ
+            'PDepend\\Source\\AST\\ASTType'
         );
         if ($typeNode === null) {
             return false;
@@ -213,7 +206,7 @@ class ASTProperty extends AbstractASTArtifact
     public function getClass()
     {
         $reference = $this->fieldDeclaration->getFirstChildOfType(
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
         if ($reference === null) {
             return null;

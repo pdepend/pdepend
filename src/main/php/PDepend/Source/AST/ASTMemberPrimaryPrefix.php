@@ -72,11 +72,6 @@ namespace PDepend\Source\AST;
 class ASTMemberPrimaryPrefix extends ASTNode
 {
     /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Returns <b>true</b> when this member primary prefix represents a static
      * property or method access.
      *

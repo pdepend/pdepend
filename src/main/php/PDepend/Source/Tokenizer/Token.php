@@ -51,13 +51,6 @@ namespace PDepend\Source\Tokenizer;
 class Token
 {
     /**
-     * The type of this class.
-     * 
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The token type identifier.
      *
      * @var integer

@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
-class ASTTypeCallable extends \PDepend\Source\AST\ASTType
+class ASTTypeCallable extends ASTType
 {
-    /**
-     * The type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * The visual image for this node type.
      */

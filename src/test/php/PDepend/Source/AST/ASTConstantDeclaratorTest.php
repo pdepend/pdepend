@@ -81,7 +81,7 @@ class ASTConstantDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
     public function testParserInjectsValueObjectIntoConstantDeclarator()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass();
-        $this->assertInstanceOf(ASTValue::CLAZZ, $declarator->getValue());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $declarator->getValue());
     }
 
     /**
@@ -116,7 +116,7 @@ class ASTConstantDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
     public function testConstantDeclarator()
     {
         $declarator = $this->_getFirstConstantDeclaratorInClass();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTConstantDeclarator::CLAZZ, $declarator);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $declarator);
 
         return $declarator;
     }
@@ -182,7 +182,7 @@ class ASTConstantDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(), 
-            \PDepend\Source\AST\ASTConstantDeclarator::CLAZZ
+            'PDepend\\Source\\AST\\ASTConstantDeclarator'
         );
     }
 }

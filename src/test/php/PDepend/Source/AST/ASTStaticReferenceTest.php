@@ -167,7 +167,7 @@ class ASTStaticReferenceTest extends \PDepend\Source\AST\ASTNodeTest
     public function testStaticReference()
     {
         $reference = $this->_getFirstStaticReferenceInClass();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTStaticReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticReference', $reference);
 
         return $reference;
     }
@@ -250,7 +250,7 @@ class ASTStaticReferenceTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTStaticReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTStaticReference'
         );
     }
 }

@@ -51,13 +51,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTStaticReference extends \PDepend\Source\AST\ASTSelfReference
+class ASTStaticReference extends ASTSelfReference
 {
-    /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * The source image of this node.
      */

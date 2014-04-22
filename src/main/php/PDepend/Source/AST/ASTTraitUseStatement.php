@@ -57,11 +57,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTTraitUseStatement extends ASTStatement
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * @var \PDepend\Source\AST\ASTMethod[]
      */
     private $allMethods;
@@ -98,7 +93,7 @@ class ASTTraitUseStatement extends ASTStatement
         $methodName   = strtolower($method->getName());
         $methodParent = $method->getParent();
 
-        $precedences = $this->findChildrenOfType(ASTTraitAdaptationPrecedence::CLAZZ);
+        $precedences = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
 
         foreach ($precedences as $precedence) {
             if (strtolower($precedence->getImage()) !== $methodName) {
@@ -199,7 +194,7 @@ class ASTTraitUseStatement extends ASTStatement
      */
     private function getAliases()
     {
-        return $this->findChildrenOfType(ASTTraitAdaptationAlias::CLAZZ);
+        return $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationAlias');
     }
 
     /**

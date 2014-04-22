@@ -144,7 +144,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $methods = $class->getAllMethods();
 
         $this->assertInstanceOf(
-            ASTTrait::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTrait',
             $methods['foo']->getParent()
         );
     }
@@ -161,7 +161,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $methods = $class->getAllMethods();
 
         $this->assertInstanceOf(
-            ASTTrait::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTrait',
             $methods['foo']->getParent()
         );
     }
@@ -178,7 +178,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $methods = $class->getAllMethods();
 
         $this->assertInstanceOf(
-            ASTClass::CLAZZ,
+            'PDepend\\Source\\AST\\ASTClass',
             $methods['foo']->getParent()
         );
     }
@@ -595,7 +595,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -605,7 +605,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -630,7 +630,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -639,7 +639,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -649,7 +649,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -674,7 +674,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -684,7 +684,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -713,10 +713,10 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class  = $this->getFirstClassForTestCase();
         $params = $class->getFirstChildOfType(
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ
+            'PDepend\\Source\\AST\\ASTFormalParameter'
         );
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTFormalParameter::CLAZZ, $params);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $params);
     }
 
     /**
@@ -728,7 +728,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class  = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ
+            'PDepend\\Source\\AST\\ASTFormalParameter'
         );
 
         $this->assertEquals(4, count($params));
@@ -743,7 +743,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class  = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(
-            \PDepend\Source\AST\ASTVariableDeclarator::CLAZZ
+            'PDepend\\Source\\AST\\ASTVariableDeclarator'
         );
 
         $this->assertEquals(2, count($params));
@@ -1605,7 +1605,7 @@ class ASTClassTest extends AbstractASTArtifactTest
 
         $method = new ASTMethod(__FUNCTION__);
         $class->addMethod($method);
-        $class->setContext($this->getMock(BuilderContext::CLAZZ));
+        $class->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
 
         $file = new ASTCompilationUnit(__FILE__);
         $class->setCompilationUnit($file);
@@ -1623,10 +1623,10 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class = new ASTClass(__CLASS__);
 
-        $context = $this->getMock(BuilderContext::CLAZZ);
+        $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
         $context->expects($this->once())
             ->method('registerClass')
-            ->with(self::isInstanceOf(ASTClass::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
 
         $class->setContext($context)->__wakeup();
     }
@@ -1641,7 +1641,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $class = new ASTClass(__CLASS__);
         $class->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $class->setCache(new MemoryCacheDriver());
-        $class->setContext($this->getMock(BuilderContext::CLAZZ));
+        $class->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
 
         return $class;
     }

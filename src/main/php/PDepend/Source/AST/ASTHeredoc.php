@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-class ASTHeredoc extends \PDepend\Source\AST\ASTNode
+class ASTHeredoc extends ASTExpression
 {
-    /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-    
     /**
      * Delimiter used for this heredoc instance.
      *

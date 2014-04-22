@@ -108,7 +108,8 @@ class ASTConditionalExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstConditionalExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTConditionalExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTConditionalExpression'
         );
     }
 }

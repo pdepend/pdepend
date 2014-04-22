@@ -63,7 +63,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testListExpression()
     {
         $expr = $this->_getFirstListExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTListExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 
         return $expr;
     }
@@ -129,7 +129,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testListExpressionWithNestedList()
     {
         $expr = $this->_getFirstListExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTListExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 
         return $expr;
     }
@@ -260,7 +260,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $expr = $this->_getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTVariableVariable::CLAZZ, $var);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableVariable', $var);
     }
 
     /**
@@ -273,7 +273,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $expr = $this->_getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTCompoundVariable::CLAZZ, $var);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $var);
     }
 
     /**
@@ -286,7 +286,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $expr = $this->_getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ, $var);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArrayIndexExpression', $var);
     }
 
     /**
@@ -299,7 +299,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $expr = $this->_getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ, $var);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $var);
     }
 
     /**
@@ -311,7 +311,7 @@ class ASTListExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTListExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTListExpression'
         );
     }
 }

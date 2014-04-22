@@ -106,7 +106,7 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSwitchLabel()
     {
         $label = $this->_getFirstSwitchLabelInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSwitchLabel::CLAZZ, $label);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
 
         return $label;
     }
@@ -188,9 +188,9 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
         }
 
         $expected = array(
-            \PDepend\Source\AST\ASTExpression::CLAZZ,
-            \PDepend\Source\AST\ASTSwitchStatement::CLAZZ,
-            \PDepend\Source\AST\ASTBreakStatement::CLAZZ
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTSwitchStatement',
+            'PDepend\\Source\\AST\\ASTBreakStatement'
         );
 
         $this->assertEquals($expected, $actual);
@@ -205,7 +205,7 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSwitchLabelDefault()
     {
         $label = $this->_getFirstSwitchLabelInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSwitchLabel::CLAZZ, $label);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
 
         return $label;
     }
@@ -287,8 +287,8 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
         }
 
         $expected = array(
-            \PDepend\Source\AST\ASTSwitchStatement::CLAZZ,
-            \PDepend\Source\AST\ASTBreakStatement::CLAZZ
+            'PDepend\\Source\\AST\\ASTSwitchStatement',
+            'PDepend\\Source\\AST\\ASTBreakStatement'
         );
 
         $this->assertEquals($expected, $actual);
@@ -324,7 +324,7 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTSwitchLabel::CLAZZ
+            'PDepend\\Source\\AST\\ASTSwitchLabel'
         );
     }
 }

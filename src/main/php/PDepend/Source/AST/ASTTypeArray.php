@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTTypeArray extends \PDepend\Source\AST\ASTType
+class ASTTypeArray extends ASTType
 {
-    /**
-     * The type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * The visual image for this node type.
      */

@@ -108,7 +108,7 @@ class ASTForUpdateTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstForUpdateInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTForUpdate::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTForUpdate'
         );
     }
 }

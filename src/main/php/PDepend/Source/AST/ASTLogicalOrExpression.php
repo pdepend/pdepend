@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  */
-class ASTLogicalOrExpression extends \PDepend\Source\AST\ASTExpression
+class ASTLogicalOrExpression extends ASTExpression
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

@@ -285,10 +285,10 @@ class ASTCastExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $expr,
             array(
-                \PDepend\Source\AST\ASTCastExpression::CLAZZ,
-                \PDepend\Source\AST\ASTCastExpression::CLAZZ,
-                \PDepend\Source\AST\ASTCastExpression::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ
+                'PDepend\\Source\\AST\\ASTCastExpression',
+                'PDepend\\Source\\AST\\ASTCastExpression',
+                'PDepend\\Source\\AST\\ASTCastExpression',
+                'PDepend\\Source\\AST\\ASTVariable'
             )
         );
     }
@@ -347,7 +347,7 @@ class ASTCastExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstCastExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTCastExpression::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTCastExpression'
         );
     }
 }

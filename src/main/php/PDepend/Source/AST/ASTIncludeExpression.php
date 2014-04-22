@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-class ASTIncludeExpression extends \PDepend\Source\AST\ASTExpression
+class ASTIncludeExpression extends ASTExpression
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Does this node represent a <b>include_once</b>-expression?
      *

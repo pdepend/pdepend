@@ -64,13 +64,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTStaticVariableDeclaration extends \PDepend\Source\AST\ASTNode
+class ASTStaticVariableDeclaration extends ASTExpression
 {
-    /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.

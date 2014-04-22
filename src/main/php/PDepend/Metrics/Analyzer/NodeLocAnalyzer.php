@@ -80,11 +80,6 @@ use PDepend\Source\Tokenizer\Tokens;
 class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerFilterAware, AnalyzerProjectAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_LINES_OF_CODE             = 'loc',

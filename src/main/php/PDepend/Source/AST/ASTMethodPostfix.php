@@ -63,11 +63,6 @@ namespace PDepend\Source\AST;
 class ASTMethodPostfix extends ASTInvocation
 {
     /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

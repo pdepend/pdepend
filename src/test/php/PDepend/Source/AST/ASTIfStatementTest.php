@@ -117,7 +117,7 @@ class ASTIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFirstChildOfIfStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
 
     /**
@@ -128,7 +128,7 @@ class ASTIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSecondChildOfIfStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
     }
 
     /**
@@ -348,7 +348,7 @@ class ASTIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse()
     {
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
     }
 
     /**
@@ -359,7 +359,7 @@ class ASTIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf()
     {
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTIfStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIfStatement', $stmt->getChild(2));
     }
 
     /**
@@ -372,7 +372,7 @@ class ASTIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstIfStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTIfStatement::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTIfStatement'
         );
     }
 }

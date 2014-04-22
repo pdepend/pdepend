@@ -159,7 +159,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
         $exprs = $this->getFirstClassForTestCase()
             ->getMethods()
             ->current()
-            ->findChildrenOfType(ASTPreIncrementExpression::CLAZZ);
+            ->findChildrenOfType('PDepend\\Source\\AST\\ASTPreIncrementExpression');
 
         $this->assertEquals(2, count($exprs));
     }
@@ -217,7 +217,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
     private function _getFirstPreIncrementExpressionInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, ASTPreIncrementExpression::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTPreIncrementExpression'
         );
     }
 
@@ -230,7 +230,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
     private function _getFirstPreIncrementExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, ASTPreIncrementExpression::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTPreIncrementExpression'
         );
     }
 }

@@ -55,11 +55,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTPostfixExpression extends ASTExpression
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

@@ -64,7 +64,7 @@ class ASTSwitchStatementTest extends \PDepend\Source\AST\ASTNodeTest
         $stmt = $this->_getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $children[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $children[0]);
     }
 
     /**
@@ -77,8 +77,8 @@ class ASTSwitchStatementTest extends \PDepend\Source\AST\ASTNodeTest
         $stmt = $this->_getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSwitchLabel::CLAZZ, $children[1]);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSwitchLabel::CLAZZ, $children[2]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[1]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[2]);
     }
 
     /**
@@ -90,7 +90,7 @@ class ASTSwitchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSwitchStatement()
     {
         $stmt = $this->_getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSwitchStatement::CLAZZ, $stmt);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $stmt);
 
         return $stmt;
     }
@@ -198,7 +198,7 @@ class ASTSwitchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSwitchStatementWithAlternativeScope()
     {
         $stmt = $this->_getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSwitchStatement::CLAZZ, $stmt);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $stmt);
 
         return $stmt;
     }
@@ -275,7 +275,7 @@ class ASTSwitchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTSwitchStatement::CLAZZ
+            'PDepend\\Source\\AST\\ASTSwitchStatement'
         );
     }
 }

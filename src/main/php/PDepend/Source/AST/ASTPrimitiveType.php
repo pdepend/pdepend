@@ -51,13 +51,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTPrimitiveType extends \PDepend\Source\AST\ASTType
+class ASTPrimitiveType extends ASTType
 {
-    /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * This method will return <b>true</b> when this type is a php primitive.
      * For this concrete implementation the return value will be always true.

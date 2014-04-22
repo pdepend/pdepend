@@ -52,12 +52,9 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-abstract class ASTInvocation extends \PDepend\Source\AST\ASTNode
+abstract class ASTInvocation extends ASTExpression
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
+
 }
 
 // @codeCoverageIgnoreEnd

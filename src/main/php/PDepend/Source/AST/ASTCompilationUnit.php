@@ -54,13 +54,6 @@ use PDepend\Util\Cache\CacheDriver;
 class ASTCompilationUnit extends AbstractASTArtifact
 {
     /**
-     * The type of this class.
-     * 
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The internal used cache instance.
      *
      * @var \PDepend\Util\Cache\CacheDriver

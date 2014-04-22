@@ -74,7 +74,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionForSelfProperty()
     {
         $allocation = $this->_getFirstAllocationInClass();
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::CLAZZ, $allocation->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
     /**
@@ -86,7 +86,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionForParentProperty()
     {
         $allocation = $this->_getFirstAllocationInClass();
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::CLAZZ, $allocation->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
     /**
@@ -98,7 +98,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionForStaticProperty()
     {
         $allocation = $this->_getFirstAllocationInClass();
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::CLAZZ, $allocation->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
     /**
@@ -110,7 +110,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionForThisProperty()
     {
         $allocation = $this->_getFirstAllocationInClass();
-        $this->assertInstanceOf(ASTFunctionPostfix::CLAZZ, $allocation->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $allocation->getChild(0));
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionForObjectProperty()
     {
         $allocation = $this->_getFirstAllocationInClass();
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::CLAZZ, $allocation->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
     /**
@@ -133,10 +133,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForSimpleIdentifier()
     {
         $function = $this->getFirstFunctionForTestCase();
-        $allocation = $function->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $reference = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassReference', $reference);
         $this->assertEquals('Foo', $reference->getType()->getName());
     }
 
@@ -148,10 +148,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForSelfKeyword()
     {
         $method = $this->getFirstClassMethodForTestCase();
-        $allocation = $method->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $self = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTSelfReference::CLAZZ, $self);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $self);
         $this->assertEquals(__FUNCTION__, $self->getType()->getName());
     }
 
@@ -164,10 +164,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForParentKeyword()
     {
         $method = $this->getFirstClassMethodForTestCase();
-        $allocation = $method->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $parent = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTParentReference::CLAZZ, $parent);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $parent);
         $this->assertEquals(__FUNCTION__ . 'Parent', $parent->getType()->getName());
     }
 
@@ -179,10 +179,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForLocalNamespaceIdentifier()
     {
         $function = $this->getFirstFunctionForTestCase();
-        $allocation = $function->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $reference = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassReference', $reference);
         $this->assertEquals('Bar', $reference->getType()->getName());
     }
 
@@ -194,10 +194,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForAbsoluteNamespaceIdentifier()
     {
         $function = $this->getFirstFunctionForTestCase();
-        $allocation = $function->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $reference = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassReference', $reference);
         $this->assertEquals('Bar', $reference->getType()->getName());
     }
 
@@ -209,10 +209,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForAbsoluteNamespacedNamespaceIdentifier()
     {
         $function = $this->getFirstFunctionForTestCase();
-        $allocation = $function->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $reference = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTClassReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassReference', $reference);
         $this->assertEquals('Foo', $reference->getType()->getName());
     }
 
@@ -224,10 +224,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForVariableIdentifier()
     {
         $function = $this->getFirstFunctionForTestCase();
-        $allocation = $function->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $variable = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
         $this->assertEquals('$foo', $variable->getImage());
     }
 
@@ -239,14 +239,14 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForVariableVariableIdentifier()
     {
         $function = $this->getFirstFunctionForTestCase();
-        $allocation = $function->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $vvariable = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTVariableVariable::CLAZZ, $vvariable);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableVariable', $vvariable);
         $this->assertEquals('$', $vvariable->getImage());
 
         $variable = $vvariable->getChild(0);
-        $this->assertInstanceOf(ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
         $this->assertEquals('$foo', $variable->getImage());
     }
 
@@ -258,10 +258,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     public function testAllocationExpressionGraphForStaticReference()
     {
         $method = $this->getFirstClassMethodForTestCase();
-        $allocation = $method->getFirstChildOfType(ASTAllocationExpression::CLAZZ);
+        $allocation = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
         $reference = $allocation->getChild(0);
 
-        $this->assertInstanceOf(ASTStaticReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticReference', $reference);
         $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
     }
 
@@ -291,7 +291,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            ASTAllocationExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTAllocationExpression'
         );
     }
 }

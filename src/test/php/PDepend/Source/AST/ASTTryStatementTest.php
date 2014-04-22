@@ -63,7 +63,7 @@ class ASTTryStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testTryStatement()
     {
         $stmt = $this->_getFirstTryStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTryStatement::CLAZZ, $stmt);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTryStatement', $stmt);
 
         return $stmt;
     }
@@ -130,7 +130,7 @@ class ASTTryStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement($stmt)
     {
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(0));
     }
 
     /**
@@ -143,7 +143,7 @@ class ASTTryStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement($stmt)
     {
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTCatchStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCatchStatement', $stmt->getChild(1));
     }
 
     /**
@@ -159,11 +159,11 @@ class ASTTryStatementTest extends \PDepend\Source\AST\ASTNodeTest
         }
 
         $expected = array(
-            \PDepend\Source\AST\ASTScopeStatement::CLAZZ,
-            \PDepend\Source\AST\ASTCatchStatement::CLAZZ,
-            \PDepend\Source\AST\ASTCatchStatement::CLAZZ,
-            \PDepend\Source\AST\ASTCatchStatement::CLAZZ,
-            \PDepend\Source\AST\ASTCatchStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTScopeStatement',
+            'PDepend\\Source\\AST\\ASTCatchStatement',
+            'PDepend\\Source\\AST\\ASTCatchStatement',
+            'PDepend\\Source\\AST\\ASTCatchStatement',
+            'PDepend\\Source\\AST\\ASTCatchStatement',
         );
 
         $this->assertEquals($expected, $actual);
@@ -189,7 +189,7 @@ class ASTTryStatementTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTTryStatement::CLAZZ
+            'PDepend\\Source\\AST\\ASTTryStatement'
         );
     }
 }

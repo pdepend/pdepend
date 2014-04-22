@@ -59,11 +59,6 @@ namespace PDepend\Source\AST;
 class ASTConditionalExpression extends \PDepend\Source\AST\ASTNode
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

@@ -84,11 +84,6 @@ use PDepend\Source\AST\ASTProperty;
 class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_CALLS  = 'calls',
@@ -436,12 +431,12 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     private function countCalls(AbstractASTCallable $callable)
     {
-        $invocations = $callable->findChildrenOfType(ASTInvocation::CLAZZ);
+        $invocations = $callable->findChildrenOfType('PDepend\\Source\\AST\\ASTInvocation');
 
         $invoked = array();
 
         foreach ($invocations as $invocation) {
-            $parents = $invocation->getParentsOfType(ASTMemberPrimaryPrefix::CLAZZ);
+            $parents = $invocation->getParentsOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');
 
             $image = '';
             foreach ($parents as $parent) {

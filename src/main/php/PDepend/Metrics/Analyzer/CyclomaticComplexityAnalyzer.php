@@ -62,11 +62,6 @@ use PDepend\Source\AST\ASTMethod;
 class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_CYCLOMATIC_COMPLEXITY_1 = 'ccn',

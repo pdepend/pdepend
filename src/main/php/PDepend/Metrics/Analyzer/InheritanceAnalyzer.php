@@ -66,11 +66,6 @@ use PDepend\Source\AST\ASTClass;
 class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerFilterAware, AnalyzerProjectAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_AVERAGE_NUMBER_DERIVED_CLASSES = 'andc',

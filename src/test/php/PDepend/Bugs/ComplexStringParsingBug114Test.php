@@ -140,7 +140,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType(ASTString::CLAZZ);
-        $this->assertInstanceOf(ASTLiteral::CLAZZ, $string->getChild(1));
+        $string = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $string->getChild(1));
     }
 }

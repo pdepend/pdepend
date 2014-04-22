@@ -1143,7 +1143,7 @@ class ParserTest extends AbstractTest
             ->getMethods()
             ->current();
 
-        $foreach = $method->getFirstChildOfType(ASTForeachStatement::CLAZZ);
+        $foreach = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTForeachStatement');
         $this->assertNotNull($foreach);
     }
 
@@ -1369,7 +1369,7 @@ class ParserTest extends AbstractTest
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType(ASTString::CLAZZ);
+        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
         $image  = $string->getChild(0)->getImage();
 
         $this->assertEquals('\$foobar', $image);
@@ -1387,7 +1387,7 @@ class ParserTest extends AbstractTest
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType(ASTString::CLAZZ);
+        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
         $image  = $string->getChild(0)->getImage();
 
         $this->assertEquals('\\\\\"', $image);
@@ -1405,10 +1405,10 @@ class ParserTest extends AbstractTest
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType(ASTString::CLAZZ);
+        $string   = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
     }
 
     /**
@@ -1423,10 +1423,10 @@ class ParserTest extends AbstractTest
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType(ASTString::CLAZZ);
+        $string   = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(ASTVariable::CLAZZ, $variable);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
     }
 
     /**
@@ -1443,8 +1443,8 @@ class ParserTest extends AbstractTest
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType(ASTString::CLAZZ);
-        $this->assertInstanceOf(ASTLiteral::CLAZZ, $string->getChild(1));
+        $string = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $string->getChild(1));
     }
 
     /**

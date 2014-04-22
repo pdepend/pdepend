@@ -63,7 +63,7 @@ class ASTUnaryExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testUnaryExpression()
     {
         $expr = $this->_getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTUnaryExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $expr);
 
         return $expr;
     }
@@ -129,7 +129,7 @@ class ASTUnaryExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTUnaryExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTUnaryExpression'
         );
     }
 }

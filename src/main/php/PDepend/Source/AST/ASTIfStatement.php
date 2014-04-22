@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.8
  */
-class ASTIfStatement extends \PDepend\Source\AST\ASTStatement
+class ASTIfStatement extends ASTStatement
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Returns <b>true</b> when this <b>if</b>-statement is followed by an
      * <b>else</b>-statement.

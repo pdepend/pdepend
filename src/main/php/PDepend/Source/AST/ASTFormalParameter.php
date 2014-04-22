@@ -59,11 +59,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTFormalParameter extends ASTNode
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * This method will return <b>true</b> when the parameter is passed by
      * reference.
      *

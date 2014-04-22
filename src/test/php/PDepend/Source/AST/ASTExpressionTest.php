@@ -74,12 +74,12 @@ class ASTExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         $expr = $this->_getFirstExpressionInFunction(__METHOD__);
         $expected   = array(
-            \PDepend\Source\AST\ASTExpression::CLAZZ,
-            \PDepend\Source\AST\ASTVariable::CLAZZ,
-            \PDepend\Source\AST\ASTBooleanAndExpression::CLAZZ,
-            \PDepend\Source\AST\ASTVariable::CLAZZ,
-            \PDepend\Source\AST\ASTBooleanOrExpression::CLAZZ,
-            \PDepend\Source\AST\ASTVariable::CLAZZ,
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTBooleanAndExpression',
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTBooleanOrExpression',
+            'PDepend\\Source\\AST\\ASTVariable',
         );
 
         $this->assertGraphEquals($expr, $expected);
@@ -139,7 +139,7 @@ class ASTExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTExpression::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTExpression'
         );
     }
 }

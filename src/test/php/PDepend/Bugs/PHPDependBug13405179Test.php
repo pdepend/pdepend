@@ -91,10 +91,10 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
     public function getLoggerClassNames()
     {
         return array(
-            array(\PDepend\Report\Jdepend\Chart::CLAZZ, 'svg'),
-            array(\PDepend\Report\Jdepend\Xml::CLAZZ, 'xml'),
-            array(\PDepend\Report\Overview\Pyramid::CLAZZ, 'svg'),
-            array(\PDepend\Report\Summary\Xml::CLAZZ, 'xml'),
+            array('PDepend\\Report\\Jdepend\\Chart', 'svg'),
+            array('PDepend\\Report\\Jdepend\\Xml', 'xml'),
+            array('PDepend\\Report\\Overview\\Pyramid', 'svg'),
+            array('PDepend\\Report\\Summary\\Xml', 'xml'),
         );
     }
 }

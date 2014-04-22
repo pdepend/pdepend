@@ -56,11 +56,6 @@ use PDepend\Source\Builder\BuilderContext;
 class ASTClassOrInterfaceReference extends ASTType
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The global AST builder context.
      *
      * @var \PDepend\Source\Builder\BuilderContext

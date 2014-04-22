@@ -487,9 +487,9 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesCallableTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PDepend\Source\AST\ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTypeCallable::CLAZZ, $type);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeCallable', $type);
     }
 
     /**
@@ -501,9 +501,9 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesNamespaceTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PDepend\Source\AST\ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ, $type);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $type);
     }
 
     /**
@@ -515,9 +515,9 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesArrayTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PDepend\Source\AST\ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTypeArray::CLAZZ, $type);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeArray', $type);
     }
 
     /**
@@ -529,9 +529,9 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesSelfTypeHint()
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType(\PDepend\Source\AST\ASTType::CLAZZ);
+        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTSelfReference::CLAZZ, $type);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $type);
     }
 
     /**
@@ -543,7 +543,7 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesCompoundStaticMethodInvocation()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $postfix = $method->getFirstChildOfType(\PDepend\Source\AST\ASTMethodPostfix::CLAZZ);
+        $postfix = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix');
 
         $this->assertNotNull($postfix);
     }
@@ -557,7 +557,7 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesVariableStaticMethodInvocation()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $postfix = $method->getFirstChildOfType(\PDepend\Source\AST\ASTMethodPostfix::CLAZZ);
+        $postfix = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix');
 
         $this->assertNotNull($postfix);
     }
@@ -571,7 +571,7 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesBinaryIntegerLiteral()
     {
         $method  = $this->getFirstMethodForTestCase();
-        $literal = $method->getFirstChildOfType(\PDepend\Source\AST\ASTLiteral::CLAZZ);
+        $literal = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral');
 
         $this->assertEquals('0b0100110100111', $literal->getImage());
     }
@@ -623,9 +623,9 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesRegularArraySyntax()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTArray::CLAZZ,
+            'PDepend\\Source\\AST\\ASTArray',
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType(\PDepend\Source\AST\ASTArray::CLAZZ)
+                ->getFirstChildOfType('PDepend\\Source\\AST\\ASTArray')
         );
     }
 
@@ -638,9 +638,9 @@ class PHPParserGenericTest extends AbstractTest
     public function testParserHandlesShortArraySyntax()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTArray::CLAZZ,
+            'PDepend\\Source\\AST\\ASTArray',
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType(\PDepend\Source\AST\ASTArray::CLAZZ)
+                ->getFirstChildOfType('PDepend\\Source\\AST\\ASTArray')
         );
     }
 

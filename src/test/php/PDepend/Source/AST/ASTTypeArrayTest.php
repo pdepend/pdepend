@@ -63,7 +63,7 @@ class ASTTypeArrayTest extends \PDepend\Source\AST\ASTNodeTest
     public function testArrayType()
     {
         $type = $this->_getFirstArrayTypeInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTypeArray::CLAZZ, $type);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeArray', $type);
 
         return $type;
     }
@@ -151,7 +151,7 @@ class ASTTypeArrayTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTTypeArray::CLAZZ
+            'PDepend\\Source\\AST\\ASTTypeArray'
         );
     }
 }

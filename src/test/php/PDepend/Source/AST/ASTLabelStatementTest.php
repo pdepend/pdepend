@@ -109,7 +109,8 @@ class ASTLabelStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstLabelStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTLabelStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTLabelStatement'
         );
     }
 }

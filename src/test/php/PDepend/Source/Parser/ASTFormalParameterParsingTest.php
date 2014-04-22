@@ -64,7 +64,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
     public function testWithParentTypeHint()
     {
         $typeHint = self::getFirstMethodFormalParameter()->getChild(0);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTParentReference::CLAZZ, $typeHint);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $typeHint);
     }
 
     /**
@@ -102,6 +102,6 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
             ->current()
             ->getMethods()
             ->current()
-            ->getFirstChildOfType(ASTFormalParameter::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
     }
 }

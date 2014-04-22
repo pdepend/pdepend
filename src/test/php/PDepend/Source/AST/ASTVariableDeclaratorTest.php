@@ -75,7 +75,7 @@ class ASTVariableDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
         $declarator = new ASTVariableDeclarator();
         $declarator->setValue(new ASTValue());
 
-        $this->assertInstanceOf(ASTValue::CLAZZ, $declarator->getValue());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $declarator->getValue());
     }
 
     /**
@@ -106,7 +106,7 @@ class ASTVariableDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
     public function testVariableDeclarator()
     {
         $declarator = $this->_getFirstVariableDeclaratorInFunction();
-        $this->assertInstanceOf(ASTVariableDeclarator::CLAZZ, $declarator);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $declarator);
 
         return $declarator;
     }
@@ -168,7 +168,7 @@ class ASTVariableDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            ASTVariableDeclarator::CLAZZ
+            'PDepend\\Source\\AST\\ASTVariableDeclarator'
         );
     }
 }

@@ -210,7 +210,7 @@ class ASTClassReferenceTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstReferenceInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTClassReference::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTClassReference'
         );
     }
 
@@ -224,7 +224,7 @@ class ASTClassReferenceTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInClass(
             self::getCallingTestMethod(),
-            \PDepend\Source\AST\ASTClassReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassReference'
         );
     }
 
@@ -248,6 +248,6 @@ class ASTClassReferenceTest extends \PDepend\Source\AST\ASTNodeTest
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock(BuilderContext::CLAZZ);
+        return $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
     }
 }

@@ -69,7 +69,7 @@ class ParserBug23951621Test extends AbstractRegressionTest
     public function testParserHandlesHeredocAsPropertyDefaultValue()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertInstanceOf(ASTClass::CLAZZ, $class);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClass', $class);
     }
 
     /**
@@ -80,7 +80,7 @@ class ParserBug23951621Test extends AbstractRegressionTest
     public function testParserHandlesHeredocAsParameterDefaultValue()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertInstanceOf(ASTClass::CLAZZ, $class);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClass', $class);
     }
 
     /**
@@ -91,6 +91,6 @@ class ParserBug23951621Test extends AbstractRegressionTest
     public function testParserHandlesHeredocAsClassConstantValue()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertInstanceOf(ASTInterface::CLAZZ, $interface);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTInterface', $interface);
     }
 }

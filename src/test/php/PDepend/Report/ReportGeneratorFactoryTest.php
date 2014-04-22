@@ -70,7 +70,7 @@ class ReportGeneratorFactoryTest extends AbstractTest
         $factory = $this->createReportGeneratorFactory();
         $generator = $factory->createGenerator('summary-xml', 'pdepend.xml');
 
-        $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator);
+        $this->assertInstanceOf('PDepend\\Report\\Summary\\Xml', $generator);
     }
 
     /**
@@ -85,7 +85,7 @@ class ReportGeneratorFactoryTest extends AbstractTest
         $generator1 = $factory->createGenerator('summary-xml', 'pdepend1.xml');
         $generator2 = $factory->createGenerator('summary-xml', 'pdepend2.xml');
 
-        $this->assertInstanceOf(\PDepend\Report\Summary\Xml::CLAZZ, $generator1);
+        $this->assertInstanceOf('PDepend\\Report\\Summary\\Xml', $generator1);
         $this->assertSame($generator1, $generator2);
     }
 

@@ -108,7 +108,8 @@ class ASTCloneExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstCloneExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTCloneExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTCloneExpression'
         );
     }
 }

@@ -55,11 +55,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTTrait extends ASTClass
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Returns all properties for this class.
      *
      * @return \PDepend\Source\AST\ASTProperty[]

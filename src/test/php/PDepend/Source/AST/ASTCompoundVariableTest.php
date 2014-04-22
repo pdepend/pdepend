@@ -64,7 +64,7 @@ class ASTCompoundVariableTest extends \PDepend\Source\AST\ASTNodeTest
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTString::CLAZZ, $string);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTString', $string);
     }
 
     /**
@@ -90,7 +90,7 @@ class ASTCompoundVariableTest extends \PDepend\Source\AST\ASTNodeTest
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTString::CLAZZ, $string);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTString', $string);
     }
 
     /**
@@ -102,11 +102,11 @@ class ASTCompoundVariableTest extends \PDepend\Source\AST\ASTNodeTest
     {
         $variable = $this->_getFirstVariableInFunction(__METHOD__);
         $expected = array(
-            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-            \PDepend\Source\AST\ASTVariable::CLAZZ,
-            \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-            \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-            \PDepend\Source\AST\ASTArguments::CLAZZ
+            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTMethodPostfix',
+            'PDepend\\Source\\AST\\ASTIdentifier',
+            'PDepend\\Source\\AST\\ASTArguments'
         );
 
         $this->assertGraphEquals($variable, $expected);
@@ -177,7 +177,7 @@ class ASTCompoundVariableTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstVariableInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTCompoundVariable::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTCompoundVariable'
         );
     }
 }

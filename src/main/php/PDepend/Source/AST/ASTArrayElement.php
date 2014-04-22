@@ -63,11 +63,6 @@ namespace PDepend\Source\AST;
 class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
 {
     /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * This method will return <b>true</b> when the element value is passed by
      * reference.
      *

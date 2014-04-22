@@ -196,7 +196,8 @@ class ASTCommentTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstCommentInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, \PDepend\Source\AST\ASTComment::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTComment'
         );
     }
 }

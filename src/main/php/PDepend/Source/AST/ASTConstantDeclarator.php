@@ -80,11 +80,6 @@ namespace PDepend\Source\AST;
 class ASTConstantDeclarator extends \PDepend\Source\AST\ASTNode
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The initial declaration value for this node or <b>null</b>.
      *
      * @var \PDepend\Source\AST\ASTValue

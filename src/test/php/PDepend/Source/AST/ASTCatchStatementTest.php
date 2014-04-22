@@ -106,7 +106,7 @@ class ASTCatchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testCatchStatementVariableHasExpectedStartLine()
     {
         $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(\PDepend\Source\AST\ASTVariable::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(8, $variable->getStartLine());
     }
 
@@ -118,7 +118,7 @@ class ASTCatchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testCatchStatementVariableHasExpectedStartColumn()
     {
         $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(\PDepend\Source\AST\ASTVariable::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(9, $variable->getStartColumn());
     }
 
@@ -130,7 +130,7 @@ class ASTCatchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testCatchStatementVariableHasExpectedEndLine()
     {
         $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(\PDepend\Source\AST\ASTVariable::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(8, $variable->getStartLine());
     }
 
@@ -142,7 +142,7 @@ class ASTCatchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testCatchStatementVariableHasExpectedEndColumn()
     {
         $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
-            ->getFirstChildOfType(\PDepend\Source\AST\ASTVariable::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(10, $variable->getEndColumn());
     }
 
@@ -154,7 +154,7 @@ class ASTCatchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testThirdChildOfCatchStatementIsScopeStatement()
     {
         $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
     }
 
     /**
@@ -167,7 +167,8 @@ class ASTCatchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstCatchStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTCatchStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTCatchStatement'
         );
     }
 }

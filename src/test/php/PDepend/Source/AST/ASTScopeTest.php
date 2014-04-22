@@ -64,7 +64,7 @@ class ASTScopeTest extends \PDepend\Source\AST\ASTNodeTest
     public function testScope()
     {
         $scope = $this->_getFirstScopeInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScope::CLAZZ, $scope);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScope', $scope);
 
         return $scope;
     }
@@ -130,7 +130,7 @@ class ASTScopeTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTScope::CLAZZ
+            'PDepend\\Source\\AST\\ASTScope'
         );
     }
 }

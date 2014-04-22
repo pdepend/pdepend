@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.12
  */
-class ASTRequireExpression extends \PDepend\Source\AST\ASTExpression
+class ASTRequireExpression extends ASTExpression
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * Does this node represent a <b>require_once</b>-expression?
      *

@@ -108,7 +108,8 @@ class ASTGlobalStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstGlobalStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTGlobalStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTGlobalStatement'
         );
     }
 }

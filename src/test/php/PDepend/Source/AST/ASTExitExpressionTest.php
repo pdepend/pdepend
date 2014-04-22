@@ -63,7 +63,7 @@ class ASTExitExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testExitExpressionWithExitCode()
     {
         $expr = $this->_getFirstExitExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExitExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExitExpression', $expr);
 
         return $expr;
     }
@@ -133,7 +133,7 @@ class ASTExitExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testExitExpressionWithEmptyArgs()
     {
         $expr = $this->_getFirstExitExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExitExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExitExpression', $expr);
 
         return $expr;
     }
@@ -203,7 +203,7 @@ class ASTExitExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testExitExpressionWithoutArgs()
     {
         $expr = $this->_getFirstExitExpressionInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExitExpression::CLAZZ, $expr);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExitExpression', $expr);
 
         return $expr;
     }
@@ -269,7 +269,7 @@ class ASTExitExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTExitExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTExitExpression'
         );
     }
 }

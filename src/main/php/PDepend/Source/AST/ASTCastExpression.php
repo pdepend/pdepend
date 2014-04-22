@@ -83,11 +83,6 @@ namespace PDepend\Source\AST;
 class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
 {
     /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Constructs a new cast-expression node.
      *
      * @param string $image The original cast image.

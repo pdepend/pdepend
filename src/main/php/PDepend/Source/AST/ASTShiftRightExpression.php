@@ -50,13 +50,8 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.1
  */
-class ASTShiftRightExpression extends \PDepend\Source\AST\ASTExpression
+class ASTShiftRightExpression extends ASTExpression
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * The default image for this node.
      */

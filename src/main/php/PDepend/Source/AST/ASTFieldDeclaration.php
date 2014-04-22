@@ -66,13 +66,8 @@ use PDepend\Source\AST\State;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
-class ASTFieldDeclaration extends \PDepend\Source\AST\ASTNode
+class ASTFieldDeclaration extends ASTNode
 {
-    /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
     /**
      * This method returns a OR combined integer of the declared modifiers for
      * this property.

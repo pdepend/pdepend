@@ -63,11 +63,6 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The output log file.
      *
      * @var string

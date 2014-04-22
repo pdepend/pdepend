@@ -53,13 +53,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTClass extends AbstractASTClassOrInterface
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * List of associated properties.
      *
      * @var \PDepend\Source\AST\ASTProperty[]
@@ -96,9 +89,9 @@ class ASTClass extends AbstractASTClassOrInterface
         if ($this->properties === null) {
             $this->properties = array();
 
-            $declarations = $this->findChildrenOfType(ASTFieldDeclaration::CLAZZ);
+            $declarations = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
             foreach ($declarations as $declaration) {
-                $declarators = $declaration->findChildrenOfType(ASTVariableDeclarator::CLAZZ);
+                $declarators = $declaration->findChildrenOfType('PDepend\\Source\\AST\\ASTVariableDeclarator');
 
                 foreach ($declarators as $declarator) {
 

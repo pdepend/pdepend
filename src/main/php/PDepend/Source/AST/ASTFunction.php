@@ -54,13 +54,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTFunction extends AbstractASTCallable
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The parent namespace for this function.
      *
      * @var \PDepend\Source\AST\ASTNamespace

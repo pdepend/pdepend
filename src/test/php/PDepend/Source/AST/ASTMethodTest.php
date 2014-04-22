@@ -582,7 +582,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -592,7 +592,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -617,7 +617,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -626,7 +626,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -636,7 +636,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -661,7 +661,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -671,7 +671,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -698,7 +698,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
     public function testFindChildrenOfTypeReturnsExpectedResult()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
@@ -708,7 +708,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
             ->will($this->returnValue(array()));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Class_' . __FUNCTION__ . '_' . md5(microtime())

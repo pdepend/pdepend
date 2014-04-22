@@ -75,7 +75,7 @@ class ASTTypeCallableTest extends \PDepend\Source\AST\ASTNodeTest
     public function testCallableType()
     {
         $type = $this->_getFirstCallableTypeInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTypeCallable::CLAZZ, $type);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeCallable', $type);
 
         return $type;
     }
@@ -141,7 +141,7 @@ class ASTTypeCallableTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTTypeCallable::CLAZZ
+            'PDepend\\Source\\AST\\ASTTypeCallable'
         );
     }
 }

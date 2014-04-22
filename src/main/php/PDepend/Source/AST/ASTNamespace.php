@@ -54,13 +54,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTNamespace extends AbstractASTArtifact
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The namespace name.
      *
      * @var string
@@ -171,7 +164,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getTraits()
     {
-        return $this->getTypesOfType(ASTTrait::CLAZZ);
+        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTTrait');
     }
 
     /**
@@ -182,7 +175,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getClasses()
     {
-        return $this->getTypesOfType(ASTClass::CLAZZ);
+        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTClass');
     }
 
     /**
@@ -193,7 +186,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getInterfaces()
     {
-        return $this->getTypesOfType(ASTInterface::CLAZZ);
+        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTInterface');
     }
 
     /**

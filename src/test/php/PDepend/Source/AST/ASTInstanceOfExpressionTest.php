@@ -179,7 +179,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertInstanceOfGraph(
             $parent,
             $image,
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }
 
@@ -196,7 +196,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertInstanceOfGraph(
             $parent,
             $image,
-            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ
+            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'
         );
     }
 
@@ -212,7 +212,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     protected function assertInstanceOfGraph($parent, $image, $type)
     {
         $instanceOf = $parent->getFirstChildOfType(
-            \PDepend\Source\AST\ASTInstanceOfExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTInstanceOfExpression'
         );
 
         $reference = $instanceOf->getChild(0);

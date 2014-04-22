@@ -68,7 +68,7 @@ class ASTTraitAdaptationPrecedenceTest extends \PDepend\Source\AST\ASTNodeTest
             3,
             count(
                 $stmt->findChildrenOfType(
-                    \PDepend\Source\AST\ASTTraitReference::CLAZZ
+                    'PDepend\\Source\\AST\\ASTTraitReference'
                 )
             )
         );
@@ -94,7 +94,7 @@ class ASTTraitAdaptationPrecedenceTest extends \PDepend\Source\AST\ASTNodeTest
     public function testTraitAdaptationPrecedence()
     {
         $precedence = $this->_getFirstTraitAdaptationPrecedenceInClass();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTraitAdaptationPrecedence::CLAZZ, $precedence);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence', $precedence);
 
         return $precedence;
     }
@@ -160,7 +160,7 @@ class ASTTraitAdaptationPrecedenceTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTTraitAdaptationPrecedence::CLAZZ
+            'PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence'
         );
     }
 
@@ -173,7 +173,7 @@ class ASTTraitAdaptationPrecedenceTest extends \PDepend\Source\AST\ASTNodeTest
     public function testTraitReference()
     {
         $reference = $this->_getFirstTraitReferenceInClass();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTTraitReference::CLAZZ, $reference);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitReference', $reference);
 
         return $reference;
     }
@@ -238,6 +238,6 @@ class ASTTraitAdaptationPrecedenceTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstTraitReferenceInClass()
     {
         return $this->_getFirstTraitAdaptationPrecedenceInClass()
-            ->getFirstChildOfType(\PDepend\Source\AST\ASTTraitReference::CLAZZ);
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTTraitReference');
     }
 }

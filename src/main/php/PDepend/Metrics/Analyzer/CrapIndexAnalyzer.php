@@ -63,11 +63,6 @@ use PDepend\Source\AST\ASTMethod;
 class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_CRAP_INDEX = 'crap',
@@ -132,7 +127,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function getRequiredAnalyzers()
     {
-        return array(CyclomaticComplexityAnalyzer::CLAZZ);
+        return array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
     }
 
     /**

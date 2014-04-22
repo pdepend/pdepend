@@ -195,7 +195,8 @@ class ASTIncludeExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstIncludeExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTIncludeExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTIncludeExpression'
         );
     }
 }

@@ -62,7 +62,7 @@ class ASTAllocationExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testAllocationExpressionWithoutArguments()
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $args = $expr->findChildrenOfType(\PDepend\Source\AST\ASTArguments::CLAZZ);
+        $args = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTArguments');
 
         $this->assertEquals(0, count($args));
     }
@@ -75,7 +75,7 @@ class ASTAllocationExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testAllocationExpressionWithArguments()
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $args = $expr->findChildrenOfType(\PDepend\Source\AST\ASTArguments::CLAZZ);
+        $args = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTArguments');
 
         $this->assertEquals(1, count($args));
     }
@@ -89,7 +89,7 @@ class ASTAllocationExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testAllocationExpressionWithNestedArguments()
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $arg  = $expr->getFirstChildOfType(\PDepend\Source\AST\ASTArguments::CLAZZ);
+        $arg  = $expr->getFirstChildOfType('PDepend\\Source\\AST\\ASTArguments');
 
         $this->assertEquals($expr, $arg->getParent());
     }
@@ -148,7 +148,8 @@ class ASTAllocationExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function getFirstAllocationExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTAllocationExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTAllocationExpression'
         );
     }
 }

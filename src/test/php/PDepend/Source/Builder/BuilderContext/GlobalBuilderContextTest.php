@@ -71,7 +71,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreTrait')
-            ->with(self::isInstanceOf(ASTTrait::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerTrait(new ASTTrait(__CLASS__));
@@ -87,7 +87,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreClass')
-            ->with(self::isInstanceOf(ASTClass::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerClass(new ASTClass(__CLASS__));
@@ -103,7 +103,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreInterface')
-            ->with(self::isInstanceOf(ASTInterface::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerInterface(new ASTInterface(__CLASS__));
@@ -119,7 +119,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreFunction')
-            ->with(self::isInstanceOf(ASTFunction::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTFunction'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerFunction(new ASTFunction(__CLASS__));

@@ -239,7 +239,8 @@ class ASTDeclareStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstDeclareStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTDeclareStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTDeclareStatement'
         );
     }
 }

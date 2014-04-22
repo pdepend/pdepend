@@ -63,17 +63,11 @@ namespace PDepend\Source\AST;
 class ASTArray extends \PDepend\Source\AST\ASTExpression
 {
     /**
-     * Type of this node class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
      * @param mixed $data
-     *
      * @return mixed
      * @since 0.9.12
      */

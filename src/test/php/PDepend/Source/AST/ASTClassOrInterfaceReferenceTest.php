@@ -268,7 +268,7 @@ class ASTClassOrInterfaceReferenceTest
     private function _getFirstReferenceInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }
 
@@ -282,7 +282,7 @@ class ASTClassOrInterfaceReferenceTest
     {
         return $this->getFirstNodeOfTypeInClass(
             self::getCallingTestMethod(),
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }
 
@@ -296,7 +296,7 @@ class ASTClassOrInterfaceReferenceTest
     {
         return $this->getFirstNodeOfTypeInInterface(
             self::getCallingTestMethod(),
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }
 
@@ -320,6 +320,6 @@ class ASTClassOrInterfaceReferenceTest
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock(BuilderContext::CLAZZ);
+        return $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
     }
 }

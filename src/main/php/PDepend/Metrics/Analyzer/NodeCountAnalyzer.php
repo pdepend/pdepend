@@ -64,11 +64,6 @@ use PDepend\Source\AST\ASTNamespace;
 class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_NUMBER_OF_PACKAGES   = 'nop',

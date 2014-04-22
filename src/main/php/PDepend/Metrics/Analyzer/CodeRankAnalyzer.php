@@ -57,11 +57,6 @@ use PDepend\Source\AST\ASTArtifactList;
 class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_CODE_RANK         = 'cr',

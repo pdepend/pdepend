@@ -73,11 +73,6 @@ use PDepend\Source\AST\ASTNamespace;
 class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, AnalyzerProjectAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_NUMBER_OF_ABSTRACT_CLASSES = 'clsa',

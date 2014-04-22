@@ -55,13 +55,6 @@ use PDepend\Util\Cache\CacheDriver;
 abstract class AbstractASTCallable extends AbstractASTArtifact
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The internal used cache instance.
      *
      * @var \PDepend\Util\Cache\CacheDriver
@@ -268,7 +261,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     public function getDependencies()
     {
         return new ASTClassOrInterfaceReferenceIterator(
-            $this->findChildrenOfType(ASTClassOrInterfaceReference::CLAZZ)
+            $this->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference')
         );
     }
 
@@ -382,11 +375,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
         $staticVariables = array();
 
         $declarations = $this->findChildrenOfType(
-            \PDepend\Source\AST\ASTStaticVariableDeclaration::CLAZZ
+            'PDepend\\Source\\AST\\ASTStaticVariableDeclaration'
         );
         foreach ($declarations as $declaration) {
             $variables = $declaration->findChildrenOfType(
-                \PDepend\Source\AST\ASTVariableDeclarator::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariableDeclarator'
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
@@ -425,11 +418,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
         $parameters = array();
 
         $formalParameters = $this->getFirstChildOfType(
-            \PDepend\Source\AST\ASTFormalParameters::CLAZZ
+            'PDepend\\Source\\AST\\ASTFormalParameters'
         );
 
         $formalParameters = $formalParameters->findChildrenOfType(
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ
+            'PDepend\\Source\\AST\\ASTFormalParameter'
         );
 
         foreach ($formalParameters as $formalParameter) {

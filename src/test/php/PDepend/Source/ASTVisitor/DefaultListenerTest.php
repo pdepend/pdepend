@@ -224,7 +224,7 @@ class DefaultListenerTest extends AbstractTest
         $listener->expects($this->once())
             ->method('startVisitNode');
 
-        $parameter = $this->getMock(ASTParameter::CLAZZ, array(), array(null), '', false);
+        $parameter = $this->getMock('PDepend\\Source\\AST\\ASTParameter', array(), array(null), '', false);
         $listener->startVisitParameter($parameter);
     }
 
@@ -239,7 +239,7 @@ class DefaultListenerTest extends AbstractTest
         $listener->expects($this->once())
             ->method('endVisitNode');
 
-        $parameter = $this->getMock(ASTParameter::CLAZZ, array(), array(null), '', false);
+        $parameter = $this->getMock('PDepend\\Source\\AST\\ASTParameter', array(), array(null), '', false);
         $listener->endVisitParameter($parameter);
     }
 

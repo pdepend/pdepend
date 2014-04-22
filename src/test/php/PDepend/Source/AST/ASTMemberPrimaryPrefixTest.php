@@ -98,18 +98,18 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ                          . ' ($object)',
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ               . ' (->)', array(
-                    \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ               . ' (plots)', array(
-                        \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ      . ' ()', array(
-                            \PDepend\Source\AST\ASTIdentifier::CLAZZ            . ' (plots)',
-                            \PDepend\Source\AST\ASTLiteral::CLAZZ               . ' (0)')),
-                    \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ               . ' (coords)', array(
-                        \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ      . ' ()', array(
-                            \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ  . ' ()', array(
-                                \PDepend\Source\AST\ASTIdentifier::CLAZZ        . ' (coords)',
-                                \PDepend\Source\AST\ASTLiteral::CLAZZ           . ' (0)'),
-                            \PDepend\Source\AST\ASTVariable::CLAZZ              . ' ($i)')))
+                'PDepend\\Source\\AST\\ASTVariable'                          . ' ($object)',
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'               . ' (->)', array(
+                    'PDepend\\Source\\AST\\ASTPropertyPostfix'               . ' (plots)', array(
+                        'PDepend\\Source\\AST\\ASTArrayIndexExpression'      . ' ()', array(
+                            'PDepend\\Source\\AST\\ASTIdentifier'            . ' (plots)',
+                            'PDepend\\Source\\AST\\ASTLiteral'               . ' (0)')),
+                    'PDepend\\Source\\AST\\ASTPropertyPostfix'               . ' (coords)', array(
+                        'PDepend\\Source\\AST\\ASTArrayIndexExpression'      . ' ()', array(
+                            'PDepend\\Source\\AST\\ASTArrayIndexExpression'  . ' ()', array(
+                                'PDepend\\Source\\AST\\ASTIdentifier'        . ' (coords)',
+                                'PDepend\\Source\\AST\\ASTLiteral'           . ' (0)'),
+                            'PDepend\\Source\\AST\\ASTVariable'              . ' ($i)')))
             )
         );
     }
@@ -138,9 +138,9 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTConstantPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTConstantPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier'
             )
         );
     }
@@ -170,9 +170,9 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTPropertyPostfix',
+                'PDepend\\Source\\AST\\ASTVariable'
             )
         );
     }
@@ -204,11 +204,11 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -240,11 +240,11 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -276,12 +276,12 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTAllocationExpression::CLAZZ . ' (new)', array(
-                    \PDepend\Source\AST\ASTClassReference::CLAZZ   . ' (MyClass)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ        . ' ()'),
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ        . ' (foo)', array(
-                    \PDepend\Source\AST\ASTIdentifier::CLAZZ       . ' (foo)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ        . ' ()'
+                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', array(
+                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (MyClass)',
+                    'PDepend\\Source\\AST\\ASTArguments'        . ' ()'),
+                'PDepend\\Source\\AST\\ASTMethodPostfix'        . ' (foo)', array(
+                    'PDepend\\Source\\AST\\ASTIdentifier'       . ' (foo)',
+                    'PDepend\\Source\\AST\\ASTArguments'        . ' ()'
             ))
         );
     }
@@ -316,15 +316,15 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTAllocationExpression::CLAZZ . ' (new)', array(
-                    \PDepend\Source\AST\ASTClassReference::CLAZZ   . ' (MyClass)'),
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ  . ' (->)', array(
-                    \PDepend\Source\AST\ASTMethodPostfix::CLAZZ    . ' (foo)', array(
-                        \PDepend\Source\AST\ASTIdentifier::CLAZZ   . ' (foo)',
-                        \PDepend\Source\AST\ASTArguments::CLAZZ    . ' ()'),
-                    \PDepend\Source\AST\ASTMethodPostfix::CLAZZ    . ' (bar)', array(
-                        \PDepend\Source\AST\ASTIdentifier::CLAZZ   . ' (bar)',
-                        \PDepend\Source\AST\ASTArguments::CLAZZ    . ' ()'))
+                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', array(
+                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (MyClass)'),
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'  . ' (->)', array(
+                    'PDepend\\Source\\AST\\ASTMethodPostfix'    . ' (foo)', array(
+                        'PDepend\\Source\\AST\\ASTIdentifier'   . ' (foo)',
+                        'PDepend\\Source\\AST\\ASTArguments'    . ' ()'),
+                    'PDepend\\Source\\AST\\ASTMethodPostfix'    . ' (bar)', array(
+                        'PDepend\\Source\\AST\\ASTIdentifier'   . ' (bar)',
+                        'PDepend\\Source\\AST\\ASTArguments'    . ' ()'))
             )
         );
     }
@@ -355,11 +355,11 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTAllocationExpression::CLAZZ . ' (new)', array(
-                    \PDepend\Source\AST\ASTClassReference::CLAZZ   . ' (MyClass)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ        . ' ()'),
-                \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ      . ' (foo)', array(
-                    \PDepend\Source\AST\ASTIdentifier::CLAZZ       . ' (foo)')
+                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', array(
+                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (MyClass)',
+                    'PDepend\\Source\\AST\\ASTArguments'        . ' ()'),
+                'PDepend\\Source\\AST\\ASTPropertyPostfix'      . ' (foo)', array(
+                    'PDepend\\Source\\AST\\ASTIdentifier'       . ' (foo)')
             )
         );
     }
@@ -392,13 +392,13 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTAllocationExpression::CLAZZ . ' (new)', array(
-                    \PDepend\Source\AST\ASTClassReference::CLAZZ   . ' (MyClass)'),
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ  . ' (->)', array(
-                    \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ  . ' (foo)', array(
-                        \PDepend\Source\AST\ASTIdentifier::CLAZZ   . ' (foo)'),
-                    \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ  . ' (bar)', array(
-                        \PDepend\Source\AST\ASTIdentifier::CLAZZ   . ' (bar)'))
+                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', array(
+                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (MyClass)'),
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'  . ' (->)', array(
+                    'PDepend\\Source\\AST\\ASTPropertyPostfix'  . ' (foo)', array(
+                        'PDepend\\Source\\AST\\ASTIdentifier'   . ' (foo)'),
+                    'PDepend\\Source\\AST\\ASTPropertyPostfix'  . ' (bar)', array(
+                        'PDepend\\Source\\AST\\ASTIdentifier'   . ' (bar)'))
             )
         );
     }
@@ -418,9 +418,9 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTPropertyPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier'
             )
         );
     }
@@ -450,9 +450,9 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTPropertyPostfix',
+                'PDepend\\Source\\AST\\ASTVariable'
             )
         );
     }
@@ -472,10 +472,10 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments'
             )
         );
     }
@@ -508,12 +508,12 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $prefix,
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ        . ' ($object)',
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ   . ' ($method)', array(
-                    \PDepend\Source\AST\ASTVariable::CLAZZ    . ' ($method)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ   . ' ()', array(
-                        \PDepend\Source\AST\ASTLiteral::CLAZZ . ' (23)',
-                        \PDepend\Source\AST\ASTLiteral::CLAZZ . ' (42)'))
+                'PDepend\\Source\\AST\\ASTVariable'        . ' ($object)',
+                'PDepend\\Source\\AST\\ASTMethodPostfix'   . ' ($method)', array(
+                    'PDepend\\Source\\AST\\ASTVariable'    . ' ($method)',
+                    'PDepend\\Source\\AST\\ASTArguments'   . ' ()', array(
+                        'PDepend\\Source\\AST\\ASTLiteral' . ' (23)',
+                        'PDepend\\Source\\AST\\ASTLiteral' . ' (42)'))
             )
         );
     }
@@ -547,14 +547,14 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ,
-                \PDepend\Source\AST\ASTFunctionPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ
+                'PDepend\\Source\\AST\\ASTArrayIndexExpression',
+                'PDepend\\Source\\AST\\ASTFunctionPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments'
             )
         );
     }
@@ -574,17 +574,17 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ                    . ' ($obj)',
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ         . ' (->)',     array(
-                    \PDepend\Source\AST\ASTPropertyPostfix::CLAZZ         . ' (foo)',  array(
-                        \PDepend\Source\AST\ASTIdentifier::CLAZZ          . ' (foo)'),
-                        \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ . ' (->)', array(
-                            \PDepend\Source\AST\ASTMethodPostfix::CLAZZ   . ' (bar)', array(
-                                \PDepend\Source\AST\ASTIdentifier::CLAZZ  . ' (bar)',
-                                \PDepend\Source\AST\ASTArguments::CLAZZ   . ' ()'),
-                            \PDepend\Source\AST\ASTMethodPostfix::CLAZZ   . ' (baz)', array(
-                                \PDepend\Source\AST\ASTIdentifier::CLAZZ  . ' (baz)',
-                                \PDepend\Source\AST\ASTArguments::CLAZZ   . ' ()')))
+                'PDepend\\Source\\AST\\ASTVariable'                    . ' ($obj)',
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'         . ' (->)',     array(
+                    'PDepend\\Source\\AST\\ASTPropertyPostfix'         . ' (foo)',  array(
+                        'PDepend\\Source\\AST\\ASTIdentifier'          . ' (foo)'),
+                        'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix' . ' (->)', array(
+                            'PDepend\\Source\\AST\\ASTMethodPostfix'   . ' (bar)', array(
+                                'PDepend\\Source\\AST\\ASTIdentifier'  . ' (bar)',
+                                'PDepend\\Source\\AST\\ASTArguments'   . ' ()'),
+                            'PDepend\\Source\\AST\\ASTMethodPostfix'   . ' (baz)', array(
+                                'PDepend\\Source\\AST\\ASTIdentifier'  . ' (baz)',
+                                'PDepend\\Source\\AST\\ASTArguments'   . ' ()')))
             )
         );
     }
@@ -604,21 +604,21 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ         . ' ()',    array(
-                    \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ      . ' (->)',  array(
-                        \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ . ' ()',    array(
-                            \PDepend\Source\AST\ASTFunctionPostfix::CLAZZ  . ' (foo)', array(
-                                \PDepend\Source\AST\ASTIdentifier::CLAZZ   . ' (foo)',
-                                \PDepend\Source\AST\ASTArguments::CLAZZ    . ' ()',    array(
-                                    \PDepend\Source\AST\ASTLiteral::CLAZZ  . ' (23)')),
-                            \PDepend\Source\AST\ASTLiteral::CLAZZ          . ' (42)'),
-                        \PDepend\Source\AST\ASTMethodPostfix::CLAZZ        . ' (bar)', array(
-                            \PDepend\Source\AST\ASTIdentifier::CLAZZ       . ' (bar)',
-                            \PDepend\Source\AST\ASTArguments::CLAZZ        . ' ()')),
-                    \PDepend\Source\AST\ASTLiteral::CLAZZ                  . ' (17)'),
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ                . ' (baz)', array(
-                    \PDepend\Source\AST\ASTIdentifier::CLAZZ               . ' (baz)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ                . ' ()')
+                'PDepend\\Source\\AST\\ASTArrayIndexExpression'         . ' ()',    array(
+                    'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'      . ' (->)',  array(
+                        'PDepend\\Source\\AST\\ASTArrayIndexExpression' . ' ()',    array(
+                            'PDepend\\Source\\AST\\ASTFunctionPostfix'  . ' (foo)', array(
+                                'PDepend\\Source\\AST\\ASTIdentifier'   . ' (foo)',
+                                'PDepend\\Source\\AST\\ASTArguments'    . ' ()',    array(
+                                    'PDepend\\Source\\AST\\ASTLiteral'  . ' (23)')),
+                            'PDepend\\Source\\AST\\ASTLiteral'          . ' (42)'),
+                        'PDepend\\Source\\AST\\ASTMethodPostfix'        . ' (bar)', array(
+                            'PDepend\\Source\\AST\\ASTIdentifier'       . ' (bar)',
+                            'PDepend\\Source\\AST\\ASTArguments'        . ' ()')),
+                    'PDepend\\Source\\AST\\ASTLiteral'                  . ' (17)'),
+                'PDepend\\Source\\AST\\ASTMethodPostfix'                . ' (baz)', array(
+                    'PDepend\\Source\\AST\\ASTIdentifier'               . ' (baz)',
+                    'PDepend\\Source\\AST\\ASTArguments'                . ' ()')
             )
         );
     }
@@ -638,23 +638,23 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ                      . ' ()',    array(
-                    \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ                   . ' (->)',  array(
-                        \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ              . ' ()',    array(
-                            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ           . ' (::)', array(
-                                \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ . ' (Clazz)',
-                                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ             . ' (foo)', array(
-                                    \PDepend\Source\AST\ASTIdentifier::CLAZZ            . ' (foo)',
-                                    \PDepend\Source\AST\ASTArguments::CLAZZ             . ' ()',    array(
-                                        \PDepend\Source\AST\ASTLiteral::CLAZZ           . ' (23)'))),
-                            \PDepend\Source\AST\ASTLiteral::CLAZZ                       . ' (42)'),
-                        \PDepend\Source\AST\ASTMethodPostfix::CLAZZ                     . ' (bar)', array(
-                            \PDepend\Source\AST\ASTIdentifier::CLAZZ                    . ' (bar)',
-                            \PDepend\Source\AST\ASTArguments::CLAZZ                     . ' ()')),
-                    \PDepend\Source\AST\ASTLiteral::CLAZZ                               . ' (17)'),
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ                             . ' (baz)', array(
-                    \PDepend\Source\AST\ASTIdentifier::CLAZZ                            . ' (baz)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ                             . ' ()')
+                'PDepend\\Source\\AST\\ASTArrayIndexExpression'                      . ' ()',    array(
+                    'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'                   . ' (->)',  array(
+                        'PDepend\\Source\\AST\\ASTArrayIndexExpression'              . ' ()',    array(
+                            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'           . ' (::)', array(
+                                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference' . ' (Clazz)',
+                                'PDepend\\Source\\AST\\ASTMethodPostfix'             . ' (foo)', array(
+                                    'PDepend\\Source\\AST\\ASTIdentifier'            . ' (foo)',
+                                    'PDepend\\Source\\AST\\ASTArguments'             . ' ()',    array(
+                                        'PDepend\\Source\\AST\\ASTLiteral'           . ' (23)'))),
+                            'PDepend\\Source\\AST\\ASTLiteral'                       . ' (42)'),
+                        'PDepend\\Source\\AST\\ASTMethodPostfix'                     . ' (bar)', array(
+                            'PDepend\\Source\\AST\\ASTIdentifier'                    . ' (bar)',
+                            'PDepend\\Source\\AST\\ASTArguments'                     . ' ()')),
+                    'PDepend\\Source\\AST\\ASTLiteral'                               . ' (17)'),
+                'PDepend\\Source\\AST\\ASTMethodPostfix'                             . ' (baz)', array(
+                    'PDepend\\Source\\AST\\ASTIdentifier'                            . ' (baz)',
+                    'PDepend\\Source\\AST\\ASTArguments'                             . ' ()')
             )
         );
     }
@@ -674,23 +674,23 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $this->_getFirstMemberPrimaryPrefixInFunction(),
             array(
-                \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ                      . ' ()',    array(
-                    \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ                   . ' (->)',  array(
-                        \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ              . ' ()',    array(
-                            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ           . ' (::)', array(
-                                \PDepend\Source\AST\ASTVariable::CLAZZ                  . ' ($class)',
-                                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ             . ' (foo)', array(
-                                    \PDepend\Source\AST\ASTIdentifier::CLAZZ            . ' (foo)',
-                                    \PDepend\Source\AST\ASTArguments::CLAZZ             . ' ()',    array(
-                                        \PDepend\Source\AST\ASTLiteral::CLAZZ           . ' (23)'))),
-                            \PDepend\Source\AST\ASTLiteral::CLAZZ                       . ' (42)'),
-                        \PDepend\Source\AST\ASTMethodPostfix::CLAZZ                     . ' (bar)', array(
-                            \PDepend\Source\AST\ASTIdentifier::CLAZZ                    . ' (bar)',
-                            \PDepend\Source\AST\ASTArguments::CLAZZ                     . ' ()')),
-                    \PDepend\Source\AST\ASTLiteral::CLAZZ                               . ' (17)'),
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ                             . ' (baz)', array(
-                    \PDepend\Source\AST\ASTIdentifier::CLAZZ                            . ' (baz)',
-                    \PDepend\Source\AST\ASTArguments::CLAZZ                             . ' ()')
+                'PDepend\\Source\\AST\\ASTArrayIndexExpression'                      . ' ()',    array(
+                    'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'                   . ' (->)',  array(
+                        'PDepend\\Source\\AST\\ASTArrayIndexExpression'              . ' ()',    array(
+                            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'           . ' (::)', array(
+                                'PDepend\\Source\\AST\\ASTVariable'                  . ' ($class)',
+                                'PDepend\\Source\\AST\\ASTMethodPostfix'             . ' (foo)', array(
+                                    'PDepend\\Source\\AST\\ASTIdentifier'            . ' (foo)',
+                                    'PDepend\\Source\\AST\\ASTArguments'             . ' ()',    array(
+                                        'PDepend\\Source\\AST\\ASTLiteral'           . ' (23)'))),
+                            'PDepend\\Source\\AST\\ASTLiteral'                       . ' (42)'),
+                        'PDepend\\Source\\AST\\ASTMethodPostfix'                     . ' (bar)', array(
+                            'PDepend\\Source\\AST\\ASTIdentifier'                    . ' (bar)',
+                            'PDepend\\Source\\AST\\ASTArguments'                     . ' ()')),
+                    'PDepend\\Source\\AST\\ASTLiteral'                               . ' (17)'),
+                'PDepend\\Source\\AST\\ASTMethodPostfix'                             . ' (baz)', array(
+                    'PDepend\\Source\\AST\\ASTIdentifier'                            . ' (baz)',
+                    'PDepend\\Source\\AST\\ASTArguments'                             . ' ()')
             )
         );
     }
@@ -792,7 +792,7 @@ class ASTMemberPrimaryPrefixTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ
+            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'
         );
     }
 }

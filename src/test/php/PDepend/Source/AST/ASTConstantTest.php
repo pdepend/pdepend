@@ -141,7 +141,7 @@ class ASTConstantTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstConstantInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTConstant::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTConstant'
         );
     }
 }

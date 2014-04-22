@@ -108,7 +108,7 @@ class ASTCompoundExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTCompoundExpression::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTCompoundExpression'
         );
     }
 }

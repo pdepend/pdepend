@@ -346,12 +346,12 @@ class ASTTraitTest extends AbstractASTArtifactTest
      */
     public function testAcceptInvokesVisitTraitOnGivenVisitor()
     {
-        $visitor = $this->getMockBuilder(ASTVisitor::CLAZZ)
+        $visitor = $this->getMockBuilder('PDepend\\Source\\ASTVisitor\\ASTVisitor')
             ->disableOriginalClone()
             ->getMock();
         $visitor->expects($this->once())
             ->method('visitTrait')
-            ->with($this->isInstanceOf(ASTTrait::CLAZZ));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
 
         $trait = new ASTTrait('MyTrait');
         $trait->accept($visitor);
@@ -364,12 +364,12 @@ class ASTTraitTest extends AbstractASTArtifactTest
      */
     public function testMagicWakeupCallsRegisterTraitOnBuilderContext()
     {
-        $context = $this->getMockBuilder(BuilderContext::CLAZZ)
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->disableOriginalClone()
             ->getMock();
         $context->expects($this->once())
             ->method('registerTrait')
-            ->with($this->isInstanceOf(ASTTrait::CLAZZ));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
 
         $trait = new ASTTrait(__FUNCTION__);
         $trait->setContext($context);

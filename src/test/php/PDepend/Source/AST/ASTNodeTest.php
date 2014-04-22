@@ -187,7 +187,7 @@ abstract class ASTNodeTest extends AbstractTest
         $node = $this->createNodeInstance();
         $this->assertSame(
             array(),
-            $node->getParentsOfType(\PDepend\Source\AST\ASTScope::CLAZZ)
+            $node->getParentsOfType('PDepend\\Source\\AST\\ASTScope')
         );
     }
 
@@ -199,10 +199,10 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testGetParentsOfTypeReturnsExpectedParentNodes()
     {
-        $parent0 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
-        $parent1 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTNode::CLAZZ);
-        $parent2 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
-        $parent3 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTNode::CLAZZ);
+        $parent0 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
+        $parent1 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTNode');
+        $parent2 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
+        $parent3 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTNode');
 
         $node = $this->createNodeInstance();
 
@@ -213,7 +213,7 @@ abstract class ASTNodeTest extends AbstractTest
 
         $this->assertSame(
             array($parent0, $parent2),
-            $node->getParentsOfType(\PDepend\Source\AST\ASTScope::CLAZZ)
+            $node->getParentsOfType('PDepend\\Source\\AST\\ASTScope')
         );
     }
 
@@ -286,7 +286,7 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $this->assertNull(
             $this->getNodeMock()->getFirstChildOfType(
-                \PDepend\Source\AST\ASTArguments::CLAZZ
+                'PDepend\\Source\\AST\\ASTArguments'
             )
         );
     }
@@ -300,7 +300,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetFirstChildOfTypeReturnsFirstMatchingChild()
     {
         $child0 = $this->getMockForAbstractClass(
-            \PDepend\Source\AST\ASTIndexExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTIndexExpression'
         );
 
         $node = $this->getNodeMock();
@@ -308,7 +308,7 @@ abstract class ASTNodeTest extends AbstractTest
 
         $this->assertSame(
             $child0,
-            $node->getFirstChildOfType(\PDepend\Source\AST\ASTIndexExpression::CLAZZ)
+            $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTIndexExpression')
         );
     }
 
@@ -321,10 +321,10 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive()
     {
         $child0 = $this->getMockForAbstractClass(
-            \PDepend\Source\AST\ASTIndexExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTIndexExpression'
         );
         $child1 = $this->getMockForAbstractClass(
-            \PDepend\Source\AST\ASTArguments::CLAZZ
+            'PDepend\\Source\\AST\\ASTArguments'
         );
 
         $node = $this->getNodeMock();
@@ -333,7 +333,7 @@ abstract class ASTNodeTest extends AbstractTest
 
         $this->assertSame(
             $child1,
-            $node->getFirstChildOfType(\PDepend\Source\AST\ASTArguments::CLAZZ)
+            $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTArguments')
         );
     }
 
@@ -348,7 +348,7 @@ abstract class ASTNodeTest extends AbstractTest
         $node = $this->getNodeMock();
         $this->assertSame(
             array(),
-            $node->findChildrenOfType(\PDepend\Source\AST\ASTNode::CLAZZ)
+            $node->findChildrenOfType('PDepend\\Source\\AST\\ASTNode')
         );
     }
 
@@ -361,7 +361,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testFindChildrenOfTypeReturnsDirectChild()
     {
         $child0 = $this->getNodeMock();
-        $child1 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
+        $child1 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -369,7 +369,7 @@ abstract class ASTNodeTest extends AbstractTest
 
         $this->assertSame(
             array($child1),
-            $node->findChildrenOfType(\PDepend\Source\AST\ASTScope::CLAZZ)
+            $node->findChildrenOfType('PDepend\\Source\\AST\\ASTScope')
         );
     }
 
@@ -382,7 +382,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testFindChildrenOfTypeReturnsIndirectChild()
     {
         $child0 = $this->getNodeMock();
-        $child1 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
+        $child1 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -390,7 +390,7 @@ abstract class ASTNodeTest extends AbstractTest
 
         $this->assertSame(
             array($child1),
-            $node->findChildrenOfType(\PDepend\Source\AST\ASTScope::CLAZZ)
+            $node->findChildrenOfType('PDepend\\Source\\AST\\ASTScope')
         );
     }
 
@@ -402,9 +402,9 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testFindChildrenOfTypeReturnsDirectAndIndirectChild()
     {
-        $child0 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
-        $child1 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
-        $child2 = $this->getMockForAbstractClass(\PDepend\Source\AST\ASTScope::CLAZZ);
+        $child0 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
+        $child1 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
+        $child2 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -413,7 +413,7 @@ abstract class ASTNodeTest extends AbstractTest
 
         $this->assertSame(
             array($child0, $child1, $child2),
-            $node->findChildrenOfType(\PDepend\Source\AST\ASTScope::CLAZZ)
+            $node->findChildrenOfType('PDepend\\Source\\AST\\ASTScope')
         );
     }
 
@@ -605,7 +605,7 @@ abstract class ASTNodeTest extends AbstractTest
      */
     private function getNodeMock()
     {
-        return $this->getMockForAbstractClass(\PDepend\Source\AST\ASTNode::CLAZZ);
+        return $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTNode');
     }
 
     /**
@@ -615,8 +615,8 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testPrependChildAddsChildAtFirstPosition()
     {
-        $child1 = $this->getMock(\PDepend\Source\AST\ASTNode::CLAZZ);
-        $child2 = $this->getMock(\PDepend\Source\AST\ASTNode::CLAZZ);
+        $child1 = $this->getMock('PDepend\\Source\\AST\\ASTNode');
+        $child2 = $this->getMock('PDepend\\Source\\AST\\ASTNode');
 
         $parent = $this->createNodeInstance();
         $parent->prependChild($child2);

@@ -532,7 +532,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $class = new ASTClass($name);
         $class->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $class->setCache(new MemoryCacheDriver());
-        $class->setContext($this->getMock(BuilderContext::CLAZZ));
+        $class->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
 
         return $class;
     }

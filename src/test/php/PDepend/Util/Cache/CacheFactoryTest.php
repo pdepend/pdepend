@@ -113,7 +113,10 @@ class CacheFactoryTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $this->assertInstanceOf(FileCacheDriver::CLAZZ, $this->createFactoryFixture()->create());
+        $this->assertInstanceOf(
+            'PDepend\\Util\\Cache\\Driver\\FileCacheDriver',
+            $this->createFactoryFixture()->create()
+        );
     }
 
     /**
@@ -125,7 +128,10 @@ class CacheFactoryTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $this->assertInstanceOf(MemoryCacheDriver::CLAZZ, $this->createFactoryFixture()->create());
+        $this->assertInstanceOf(
+            'PDepend\\Util\\Cache\\Driver\\MemoryCacheDriver',
+            $this->createFactoryFixture()->create()
+        );
     }
 
     /**

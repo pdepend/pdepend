@@ -52,8 +52,5 @@ namespace PDepend\Source\AST;
  */
 abstract class ASTIndexExpression extends ASTExpression
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
+
 }

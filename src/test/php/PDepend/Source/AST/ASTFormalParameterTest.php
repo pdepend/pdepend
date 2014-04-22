@@ -121,7 +121,7 @@ class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFormalParameterWithArrayTypeHint()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTypeArray::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTypeArray',
             $this->_getFirstFormalParameterInFunction()->getChild(0)
         );
     }
@@ -199,7 +199,7 @@ class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(), 
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ
+            'PDepend\\Source\\AST\\ASTFormalParameter'
         );
     }
 }

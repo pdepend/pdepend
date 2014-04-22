@@ -108,7 +108,8 @@ class ASTGotoStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstGotoStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTGotoStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTGotoStatement'
         );
     }
 }

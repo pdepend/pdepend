@@ -80,10 +80,10 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTFunctionPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTFunctionPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -113,10 +113,10 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTFunctionPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTFunctionPostfix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -148,12 +148,12 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -185,12 +185,12 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -222,12 +222,12 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -259,12 +259,12 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
-                \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ,
-                \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTArguments::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
+                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
+                'PDepend\\Source\\AST\\ASTMethodPostfix',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTArguments',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -283,8 +283,8 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -303,8 +303,8 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTIdentifier::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTIdentifier',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -323,12 +323,12 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraphEquals(
             $this->_getFirstArrayIndexExpressionInFunction(),
             array(
-                \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ,
-                \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ,
-                \PDepend\Source\AST\ASTVariable::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ,
-                \PDepend\Source\AST\ASTLiteral::CLAZZ
+                'PDepend\\Source\\AST\\ASTArrayIndexExpression',
+                'PDepend\\Source\\AST\\ASTArrayIndexExpression',
+                'PDepend\\Source\\AST\\ASTVariable',
+                'PDepend\\Source\\AST\\ASTLiteral',
+                'PDepend\\Source\\AST\\ASTLiteral',
+                'PDepend\\Source\\AST\\ASTLiteral'
             )
         );
     }
@@ -386,7 +386,7 @@ class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(), 
-            \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ
+            'PDepend\\Source\\AST\\ASTArrayIndexExpression'
         );
     }
 }

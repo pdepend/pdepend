@@ -53,11 +53,6 @@ use PDepend\Source\AST\AbstractASTArtifact;
 class CloverReport implements Report
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Holds the line coverage for all files found in the coverage report.
      *
      * @var array(string=>array)

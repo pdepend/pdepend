@@ -81,10 +81,10 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
             ->current();
 
         $declaration = $class->getFirstChildOfType(
-            \PDepend\Source\AST\ASTFieldDeclaration::CLAZZ
+            'PDepend\\Source\\AST\\ASTFieldDeclaration'
         );
         $reference = $declaration->getFirstChildOfType(
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
         $this->assertNull($reference);
     }
@@ -295,7 +295,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstFieldDeclarationInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, \PDepend\Source\AST\ASTFieldDeclaration::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTFieldDeclaration'
         );
     }
 

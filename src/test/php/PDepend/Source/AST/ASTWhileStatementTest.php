@@ -73,7 +73,7 @@ class ASTWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFirstChildOfWhileStatementIsASTExpression()
     {
         $stmt = $this->_getFirstWhileStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
 
     /**
@@ -84,7 +84,7 @@ class ASTWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSecondChildOfWhileStatementIsASTScopeStatement()
     {
         $stmt = $this->_getFirstWhileStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testWhileStatement()
     {
         $stmt = $this->_getFirstWhileStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTWhileStatement::CLAZZ, $stmt);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTWhileStatement', $stmt);
 
         return $stmt;
     }
@@ -162,7 +162,7 @@ class ASTWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testWhileStatementWithAlternativeScope()
     {
         $stmt = $this->_getFirstWhileStatementInFunction();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTWhileStatement::CLAZZ, $stmt);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTWhileStatement', $stmt);
 
         return $stmt;
     }
@@ -239,7 +239,7 @@ class ASTWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTWhileStatement::CLAZZ
+            'PDepend\\Source\\AST\\ASTWhileStatement'
         );
     }
 }

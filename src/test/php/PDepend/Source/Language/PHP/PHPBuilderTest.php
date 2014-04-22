@@ -140,7 +140,7 @@ class PHPBuilderTest extends AbstractTest
     public function testRestoreFunctionUsesGetNamespaceNameMethod()
     {
         $function = $this->getMock(
-            ASTFunction::CLAZZ,
+            'PDepend\\Source\\AST\\ASTFunction',
             array(),
             array(__FUNCTION__)
         );
@@ -410,14 +410,14 @@ class PHPBuilderTest extends AbstractTest
     }
 
     /**
-     * Tests the \PDepend\Source\AST\ASTMethod build method.
+     * Tests the 'PDepend\\Source\\AST\\ASTMethod build method.
      *
      * @return void
      */
     public function testBuildMethod()
     {
         $this->assertInstanceOf(
-            '\\PDepend\\Source\\AST\\ASTMethod',
+            'PDepend\\Source\\AST\\ASTMethod',
             $this->createBuilder()->buildMethod('method')
         );
     }
@@ -785,7 +785,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTCommentReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            ASTComment::CLAZZ,
+            'PDepend\\Source\\AST\\ASTComment',
             $this->createBuilder()->buildAstComment('// Hello')
         );
     }
@@ -798,7 +798,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTPrimitiveTypeReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTPrimitiveType::CLAZZ,
+            'PDepend\\Source\\AST\\ASTPrimitiveType',
             $this->createBuilder()->buildAstPrimitiveType('1')
         );
     }
@@ -811,7 +811,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTypeArrayReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTypeArray::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTypeArray',
             $this->createBuilder()->buildAstTypeArray()
         );
     }
@@ -825,7 +825,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTypeCallableReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTypeCallable::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTypeCallable',
             $this->createBuilder()->buildAstTypeCallable()
         );
     }
@@ -838,7 +838,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTHeredocReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTHeredoc::CLAZZ,
+            'PDepend\\Source\\AST\\ASTHeredoc',
             $this->createBuilder()->buildAstHeredoc()
         );
     }
@@ -851,7 +851,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTIdentifierReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTIdentifier::CLAZZ,
+            'PDepend\\Source\\AST\\ASTIdentifier',
             $this->createBuilder()->buildAstIdentifier('ID')
         );
     }
@@ -864,7 +864,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTLiteralReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTLiteral::CLAZZ,
+            'PDepend\\Source\\AST\\ASTLiteral',
             $this->createBuilder()->buildAstLiteral('false')
         );
     }
@@ -877,7 +877,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTStringReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTString::CLAZZ,
+            'PDepend\\Source\\AST\\ASTString',
             $this->createBuilder()->buildAstString()
         );
     }
@@ -891,7 +891,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTArrayReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTArray::CLAZZ,
+            'PDepend\\Source\\AST\\ASTArray',
             $this->createBuilder()->buildAstArray()
         );
     }
@@ -905,7 +905,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTArrayElementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTArrayElement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTArrayElement',
             $this->createBuilder()->buildAstArrayElement()
         );
     }
@@ -918,7 +918,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTScopeReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTScope::CLAZZ,
+            'PDepend\\Source\\AST\\ASTScope',
             $this->createBuilder()->buildAstScope()
         );
     }
@@ -931,7 +931,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTVariableReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTVariable::CLAZZ,
+            'PDepend\\Source\\AST\\ASTVariable',
             $this->createBuilder()->buildAstVariable('$name')
         );
     }
@@ -944,7 +944,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTVariableVariableReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTVariableVariable::CLAZZ,
+            'PDepend\\Source\\AST\\ASTVariableVariable',
             $this->createBuilder()->buildAstVariableVariable('$$x')
         );
     }
@@ -957,7 +957,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTCompoundVariableReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTCompoundVariable::CLAZZ,
+            'PDepend\\Source\\AST\\ASTCompoundVariable',
             $this->createBuilder()->buildAstCompoundVariable('${x}')
         );
     }
@@ -970,7 +970,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTFieldDeclarationReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTFieldDeclaration::CLAZZ,
+            'PDepend\\Source\\AST\\ASTFieldDeclaration',
             $this->createBuilder()->buildAstFieldDeclaration()
         );
     }
@@ -983,7 +983,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTConstantReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTConstant::CLAZZ,
+            'PDepend\\Source\\AST\\ASTConstant',
             $this->createBuilder()->buildAstConstant('X')
         );
     }
@@ -996,7 +996,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTConstantDeclaratorReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTConstantDeclarator::CLAZZ,
+            'PDepend\\Source\\AST\\ASTConstantDeclarator',
             $this->createBuilder()->buildAstConstantDeclarator('X')
         );
     }
@@ -1009,7 +1009,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTConstantDefinitionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTConstantDefinition::CLAZZ,
+            'PDepend\\Source\\AST\\ASTConstantDefinition',
             $this->createBuilder()->buildAstConstantDefinition('X')
         );
     }
@@ -1022,7 +1022,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTConstantPostfixReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            ASTConstantPostfix::CLAZZ,
+            'PDepend\\Source\\AST\\ASTConstantPostfix',
             $this->createBuilder()->buildAstConstantPostfix('X')
         );
     }
@@ -1035,7 +1035,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTClassFqnPostfixReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            ASTClassFqnPostfix::CLAZZ,
+            'PDepend\\Source\\AST\\ASTClassFqnPostfix',
             $this->createBuilder()->buildAstClassFqnPostfix()
         );
     }
@@ -1048,7 +1048,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTAssignmentExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTAssignmentExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTAssignmentExpression',
             $this->createBuilder()->buildAstAssignmentExpression('=')
         );
     }
@@ -1062,7 +1062,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTShiftLeftExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTShiftLeftExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTShiftLeftExpression',
             $this->createBuilder()->buildAstShiftLeftExpression()
         );
     }
@@ -1076,7 +1076,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTShiftRightExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTShiftRightExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTShiftRightExpression',
             $this->createBuilder()->buildAstShiftRightExpression()
         );
     }
@@ -1089,7 +1089,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTBooleanAndExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTBooleanAndExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTBooleanAndExpression',
             $this->createBuilder()->buildAstBooleanAndExpression()
         );
     }
@@ -1102,7 +1102,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTBooleanOrExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTBooleanOrExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTBooleanOrExpression',
             $this->createBuilder()->buildAstBooleanOrExpression()
         );
     }
@@ -1115,7 +1115,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTCastExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTCastExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTCastExpression',
             $this->createBuilder()->buildAstCastExpression('(boolean)')
         );
     }
@@ -1128,7 +1128,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTCloneExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTCloneExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTCloneExpression',
             $this->createBuilder()->buildAstCloneExpression('clone')
         );
     }
@@ -1141,7 +1141,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTCompoundExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTCompoundExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTCompoundExpression',
             $this->createBuilder()->buildAstCompoundExpression()
         );
     }
@@ -1154,7 +1154,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTConditionalExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTConditionalExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTConditionalExpression',
             $this->createBuilder()->buildAstConditionalExpression()
         );
     }
@@ -1167,7 +1167,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTEvalExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTEvalExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTEvalExpression',
             $this->createBuilder()->buildAstEvalExpression('eval')
         );
     }
@@ -1180,7 +1180,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTExitExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTExitExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTExitExpression',
             $this->createBuilder()->buildAstExitExpression('exit')
         );
     }
@@ -1193,7 +1193,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTExpression',
             $this->createBuilder()->buildAstExpression()
         );
     }
@@ -1206,7 +1206,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTIncludeExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTIncludeExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTIncludeExpression',
             $this->createBuilder()->buildAstIncludeExpression()
         );
     }
@@ -1219,7 +1219,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTInstanceOfExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTInstanceOfExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTInstanceOfExpression',
             $this->createBuilder()->buildAstInstanceOfExpression('instanceof')
         );
     }
@@ -1232,7 +1232,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTIssetExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTIssetExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTIssetExpression',
             $this->createBuilder()->buildAstIssetExpression()
         );
     }
@@ -1245,7 +1245,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTListExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTListExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTListExpression',
             $this->createBuilder()->buildAstListExpression('list')
         );
     }
@@ -1258,7 +1258,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTLogicalAndExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTLogicalAndExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTLogicalAndExpression',
             $this->createBuilder()->buildAstLogicalAndExpression('AND')
         );
     }
@@ -1271,7 +1271,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTLogicalOrExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTLogicalOrExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTLogicalOrExpression',
             $this->createBuilder()->buildAstLogicalOrExpression('OR')
         );
     }
@@ -1284,7 +1284,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTLogicalXorExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTLogicalXorExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTLogicalXorExpression',
             $this->createBuilder()->buildAstLogicalXorExpression('XOR')
         );
     }
@@ -1297,7 +1297,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTRequireExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTRequireExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTRequireExpression',
             $this->createBuilder()->buildAstRequireExpression()
         );
     }
@@ -1310,7 +1310,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTStringIndexExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTStringIndexExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTStringIndexExpression',
             $this->createBuilder()->buildAstStringIndexExpression()
         );
     }
@@ -1323,7 +1323,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTUnaryExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTUnaryExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTUnaryExpression',
             $this->createBuilder()->buildAstUnaryExpression('+')
         );
     }
@@ -1336,7 +1336,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTBreakStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTBreakStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTBreakStatement',
             $this->createBuilder()->buildAstBreakStatement('break')
         );
     }
@@ -1349,7 +1349,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTCatchStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTCatchStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTCatchStatement',
             $this->createBuilder()->buildAstCatchStatement('catch')
         );
     }
@@ -1362,7 +1362,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTDeclareStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTDeclareStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTDeclareStatement',
             $this->createBuilder()->buildAstDeclareStatement()
         );
     }
@@ -1375,7 +1375,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTIfStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTIfStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTIfStatement',
             $this->createBuilder()->buildAstIfStatement('if')
         );
     }
@@ -1388,7 +1388,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTElseIfStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTElseIfStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTElseIfStatement',
             $this->createBuilder()->buildAstElseIfStatement('elseif')
         );
     }
@@ -1401,7 +1401,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTContinueStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTContinueStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTContinueStatement',
             $this->createBuilder()->buildAstContinueStatement('continue')
         );
     }
@@ -1414,7 +1414,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTDoWhileStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTDoWhileStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTDoWhileStatement',
             $this->createBuilder()->buildAstDoWhileStatement('while')
         );
     }
@@ -1427,7 +1427,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTForStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTForStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTForStatement',
             $this->createBuilder()->buildAstForStatement('for')
         );
     }
@@ -1440,7 +1440,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTForInitReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTForInit::CLAZZ,
+            'PDepend\\Source\\AST\\ASTForInit',
             $this->createBuilder()->buildAstForInit()
         );
     }
@@ -1453,7 +1453,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTForUpdateReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTForUpdate::CLAZZ,
+            'PDepend\\Source\\AST\\ASTForUpdate',
             $this->createBuilder()->buildAstForUpdate()
         );
     }
@@ -1466,7 +1466,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTForeachStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTForeachStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTForeachStatement',
             $this->createBuilder()->buildAstForeachStatement('foreach')
         );
     }
@@ -1479,7 +1479,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTFormalParametersReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTFormalParameters::CLAZZ,
+            'PDepend\\Source\\AST\\ASTFormalParameters',
             $this->createBuilder()->buildAstFormalParameters()
         );
     }
@@ -1492,7 +1492,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTFormalParameterReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTFormalParameter::CLAZZ,
+            'PDepend\\Source\\AST\\ASTFormalParameter',
             $this->createBuilder()->buildAstFormalParameter()
         );
     }
@@ -1505,7 +1505,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTGlobalStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTGlobalStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTGlobalStatement',
             $this->createBuilder()->buildAstGlobalStatement()
         );
     }
@@ -1518,7 +1518,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTGotoStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTGotoStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTGotoStatement',
             $this->createBuilder()->buildAstGotoStatement('goto')
         );
     }
@@ -1531,7 +1531,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTLabelStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTLabelStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTLabelStatement',
             $this->createBuilder()->buildAstLabelStatement('LABEL')
         );
     }
@@ -1544,7 +1544,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTReturnStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTReturnStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTReturnStatement',
             $this->createBuilder()->buildAstReturnStatement('return')
         );
     }
@@ -1557,7 +1557,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTScopeStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTScopeStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTScopeStatement',
             $this->createBuilder()->buildAstScopeStatement()
         );
     }
@@ -1570,7 +1570,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTStatement',
             $this->createBuilder()->buildAstStatement()
         );
     }
@@ -1584,7 +1584,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTraitUseStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTraitUseStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTraitUseStatement',
             $this->createBuilder()->buildAstTraitUseStatement()
         );
     }
@@ -1598,7 +1598,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTraitAdaptationReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTraitAdaptation::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTraitAdaptation',
             $this->createBuilder()->buildAstTraitAdaptation()
         );
     }
@@ -1612,7 +1612,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTraitAdaptationAliasReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTraitAdaptationAlias::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTraitAdaptationAlias',
             $this->createBuilder()->buildAstTraitAdaptationAlias(__CLASS__)
         );
     }
@@ -1626,7 +1626,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTraitAdaptationPrecedenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTraitAdaptationPrecedence::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence',
             $this->createBuilder()->buildAstTraitAdaptationPrecedence(__CLASS__)
         );
     }
@@ -1639,7 +1639,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTSwitchStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTSwitchStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTSwitchStatement',
             $this->createBuilder()->buildAstSwitchStatement()
         );
     }
@@ -1652,7 +1652,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTThrowStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTThrowStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTThrowStatement',
             $this->createBuilder()->buildAstThrowStatement('throw')
         );
     }
@@ -1665,7 +1665,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTryStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTryStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTryStatement',
             $this->createBuilder()->buildAstTryStatement('try')
         );
     }
@@ -1678,7 +1678,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTUnsetStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTUnsetStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTUnsetStatement',
             $this->createBuilder()->buildAstUnsetStatement()
         );
     }
@@ -1691,7 +1691,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTWhileStatementReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTWhileStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTWhileStatement',
             $this->createBuilder()->buildAstWhileStatement('while')
         );
     }
@@ -1704,7 +1704,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTArrayIndexExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTArrayIndexExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTArrayIndexExpression',
             $this->createBuilder()->buildAstArrayIndexExpression()
         );
     }
@@ -1717,7 +1717,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTClosureReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTClosure::CLAZZ,
+            'PDepend\\Source\\AST\\ASTClosure',
             $this->createBuilder()->buildAstClosure()
         );
     }
@@ -1730,7 +1730,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTParentReferenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTParentReference::CLAZZ,
+            'PDepend\\Source\\AST\\ASTParentReference',
             $this->createBuilder()->buildAstParentReference(
                 $this->createBuilder()->buildAstClassOrInterfaceReference(__CLASS__)
             )
@@ -1745,7 +1745,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTSelfReferenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTSelfReference::CLAZZ,
+            'PDepend\\Source\\AST\\ASTSelfReference',
             $this->createBuilder()->buildAstSelfReference(
                 $this->createBuilder()->buildClass(__CLASS__)
             )
@@ -1760,7 +1760,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTStaticReferenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTStaticReference::CLAZZ,
+            'PDepend\\Source\\AST\\ASTStaticReference',
             $this->createBuilder()->buildAstStaticReference(
                 $this->createBuilder()->buildClass(__CLASS__)
             )
@@ -1776,7 +1776,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTTraitReferenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTTraitReference::CLAZZ,
+            'PDepend\\Source\\AST\\ASTTraitReference',
             $this->createBuilder()->buildAstTraitReference(__CLASS__)
         );
     }
@@ -1789,7 +1789,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTClassOrInterfaceReferenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ,
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
             $this->createBuilder()->buildAstClassOrInterfaceReference(__CLASS__)
         );
     }
@@ -1802,7 +1802,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTClassReferenceReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTClassReference::CLAZZ,
+            'PDepend\\Source\\AST\\ASTClassReference',
             $this->createBuilder()->buildAstClassReference(__CLASS__)
         );
     }
@@ -1817,7 +1817,7 @@ class PHPBuilderTest extends AbstractTest
         $builder  = $this->createBuilder();
         $instance = $builder->buildAstPrimitiveType(__FUNCTION__);
 
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTPrimitiveType::CLAZZ, $instance);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTPrimitiveType', $instance);
     }
 
     /**
@@ -1831,7 +1831,7 @@ class PHPBuilderTest extends AbstractTest
             ->buildAstAllocationExpression(__FUNCTION__);
 
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTAllocationExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTAllocationExpression',
             $object
         );
     }
@@ -1844,7 +1844,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTArgumentsReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTArguments::CLAZZ,
+            'PDepend\\Source\\AST\\ASTArguments',
             $this->createBuilder()->buildAstArguments()
         );
     }
@@ -1857,7 +1857,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTSwitchLabel()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTSwitchLabel::CLAZZ,
+            'PDepend\\Source\\AST\\ASTSwitchLabel',
             $this->createBuilder()->buildAstSwitchLabel('m')
         );
     }
@@ -1870,7 +1870,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTEchoStatetmentReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTEchoStatement::CLAZZ,
+            'PDepend\\Source\\AST\\ASTEchoStatement',
             $this->createBuilder()->buildAstEchoStatement('echo')
         );
     }
@@ -1883,7 +1883,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTVariableDeclaratorReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTVariableDeclarator::CLAZZ,
+            'PDepend\\Source\\AST\\ASTVariableDeclarator',
             $this->createBuilder()->buildAstVariableDeclarator('foo')
         );
     }
@@ -1896,7 +1896,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTStaticVariableDeclarationReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTStaticVariableDeclaration::CLAZZ,
+            'PDepend\\Source\\AST\\ASTStaticVariableDeclaration',
             $this->createBuilder()->buildAstStaticVariableDeclaration('$foo')
         );
     }
@@ -1909,7 +1909,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTPostfixExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTPostfixExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTPostfixExpression',
             $this->createBuilder()->buildAstPostfixExpression('++')
         );
     }
@@ -1922,7 +1922,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTPreDecrementExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTPreDecrementExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTPreDecrementExpression',
             $this->createBuilder()->buildAstPreDecrementExpression()
         );
     }
@@ -1935,7 +1935,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTPreIncrementExpressionReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTPreIncrementExpression::CLAZZ,
+            'PDepend\\Source\\AST\\ASTPreIncrementExpression',
             $this->createBuilder()->buildAstPreIncrementExpression()
         );
     }
@@ -1949,7 +1949,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTMemberPrimaryPrefixReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ,
+            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
             $this->createBuilder()->buildAstMemberPrimaryPrefix('::')
         );
     }
@@ -1963,7 +1963,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTMethodPostfixReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTMethodPostfix::CLAZZ,
+            'PDepend\\Source\\AST\\ASTMethodPostfix',
             $this->createBuilder()->buildAstMethodPostfix('foo')
         );
     }
@@ -1976,7 +1976,7 @@ class PHPBuilderTest extends AbstractTest
     public function testBuildASTFunctionPostfixReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            \PDepend\Source\AST\ASTFunctionPostfix::CLAZZ,
+            'PDepend\\Source\\AST\\ASTFunctionPostfix',
             $this->createBuilder()->buildAstFunctionPostfix('foo')
         );
     }

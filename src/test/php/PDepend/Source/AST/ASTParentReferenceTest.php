@@ -213,7 +213,7 @@ class ASTParentReferenceTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstParentReferenceInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, \PDepend\Source\AST\ASTParentReference::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTParentReference'
         );
     }
 }

@@ -63,9 +63,9 @@ class FactoryTest extends AbstractTest
     public function testCreateReturnsCloverReportInstanceForCloverInputFile()
     {
         $factory = new Factory();
-        $report  = $factory->create(dirname(__FILE__) . '/_files/clover.xml');
+        $report  = $factory->create(__DIR__ . '/_files/clover.xml');
 
-        $this->assertInstanceOf(CloverReport::CLAZZ, $report);
+        $this->assertInstanceOf('PDepend\\Util\\Coverage\\CloverReport', $report);
     }
 
     /**

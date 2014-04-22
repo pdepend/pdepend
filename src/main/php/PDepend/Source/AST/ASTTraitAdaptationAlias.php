@@ -53,11 +53,6 @@ namespace PDepend\Source\AST;
 class ASTTraitAdaptationAlias extends ASTStatement
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The new aliased method name.
      *
      * @var string

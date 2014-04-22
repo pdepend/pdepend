@@ -53,11 +53,6 @@ namespace PDepend\Source\AST;
 class ASTClosure extends \PDepend\Source\AST\ASTNode
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * This method will return <b>true</b> when this closure returns by
      * reference.
      *

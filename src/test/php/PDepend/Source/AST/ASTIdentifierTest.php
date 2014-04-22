@@ -108,7 +108,7 @@ class ASTIdentifierTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstIdentifierInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTIdentifier::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTIdentifier'
         );
     }
 }

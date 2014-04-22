@@ -68,7 +68,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -78,7 +78,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -103,7 +103,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -112,7 +112,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -122,7 +122,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node3 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -147,7 +147,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
         $node1 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -157,7 +157,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->will($this->returnValue(null));
 
         $node2 = $this->getMock(
-            ASTNode::CLAZZ,
+            'PDepend\\Source\\AST\\ASTNode',
             array(),
             array(),
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
@@ -364,8 +364,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->current();
 
         $this->assertInstanceOf(
-            ASTFormalParameter::CLAZZ,
-            $class->getFirstChildOfType(ASTFormalParameter::CLAZZ)
+            'PDepend\\Source\\AST\\ASTFormalParameter',
+            $class->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter')
         );
     }
 
@@ -382,7 +382,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->current();
 
         $parameters = $class->findChildrenOfType(
-            ASTFormalParameter::CLAZZ
+            'PDepend\\Source\\AST\\ASTFormalParameter'
         );
         $this->assertEquals(4, count($parameters));
     }
@@ -886,10 +886,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     {
         $interface = $this->createItem();
 
-        $context = $this->getMock(BuilderContext::CLAZZ);
+        $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
         $context->expects($this->once())
             ->method('registerInterface')
-            ->with(self::isInstanceOf(ASTInterface::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $interface->setContext($context)->__wakeup();
     }
@@ -904,7 +904,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('visitInterface')
-            ->with(self::isInstanceOf(ASTInterface::CLAZZ));
+            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $interface = $this->createItem();
         $interface->accept($visitor);
@@ -920,7 +920,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $interface = new ASTInterface(__CLASS__);
         $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $interface->setCache(new MemoryCacheDriver());
-        $interface->setContext($this->getMock(BuilderContext::CLAZZ));
+        $interface->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
 
         return $interface;
     }

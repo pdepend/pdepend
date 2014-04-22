@@ -66,13 +66,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTParameter extends AbstractASTArtifact
 {
     /**
-     * The type of this class.
-     * 
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The parent function or method instance.
      *
      * @var \PDepend\Source\AST\AbstractASTCallable
@@ -116,7 +109,7 @@ class ASTParameter extends AbstractASTArtifact
     {
         $this->formalParameter    = $formalParameter;
         $this->variableDeclarator = $formalParameter->getFirstChildOfType(
-            \PDepend\Source\AST\ASTVariableDeclarator::CLAZZ
+            'PDepend\\Source\\AST\\ASTVariableDeclarator'
         );
 
         $this->id = spl_object_hash($this);
@@ -223,7 +216,7 @@ class ASTParameter extends AbstractASTArtifact
     public function getClass()
     {
         $classReference = $this->formalParameter->getFirstChildOfType(
-            \PDepend\Source\AST\ASTClassOrInterfaceReference::CLAZZ
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
         if ($classReference === null) {
             return null;

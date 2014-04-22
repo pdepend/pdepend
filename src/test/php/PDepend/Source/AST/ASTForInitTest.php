@@ -108,7 +108,8 @@ class ASTForInitTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstForInitInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTForInit::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTForInit'
         );
     }
 }

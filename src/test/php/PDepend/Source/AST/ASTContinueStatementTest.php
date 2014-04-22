@@ -108,7 +108,8 @@ class ASTContinueStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstContinueStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTContinueStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTContinueStatement'
         );
     }
 }

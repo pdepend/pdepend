@@ -56,11 +56,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 final class ASTParentReference extends ASTClassOrInterfaceReference
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The source image of this node.
      */
     const IMAGE = 'parent';

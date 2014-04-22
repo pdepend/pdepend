@@ -55,11 +55,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTClassReference extends ASTClassOrInterfaceReference
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Returns the concrete type instance associated with with this placeholder.
      *
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface

@@ -108,7 +108,8 @@ class ASTBooleanAndExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstBooleanAndExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTBooleanAndExpression::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTBooleanAndExpression'
         );
     }
 }

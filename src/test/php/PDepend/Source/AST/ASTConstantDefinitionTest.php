@@ -95,7 +95,7 @@ class ASTConstantDefinitionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testConstantDefinition()
     {
         $constant = $this->_getFirstConstantDefinitionInClass();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTConstantDefinition::CLAZZ, $constant);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constant);
 
         return $constant;
     }
@@ -161,7 +161,7 @@ class ASTConstantDefinitionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testConstantDefinitionWithDeclarators()
     {
         $constant = $this->_getFirstConstantDefinitionInClass();
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTConstantDefinition::CLAZZ, $constant);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constant);
 
         return $constant;
     }
@@ -253,7 +253,7 @@ class ASTConstantDefinitionTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(), 
-            \PDepend\Source\AST\ASTConstantDefinition::CLAZZ
+            'PDepend\\Source\\AST\\ASTConstantDefinition'
         );
     }
 }

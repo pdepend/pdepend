@@ -71,11 +71,6 @@ namespace PDepend\Source\AST;
 class ASTDeclareStatement extends \PDepend\Source\AST\ASTStatement
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The parsed declare values.
      *
      * @var \PDepend\Source\AST\ASTValue[]

@@ -58,11 +58,6 @@ use PDepend\Source\AST\ASTTrait;
 interface BuilderContext
 {
     /**
-     * The type of this interface
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * This method can be used to register an existing function in the current
      * application context.
      * 

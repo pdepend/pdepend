@@ -12,7 +12,7 @@
         "symfony/config": "@stable"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable",
+        "phpunit/phpunit": "3.*@stable",
         "squizlabs/php_codesniffer": "@stable"
     },
     "bin": ["src/bin/pdepend"],

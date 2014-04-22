@@ -117,7 +117,7 @@ class ASTElseIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFirstChildOfElseIfStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
     
     /**
@@ -128,7 +128,7 @@ class ASTElseIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
     }
 
     /**
@@ -183,7 +183,7 @@ class ASTElseIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testElseIfStatementWithoutScopeStatementBody()
     {
         $stmt = $this->_getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTForeachStatement::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForeachStatement', $stmt->getChild(1));
     }
 
     /**
@@ -240,7 +240,8 @@ class ASTElseIfStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstElseIfStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTElseIfStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTElseIfStatement'
         );
     }
 }

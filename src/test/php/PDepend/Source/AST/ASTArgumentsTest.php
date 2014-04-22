@@ -66,11 +66,11 @@ class ASTArgumentsTest extends \PDepend\Source\AST\ASTNodeTest
         $this->assertGraph(
             $arguments,
             array(
-                \PDepend\Source\AST\ASTConstant::CLAZZ         . ' (__CLASS__)',
-                \PDepend\Source\AST\ASTLiteral::CLAZZ          . ' ("run")',
-                \PDepend\Source\AST\ASTArray::CLAZZ            . ' ()', array(
-                    \PDepend\Source\AST\ASTArrayElement::CLAZZ . ' ()', array(
-                        \PDepend\Source\AST\ASTVariable::CLAZZ . ' ($count)'))
+                'PDepend\\Source\\AST\\ASTConstant'         . ' (__CLASS__)',
+                'PDepend\\Source\\AST\\ASTLiteral'          . ' ("run")',
+                'PDepend\\Source\\AST\\ASTArray'            . ' ()', array(
+                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', array(
+                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)'))
             )
         );
     }
@@ -128,7 +128,7 @@ class ASTArgumentsTest extends \PDepend\Source\AST\ASTNodeTest
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            \PDepend\Source\AST\ASTArguments::CLAZZ
+            'PDepend\\Source\\AST\\ASTArguments'
         );
     }
 }

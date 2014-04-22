@@ -53,13 +53,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTInterface extends AbstractASTClassOrInterface
 {
     /**
-     * The type of this class.
-     *
-     * @since 0.10.0
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The modifiers for this interface instance, by default an interface is
      * always abstract.
      *

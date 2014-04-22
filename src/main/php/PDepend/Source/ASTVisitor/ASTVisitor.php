@@ -61,11 +61,6 @@ use PDepend\Source\AST\ASTTrait;
 interface ASTVisitor
 {
     /**
-     * The type of this interface
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Adds a new listener to this node visitor.
      * @param \PDepend\Source\ASTVisitor\ASTVisitListener $listener
      * @return void

@@ -73,7 +73,7 @@ class ASTDoWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(0));
     }
     
     /**
@@ -84,7 +84,7 @@ class ASTDoWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSecondChildOfDoWhileStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(1));
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTDoWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testDoWhileStatementWithoutScopeStatementChild()
     {
         $stmt = $this->_getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTIfStatement::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIfStatement', $stmt->getChild(0));
     }
 
     /**
@@ -152,7 +152,8 @@ class ASTDoWhileStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstDoWhileStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTDoWhileStatement::CLAZZ
+            $testCase,
+            'PDepend\\Source\\AST\\ASTDoWhileStatement'
         );
     }
 }

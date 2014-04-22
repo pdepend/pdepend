@@ -57,11 +57,6 @@ use PDepend\Source\AST\ASTArtifactList;
 class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
     /**
-     * Type of this analyzer class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Metrics provided by the analyzer implementation.
      */
     const M_LCOM4  = 'lcom4';
@@ -128,7 +123,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         $this->fireStartMethod($method);
 
         $prefixes = $method->findChildrenOfType(
-            \PDepend\Source\AST\ASTMemberPrimaryPrefix::CLAZZ
+            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'
         );
         foreach ($prefixes as $prefix) {
             $variable = $prefix->getChild(0);

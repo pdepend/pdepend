@@ -61,11 +61,6 @@ use PDepend\Util\ImageConvert;
 class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * The output file name.
      *
      * @var string

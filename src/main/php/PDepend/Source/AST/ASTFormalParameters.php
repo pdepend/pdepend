@@ -72,11 +72,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTFormalParameters extends ASTNode
 {
     /**
-     * The image type of this node.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

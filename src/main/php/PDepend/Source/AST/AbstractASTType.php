@@ -313,7 +313,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         $methods = array();
 
         $uses = $this->findChildrenOfType(
-            \PDepend\Source\AST\ASTTraitUseStatement::CLAZZ
+            'PDepend\\Source\\AST\\ASTTraitUseStatement'
         );
 
         foreach ($uses as $use) {

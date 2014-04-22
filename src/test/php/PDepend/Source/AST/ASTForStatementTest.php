@@ -150,7 +150,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFirstChildOfForStatementIsInstanceOfForInit()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTForInit::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForInit', $stmt->getChild(0));
     }
 
     /**
@@ -161,7 +161,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFirstChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $stmt->getChild(0));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
 
 
@@ -183,7 +183,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSecondChildOfForStatementIsInstanceOfExpression()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTExpression::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(1));
     }
 
     /**
@@ -194,7 +194,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testSecondChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTForUpdate::CLAZZ, $stmt->getChild(1));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForUpdate', $stmt->getChild(1));
     }
 
     /**
@@ -205,7 +205,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testThirdChildOfForStatementIsInstanceOfForUpdate()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTForUpdate::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForUpdate', $stmt->getChild(2));
     }
 
     /**
@@ -216,7 +216,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testThirdChildOfForStatementCanBeLeftBlank()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(2));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
     }
 
     /**
@@ -227,7 +227,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTScopeStatement::CLAZZ, $stmt->getChild(3));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(3));
     }
 
     /**
@@ -238,7 +238,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     public function testFourthChildOfForStatementIsInstanceOfStatement()
     {
         $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(\PDepend\Source\AST\ASTStatement::CLAZZ, $stmt->getChild(3));
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStatement', $stmt->getChild(3));
     }
 
     /**
@@ -381,7 +381,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstForStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, \PDepend\Source\AST\ASTForStatement::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTForStatement'
         );
     }
 
@@ -395,7 +395,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstForStatementInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, \PDepend\Source\AST\ASTForStatement::CLAZZ
+            $testCase, 'PDepend\\Source\\AST\\ASTForStatement'
         );
     }
 }
