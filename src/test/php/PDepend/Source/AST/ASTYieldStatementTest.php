@@ -123,6 +123,109 @@ class ASTYieldStatementTest extends \PDepend\Source\AST\ASTNodeTest
     }
 
     /**
+     * testYieldKeyValue
+     *
+     * @return \PDepend\Source\AST\ASTExpression[]
+     */
+    public function testYieldKeyValue()
+    {
+        $stmt = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $nodes = $stmt->getChildren();
+
+        $this->assertEquals(2, count($nodes));
+
+        return $nodes;
+    }
+
+    /**
+     * testYieldKeyValueChildNodes
+     *
+     * @param \PDepend\Source\AST\ASTExpression[] $nodes
+     * @return void
+     * @depends testYieldKeyValue
+     */
+    public function testYieldKeyValueChildNodes(array $nodes)
+    {
+        $this->assertEquals('$id', $nodes[0]->getImage());
+        $this->assertEquals('$line', $nodes[1]->getImage());
+    }
+
+    /**
+     * testYieldValueAssignmentSimple
+     *
+     * @return \PDepend\Source\AST\ASTYieldStatement
+     */
+    public function testYieldValueAssignmentSimple()
+    {
+        $yield = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $nodes = $yield->getChildren();
+
+        $this->assertEquals(1, count($nodes));
+
+        return $yield;
+    }
+
+    /**
+     * testYieldValueAssignmentSimpleParent
+     *
+     * @param \PDepend\Source\AST\ASTStatement $yield
+     * @return void
+     * @depends testYieldValueAssignmentSimple
+     */
+    public function testYieldValueAssignmentSimpleParent(ASTStatement $yield)
+    {
+        $this->assertInstanceOf(
+            'PDepend\\Source\\AST\\ASTAssignmentExpression',
+            $yield->getParent()->getParent()
+        );
+    }
+
+    /**
+     * testYieldValueAssignmentKeyValue
+     *
+     * @return \PDepend\Source\AST\ASTYieldStatement
+     */
+    public function testYieldValueAssignmentKeyValue()
+    {
+        $yield = $this->_getFirstYieldStatementInFunction(__METHOD__);
+        $nodes = $yield->getChildren();
+
+        $this->assertEquals(2, count($nodes));
+
+        return $yield;
+    }
+
+    /**
+     * testYieldValueAssignmentKeyValueParent
+     *
+     * @param \PDepend\Source\AST\ASTYieldStatement $yield
+     * @return void
+     * @depends testYieldValueAssignmentKeyValue
+     */
+    public function testYieldValueAssignmentKeyValueParent(ASTYieldStatement $yield)
+    {
+        $this->assertInstanceOf(
+            'PDepend\\Source\\AST\\ASTAssignmentExpression',
+            $yield->getParent()->getParent()->getParent()
+        );
+    }
+
+    /**
+     * testYieldValueAssignmentKeyValueChildren
+     *
+     * @param \PDepend\Source\AST\ASTYieldStatement $yield
+     * @return void
+     * @depends testYieldValueAssignmentKeyValue
+     */
+    public function testYieldValueAssignmentKeyValueChildren(ASTYieldStatement $yield)
+    {
+        $nodes = $yield->getChildren();
+
+        $this->assertEquals('"key"', $nodes[0]->getImage());
+        $this->assertEquals('2', $nodes[1]->getImage());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.

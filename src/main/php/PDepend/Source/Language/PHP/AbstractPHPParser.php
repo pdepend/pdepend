@@ -2761,6 +2761,10 @@ abstract class AbstractPHPParser
                     $expressions[] = $expr;
                     break;
 
+                case Tokens::T_YIELD:
+                    $expressions[] = $this->parseYield();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(
                         $this->consumeToken($tokenType),
@@ -6552,6 +6556,11 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_DOUBLE_ARROW);
 
             $yield->addChild($this->parseOptionalExpression());
+        }
+
+        $this->consumeComments();
+        if (Tokens::T_PARENTHESIS_CLOSE === $this->tokenizer->peek()) {
+            return $this->setNodePositionsAndReturn($yield);
         }
 
         $this->parseStatementTermination();
