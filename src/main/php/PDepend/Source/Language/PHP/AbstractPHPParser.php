@@ -6616,6 +6616,7 @@ abstract class AbstractPHPParser
         } elseif ($token->type == $tokenType) {
             return $this->tokenStack->add($token);
         }
+
         throw new UnexpectedTokenException(
             $token,
             $this->tokenizer->getSourceFile()
