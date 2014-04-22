@@ -187,6 +187,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_PAAMAYIM_NEKUDOTAYIM      =>  Tokens::T_DOUBLE_COLON,
         T_ENCAPSED_AND_WHITESPACE   =>  Tokens::T_ENCAPSED_AND_WHITESPACE,
         T_CONSTANT_ENCAPSED_STRING  =>  Tokens::T_CONSTANT_ENCAPSED_STRING,
+        T_YIELD                     =>  Tokens::T_YIELD,
         //T_DOLLAR_OPEN_CURLY_BRACES  =>  Tokens::T_CURLY_BRACE_OPEN,
     );
 

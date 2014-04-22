@@ -106,6 +106,13 @@ if (!defined('T_CALLABLE')) {
 }
 
 /**
+ * Define PHP 5.5's 'T_YIELD' token constant
+ */
+if (!defined('T_YIELD')) {
+    define('T_YIELD', 267);
+}
+
+/**
  * Base interface for all php code tokenizers.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.

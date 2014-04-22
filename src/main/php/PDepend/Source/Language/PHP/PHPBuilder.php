@@ -1750,6 +1750,19 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new yield-statement instance.
+     *
+     * @param string $image The source code image for this node.
+     *
+     * @return \PDepend\Source\AST\ASTYieldStatement
+     * @since $version$
+     */
+    public function buildAstYieldStatement($image)
+    {
+        return $this->buildAstNodeInstance('ASTYieldStatement', $image);
+    }
+
+    /**
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
