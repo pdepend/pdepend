@@ -12,7 +12,7 @@
         <release version="2.0.0"
                  date=""
                  description="">
-            <action date="2e0df36" dev="manuelpichler" type="fix" issue="144" system="github">
+            <action date="f6acea9" dev="manuelpichler" type="fix" issue="144" system="github">
                 pdepend --version gives me a wrong message..
             </action>
             <action date="3ba9c9e" dev="robocoder" type="add" issue="113" system="github">
