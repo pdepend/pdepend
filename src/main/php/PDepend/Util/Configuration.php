@@ -54,7 +54,7 @@ class Configuration
     /**
      * Simple object tree holding the concrete configuration values.
      *
-     * @var stdClass
+     * @var \stdClass
      * @since 0.10.0
      */
     protected $settings = null;

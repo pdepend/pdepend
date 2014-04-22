@@ -59,7 +59,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @var array(Extension)
      */
-    private $extension = array();
+    private $extensions = array();
 
     public function __construct(array $extensions)
     {
