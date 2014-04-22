@@ -385,7 +385,20 @@ class Command
      */
     protected function printVersion()
     {
-        echo 'PDepend @package_version@', PHP_EOL, PHP_EOL;
+        $composer = __DIR__ . '/../../../../../composer.json';
+        $build = __DIR__ . '/../../../../../build.xml';
+
+        if (file_exists($composer)) {
+            $data = json_decode(file_get_contents($composer));
+            $version = $data->version;
+        } else if (file_exists($build)) {
+            $data = @parse_ini_file($build);
+            $version = $data['project.version'];
+        } else {
+            $version = '@package_version@';
+        }
+
+        echo 'PDepend ', $version, PHP_EOL, PHP_EOL;
     }
 
     /**
