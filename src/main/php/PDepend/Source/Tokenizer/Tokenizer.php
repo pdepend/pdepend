@@ -113,6 +113,13 @@ if (!defined('T_YIELD')) {
 }
 
 /**
+ * Define PHP 5,5's 'T_FINALLY' token constant
+ */
+if (!defined('T_FINALLY')) {
+    define('T_FINALLY', 42010);
+}
+
+/**
  * Base interface for all php code tokenizers.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.

@@ -188,6 +188,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_ENCAPSED_AND_WHITESPACE   =>  Tokens::T_ENCAPSED_AND_WHITESPACE,
         T_CONSTANT_ENCAPSED_STRING  =>  Tokens::T_CONSTANT_ENCAPSED_STRING,
         T_YIELD                     =>  Tokens::T_YIELD,
+        T_FINALLY                   =>  Tokens::T_FINALLY,
         //T_DOLLAR_OPEN_CURLY_BRACES  =>  Tokens::T_CURLY_BRACE_OPEN,
     );
 
@@ -236,6 +237,7 @@ class PHPTokenizerInternal implements Tokenizer
         'trait'          =>  Tokens::T_TRAIT,
         'yield'          =>  Tokens::T_YIELD,
         'parent'         =>  Tokens::T_PARENT,
+        'finally'        =>  Tokens::T_FINALLY,
         'insteadof'      =>  Tokens::T_INSTEADOF,
         'namespace'      =>  Tokens::T_NAMESPACE,
         '__dir__'        =>  Tokens::T_DIR,
@@ -300,6 +302,7 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,
+            Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
         Tokens::T_NAMESPACE => array(
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
@@ -338,6 +341,12 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
         Tokens::T_INSTEADOF => array(
+            Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
+            Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
+            Tokens::T_CONST            =>  Tokens::T_STRING,
+            Tokens::T_FUNCTION         =>  Tokens::T_STRING,
+        ),
+        Tokens::T_FINALLY => array(
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,

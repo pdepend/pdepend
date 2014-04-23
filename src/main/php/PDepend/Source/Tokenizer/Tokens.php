@@ -846,6 +846,11 @@ interface Tokens
     const T_YIELD = 159;
 
     /**
+     * Token that represents the 'finally' keyword.
+     */
+    const T_FINALLY = 160;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;
