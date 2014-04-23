@@ -72,7 +72,6 @@ class PHPParserGeneric extends AbstractPHPParser
         switch ($tokenType) {
             case Tokens::T_CLASS:
             case Tokens::T_INTERFACE:
-            case Tokens::T_FUNCTION:
                 return true;
         }
         return false;

@@ -71,7 +71,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 
         $exceptions = $pdepend->getExceptions();
         $this->assertStringStartsWith(
-            'Unexpected token: function, line: 7, col: 41, file:',
+            'Unexpected token: ), line: 7, col: 49, file:',
             $exceptions[0]->getMessage()
         );
     }
@@ -149,7 +149,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
         );
         list($exitCode, $output) = $this->runTextUICommand();
 
-        $this->assertContains('Unexpected token: function, line: 7, col: 41, file:', $output);
+        $this->assertContains('Unexpected token: ), line: 7, col: 49, file:', $output);
     }
 
     /**
