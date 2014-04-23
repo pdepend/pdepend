@@ -77,7 +77,10 @@ use PDepend\Source\Tokenizer\Tokens;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class NodeLocAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerFilterAware, AnalyzerProjectAware
+class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
+    AnalyzerNodeAware,
+    AnalyzerFilterAware,
+    AnalyzerProjectAware
 {
     /**
      * Metrics provided by the analyzer implementation.

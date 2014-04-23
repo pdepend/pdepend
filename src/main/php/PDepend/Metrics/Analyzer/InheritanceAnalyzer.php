@@ -63,7 +63,10 @@ use PDepend\Source\AST\ASTClass;
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class InheritanceAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerFilterAware, AnalyzerProjectAware
+class InheritanceAnalyzer extends AbstractAnalyzer implements
+    AnalyzerNodeAware,
+    AnalyzerFilterAware,
+    AnalyzerProjectAware
 {
     /**
      * Metrics provided by the analyzer implementation.

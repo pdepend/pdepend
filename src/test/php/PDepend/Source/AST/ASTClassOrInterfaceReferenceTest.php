@@ -54,8 +54,7 @@ use PDepend\Source\Builder\BuilderContext;
  * @covers \PDepend\Source\AST\ASTClassOrInterfaceReference
  * @group unittest
  */
-class ASTClassOrInterfaceReferenceTest
-    extends \PDepend\Source\AST\ASTNodeTest
+class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
 {
     /**
      * testReturnValueOfMagicSleepContainsContextProperty
@@ -64,9 +63,11 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReturnValueOfMagicSleepContainsContextProperty()
     {
-        $reference = new \PDepend\Source\AST\ASTClassOrInterfaceReference(
-            $this->getBuilderContextMock(), __CLASS__
+        $reference = new ASTClassOrInterfaceReference(
+            $this->getBuilderContextMock(),
+            __CLASS__
         );
+
         $this->assertEquals(
             array(
                 'context',
@@ -91,8 +92,9 @@ class ASTClassOrInterfaceReferenceTest
             ->with($this->equalTo(__CLASS__))
             ->will($this->returnValue($this));
 
-        $reference = new \PDepend\Source\AST\ASTClassOrInterfaceReference(
-            $context, __CLASS__
+        $reference = new ASTClassOrInterfaceReference(
+            $context,
+            __CLASS__
         );
 
         $reference->getType();
@@ -111,8 +113,9 @@ class ASTClassOrInterfaceReferenceTest
             ->with($this->equalTo(__CLASS__))
             ->will($this->returnValue($this));
 
-        $reference = new \PDepend\Source\AST\ASTClassOrInterfaceReference(
-            $context, __CLASS__
+        $reference = new ASTClassOrInterfaceReference(
+            $context,
+            __CLASS__
         );
 
         $reference->getType();
@@ -125,7 +128,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceHasExpectedStartLine()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(2, $reference->getStartLine());
     }
 
@@ -136,7 +139,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceHasExpectedStartColumn()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(14, $reference->getStartColumn());
     }
 
@@ -147,7 +150,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceHasExpectedEndLine()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(2, $reference->getEndLine());
     }
 
@@ -158,7 +161,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceHasExpectedEndColumn()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(29, $reference->getEndColumn());
     }
 
@@ -218,7 +221,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceInClassImplementsHasExpectedStartLine()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(2, $reference->getStartLine());
     }
 
@@ -230,7 +233,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceInClassImplementsHasExpectedStartColumn()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(68, $reference->getStartColumn());
     }
 
@@ -242,7 +245,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceInClassImplementsHasExpectedEndLine()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(2, $reference->getEndLine());
     }
 
@@ -254,7 +257,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     public function testReferenceInClassImplementsHasExpectedEndColumn()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(68, $reference->getEndColumn());
     }
 
@@ -265,10 +268,11 @@ class ASTClassOrInterfaceReferenceTest
      *
      * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
      */
-    private function _getFirstReferenceInFunction($testCase)
+    private function getFirstReferenceInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }
 
@@ -278,7 +282,7 @@ class ASTClassOrInterfaceReferenceTest
      * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
      * @since 0.10.5
      */
-    private function _getFirstReferenceInClass()
+    private function getFirstReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             self::getCallingTestMethod(),
@@ -307,7 +311,7 @@ class ASTClassOrInterfaceReferenceTest
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTClassOrInterfaceReference(
+        return new ASTClassOrInterfaceReference(
             $this->getBuilderContextMock(),
             __CLASS__
         );

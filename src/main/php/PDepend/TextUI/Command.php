@@ -391,7 +391,7 @@ class Command
         if (file_exists($composer)) {
             $data = json_decode(file_get_contents($composer));
             $version = $data->version;
-        } else if (file_exists($build)) {
+        } elseif (file_exists($build)) {
             $data = @parse_ini_file($build);
             $version = $data['project.version'];
         } else {
