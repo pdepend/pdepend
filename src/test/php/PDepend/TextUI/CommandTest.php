@@ -44,6 +44,7 @@ namespace PDepend\TextUI;
 
 use PDepend\AbstractTest;
 use PDepend\Util\ConfigurationInstance;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Test case for the text ui command.
@@ -61,7 +62,7 @@ class CommandTest extends AbstractTest
      *
      * @var string
      */
-    private $versionOutput = "PDepend @package_version@\n\n";
+    private $versionOutput;
 
     /**
      * Expected output of the --usage option.
@@ -69,6 +70,15 @@ class CommandTest extends AbstractTest
      * @var string
      */
     private $usageOutput = "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $data = json_decode(file_get_contents(__DIR__ . '/../../../../../composer.json'));
+
+        $this->versionOutput = sprintf("PDepend %s\n\n", $data->version);
+    }
 
     /**
      * Tests the result of the print version option.
