@@ -14,9 +14,7 @@
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/main/php/PHP</directory>
-            <!--
-                Exclude some interfaces that are marked as uncovered.
-            -->
+
             <exclude>
                 <!-- Exclude this exotic result printer -->
                 <file>src/main/php/PDepend/DbusUI/ResultPrinter.php</file>
