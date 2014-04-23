@@ -12,7 +12,7 @@
         <release version="2.0.0"
                  date=""
                  description="">
-            <action date="" dev="manuelpichler" due-to="claar" type="fix" issue="126" system="github">
+            <action date="b9775ac" dev="manuelpichler" due-to="claar" type="fix" issue="126" system="github">
                 Allow closure as array element
             </action>
             <action date="e536e7a" dev="manuelpichler" due-to="hgraca" type="fix" issue="153" system="github">
