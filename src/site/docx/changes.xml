@@ -12,6 +12,9 @@
         <release version="2.0.0"
                  date=""
                  description="">
+            <action date="e536e7a" dev="manuelpichler" due-to="hgraca" type="fix" issue="153" system="github">
+                Support for new finally keyword implemented.
+            </action>
             <action date="f6acea9" dev="manuelpichler" type="fix" issue="144" system="github">
                 pdepend --version gives me a wrong message..
             </action>
