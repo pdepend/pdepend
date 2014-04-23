@@ -1068,14 +1068,24 @@ class PHPBuilder implements Builder
     /**
      * Builds a new catch-statement node.
      *
-     * @param string $image The source image of this statement.
-     *
+     * @param string $image
      * @return \PDepend\Source\AST\ASTCatchStatement
      * @since 0.9.8
      */
     public function buildAstCatchStatement($image)
     {
         return $this->buildAstNodeInstance('ASTCatchStatement', $image);
+    }
+
+    /**
+     * Builds a new finally-statement node.
+     *
+     * @return \PDepend\Source\AST\ASTFinallyStatement
+     * @since 2.0.0
+     */
+    public function buildAstFinallyStatement()
+    {
+        return $this->buildAstNodeInstance('ASTFinallyStatement', 'finally');
     }
 
     /**

@@ -3037,10 +3037,24 @@ abstract class AbstractPHPParser
         $stmt = $this->builder->buildAstTryStatement($token->image);
         $stmt->addChild($this->parseRegularScope());
 
-        do {
+        $this->consumeComments();
+
+        if (false === in_array($this->tokenizer->peek(), array(Tokens::T_CATCH, Tokens::T_FINALLY))) {
+            throw new UnexpectedTokenException(
+                $this->tokenizer->next(),
+                $this->tokenizer->getSourceFile()
+            );
+        }
+
+        while ($this->tokenizer->peek() === Tokens::T_CATCH) {
             $stmt->addChild($this->parseCatchStatement());
             $this->consumeComments();
-        } while ($this->tokenizer->peek() === Tokens::T_CATCH);
+        }
+
+        while ($this->tokenizer->peek() === Tokens::T_FINALLY) {
+            $stmt->addChild($this->parseFinallyStatement());
+            $this->consumeComments();
+        }
 
         return $this->setNodePositionsAndReturn($stmt);
     }
@@ -3180,6 +3194,25 @@ abstract class AbstractPHPParser
         $catch->addChild($this->parseRegularScope());
 
         return $this->setNodePositionsAndReturn($catch);
+    }
+
+    /**
+     * This method parses a finally-statement.
+     *
+     * @return \PDepend\Source\AST\ASTFinallyStatement
+     * @since 2.0.0
+     */
+    private function parseFinallyStatement()
+    {
+        $this->tokenStack->push();
+        $this->consumeComments();
+
+        $token = $this->consumeToken(Tokens::T_FINALLY);
+
+        $finally = $this->builder->buildAstFinallyStatement($token->image);
+        $finally->addChild($this->parseRegularScope());
+
+        return $this->setNodePositionsAndReturn($finally);
     }
 
     /**

@@ -1355,6 +1355,19 @@ class PHPBuilderTest extends AbstractTest
     }
 
     /**
+     * testBuildASTFinallyStatementReturnsExpectedType
+     *
+     * @return void
+     */
+    public function testBuildASTFinallyStatementReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            'PDepend\\Source\\AST\\ASTFinallyStatement',
+            $this->createBuilder()->buildAstFinallyStatement()
+        );
+    }
+
+    /**
      * testBuildASTDeclareStatementReturnsExpectedType
      *
      * @return void

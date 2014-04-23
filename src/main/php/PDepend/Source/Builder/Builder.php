@@ -631,6 +631,14 @@ interface Builder extends \IteratorAggregate
     public function buildAstCatchStatement($image);
 
     /**
+     * Builds a new finally-statement node.
+     *
+     * @return \PDepend\Source\AST\ASTFinallyStatement
+     * @since 2.0.0
+     */
+    public function buildAstFinallyStatement();
+
+    /**
      * Builds a new if statement node.
      *
      * @param string $image The source image of this statement.
