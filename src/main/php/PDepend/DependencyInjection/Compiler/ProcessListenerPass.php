@@ -63,7 +63,7 @@ class ProcessListenerPass implements CompilerPassInterface
         $processListenerTags = $container->findTaggedServiceIds('pdepend.process_listener');
 
         foreach ($processListenerTags as $id => $tags) {
-            $engineDefinition->addMethodCall('addProcessListener', new Reference($id));
+            $engineDefinition->addMethodCall('addProcessListener', array(new Reference($id)));
         }
     }
 }
