@@ -130,6 +130,10 @@ class Command
         if (isset($this->options['--configuration'])) {
             $configurationFile = $this->options['--configuration'];
 
+            if (false === file_exists($configurationFile)) {
+                $configurationFile = getcwd() . '/' . $configurationFile;
+            }
+
             unset($this->options['--configuration']);
         } elseif (file_exists(getcwd() . '/pdepend.xml')) {
             $configurationFile = getcwd() . '/pdepend.xml';
