@@ -178,7 +178,7 @@ class CloverReportTest extends AbstractTest
     {
         $file = $this->getMock('\\PDepend\\Source\\AST\\ASTCompilationUnit', array(), array(null));
         $file->expects($this->any())
-            ->method('__toString')
+            ->method('getFileName')
             ->will($this->returnValue('/' . $name . '.php'));
 
         $method = $this->getMock('\\PDepend\\Source\\AST\\ASTMethod', array(), array($name));
