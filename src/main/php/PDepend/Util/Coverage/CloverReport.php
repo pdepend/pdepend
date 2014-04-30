@@ -109,7 +109,7 @@ class CloverReport implements Report
      */
     public function getCoverage(AbstractASTArtifact $artifact)
     {
-        $lines = $this->getLines((string) $artifact->getCompilationUnit());
+        $lines = $this->getLines($artifact->getCompilationUnit()->getFileName());
 
         $startLine = $artifact->getStartLine();
         $endLine   = $artifact->getEndLine();
