@@ -10,8 +10,8 @@
 
 	<body>
         <release version="2.0.0"
-                 date=""
-                 description="">
+                 date="2014/05/21"
+                 description="New mayor release of PDepend.">
             <action date="b9775ac" dev="manuelpichler" due-to="claar" type="fix" issue="126" system="github">
                 Allow closure as array element
             </action>
