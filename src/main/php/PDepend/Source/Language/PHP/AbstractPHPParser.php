@@ -6583,12 +6583,15 @@ abstract class AbstractPHPParser
 
         $yield = $this->builder->buildAstYieldStatement($token->image);
 
-        $yield->addChild($this->parseOptionalExpression());
+        $node = $this->parseOptionalExpression();
+        if ($node) {
+            $yield->addChild($node);
 
-        if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
-            $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+            if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+                $this->consumeToken(Tokens::T_DOUBLE_ARROW);
 
-            $yield->addChild($this->parseOptionalExpression());
+                $yield->addChild($this->parseOptionalExpression());
+            }
         }
 
         $this->consumeComments();
