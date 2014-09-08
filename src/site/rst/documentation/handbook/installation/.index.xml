@@ -4,10 +4,12 @@
         <name>Installation</name>
         <path>index.rst</path>
     </site>
+<!-- @TODO
     <site>
-        <name>The PEAR Installer</name>
-        <path>pear-installer.rst</path>
+        <name>Composer</name>
+        <path>composer.rst</path>
     </site>
+-->
     <site>
         <name>The Phar Archive</name>
         <path>phar-archive.rst</path>

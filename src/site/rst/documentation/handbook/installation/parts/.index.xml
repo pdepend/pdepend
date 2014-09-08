@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <index>
-    <site display="false">
-        <name>Installing with PEAR</name>
-        <path>pear.rst</path>
-    </site>
 </index>
 

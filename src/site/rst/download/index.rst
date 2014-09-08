@@ -17,11 +17,6 @@ The PHAR archive
 
 .. include:: ../documentation/handbook/installation/parts/phar-abstract.rst
 
-PEAR Installer
-==============
-
-.. include:: ../documentation/handbook/installation/parts/pear-abstract.rst
-
 Releases
 ========
 

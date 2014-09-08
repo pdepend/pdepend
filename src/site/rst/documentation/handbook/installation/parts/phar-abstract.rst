@@ -1,4 +1,4 @@
-Beside the PEAR repository and the developer checkout from GitHub, you can
+Beside the GitHub releases and the developer checkout from GitHub, you can
 always grep the latest version of PHP_Depend from this website as a simple,
 single PHAR archive.
 

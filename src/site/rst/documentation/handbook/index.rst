@@ -5,7 +5,6 @@ PHP_Depend Handbook
 - `Introduction`__
 - `Installation`__
 
-  - `PEAR Installer`__
   - `PHAR Archive`__
   - `GitHub Repository`__
 
@@ -18,7 +17,6 @@ PHP_Depend Handbook
 
 __ /documentation/handbook/introduction.html
 __ /documentation/handbook/installation.html
-__ /documentation/handbook/installation/pear-installer.html
 __ /documentation/handbook/installation/phar-archive.html
 __ /documentation/handbook/installation/github-repository.html
 __ /documentation/handbook/command-line.html

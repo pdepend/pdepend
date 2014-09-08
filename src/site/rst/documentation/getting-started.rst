@@ -8,7 +8,7 @@ software analyzer and metric tool.
 Installation
 ============
 
-.. include:: handbook/installation/parts/pear.rst
+.. include:: handbook/installation/phar-archive.rst
 
 Usage
 =====

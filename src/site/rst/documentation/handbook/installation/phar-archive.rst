@@ -7,11 +7,11 @@ The Phar Archive
 
 .. class:: prev
 
-`PEAR Installer`__
+`Installation`__
 
 .. class:: next
 
 `GitHub Repository`__
 
-__ /documentation/handbook/installation/pear-installer.html
+__ /documentation/handbook/installation/index.rst
 __ /documentation/handbook/installation/github-repository.html
