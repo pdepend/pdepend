@@ -146,4 +146,14 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     {
         return true;
     }
+
+    /**
+     * Set global options
+     *
+     * @param array(string=>mixed) $options
+     * @since 2.0.1
+     */
+    public function setOptions(array $options = array())
+    {
+    }
 }

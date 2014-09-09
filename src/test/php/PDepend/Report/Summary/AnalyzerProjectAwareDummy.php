@@ -122,4 +122,14 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
         return $this->projectMetrics;
     }
 
+    /**
+     * Set global options
+     *
+     * @param array(string=>mixed) $options
+     * @since 2.0.1
+     */
+    public function setOptions(array $options = array())
+    {
+    }
+
 }
