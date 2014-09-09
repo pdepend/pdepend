@@ -63,7 +63,7 @@ class CloverReportTest extends AbstractTest
     public function testReportReturnsExpected0PercentCoverage()
     {
         $report   = $this->_createCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
     }
@@ -76,7 +76,7 @@ class CloverReportTest extends AbstractTest
     public function testReportReturnsExpected50PercentCoverage()
     {
         $report   = $this->_createCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(50, $coverage);
     }
@@ -89,9 +89,35 @@ class CloverReportTest extends AbstractTest
     public function testReportReturnsExpected100PercentCoverage()
     {
         $report   = $this->_createCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(100, $coverage);
+    }
+
+    /**
+     * testReportReturnsExpected100PercentCoverageWithCoverageIgnore
+     *
+     * @return void
+     */
+    public function testReportReturnsExpected100PercentCoverageWithCoverageIgnore()
+    {
+        $report   = $this->_createCloverReport();
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
+
+        $this->assertEquals(100, $coverage);
+    }
+
+    /**
+     * testReportReturnsExpected0PercentCoverageForOneLineMethod
+     *
+     * @return void
+     */
+    public function testReportReturnsExpected0PercentCoverageForOneLineMethod()
+    {
+        $report   = $this->_createCloverReport();
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
+
+        $this->assertEquals(0, $coverage);
     }
 
     /**
@@ -102,7 +128,7 @@ class CloverReportTest extends AbstractTest
     public function testNamespacedReportReturnsExpected0PercentCoverage()
     {
         $report   = $this->_createNamespacedCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
     }
@@ -115,7 +141,7 @@ class CloverReportTest extends AbstractTest
     public function testNamespacedReportReturnsExpected50PercentCoverage()
     {
         $report   = $this->_createNamespacedCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(50, $coverage);
     }
@@ -128,7 +154,7 @@ class CloverReportTest extends AbstractTest
     public function testNamespacedReportReturnsExpected100PercentCoverage()
     {
         $report   = $this->_createNamespacedCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(100, $coverage);
     }
@@ -141,7 +167,7 @@ class CloverReportTest extends AbstractTest
     public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists()
     {
         $report   = $this->_createCloverReport();
-        $coverage = $report->getCoverage($this->_createMethodMock(__FUNCTION__));
+        $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
     }
@@ -172,9 +198,11 @@ class CloverReportTest extends AbstractTest
      * Creates a mocked method instance.
      *
      * @param string $name Name of the mock method.
+     * @param int $startLine
+     * @param int $endLine
      * @return \PDepend\Source\AST\ASTMethod
      */
-    private function _createMethodMock($name)
+    private function createMethodMock($name, $startLine = 1, $endLine = 4)
     {
         $file = $this->getMock('\\PDepend\\Source\\AST\\ASTCompilationUnit', array(), array(null));
         $file->expects($this->any())
@@ -187,10 +215,10 @@ class CloverReportTest extends AbstractTest
             ->will($this->returnValue($file));
         $method->expects($this->once())
             ->method('getStartLine')
-            ->will($this->returnValue(1));
+            ->will($this->returnValue($startLine));
         $method->expects($this->once())
             ->method('getEndLine')
-            ->will($this->returnValue(4));
+            ->will($this->returnValue($endLine));
 
         return $method;
     }

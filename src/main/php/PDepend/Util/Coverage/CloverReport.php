@@ -125,6 +125,10 @@ class CloverReport implements Report
                 ++$executed;
             }
         }
+
+        if (0 === $executed && 1 === $executable && 0 < ($endLine - $startLine)) {
+            return 100;
+        }
         if ($executed === 0) {
             return 0;
         }
