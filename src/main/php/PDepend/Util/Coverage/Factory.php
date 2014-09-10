@@ -64,8 +64,6 @@ class Factory
     {
         $sxml = $this->loadXml($pathName);
         if ($sxml->project) {
-            include_once 'PDepend/Util/Coverage/CloverReport.php';
-
             return new CloverReport($sxml);
         }
         throw new \RuntimeException('Unsupported coverage report format.');
