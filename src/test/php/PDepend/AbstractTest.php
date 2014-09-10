@@ -85,7 +85,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $run = dirname(__FILE__) . '/_run';
+        $run = __DIR__ . '/_run';
         if (file_exists($run) === false) {
             mkdir($run, 0755);
         }
@@ -448,7 +448,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     private function clearRunResources($dir = null)
     {
         if ($dir === null) {
-            $dir = dirname(__FILE__) . '/_run';
+            $dir = __DIR__ . '/_run';
         }
 
         foreach (new \DirectoryIterator($dir) as $file) {
@@ -619,7 +619,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected static function createRunResourceURI($fileName = null)
     {
-        $uri = dirname(__FILE__) . '/_run/' . ($fileName ? $fileName : uniqid());
+        $uri = __DIR__ . '/_run/' . ($fileName ? $fileName : uniqid());
         if (file_exists($uri) === true) {
             throw new \ErrorException("File '{$fileName}' already exists.");
         }
