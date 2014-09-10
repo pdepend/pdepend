@@ -93,4 +93,94 @@
             depends="pdepend:update-version"
             extensionOf="-initialize:main~hook" />
 
+    <target name="-pdepend:news:initialize:main~hooked"
+            extensionOf="-initialize:main~hook"
+            if="release">
+
+        <property name="release.news.dir" location="${basedir}/src/site/rst/news/" />
+        <property name="release.news.xml" location="${release.news.dir}/.blog.xml" />
+        <property name="release.news.rst" location="${release.news.dir}/pdepend-${project.version}-released.rst" />
+
+        <property name="release.news.resource.dir" location="${basedir}/src/site/resources/news" />
+        <property name="release.news.resource.rst" location="${release.news.resource.dir}/release.rst.in" />
+        <property name="release.news.resource.xsl" location="${release.news.resource.dir}/stylesheet.xsl" />
+
+        <tempfile property="release.news.xml.out" deleteonexit="true" />
+
+        <fail message="Cannot overwrite existing blog post '${release.news.rst}'.">
+            <condition>
+                <available file="${release.news.rst}" />
+            </condition>
+        </fail>
+
+        <xslt basedir="${release.news.dir}"
+              destdir="${release.news.dir}"
+              style="${release.news.resource.xsl}"
+              in="${release.news.xml}"
+              out="${release.news.xml.tmp}"
+              includes="${release.news.xml}">
+
+            <param name="project.version" expression="${project.version}" />
+        </xslt>
+
+        <copy file="${release.news.resource.rst}" tofile="${release.news.rst}">
+            <filterset>
+                <filter token="PROJECT_VERSION" value="${project.version}" />
+            </filterset>
+        </copy>
+
+        <move file="${release.news.xml.tmp}" tofile="${release.news.xml}" />
+
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="add" />
+            <arg line="${release.news.rst}" />
+            <arg line="${release.news.xml}" />
+        </exec>
+
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="commit" />
+            <arg line="-m" />
+            <arg line="Blog post about release ${project.version} added." />
+        </exec>
+    </target>
+
+    <target name="-pdepend:initialize:after~hooked" extensionOf="-deploy:after~hook" if="release">
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="pull" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="push" />
+            <arg line="--all" />
+        </exec>
+
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="tag" />
+            <arg line="${project.version}" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="push" />
+            <arg line="--tags" />
+        </exec>
+    </target>
+
+    <target name="-pdepend:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">
+
+        <property name="project.web.release.dir" value="${project.web.root}/static.${project.uri}/php/${project.version}" />
+
+        <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
+            <arg line="${remote.shell.credentials}" />
+            <arg line="mkdir '${project.web.release.dir}'" />
+        </exec>
+        <exec dir="${commons:builddir}" executable="scp" failonerror="true">
+            <arg line="dist/${project.name}-${project.version}.phar" />
+            <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.phar" />
+        </exec>
+        <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
+            <arg line="${remote.shell.credentials}" />
+            <arg line="cd '${project.web.release.dir}/..' ; rm latest ; ln -s '${project.version}' latest" />
+        </exec>
+
+        <antcall target="site:deploy" />
+    </target>
+
 </project>
