@@ -58,7 +58,6 @@ use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
-use PDepend\Util\Configuration\ConfigurationFactory;
 
 /**
  * Abstract test case implementation for the PDepend namespace.

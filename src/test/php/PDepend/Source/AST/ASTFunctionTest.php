@@ -171,6 +171,31 @@ class ASTFunctionTest extends AbstractASTArtifactTest
     }
 
     /**
+     * testClassReferenceForJavaStyleArrayNotation
+     *
+     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     */
+    public function testClassReferenceForJavaStyleArrayNotation()
+    {
+        $function = $this->_getFirstFunctionForTestCase();
+        $type = $function->getReturnClass();
+
+        $this->assertEquals('Sindelfingen', $type->getName());
+
+        return $type;
+    }
+
+    /**
+     * @depends testClassReferenceForJavaStyleArrayNotation
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @return void
+     */
+    public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type)
+    {
+        $this->assertEquals('Java\\Style', $type->getNamespaceName());
+    }
+
+    /**
      * testSetNamespaceNotEstablishesBackReference
      *
      * @return void

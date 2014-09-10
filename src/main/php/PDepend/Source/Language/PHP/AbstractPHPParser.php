@@ -123,6 +123,8 @@ abstract class AbstractPHPParser
                       \)
                       |
                       ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
+                      |
+                       ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*)\[\]
                     )ix';
 
     /**
@@ -137,6 +139,8 @@ abstract class AbstractPHPParser
                        \)
                        |
                        ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*))\s+
+                       |
+                       ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\|\\\\]*)\[\]\s+
                        |
                        (array)\(\s*\)\s+
                      )ix';
@@ -6505,7 +6509,6 @@ abstract class AbstractPHPParser
      * it returns the found property types.
      *
      * @param string $comment A doc comment text.
-     *
      * @return array(string)
      */
     private function parseVarAnnotation($comment)

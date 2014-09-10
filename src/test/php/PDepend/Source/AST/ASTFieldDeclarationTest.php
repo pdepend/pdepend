@@ -41,6 +41,8 @@
  */
 
 namespace PDepend\Source\AST;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTFieldDeclaration;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFieldDeclaration} class.
@@ -61,7 +63,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $declaration = $this->_getFirstFieldDeclarationInClass();
 
         $reference = $declaration->getChild(0);
         $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
@@ -90,17 +92,45 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
     }
 
     /**
+     * testClassReferenceForJavaStyleArrayNotation
+     *
+     * @return AbstractASTClassOrInterface
+     */
+    public function testClassReferenceForJavaStyleArrayNotation()
+    {
+        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $reference = $declaration->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+        );
+
+        $type = $reference->getType();
+
+        $this->assertEquals('Sindelfingen', $type->getName());
+
+        return $type;
+    }
+
+    /**
+     * @depends testClassReferenceForJavaStyleArrayNotation
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @return void
+     */
+    public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type)
+    {
+        $this->assertEquals('Java\\Style', $type->getNamespaceName());
+    }
+
+    /**
      * Tests that the field declaration <b>setModifiers()</b> method accepts all
      * valid combinations of modifiers.
      *
      * @param integer $modifiers Combinations of valid modifiers.
-     *
      * @return void
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
     {
-        $declaration = new \PDepend\Source\AST\ASTFieldDeclaration();
+        $declaration = new ASTFieldDeclaration();
         $declaration->setModifiers($modifiers);
         $this->assertEquals($modifiers, $declaration->getModifiers());
     }
@@ -116,7 +146,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
     {
-        $declaration = new \PDepend\Source\AST\ASTFieldDeclaration();
+        $declaration = new ASTFieldDeclaration();
 
         $this->setExpectedException(
             'InvalidArgumentException',
@@ -248,7 +278,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedStartLine()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $declaration = $this->_getFirstFieldDeclarationInClass();
         $this->assertEquals(4, $declaration->getStartLine());
     }
 
@@ -259,7 +289,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedStartColumn()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $declaration = $this->_getFirstFieldDeclarationInClass();
         $this->assertEquals(5, $declaration->getStartColumn());
     }
 
@@ -270,7 +300,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedEndLine()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $declaration = $this->_getFirstFieldDeclarationInClass();
         $this->assertEquals(5, $declaration->getEndLine());
     }
 
@@ -281,21 +311,20 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedEndColumn()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass(__METHOD__);
+        $declaration = $this->_getFirstFieldDeclarationInClass();
         $this->assertEquals(22, $declaration->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return \PDepend\Source\AST\ASTFieldDeclaration
+     * @return ASTFieldDeclaration
      */
-    private function _getFirstFieldDeclarationInClass($testCase)
+    private function _getFirstFieldDeclarationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, 'PDepend\\Source\\AST\\ASTFieldDeclaration'
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFieldDeclaration'
         );
     }
 
