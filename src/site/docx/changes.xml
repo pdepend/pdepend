@@ -12,14 +12,14 @@
         <release version="2.0.2"
                  date=""
                  description="">
-            <action date="" dev="manuelpichler" due-to="MalteGerth" type="fix" issue="160" system="github">
+            <action date="4dca605" dev="manuelpichler" due-to="MalteGerth" type="fix" issue="160" system="github">
                 include_once PDepend/Util/Coverage/CloverReport.php: failed to open stream
             </action>
         </release>
         <release version="2.0.1"
                  date="2014/09/09"
                  description="Bug fix release which closes a issue within PDepend's C.R.A.P. index calculation.">
-            <action date="" dev="manuelpichler" type="fix">
+            <action date="3e67aa2" dev="manuelpichler" type="fix">
                 Handle code surrounded by @codeCoverageIgnore annotations correct.
             </action>
         </release>
