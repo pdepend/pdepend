@@ -8,7 +8,7 @@ composer. Just add the following lines to your ``composer.json`` file:
   {
       "require": {
 
-          "pdepend/pdepend" : "1.1.0"
+          "pdepend/pdepend" : "@stable"
       }
   }
 
