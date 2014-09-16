@@ -140,7 +140,7 @@
         <exec executable="git" dir="${basedir}" failonerror="true">
             <arg line="commit" />
             <arg line="-m" />
-            <arg line="Blog post about release ${project.version} added." />
+            <arg line="'Blog post about release ${project.version} added.'" />
         </exec>
     </target>
 
