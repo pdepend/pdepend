@@ -286,6 +286,7 @@ class PHPTokenizerInternal implements Tokenizer
         Tokens::T_TRUE => array(
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
+            Tokens::T_NAMESPACE        =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
@@ -295,6 +296,7 @@ class PHPTokenizerInternal implements Tokenizer
         Tokens::T_FALSE => array(
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
+            Tokens::T_NAMESPACE        =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
