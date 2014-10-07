@@ -3413,13 +3413,22 @@ abstract class AbstractPHPParser
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
             $foreach->addChild($this->parseVariableOrMemberByReference());
         } else {
-            $foreach->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
+            if ($this->tokenizer->peek() == Tokens::T_LIST) {
+                $foreach->addChild($this->parseListExpression());
+            } else {
+                $foreach->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
 
-            if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
-                $this->consumeToken(Tokens::T_DOUBLE_ARROW);
-                $foreach->addChild(
-                    $this->parseVariableOrMemberOptionalByReference()
-                );
+                if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+                    $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+
+                    if ($this->tokenizer->peek() == Tokens::T_LIST) {
+                        $foreach->addChild($this->parseListExpression());
+                    } else {
+                        $foreach->addChild(
+                            $this->parseVariableOrMemberOptionalByReference()
+                        );
+                    }
+                }
             }
         }
 
