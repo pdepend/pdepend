@@ -9,8 +9,24 @@
     </properties>
 
 	<body>
+        <release version="2.0.3"
+                 date="2014/10/08"
+                 description="This is a bugfix release which closes some minor issues.">
+            <action date="64f95c1" dev="manuelpichler" type="fix" issue="129" system="github">
+                Windows+Composer install fails due to "path too long"
+            </action>
+            <action dev="manuelpichler" type="fix" issue="172" system="github">
+                Outdated news on the website
+            </action>
+            <action date="a744af1" dev="digilist" type="fix" issue="166" system="github">
+                Added support for foreach with list statement (PHP 5.5)
+            </action>
+            <action date="a744af1" dev="digilist" type="fix" issue="171" system="github">
+                The list usage in foreach loops reports an invalid token
+            </action>
+        </release>
         <release version="2.0.2"
-                 date=""
+                 date="2014/09/16"
                  description="">
             <action date="4dca605" dev="manuelpichler" due-to="MalteGerth" type="fix" issue="160" system="github">
                 include_once PDepend/Util/Coverage/CloverReport.php: failed to open stream
