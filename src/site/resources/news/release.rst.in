@@ -10,8 +10,16 @@ Version @PROJECT_VERSION@ released
 We are proud to announce version `@PROJECT_VERSION@`__ of PDepend. For more
 details visit the version release `site`__.
 
-With this release we make `composer`__ a first citizen distribution channel of
-PHP_Depend, just add PHP_Depend as a dependency to your ``composer.json`` ::
+The prefered way to install PDepend is as a `phar`__ archive:
+
+.. class:: shell
+
+::
+
+  ~ $ wget http://static.pdepend.org/php/latest/pdepend.phar
+
+or you can use `composer`__ by just adding PHP_Depend as a 
+dependency to your ``composer.json`` ::
 
   {
       "require": {
@@ -45,6 +53,7 @@ dependency.
 
 __ /download/release/@PROJECT_VERSION@/changelog.html
 __ /download/release/@PROJECT_VERSION@/changelog.html
+__ http://static.pdepend.org/php/latest/pdepend.phar
 __ http://getcomposer.org
 __ http://getcomposer.org/composer.phar
 __ http://static.pdepend.org/php/@PROJECT_VERSION@/pdepend.phar
