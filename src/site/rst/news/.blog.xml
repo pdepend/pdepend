@@ -40,14 +40,6 @@
             </categories>
         </entry>
         <entry>
-            <title>PDepend 2.0.2 released</title>
-            <path>pdepend-2.0.2-released.rst</path>
-            <categories>
-                <category>announcement</category>
-                <category>releases</category>
-            </categories>
-        </entry>
-        <entry>
             <title>PHP_Depend 1.1.1 released</title>
             <path>pdepend-1.1.1-released.rst</path>
             <categories>
