@@ -2,7 +2,6 @@
     "name": "pdepend/pdepend",
     "description": "Official version of pdepend to be handled with Composer",
     "license": "BSD-3-Clause",
-    "version": "2.0.2",
     "require": {
         "php": ">=5.3.7"
     },
