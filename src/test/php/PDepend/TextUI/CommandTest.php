@@ -75,9 +75,9 @@ class CommandTest extends AbstractTest
     {
         parent::setUp();
 
-        $data = json_decode(file_get_contents(__DIR__ . '/../../../../../composer.json'));
+        $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
 
-        $this->versionOutput = sprintf("PDepend %s\n\n", $data->version);
+        $this->versionOutput = sprintf("PDepend %s\n\n", $data['project.version']);
     }
 
     /**
