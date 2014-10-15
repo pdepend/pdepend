@@ -228,6 +228,12 @@ class FileCacheDriver implements CacheDriver
     public function remove($pattern)
     {
         $file = $this->getCacheFileWithoutExtension($pattern);
+        $files = glob("{$file}*.*");
+
+        if (false === $files) {
+            return;
+        }
+
         foreach (glob("{$file}*.*") as $f) {
             unlink($f);
         }
