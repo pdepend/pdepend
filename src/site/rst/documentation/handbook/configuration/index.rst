@@ -190,7 +190,6 @@ PHP_Depend reads both configuration files additive. This means it first
 reads the ``pdepend.xml.dist`` and overwrites the default values with those
 found in the xml file. Then it reads the ``pdepend.xml`` file and only
 overwrites those settings that were defined in this file.
-overwrites those settings that were defined in this file.
 
 History
 =======
