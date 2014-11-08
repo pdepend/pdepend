@@ -11,7 +11,7 @@
         "symfony/config": "@stable"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.*@stable",
+        "phpunit/phpunit": "4.*@stable",
         "squizlabs/php_codesniffer": "@stable"
     },
     "bin": ["src/bin/pdepend"],
@@ -19,4 +19,3 @@
         "psr-0": {"PDepend\\": "src/main/php/"}
     }
 }
-
