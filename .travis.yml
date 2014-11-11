@@ -5,6 +5,12 @@ php:
   - 5.4
   - 5.5
   - hhvm
+  - hhvm-nightly
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - php: hhvm-nightly
 
 env:
   - TEST_CONFIG="phpunit.xml.dist"
