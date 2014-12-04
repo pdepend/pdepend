@@ -45,6 +45,9 @@
                 <action date="45ab1d3" dev="Raphhh" type="fix" issue="154" system="github">
                     Invalid trait conflict errors: t is completely valid to mix traits in PHP that have the same methods declared, as long as only one of them is concrete (all the others must be abstract).
                 </action>
+                <action date="a73e6de" dev="manuelpichler" type="fix" issue="128" system="github">
+                    Problem when I use parent:: in trait
+                </action>
             </release>
         <release version="2.0.3"
                  date="2014/10/08"
