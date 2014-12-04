@@ -242,11 +242,30 @@ class ASTTraitTest extends AbstractASTArtifactTest
      * @return void
      * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
      * @expectedException \PDepend\Source\AST\ASTTraitMethodCollisionException
+     *
+     * @group issue-154
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
     {
         $trait = $this->getFirstTraitForTest();
         $trait->getAllMethods();
+    }
+
+    /**
+     * testGetAllMethodsWithAbstractMethods
+     * case with abstract methods.
+     * No ASTTraitMethodCollisionException is thrown if only one method is not abstract.
+     * Fix issue 154.
+     *
+     * @return void
+     * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
+     *
+     * @group issue-154
+     */
+    public function testGetAllMethodsWithAbstractMethods()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertCount(1, $trait->getAllMethods());
     }
 
     /**

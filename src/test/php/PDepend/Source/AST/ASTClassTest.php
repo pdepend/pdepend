@@ -363,6 +363,8 @@ class ASTClassTest extends AbstractASTArtifactTest
      * @since 1.0.0
      * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
      * @expectedException \PDepend\Source\AST\ASTTraitMethodCollisionException
+     *
+     * @group issue-154
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
     {
