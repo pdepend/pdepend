@@ -44,6 +44,7 @@ namespace PDepend\Source\Builder;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTTrait;
@@ -233,12 +234,10 @@ interface Builder extends \IteratorAggregate
      *
      * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $reference The type
      *        instance that reference the concrete target of parent.
-     *
      * @return \PDepend\Source\AST\ASTParentReference
      * @since 0.9.6
      */
-    public function buildAstParentReference(
-        \PDepend\Source\AST\ASTClassOrInterfaceReference $reference
+    public function buildAstParentReference(ASTClassOrInterfaceReference $reference
     );
 
     /**

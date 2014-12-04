@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchStatement;
+use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\State;
 use PDepend\Source\Builder\Builder;
@@ -4416,7 +4417,12 @@ abstract class AbstractPHPParser
             );
         }
 
-        $classReference = $this->classOrInterface->getParentClassReference();
+        if ($this->classOrInterface instanceof ASTTrait) {
+            $classReference = $this->builder->buildAstClassReference('__PDepend_TraitRuntimeReference');
+        } else {
+            $classReference = $this->classOrInterface->getParentClassReference();
+        }
+
         if ($classReference === null) {
             throw new InvalidStateException(
                 $token->startLine,

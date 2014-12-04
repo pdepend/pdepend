@@ -359,6 +359,28 @@ class ASTTraitTest extends AbstractASTArtifactTest
     }
 
     /**
+     * testTraitCanUseParentKeywordInMethodBody
+     *
+     * @return void
+     */
+    public function testTraitCanUseParentKeywordInMethodBody()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertNotNull($trait);
+    }
+
+    /**
+     * testTraitCanUseParentKeywordAsMethodTypeHint
+     *
+     * @return void
+     */
+    public function testTraitCanUseParentKeywordAsMethodTypeHint()
+    {
+        $trait = $this->getFirstTraitForTest();
+        $this->assertNotNull($trait);
+    }
+
+    /**
      * testAcceptInvokesVisitTraitOnGivenVisitor
      *
      * @return void
