@@ -8,12 +8,12 @@ if (!extension_loaded('bcmath')) {
 ?>
 --FILE--
 <?php
-require_once 'PDepend/Util/MathUtil.php';
+require_once __DIR__ . '/../../../../../main/php/PDepend/Util/MathUtil.php';
 var_dump(\PDepend\Util\MathUtil::add(1000, 1000));
 var_dump(\PDepend\Util\MathUtil::add(10000, 10000));
 var_dump(\PDepend\Util\MathUtil::add(100000, 100000));
 ?>
---EXPECTREGEX--
-string\(4\) ["\']2000["\']
-string\(5\) ["\']20000["\']
-string\(6\) ["\']200000["\']
+--EXPECT--
+string(4) "2000"
+string(5) "20000"
+string(6) "200000"
