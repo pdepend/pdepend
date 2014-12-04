@@ -237,8 +237,7 @@ interface Builder extends \IteratorAggregate
      * @return \PDepend\Source\AST\ASTParentReference
      * @since 0.9.6
      */
-    public function buildAstParentReference(ASTClassOrInterfaceReference $reference
-    );
+    public function buildAstParentReference(ASTClassOrInterfaceReference $reference);
 
     /**
      * Builds a new static reference instance.
