@@ -56,6 +56,7 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 
 /**
@@ -256,27 +257,50 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function visitClass(ASTClass $class)
     {
-        if (!$class->isUserDefined()) {
+        $this->generateTypeXml($class, 'class');
+    }
+
+    /**
+     * Visits a trait node.
+     *
+     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @return void
+     */
+    public function visitTrait(ASTTrait $trait)
+    {
+        $this->generateTypeXml($trait, 'trait');
+    }
+
+    /**
+     * Generates the XML for a class or trait node.
+     *
+     * @param \PDepend\Source\AST\ASTClass $type
+     * @param string $typeIdentifier
+     * @return void
+     */
+    private function generateTypeXml(ASTClass $type, $typeIdentifier)
+    {
+        if (!$type->isUserDefined()) {
             return;
         }
 
         $xml = end($this->xmlStack);
         $doc = $xml->ownerDocument;
 
-        $classXml = $doc->createElement('class');
-        $classXml->setAttribute('name', $class->getName());
+        $typeXml = $doc->createElement($typeIdentifier);
+        $typeXml->setAttribute('name', $type->getName());
 
-        $this->writeNodeMetrics($classXml, $class);
-        $this->writeFileReference($classXml, $class->getCompilationUnit());
+        $this->writeNodeMetrics($typeXml, $type);
+        $this->writeFileReference($typeXml, $type->getCompilationUnit());
 
-        $xml->appendChild($classXml);
+        $xml->appendChild($typeXml);
 
-        array_push($this->xmlStack, $classXml);
+        array_push($this->xmlStack, $typeXml);
 
-        foreach ($class->getMethods() as $method) {
+        foreach ($type->getMethods() as $method) {
             $method->accept($this);
         }
-        foreach ($class->getProperties() as $property) {
+        foreach ($type->getProperties() as $property) {
             $property->accept($this);
         }
 

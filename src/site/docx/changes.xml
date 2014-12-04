@@ -30,6 +30,9 @@
                 <action date="d96e4e7" dev="renan" type="fix" issue="173" system="github">
                     Fixing parsing True/False keywords in namespaces: Usage of true and false keywords are allowed in namespace declarations in PHP.
                 </action>
+                <action date="" dev="manuelpichler" due-to="pupsschluepfer" type="fix" issue="170" system="github">
+                    invalid xml-report after parsing traits
+                </action>
                 <action date="73d32f3" dev="Deltachaos" type="fix" issue="167" system="github">
                     Fix Invalid argument supplied for foreach() in FileCacheDriver.php
                 </action>
