@@ -9,6 +9,43 @@
     </properties>
 
 	<body>
+            <release version="2.0.4"
+                     date="2014/12/04"
+                     description="This release closes some minor issues and incorporates several outstanding pull requests.">
+                <action date="1288292" dev="KacerCZ" type="fix" issue="179" system="github">
+                    Fixed display of duration longer than one hour
+                </action>
+                <action date="17da34b" dev="torinaki" type="update" issue="177" system="github">
+                    HHVM support
+                </action>
+                <action date="6a8e542" dev="godelfin" type="fix" issue="176" system="github">
+                    Typo on website fixed.
+                </action>
+                <action date="bc758e4" dev="grogy" type="fix" issue="175" system="github">
+                    Inconsistent indention in phpunit.dist.xml file fixed.
+                </action>
+                <action date="e3e672b" dev="pschultz" type="fix" issue="174" system="github">
+                    Fix conflicting import: "Extension" is already in use in the "PDepend\DependencyInjection" namespace.
+                </action>
+                <action date="d96e4e7" dev="renan" type="fix" issue="173" system="github">
+                    Fixing parsing True/False keywords in namespaces: Usage of true and false keywords are allowed in namespace declarations in PHP.
+                </action>
+                <action date="73d32f3" dev="Deltachaos" type="fix" issue="167" system="github">
+                    Fix Invalid argument supplied for foreach() in FileCacheDriver.php
+                </action>
+                <action date="4826c3f" dev="monmon" type="fix" issue="165" system="github">
+                    Fix FileUtil::getUserHomeDir on Mac
+                </action>
+                <action date="7ab0736" dev="danez" type="fix" issue="164" system="github">
+                    Empty yields raise Fatal error: When using empty yields yield; the parser raises an fatal error.
+                </action>
+                <action date="3955c07" dev="gureedo" type="fix" issue="163" system="github">
+                    File cache concurrency fix: Fixes concurrent run of pdepend and phpmd.
+                </action>
+                <action date="45ab1d3" dev="Raphhh" type="fix" issue="154" system="github">
+                    Invalid trait conflict errors: t is completely valid to mix traits in PHP that have the same methods declared, as long as only one of them is concrete (all the others must be abstract).
+                </action>
+            </release>
         <release version="2.0.3"
                  date="2014/10/08"
                  description="This is a bugfix release which closes some minor issues.">
