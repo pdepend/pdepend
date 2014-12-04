@@ -2,14 +2,14 @@
 <phpunit bootstrap="src/test/php/PDepend/bootstrap.php">
     <php>
         <ini name="date.timezone" value="UTC" />
-	</php>
+    </php>
 
     <testsuites>
         <testsuite name="PHP Depends Test Suite">
             <directory suffix="Test.php">src/test/php</directory>
             <directory suffix=".phpt">src/test/php</directory>
         </testsuite>
-	</testsuites>
+    </testsuites>
 
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
