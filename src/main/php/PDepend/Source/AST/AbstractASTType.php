@@ -319,10 +319,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
         foreach ($uses as $use) {
             foreach ($use->getAllMethods() as $method) {
 
-                if ($method->isAbstract()) {
-                    continue;
-                }
-
                 foreach ($uses as $use2) {
                     if ($use2->hasExcludeFor($method)) {
                         continue 2;
@@ -331,10 +327,21 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
                 $name = strtolower($method->getName());
 
-                if (isset($methods[$name])) {
-                    throw new ASTTraitMethodCollisionException($method, $this);
+                if (false === isset($methods[$name])) {
+                    $methods[$name] = $method;
+                    continue;
                 }
-                $methods[$name] = $method;
+
+                if ($methods[$name]->isAbstract()) {
+                    $methods[$name] = $method;
+                    continue;
+                }
+
+                if ($method->isAbstract()) {
+                    continue;
+                }
+
+                throw new ASTTraitMethodCollisionException($method, $this);
             }
         }
         return $methods;
