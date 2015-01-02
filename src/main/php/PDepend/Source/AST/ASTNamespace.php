@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**

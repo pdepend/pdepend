@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\AST\State;
-
 /**
  * This class represents a field or property declaration of a class.
  *

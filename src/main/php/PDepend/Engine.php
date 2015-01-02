@@ -44,11 +44,11 @@ namespace PDepend;
 
 use PDepend\Input\CompositeFilter;
 use PDepend\Input\Filter;
+use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Metrics\AnalyzerClassFileSystemLocator;
+use PDepend\Metrics\AnalyzerFactory;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerLoader;
-use PDepend\Metrics\AnalyzerFactory;
-use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
@@ -59,8 +59,8 @@ use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Util\Configuration;
 use PDepend\Util\Cache\CacheFactory;
+use PDepend\Util\Configuration;
 
 /**
  * PDepend analyzes php class files and generates metrics.

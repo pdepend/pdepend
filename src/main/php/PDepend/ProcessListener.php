@@ -44,9 +44,9 @@ namespace PDepend;
 
 // @codeCoverageIgnoreStart
 use PDepend\Metrics\AnalyzerListener;
+use PDepend\Source\ASTVisitor\ASTVisitListener;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Source\ASTVisitor\ASTVisitListener;
 
 /**
  * This listener can be used to get informations about the current pdepend process.

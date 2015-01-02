@@ -52,8 +52,6 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
-use PDepend\Source\AST\ASTInvocation;
-use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTProperty;
 

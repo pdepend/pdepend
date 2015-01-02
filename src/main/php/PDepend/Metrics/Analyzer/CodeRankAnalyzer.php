@@ -43,8 +43,8 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractAnalyzer;
-use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
+use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 

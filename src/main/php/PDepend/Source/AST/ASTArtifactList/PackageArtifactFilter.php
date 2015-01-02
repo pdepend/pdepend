@@ -42,8 +42,8 @@
 
 namespace PDepend\Source\AST\ASTArtifactList;
 
-use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTNamespace;
 
