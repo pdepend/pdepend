@@ -2880,6 +2880,10 @@ abstract class AbstractPHPParser
 
             switch ($tokenType) {
 
+                case Tokens::T_CLOSE_TAG:
+                    $this->parseNonePhpCode();
+                    break;
+
                 case Tokens::T_ENDSWITCH:
                     $this->parseAlternativeScopeTermination(Tokens::T_ENDSWITCH);
                     return $switch;
@@ -2988,6 +2992,10 @@ abstract class AbstractPHPParser
                     }
                     $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
                     --$curlyBraceCount;
+                    break;
+
+                case Tokens::T_CLOSE_TAG:
+                    $this->parseNonePhpCode();
                     break;
 
                 case Tokens::T_CASE:

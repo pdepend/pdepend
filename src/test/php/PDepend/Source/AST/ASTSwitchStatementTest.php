@@ -267,6 +267,72 @@ class ASTSwitchStatementTest extends \PDepend\Source\AST\ASTNodeTest
     }
 
     /**
+     * testSwitchStatementWithNestedNonePhpCode
+     *
+     * @return \PDepend\Source\AST\ASTSwitch
+     * @since 2.1.0
+     */
+    public function testSwitchStatementWithNestedNonePhpCode()
+    {
+        $switch = $this->_getFirstSwitchStatementInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $switch);
+
+        return $switch;
+    }
+
+    /**
+     * testSwitchStatementWithNestedNonePhpCodeStartLine
+     *
+     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchStatementWithNestedNonePhpCode
+     */
+    public function testSwitchStatementWithNestedNonePhpCodeStartLine(ASTSwitchStatement $switch)
+    {
+        $this->assertSame(5, $switch->getStartLine());
+    }
+
+    /**
+     * testSwitchStatementWithNestedNonePhpCodeEndLine
+     *
+     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchStatementWithNestedNonePhpCode
+     */
+    public function testSwitchStatementWithNestedNonePhpCodeEndLine(ASTSwitchStatement $switch)
+    {
+        $this->assertSame(16, $switch->getEndLine());
+    }
+
+    /**
+     * testSwitchStatementWithNestedNonePhpCodeStartColumn
+     *
+     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchStatementWithNestedNonePhpCode
+     */
+    public function testSwitchStatementWithNestedNonePhpCodeStartColumn(ASTSwitchStatement $switch)
+    {
+        $this->assertSame(7, $switch->getStartColumn());
+    }
+
+    /**
+     * testSwitchStatementWithNestedNonePhpCodeEndColumn
+     *
+     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchStatementWithNestedNonePhpCode
+     */
+    public function testSwitchStatementWithNestedNonePhpCodeEndColumn(ASTSwitchStatement $switch)
+    {
+        $this->assertSame(16, $switch->getEndColumn());
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @return \PDepend\Source\AST\ASTSwitchStatement

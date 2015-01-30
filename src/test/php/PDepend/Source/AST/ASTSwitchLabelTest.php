@@ -197,6 +197,72 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
     }
 
     /**
+     * testSwitchLabelWithNestedNonePhpCode
+     *
+     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @since 2.1.0
+     */
+    public function testSwitchLabelWithNestedNonePhpCode()
+    {
+        $label = $this->_getFirstSwitchLabelInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
+
+        return $label;
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeStartLine
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelWithNestedNonePhpCode
+     */
+    public function testSwitchLabelWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label)
+    {
+        $this->assertSame(6, $label->getStartLine());
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeEndLine
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelWithNestedNonePhpCode
+     */
+    public function testSwitchLabelWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label)
+    {
+        $this->assertSame(9, $label->getEndLine());
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeStartColumn
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelWithNestedNonePhpCode
+     */
+    public function testSwitchLabelWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label)
+    {
+        $this->assertSame(7, $label->getStartColumn());
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeEndColumn
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelWithNestedNonePhpCode
+     */
+    public function testSwitchLabelWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label)
+    {
+        $this->assertSame(5, $label->getEndColumn());
+    }
+
+    /**
      * testSwitchLabelDefault
      *
      * @return \PDepend\Source\AST\ASTSwitchLabel
@@ -292,6 +358,72 @@ class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
         );
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCode
+     *
+     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @since 2.1.0
+     */
+    public function testSwitchLabelDefaultWithNestedNonePhpCode()
+    {
+        $label = $this->_getFirstSwitchLabelInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
+
+        return $label;
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeStartLine
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelWithNestedNonePhpCode
+     */
+    public function testSwitchLabelDefaultDefaultWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label)
+    {
+        $this->assertSame(6, $label->getStartLine());
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeEndLine
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelDefaultWithNestedNonePhpCode
+     */
+    public function testSwitchLabelDefaultWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label)
+    {
+        $this->assertSame(9, $label->getEndLine());
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeStartColumn
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelDefaultWithNestedNonePhpCode
+     */
+    public function testSwitchLabelDefaultWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label)
+    {
+        $this->assertSame(7, $label->getStartColumn());
+    }
+
+    /**
+     * testSwitchLabelWithNestedNonePhpCodeEndColumn
+     *
+     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @return void
+     * @since 2.1.0
+     * @depends testSwitchLabelDefaultWithNestedNonePhpCode
+     */
+    public function testSwitchLabelDefaultWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label)
+    {
+        $this->assertSame(5, $label->getEndColumn());
     }
 
     /**
