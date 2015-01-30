@@ -144,7 +144,7 @@
         </exec>
     </target>
 
-    <target name="-pdepend:initialize:after~hooked" extensionOf="-deploy:after~hook" if="release">
+    <target name="-pdepend:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">
         <exec executable="git" dir="${basedir}" failonerror="true">
             <arg line="pull" />
         </exec>
@@ -161,9 +161,6 @@
             <arg line="push" />
             <arg line="--tags" />
         </exec>
-    </target>
-
-    <target name="-pdepend:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">
 
         <property name="project.web.release.dir" value="${project.web.root}/static.${project.uri}/php/${project.version}" />
 
@@ -180,7 +177,8 @@
             <arg line="cd '${project.web.release.dir}/..' ; rm latest ; ln -s '${project.version}' latest" />
         </exec>
 
-        <antcall target="site:deploy" />
+        <antcall target="site:deploy"
+                 inheritAll="false" />
     </target>
 
 </project>
