@@ -261,7 +261,6 @@ class Command
 
             return $result;
         } catch (\RuntimeException $e) {
-
             echo PHP_EOL, PHP_EOL,
                  'Critical error: ', PHP_EOL,
                  '=============== ', PHP_EOL,
@@ -307,7 +306,6 @@ class Command
         }
 
         for ($i = 0, $c = count($argv); $i < $c; ++$i) {
-
             // Is it an ini_set option?
             if ($argv[$i] === '-d' && isset($argv[$i + 1])) {
                 if (strpos($argv[++$i], '=') === false) {
@@ -520,7 +518,6 @@ class Command
 
         $last = null;
         foreach ($options as $option => $message) {
-
             $current = substr($option, 0, strrpos($option, '-'));
             if ($last !== null && $last !== $current) {
                 echo PHP_EOL;
@@ -552,7 +549,6 @@ class Command
         ksort($options);
 
         foreach ($options as $option => $info) {
-
             if (isset($info['value'])) {
                 $option .= '=<' . $info['value'] . '>';
             } else {

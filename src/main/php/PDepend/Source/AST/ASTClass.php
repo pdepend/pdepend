@@ -94,7 +94,6 @@ class ASTClass extends AbstractASTClassOrInterface
                 $declarators = $declaration->findChildrenOfType('PDepend\\Source\\AST\\ASTVariableDeclarator');
 
                 foreach ($declarators as $declarator) {
-
                     $property = new ASTProperty($declaration, $declarator);
                     $property->setDeclaringClass($this);
                     $property->setCompilationUnit($this->getCompilationUnit());

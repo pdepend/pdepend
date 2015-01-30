@@ -106,13 +106,13 @@ class CacheFactory
     protected function createCache($cacheKey)
     {
         switch ($this->configuration->cache->driver) {
-        case 'file':
-            return $this->createFileCache(
-                $this->configuration->cache->location,
-                $cacheKey
-            );
-        case 'memory':
-            return $this->createMemoryCache();
+            case 'file':
+                return $this->createFileCache(
+                    $this->configuration->cache->location,
+                    $cacheKey
+                );
+            case 'memory':
+                return $this->createMemoryCache();
         }
         throw new \InvalidArgumentException(
             "Unknown cache driver '{$this->configuration->cache->driver}' given."

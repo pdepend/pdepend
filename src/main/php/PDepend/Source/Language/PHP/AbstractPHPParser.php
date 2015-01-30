@@ -346,48 +346,47 @@ abstract class AbstractPHPParser
 
         $tokenType = $this->tokenizer->peek();
         while ($tokenType !== Tokenizer::T_EOF) {
-
             switch ($tokenType) {
 
-            case Tokens::T_COMMENT:
-                $this->consumeToken(Tokens::T_COMMENT);
-                break;
+                case Tokens::T_COMMENT:
+                    $this->consumeToken(Tokens::T_COMMENT);
+                    break;
 
-            case Tokens::T_DOC_COMMENT:
-                $comment = $this->consumeToken(Tokens::T_DOC_COMMENT)->image;
+                case Tokens::T_DOC_COMMENT:
+                    $comment = $this->consumeToken(Tokens::T_DOC_COMMENT)->image;
 
-                $this->packageName = $this->parsePackageAnnotation($comment);
-                $this->docComment  = $comment;
-                break;
+                    $this->packageName = $this->parsePackageAnnotation($comment);
+                    $this->docComment  = $comment;
+                    break;
 
-            case Tokens::T_USE:
-                // Parse a use statement. This method has no return value but it
-                // creates a new entry in the symbol map.
-                $this->parseUseDeclarations();
-                break;
+                case Tokens::T_USE:
+                    // Parse a use statement. This method has no return value but it
+                    // creates a new entry in the symbol map.
+                    $this->parseUseDeclarations();
+                    break;
 
-            case Tokens::T_NAMESPACE:
-                $this->parseNamespaceDeclaration();
-                break;
+                case Tokens::T_NAMESPACE:
+                    $this->parseNamespaceDeclaration();
+                    break;
 
-            case Tokens::T_NO_PHP:
-            case Tokens::T_OPEN_TAG:
-            case Tokens::T_OPEN_TAG_WITH_ECHO:
-                $this->consumeToken($tokenType);
-                $this->reset();
-                break;
-
-            case Tokens::T_CLOSE_TAG:
-                $this->parseNonePhpCode();
-                $this->reset();
-                break;
-
-            default:
-                if (null === $this->parseOptionalStatement()) {
-                    // Consume whatever token
+                case Tokens::T_NO_PHP:
+                case Tokens::T_OPEN_TAG:
+                case Tokens::T_OPEN_TAG_WITH_ECHO:
                     $this->consumeToken($tokenType);
-                }
-                break;
+                    $this->reset();
+                    break;
+
+                case Tokens::T_CLOSE_TAG:
+                    $this->parseNonePhpCode();
+                    $this->reset();
+                    break;
+
+                default:
+                    if (null === $this->parseOptionalStatement()) {
+                        // Consume whatever token
+                        $this->consumeToken($tokenType);
+                    }
+                    break;
             }
 
             $tokenType = $this->tokenizer->peek();
@@ -700,7 +699,6 @@ abstract class AbstractPHPParser
     private function parseInterfaceList(AbstractASTClassOrInterface $abstractType)
     {
         while (true) {
-
             $this->tokenStack->push();
 
             $abstractType->addInterfaceReference(
@@ -746,86 +744,85 @@ abstract class AbstractPHPParser
         $tokenType = $this->tokenizer->peek();
 
         while ($tokenType !== Tokenizer::T_EOF) {
-
             switch ($tokenType) {
 
-            case Tokens::T_ABSTRACT:
-            case Tokens::T_PUBLIC:
-            case Tokens::T_PRIVATE:
-            case Tokens::T_PROTECTED:
-            case Tokens::T_STATIC:
-            case Tokens::T_FINAL:
-            case Tokens::T_FUNCTION:
-            case Tokens::T_VARIABLE:
-            case Tokens::T_VAR:
+                case Tokens::T_ABSTRACT:
+                case Tokens::T_PUBLIC:
+                case Tokens::T_PRIVATE:
+                case Tokens::T_PROTECTED:
+                case Tokens::T_STATIC:
+                case Tokens::T_FINAL:
+                case Tokens::T_FUNCTION:
+                case Tokens::T_VARIABLE:
+                case Tokens::T_VAR:
 
-                $methodOrProperty = $this->parseMethodOrFieldDeclaration(
-                    $defaultModifier
-                );
+                    $methodOrProperty = $this->parseMethodOrFieldDeclaration(
+                        $defaultModifier
+                    );
 
-                if ($methodOrProperty instanceof \PDepend\Source\AST\ASTNode) {
-                    $type->addChild($methodOrProperty);
-                }
+                    if ($methodOrProperty instanceof \PDepend\Source\AST\ASTNode) {
+                        $type->addChild($methodOrProperty);
+                    }
 
-                $this->reset();
-                break;
+                    $this->reset();
+                    break;
 
-            case Tokens::T_CONST:
-                $type->addChild($this->parseConstantDefinition());
-                $this->reset();
-                break;
+                case Tokens::T_CONST:
+                    $type->addChild($this->parseConstantDefinition());
+                    $this->reset();
+                    break;
 
-            case Tokens::T_CURLY_BRACE_CLOSE:
-                $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+                case Tokens::T_CURLY_BRACE_CLOSE:
+                    $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
 
-                $this->reset();
+                    $this->reset();
 
-                // Reset context class or interface instance
-                $this->classOrInterface = null;
+                    // Reset context class or interface instance
+                    $this->classOrInterface = null;
 
-                // Stop processing
-                return $type;
+                    // Stop processing
+                    return $type;
 
-            case Tokens::T_COMMENT:
-                $token = $this->consumeToken(Tokens::T_COMMENT);
+                case Tokens::T_COMMENT:
+                    $token = $this->consumeToken(Tokens::T_COMMENT);
 
-                $comment = $this->builder->buildAstComment($token->image);
-                $comment->configureLinesAndColumns(
-                    $token->startLine,
-                    $token->endLine,
-                    $token->startColumn,
-                    $token->endColumn
-                );
+                    $comment = $this->builder->buildAstComment($token->image);
+                    $comment->configureLinesAndColumns(
+                        $token->startLine,
+                        $token->endLine,
+                        $token->startColumn,
+                        $token->endColumn
+                    );
 
-                $type->addChild($comment);
+                    $type->addChild($comment);
 
-                break;
+                    break;
 
-            case Tokens::T_DOC_COMMENT:
-                $token = $this->consumeToken(Tokens::T_DOC_COMMENT);
+                case Tokens::T_DOC_COMMENT:
+                    $token = $this->consumeToken(Tokens::T_DOC_COMMENT);
 
-                $comment = $this->builder->buildAstComment($token->image);
-                $comment->configureLinesAndColumns(
-                    $token->startLine,
-                    $token->endLine,
-                    $token->startColumn,
-                    $token->endColumn
-                );
+                    $comment = $this->builder->buildAstComment($token->image);
+                    $comment->configureLinesAndColumns(
+                        $token->startLine,
+                        $token->endLine,
+                        $token->startColumn,
+                        $token->endColumn
+                    );
 
-                $type->addChild($comment);
+                    $type->addChild($comment);
 
-                $this->docComment = $token->image;
-                break;
+                    $this->docComment = $token->image;
+                    break;
 
-            case Tokens::T_USE:
-                $type->addChild($this->parseTraitUseStatement());
-                break;
+                case Tokens::T_USE:
+                    $type->addChild($this->parseTraitUseStatement());
+                    break;
 
-            default:
-                throw new UnexpectedTokenException(
-                    $this->tokenizer->next(),
-                    $this->tokenizer->getSourceFile()
-                );
+                default:
+                    throw new UnexpectedTokenException(
+                        $this->tokenizer->next(),
+                        $this->tokenizer->getSourceFile()
+                    );
             }
 
             $tokenType = $this->tokenizer->peek();
@@ -850,49 +847,49 @@ abstract class AbstractPHPParser
         while ($tokenType !== Tokenizer::T_EOF) {
             switch ($tokenType) {
 
-            case Tokens::T_PRIVATE:
-                $modifiers |= State::IS_PRIVATE;
-                $modifiers = $modifiers & ~State::IS_PUBLIC;
-                break;
+                case Tokens::T_PRIVATE:
+                    $modifiers |= State::IS_PRIVATE;
+                    $modifiers = $modifiers & ~State::IS_PUBLIC;
+                    break;
 
-            case Tokens::T_PROTECTED:
-                $modifiers |= State::IS_PROTECTED;
-                $modifiers = $modifiers & ~State::IS_PUBLIC;
-                break;
+                case Tokens::T_PROTECTED:
+                    $modifiers |= State::IS_PROTECTED;
+                    $modifiers = $modifiers & ~State::IS_PUBLIC;
+                    break;
 
-            case Tokens::T_VAR:
-            case Tokens::T_PUBLIC:
-                $modifiers |= State::IS_PUBLIC;
-                break;
+                case Tokens::T_VAR:
+                case Tokens::T_PUBLIC:
+                    $modifiers |= State::IS_PUBLIC;
+                    break;
 
-            case Tokens::T_STATIC:
-                $modifiers |= State::IS_STATIC;
-                break;
+                case Tokens::T_STATIC:
+                    $modifiers |= State::IS_STATIC;
+                    break;
 
-            case Tokens::T_ABSTRACT:
-                $modifiers |= State::IS_ABSTRACT;
-                break;
+                case Tokens::T_ABSTRACT:
+                    $modifiers |= State::IS_ABSTRACT;
+                    break;
 
-            case Tokens::T_FINAL:
-                $modifiers |= State::IS_FINAL;
-                break;
+                case Tokens::T_FINAL:
+                    $modifiers |= State::IS_FINAL;
+                    break;
 
-            case Tokens::T_FUNCTION:
-                $method = $this->parseMethodDeclaration();
-                $method->setModifiers($modifiers);
-                $method->setCompilationUnit($this->compilationUnit);
-                $method->setId($this->idBuilder->forMethod($method));
-                $method->setTokens($this->tokenStack->pop());
-                return $method;
+                case Tokens::T_FUNCTION:
+                    $method = $this->parseMethodDeclaration();
+                    $method->setModifiers($modifiers);
+                    $method->setCompilationUnit($this->compilationUnit);
+                    $method->setId($this->idBuilder->forMethod($method));
+                    $method->setTokens($this->tokenStack->pop());
+                    return $method;
 
-            case Tokens::T_VARIABLE:
-                $declaration = $this->parseFieldDeclaration();
-                $declaration->setModifiers($modifiers);
+                case Tokens::T_VARIABLE:
+                    $declaration = $this->parseFieldDeclaration();
+                    $declaration->setModifiers($modifiers);
 
-                return $declaration;
+                    return $declaration;
 
-            default:
-                break 2;
+                default:
+                    break 2;
             }
 
             $this->consumeToken($tokenType);
@@ -1289,7 +1286,6 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
-
             $traitReference = $this->setNodePositionsAndReturn(
                 $this->builder->buildAstTraitReference($qualifiedName)
             );
@@ -1325,23 +1321,23 @@ abstract class AbstractPHPParser
 
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_PUBLIC:
-            $stmt->setNewModifier(State::IS_PUBLIC);
-            $this->consumeToken(Tokens::T_PUBLIC);
-            $this->consumeComments();
-            break;
+            case Tokens::T_PUBLIC:
+                $stmt->setNewModifier(State::IS_PUBLIC);
+                $this->consumeToken(Tokens::T_PUBLIC);
+                $this->consumeComments();
+                break;
 
-        case Tokens::T_PROTECTED:
-            $stmt->setNewModifier(State::IS_PROTECTED);
-            $this->consumeToken(Tokens::T_PROTECTED);
-            $this->consumeComments();
-            break;
+            case Tokens::T_PROTECTED:
+                $stmt->setNewModifier(State::IS_PROTECTED);
+                $this->consumeToken(Tokens::T_PROTECTED);
+                $this->consumeComments();
+                break;
 
-        case Tokens::T_PRIVATE:
-            $stmt->setNewModifier(State::IS_PRIVATE);
-            $this->consumeToken(Tokens::T_PRIVATE);
-            $this->consumeComments();
-            break;
+            case Tokens::T_PRIVATE:
+                $stmt->setNewModifier(State::IS_PRIVATE);
+                $this->consumeToken(Tokens::T_PRIVATE);
+                $this->consumeComments();
+                break;
         }
 
         if (Tokens::T_SEMICOLON !== $this->tokenizer->peek()) {
@@ -1493,29 +1489,28 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
-
             // The variable is optional:
             //   list(, , , , $something) = ...;
             // is valid.
             switch ($tokenType) {
 
-            case Tokens::T_COMMA:
-                $this->consumeToken(Tokens::T_COMMA);
-                $this->consumeComments();
-                break;
+                case Tokens::T_COMMA:
+                    $this->consumeToken(Tokens::T_COMMA);
+                    $this->consumeComments();
+                    break;
 
-            case Tokens::T_PARENTHESIS_CLOSE:
-                break 2;
+                case Tokens::T_PARENTHESIS_CLOSE:
+                    break 2;
 
-            case Tokens::T_LIST:
-                $list->addChild($this->parseListExpression());
-                $this->consumeComments();
-                break;
+                case Tokens::T_LIST:
+                    $list->addChild($this->parseListExpression());
+                    $this->consumeComments();
+                    break;
 
-            default:
-                $list->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
-                $this->consumeComments();
-                break;
+                default:
+                    $list->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
+                    $this->consumeComments();
+                    break;
             }
         }
 
@@ -1779,11 +1774,11 @@ abstract class AbstractPHPParser
 
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_CURLY_BRACE_OPEN:
-            return $this->parseStringIndexExpression($node);
+            case Tokens::T_CURLY_BRACE_OPEN:
+                return $this->parseStringIndexExpression($node);
 
-        case Tokens::T_SQUARED_BRACKET_OPEN:
-            return $this->parseArrayIndexExpression($node);
+            case Tokens::T_SQUARED_BRACKET_OPEN:
+                return $this->parseArrayIndexExpression($node);
         }
 
         return $node;
@@ -2030,27 +2025,27 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_DOLLAR:
-        case Tokens::T_VARIABLE:
-            // TODO: Parse variable or Member Primary Prefix + Property Postfix
-            $ref = $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
-            break;
+            case Tokens::T_DOLLAR:
+            case Tokens::T_VARIABLE:
+                // TODO: Parse variable or Member Primary Prefix + Property Postfix
+                $ref = $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+                break;
 
-        case Tokens::T_SELF:
-            $ref = $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
-            break;
+            case Tokens::T_SELF:
+                $ref = $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
+                break;
 
-        case Tokens::T_PARENT:
-            $ref = $this->parseParentReference($this->consumeToken(Tokens::T_PARENT));
-            break;
+            case Tokens::T_PARENT:
+                $ref = $this->parseParentReference($this->consumeToken(Tokens::T_PARENT));
+                break;
 
-        case Tokens::T_STATIC:
-            $ref = $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
-            break;
+            case Tokens::T_STATIC:
+                $ref = $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
+                break;
 
-        default:
-            $ref = $this->parseClassOrInterfaceReference($classRef);
-            break;
+            default:
+                $ref = $this->parseClassOrInterfaceReference($classRef);
+                break;
         }
 
         $expr->addChild(
@@ -2509,272 +2504,271 @@ abstract class AbstractPHPParser
         $expressions = array();
 
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
-
             $expr = null;
 
             switch ($tokenType) {
 
-            case Tokens::T_COMMA:
-            case Tokens::T_AS:
-            case Tokens::T_BREAK:
-            case Tokens::T_CLOSE_TAG:
-            case Tokens::T_COLON:
-            case Tokens::T_CONTINUE:
-            case Tokens::T_CURLY_BRACE_CLOSE:
-            case Tokens::T_DECLARE:
-            case Tokens::T_DO:
-            case Tokens::T_DOUBLE_ARROW:
-            case Tokens::T_ECHO:
-            case Tokens::T_END_HEREDOC:
-            case Tokens::T_ENDFOREACH:
-            case Tokens::T_FOR:
-            case Tokens::T_FOREACH:
-            case Tokens::T_GLOBAL:
-            case Tokens::T_GOTO:
-            case Tokens::T_IF:
-            case Tokens::T_PARENTHESIS_CLOSE:
-            case Tokens::T_RETURN:
-            case Tokens::T_SEMICOLON:
-            case Tokens::T_SQUARED_BRACKET_CLOSE:
-            case Tokens::T_SWITCH:
-            case Tokens::T_THROW:
-            case Tokens::T_TRY:
-            case Tokens::T_UNSET:
-            case Tokens::T_WHILE:
-                break 2;
+                case Tokens::T_COMMA:
+                case Tokens::T_AS:
+                case Tokens::T_BREAK:
+                case Tokens::T_CLOSE_TAG:
+                case Tokens::T_COLON:
+                case Tokens::T_CONTINUE:
+                case Tokens::T_CURLY_BRACE_CLOSE:
+                case Tokens::T_DECLARE:
+                case Tokens::T_DO:
+                case Tokens::T_DOUBLE_ARROW:
+                case Tokens::T_ECHO:
+                case Tokens::T_END_HEREDOC:
+                case Tokens::T_ENDFOREACH:
+                case Tokens::T_FOR:
+                case Tokens::T_FOREACH:
+                case Tokens::T_GLOBAL:
+                case Tokens::T_GOTO:
+                case Tokens::T_IF:
+                case Tokens::T_PARENTHESIS_CLOSE:
+                case Tokens::T_RETURN:
+                case Tokens::T_SEMICOLON:
+                case Tokens::T_SQUARED_BRACKET_CLOSE:
+                case Tokens::T_SWITCH:
+                case Tokens::T_THROW:
+                case Tokens::T_TRY:
+                case Tokens::T_UNSET:
+                case Tokens::T_WHILE:
+                    break 2;
 
-            case Tokens::T_SELF:
-            case Tokens::T_STRING:
-            case Tokens::T_PARENT:
-            case Tokens::T_STATIC:
-            case Tokens::T_DOLLAR:
-            case Tokens::T_VARIABLE:
-            case Tokens::T_BACKSLASH:
-            case Tokens::T_NAMESPACE:
-                $expressions[] = $this->parseVariableOrConstantOrPrimaryPrefix();
-                break;
+                case Tokens::T_SELF:
+                case Tokens::T_STRING:
+                case Tokens::T_PARENT:
+                case Tokens::T_STATIC:
+                case Tokens::T_DOLLAR:
+                case Tokens::T_VARIABLE:
+                case Tokens::T_BACKSLASH:
+                case Tokens::T_NAMESPACE:
+                    $expressions[] = $this->parseVariableOrConstantOrPrimaryPrefix();
+                    break;
 
-            case ($this->isArrayStartDelimiter()):
-                $expressions[] = $this->doParseArray();
-                break;
+                case ($this->isArrayStartDelimiter()):
+                    $expressions[] = $this->doParseArray();
+                    break;
 
-            case Tokens::T_NULL:
-            case Tokens::T_TRUE:
-            case Tokens::T_FALSE:
-            case Tokens::T_LNUMBER:
-            case Tokens::T_DNUMBER:
-            case Tokens::T_BACKTICK:
-            case Tokens::T_DOUBLE_QUOTE:
-            case Tokens::T_CONSTANT_ENCAPSED_STRING:
-                $expressions[] = $this->parseLiteralOrString();
-                break;
+                case Tokens::T_NULL:
+                case Tokens::T_TRUE:
+                case Tokens::T_FALSE:
+                case Tokens::T_LNUMBER:
+                case Tokens::T_DNUMBER:
+                case Tokens::T_BACKTICK:
+                case Tokens::T_DOUBLE_QUOTE:
+                case Tokens::T_CONSTANT_ENCAPSED_STRING:
+                    $expressions[] = $this->parseLiteralOrString();
+                    break;
 
-            case Tokens::T_NEW:
-                $expressions[] = $this->parseAllocationExpression();
-                break;
+                case Tokens::T_NEW:
+                    $expressions[] = $this->parseAllocationExpression();
+                    break;
 
-            case Tokens::T_EVAL:
-                $expressions[] = $this->parseEvalExpression();
-                break;
+                case Tokens::T_EVAL:
+                    $expressions[] = $this->parseEvalExpression();
+                    break;
 
-            case Tokens::T_CLONE:
-                $expressions[] = $this->parseCloneExpression();
-                break;
+                case Tokens::T_CLONE:
+                    $expressions[] = $this->parseCloneExpression();
+                    break;
 
-            case Tokens::T_INSTANCEOF:
-                $expressions[] = $this->parseInstanceOfExpression();
-                break;
+                case Tokens::T_INSTANCEOF:
+                    $expressions[] = $this->parseInstanceOfExpression();
+                    break;
 
-            case Tokens::T_ISSET:
-                $expressions[] = $this->parseIssetExpression();
-                break;
+                case Tokens::T_ISSET:
+                    $expressions[] = $this->parseIssetExpression();
+                    break;
 
-            case Tokens::T_LIST:
-                $expressions[] = $this->parseListExpression();
-                break;
+                case Tokens::T_LIST:
+                    $expressions[] = $this->parseListExpression();
+                    break;
 
-            case Tokens::T_QUESTION_MARK:
-                $expressions[] = $this->parseConditionalExpression();
-                break;
+                case Tokens::T_QUESTION_MARK:
+                    $expressions[] = $this->parseConditionalExpression();
+                    break;
 
-            case Tokens::T_BOOLEAN_AND:
-                $expressions[] = $this->parseBooleanAndExpression();
-                break;
+                case Tokens::T_BOOLEAN_AND:
+                    $expressions[] = $this->parseBooleanAndExpression();
+                    break;
 
-            case Tokens::T_BOOLEAN_OR:
-                $expressions[] = $this->parseBooleanOrExpression();
-                break;
+                case Tokens::T_BOOLEAN_OR:
+                    $expressions[] = $this->parseBooleanOrExpression();
+                    break;
 
-            case Tokens::T_LOGICAL_AND:
-                $expressions[] = $this->parseLogicalAndExpression();
-                break;
+                case Tokens::T_LOGICAL_AND:
+                    $expressions[] = $this->parseLogicalAndExpression();
+                    break;
 
-            case Tokens::T_LOGICAL_OR:
-                $expressions[] = $this->parseLogicalOrExpression();
-                break;
+                case Tokens::T_LOGICAL_OR:
+                    $expressions[] = $this->parseLogicalOrExpression();
+                    break;
 
-            case Tokens::T_LOGICAL_XOR:
-                $expressions[] = $this->parseLogicalXorExpression();
-                break;
+                case Tokens::T_LOGICAL_XOR:
+                    $expressions[] = $this->parseLogicalXorExpression();
+                    break;
 
-            case Tokens::T_FUNCTION:
-                $expressions[] = $this->parseClosureDeclaration();
-                break;
+                case Tokens::T_FUNCTION:
+                    $expressions[] = $this->parseClosureDeclaration();
+                    break;
 
-            case Tokens::T_PARENTHESIS_OPEN:
-                $expressions[] = $this->parseParenthesisExpressionOrPrimaryPrefix();
-                break;
+                case Tokens::T_PARENTHESIS_OPEN:
+                    $expressions[] = $this->parseParenthesisExpressionOrPrimaryPrefix();
+                    break;
 
-            case Tokens::T_EXIT:
-                $expressions[] = $this->parseExitExpression();
-                break;
+                case Tokens::T_EXIT:
+                    $expressions[] = $this->parseExitExpression();
+                    break;
 
-            case Tokens::T_START_HEREDOC:
-                $expressions[] = $this->parseHeredoc();
-                break;
+                case Tokens::T_START_HEREDOC:
+                    $expressions[] = $this->parseHeredoc();
+                    break;
 
-            case Tokens::T_CURLY_BRACE_OPEN:
-                $expressions[] = $this->parseBraceExpression(
-                    $this->builder->buildAstExpression(),
-                    $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN),
-                    Tokens::T_CURLY_BRACE_CLOSE
-                );
-                break;
+                case Tokens::T_CURLY_BRACE_OPEN:
+                    $expressions[] = $this->parseBraceExpression(
+                        $this->builder->buildAstExpression(),
+                        $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN),
+                        Tokens::T_CURLY_BRACE_CLOSE
+                    );
+                    break;
 
-            case Tokens::T_INCLUDE:
-                $expressions[] = $this->parseIncludeExpression();
-                break;
+                case Tokens::T_INCLUDE:
+                    $expressions[] = $this->parseIncludeExpression();
+                    break;
 
-            case Tokens::T_INCLUDE_ONCE:
-                $expressions[] = $this->parseIncludeOnceExpression();
-                break;
+                case Tokens::T_INCLUDE_ONCE:
+                    $expressions[] = $this->parseIncludeOnceExpression();
+                    break;
 
-            case Tokens::T_REQUIRE:
-                $expressions[] = $this->parseRequireExpression();
-                break;
+                case Tokens::T_REQUIRE:
+                    $expressions[] = $this->parseRequireExpression();
+                    break;
 
-            case Tokens::T_REQUIRE_ONCE:
-                $expressions[] = $this->parseRequireOnceExpression();
-                break;
+                case Tokens::T_REQUIRE_ONCE:
+                    $expressions[] = $this->parseRequireOnceExpression();
+                    break;
 
-            case Tokens::T_DEC:
-                $expressions[] = $this->parseDecrementExpression($expressions);
-                break;
+                case Tokens::T_DEC:
+                    $expressions[] = $this->parseDecrementExpression($expressions);
+                    break;
 
-            case Tokens::T_INC:
-                $expressions[] = $this->parseIncrementExpression($expressions);
-                break;
+                case Tokens::T_INC:
+                    $expressions[] = $this->parseIncrementExpression($expressions);
+                    break;
 
-            case Tokens::T_SL:
-                $expressions[] = $this->parseShiftLeftExpression();
-                break;
+                case Tokens::T_SL:
+                    $expressions[] = $this->parseShiftLeftExpression();
+                    break;
 
-            case Tokens::T_SR:
-                $expressions[] = $this->parseShiftRightExpression();
-                break;
+                case Tokens::T_SR:
+                    $expressions[] = $this->parseShiftRightExpression();
+                    break;
 
-            case Tokens::T_DIR:
-            case Tokens::T_FILE:
-            case Tokens::T_LINE:
-            case Tokens::T_NS_C:
-            case Tokens::T_FUNC_C:
-            case Tokens::T_CLASS_C:
-            case Tokens::T_METHOD_C:
-                $expressions[] = $this->parseConstant();
-                break;
+                case Tokens::T_DIR:
+                case Tokens::T_FILE:
+                case Tokens::T_LINE:
+                case Tokens::T_NS_C:
+                case Tokens::T_FUNC_C:
+                case Tokens::T_CLASS_C:
+                case Tokens::T_METHOD_C:
+                    $expressions[] = $this->parseConstant();
+                    break;
 
-            case Tokens::T_INT_CAST:
-            case Tokens::T_BOOL_CAST:
-            case Tokens::T_ARRAY_CAST:
-            case Tokens::T_UNSET_CAST:
-            case Tokens::T_OBJECT_CAST:
-            case Tokens::T_DOUBLE_CAST:
-            case Tokens::T_STRING_CAST:
-                $expressions[] = $this->parseCastExpression();
-                break;
+                case Tokens::T_INT_CAST:
+                case Tokens::T_BOOL_CAST:
+                case Tokens::T_ARRAY_CAST:
+                case Tokens::T_UNSET_CAST:
+                case Tokens::T_OBJECT_CAST:
+                case Tokens::T_DOUBLE_CAST:
+                case Tokens::T_STRING_CAST:
+                    $expressions[] = $this->parseCastExpression();
+                    break;
 
-            case Tokens::T_EQUAL:
-            case Tokens::T_OR_EQUAL:
-            case Tokens::T_SL_EQUAL:
-            case Tokens::T_SR_EQUAL:
-            case Tokens::T_AND_EQUAL:
-            case Tokens::T_DIV_EQUAL:
-            case Tokens::T_MOD_EQUAL:
-            case Tokens::T_MUL_EQUAL:
-            case Tokens::T_XOR_EQUAL:
-            case Tokens::T_PLUS_EQUAL:
-            case Tokens::T_MINUS_EQUAL:
-            case Tokens::T_CONCAT_EQUAL:
-                $expressions[] = $this->parseAssignmentExpression(
-                    array_pop($expressions)
-                );
-                break;
+                case Tokens::T_EQUAL:
+                case Tokens::T_OR_EQUAL:
+                case Tokens::T_SL_EQUAL:
+                case Tokens::T_SR_EQUAL:
+                case Tokens::T_AND_EQUAL:
+                case Tokens::T_DIV_EQUAL:
+                case Tokens::T_MOD_EQUAL:
+                case Tokens::T_MUL_EQUAL:
+                case Tokens::T_XOR_EQUAL:
+                case Tokens::T_PLUS_EQUAL:
+                case Tokens::T_MINUS_EQUAL:
+                case Tokens::T_CONCAT_EQUAL:
+                    $expressions[] = $this->parseAssignmentExpression(
+                        array_pop($expressions)
+                    );
+                    break;
 
                 // TODO: Handle comments here
-            case Tokens::T_COMMENT:
-            case Tokens::T_DOC_COMMENT:
-                $this->consumeToken($tokenType);
-                break;
+                case Tokens::T_COMMENT:
+                case Tokens::T_DOC_COMMENT:
+                    $this->consumeToken($tokenType);
+                    break;
 
-            case Tokens::T_PRINT: // TODO: Implement print expression
+                case Tokens::T_PRINT: // TODO: Implement print expression
 
-            case Tokens::T_STRING_VARNAME: // TODO: Implement this
+                case Tokens::T_STRING_VARNAME: // TODO: Implement this
 
-            case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
-            case Tokens::T_MINUS:
-            case Tokens::T_MUL:
-            case Tokens::T_DIV:
-            case Tokens::T_MOD:
+                case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
+                case Tokens::T_MINUS:
+                case Tokens::T_MUL:
+                case Tokens::T_DIV:
+                case Tokens::T_MOD:
 
-            case Tokens::T_IS_EQUAL: // TODO: Implement compare expressions
-            case Tokens::T_IS_NOT_EQUAL:
-            case Tokens::T_IS_IDENTICAL:
-            case Tokens::T_IS_NOT_IDENTICAL:
-            case Tokens::T_IS_GREATER_OR_EQUAL:
-            case Tokens::T_IS_SMALLER_OR_EQUAL:
-            case Tokens::T_ANGLE_BRACKET_OPEN:
-            case Tokens::T_ANGLE_BRACKET_CLOSE:
+                case Tokens::T_IS_EQUAL: // TODO: Implement compare expressions
+                case Tokens::T_IS_NOT_EQUAL:
+                case Tokens::T_IS_IDENTICAL:
+                case Tokens::T_IS_NOT_IDENTICAL:
+                case Tokens::T_IS_GREATER_OR_EQUAL:
+                case Tokens::T_IS_SMALLER_OR_EQUAL:
+                case Tokens::T_ANGLE_BRACKET_OPEN:
+                case Tokens::T_ANGLE_BRACKET_CLOSE:
 
-            case Tokens::T_EMPTY:
-            case Tokens::T_CONCAT:
-            case Tokens::T_BITWISE_OR:
-            case Tokens::T_BITWISE_AND:
-            case Tokens::T_BITWISE_NOT:
-            case Tokens::T_BITWISE_XOR:
-                $token = $this->consumeToken($tokenType);
+                case Tokens::T_EMPTY:
+                case Tokens::T_CONCAT:
+                case Tokens::T_BITWISE_OR:
+                case Tokens::T_BITWISE_AND:
+                case Tokens::T_BITWISE_NOT:
+                case Tokens::T_BITWISE_XOR:
+                    $token = $this->consumeToken($tokenType);
 
-                $expr = $this->builder->buildAstExpression();
-                $expr->setImage($token->image);
-                $expr->setStartLine($token->startLine);
-                $expr->setStartColumn($token->startColumn);
-                $expr->setEndLine($token->endLine);
-                $expr->setEndColumn($token->endColumn);
+                    $expr = $this->builder->buildAstExpression();
+                    $expr->setImage($token->image);
+                    $expr->setStartLine($token->startLine);
+                    $expr->setStartColumn($token->startColumn);
+                    $expr->setEndLine($token->endLine);
+                    $expr->setEndColumn($token->endColumn);
 
-                $expressions[] = $expr;
-                break;
+                    $expressions[] = $expr;
+                    break;
 
-            case Tokens::T_AT:
-            case Tokens::T_EXCLAMATION_MARK:
-                $token = $this->consumeToken($tokenType);
+                case Tokens::T_AT:
+                case Tokens::T_EXCLAMATION_MARK:
+                    $token = $this->consumeToken($tokenType);
 
-                $expr = $this->builder->buildAstUnaryExpression($token->image);
-                $expr->setStartLine($token->startLine);
-                $expr->setStartColumn($token->startColumn);
-                $expr->setEndLine($token->endLine);
-                $expr->setEndColumn($token->endColumn);
+                    $expr = $this->builder->buildAstUnaryExpression($token->image);
+                    $expr->setStartLine($token->startLine);
+                    $expr->setStartColumn($token->startColumn);
+                    $expr->setEndLine($token->endLine);
+                    $expr->setEndColumn($token->endColumn);
 
-                $expressions[] = $expr;
-                break;
+                    $expressions[] = $expr;
+                    break;
 
-            case Tokens::T_YIELD:
-                $expressions[] = $this->parseYield();
-                break;
+                case Tokens::T_YIELD:
+                    $expressions[] = $this->parseYield();
+                    break;
 
-            default:
-                throw new UnexpectedTokenException(
-                    $this->consumeToken($tokenType),
-                    $this->compilationUnit->getFileName()
-                );
+                default:
+                    throw new UnexpectedTokenException(
+                        $this->consumeToken($tokenType),
+                        $this->compilationUnit->getFileName()
+                    );
             }
         }
 
@@ -2877,36 +2871,35 @@ abstract class AbstractPHPParser
         }
 
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
-
             switch ($tokenType) {
 
-            case Tokens::T_CLOSE_TAG:
-                $this->parseNonePhpCode();
-                break;
+                case Tokens::T_CLOSE_TAG:
+                    $this->parseNonePhpCode();
+                    break;
 
-            case Tokens::T_ENDSWITCH:
-                $this->parseAlternativeScopeTermination(Tokens::T_ENDSWITCH);
-                return $switch;
+                case Tokens::T_ENDSWITCH:
+                    $this->parseAlternativeScopeTermination(Tokens::T_ENDSWITCH);
+                    return $switch;
 
-            case Tokens::T_CURLY_BRACE_CLOSE:
-                $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
-                return $switch;
+                case Tokens::T_CURLY_BRACE_CLOSE:
+                    $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+                    return $switch;
 
-            case Tokens::T_CASE:
-                $switch->addChild($this->parseSwitchLabel());
-                break;
+                case Tokens::T_CASE:
+                    $switch->addChild($this->parseSwitchLabel());
+                    break;
 
-            case Tokens::T_DEFAULT:
-                $switch->addChild($this->parseSwitchLabelDefault());
-                break;
+                case Tokens::T_DEFAULT:
+                    $switch->addChild($this->parseSwitchLabelDefault());
+                    break;
 
-            case Tokens::T_COMMENT:
-            case Tokens::T_DOC_COMMENT:
-                $this->consumeToken($tokenType);
-                break;
+                case Tokens::T_COMMENT:
+                case Tokens::T_DOC_COMMENT:
+                    $this->consumeToken($tokenType);
+                    break;
 
-            default:
-                break 2;
+                default:
+                    break 2;
             }
         }
         throw new UnexpectedTokenException(
@@ -2978,41 +2971,40 @@ abstract class AbstractPHPParser
 
         $tokenType = $this->tokenizer->peek();
         while ($tokenType !== Tokenizer::T_EOF) {
-
             switch ($tokenType) {
 
-            case Tokens::T_CURLY_BRACE_OPEN:
-                $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
-                ++$curlyBraceCount;
-                break;
+                case Tokens::T_CURLY_BRACE_OPEN:
+                    $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+                    ++$curlyBraceCount;
+                    break;
 
-            case Tokens::T_CURLY_BRACE_CLOSE:
-                if ($curlyBraceCount === 0) {
+                case Tokens::T_CURLY_BRACE_CLOSE:
+                    if ($curlyBraceCount === 0) {
+                        return $label;
+                    }
+                    $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+                    --$curlyBraceCount;
+                    break;
+
+                case Tokens::T_CLOSE_TAG:
+                    $this->parseNonePhpCode();
+                    break;
+
+                case Tokens::T_CASE:
+                case Tokens::T_DEFAULT:
+                case Tokens::T_ENDSWITCH:
                     return $label;
-                }
-                $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
-                --$curlyBraceCount;
-                break;
 
-            case Tokens::T_CLOSE_TAG:
-                $this->parseNonePhpCode();
-                break;
-
-            case Tokens::T_CASE:
-            case Tokens::T_DEFAULT:
-            case Tokens::T_ENDSWITCH:
-                return $label;
-
-            default:
-                $statement = $this->parseOptionalStatement();
-                if ($statement === null) {
-                    $this->consumeToken($tokenType);
-                } elseif ($statement instanceof ASTNode) {
-                    $label->addChild($statement);
-                }
-                // TODO: Change the <else if> into and <else> when the ast
-                //       implementation is finished.
-                break;
+                default:
+                    $statement = $this->parseOptionalStatement();
+                    if ($statement === null) {
+                        $this->consumeToken($tokenType);
+                    } elseif ($statement instanceof ASTNode) {
+                        $label->addChild($statement);
+                    }
+                    // TODO: Change the <else if> into and <else> when the ast
+                    //       implementation is finished.
+                    break;
             }
             $tokenType = $this->tokenizer->peek();
         }
@@ -3281,19 +3273,19 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_ELSE:
-            $this->consumeToken(Tokens::T_ELSE);
-            $this->consumeComments();
-            if ($this->tokenizer->peek() === Tokens::T_IF) {
-                $stmt->addChild($this->parseIfStatement());
-            } else {
-                $this->parseStatementBody($stmt);
-            }
-            break;
+            case Tokens::T_ELSE:
+                $this->consumeToken(Tokens::T_ELSE);
+                $this->consumeComments();
+                if ($this->tokenizer->peek() === Tokens::T_IF) {
+                    $stmt->addChild($this->parseIfStatement());
+                } else {
+                    $this->parseStatementBody($stmt);
+                }
+                break;
 
-        case Tokens::T_ELSEIF:
-            $stmt->addChild($this->parseElseIfStatement());
-            break;
+            case Tokens::T_ELSEIF:
+                $stmt->addChild($this->parseElseIfStatement());
+                break;
         }
 
         return $stmt;
@@ -3744,22 +3736,22 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_DOUBLE_COLON:
-            $node = $this->builder->buildAstClassOrInterfaceReference($qName);
-            $node = $this->setNodePositionsAndReturn($node);
-            $node = $this->parseStaticMemberPrimaryPrefix($node);
-            break;
+            case Tokens::T_DOUBLE_COLON:
+                $node = $this->builder->buildAstClassOrInterfaceReference($qName);
+                $node = $this->setNodePositionsAndReturn($node);
+                $node = $this->parseStaticMemberPrimaryPrefix($node);
+                break;
 
-        case Tokens::T_PARENTHESIS_OPEN:
-            $node = $this->builder->buildAstIdentifier($qName);
-            $node = $this->setNodePositionsAndReturn($node);
-            $node = $this->parseFunctionPostfix($node);
-            break;
+            case Tokens::T_PARENTHESIS_OPEN:
+                $node = $this->builder->buildAstIdentifier($qName);
+                $node = $this->setNodePositionsAndReturn($node);
+                $node = $this->parseFunctionPostfix($node);
+                break;
 
-        default:
-            $node = $this->builder->buildAstConstant($qName);
-            $node = $this->setNodePositionsAndReturn($node);
-            break;
+            default:
+                $node = $this->builder->buildAstConstant($qName);
+                $node = $this->setNodePositionsAndReturn($node);
+                break;
         }
 
         return $this->setNodePositionsAndReturn($node);
@@ -3881,27 +3873,27 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_STRING:
-            $child = $this->parseIdentifier();
-            $child = $this->parseOptionalIndexExpression($child);
+            case Tokens::T_STRING:
+                $child = $this->parseIdentifier();
+                $child = $this->parseOptionalIndexExpression($child);
 
-            // TODO: Move this in a separate method
-            if ($child instanceof \PDepend\Source\AST\ASTIndexExpression) {
-                $this->consumeComments();
-                if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
-                    $prefix->addChild($this->parsePropertyPostfix($child));
-                    return $this->parseOptionalFunctionPostfix($prefix);
+                // TODO: Move this in a separate method
+                if ($child instanceof \PDepend\Source\AST\ASTIndexExpression) {
+                    $this->consumeComments();
+                    if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
+                        $prefix->addChild($this->parsePropertyPostfix($child));
+                        return $this->parseOptionalFunctionPostfix($prefix);
+                    }
                 }
-            }
-            break;
+                break;
 
-        case Tokens::T_CURLY_BRACE_OPEN:
-            $child = $this->parseCompoundExpression();
-            break;
+            case Tokens::T_CURLY_BRACE_OPEN:
+                $child = $this->parseCompoundExpression();
+                break;
 
-        default:
-            $child = $this->parseCompoundVariableOrVariableVariableOrVariable();
-            break;
+            default:
+                $child = $this->parseCompoundVariableOrVariableVariableOrVariable();
+                break;
         }
 
         $prefix->addChild(
@@ -3978,19 +3970,19 @@ abstract class AbstractPHPParser
 
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_STRING:
-            $postfix = $this->parseMethodOrConstantPostfix();
-            break;
+            case Tokens::T_STRING:
+                $postfix = $this->parseMethodOrConstantPostfix();
+                break;
 
-        case Tokens::T_CLASS_FQN:
-            $postfix = $this->parseFullQualifiedClassNamePostfix();
-            break;
+            case Tokens::T_CLASS_FQN:
+                $postfix = $this->parseFullQualifiedClassNamePostfix();
+                break;
 
-        default:
-            $postfix = $this->parseMethodOrPropertyPostfix(
-                $this->parsePostfixIdentifier()
-            );
-            break;
+            default:
+                $postfix = $this->parseMethodOrPropertyPostfix(
+                    $this->parsePostfixIdentifier()
+                );
+                break;
         }
 
         $prefix->addChild($postfix);
@@ -4044,13 +4036,13 @@ abstract class AbstractPHPParser
 
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_PARENTHESIS_OPEN:
-            $postfix = $this->parseMethodPostfix($node);
-            break;
+            case Tokens::T_PARENTHESIS_OPEN:
+                $postfix = $this->parseMethodPostfix($node);
+                break;
 
-        default:
-            $postfix = $this->parsePropertyPostfix($node);
-            break;
+            default:
+                $postfix = $this->parsePropertyPostfix($node);
+                break;
         }
         return $this->parseOptionalMemberPrimaryPrefix($postfix);
     }
@@ -4181,34 +4173,34 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_DOLLAR:
-        case Tokens::T_VARIABLE:
-            $node = $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
-            break;
+            case Tokens::T_DOLLAR:
+            case Tokens::T_VARIABLE:
+                $node = $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
+                break;
 
-        case Tokens::T_SELF:
-            $node = $this->parseConstantOrSelfMemberPrimaryPrefix();
-            break;
+            case Tokens::T_SELF:
+                $node = $this->parseConstantOrSelfMemberPrimaryPrefix();
+                break;
 
-        case Tokens::T_PARENT:
-            $node = $this->parseConstantOrParentMemberPrimaryPrefix();
-            break;
+            case Tokens::T_PARENT:
+                $node = $this->parseConstantOrParentMemberPrimaryPrefix();
+                break;
 
-        case Tokens::T_STATIC:
-            $node = $this->parseStaticVariableDeclarationOrMemberPrimaryPrefix();
-            break;
+            case Tokens::T_STATIC:
+                $node = $this->parseStaticVariableDeclarationOrMemberPrimaryPrefix();
+                break;
 
-        case Tokens::T_STRING:
-        case Tokens::T_BACKSLASH:
-        case Tokens::T_NAMESPACE:
-            $node = $this->parseMemberPrefixOrFunctionPostfix();
-            break;
+            case Tokens::T_STRING:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
+                $node = $this->parseMemberPrefixOrFunctionPostfix();
+                break;
 
-        default:
-            throw new UnexpectedTokenException(
-                $this->tokenizer->next(),
-                $this->compilationUnit->getFileName()
-            );
+            default:
+                throw new UnexpectedTokenException(
+                    $this->tokenizer->next(),
+                    $this->compilationUnit->getFileName()
+                );
         }
 
         return $node;
@@ -4239,21 +4231,21 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_DOUBLE_COLON:
-            $result = $this->parseStaticMemberPrimaryPrefix($variable);
-            break;
+            case Tokens::T_DOUBLE_COLON:
+                $result = $this->parseStaticMemberPrimaryPrefix($variable);
+                break;
 
-        case Tokens::T_OBJECT_OPERATOR:
-            $result = $this->parseMemberPrimaryPrefix($variable);
-            break;
+            case Tokens::T_OBJECT_OPERATOR:
+                $result = $this->parseMemberPrimaryPrefix($variable);
+                break;
 
-        case Tokens::T_PARENTHESIS_OPEN:
-            $result = $this->parseFunctionPostfix($variable);
-            break;
+            case Tokens::T_PARENTHESIS_OPEN:
+                $result = $this->parseFunctionPostfix($variable);
+                break;
 
-        default:
-            $result = $variable;
-            break;
+            default:
+                $result = $variable;
+                break;
         }
         return $this->setNodePositionsAndReturn($result);
     }
@@ -4363,18 +4355,18 @@ abstract class AbstractPHPParser
 
         switch ($type = $this->tokenizer->peek()) {
 
-        case Tokens::T_STRING:
-            // TODO: Separate node classes for magic constants
-        case Tokens::T_DIR:
-        case Tokens::T_FILE:
-        case Tokens::T_LINE:
-        case Tokens::T_NS_C:
-        case Tokens::T_FUNC_C:
-        case Tokens::T_CLASS_C:
-        case Tokens::T_METHOD_C:
-            $token = $this->consumeToken($type);
-            $const = $this->builder->buildAstConstant($token->image);
-            break;
+            case Tokens::T_STRING:
+                // TODO: Separate node classes for magic constants
+            case Tokens::T_DIR:
+            case Tokens::T_FILE:
+            case Tokens::T_LINE:
+            case Tokens::T_NS_C:
+            case Tokens::T_FUNC_C:
+            case Tokens::T_CLASS_C:
+            case Tokens::T_METHOD_C:
+                $token = $this->consumeToken($type);
+                $const = $this->builder->buildAstConstant($token->image);
+                break;
         }
         return $this->setNodePositionsAndReturn($const);
     }
@@ -4575,7 +4567,6 @@ abstract class AbstractPHPParser
 
             $this->consumeComments();
             if ($this->tokenizer->peek() === Tokens::T_COMMA) {
-
                 $this->consumeToken(Tokens::T_COMMA);
                 $this->consumeComments();
             } else {
@@ -4638,14 +4629,14 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_CURLY_BRACE_OPEN:
-            $variable = $this->builder->buildAstCompoundVariable($token->image);
-            $variable->addChild($this->parseCompoundExpression());
-            break;
+            case Tokens::T_CURLY_BRACE_OPEN:
+                $variable = $this->builder->buildAstCompoundVariable($token->image);
+                $variable->addChild($this->parseCompoundExpression());
+                break;
 
-        default:
-            $variable = $this->builder->buildAstLiteral($token->image);
-            break;
+            default:
+                $variable = $this->builder->buildAstLiteral($token->image);
+                break;
         }
 
         return $this->setNodePositionsAndReturn($variable);
@@ -4679,17 +4670,17 @@ abstract class AbstractPHPParser
         // T_CURLY_BRACE_OPEN === Compound variable
         switch ($tokenType) {
 
-        case Tokens::T_DOLLAR:
-        case Tokens::T_VARIABLE:
-            $variable = $this->builder->buildAstVariableVariable($token->image);
-            $variable->addChild(
-                $this->parseCompoundVariableOrVariableVariableOrVariable()
-            );
-            break;
+            case Tokens::T_DOLLAR:
+            case Tokens::T_VARIABLE:
+                $variable = $this->builder->buildAstVariableVariable($token->image);
+                $variable->addChild(
+                    $this->parseCompoundVariableOrVariableVariableOrVariable()
+                );
+                break;
 
-        default:
-            $variable = $this->parseCompoundVariable($token);
-            break;
+            default:
+                $variable = $this->parseCompoundVariable($token);
+                break;
         }
 
         return $this->setNodePositionsAndReturn($variable);
@@ -4744,13 +4735,13 @@ abstract class AbstractPHPParser
 
         switch ($this->tokenizer->peek()) {
 
-        case Tokens::T_DOLLAR:
-        case Tokens::T_VARIABLE:
-            return $this->parseBraceExpression(
-                $this->builder->buildAstCompoundExpression(),
-                $token,
-                Tokens::T_CURLY_BRACE_CLOSE
-            );
+            case Tokens::T_DOLLAR:
+            case Tokens::T_VARIABLE:
+                return $this->parseBraceExpression(
+                    $this->builder->buildAstCompoundExpression(),
+                    $token,
+                    Tokens::T_CURLY_BRACE_CLOSE
+                );
         }
 
         $literal = $this->builder->buildAstLiteral($token->image);
@@ -4825,27 +4816,27 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_NULL:
-        case Tokens::T_TRUE:
-        case Tokens::T_FALSE:
-        case Tokens::T_DNUMBER:
-        case Tokens::T_CONSTANT_ENCAPSED_STRING:
-            $token = $this->consumeToken($tokenType);
+            case Tokens::T_NULL:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_DNUMBER:
+            case Tokens::T_CONSTANT_ENCAPSED_STRING:
+                $token = $this->consumeToken($tokenType);
 
-            $literal = $this->builder->buildAstLiteral($token->image);
-            $literal->configureLinesAndColumns(
-                $token->startLine,
-                $token->endLine,
-                $token->startColumn,
-                $token->endColumn
-            );
-            return $literal;
+                $literal = $this->builder->buildAstLiteral($token->image);
+                $literal->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
+                return $literal;
 
-        case Tokens::T_LNUMBER:
-            return $this->parseIntegerNumber();
+            case Tokens::T_LNUMBER:
+                return $this->parseIntegerNumber();
 
-        default:
-            return $this->parseString($tokenType);
+            default:
+                return $this->parseString($tokenType);
         }
     }
 
@@ -4937,7 +4928,6 @@ abstract class AbstractPHPParser
 
         $element = $this->builder->buildAstArrayElement();
         if ($this->parseOptionalByReference()) {
-
             if ($static) {
                 $tokens = $this->tokenStack->pop();
 
@@ -5067,31 +5057,30 @@ abstract class AbstractPHPParser
     private function parseStringExpressions(ASTNode $node, $stopToken)
     {
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
-
             switch ($tokenType) {
 
-            case $stopToken:
-                break 2;
+                case $stopToken:
+                    break 2;
 
-            case Tokens::T_BACKSLASH:
-                $node->addChild($this->parseEscapedAstLiteralString());
-                break;
+                case Tokens::T_BACKSLASH:
+                    $node->addChild($this->parseEscapedAstLiteralString());
+                    break;
 
-            case Tokens::T_DOLLAR:
-                $node->addChild($this->parseCompoundVariableOrLiteral());
-                break;
+                case Tokens::T_DOLLAR:
+                    $node->addChild($this->parseCompoundVariableOrLiteral());
+                    break;
 
-            case Tokens::T_VARIABLE:
-                $node->addChild($this->parseVariable());
-                break;
+                case Tokens::T_VARIABLE:
+                    $node->addChild($this->parseVariable());
+                    break;
 
-            case Tokens::T_CURLY_BRACE_OPEN:
-                $node->addChild($this->parseCompoundExpressionOrLiteral());
-                break;
+                case Tokens::T_CURLY_BRACE_OPEN:
+                    $node->addChild($this->parseCompoundExpressionOrLiteral());
+                    break;
 
-            default:
-                $node->addChild($this->parseLiteral());
-                break;
+                default:
+                    $node->addChild($this->parseLiteral());
+                    break;
             }
         }
         return $node;
@@ -5178,7 +5167,6 @@ abstract class AbstractPHPParser
         }
 
         while ($tokenType !== Tokenizer::T_EOF) {
-
             $formalParameters->addChild(
                 $this->parseFormalParameterOrTypeHintOrByReference()
             );
@@ -5226,29 +5214,29 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_ARRAY:
-            $parameter = $this->parseFormalParameterAndArrayTypeHint();
-            break;
+            case Tokens::T_ARRAY:
+                $parameter = $this->parseFormalParameterAndArrayTypeHint();
+                break;
 
-        case ($this->isFormalParameterTypeHint($tokenType)):
-            $parameter = $this->parseFormalParameterAndTypeHint();
-            break;
+            case ($this->isFormalParameterTypeHint($tokenType)):
+                $parameter = $this->parseFormalParameterAndTypeHint();
+                break;
 
-        case Tokens::T_SELF:
-            $parameter = $this->parseFormalParameterAndSelfTypeHint();
-            break;
+            case Tokens::T_SELF:
+                $parameter = $this->parseFormalParameterAndSelfTypeHint();
+                break;
 
-        case Tokens::T_PARENT:
-            $parameter = $this->parseFormalParameterAndParentTypeHint();
-            break;
+            case Tokens::T_PARENT:
+                $parameter = $this->parseFormalParameterAndParentTypeHint();
+                break;
 
-        case Tokens::T_BITWISE_AND:
-            $parameter = $this->parseFormalParameterAndByReference();
-            break;
+            case Tokens::T_BITWISE_AND:
+                $parameter = $this->parseFormalParameterAndByReference();
+                break;
 
-        default:
-            $parameter = $this->parseFormalParameter();
-            break;
+            default:
+                $parameter = $this->parseFormalParameter();
+                break;
         }
         return $this->setNodePositionsAndReturn($parameter);
     }
@@ -5516,125 +5504,125 @@ abstract class AbstractPHPParser
 
         switch ($tokenType) {
 
-        case Tokens::T_ECHO:
-            return $this->parseEchoStatement();
+            case Tokens::T_ECHO:
+                return $this->parseEchoStatement();
 
-        case Tokens::T_SWITCH:
-            return $this->parseSwitchStatement();
+            case Tokens::T_SWITCH:
+                return $this->parseSwitchStatement();
 
-        case Tokens::T_TRY:
-            return $this->parseTryStatement();
+            case Tokens::T_TRY:
+                return $this->parseTryStatement();
 
-        case Tokens::T_THROW:
-            return $this->parseThrowStatement();
+            case Tokens::T_THROW:
+                return $this->parseThrowStatement();
 
-        case Tokens::T_IF:
-            return $this->parseIfStatement();
+            case Tokens::T_IF:
+                return $this->parseIfStatement();
 
-        case Tokens::T_FOR:
-            return $this->parseForStatement();
+            case Tokens::T_FOR:
+                return $this->parseForStatement();
 
-        case Tokens::T_FOREACH:
-            return $this->parseForeachStatement();
+            case Tokens::T_FOREACH:
+                return $this->parseForeachStatement();
 
-        case Tokens::T_DO:
-            return $this->parseDoWhileStatement();
+            case Tokens::T_DO:
+                return $this->parseDoWhileStatement();
 
-        case Tokens::T_WHILE:
-            return $this->parseWhileStatement();
+            case Tokens::T_WHILE:
+                return $this->parseWhileStatement();
 
-        case Tokens::T_RETURN:
-            return $this->parseReturnStatement();
+            case Tokens::T_RETURN:
+                return $this->parseReturnStatement();
 
-        case Tokens::T_BREAK:
-            return $this->parseBreakStatement();
+            case Tokens::T_BREAK:
+                return $this->parseBreakStatement();
 
-        case Tokens::T_CONTINUE:
-            return $this->parseContinueStatement();
+            case Tokens::T_CONTINUE:
+                return $this->parseContinueStatement();
 
-        case Tokens::T_GOTO:
-            return $this->parseGotoStatement();
+            case Tokens::T_GOTO:
+                return $this->parseGotoStatement();
 
-        case Tokens::T_GLOBAL:
-            return $this->parseGlobalStatement();
+            case Tokens::T_GLOBAL:
+                return $this->parseGlobalStatement();
 
-        case Tokens::T_UNSET:
-            return $this->parseUnsetStatement();
+            case Tokens::T_UNSET:
+                return $this->parseUnsetStatement();
 
-        case Tokens::T_STRING:
-            if ($this->tokenizer->peekNext() === Tokens::T_COLON) {
-                return $this->parseLabelStatement();
-            }
-            break;
+            case Tokens::T_STRING:
+                if ($this->tokenizer->peekNext() === Tokens::T_COLON) {
+                    return $this->parseLabelStatement();
+                }
+                break;
 
-        case Tokens::T_CONST:
-            return $this->parseConstantDefinition();
+            case Tokens::T_CONST:
+                return $this->parseConstantDefinition();
 
-        case Tokens::T_FUNCTION:
-            return $this->parseFunctionOrClosureDeclaration();
+            case Tokens::T_FUNCTION:
+                return $this->parseFunctionOrClosureDeclaration();
 
-        case Tokens::T_COMMENT:
-            return $this->parseCommentWithOptionalInlineClassOrInterfaceReference();
+            case Tokens::T_COMMENT:
+                return $this->parseCommentWithOptionalInlineClassOrInterfaceReference();
 
-        case Tokens::T_DOC_COMMENT:
-            return $this->builder->buildAstComment(
-                $this->consumeToken(Tokens::T_DOC_COMMENT)->image
-            );
+            case Tokens::T_DOC_COMMENT:
+                return $this->builder->buildAstComment(
+                    $this->consumeToken(Tokens::T_DOC_COMMENT)->image
+                );
 
-        case Tokens::T_CURLY_BRACE_OPEN:
-            return $this->parseRegularScope();
+            case Tokens::T_CURLY_BRACE_OPEN:
+                return $this->parseRegularScope();
 
-        case Tokens::T_DECLARE:
-            return $this->parseDeclareStatement();
+            case Tokens::T_DECLARE:
+                return $this->parseDeclareStatement();
 
-        case Tokens::T_ELSE:
-        case Tokens::T_ENDIF:
-        case Tokens::T_ELSEIF:
-        case Tokens::T_ENDFOR:
-        case Tokens::T_ENDWHILE:
-        case Tokens::T_ENDSWITCH:
-        case Tokens::T_ENDDECLARE:
-        case Tokens::T_ENDFOREACH:
-        case Tokens::T_CURLY_BRACE_CLOSE:
-            return null;
-
-        case Tokens::T_DECLARE:
-            return $this->parseDeclareStatement();
-
-        case Tokens::T_CLOSE_TAG:
-            if (($tokenType = $this->parseNonePhpCode()) === Tokenizer::T_EOF) {
+            case Tokens::T_ELSE:
+            case Tokens::T_ENDIF:
+            case Tokens::T_ELSEIF:
+            case Tokens::T_ENDFOR:
+            case Tokens::T_ENDWHILE:
+            case Tokens::T_ENDSWITCH:
+            case Tokens::T_ENDDECLARE:
+            case Tokens::T_ENDFOREACH:
+            case Tokens::T_CURLY_BRACE_CLOSE:
                 return null;
-            }
-            return $this->parseOptionalStatement();
 
-        case Tokens::T_TRAIT:
-            $package = $this->getNamespaceOrPackage();
-            $package->addType($trait = $this->parseTraitDeclaration());
+            case Tokens::T_DECLARE:
+                return $this->parseDeclareStatement();
 
-            $this->builder->restoreTrait($trait);
-            $this->compilationUnit->addChild($trait);
-            return $trait;
+            case Tokens::T_CLOSE_TAG:
+                if (($tokenType = $this->parseNonePhpCode()) === Tokenizer::T_EOF) {
+                    return null;
+                }
+                return $this->parseOptionalStatement();
 
-        case Tokens::T_INTERFACE:
-            $package = $this->getNamespaceOrPackage();
-            $package->addType($interface = $this->parseInterfaceDeclaration());
+            case Tokens::T_TRAIT:
+                $package = $this->getNamespaceOrPackage();
+                $package->addType($trait = $this->parseTraitDeclaration());
 
-            $this->builder->restoreInterface($interface);
-            $this->compilationUnit->addChild($interface);
-            return $interface;
+                $this->builder->restoreTrait($trait);
+                $this->compilationUnit->addChild($trait);
+                return $trait;
 
-        case Tokens::T_CLASS:
-        case Tokens::T_FINAL:
-        case Tokens::T_ABSTRACT:
-            $package = $this->getNamespaceOrPackage();
-            $package->addType($class = $this->parseClassDeclaration());
+            case Tokens::T_INTERFACE:
+                $package = $this->getNamespaceOrPackage();
+                $package->addType($interface = $this->parseInterfaceDeclaration());
 
-            $this->builder->restoreClass($class);
-            $this->compilationUnit->addChild($class);
-            return $class;
+                $this->builder->restoreInterface($interface);
+                $this->compilationUnit->addChild($interface);
+                return $interface;
 
-        case Tokens::T_YIELD:
-            return $this->parseYield();
+            case Tokens::T_CLASS:
+            case Tokens::T_FINAL:
+            case Tokens::T_ABSTRACT:
+                $package = $this->getNamespaceOrPackage();
+                $package->addType($class = $this->parseClassDeclaration());
+
+                $this->builder->restoreClass($class);
+                $this->compilationUnit->addChild($class);
+                return $class;
+
+            case Tokens::T_YIELD:
+                return $this->parseYield();
         }
 
         $this->tokenStack->push();
@@ -5661,15 +5649,15 @@ abstract class AbstractPHPParser
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
             switch ($tokenType) {
 
-            case Tokens::T_OPEN_TAG:
-            case Tokens::T_OPEN_TAG_WITH_ECHO:
-                $this->consumeToken($tokenType);
-                $tokenType = $this->tokenizer->peek();
-                break 2;
+                case Tokens::T_OPEN_TAG:
+                case Tokens::T_OPEN_TAG_WITH_ECHO:
+                    $this->consumeToken($tokenType);
+                    $tokenType = $this->tokenizer->peek();
+                    break 2;
 
-            default:
-                $this->consumeToken($tokenType);
-                break;
+                default:
+                    $this->consumeToken($tokenType);
+                    break;
             }
         }
         $this->tokenStack->pop();
@@ -6270,96 +6258,95 @@ abstract class AbstractPHPParser
 
         $tokenType = $this->tokenizer->peek();
         while ($tokenType !== Tokenizer::T_EOF) {
-
             switch ($tokenType) {
 
-            case Tokens::T_COMMA:
-            case Tokens::T_SEMICOLON:
-            case Tokens::T_PARENTHESIS_CLOSE:
-                if ($defaultValue->isValueAvailable() === true) {
-                    return $defaultValue;
-                }
-                throw new MissingValueException($this->tokenizer);
+                case Tokens::T_COMMA:
+                case Tokens::T_SEMICOLON:
+                case Tokens::T_PARENTHESIS_CLOSE:
+                    if ($defaultValue->isValueAvailable() === true) {
+                        return $defaultValue;
+                    }
+                    throw new MissingValueException($this->tokenizer);
 
-            case Tokens::T_NULL:
-                $this->consumeToken(Tokens::T_NULL);
-                $defaultValue->setValue(null);
-                break;
+                case Tokens::T_NULL:
+                    $this->consumeToken(Tokens::T_NULL);
+                    $defaultValue->setValue(null);
+                    break;
 
-            case Tokens::T_TRUE:
-                $this->consumeToken(Tokens::T_TRUE);
-                $defaultValue->setValue(true);
-                break;
+                case Tokens::T_TRUE:
+                    $this->consumeToken(Tokens::T_TRUE);
+                    $defaultValue->setValue(true);
+                    break;
 
-            case Tokens::T_FALSE:
-                $this->consumeToken(Tokens::T_FALSE);
-                $defaultValue->setValue(false);
-                break;
+                case Tokens::T_FALSE:
+                    $this->consumeToken(Tokens::T_FALSE);
+                    $defaultValue->setValue(false);
+                    break;
 
-            case Tokens::T_LNUMBER:
-                $token = $this->consumeToken(Tokens::T_LNUMBER);
-                $defaultValue->setValue($signed * (int) $token->image);
-                break;
+                case Tokens::T_LNUMBER:
+                    $token = $this->consumeToken(Tokens::T_LNUMBER);
+                    $defaultValue->setValue($signed * (int) $token->image);
+                    break;
 
-            case Tokens::T_DNUMBER:
-                $token = $this->consumeToken(Tokens::T_DNUMBER);
-                $defaultValue->setValue($signed * (double) $token->image);
-                break;
+                case Tokens::T_DNUMBER:
+                    $token = $this->consumeToken(Tokens::T_DNUMBER);
+                    $defaultValue->setValue($signed * (double) $token->image);
+                    break;
 
-            case Tokens::T_CONSTANT_ENCAPSED_STRING:
-                $token = $this->consumeToken(Tokens::T_CONSTANT_ENCAPSED_STRING);
-                $defaultValue->setValue(substr($token->image, 1, -1));
-                break;
+                case Tokens::T_CONSTANT_ENCAPSED_STRING:
+                    $token = $this->consumeToken(Tokens::T_CONSTANT_ENCAPSED_STRING);
+                    $defaultValue->setValue(substr($token->image, 1, -1));
+                    break;
 
-            case Tokens::T_DOUBLE_COLON:
-                $this->consumeToken(Tokens::T_DOUBLE_COLON);
-                break;
+                case Tokens::T_DOUBLE_COLON:
+                    $this->consumeToken(Tokens::T_DOUBLE_COLON);
+                    break;
 
-            case Tokens::T_CLASS_FQN:
-                $this->consumeToken(Tokens::T_CLASS_FQN);
-                break;
+                case Tokens::T_CLASS_FQN:
+                    $this->consumeToken(Tokens::T_CLASS_FQN);
+                    break;
 
-            case Tokens::T_PLUS:
-                $this->consumeToken(Tokens::T_PLUS);
-                break;
+                case Tokens::T_PLUS:
+                    $this->consumeToken(Tokens::T_PLUS);
+                    break;
 
-            case Tokens::T_MINUS:
-                $this->consumeToken(Tokens::T_MINUS);
-                $signed *= -1;
-                break;
+                case Tokens::T_MINUS:
+                    $this->consumeToken(Tokens::T_MINUS);
+                    $signed *= -1;
+                    break;
 
-            case Tokens::T_DOUBLE_QUOTE:
-                $defaultValue->setValue($this->parseStringSequence($tokenType));
-                break;
+                case Tokens::T_DOUBLE_QUOTE:
+                    $defaultValue->setValue($this->parseStringSequence($tokenType));
+                    break;
 
-            case Tokens::T_DIR:
-            case Tokens::T_FILE:
-            case Tokens::T_LINE:
-            case Tokens::T_SELF:
-            case Tokens::T_NS_C:
-            case Tokens::T_FUNC_C:
-            case Tokens::T_PARENT:
-            case Tokens::T_STRING:
-            case Tokens::T_STATIC:
-            case Tokens::T_CLASS_C:
-            case Tokens::T_METHOD_C:
-            case Tokens::T_BACKSLASH:
-            case Tokens::T_SQUARED_BRACKET_OPEN:
-            case Tokens::T_SQUARED_BRACKET_CLOSE:
-                // There is a default value but we don't handle it at the moment.
-                $defaultValue->setValue(null);
-                $this->consumeToken($tokenType);
-                break;
+                case Tokens::T_DIR:
+                case Tokens::T_FILE:
+                case Tokens::T_LINE:
+                case Tokens::T_SELF:
+                case Tokens::T_NS_C:
+                case Tokens::T_FUNC_C:
+                case Tokens::T_PARENT:
+                case Tokens::T_STRING:
+                case Tokens::T_STATIC:
+                case Tokens::T_CLASS_C:
+                case Tokens::T_METHOD_C:
+                case Tokens::T_BACKSLASH:
+                case Tokens::T_SQUARED_BRACKET_OPEN:
+                case Tokens::T_SQUARED_BRACKET_CLOSE:
+                    // There is a default value but we don't handle it at the moment.
+                    $defaultValue->setValue(null);
+                    $this->consumeToken($tokenType);
+                    break;
 
-            case Tokens::T_START_HEREDOC:
-                $defaultValue->setValue(
-                    $this->parseHeredoc()->getChild(0)->getImage()
-                );
-                break;
+                case Tokens::T_START_HEREDOC:
+                    $defaultValue->setValue(
+                        $this->parseHeredoc()->getChild(0)->getImage()
+                    );
+                    break;
 
 
-            default:
-                return $this->parseStaticValueVersionSpecific($defaultValue);
+                default:
+                    return $this->parseStaticValueVersionSpecific($defaultValue);
             }
 
             $this->consumeComments();
@@ -6705,7 +6692,6 @@ abstract class AbstractPHPParser
     {
         $type = $this->tokenizer->peek();
         while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT) {
-
             $token = $this->consumeToken($type);
             $type  = $this->tokenizer->peek();
 

@@ -71,9 +71,9 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function isKeyword($tokenType)
     {
         switch ($tokenType) {
-        case Tokens::T_CLASS:
-        case Tokens::T_INTERFACE:
-            return true;
+            case Tokens::T_CLASS:
+            case Tokens::T_INTERFACE:
+                return true;
         }
         return false;
     }
@@ -90,20 +90,20 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function isClassName($tokenType)
     {
         switch ($tokenType) {
-        case Tokens::T_DIR:
-        case Tokens::T_USE:
-        case Tokens::T_GOTO:
-        case Tokens::T_NULL:
-        case Tokens::T_NS_C:
-        case Tokens::T_TRUE:
-        case Tokens::T_CLONE:
-        case Tokens::T_FALSE:
-        case Tokens::T_TRAIT:
-        case Tokens::T_STRING:
-        case Tokens::T_TRAIT_C:
-        case Tokens::T_INSTEADOF:
-        case Tokens::T_NAMESPACE:
-            return true;
+            case Tokens::T_DIR:
+            case Tokens::T_USE:
+            case Tokens::T_GOTO:
+            case Tokens::T_NULL:
+            case Tokens::T_NS_C:
+            case Tokens::T_TRUE:
+            case Tokens::T_CLONE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_STRING:
+            case Tokens::T_TRAIT_C:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_NAMESPACE:
+                return true;
         }
         return false;
     }
@@ -145,24 +145,24 @@ class PHPParserGeneric extends AbstractPHPParser
     {
         $type = $this->tokenizer->peek();
         switch ($type) {
-        case Tokens::T_CLONE:
-        case Tokens::T_STRING:
-        case Tokens::T_USE:
-        case Tokens::T_GOTO:
-        case Tokens::T_NULL:
-        case Tokens::T_SELF:
-        case Tokens::T_TRUE:
-        case Tokens::T_FALSE:
-        case Tokens::T_TRAIT:
-        case Tokens::T_INSTEADOF:
-        case Tokens::T_NAMESPACE:
-        case Tokens::T_DIR:
-        case Tokens::T_NS_C:
-        case Tokens::T_PARENT:
-        case Tokens::T_TRAIT_C:
-            return $this->consumeToken($type)->image;
-        case Tokenizer::T_EOF:
-            throw new TokenStreamEndException($this->tokenizer);
+            case Tokens::T_CLONE:
+            case Tokens::T_STRING:
+            case Tokens::T_USE:
+            case Tokens::T_GOTO:
+            case Tokens::T_NULL:
+            case Tokens::T_SELF:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_NAMESPACE:
+            case Tokens::T_DIR:
+            case Tokens::T_NS_C:
+            case Tokens::T_PARENT:
+            case Tokens::T_TRAIT_C:
+                return $this->consumeToken($type)->image;
+            case Tokenizer::T_EOF:
+                throw new TokenStreamEndException($this->tokenizer);
         }
         throw new UnexpectedTokenException(
             $this->tokenizer->next(),
@@ -182,11 +182,11 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function isFormalParameterTypeHint($tokenType)
     {
         switch ($tokenType) {
-        case Tokens::T_STRING:
-        case Tokens::T_CALLABLE:
-        case Tokens::T_BACKSLASH:
-        case Tokens::T_NAMESPACE:
-            return true;
+            case Tokens::T_STRING:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
+                return true;
         }
         return false;
     }
@@ -201,21 +201,21 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function parseFormalParameterTypeHint()
     {
         switch ($this->tokenizer->peek()) {
-        case Tokens::T_CALLABLE:
-            $this->consumeToken(Tokens::T_CALLABLE);
-            $type = $this->builder->buildAstTypeCallable();
-            break;
-        case Tokens::T_STRING:
-        case Tokens::T_BACKSLASH:
-        case Tokens::T_NAMESPACE:
-            $name = $this->parseQualifiedName();
-
-            if (0 === strcasecmp('callable', $name)) {
+            case Tokens::T_CALLABLE:
+                $this->consumeToken(Tokens::T_CALLABLE);
                 $type = $this->builder->buildAstTypeCallable();
-            } else {
-                $type = $this->builder->buildAstClassOrInterfaceReference($name);
-            }
-            break;
+                break;
+            case Tokens::T_STRING:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
+                $name = $this->parseQualifiedName();
+
+                if (0 === strcasecmp('callable', $name)) {
+                    $type = $this->builder->buildAstTypeCallable();
+                } else {
+                    $type = $this->builder->buildAstClassOrInterfaceReference($name);
+                }
+                break;
         }
         return $type;
     }
@@ -268,15 +268,15 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function parsePostfixIdentifier()
     {
         switch ($this->tokenizer->peek()) {
-        case Tokens::T_STRING:
-            $node = $this->parseLiteral();
-            break;
-        case Tokens::T_CURLY_BRACE_OPEN:
-            $node = $this->parseCompoundExpression();
-            break;
-        default:
-            $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
-            break;
+            case Tokens::T_STRING:
+                $node = $this->parseLiteral();
+                break;
+            case Tokens::T_CURLY_BRACE_OPEN:
+                $node = $this->parseCompoundExpression();
+                break;
+            default:
+                $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
+                break;
         }
         return $this->parseOptionalIndexExpression($node);
     }
@@ -314,9 +314,9 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function isArrayStartDelimiter()
     {
         switch ($this->tokenizer->peek()) {
-        case Tokens::T_ARRAY:
-        case Tokens::T_SQUARED_BRACKET_OPEN:
-            return true;
+            case Tokens::T_ARRAY:
+            case Tokens::T_SQUARED_BRACKET_OPEN:
+                return true;
         }
         return false;
     }
@@ -332,18 +332,18 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function parseArray(\PDepend\Source\AST\ASTArray $array, $static = false)
     {
         switch ($this->tokenizer->peek()) {
-        case Tokens::T_ARRAY:
-            $this->consumeToken(Tokens::T_ARRAY);
-            $this->consumeComments();
-            $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
-            $this->parseArrayElements($array, Tokens::T_PARENTHESIS_CLOSE, $static);
-            $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
-            break;
-        default:
-            $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
-            $this->parseArrayElements($array, Tokens::T_SQUARED_BRACKET_CLOSE, $static);
-            $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
-            break;
+            case Tokens::T_ARRAY:
+                $this->consumeToken(Tokens::T_ARRAY);
+                $this->consumeComments();
+                $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+                $this->parseArrayElements($array, Tokens::T_PARENTHESIS_CLOSE, $static);
+                $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+                break;
+            default:
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
+                $this->parseArrayElements($array, Tokens::T_SQUARED_BRACKET_CLOSE, $static);
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
+                break;
         }
         return $array;
     }
@@ -359,19 +359,19 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
         switch ($this->tokenizer->peek()) {
-        case Tokens::T_SL:
-            $shift = $this->parseShiftLeftExpression();
-            $this->parseStaticValue();
-            break;
-        case Tokens::T_SR:
-            $shift = $this->parseShiftRightExpression();
-            $this->parseStaticValue();
-            break;
-        default:
-            throw new UnexpectedTokenException(
-                $this->tokenizer->next(),
-                $this->tokenizer->getSourceFile()
-            );
+            case Tokens::T_SL:
+                $shift = $this->parseShiftLeftExpression();
+                $this->parseStaticValue();
+                break;
+            case Tokens::T_SR:
+                $shift = $this->parseShiftRightExpression();
+                $this->parseStaticValue();
+                break;
+            default:
+                throw new UnexpectedTokenException(
+                    $this->tokenizer->next(),
+                    $this->tokenizer->getSourceFile()
+                );
         }
 
         return $value;

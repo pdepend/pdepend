@@ -72,7 +72,7 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      *
      * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $reference The type
      *        instance that reference the concrete target of self.
-     * 
+     *
      * @todo Call parent constructor, otherwise this could cause bad side effects.
      */
     public function __construct(ASTClassOrInterfaceReference $reference)

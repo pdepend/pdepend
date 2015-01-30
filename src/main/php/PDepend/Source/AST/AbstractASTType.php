@@ -333,7 +333,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         foreach ($uses as $use) {
             foreach ($use->getAllMethods() as $method) {
-
                 foreach ($uses as $use2) {
                     if ($use2->hasExcludeFor($method)) {
                         continue 2;

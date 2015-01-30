@@ -167,7 +167,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         $interfaces = array();
 
         while (($top = array_pop($stack)) !== null) {
-
             foreach ($top->interfaceReferences as $interfaceReference) {
                 $interface = $interfaceReference->getType();
                 if (in_array($interface, $interfaces, true) === true) {

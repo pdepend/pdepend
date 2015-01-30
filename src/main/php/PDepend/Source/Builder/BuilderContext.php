@@ -60,7 +60,7 @@ interface BuilderContext
     /**
      * This method can be used to register an existing function in the current
      * application context.
-     * 
+     *
      * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
@@ -79,7 +79,7 @@ interface BuilderContext
     /**
      * This method can be used to register an existing class in the current
      * class context.
-     * 
+     *
      * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */

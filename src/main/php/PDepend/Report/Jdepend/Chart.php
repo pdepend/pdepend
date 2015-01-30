@@ -160,7 +160,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 
         $items = array();
         foreach ($this->code as $namespace) {
-
             if (!$namespace->isUserDefined()) {
                 continue;
             }
