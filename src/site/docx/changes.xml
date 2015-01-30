@@ -12,6 +12,9 @@
             <release version="2.0.4"
                      date="2014/12/04"
                      description="This release closes some minor issues and incorporates several outstanding pull requests.">
+                <action date="4df5b9d" dev="manuelpichler" type="fix" issue="180" system="github">
+                    Unexpected token: &lt;&lt;, line: 5, col: 27
+                </action>
                 <action date="1288292" dev="KacerCZ" type="fix" issue="179" system="github">
                     Fixed display of duration longer than one hour
                 </action>
