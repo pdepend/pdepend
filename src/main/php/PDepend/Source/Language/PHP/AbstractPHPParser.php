@@ -2097,7 +2097,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTShiftLeftExpression
      * @since 1.0.1
      */
-    private function parseShiftLeftExpression()
+    protected function parseShiftLeftExpression()
     {
         $token = $this->consumeToken(Tokens::T_SL);
 
@@ -2117,7 +2117,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTShiftRightExpression
      * @since 1.0.1
      */
-    private function parseShiftRightExpression()
+    protected function parseShiftRightExpression()
     {
         $token = $this->consumeToken(Tokens::T_SR);
 
@@ -6251,7 +6251,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTValue
      * @since 0.9.5
      */
-    private function parseStaticValue()
+    protected function parseStaticValue()
     {
         $defaultValue = new ASTValue();
 
@@ -6351,10 +6351,7 @@ abstract class AbstractPHPParser
 
 
                 default:
-                    throw new UnexpectedTokenException(
-                        $this->tokenizer->next(),
-                        $this->tokenizer->getSourceFile()
-                    );
+                    return $this->parseStaticValueVersionSpecific($defaultValue);
             }
 
             $this->consumeComments();
@@ -6364,6 +6361,21 @@ abstract class AbstractPHPParser
 
         // We should never reach this, so throw an exception
         throw new TokenStreamEndException($this->tokenizer);
+    }
+
+    /**
+     * Parses additional static values that are valid in the supported php version.
+     *
+     * @param \PDepend\Source\AST\ASTValue $value
+     * @return \PDepend\Source\AST\ASTValue
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    protected function parseStaticValueVersionSpecific(ASTValue $value)
+    {
+        throw new UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
+        );
     }
 
     /**

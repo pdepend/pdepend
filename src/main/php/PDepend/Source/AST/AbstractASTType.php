@@ -175,6 +175,21 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
+     * Returns the child at the given index.
+     *
+     * @param integer $index
+     * @return \PDepend\Source\AST\ASTNode
+     * @throws \OutOfBoundsException
+     */
+    public function getChild($index)
+    {
+        if (isset($this->nodes[$index])) {
+            return $this->nodes[$index];
+        }
+        throw new \OutOfBoundsException("No child at index {$index} exists.");
+    }
+
+    /**
      * Returns all child nodes of this class.
      *
      * @return \PDepend\Source\AST\ASTNode[]

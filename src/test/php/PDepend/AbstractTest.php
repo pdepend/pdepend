@@ -659,7 +659,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         // Strip first two parts
         array_shift($parts);
 
-        if (preg_match('(\D(\d+Test)$)', end($parts), $match)) {
+        if (!preg_match('(Version\d+Test$)', end($parts)) && preg_match('(\D(\d+Test)$)', end($parts), $match)) {
             array_pop($parts);
             array_push($parts, $match[1]);
 
