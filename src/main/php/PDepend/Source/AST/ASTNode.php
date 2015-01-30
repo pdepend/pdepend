@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
 
@@ -47,7 +47,7 @@ namespace PDepend\Source\AST;
  * This is an abstract base implementation of the ast node interface.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
 abstract class ASTNode
@@ -79,7 +79,7 @@ abstract class ASTNode
      * contains the start, end line, and the start, end column and the node
      * image in a colon seperated string.
      *
-     * @var string
+     * @var   string
      * @since 0.10.4
      */
     protected $metadata = '::::';
@@ -102,7 +102,7 @@ abstract class ASTNode
      * @param string $image The image for this node.
      *
      * @return void
-     * @since 0.10.4
+     * @since  0.10.4
      */
     public function setImage($image)
     {
@@ -125,7 +125,7 @@ abstract class ASTNode
      * @param integer $startLine The node start line.
      *
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function setStartLine($startLine)
     {
@@ -148,7 +148,7 @@ abstract class ASTNode
      * @param integer $startColumn The node start column.
      *
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function setStartColumn($startColumn)
     {
@@ -171,7 +171,7 @@ abstract class ASTNode
      * @param integer $endLine The node's end line.
      *
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function setEndLine($endLine)
     {
@@ -194,7 +194,7 @@ abstract class ASTNode
      * @param integer $endColumn The node's end column.
      *
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function setEndColumn($endColumn)
     {
@@ -221,7 +221,7 @@ abstract class ASTNode
      * @param integer $endColumn   The node's end column.
      *
      * @return void
-     * @since 0.9.10
+     * @since  0.9.10
      */
     public function configureLinesAndColumns(
         $startLine,
@@ -241,7 +241,7 @@ abstract class ASTNode
      * @param integer $index The property instance.
      *
      * @return integer
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function getMetadataInteger($index)
     {
@@ -256,7 +256,7 @@ abstract class ASTNode
      * @param integer $value The property value.
      *
      * @return void
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function setMetadataInteger($index, $value)
     {
@@ -269,7 +269,7 @@ abstract class ASTNode
      * @param integer $index The property instance.
      *
      * @return boolean
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function getMetadataBoolean($index)
     {
@@ -284,7 +284,7 @@ abstract class ASTNode
      * @param boolean $value The property value.
      *
      * @return void
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function setMetadataBoolean($index, $value)
     {
@@ -297,7 +297,7 @@ abstract class ASTNode
      * @param integer $index The property instance.
      *
      * @return mixed
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function getMetadata($index)
     {
@@ -313,7 +313,7 @@ abstract class ASTNode
      * @param mixed   $value The property value.
      *
      * @return void
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function setMetadata($index, $value)
     {
@@ -327,7 +327,7 @@ abstract class ASTNode
      * Returns the total number of the used property bag.
      *
      * @return integer
-     * @since 0.10.4
+     * @since  0.10.4
      */
     protected function getMetadataSize()
     {
@@ -416,7 +416,7 @@ abstract class ASTNode
      * @param \PDepend\Source\AST\ASTNode $node The new child node.
      *
      * @return void
-     * @since 0.10.2
+     * @since  0.10.2
      */
     public function prependChild(\PDepend\Source\AST\ASTNode $node)
     {
@@ -511,7 +511,7 @@ abstract class ASTNode
      * array with those property names that should be serialized for this class.
      *
      * @return array
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function __sleep()
     {
@@ -529,7 +529,7 @@ abstract class ASTNode
      * node's children.
      *
      * @return void
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function __wakeup()
     {

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util\Coverage;
@@ -48,14 +48,14 @@ use PDepend\Source\AST\AbstractASTArtifact;
  * Base interface representing a coverage report.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface Report
 {
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $artifact
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $artifact
      * @return float
      */
     public function getCoverage(AbstractASTArtifact $artifact);

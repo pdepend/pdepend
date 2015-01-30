@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTMethod;
  * methods and functions.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
@@ -84,7 +84,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace $namespaces
      * @return void
      */
     public function analyze($namespaces)
@@ -108,7 +108,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Returns the cyclomatic complexity for the given <b>$node</b> instance.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $node
+     * @param  \PDepend\Source\AST\ASTArtifact $node
      * @return integer
      */
     public function getCcn(ASTArtifact $node)
@@ -124,7 +124,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Returns the extended cyclomatic complexity for the given <b>$node</b>
      * instance.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $node
+     * @param  \PDepend\Source\AST\ASTArtifact $node
      * @return integer
      */
     public function getCcn2(ASTArtifact $node)
@@ -141,7 +141,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -168,7 +168,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a function node.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -186,7 +186,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a code interface object.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -197,7 +197,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a method node.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -215,9 +215,9 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits methods, functions or closures and calculated their complexity.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function calculateComplexity(AbstractASTCallable $callable)
     {
@@ -240,7 +240,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * @param string $nodeId Identifier of the analyzed item.
      *
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
     private function updateProjectMetrics($nodeId)
     {
@@ -252,10 +252,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a boolean AND-expression.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitBooleanAndExpression($node, $data)
     {
@@ -267,10 +267,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a boolean OR-expression.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitBooleanOrExpression($node, $data)
     {
@@ -282,10 +282,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a switch label.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitSwitchLabel($node, $data)
     {
@@ -300,10 +300,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a catch statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitCatchStatement($node, $data)
     {
@@ -317,10 +317,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits an elseif statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitElseIfStatement($node, $data)
     {
@@ -334,10 +334,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a for statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitForStatement($node, $data)
     {
@@ -351,10 +351,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a foreach statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitForeachStatement($node, $data)
     {
@@ -368,10 +368,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits an if statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitIfStatement($node, $data)
     {
@@ -385,10 +385,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a logical AND expression.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitLogicalAndExpression($node, $data)
     {
@@ -400,10 +400,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a logical OR expression.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitLogicalOrExpression($node, $data)
     {
@@ -415,10 +415,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a ternary operator.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitConditionalExpression($node, $data)
     {
@@ -432,10 +432,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a while-statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function visitWhileStatement($node, $data)
     {
@@ -449,10 +449,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * Visits a do/while-statement.
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array(string=>integer)   $data The previously calculated ccn values.
+     * @param array(string=>integer)      $data The previously calculated ccn values.
      *
      * @return array(string=>integer)
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitDoWhileStatement($node, $data)
     {

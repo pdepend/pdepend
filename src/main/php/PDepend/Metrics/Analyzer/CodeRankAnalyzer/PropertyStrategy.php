@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
@@ -50,7 +50,7 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
  * Collects class and namespace metrics based on class properties.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 {
@@ -74,7 +74,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     /**
      * Visits a property node.
      *
-     * @param \PDepend\Source\AST\ASTProperty $property
+     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     public function visitProperty(ASTProperty $property)
@@ -113,7 +113,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
     protected function initNode(AbstractASTArtifact $node)

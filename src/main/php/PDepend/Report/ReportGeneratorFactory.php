@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Report;
@@ -56,7 +56,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *  <tag name="pdepend.logger" option="--my-custom-logger" />
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ReportGeneratorFactory
 {
@@ -74,8 +74,8 @@ class ReportGeneratorFactory
      * Creates a new generator or returns an existing instance for the given
      * <b>$identifier</b>.
      *
-     * @param string $identifier The generator identifier.
-     * @param string $fileName The log output file name.
+     * @param  string $identifier The generator identifier.
+     * @param  string $fileName   The log output file name.
      * @return \PDepend\Report\ReportGenerator
      * @throws \RuntimeException
      */

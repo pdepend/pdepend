@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics;
@@ -49,14 +49,14 @@ use PDepend\Source\ASTVisitor\ASTVisitListener;
  * the current metric analyzer.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface AnalyzerListener extends ASTVisitListener
 {
     /**
      * This method is called when the analyzer starts code processing.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
+     * @param  \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
      * @return void
      */
     public function startAnalyzer(Analyzer $analyzer);
@@ -64,7 +64,7 @@ interface AnalyzerListener extends ASTVisitListener
     /**
      * This method is called when the analyzer has finished code processing.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
+     * @param  \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
      * @return void
      */
     public function endAnalyzer(Analyzer $analyzer);

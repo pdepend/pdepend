@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util\Coverage;
@@ -47,7 +47,7 @@ namespace PDepend\Util\Coverage;
  * application.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Factory
 {
@@ -55,7 +55,7 @@ class Factory
      * Factory method that tries to create coverage report instance for a given
      * path name.
      *
-     * @param string $pathName Qualified path name of a coverage report file.
+     * @param  string $pathName Qualified path name of a coverage report file.
      * @return \PDepend\Util\Coverage\CloverReport
      * @throws \RuntimeException When the given path name does not point to a
      *         valid coverage file or onto an unsupported coverage format.
@@ -73,7 +73,7 @@ class Factory
      * Creates a simple xml instance for the xml contents that are located under
      * the given path name.
      *
-     * @param string $pathName Qualified path name of a coverage report file.
+     * @param  string $pathName Qualified path name of a coverage report file.
      * @return \SimpleXMLElement
      * @throws \RuntimeException When the given path name does not point to a
      *         valid xml file.

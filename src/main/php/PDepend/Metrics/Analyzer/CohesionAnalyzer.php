@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * and namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
@@ -81,7 +81,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * )
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(ASTArtifact $artifact)

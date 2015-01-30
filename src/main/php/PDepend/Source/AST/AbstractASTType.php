@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 
@@ -50,7 +50,7 @@ use PDepend\Util\Cache\CacheDriver;
  * Represents any valid complex php type.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 abstract class AbstractASTType extends AbstractASTArtifact
@@ -131,7 +131,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Temporary property that only holds methods during the parsing process.
      *
-     * @var \PDepend\Source\AST\ASTMethod[]
+     * @var   \PDepend\Source\AST\ASTMethod[]
      * @since 1.0.2
      */
     private $methods = array();
@@ -141,7 +141,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Setter method for the currently used token cache, where this class or
      * interface instance can store the associated tokens.
      *
-     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @param  \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\AST\AbstractASTType
      */
     public function setCache(CacheDriver $cache)
@@ -153,7 +153,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Sets the currently active builder context.
      *
-     * @param \PDepend\Source\Builder\BuilderContext $context
+     * @param  \PDepend\Source\Builder\BuilderContext $context
      * @return \PDepend\Source\AST\AbstractASTType
      */
     public function setContext(BuilderContext $context)
@@ -165,7 +165,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Adds a parsed child node to this node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
+     * @param  \PDepend\Source\AST\ASTNode $node
      * @return void
      * @access private
      */
@@ -177,7 +177,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns the child at the given index.
      *
-     * @param integer $index
+     * @param  integer $index
      * @return \PDepend\Source\AST\ASTNode
      * @throws \OutOfBoundsException
      */
@@ -208,7 +208,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return \PDepend\Source\AST\ASTNode
      * @access private
-     * @todo Refactor $_methods property to getAllMethods() when it exists.
+     * @todo   Refactor $_methods property to getAllMethods() when it exists.
      */
     public function getFirstChildOfType($targetType)
     {
@@ -238,7 +238,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return \PDepend\Source\AST\ASTNode[]
      * @access private
-     * @todo Refactor $_methods property to getAllMethods() when it exists.
+     * @todo   Refactor $_methods property to getAllMethods() when it exists.
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
@@ -304,7 +304,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Adds the given method to this type.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return \PDepend\Source\AST\ASTMethod
      */
     public function addMethod(ASTMethod $method)
@@ -321,7 +321,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * that are imported through traits.
      *
      * @return \PDepend\Source\AST\ASTMethod[]
-     * @since 1.0.0
+     * @since  1.0.0
      */
     protected function getTraitMethods()
     {
@@ -377,7 +377,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Sets the tokens for this type.
      *
-     * @param \PDepend\Source\Tokenizer\Token[] $tokens The generated tokens.
+     * @param  \PDepend\Source\Tokenizer\Token[] $tokens The generated tokens.
      * @return void
      */
     public function setTokens(array $tokens)
@@ -433,7 +433,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Sets the parent namespace for this type.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function setNamespace(ASTNamespace $namespace)
@@ -476,9 +476,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Checks that this user type is a subtype of the given <b>$type</b>
      * instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTType $type
+     * @param  \PDepend\Source\AST\AbstractASTType $type
      * @return boolean
-     * @since 1.0.6
+     * @since  1.0.6
      */
     abstract public function isSubtypeOf(AbstractASTType $type);
 

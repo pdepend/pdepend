@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -48,7 +48,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * Representation of a code interface.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ASTInterface extends AbstractASTClassOrInterface
 {
@@ -73,10 +73,10 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * Sets a reference onto the parent class of this class node.
      *
-     * @param \PDepend\Source\AST\ASTClassReference
+     * @param  \PDepend\Source\AST\ASTClassReference
      * @return void
      * @throws \BadMethodCallException
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function setParentClassReference(\PDepend\Source\AST\ASTClassReference $classReference)
     {
@@ -88,7 +88,7 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTType $type
+     * @param  \PDepend\Source\AST\AbstractASTType $type
      * @return boolean
      */
     public function isSubtypeOf(AbstractASTType $type)
@@ -109,7 +109,7 @@ class ASTInterface extends AbstractASTClassOrInterface
      * Returns the declared modifiers for this type.
      *
      * @return integer
-     * @since 0.9.4
+     * @since  0.9.4
      */
     public function getModifiers()
     {
@@ -119,7 +119,7 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor)
@@ -134,7 +134,7 @@ class ASTInterface extends AbstractASTClassOrInterface
      * context.
      *
      * @return void
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function __wakeup()
     {

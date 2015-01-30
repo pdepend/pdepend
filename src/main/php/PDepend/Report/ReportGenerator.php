@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Report;
@@ -48,7 +48,7 @@ use PDepend\Metrics\Analyzer;
  * Base interface for all PDepend report generators.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface ReportGenerator
 {
@@ -56,7 +56,7 @@ interface ReportGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
     public function log(Analyzer $analyzer);
@@ -71,7 +71,7 @@ interface ReportGenerator
     
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
-     * concrete analyzer classes or one of the descriptive analyzer interfaces. 
+     * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
      * @return array(string)
      */

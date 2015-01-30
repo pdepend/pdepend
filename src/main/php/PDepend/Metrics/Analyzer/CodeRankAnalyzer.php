@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * Calculates the code rank metric for classes and namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
@@ -116,13 +116,12 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
-
             $this->fireStartAnalyzer();
 
             $factory = new StrategyFactory();
@@ -169,7 +168,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(ASTArtifact $artifact)

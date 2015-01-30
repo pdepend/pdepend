@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
@@ -46,7 +46,7 @@ namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
  * Factory for the different code rank strategies.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class StrategyFactory
 {
@@ -96,7 +96,7 @@ class StrategyFactory
     /**
      * Creates a code rank strategy for the given identifier.
      *
-     * @param string $strategyName The strategy identifier.
+     * @param  string $strategyName The strategy identifier.
      * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
      * @throws \InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.

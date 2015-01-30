@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -48,7 +48,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  * Iterator for code nodes.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
 {
@@ -172,8 +172,8 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return boolean Returns true on success or false on failure. The return
      *                 value will be casted to boolean if non-boolean was returned.
-     * @since 1.0.0
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
+     * @since  1.0.0
+     * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
      */
     public function offsetExists($offset)
     {
@@ -183,11 +183,11 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Offset to retrieve
      *
-     * @param mixed $offset
+     * @param  mixed $offset
      * @return \PDepend\Source\AST\ASTArtifact Can return all value types.
      * @throws \OutOfBoundsException
-     * @since 1.0.0
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
+     * @since  1.0.0
+     * @link   http://php.net/manual/en/arrayaccess.offsetget.php
      */
     public function offsetGet($offset)
     {
@@ -200,12 +200,12 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Offset to set
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param  mixed $offset
+     * @param  mixed $value
      * @return void
      * @throws \BadMethodCallException
-     * @since 1.0.0
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
+     * @since  1.0.0
+     * @link   http://php.net/manual/en/arrayaccess.offsetset.php
      */
     public function offsetSet($offset, $value)
     {
@@ -215,11 +215,11 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Offset to unset
      *
-     * @param mixed $offset
+     * @param  mixed $offset
      * @return void
      * @throws \BadMethodCallException
-     * @since 1.0.0
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
+     * @since  1.0.0
+     * @link   http://php.net/manual/en/arrayaccess.offsetunset.php
      */
     public function offsetUnset($offset)
     {

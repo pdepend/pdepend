@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\Tokenizer;
@@ -123,7 +123,7 @@ if (!defined('T_FINALLY')) {
  * Base interface for all php code tokenizers.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface Tokenizer
 {
@@ -174,7 +174,7 @@ interface Tokenizer
      * ignores all comments between the current and the next token.
      *
      * @return integer
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function peekNext();
 

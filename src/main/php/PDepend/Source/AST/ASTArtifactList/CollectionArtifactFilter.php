@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST\ASTArtifactList;
@@ -49,7 +49,7 @@ use PDepend\Source\AST\ASTArtifact;
  * filtering.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
  * @fixme Never ever use a singleton!!!
  */
@@ -94,9 +94,9 @@ final class CollectionArtifactFilter implements ArtifactFilter
     /**
      * Sets the used filter instance.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList\ArtifactFilter $filter
+     * @param  \PDepend\Source\AST\ASTArtifactList\ArtifactFilter $filter
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function setFilter(ArtifactFilter $filter = null)
     {
@@ -107,7 +107,7 @@ final class CollectionArtifactFilter implements ArtifactFilter
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $node
+     * @param  \PDepend\Source\AST\ASTArtifact $node
      * @return boolean
      */
     public function accept(ASTArtifact $node)

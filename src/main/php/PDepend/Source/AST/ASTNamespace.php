@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -49,7 +49,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * Represents a php namespace node.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ASTNamespace extends AbstractASTArtifact
 {
@@ -127,7 +127,7 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>false</b>.
      *
      * @return boolean
-     * @since 0.9.10
+     * @since  0.9.10
      */
     public function isUserDefined()
     {
@@ -143,7 +143,7 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>false</b>.
      *
      * @return boolean
-     * @since 0.9.10
+     * @since  0.9.10
      */
     private function checkUserDefined()
     {
@@ -160,7 +160,7 @@ class ASTNamespace extends AbstractASTArtifact
      * instances declared in this namespace.
      *
      * @return array
-     * @since 1.0.0
+     * @since  1.0.0
      */
     public function getTraits()
     {
@@ -193,9 +193,9 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns an iterator with all types of the given <b>$className</b> in this
      * namespace.
      *
-     * @param string $className The class/type we are looking for.
+     * @param  string $className The class/type we are looking for.
      * @return \PDepend\Source\AST\ASTArtifactList
-     * @since 1.0.0
+     * @since  1.0.0
      */
     private function getTypesOfType($className)
     {
@@ -222,7 +222,7 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Adds the given type to this namespace and returns the input type instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTType $type
+     * @param  \PDepend\Source\AST\AbstractASTType $type
      * @return \PDepend\Source\AST\AbstractASTType
      */
     public function addType(AbstractASTType $type)
@@ -247,7 +247,7 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Removes the given type instance from this namespace.
      *
-     * @param \PDepend\Source\AST\AbstractASTType $type
+     * @param  \PDepend\Source\AST\AbstractASTType $type
      * @return void
      */
     public function removeType(AbstractASTType $type)
@@ -274,7 +274,7 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Adds the given function to this namespace and returns the input instance.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return \PDepend\Source\AST\ASTFunction
      */
     public function addFunction(ASTFunction $function)
@@ -293,7 +293,7 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Removes the given function from this namespace.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function removeFunction(ASTFunction $function)
@@ -309,7 +309,7 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor)

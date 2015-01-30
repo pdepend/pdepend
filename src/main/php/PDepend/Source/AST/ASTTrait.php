@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 
@@ -49,7 +49,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * Representation of a trait.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 class ASTTrait extends ASTClass
@@ -58,8 +58,8 @@ class ASTTrait extends ASTClass
      * Returns all properties for this class.
      *
      * @return \PDepend\Source\AST\ASTProperty[]
-     * @since 1.0.6
-     * @todo Return properties declared by a trait.
+     * @since  1.0.6
+     * @todo   Return properties declared by a trait.
      */
     public function getProperties()
     {
@@ -86,9 +86,9 @@ class ASTTrait extends ASTClass
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTType $type
+     * @param  \PDepend\Source\AST\AbstractASTType $type
      * @return boolean
-     * @todo Should we handle trait subtypes?
+     * @todo   Should we handle trait subtypes?
      */
     public function isSubtypeOf(AbstractASTType $type)
     {
@@ -98,7 +98,7 @@ class ASTTrait extends ASTClass
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor)

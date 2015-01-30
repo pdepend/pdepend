@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\Parser;
@@ -48,15 +48,15 @@ use PDepend\Source\Tokenizer\Token;
  * This type of exception is thrown when the parser detects an unexpected token.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class UnexpectedTokenException extends TokenException
 {
     /**
      * Constructs a new unexpected token exception.
      *
-     * @param Token $token    The last parsed token instance.
-     * @param string           $fileName The file where the exception occured.
+     * @param Token  $token    The last parsed token instance.
+     * @param string $fileName The file where the exception occured.
      */
     public function __construct(Token $token, $fileName)
     {

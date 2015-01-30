@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -46,7 +46,7 @@ namespace PDepend\Source\AST;
  * This node class represents any kind of assignment.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ASTAssignmentExpression extends \PDepend\Source\AST\ASTNode
 {
@@ -55,10 +55,10 @@ class ASTAssignmentExpression extends \PDepend\Source\AST\ASTNode
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed $data
+     * @param mixed                                 $data
      *
      * @return mixed
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
     {

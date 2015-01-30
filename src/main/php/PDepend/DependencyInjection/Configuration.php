@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\DependencyInjection;
@@ -52,7 +52,7 @@ use PDepend\Util\Workarounds;
  * This is the class that validates and merges configuration
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Configuration implements ConfigurationInterface
 {
@@ -81,34 +81,33 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('cache')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->enumNode('driver')->defaultValue($defaultCacheDriver)->values(array('file', 'memory'))->end()
-                        ->scalarNode('location')->defaultValue($home . '/.pdepend')->end()
-                    ->end()
-                ->end()
-                ->arrayNode('image_convert')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('font_size')->defaultValue('11')->end()
-                        ->scalarNode('font_family')->defaultValue('Arial')->end()
-                    ->end()
-                ->end()
-                ->arrayNode('parser')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->integerNode('nesting')->defaultValue(65536)->end()
-                    ->end()
-                ->end()
+            ->arrayNode('cache')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->enumNode('driver')->defaultValue($defaultCacheDriver)->values(array('file', 'memory'))->end()
+            ->scalarNode('location')->defaultValue($home . '/.pdepend')->end()
             ->end()
-        ;
+            ->end()
+            ->arrayNode('image_convert')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('font_size')->defaultValue('11')->end()
+            ->scalarNode('font_family')->defaultValue('Arial')->end()
+            ->end()
+            ->end()
+            ->arrayNode('parser')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->integerNode('nesting')->defaultValue(65536)->end()
+            ->end()
+            ->end()
+            ->end();
 
         $extensionsNode = $rootNode
             ->children()
-                ->arrayNode('extensions')
-                ->addDefaultsIfNotSet()
-                    ->children();
+            ->arrayNode('extensions')
+            ->addDefaultsIfNotSet()
+            ->children();
 
         foreach ($this->extensions as $extension) {
             $extensionNode = $extensionsNode->arrayNode($extension->getName());

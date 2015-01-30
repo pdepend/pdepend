@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
@@ -52,7 +52,7 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
  * Collects class and namespace metrics based on inheritance.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 {
@@ -76,7 +76,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Visits a code class object.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -89,7 +89,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Visits a code interface object.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -103,7 +103,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
     protected function visitType(AbstractASTClassOrInterface $type)
@@ -114,7 +114,6 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
         $this->initNode($type);
 
         foreach ($type->getDependencies() as $dependency) {
-
             $depPkg = $dependency->getNamespace();
 
             $this->initNode($dependency);
@@ -134,7 +133,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
     protected function initNode(AbstractASTArtifact $node)

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -59,7 +59,7 @@ use PDepend\Source\AST\ASTNamespace;
  * classes, methods, functions or namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, AnalyzerProjectAware
 {
@@ -127,7 +127,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * )
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -168,14 +168,13 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
     {
         // Check for previous run
         if ($this->nodeMetrics === null) {
-
             $this->fireStartAnalyzer();
 
             $this->nodeMetrics = array();
@@ -191,7 +190,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Visits a class node.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -222,7 +221,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Visits a function node.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -241,7 +240,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Visits a code interface object.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -272,7 +271,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Visits a method node.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -297,7 +296,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Visits a namespace node.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)

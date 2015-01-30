@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util\Coverage;
@@ -48,7 +48,7 @@ use PDepend\Source\AST\AbstractASTArtifact;
  * Coverage report implementation for clover formatted xml files.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class CloverReport implements Report
 {
@@ -72,7 +72,7 @@ class CloverReport implements Report
     /**
      * Reads the coverage information for a project.
      *
-     * @param \SimpleXMLElement $sxml Element representing the clover project tag.
+     * @param  \SimpleXMLElement $sxml Element representing the clover project tag.
      * @return void
      */
     private function readProjectCoverage(\SimpleXMLElement $sxml)
@@ -87,7 +87,7 @@ class CloverReport implements Report
      * Reads the coverage information for all file elements under the given
      * parent.
      *
-     * @param \SimpleXMLElement $sxml Element representing a file parent element.
+     * @param  \SimpleXMLElement $sxml Element representing a file parent element.
      * @return void
      */
     private function readFileCoverage(\SimpleXMLElement $sxml)
@@ -104,7 +104,7 @@ class CloverReport implements Report
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $artifact
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $artifact
      * @return float
      */
     public function getCoverage(AbstractASTArtifact $artifact)
@@ -138,7 +138,7 @@ class CloverReport implements Report
     /**
      * Returns the lines of the covered file.
      *
-     * @param string $fileName The source file name.
+     * @param  string $fileName The source file name.
      * @return array(boolean)
      */
     private function getLines($fileName)

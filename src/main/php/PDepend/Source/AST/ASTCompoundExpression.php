@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
 
@@ -61,7 +61,7 @@ namespace PDepend\Source\AST;
  * </code>
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
 class ASTCompoundExpression extends \PDepend\Source\AST\ASTNode
@@ -71,10 +71,10 @@ class ASTCompoundExpression extends \PDepend\Source\AST\ASTNode
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed $data
+     * @param mixed                                 $data
      *
      * @return mixed
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
     {

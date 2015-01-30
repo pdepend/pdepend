@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Report\Jdepend;
@@ -56,7 +56,7 @@ use PDepend\Util\ImageConvert;
  * Generates a chart with the aggregated metrics.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
@@ -107,7 +107,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Sets the context code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
+     * @param  \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)
@@ -119,7 +119,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
     public function log(Analyzer $analyzer)

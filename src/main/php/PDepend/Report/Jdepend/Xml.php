@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Report\Jdepend;
@@ -58,7 +58,7 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
  * from <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
@@ -158,7 +158,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Sets the context code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
+     * @param  \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)
@@ -170,7 +170,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
     public function log(Analyzer $analyzer)
@@ -216,7 +216,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Visits a class node.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -241,7 +241,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Visits a code interface object.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -262,7 +262,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Visits a package node.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)

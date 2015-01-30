@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
 
@@ -54,7 +54,7 @@ use PDepend\Util\Cache\Driver\File\FileCacheDirectory;
  * stores all cache entries in files under this directory structure.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
 class FileCacheDriver implements CacheDriver
@@ -88,7 +88,7 @@ class FileCacheDriver implements CacheDriver
     /**
      * Unique key for this cache instance.
      *
-     * @var string
+     * @var   string
      * @since 1.0.0
      */
     private $cacheKey;
@@ -97,7 +97,7 @@ class FileCacheDriver implements CacheDriver
      * This method constructs a new file cache instance for the given root
      * directory.
      *
-     * @param string $root The cache root directory.
+     * @param string $root     The cache root directory.
      * @param string $cacheKey Unique key for this cache instance.
      */
     public function __construct($root, $cacheKey = null)
@@ -116,7 +116,7 @@ class FileCacheDriver implements CacheDriver
      * you must invoke right before every call to <em>restore()</em> or
      * <em>store()</em>.
      *
-     * @param string $type The name or object type for the next storage method call.
+     * @param  string $type The name or object type for the next storage method call.
      * @return \PDepend\Util\Cache\CacheDriver
      */
     public function type($type)
@@ -132,9 +132,9 @@ class FileCacheDriver implements CacheDriver
      * hash and the supplied hash are not identical, that cache entry will be
      * removed and not returned.
      *
-     * @param string $key  The cache key for the given data.
-     * @param mixed  $data Any data that should be cached.
-     * @param string $hash Optional hash that will be used for verification.
+     * @param  string $key  The cache key for the given data.
+     * @param  mixed  $data Any data that should be cached.
+     * @param  string $hash Optional hash that will be used for verification.
      * @return void
      */
     public function store($key, $data, $hash = null)
@@ -146,8 +146,8 @@ class FileCacheDriver implements CacheDriver
     /**
      * This method writes the given <em>$data</em> into <em>$file</em>.
      *
-     * @param string $file The cache file name.
-     * @param string $data Serialized cache data.
+     * @param  string $file The cache file name.
+     * @param  string $data Serialized cache data.
      * @return void
      */
     protected function write($file, $data)
@@ -166,8 +166,8 @@ class FileCacheDriver implements CacheDriver
      * Then it returns the cached entry. Otherwise this method will return
      * <b>NULL</b>.
      *
-     * @param string $key  The cache key for the given data.
-     * @param string $hash Optional hash that will be used for verification.
+     * @param  string $key  The cache key for the given data.
+     * @param  string $hash Optional hash that will be used for verification.
      * @return mixed
      */
     public function restore($key, $hash = null)
@@ -184,8 +184,8 @@ class FileCacheDriver implements CacheDriver
      * to stored hash value. If both hashes are equal this method returns the
      * cached entry. Otherwise this method returns <b>NULL</b>.
      *
-     * @param string $file The cache file name.
-     * @param string $hash The verification hash.
+     * @param  string $file The cache file name.
+     * @param  string $hash The verification hash.
      * @return mixed
      */
     protected function restoreFile($file, $hash)
@@ -200,7 +200,7 @@ class FileCacheDriver implements CacheDriver
     /**
      * This method reads the raw data from the given <em>$file</em>.
      *
-     * @param string $file The cache file name.
+     * @param  string $file The cache file name.
      * @return string
      */
     protected function read($file)
@@ -222,7 +222,7 @@ class FileCacheDriver implements CacheDriver
      * <b>$pattern</b>. If no matching entry exists, this method simply does
      * nothing.
      *
-     * @param string $pattern The cache key pattern.
+     * @param  string $pattern The cache key pattern.
      * @return void
      */
     public function remove($pattern)
@@ -242,7 +242,7 @@ class FileCacheDriver implements CacheDriver
      * file name is a combination of the given <em>$key</em>, the cache root
      * directory and the current entry type.
      *
-     * @param string $key The cache key for the given data.
+     * @param  string $key The cache key for the given data.
      * @return string
      */
     protected function getCacheFile($key)
@@ -262,7 +262,7 @@ class FileCacheDriver implements CacheDriver
      * directory and the current entry type, but without the used cache file
      * extension.
      *
-     * @param string $key The cache key for the given data.
+     * @param  string $key The cache key for the given data.
      * @return string
      */
     protected function getCacheFileWithoutExtension($key)

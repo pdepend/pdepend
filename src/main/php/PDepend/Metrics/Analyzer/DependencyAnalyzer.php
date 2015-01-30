@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTNamespace;
  * This visitor generates the metrics for the analyzed namespaces.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class DependencyAnalyzer extends AbstractAnalyzer
 {
@@ -121,13 +121,12 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
     {
         if ($this->nodeMetrics === null) {
-
             $this->fireStartAnalyzer();
 
             $this->nodeMetrics = array();
@@ -149,7 +148,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns the statistics for the requested node.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return array
      */
     public function getStats(AbstractASTArtifact $node)
@@ -164,7 +163,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return \PDepend\Source\AST\AbstractASTArtifact[]
      */
     public function getAfferents(AbstractASTArtifact $node)
@@ -179,7 +178,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return \PDepend\Source\AST\AbstractASTArtifact[]
      */
     public function getEfferents(AbstractASTArtifact $node)
@@ -195,7 +194,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Returns an array of nodes that build a cycle for the requested node or it
      * returns <b>null</b> if no cycle exists .
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return \PDepend\Source\AST\AbstractASTArtifact[]
      */
     public function getCycle(AbstractASTArtifact $node)
@@ -217,7 +216,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits a method node.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -235,7 +234,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits a namespace node.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)
@@ -256,7 +255,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits a class node.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -269,7 +268,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits an interface node.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -283,7 +282,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Generic visit method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
     protected function visitType(AbstractASTClassOrInterface $type)
@@ -342,7 +341,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Initializes the node metric record for the given <b>$namespace</b>.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     protected function initNamespaceMetric(ASTNamespace $namespace)
@@ -373,17 +372,18 @@ class DependencyAnalyzer extends AbstractAnalyzer
     protected function postProcess()
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
-
             $this->afferentNodes[$id] = array();
             foreach ($metrics[self::M_AFFERENT_COUPLING] as $caId) {
                 $this->afferentNodes[$id][] = $this->nodeSet[$caId];
             }
+
             sort($this->afferentNodes[$id]);
 
             $this->efferentNodes[$id] = array();
             foreach ($metrics[self::M_EFFERENT_COUPLING] as $ceId) {
                 $this->efferentNodes[$id][] = $this->nodeSet[$ceId];
             }
+
             sort($this->efferentNodes[$id]);
 
             $afferent = count($metrics[self::M_AFFERENT_COUPLING]);
@@ -452,8 +452,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] &$list
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace[] &$list
+     * @param  \PDepend\Source\AST\ASTNamespace   $namespace
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Input;
@@ -46,7 +46,7 @@ namespace PDepend\Input;
  * Whitelist filter that accepts files by their file extension.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ExtensionFilter implements Filter
 {
@@ -71,8 +71,8 @@ class ExtensionFilter implements Filter
     /**
      * Returns <b>true</b> if this filter accepts the given paths.
      *
-     * @param string $relative The relative path to the specified root.
-     * @param string $absolute The absolute path to a source file.
+     * @param  string $relative The relative path to the specified root.
+     * @param  string $absolute The absolute path to a source file.
      * @return boolean
      */
     public function accept($relative, $absolute)

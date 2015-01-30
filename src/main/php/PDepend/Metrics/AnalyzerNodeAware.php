@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics;
@@ -48,7 +48,7 @@ use PDepend\Source\AST\ASTArtifact;
  * Marker interface that marks a result set as node metrics aware.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface AnalyzerNodeAware extends Analyzer
 {
@@ -65,7 +65,7 @@ interface AnalyzerNodeAware extends Analyzer
      * )
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array(string=>mixed)
      */
     public function getNodeMetrics(ASTArtifact $artifact);

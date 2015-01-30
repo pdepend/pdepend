@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
 
@@ -49,7 +49,7 @@ use PDepend\Util\Cache\CacheDriver;
  * Directory helper for the file system based cache implementation.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
 class FileCacheDirectory
@@ -84,7 +84,7 @@ class FileCacheDirectory
      * Creates a cache directory for the given cache entry key and returns the
      * full qualified path for that cache directory.
      *
-     * @param string $key The cache for an entry.
+     * @param  string $key The cache for an entry.
      * @return string
      */
     public function createCacheDirectory($key)
@@ -97,7 +97,7 @@ class FileCacheDirectory
      * creates a new cache directory for the given cache entry key and returns
      * the full qualified path for that cache directory.
      *
-     * @param string $key The cache for an entry.
+     * @param  string $key The cache for an entry.
      * @return string
      */
     protected function createOrReturnCacheDirectory($key)
@@ -112,7 +112,7 @@ class FileCacheDirectory
     /**
      * Ensures that the given <b>$cacheDir</b> really exists.
      *
-     * @param string $cacheDir The cache root directory.
+     * @param  string $cacheDir The cache root directory.
      * @return string
      */
     protected function ensureExists($cacheDir)
@@ -208,7 +208,7 @@ class FileCacheDirectory
      * Flushes the cache record for the given file info instance, independent if
      * it is a file, directory or symlink.
      *
-     * @param \SplFileInfo $file
+     * @param  \SplFileInfo $file
      * @return void
      */
     protected function flushEntry(\SplFileInfo $file)

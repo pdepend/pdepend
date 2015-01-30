@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util;
@@ -46,7 +46,7 @@ namespace PDepend\Util;
  * Registry class for the PDepend configuration class.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ConfigurationInstance
 {
@@ -70,7 +70,7 @@ class ConfigurationInstance
     /**
      * Sets the configuration instance.
      *
-     * @param \PDepend\Util\Configuration $configuration The config instance.
+     * @param  \PDepend\Util\Configuration $configuration The config instance.
      * @return void
      */
     public static function set(Configuration $configuration = null)

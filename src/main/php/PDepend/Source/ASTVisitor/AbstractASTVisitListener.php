@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\ASTVisitor;
@@ -58,14 +58,14 @@ use PDepend\Source\AST\ASTTrait;
  * listener.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractASTVisitListener implements ASTVisitListener
 {
     /**
      * Is called when the visitor starts a new class instance.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function startVisitClass(ASTClass $class)
@@ -76,7 +76,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a class instance.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function endVisitClass(ASTClass $class)
@@ -87,9 +87,9 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new trait instance.
      *
-     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
     public function startVisitTrait(ASTTrait $trait)
     {
@@ -99,9 +99,9 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a trait instance.
      *
-     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
     public function endVisitTrait(ASTTrait $trait)
     {
@@ -111,7 +111,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new file instance.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
     public function startVisitFile(ASTCompilationUnit $compilationUnit)
@@ -122,7 +122,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a file instance.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
     public function endVisitFile(ASTCompilationUnit $compilationUnit)
@@ -133,7 +133,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new function instance.
      *
-     * @param ASTFunction $function
+     * @param  ASTFunction $function
      * @return void
      */
     public function startVisitFunction(ASTFunction $function)
@@ -144,7 +144,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a function instance.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function endVisitFunction(ASTFunction $function)
@@ -155,7 +155,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new interface instance.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function startVisitInterface(ASTInterface $interface)
@@ -166,7 +166,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with an interface instance.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function endVisitInterface(ASTInterface $interface)
@@ -177,7 +177,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new method instance.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function startVisitMethod(ASTMethod $method)
@@ -188,7 +188,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a method instance.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function endVisitMethod(ASTMethod $method)
@@ -199,7 +199,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new namespace instance.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function startVisitNamespace(ASTNamespace $namespace)
@@ -210,7 +210,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a namespace instance.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function endVisitNamespace(ASTNamespace $namespace)
@@ -221,7 +221,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new parameter instance.
      *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
+     * @param  \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
     public function startVisitParameter(ASTParameter $parameter)
@@ -232,7 +232,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a parameter instance.
      *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
+     * @param  \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
     public function endVisitParameter(ASTParameter $parameter)
@@ -243,7 +243,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new property instance.
      *
-     * @param \PDepend\Source\AST\ASTProperty $property
+     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     public function startVisitProperty(ASTProperty $property)
@@ -254,7 +254,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a property instance.
      *
-     * @param \PDepend\Source\AST\ASTProperty $property
+     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     public function endVisitProperty(ASTProperty $property)
@@ -265,7 +265,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
     protected function startVisitNode(AbstractASTArtifact $node)
@@ -276,7 +276,7 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Generic notification method that is called when the node processing ends.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
     protected function endVisitNode(AbstractASTArtifact $node)

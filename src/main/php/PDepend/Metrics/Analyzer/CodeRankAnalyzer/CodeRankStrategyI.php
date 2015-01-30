@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
@@ -45,10 +45,10 @@ namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * The code rank strategy provides an interface for dependency collection. 
+ * The code rank strategy provides an interface for dependency collection.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface CodeRankStrategyI extends ASTVisitor
 {

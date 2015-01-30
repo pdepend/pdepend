@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\DependencyInjection;
@@ -55,7 +55,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * Copied from Behat
  *
- * @link https://github.com/Behat/Behat/blob/3.0/src/Behat/Behat/Extension/Extension.php
+ * @link   https://github.com/Behat/Behat/blob/3.0/src/Behat/Behat/Extension/Extension.php
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
 abstract class Extension

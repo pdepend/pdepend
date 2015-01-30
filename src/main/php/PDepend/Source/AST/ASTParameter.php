@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -61,7 +61,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * </code>
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ASTParameter extends AbstractASTArtifact
 {
@@ -149,7 +149,7 @@ class ASTParameter extends AbstractASTArtifact
      * Returns the parent function or method instance or <b>null</b>
      *
      * @return \PDepend\Source\AST\AbstractASTCallable
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function getDeclaringFunction()
     {
@@ -159,9 +159,9 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * Sets the parent function or method object.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $function
+     * @param  \PDepend\Source\AST\AbstractASTCallable $function
      * @return void
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function setDeclaringFunction(AbstractASTCallable $function)
     {
@@ -173,7 +173,7 @@ class ASTParameter extends AbstractASTArtifact
      * The returned value will be <b>null</b> if the parent is a function.
      *
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function getDeclaringClass()
     {
@@ -211,7 +211,7 @@ class ASTParameter extends AbstractASTArtifact
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function getClass()
     {
@@ -229,7 +229,7 @@ class ASTParameter extends AbstractASTArtifact
      * reference.
      *
      * @return boolean
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function isPassedByReference()
     {
@@ -241,7 +241,7 @@ class ASTParameter extends AbstractASTArtifact
      * the array type hint, otherwise the it will return <b>false</b>.
      *
      * @return boolean
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function isArray()
     {
@@ -255,7 +255,7 @@ class ASTParameter extends AbstractASTArtifact
      * value <b>null</b>.
      *
      * @return boolean
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function allowsNull()
     {
@@ -275,7 +275,7 @@ class ASTParameter extends AbstractASTArtifact
      * can be left blank on invocation.
      *
      * @return boolean
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function isOptional()
     {
@@ -291,7 +291,7 @@ class ASTParameter extends AbstractASTArtifact
      *                          optional or not.
      *
      * @return void
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function setOptional($optional)
     {
@@ -303,7 +303,7 @@ class ASTParameter extends AbstractASTArtifact
      * contains a default value.
      *
      * @return boolean
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function isDefaultValueAvailable()
     {
@@ -322,7 +322,7 @@ class ASTParameter extends AbstractASTArtifact
      * detect a NULL-value.
      *
      * @return mixed
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function getDefaultValue()
     {
@@ -336,7 +336,7 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor)

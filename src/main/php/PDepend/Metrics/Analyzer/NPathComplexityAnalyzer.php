@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -67,7 +67,7 @@ use PDepend\Util\MathUtil;
  * or function. See Nejmeh, Communications of the ACM Feb 1988 pp 188-200.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware
 {
@@ -79,7 +79,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
@@ -109,7 +109,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * )
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -124,7 +124,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Visits a code interface object.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -135,7 +135,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Visits a function node.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -171,9 +171,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * This method will calculate the NPath complexity for the given callable
      * instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     protected function calculateComplexity(AbstractASTCallable $callable)
     {
@@ -196,10 +196,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode
-     * @param string $data
+     * @param  \PDepend\Source\AST\ASTNode
+     * @param  string                      $data
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitConditionalExpression($node, $data)
     {
@@ -234,10 +234,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitDoWhileStatement($node, $data)
     {
@@ -272,10 +272,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitElseIfStatement($node, $data)
     {
@@ -307,10 +307,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitForStatement($node, $data)
     {
@@ -341,10 +341,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitForeachStatement($node, $data)
     {
@@ -383,10 +383,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitIfStatement($node, $data)
     {
@@ -417,10 +417,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitReturnStatement($node, $data)
     {
@@ -445,10 +445,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitSwitchStatement($node, $data)
     {
@@ -487,10 +487,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitTryStatement($node, $data)
     {
@@ -517,10 +517,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                   $data The previously calculated npath value.
+     * @param string                      $data The previously calculated npath value.
      *
      * @return string
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function visitWhileStatement($node, $data)
     {
@@ -539,8 +539,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
      *
      * @return string
-     * @since 0.9.12
-     * @todo I don't like this method implementation, it should be possible to
+     * @since  0.9.12
+     * @todo   I don't like this method implementation, it should be possible to
      *       implement this method with more visitor behavior for the boolean
      *       and logical expressions.
      */

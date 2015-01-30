@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
 
@@ -57,7 +57,7 @@ use PDepend\Source\Builder\BuilderContext;
  * context instance between all using objects.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.10.0
  */
 class GlobalBuilderContext implements BuilderContext
@@ -83,7 +83,7 @@ class GlobalBuilderContext implements BuilderContext
      * This method can be used to register an existing function in the current
      * application context.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function registerFunction(ASTFunction $function)
@@ -95,9 +95,9 @@ class GlobalBuilderContext implements BuilderContext
      * This method can be used to register an existing trait in the current
      * class context.
      *
-     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
     public function registerTrait(ASTTrait $trait)
     {
@@ -108,7 +108,7 @@ class GlobalBuilderContext implements BuilderContext
      * This method can be used to register an existing class in the current
      * class context.
      *
-     * @param \PDepend\Source\AST\ASTClass $class The class instance.
+     * @param  \PDepend\Source\AST\ASTClass $class The class instance.
      * @return void
      */
     public function registerClass(ASTClass $class)
@@ -120,7 +120,7 @@ class GlobalBuilderContext implements BuilderContext
      * This method can be used to register an existing interface in the current
      * class context.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function registerInterface(ASTInterface $interface)
@@ -131,9 +131,9 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns the trait instance for the given qualified name.
      *
-     * @param string $qualifiedName
+     * @param  string $qualifiedName
      * @return \PDepend\Source\AST\ASTTrait
-     * @since 1.0.0
+     * @since  1.0.0
      */
     public function getTrait($qualifiedName)
     {
@@ -143,7 +143,7 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns the class instance for the given qualified name.
      *
-     * @param string $qualifiedName
+     * @param  string $qualifiedName
      * @return \PDepend\Source\AST\ASTClass
      */
     public function getClass($qualifiedName)
@@ -154,7 +154,7 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns a class or an interface instance for the given qualified name.
      *
-     * @param string $qualifiedName
+     * @param  string $qualifiedName
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface
      */
     public function getClassOrInterface($qualifiedName)

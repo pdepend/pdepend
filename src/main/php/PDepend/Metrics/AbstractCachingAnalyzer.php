@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 
@@ -53,7 +53,7 @@ use PDepend\Util\Cache\CacheDriver;
  * for caching.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     1.0.0
  */
 abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements AnalyzerCacheAware
@@ -82,7 +82,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Setter method for the system wide used cache.
      *
-     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @param  \PDepend\Util\Cache\CacheDriver $cache
      * @return void
      */
     public function setCache(CacheDriver $cache)
@@ -95,7 +95,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return boolean
      */
     protected function restoreFromCache(AbstractASTArtifact $node)

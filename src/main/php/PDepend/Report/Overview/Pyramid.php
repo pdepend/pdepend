@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Report\Overview;
@@ -60,7 +60,7 @@ use PDepend\Util\ImageConvert;
  * http://www.springer.com/computer/programming/book/978-3-540-24429-5
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Pyramid implements FileAwareGenerator
 {
@@ -156,7 +156,7 @@ class Pyramid implements FileAwareGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
      * @return boolean
      */
     public function log(Analyzer $analyzer)
@@ -231,8 +231,8 @@ class Pyramid implements FileAwareGenerator
      * If no threshold is defined for the given name, this method will return
      * <b>null</b>.
      *
-     * @param string $name The metric/field identfier.
-     * @param mixed $value The metric/field value.
+     * @param  string $name  The metric/field identfier.
+     * @param  mixed  $value The metric/field value.
      * @return string
      */
     private function computeThreshold($name, $value)
@@ -260,7 +260,7 @@ class Pyramid implements FileAwareGenerator
     /**
      * Computes the proportions between the given metrics.
      *
-     * @param array $metrics The aggregated project metrics.
+     * @param  array $metrics The aggregated project metrics.
      * @return array(string => float)
      */
     private function computeProportions(array $metrics)

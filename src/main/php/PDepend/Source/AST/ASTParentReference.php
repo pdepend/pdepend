@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
 
@@ -50,7 +50,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * <b>parent</b> is used to reference a class or interface.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since     0.9.6
  */
 final class ASTParentReference extends ASTClassOrInterfaceReference
@@ -84,7 +84,7 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * Returns the visual representation for this node type.
      *
      * @return string
-     * @since 0.10.4
+     * @since  0.10.4
      */
     public function getImage()
     {
@@ -105,10 +105,10 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
+     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param  mixed                                 $data
      * @return mixed
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
@@ -121,7 +121,7 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * array with those property names that should be serialized for this class.
      *
      * @return array(string)
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function __sleep()
     {

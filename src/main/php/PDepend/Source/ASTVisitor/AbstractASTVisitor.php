@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\ASTVisitor;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTTrait;
  * that can be used for custom visitors.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractASTVisitor implements ASTVisitor
 {
@@ -81,7 +81,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Adds a new listener to this node visitor.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitListener $listener
+     * @param  \PDepend\Source\ASTVisitor\ASTVisitListener $listener
      * @return void
      */
     public function addVisitListener(ASTVisitListener $listener)
@@ -94,7 +94,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a class node.
      *
-     * @param ASTClass $class
+     * @param  ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -116,9 +116,9 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a trait node.
      *
-     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
-     * @since 1.0.0
+     * @since  1.0.0
      */
     public function visitTrait(ASTTrait $trait)
     {
@@ -136,7 +136,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a file node.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
     public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
@@ -148,7 +148,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a function node.
      *
-     * @param ASTFunction $function
+     * @param  ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -167,7 +167,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a code interface object.
      *
-     * @param ASTInterface $interface
+     * @param  ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -186,7 +186,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a method node.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -203,7 +203,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a namespace node.
      *
-     * @param ASTNamespace $namespace
+     * @param  ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)
@@ -229,7 +229,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a parameter node.
      *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
+     * @param  \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
     public function visitParameter(ASTParameter $parameter)
@@ -241,7 +241,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a property node.
      *
-     * @param \PDepend\Source\AST\ASTProperty $property
+     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     public function visitProperty(ASTProperty $property)
@@ -272,7 +272,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
      * @param array  $args   Array with method argument.
      *
      * @return mixed
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function __call($method, $args)
     {
@@ -286,7 +286,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start class event.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     protected function fireStartClass(ASTClass $class)
@@ -299,7 +299,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end class event.
      *
-     * @param \PDepend\Source\AST\ASTClass $class
+     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     protected function fireEndClass(ASTClass $class)
@@ -312,7 +312,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start trait event.
      *
-     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
      */
     protected function fireStartTrait(ASTTrait $trait)
@@ -325,7 +325,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end trait event.
      *
-     * @param \PDepend\Source\AST\ASTTrait $trait
+     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
      */
     protected function fireEndTrait(ASTTrait $trait)
@@ -338,7 +338,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start file event.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
     protected function fireStartFile(ASTCompilationUnit $compilationUnit)
@@ -351,7 +351,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end file event.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
+     * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
     protected function fireEndFile(ASTCompilationUnit $compilationUnit)
@@ -364,7 +364,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start function event.
      *
-     * @param ASTFunction $function
+     * @param  ASTFunction $function
      * @return void
      */
     protected function fireStartFunction(ASTFunction $function)
@@ -377,7 +377,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end function event.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     protected function fireEndFunction(ASTFunction $function)
@@ -390,7 +390,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start interface event.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     protected function fireStartInterface(ASTInterface $interface)
@@ -403,7 +403,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end interface event.
      *
-     * @param \PDepend\Source\AST\ASTInterface $interface
+     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     protected function fireEndInterface(ASTInterface $interface)
@@ -416,7 +416,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start method event.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     protected function fireStartMethod(ASTMethod $method)
@@ -429,7 +429,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end method event.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     protected function fireEndMethod(ASTMethod $method)
@@ -442,7 +442,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start namespace event.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     protected function fireStartNamespace(ASTNamespace $namespace)
@@ -455,7 +455,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end namespace event.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     protected function fireEndNamespace(ASTNamespace $namespace)
@@ -468,7 +468,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start parameter event.
      *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
+     * @param  \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
     protected function fireStartParameter(ASTParameter $parameter)
@@ -481,7 +481,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a end parameter event.
      *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
+     * @param  \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
     protected function fireEndParameter(ASTParameter $parameter)
@@ -494,7 +494,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends a start property event.
      *
-     * @param \PDepend\Source\AST\ASTProperty $property
+     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     protected function fireStartProperty(ASTProperty $property)
@@ -507,7 +507,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Sends an end property event.
      *
-     * @param \PDepend\Source\AST\ASTProperty $property
+     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     protected function fireEndProperty(ASTProperty $property)

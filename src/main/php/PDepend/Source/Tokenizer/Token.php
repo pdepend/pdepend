@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\Tokenizer;
@@ -46,7 +46,7 @@ namespace PDepend\Source\Tokenizer;
  * This struct represents a code token.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Token
 {
@@ -95,12 +95,12 @@ class Token
     /**
      * Constructs a new source token.
      *
-     * @param integer $type The token type identifier.
-     * @param string  $image The token image/textual representation.
-     * @param integer $startLine The start line number for this token.
-     * @param integer $endLine The end line number for this token.
+     * @param integer $type        The token type identifier.
+     * @param string  $image       The token image/textual representation.
+     * @param integer $startLine   The start line number for this token.
+     * @param integer $endLine     The end line number for this token.
      * @param integer $startColumn The start column number for this token.
-     * @param integer $endColumn The end column number for this token.
+     * @param integer $endColumn   The end column number for this token.
      */
     public function __construct($type, $image, $startLine, $endLine, $startColumn, $endColumn)
     {

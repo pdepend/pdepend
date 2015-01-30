@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
 namespace PDepend;
@@ -69,7 +69,7 @@ use PDepend\Util\Cache\CacheFactory;
  * <a href="http://clarkware.com/software/JDepend.html">JDepend</a>.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Engine
 {
@@ -86,7 +86,7 @@ class Engine
     /**
      * The system configuration.
      *
-     * @var \PDepend\Util\Configuration
+     * @var   \PDepend\Util\Configuration
      * @since 0.10.0
      */
     protected $configuration = null;
@@ -172,7 +172,7 @@ class Engine
     /**
      * The configured cache factory.
      *
-     * @var \PDepend\Util\Cache\CacheFactory
+     * @var   \PDepend\Util\Cache\CacheFactory
      * @since 1.0.0
      */
     private $cacheFactory;
@@ -185,7 +185,7 @@ class Engine
     /**
      * Constructs a new php depend facade.
      *
-     * @param \PDepend\Util\Configuration $configuration The system configuration.
+     * @param \PDepend\Util\Configuration      $configuration   The system configuration.
      * @param \PDepend\Util\Cache\CacheFactory $cacheFactory
      * @param \PDepend\Metrics\AnalyzerFactory $analyzerFactory
      */
@@ -206,7 +206,7 @@ class Engine
     /**
      * Adds the specified directory to the list of directories to be analyzed.
      *
-     * @param string $directory The php source directory.
+     * @param  string $directory The php source directory.
      * @return void
      */
     public function addDirectory($directory)
@@ -223,7 +223,7 @@ class Engine
     /**
      * Adds a single source code file to the list of files to be analysed.
      *
-     * @param string $file The source file name.
+     * @param  string $file The source file name.
      * @return void
      */
     public function addFile($file)
@@ -240,7 +240,7 @@ class Engine
     /**
      * Adds a logger to the output list.
      *
-     * @param \PDepend\Report\ReportGenerator $generator The logger instance.
+     * @param  \PDepend\Report\ReportGenerator $generator The logger instance.
      * @return void
      */
     public function addReportGenerator(\PDepend\Report\ReportGenerator $generator)
@@ -251,7 +251,7 @@ class Engine
     /**
      * Adds a new input/file filter.
      *
-     * @param \PDepend\Input\Filter $filter New input/file filter instance.
+     * @param  \PDepend\Input\Filter $filter New input/file filter instance.
      * @return void
      */
     public function addFileFilter(Filter $filter)
@@ -263,7 +263,7 @@ class Engine
      * Sets an additional code filter. These filters could be used to hide
      * external libraries and global stuff from the PDepend output.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList\ArtifactFilter $filter
+     * @param  \PDepend\Source\AST\ASTArtifactList\ArtifactFilter $filter
      * @return void
      */
     public function setCodeFilter(ArtifactFilter $filter)
@@ -274,7 +274,7 @@ class Engine
     /**
      * Sets analyzer options.
      *
-     * @param array(string=>mixed) $options The analyzer options.
+     * @param  array(string=>mixed) $options The analyzer options.
      * @return void
      */
     public function setOptions(array $options = array())
@@ -295,7 +295,7 @@ class Engine
     /**
      * Adds a process listener.
      *
-     * @param \PDepend\ProcessListener $listener The listener instance.
+     * @param  \PDepend\ProcessListener $listener The listener instance.
      * @return void
      */
     public function addProcessListener(ProcessListener $listener)
@@ -399,7 +399,7 @@ class Engine
     /**
      * Returns the analyzed namespace for the given name.
      *
-     * @param string $name
+     * @param  string $name
      * @return \PDepend\Source\AST\ASTNamespace
      * @throws \OutOfBoundsException
      * @throws \RuntimeException
@@ -436,7 +436,7 @@ class Engine
     /**
      * Send the start parsing process event.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     protected function fireStartParseProcess(Builder $builder)
@@ -449,7 +449,7 @@ class Engine
     /**
      * Send the end parsing process event.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     protected function fireEndParseProcess(Builder $builder)
@@ -462,7 +462,7 @@ class Engine
     /**
      * Sends the start file parsing event.
      *
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param  \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
     protected function fireStartFileParsing(Tokenizer $tokenizer)
@@ -475,7 +475,7 @@ class Engine
     /**
      * Sends the end file parsing event.
      *
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param  \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
     protected function fireEndFileParsing(Tokenizer $tokenizer)

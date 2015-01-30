@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\Language\PHP;
@@ -49,7 +49,7 @@ use PDepend\Source\Parser\TokenException;
  * PHP environments lower than 5.3alpha3
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 final class PHPTokenizerHelperVersion52
 {
@@ -108,10 +108,10 @@ final class PHPTokenizerHelperVersion52
      * Executes the internal tokenizer function and decorates it with some
      * exception handling.
      *
-     * @param string $source The raw php source code.
+     * @param  string $source The raw php source code.
      * @return array
      * @throws \PDepend\Source\Parser\TokenException
-     * @todo Exception should be moved into a general namespace.
+     * @todo   Exception should be moved into a general namespace.
      */
     private static function doTokenize($source)
     {

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util;
@@ -46,7 +46,7 @@ namespace PDepend\Util;
  * This is a utility class for some file operations.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 final class FileUtil
 {
@@ -55,7 +55,7 @@ final class FileUtil
      * this method will return the system temp directory.
      *
      * @return string
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public static function getUserHomeDirOrSysTempDir()
     {
@@ -80,7 +80,7 @@ final class FileUtil
      * Returns the home directory of the current user.
      *
      * @return string
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public static function getUserHomeDir()
     {

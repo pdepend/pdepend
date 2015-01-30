@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
   */
 
 namespace PDepend;
@@ -52,14 +52,14 @@ use PDepend\Source\ASTVisitor\ASTVisitListener;
  * This listener can be used to get informations about the current pdepend process.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 interface ProcessListener extends ASTVisitListener, AnalyzerListener
 {
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     public function startParseProcess(Builder $builder);
@@ -67,7 +67,7 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
      * @return void
      */
     public function endParseProcess(Builder $builder);
@@ -75,7 +75,7 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param  \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
     public function startFileParsing(Tokenizer $tokenizer);
@@ -83,21 +83,21 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param  \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
     public function endFileParsing(Tokenizer $tokenizer);
     
     /**
      * Is called when PDepend starts the analyzing process.
-     * 
+     *
      * @return void
      */
     public function startAnalyzeProcess();
     
     /**
      * Is called when PDepend has finished the analyzing process.
-     * 
+     *
      * @return void
      */
     public function endAnalyzeProcess();

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -58,7 +58,7 @@ use PDepend\Source\AST\ASTMethod;
  * command line option <b>--coverage-report=</b>.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
 {
@@ -108,7 +108,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      * Returns the calculated metrics for the given node or an empty <b>array</b>
      * when no metrics exist for the given node.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array(string=>float)
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -133,7 +133,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Adds an analyzer that this analyzer depends on.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer
+     * @param  \PDepend\Metrics\Analyzer $analyzer
      * @return void
      */
     public function addAnalyzer(Analyzer $analyzer)
@@ -144,7 +144,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Performs the crap index analysis.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
@@ -157,7 +157,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Performs the crap index analysis.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     private function doAnalyze($namespaces)
@@ -178,7 +178,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Visits the given method.
      *
-     * @param \PDepend\Source\AST\ASTMethod $method
+     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -191,7 +191,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Visits the given function.
      *
-     * @param \PDepend\Source\AST\ASTFunction $function
+     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -202,7 +202,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Visits the given callable instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
     private function visitCallable(AbstractASTCallable $callable)
@@ -216,7 +216,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Calculates the crap index for the given callable.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return float
      */
     private function calculateCrapIndex(AbstractASTCallable $callable)
@@ -237,7 +237,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Calculates the code coverage for the given callable object.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return float
      */
     private function calculateCoverage(AbstractASTCallable $callable)

@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\AST;
@@ -50,14 +50,14 @@ use PDepend\Util\Cache\CacheDriver;
  * Callable objects is a generic parent for methods and functions.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractASTCallable extends AbstractASTArtifact
 {
     /**
      * The internal used cache instance.
      *
-     * @var \PDepend\Util\Cache\CacheDriver
+     * @var   \PDepend\Util\Cache\CacheDriver
      * @since 0.10.0
      */
     protected $cache = null;
@@ -66,7 +66,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @var   \PDepend\Source\AST\ASTClassOrInterfaceReference
      * @since 0.9.5
      */
     protected $returnClassReference = null;
@@ -74,7 +74,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     /**
      * List of all exceptions classes referenced by this callable.
      *
-     * @var \PDepend\Source\AST\ASTClassOrInterfaceReference[]
+     * @var   \PDepend\Source\AST\ASTClassOrInterfaceReference[]
      * @since 0.9.5
      */
     protected $exceptionClassReferences = array();
@@ -89,7 +89,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     /**
      * List of all parsed child nodes.
      *
-     * @var \PDepend\Source\AST\ASTNode[]
+     * @var   \PDepend\Source\AST\ASTNode[]
      * @since 0.9.6
      */
     protected $nodes = array();
@@ -97,7 +97,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     /**
      * The start line number of the method or function declaration.
      *
-     * @var integer
+     * @var   integer
      * @since 0.9.12
      */
     protected $startLine = 0;
@@ -105,7 +105,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
     /**
      * The end line number of the method or function declaration.
      *
-     * @var integer
+     * @var   integer
      * @since 0.9.12
      */
     protected $endLine = 0;
@@ -121,9 +121,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * Setter method for the currently used token cache, where this callable
      * instance can store the associated tokens.
      *
-     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @param  \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\AST\AbstractASTCallable
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)
     {
@@ -138,7 +138,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      *
      * @return void
      * @access private
-     * @since 0.9.6
+     * @since  0.9.6
      */
     public function addChild(\PDepend\Source\AST\ASTNode $node)
     {
@@ -149,7 +149,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * Returns all child nodes of this method.
      *
      * @return \PDepend\Source\AST\ASTNode[]
-     * @since 0.9.8
+     * @since  0.9.8
      */
     public function getChildren()
     {
@@ -165,7 +165,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      *
      * @return \PDepend\Source\AST\ASTNode
      * @access private
-     * @since 0.9.6
+     * @since  0.9.6
      */
     public function getFirstChildOfType($targetType)
     {
@@ -188,7 +188,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      *
      * @return \PDepend\Source\AST\ASTNode[]
      * @access private
-     * @since 0.9.6
+     * @since  0.9.6
      */
     public function findChildrenOfType($targetType, array &$results = array())
     {
@@ -234,7 +234,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * Returns the line number where the callable declaration starts.
      *
      * @return integer
-     * @since 0.9.6
+     * @since  0.9.6
      */
     public function getStartLine()
     {
@@ -245,7 +245,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * Returns the line number where the callable declaration ends.
      *
      * @return integer
-     * @since 0.9.6
+     * @since  0.9.6
      */
     public function getEndLine()
     {
@@ -271,7 +271,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * if there is no return value or the return value is scalat.
      *
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function getReturnClass()
     {
@@ -289,7 +289,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      *        instance for the declared function return type.
      *
      * @return void
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function setReturnClassReference(
         \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference
@@ -305,7 +305,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      *        reference instance for a thrown exception.
      *
      * @return void
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function addExceptionClassReference(
         \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference
@@ -344,7 +344,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * reference, otherwise the return value will be <b>false</b>.
      *
      * @return boolean
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function returnsReference()
     {
@@ -357,7 +357,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * a value by reference.
      *
      * @return void
-     * @since 0.9.5
+     * @since  0.9.5
      */
     public function setReturnsReference()
     {
@@ -368,7 +368,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * Returns an array with all declared static variables.
      *
      * @return array
-     * @since 0.9.6
+     * @since  0.9.6
      */
     public function getStaticVariables()
     {
@@ -400,7 +400,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * will return <b>false</b>.
      *
      * @return boolean
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function isCached()
     {
@@ -411,7 +411,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * This method will initialize the <b>$_parameters</b> property.
      *
      * @return void
-     * @since 0.9.6
+     * @since  0.9.6
      */
     private function initParameters()
     {
@@ -450,7 +450,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * cached for all callable instances.
      *
      * @return array
-     * @since 0.10.0
+     * @since  0.10.0
      */
     public function __sleep()
     {
@@ -477,7 +477,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * automatically by PHP's garbage collector.
      *
      * @return void
-     * @since 0.9.12
+     * @since  0.9.12
      */
     public function free()
     {

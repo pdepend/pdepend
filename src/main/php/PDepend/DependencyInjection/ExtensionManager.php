@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\DependencyInjection;
@@ -46,7 +46,7 @@ namespace PDepend\DependencyInjection;
  * Manage activation and registration of extensions for PDepend.
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ExtensionManager
 {
@@ -56,7 +56,7 @@ class ExtensionManager
      * Activate an extension based on a class name.
      *
      * @throws RuntimeException
-     * @param string $className
+     * @param  string $className
      * @return void
      */
     public function activateExtension($className)
