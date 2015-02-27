@@ -9,6 +9,13 @@
     </properties>
 
 	<body>
+            <release version="2.0.5"
+                     date="2015/02/27"
+                     description="This release just adds a simple garbage collector for PDepend's file cache">
+                <action date="56712b1" dev="manuelpichler" type="add" system="github">
+                    Garbage collector for old cache files added.
+                </action>
+            </release>
             <release version="2.0.4"
                      date="2014/12/04"
                      description="This release closes some minor issues and incorporates several outstanding pull requests.">
