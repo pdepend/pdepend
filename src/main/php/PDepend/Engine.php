@@ -115,7 +115,7 @@ class Engine
     /**
      * Generated {@link \PDepend\Source\AST\ASTNamespace} objects.
      *
-     * @var Iterator
+     * @var \PDepend\Source\AST\ASTNamespace[]
      */
     private $namespaces = null;
 

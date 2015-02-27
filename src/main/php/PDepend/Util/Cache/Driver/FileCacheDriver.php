@@ -45,6 +45,7 @@ namespace PDepend\Util\Cache\Driver;
 
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\File\FileCacheDirectory;
+use PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector;
 
 /**
  * A file system based cache implementation.
@@ -94,6 +95,11 @@ class FileCacheDriver implements CacheDriver
     private $cacheKey;
 
     /**
+     * @var \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector
+     */
+    private $garbageCollector;
+
+    /**
      * This method constructs a new file cache instance for the given root
      * directory.
      *
@@ -106,6 +112,8 @@ class FileCacheDriver implements CacheDriver
         $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
 
         $this->cacheKey = $cacheKey;
+
+        $this->garbageCollect($root);
     }
 
     /**
@@ -273,5 +281,17 @@ class FileCacheDriver implements CacheDriver
 
         $path = $this->directory->createCacheDirectory($key);
         return "{$path}/{$key}";
+    }
+
+    /**
+     * Cleans old cache files.
+     *
+     * @param string $root
+     * @return void
+     */
+    protected function garbageCollect($root)
+    {
+        $garbageCollector = new FileCacheGarbageCollector($root);
+        $garbageCollector->garbageCollect();
     }
 }
