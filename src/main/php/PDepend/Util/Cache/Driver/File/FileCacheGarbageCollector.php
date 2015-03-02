@@ -84,19 +84,24 @@ class FileCacheGarbageCollector
             return 0;
         }
 
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->cacheDir)
-        );
-
         $count = 0;
-        foreach ($files as $file) {
-            if ($this->isCollectibleFile($file)) {
-                $this->garbageCollectFile($file);
-                $count += 1;
-            }
-        }
 
-        return $count;
+        try {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($this->cacheDir)
+            );
+            foreach ($files as $file) {
+                if ($this->isCollectibleFile($file)) {
+                    $this->garbageCollectFile($file);
+                    $count += 1;
+                }
+            }
+
+            return $count;
+        } catch (\UnexpectedValueException $e) {
+            /* This may happen if PHPMD and PDepend run in parallel */
+            return $count;
+        }
     }
 
     /**
