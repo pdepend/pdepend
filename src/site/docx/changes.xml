@@ -9,6 +9,14 @@
     </properties>
 
 	<body>
+            <release version="2.0.6"
+                     date="2015/03/02"
+                     description="Concurrency issue in the file cache garbage collector fixed.">
+                <action date="3e31cc7" dev="manuelpichler" type="fix" system="github">
+                    Suppress exceptions when there are concurrency issues within the garbage collector.
+                </action>
+            </release>
+
             <release version="2.0.5"
                      date="2015/02/27"
                      description="This release just adds a simple garbage collector for PDepend's file cache">
