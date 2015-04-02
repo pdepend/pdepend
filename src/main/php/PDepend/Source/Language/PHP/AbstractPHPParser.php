@@ -3464,7 +3464,7 @@ abstract class AbstractPHPParser
      * This method parses a do/while-statement.
      *
      * @return \PDepend\Source\AST\ASTDoWhileStatement
-     * @sibce  0.9.12
+     * @since  0.9.12
      */
     private function parseDoWhileStatement()
     {
