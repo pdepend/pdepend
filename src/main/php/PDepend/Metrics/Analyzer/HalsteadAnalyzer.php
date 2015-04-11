@@ -99,6 +99,23 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     }
 
     /**
+     * This method will return an <b>array</b> with all generated basis metrics
+     * for the given <b>$node</b> (n1, n2, N1, N2). If there are no metrics for
+     * the requested node, this method will return an empty <b>array</b>.
+     *
+     * @param \PDepend\Source\AST\ASTArtifact $artifact
+     * @return array
+     */
+    public function getNodeBasisMetrics(ASTArtifact $artifact)
+    {
+        if (isset($this->metrics[$artifact->getId()])) {
+            return $this->metrics[$artifact->getId()];
+        }
+
+        return array();
+    }
+
+    /**
      * This method will return an <b>array</b> with all generated metric values
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
@@ -108,8 +125,8 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->metrics[$artifact->getId()])) {
-            $basis = $this->metrics[$artifact->getId()];
+        $basis = $this->getNodeBasisMetrics($artifact);
+        if ($basis) {
             return $this->calculateHalsteadMeasures($basis);
         }
 
