@@ -107,5 +107,9 @@
         <service id="pdepend.analyzer.node_loc" class="PDepend\Metrics\Analyzer\NodeLocAnalyzer">
             <tag name="pdepend.analyzer" />
         </service>
+
+        <service id="pdepend.analyzer.halstead" class="PDepend\Metrics\Analyzer\HalsteadAnalyzer">
+            <tag name="pdepend.analyzer" />
+        </service>
     </services>
 </container>
