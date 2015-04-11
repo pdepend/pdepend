@@ -110,7 +110,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     {
         if (isset($this->metrics[$artifact->getId()])) {
             $basis = $this->metrics[$artifact->getId()];
-
             return $this->calculateHalsteadMeasures($basis);
         }
 
@@ -323,7 +322,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                         // Undo all of "define", "(", name, ",", value, ")"
                         $skipUntil = Tokens::T_PARENTHESIS_CLOSE;
                     } else {
-                        $operands++;
+                        $operands[] = $token->image;
                     }
                     break;
 
