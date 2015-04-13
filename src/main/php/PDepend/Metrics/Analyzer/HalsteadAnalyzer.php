@@ -238,7 +238,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_CATCH:
                 // case Tokens::T_SWITCH: // not followed by ()
                 // case Tokens::T_TRY: // not followed by ()
-                // case Tokens::T_DO: // always come with while, which accounts for () already
+                // case Tokens::T_DO: // always comes with while, which accounts for () already
                     $operators[] = $token->image;
                     /*
                      * These are always followed by parenthesis, which would add
@@ -246,7 +246,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                      * so we'll have to skip that one.
                      */
                     $skipUntil = Tokens::T_PARENTHESIS_OPEN;
-                    $operators[] = $token->image;
                     break;
 
                 /*
@@ -326,11 +325,8 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                  * when they appear with operators in expressions.
                  */
                 case Tokens::T_VAR:
-                    /*
-                     * Ignore this token, and the next one will be recognized as
-                     * operand but should be cancelled out.
-                     */
-                    $skipUntil = $tokens[$i + 1]->type;
+                case Tokens::T_CONST:
+                    $skipUntil = Tokens::T_SEMICOLON;
                     break;
 
                 case Tokens::T_STRING:
@@ -348,6 +344,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_VARIABLE:
                 case Tokens::T_LNUMBER:
                 case Tokens::T_DNUMBER:
+                case Tokens::T_NUM_STRING:
                 case Tokens::T_NULL:
                 case Tokens::T_TRUE:
                 case Tokens::T_FALSE:
