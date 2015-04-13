@@ -135,6 +135,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
         $expected = array(
             'pdepend1' => array('mi' => 76.757952883513823),
             'pdepend2' => array('mi' => 81.120955834208331),
+            'pdepend3' => array('mi' => 100),
         );
 
         foreach ($methods as $method) {

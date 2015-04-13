@@ -17,4 +17,6 @@ class MIMethodClass implements MIMethodInterface
     {
         return $this->pdepend1( $x );
     }
+
+    abstract function pdepend3($x);
 }

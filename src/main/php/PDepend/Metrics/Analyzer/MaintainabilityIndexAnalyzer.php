@@ -193,7 +193,8 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
         $loc = $this->analyzers['loc']->getNodeMetrics($callable);
         $eloc = $loc[NodeLocAnalyzer::M_EXECUTABLE_LINES_OF_CODE];
 
-        $maintainabilityIndex = max(0, (171 - 5.2 * log($halsteadVolume) - 0.23 * $cyclomaticComplexity - 16.2 * log($eloc)) * 100 / 171);
+        $maintainabilityIndex = 171 - 5.2 * log($halsteadVolume) - 0.23 * $cyclomaticComplexity - 16.2 * log($eloc);
+        $maintainabilityIndex = min(100, max(0, $maintainabilityIndex * 100 / 171));
         $this->metrics[$callable->getId()] = array(self::M_MAINTAINABILITY_INDEX => $maintainabilityIndex);
     }
 }
