@@ -43,7 +43,6 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AbstractCachingAnalyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\AbstractASTCallable;
@@ -67,7 +66,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     const M_MAINTAINABILITY_INDEX = 'mi';
 
     /**
-     * @var AbstractAnalyzer[]
+     * @var AbstractCachingAnalyzer[]
      */
     private $analyzers = array();
 
@@ -96,6 +95,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     {
         // Run CCN, Halstead & LOC analyzers first
         foreach ($this->analyzers as $analyzer) {
+            $analyzer->setCache($this->getCache());
             $analyzer->analyze($namespaces);
         }
 
