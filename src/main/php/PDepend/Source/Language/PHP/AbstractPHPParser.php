@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use org\pdepend\reflection\exceptions\EndOfTokenStreamException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTType;
@@ -5479,17 +5480,18 @@ abstract class AbstractPHPParser
      *
      * @return \PDepend\Source\AST\ASTNode
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws \PDepend\Source\Parser\EndOfTokenStreamException
      * @since  1.0.0
      */
     private function parseStatement()
     {
-        if (null === ($stmt = $this->parseOptionalStatement())) {
-            throw new UnexpectedTokenException(
-                $this->tokenizer->next(),
-                $this->compilationUnit->getFileName()
-            );
+        if (is_object($stmt = $this->parseOptionalStatement())) {
+            return $stmt;
         }
-        return $stmt;
+        if (is_object($token = $this->tokenizer->next())) {
+            throw new UnexpectedTokenException($token, $this->compilationUnit->getFileName());
+        }
+        throw new EndOfTokenStreamException($this->compilationUnit->getFileName());
     }
 
     /**
