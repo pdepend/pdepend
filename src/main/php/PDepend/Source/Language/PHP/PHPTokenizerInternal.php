@@ -57,6 +57,11 @@ use PDepend\Source\Tokenizer\Tokens;
 class PHPTokenizerInternal implements Tokenizer
 {
     /**
+     * Internally used transition token.
+     */
+    const T_ELLIPSIS = 23006;
+
+    /**
      * Mapping between php internal tokens and php depend tokens.
      *
      * @var array(integer=>integer)
@@ -129,6 +134,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_OR_EQUAL                  =>  Tokens::T_OR_EQUAL,
         T_CONTINUE                  =>  Tokens::T_CONTINUE,
         T_METHOD_C                  =>  Tokens::T_METHOD_C,
+        T_ELLIPSIS                  =>  Tokens::T_ELLIPSIS,
         T_OPEN_TAG                  =>  Tokens::T_OPEN_TAG,
         T_SL_EQUAL                  =>  Tokens::T_SL_EQUAL,
         T_SR_EQUAL                  =>  Tokens::T_SR_EQUAL,
@@ -355,6 +361,19 @@ class PHPTokenizerInternal implements Tokenizer
         ),
         Tokens::T_CLASS => array(
             Tokens::T_DOUBLE_COLON     => Tokens::T_CLASS_FQN,
+        ),
+    );
+
+    protected static $reductionMap = array(
+        Tokens::T_CONCAT => array(
+            Tokens::T_CONCAT => array(
+                'type'  => self::T_ELLIPSIS,
+                'image' => '..'
+            ),
+            self::T_ELLIPSIS  =>  array(
+                'type'  => Tokens::T_ELLIPSIS,
+                'image' => '...'
+            )
         ),
     );
 
@@ -592,12 +611,20 @@ class PHPTokenizerInternal implements Tokenizer
                 if (isset($literalMap[$value])) {
                     // Fetch literal type
                     $type = $literalMap[$value];
+                    $image = $token[1];
 
                     // Check for a context sensitive alternative
                     if (isset(self::$alternativeMap[$type][$previousType])) {
                         $type = self::$alternativeMap[$type][$previousType];
                     }
-                    $image = $token[1];
+
+                    if (isset(self::$reductionMap[$type][$previousType])) {
+                        $image = self::$reductionMap[$type][$previousType]['image'];
+                        $type = self::$reductionMap[$type][$previousType]['type'];
+
+                        array_pop($this->tokens);
+                    }
+
                 } elseif (isset($tokenMap[$token[0]])) {
                     $type = $tokenMap[$token[0]];
                     // Check for a context sensitive alternative
