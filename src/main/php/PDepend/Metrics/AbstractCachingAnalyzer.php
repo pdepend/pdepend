@@ -89,6 +89,16 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     }
 
     /**
+     * Getter method for the system wide used cache.
+     *
+     * @return \PDepend\Util\Cache\CacheDriver $cache
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+    /**
      * Tries to restore the metrics for a cached node. If this method has
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.

@@ -144,6 +144,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.class_level',
             'pdepend.analyzer.cohesion',
+            'pdepend.analyzer.halstead',
+            'pdepend.analyzer.maintainability',
         );
     }
 
@@ -405,7 +407,6 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         foreach ($this->nodeAwareAnalyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
         }
-        ksort($metrics);
 
         foreach ($metrics as $name => $value) {
             $xml->setAttribute($name, $value);
