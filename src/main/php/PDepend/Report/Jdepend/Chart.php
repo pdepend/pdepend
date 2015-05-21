@@ -150,10 +150,16 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $svg = new \DOMDocument('1.0', 'UTF-8');
         $svg->load(dirname(__FILE__) . '/chart.svg');
 
-        $bad   = $svg->getElementById('jdepend.bad');
-        $good  = $svg->getElementById('jdepend.good');
         $layer = $svg->getElementById('jdepend.layer');
+
+        $bad = $svg->getElementById('jdepend.bad');
+        $bad->removeAttribute('xml:id');
+
+        $good = $svg->getElementById('jdepend.good');
+        $good->removeAttribute('xml:id');
+
         $legendTemplate = $svg->getElementById('jdepend.legend');
+        $legendTemplate->removeAttribute('xml:id');
 
         $max = 0;
         $min = 0;
@@ -211,7 +217,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 
             $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
 
-            $ellipse->removeAttribute('xml:id');
             $ellipse->setAttribute('id', uniqid('pdepend_'));
             $ellipse->setAttribute('title', $item['name']);
             $ellipse->setAttribute('transform', $transform);
@@ -222,7 +227,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             if ($result && count($found)) {
                 $angle = rand(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
-                $legend->removeAttribute('xml:id');
                 $legend->setAttribute('x', $e + $r * (1 + cos($angle)));
                 $legend->setAttribute('y', $f + $r * (1 + sin($angle)));
                 $legend->nodeValue = $found[1];
