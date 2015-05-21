@@ -44,7 +44,6 @@ namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AggregateAnalyzer;
-use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\AbstractASTCallable;

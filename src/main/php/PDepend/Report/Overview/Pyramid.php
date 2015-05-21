@@ -43,8 +43,8 @@
 namespace PDepend\Report\Overview;
 
 use PDepend\Metrics\Analyzer;
-use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
 use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
 use PDepend\Metrics\Analyzer\InheritanceAnalyzer;
 use PDepend\Metrics\Analyzer\NodeCountAnalyzer;
 use PDepend\Metrics\Analyzer\NodeLocAnalyzer;

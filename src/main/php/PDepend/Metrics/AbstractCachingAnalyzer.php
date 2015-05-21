@@ -43,8 +43,6 @@
 
 namespace PDepend\Metrics;
 
-use PDepend\Metrics\AbstractAnalyzer;
-use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Util\Cache\CacheDriver;
 

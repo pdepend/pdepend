@@ -42,10 +42,10 @@
 
 namespace PDepend\TextUI;
 
+use PDepend\Application;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PDepend\Util\Workarounds;
-use PDepend\Application;
 
 /**
  * Handles the command line stuff and starts the text ui runner.
