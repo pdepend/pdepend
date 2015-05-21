@@ -45,9 +45,9 @@ namespace PDepend\TextUI;
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 
 /**
  * Prints current the PDepend status information.

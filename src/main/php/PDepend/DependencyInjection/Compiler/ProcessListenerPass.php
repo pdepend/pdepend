@@ -42,9 +42,9 @@
 
 namespace PDepend\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Find Process Listeners of extensions by 'pdepend.process_listener' tag.

@@ -376,4 +376,33 @@ class PHPParserGeneric extends AbstractPHPParser
 
         return $value;
     }
+
+    /**
+     * This method will parse a formal parameter. A formal parameter is at least
+     * a variable name, but can also contain a default parameter value.
+     *
+     * <code>
+     * //               --  -------
+     * function foo(Bar $x, $y = 42) {}
+     * //               --  -------
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @since 2.0.7
+     */
+    protected function parseFormalParameter()
+    {
+        $parameter = $this->builder->buildAstFormalParameter();
+
+        if (Tokens::T_ELLIPSIS === $this->tokenizer->peek()) {
+            $this->consumeToken(Tokens::T_ELLIPSIS);
+            $this->consumeComments();
+
+            $parameter->setVariableArgList();
+        }
+
+        $parameter->addChild($this->parseVariableDeclarator());
+
+        return $parameter;
+    }
 }

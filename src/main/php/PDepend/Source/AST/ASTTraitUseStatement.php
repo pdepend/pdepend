@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\State;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**

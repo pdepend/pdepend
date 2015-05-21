@@ -851,6 +851,13 @@ interface Tokens
     const T_FINALLY = 160;
 
     /**
+     * TOken that represents the '...' token
+     *
+     * @since 2.0.7
+     */
+    const T_ELLIPSIS = 161;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

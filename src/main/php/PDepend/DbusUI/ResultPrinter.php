@@ -46,9 +46,9 @@ namespace PDepend\DbusUI;
 // @codeCoverageIgnoreStart
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
+use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 
 /**
  * Fun result printer that uses dbus to show a notification window.

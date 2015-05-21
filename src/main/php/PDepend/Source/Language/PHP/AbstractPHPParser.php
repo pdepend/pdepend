@@ -3465,7 +3465,7 @@ abstract class AbstractPHPParser
      * This method parses a do/while-statement.
      *
      * @return \PDepend\Source\AST\ASTDoWhileStatement
-     * @sibce  0.9.12
+     * @since  0.9.12
      */
     private function parseDoWhileStatement()
     {
@@ -5418,7 +5418,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTFormalParameter
      * @since  0.9.6
      */
-    private function parseFormalParameter()
+    protected function parseFormalParameter()
     {
         $parameter = $this->builder->buildAstFormalParameter();
         $parameter->addChild($this->parseVariableDeclarator());
@@ -6204,7 +6204,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTVariableDeclarator
      * @since  0.9.6
      */
-    private function parseVariableDeclarator()
+    protected function parseVariableDeclarator()
     {
         $this->tokenStack->push();
 

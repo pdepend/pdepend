@@ -42,11 +42,11 @@
 
 namespace PDepend\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as SymfonyExtension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
  * PDepend DependencyInjection Extension for Symfony DIC

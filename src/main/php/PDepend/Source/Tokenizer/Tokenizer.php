@@ -85,6 +85,13 @@ if (!defined('T_NAMESPACE')) {
 }
 
 /**
+ * Define PHP 5.6 '...' token constant
+ */
+if (!defined('T_ELLIPSIS')) {
+    define('T_ELLIPSIS', 42006);
+}
+
+/**
  * Define PHP 5.3's '__DIR__' token constant.
  */
 if (!defined('T_DIR')) {

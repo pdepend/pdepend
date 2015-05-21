@@ -42,8 +42,8 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\Builder\BuilderContext;
 
 /**
  * Represents a php function node.

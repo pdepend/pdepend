@@ -115,6 +115,8 @@ class XmlTest extends AbstractTest
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.class_level',
             'pdepend.analyzer.cohesion',
+            'pdepend.analyzer.halstead',
+            'pdepend.analyzer.maintainability',
         );
 
         $this->assertEquals($expected, $actual);
