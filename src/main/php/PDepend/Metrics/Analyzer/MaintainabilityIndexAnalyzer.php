@@ -77,7 +77,8 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @param array $options
      */
-    public function __construct(array $options = array()) {
+    public function __construct(array $options = array())
+    {
         parent::__construct($options);
 
         $this->analyzers['ccn'] = new CyclomaticComplexityAnalyzer();

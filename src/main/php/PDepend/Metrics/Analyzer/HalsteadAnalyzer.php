@@ -386,13 +386,16 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
         $measures = array();
         $measures[self::M_HALSTEAD_LENGTH] = $basis['N1'] + $basis['N2'];
         $measures[self::M_HALSTEAD_VOCABULARY] = $basis['n1'] + $basis['n2'];
-        $measures[self::M_HALSTEAD_VOLUME] = $measures[self::M_HALSTEAD_LENGTH] * log($measures[self::M_HALSTEAD_VOCABULARY], 2);
+        $measures[self::M_HALSTEAD_VOLUME] =
+            $measures[self::M_HALSTEAD_LENGTH] * log($measures[self::M_HALSTEAD_VOCABULARY], 2);
         $measures[self::M_HALSTEAD_DIFFICULTY] = ($basis['n1'] / 2) * ($basis['N1'] / ($basis['n2'] ?: 1));
         $measures[self::M_HALSTEAD_LEVEL] = 1 / $measures[self::M_HALSTEAD_DIFFICULTY];
-        $measures[self::M_HALSTEAD_EFFORT] = $measures[self::M_HALSTEAD_VOLUME] * $measures[self::M_HALSTEAD_DIFFICULTY];
+        $measures[self::M_HALSTEAD_EFFORT] =
+            $measures[self::M_HALSTEAD_VOLUME] * $measures[self::M_HALSTEAD_DIFFICULTY];
         $measures[self::M_HALSTEAD_TIME] = $measures[self::M_HALSTEAD_EFFORT] / 18;
         $measures[self::M_HALSTEAD_BUGS] = pow($measures[self::M_HALSTEAD_EFFORT], (2/3)) / 3000;
-        $measures[self::M_HALSTEAD_CONTENT] = $measures[self::M_HALSTEAD_VOLUME] / ($measures[self::M_HALSTEAD_DIFFICULTY] ?: 1);
+        $measures[self::M_HALSTEAD_CONTENT] =
+            $measures[self::M_HALSTEAD_VOLUME] / ($measures[self::M_HALSTEAD_DIFFICULTY] ?: 1);
 
         return $measures;
     }
