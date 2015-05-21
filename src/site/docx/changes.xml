@@ -9,6 +9,21 @@
     </properties>
 
 	<body>
+
+            <release version="2.0.7"
+                     date="2015/05/21"
+                     description="">
+                <action date="46d5fb" dev="JeroenDeDauw" type="update" issue="185" system="github">
+                    Remove unused imports and order alphabetically
+                </action>
+                <action date="776529d" dev="tvt" type="fix" issue="200" system="github">
+                    Fix annotation-typo in AbstractPHPParser.php
+                </action>
+                <action date="dff2547" dev="manuelpichler" type="fix" issue="202" system="github">
+                    Support for variable arg list implemented
+                </action>
+            </release>
+
             <release version="2.0.6"
                      date="2015/03/02"
                      description="Concurrency issue in the file cache garbage collector fixed.">
