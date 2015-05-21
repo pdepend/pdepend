@@ -13,6 +13,10 @@
             <release version="2.1.0"
                      date="2015/05/21"
                      description="This release introduces an analyzer for the Halstead metrics and the maintainability index, contributed by Matthias Mullie. Beside that we have closed several issues and bugs in PDepend's source code.">
+                <action date="48ee5d9" dev="torinaki" type="add" issue="177" system="github">
+                    HHVM support
+                </action>
+
                 <action date="46d5fb" dev="JeroenDeDauw" type="update" issue="185" system="github">
                     Remove unused imports and order alphabetically
                 </action>
