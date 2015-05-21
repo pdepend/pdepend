@@ -56,6 +56,61 @@ namespace PDepend\Source\AST;
 class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
 {
     /**
+     * testIsVariableArgListReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testIsVariableArgListReturnsFalseByDefault()
+    {
+        $parameter = $this->_getFirstFormalParameterInFunction();
+        $this->assertFalse($parameter->isVariableArgList());
+    }
+
+    /**
+     * testIsVariableArgListReturnsTrue
+     *
+     * @return void
+     */
+    public function testIsVariableArgListReturnsTrue()
+    {
+        $parameter = $this->_getFirstFormalParameterInFunction();
+        $this->assertTrue($parameter->isVariableArgList());
+    }
+
+    /**
+     * testIsVariableArgListWithArrayTypeHint
+     *
+     * @return void
+     */
+    public function testIsVariableArgListWithArrayTypeHint()
+    {
+        $parameter = $this->_getFirstFormalParameterInFunction();
+        $this->assertTrue($parameter->isVariableArgList());
+    }
+
+    /**
+     * testIsVariableArgListWithClassTypeHint
+     *
+     * @return void
+     */
+    public function testIsVariableArgListWithClassTypeHint()
+    {
+        $parameter = $this->_getFirstFormalParameterInFunction();
+        $this->assertTrue($parameter->isVariableArgList());
+    }
+
+    /**
+     * testIsVariableArgListPassedByReference
+     *
+     * @return void
+     */
+    public function testIsVariableArgListPassedByReference()
+    {
+        $parameter = $this->_getFirstFormalParameterInFunction();
+        $this->assertTrue($parameter->isVariableArgList());
+    }
+
+    /**
      * testIsPassedByReferenceReturnsFalseByDefault
      *
      * @return void

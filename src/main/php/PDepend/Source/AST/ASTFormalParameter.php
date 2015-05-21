@@ -59,6 +59,29 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTFormalParameter extends ASTNode
 {
     /**
+     * This method will return <b>true</b> when the parameter is declared as a
+     * variable argument list <b>...</b>.
+     *
+     * @return boolean
+     * @since 2.0.7
+     */
+    public function isVariableArgList()
+    {
+        return $this->getMetadataBoolean(6);
+    }
+
+    /**
+     * This method can be used to mark this parameter as passed by reference.
+     *
+     * @return void
+    @since 2.0.7
+     */
+    public function setVariableArgList()
+    {
+        return $this->setMetadataBoolean(6, true);
+    }
+
+    /**
      * This method will return <b>true</b> when the parameter is passed by
      * reference.
      *
@@ -102,6 +125,6 @@ class ASTFormalParameter extends ASTNode
      */
     protected function getMetadataSize()
     {
-        return 6;
+        return 7;
     }
 }
