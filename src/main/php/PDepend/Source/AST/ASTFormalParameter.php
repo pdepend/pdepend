@@ -59,6 +59,29 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTFormalParameter extends ASTNode
 {
     /**
+     * Checks if this parameter has a type.
+     *
+     * @return boolean
+     */
+    public function hasType()
+    {
+        return (reset($this->nodes) instanceof ASTType);
+    }
+
+    /**
+     * Returns the type of this parameter.
+     *
+     * @return \PDepend\Source\AST\ASTType
+     */
+    public function getType()
+    {
+        if ($this->hasType()) {
+            return $this->getChild(0);
+        }
+        throw new \OutOfBoundsException('The parameter does not has a type specification.');
+    }
+
+    /**
      * This method will return <b>true</b> when the parameter is declared as a
      * variable argument list <b>...</b>.
      *

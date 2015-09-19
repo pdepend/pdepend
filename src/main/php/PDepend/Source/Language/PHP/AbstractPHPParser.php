@@ -5293,7 +5293,7 @@ abstract class AbstractPHPParser
         );
 
         $parameter = $this->parseFormalParameterOrByReference();
-        $parameter->addChild($classReference);
+        $parameter->prependChild($classReference);
 
         return $parameter;
     }
