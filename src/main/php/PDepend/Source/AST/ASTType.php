@@ -68,7 +68,7 @@ class ASTType extends ASTNode
      *
      * @return boolean
      */
-    public function isPrimitive()
+    public function isScalar()
     {
         return false;
     }

@@ -5219,7 +5219,7 @@ abstract class AbstractPHPParser
                 $parameter = $this->parseFormalParameterAndArrayTypeHint();
                 break;
 
-            case ($this->isFormalParameterTypeHint($tokenType)):
+            case ($this->isTypeHint($tokenType)):
                 $parameter = $this->parseFormalParameterAndTypeHint();
                 break;
 
@@ -5289,7 +5289,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         $classReference = $this->setNodePositionsAndReturn(
-            $this->parseFormalParameterTypeHint()
+            $this->parseTypeHint()
         );
 
         $parameter = $this->parseFormalParameterOrByReference();
@@ -5435,7 +5435,7 @@ abstract class AbstractPHPParser
      * @return boolean
      * @since  1.0.0
      */
-    abstract protected function isFormalParameterTypeHint($tokenType);
+    abstract protected function isTypeHint($tokenType);
 
     /**
      * Parses a formal parameter type hint that is valid in the supported PHP
@@ -5444,7 +5444,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTNode
      * @since  1.0.0
      */
-    abstract protected function parseFormalParameterTypeHint();
+    abstract protected function parseTypeHint();
 
     /**
      * Extracts all dependencies from a callable body.
@@ -6565,7 +6565,7 @@ abstract class AbstractPHPParser
         $annotations = $this->parseVarAnnotation($this->docComment);
         foreach ($annotations as $annotation) {
             if (Type::isPrimitiveType($annotation) === true) {
-                return $this->builder->buildAstPrimitiveType(
+                return $this->builder->buildAstScalarType(
                     Type::getPrimitiveType($annotation)
                 );
             } elseif (Type::isArrayType($annotation) === true) {

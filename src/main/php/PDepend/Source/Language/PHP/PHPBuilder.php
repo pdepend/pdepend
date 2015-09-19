@@ -1430,12 +1430,12 @@ class PHPBuilder implements Builder
      *
      * @param string $image The source image for the primitive type.
      *
-     * @return \PDepend\Source\AST\ASTPrimitiveType
+     * @return \PDepend\Source\AST\ASTScalarType
      * @since  0.9.6
      */
-    public function buildAstPrimitiveType($image)
+    public function buildAstScalarType($image)
     {
-        return $this->buildAstNodeInstance('ASTPrimitiveType', $image);
+        return $this->buildAstNodeInstance('ASTScalarType', $image);
     }
 
     /**

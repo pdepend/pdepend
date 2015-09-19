@@ -791,15 +791,15 @@ class PHPBuilderTest extends AbstractTest
     }
 
     /**
-     * testBuildASTPrimitiveTypeReturnsExpectedType
+     * testBuildASTScalarTypeReturnsExpectedType
      *
      * @return void
      */
-    public function testBuildASTPrimitiveTypeReturnsExpectedType()
+    public function testBuildASTScalarTypeReturnsExpectedType()
     {
         $this->assertInstanceOf(
-            'PDepend\\Source\\AST\\ASTPrimitiveType',
-            $this->createBuilder()->buildAstPrimitiveType('1')
+            'PDepend\\Source\\AST\\ASTScalarType',
+            $this->createBuilder()->buildAstScalarType('1')
         );
     }
 
@@ -1821,16 +1821,16 @@ class PHPBuilderTest extends AbstractTest
     }
 
     /**
-     * testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType
+     * testBuildASTScalarTypeReturnsInstanceOfExpectedType
      *
      * @return void
      */
-    public function testBuildASTPrimitiveTypeReturnsInstanceOfExpectedType()
+    public function testBuildASTScalarTypeReturnsInstanceOfExpectedType()
     {
         $builder  = $this->createBuilder();
-        $instance = $builder->buildAstPrimitiveType(__FUNCTION__);
+        $instance = $builder->buildAstScalarType(__FUNCTION__);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTPrimitiveType', $instance);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $instance);
     }
 
     /**

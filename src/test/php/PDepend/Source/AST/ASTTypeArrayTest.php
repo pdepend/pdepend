@@ -139,7 +139,7 @@ class ASTTypeArrayTest extends \PDepend\Source\AST\ASTNodeTest
     public function testIsPrimitiveReturnsFalse()
     {
         $type = new \PDepend\Source\AST\ASTTypeArray();
-        $this->assertFalse($type->isPrimitive());
+        $this->assertFalse($type->isScalar());
     }
 
     /**

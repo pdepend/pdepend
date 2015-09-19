@@ -171,7 +171,7 @@ class PHPParserGeneric extends AbstractPHPParser
     }
 
     /**
-     * Tests if the given token type is a valid formal parameter in the supported
+     * Tests if the given token type is a valid type hint in the supported
      * PHP version.
      *
      * @param integer $tokenType Numerical token identifier.
@@ -179,7 +179,7 @@ class PHPParserGeneric extends AbstractPHPParser
      * @return boolean
      * @since  1.0.0
      */
-    protected function isFormalParameterTypeHint($tokenType)
+    protected function isTypeHint($tokenType)
     {
         switch ($tokenType) {
             case Tokens::T_STRING:
@@ -192,13 +192,12 @@ class PHPParserGeneric extends AbstractPHPParser
     }
 
     /**
-     * Parses a formal parameter type hint that is valid in the supported PHP
-     * version.
+     * Parses a type hint that is valid in the supported PHP version.
      *
      * @return \PDepend\Source\AST\ASTNode
      * @since  1.0.0
      */
-    protected function parseFormalParameterTypeHint()
+    protected function parseTypeHint()
     {
         switch ($this->tokenizer->peek()) {
             case Tokens::T_CALLABLE:
@@ -210,14 +209,55 @@ class PHPParserGeneric extends AbstractPHPParser
             case Tokens::T_NAMESPACE:
                 $name = $this->parseQualifiedName();
 
-                if (0 === strcasecmp('callable', $name)) {
-                    $type = $this->builder->buildAstTypeCallable();
+                if ($this->isScalarOrCallableTypeHint($name)) {
+                    $type = $this->parseScalarOrCallableTypeHint($name);
                 } else {
                     $type = $this->builder->buildAstClassOrInterfaceReference($name);
                 }
                 break;
         }
         return $type;
+    }
+
+    /**
+     * Tests if the given image is a PHP 7 type hint.
+     *
+     * @param string $image
+     * @return boolean
+     */
+    private function isScalarOrCallableTypeHint($image)
+    {
+        switch (strtolower($image)) {
+            case 'int':
+            case 'bool':
+            case 'float':
+            case 'string':
+            case 'callable':
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Parses a scalar type hint or a callable type hint.
+     *
+     * @param string $image
+     * @return \PDepend\Source\AST\ASTType
+     */
+    private function parseScalarOrCallableTypeHint($image)
+    {
+        switch (strtolower($image)) {
+            case 'int':
+            case 'bool':
+            case 'float':
+            case 'string':
+                return $this->builder->buildAstScalarType($image);
+            case 'callable':
+                return $this->builder->buildAstTypeCallable();
+        }
+
+        return false;
     }
 
     /**

@@ -117,7 +117,7 @@ class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testIsPassedByReferenceReturnsFalseByDefault()
     {
-        $param = new \PDepend\Source\AST\ASTFormalParameter();
+        $param = new ASTFormalParameter();
         $this->assertFalse($param->isPassedByReference());
     }
 
@@ -253,7 +253,7 @@ class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstFormalParameterInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
     }
