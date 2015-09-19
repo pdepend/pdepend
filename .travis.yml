@@ -1,26 +1,27 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - hhvm
-  - hhvm-nightly
+    - 5.3
+    - 5.4
+    - 5.5
+    - 5.6
+    - 7.0
+    - hhvm
+    - hhvm-nightly
 
 matrix:
-  allow_failures:
-    - php: hhvm
-    - php: hhvm-nightly
+    allow_failures:
+        - php: hhvm
+        - php: hhvm-nightly
 
 env:
-  - TEST_CONFIG="phpunit.xml.dist"
+    - TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
-  - composer self-update
-  - composer install
+    - composer self-update
+    - composer install
 
 script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
 
 notifications:
-  irc: "irc.freenode.org#pdepend"
+    irc: "irc.freenode.org#pdepend"
