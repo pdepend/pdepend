@@ -217,10 +217,10 @@ class FileCacheDirectory
         if ($file->isDot()) {
             return;
         } elseif ($file->isFile()) {
-            unlink($path);
+            @unlink($path);
         } else {
             $this->flushDirectory($path);
-            rmdir($path);
+            @rmdir($path);
         }
     }
 }
