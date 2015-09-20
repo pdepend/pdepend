@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PDepend\Util\Utf8Util;
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -229,7 +230,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $classXml = $doc->createElement('Class');
         $classXml->setAttribute('sourceFile', (string) $class->getCompilationUnit());
-        $classXml->appendChild($doc->createTextNode($class->getName()));
+        $classXml->appendChild(
+            $doc->createTextNode(
+                Utf8Util::ensureEncoding($class->getName())
+            )
+        );
 
         if ($class->isAbstract()) {
             $this->abstractClasses->appendChild($classXml);
@@ -254,7 +259,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $classXml = $doc->createElement('Class');
         $classXml->setAttribute('sourceFile', (string) $interface->getCompilationUnit());
-        $classXml->appendChild($doc->createTextNode($interface->getName()));
+        $classXml->appendChild(
+            $doc->createTextNode(
+                Utf8Util::ensureEncoding($interface->getName())
+            )
+        );
 
         $this->abstractClasses->appendChild($classXml);
     }
@@ -282,7 +291,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->abstractClasses = $doc->createElement('AbstractClasses');
 
         $packageXml = $doc->createElement('Package');
-        $packageXml->setAttribute('name', $namespace->getName());
+        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
 
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
@@ -305,7 +314,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $dependsUpon = $doc->createElement('DependsUpon');
         foreach ($this->analyzer->getEfferents($namespace) as $efferent) {
             $efferentXml = $doc->createElement('Package');
-            $efferentXml->appendChild($doc->createTextNode($efferent->getName()));
+            $efferentXml->appendChild(
+                $doc->createTextNode(
+                    Utf8Util::ensureEncoding($efferent->getName())
+                )
+            );
 
             $dependsUpon->appendChild($efferentXml);
         }
@@ -313,7 +326,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $usedBy = $doc->createElement('UsedBy');
         foreach ($this->analyzer->getAfferents($namespace) as $afferent) {
             $afferentXml = $doc->createElement('Package');
-            $afferentXml->appendChild($doc->createTextNode($afferent->getName()));
+            $afferentXml->appendChild(
+                $doc->createTextNode(
+                    Utf8Util::ensureEncoding($afferent->getName())
+                )
+            );
 
             $usedBy->appendChild($afferentXml);
         }
@@ -326,11 +343,15 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         if (($cycles = $this->analyzer->getCycle($namespace)) !== null) {
             $cycleXml = $doc->createElement('Package');
-            $cycleXml->setAttribute('Name', $namespace->getName());
+            $cycleXml->setAttribute('Name', Utf8Util::ensureEncoding($namespace->getName()));
 
             foreach ($cycles as $cycle) {
                 $cycleXml->appendChild($doc->createElement('Package'))
-                    ->appendChild($doc->createTextNode($cycle->getName()));
+                    ->appendChild(
+                        $doc->createTextNode(
+                            Utf8Util::ensureEncoding($cycle->getName())
+                        )
+                    );
             }
 
             $this->cycles->appendChild($cycleXml);

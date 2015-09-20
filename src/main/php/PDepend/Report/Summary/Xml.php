@@ -58,6 +58,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PDepend\Util\Utf8Util;
 
 /**
  * This logger generates a summary xml document with aggregated project, class,
@@ -217,7 +218,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $filesXml = $dom->createElement('files');
             foreach ($this->fileSet as $file) {
                 $fileXml = $dom->createElement('file');
-                $fileXml->setAttribute('name', $file->getFileName());
+                $fileXml->setAttribute('name', Utf8Util::ensureEncoding($file->getFileName()));
 
                 $this->writeNodeMetrics($fileXml, $file);
 
@@ -290,7 +291,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $doc = $xml->ownerDocument;
 
         $typeXml = $doc->createElement($typeIdentifier);
-        $typeXml->setAttribute('name', $type->getName());
+        $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
 
         $this->writeNodeMetrics($typeXml, $type);
         $this->writeFileReference($typeXml, $type->getCompilationUnit());
@@ -321,7 +322,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $doc = $xml->ownerDocument;
 
         $functionXml = $doc->createElement('function');
-        $functionXml->setAttribute('name', $function->getName());
+        $functionXml->setAttribute('name', Utf8Util::ensureEncoding($function->getName()));
 
         $this->writeNodeMetrics($functionXml, $function);
         $this->writeFileReference($functionXml, $function->getCompilationUnit());
@@ -352,7 +353,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $doc = $xml->ownerDocument;
 
         $methodXml = $doc->createElement('method');
-        $methodXml->setAttribute('name', $method->getName());
+        $methodXml->setAttribute('name', Utf8Util::ensureEncoding($method->getName()));
 
         $this->writeNodeMetrics($methodXml, $method);
 
@@ -371,7 +372,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $doc = $xml->ownerDocument;
 
         $packageXml = $doc->createElement('package');
-        $packageXml->setAttribute('name', $namespace->getName());
+        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
 
         $this->writeNodeMetrics($packageXml, $namespace);
 
@@ -433,7 +434,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $fileXml = $xml->ownerDocument->createElement('file');
-        $fileXml->setAttribute('name', $compilationUnit->getFileName());
+        $fileXml->setAttribute('name', Utf8Util::ensureEncoding($compilationUnit->getFileName()));
 
         $xml->appendChild($fileXml);
     }
