@@ -122,7 +122,7 @@ class Runner
      * This of process listeners that will be hooked into PDepend's analyzing
      * process.
      *
-     * @var ProcessListener[]
+     * @var \PDepend\ProcessListener[]
      */
     private $processListeners = array();
 
@@ -134,12 +134,12 @@ class Runner
     private $parseErrors = array();
 
     /**
-     * @var PDepend\Report\ReportGeneratorFactory
+     * @var \PDepend\Report\ReportGeneratorFactory
      */
     private $reportGeneratorFactory;
 
     /**
-     * @var PDepend\Engine
+     * @var \PDepend\Engine
      */
     private $engine;
 
@@ -154,7 +154,7 @@ class Runner
      *
      * NOTE: If you call this method, it will replace the default file extensions.
      *
-     * @param  array(string) $extensions List of file extensions.
+     * @param array(string) $extensions
      * @return void
      */
     public function setFileExtensions(array $extensions)
@@ -167,7 +167,7 @@ class Runner
      *
      * NOTE: If this method is called, it will overwrite the default settings.
      *
-     * @param  array(string) $excludeDirectories All exclude directories.
+     * @param array(string) $excludeDirectories
      * @return void
      */
     public function setExcludeDirectories(array $excludeDirectories)
@@ -178,7 +178,7 @@ class Runner
     /**
      * Sets a list of exclude packages.
      *
-     * @param  array(string) $excludePackages Exclude packages.
+     * @param array(string) $excludePackages
      * @return void
      */
     public function setExcludeNamespaces(array $excludePackages)
@@ -189,7 +189,7 @@ class Runner
     /**
      * Sets a list of source directories and files.
      *
-     * @param  array(string) $sourceArguments The source directories.
+     * @param array(string) $sourceArguments
      * @return void
      */
     public function setSourceArguments(array $sourceArguments)
@@ -210,8 +210,8 @@ class Runner
     /**
      * Adds a logger to this runner.
      *
-     * @param  string $generatorId The logger identifier.
-     * @param  string $reportFile  The log file name.
+     * @param string $generatorId
+     * @param string $reportFile
      * @return void
      */
     public function addReportGenerator($generatorId, $reportFile)
@@ -222,8 +222,8 @@ class Runner
     /**
      * Adds a logger or analyzer option.
      *
-     * @param  string       $identifier The option identifier.
-     * @param  string|array $value      The option value.
+     * @param string $identifier
+     * @param string|array $value
      * @return void
      */
     public function addOption($identifier, $value)
@@ -235,7 +235,7 @@ class Runner
      * Adds a process listener instance that will be hooked into PDepend's
      * analyzing process.
      *
-     * @param  ProcessListener $processListener A process listener.
+     * @param \PDepend\ProcessListener $processListener
      * @return void
      */
     public function addProcessListener(ProcessListener $processListener)
