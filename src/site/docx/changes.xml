@@ -15,6 +15,9 @@
                 <action date="d979462" due-to="knightstalker" dev="manuelpichler" type="fix" issue="143" system="github">
                     Truncated summary when analyzing ISO-8859-1 input
                 </action>
+                <action date="d979462" due-to="Majkl578" dev="manuelpichler" type="fix" issue="214" system="github">
+                    Truncated summary when analyzing ISO-8859-1 input
+                </action>
             </release>
 
             <release version="2.1.0"
