@@ -37,7 +37,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Util\Cache\Driver\File;
@@ -48,7 +48,7 @@ use PDepend\Util\Log;
  * Simple garbage collector for PDepend's file cache.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class FileCacheGarbageCollector
 {
