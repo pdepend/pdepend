@@ -49,6 +49,7 @@ use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PDepend\Util\Utf8Util;
 use PDepend\Util\FileUtil;
 use PDepend\Util\ImageConvert;
 
@@ -188,7 +189,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 'abstraction'  =>  $metrics['a'],
                 'instability'  =>  $metrics['i'],
                 'distance'     =>  $metrics['d'],
-                'name'         =>  $namespace->getName()
+                'name'         =>  Utf8Util::ensureEncoding($namespace->getName())
             );
         }
 
