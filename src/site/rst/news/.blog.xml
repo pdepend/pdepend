@@ -32,6 +32,14 @@
             </categories>
         </entry>
         <entry>
+            <title>PDepend 2.2.0 released</title>
+            <path>pdepend-2.2.0-released.rst</path>
+            <categories>
+                <category>announcement</category>
+                <category>releases</category>
+            </categories>
+        </entry>
+        <entry>
             <title>PDepend 2.1.0 released</title>
             <path>pdepend-2.1.0-released.rst</path>
             <categories>
