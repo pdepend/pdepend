@@ -12,11 +12,29 @@
             <release version="2.2.0"
                      date=""
                      description="">
-                <action date="d979462" due-to="knightstalker" dev="manuelpichler" type="fix" issue="143" system="github">
-                    Truncated summary when analyzing ISO-8859-1 input
+                <action date="b80ae7e" due-to="btbroot" dev="manuelpichler" type="fix" issue="119" system="github">
+                    PDepend doesn't follow any symlinks to directories.
                 </action>
-                <action date="d979462" due-to="Majkl578" dev="manuelpichler" type="fix" issue="214" system="github">
-                    Truncated summary when analyzing ISO-8859-1 input
+                <action date="d979462" due-to="knightstalker" dev="manuelpichler" type="fix" issue="143" system="github">
+                    Truncated summary when analyzing ISO-8859-1 input.
+                </action>
+                <action date="a4e20ff" due-to="bvis" dev="manuelpichler" type="fix" issue="193" system="github">
+                    Cache conflict when executing pdepend in parallel.
+                </action>
+                <action date="2221f74" due-to="localgod" dev="manuelpichler" type="fix" issue="197" system="github">
+                    Warning: DOMNode::cloneNode(): ID &#60;id&#62; already defined in phar.
+                </action>
+                <action date="" due-to="FunTimeCoding" dev="manuelpichler" type="fix" issue="201" system="github">
+                    ShellCheck warnings in scripts/compare.sh
+                </action>
+                <action date="1209b0e" due-to="egircys" dev="manuelpichler" type="fix" issue="209" system="github">
+                    PHP 5.6 constant syntax not supported.
+                </action>
+                <action date="1f5b051" due-to="Majkl578" dev="manuelpichler" type="fix" issue="213" system="github">
+                    PHP 7: T_CHARACTER and T_BAD_CHARACTER are no longer defined.
+                </action>
+                <action date="249932b" due-to="Majkl578" dev="manuelpichler" type="fix" issue="214" system="github">
+                    PHP 7: Return types not supported.
                 </action>
             </release>
 
