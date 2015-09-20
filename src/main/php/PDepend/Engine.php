@@ -44,6 +44,7 @@ namespace PDepend;
 
 use PDepend\Input\CompositeFilter;
 use PDepend\Input\Filter;
+use PDepend\Input\Iterator;
 use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Metrics\AnalyzerClassFileSystemLocator;
 use PDepend\Metrics\AnalyzerFactory;
@@ -619,7 +620,7 @@ class Engine
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
      *
-     * @return Iterator
+     * @return \Iterator
      */
     private function createFileIterator()
     {
@@ -632,9 +633,12 @@ class Engine
 
         foreach ($this->directories as $directory) {
             $fileIterator->append(
-                new \PDepend\Input\Iterator(
+                new Iterator(
                     new \RecursiveIteratorIterator(
-                        new \RecursiveDirectoryIterator($directory . '/')
+                        new \RecursiveDirectoryIterator(
+                            $directory . '/',
+                            \RecursiveDirectoryIterator::FOLLOW_SYMLINKS
+                        )
                     ),
                     $this->fileFilter,
                     $directory
