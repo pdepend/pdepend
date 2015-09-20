@@ -405,4 +405,18 @@ class PHPParserGeneric extends AbstractPHPParser
 
         return $parameter;
     }
+
+    /**
+     * Parses constant default values as they are supported by the most recent
+     * PHP version.
+     *
+     * @return \PDepend\Source\AST\ASTValue
+     * @since 2.2.x
+     */
+    protected function parseConstantDeclaratorValue()
+    {
+        return $this->parseStaticValueOrStaticArray();
+    }
+
+
 }

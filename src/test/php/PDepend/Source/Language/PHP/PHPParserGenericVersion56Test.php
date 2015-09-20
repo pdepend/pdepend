@@ -110,4 +110,60 @@ class PHPParserGenericVersion56Test extends AbstractTest
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
     }
+
+    /**
+     * testConstantSupportForScalarArrayValues
+     *
+     * @return void
+     * @link https://github.com/pdepend/pdepend/issues/209
+     */
+    public function testConstantSupportForArrayWithValues()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForArrayWithKeyValuePairs
+     *
+     * @return void
+     * @link https://github.com/pdepend/pdepend/issues/209
+     */
+    public function testConstantSupportForArrayWithKeyValuePairs()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForArrayWithSelfReferenceInClass
+     *
+     * @return void
+     * @link https://github.com/pdepend/pdepend/issues/192
+     */
+    public function testConstantSupportForArrayWithSelfReferenceInClass()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForArrayWithSelfReferenceInInterface
+     *
+     * @return void
+     * @link https://github.com/pdepend/pdepend/issues/192
+     */
+    public function testConstantSupportForArrayWithSelfReferenceInInterface()
+    {
+        $class = $this->getFirstInterfaceForTestCase();
+        $const = $class->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
 }

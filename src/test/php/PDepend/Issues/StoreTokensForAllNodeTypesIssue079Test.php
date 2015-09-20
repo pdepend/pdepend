@@ -94,22 +94,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
     }
 
     /**
-     * Tests that the parser throws an exception when a constant declaration
-     * contains an invalid token.
-     *
-     * @return void
-     */
-    public function testParserThrowsExpectedExceptionForArrayInConstantDeclaration()
-    {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: array, line: 4, col: 17, file: '
-        );
-
-        self::parseTestCaseSource(__METHOD__);
-    }
-
-    /**
      * Tests that the parser stores the expected function tokens.
      *
      * @return void

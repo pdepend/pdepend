@@ -5884,7 +5884,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTConstantDeclarator
      * @since  0.9.6
      */
-    private function parseConstantDeclarator()
+    protected function parseConstantDeclarator()
     {
         // Remove leading comments and create a new token stack
         $this->consumeComments();
@@ -5896,9 +5896,21 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_EQUAL);
 
         $declarator = $this->builder->buildAstConstantDeclarator($token->image);
-        $declarator->setValue($this->parseStaticValue());
+        $declarator->setValue($this->parseConstantDeclaratorValue());
 
         return $this->setNodePositionsAndReturn($declarator);
+    }
+
+    /**
+     * Parses the value of a php constant. By default this can be only static
+     * values that were allowed in the oldest supported PHP version.
+     *
+     * @return \PDepend\Source\AST\ASTValue
+     * @since 2.2.x
+     */
+    protected function parseConstantDeclaratorValue()
+    {
+        return $this->parseStaticValue();
     }
 
     /**
@@ -6066,7 +6078,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTValue
      * @since  0.9.6
      */
-    private function parseStaticValueOrStaticArray()
+    protected function parseStaticValueOrStaticArray()
     {
         $this->consumeComments();
         if ($this->isArrayStartDelimiter()) {
