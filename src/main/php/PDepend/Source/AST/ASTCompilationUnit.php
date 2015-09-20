@@ -220,7 +220,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function setTokens(array $tokens)
     {
-        return $this->cache
+        $this->cache
             ->type('tokens')
             ->store($this->getId(), $tokens);
     }

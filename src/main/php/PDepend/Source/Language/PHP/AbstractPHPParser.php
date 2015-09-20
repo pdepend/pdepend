@@ -51,6 +51,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTTrait;
@@ -1138,6 +1139,7 @@ abstract class AbstractPHPParser
         $closure->setReturnsByReference($this->parseOptionalByReference());
         $closure->addChild($this->parseFormalParameters());
         $closure = $this->parseOptionalBoundVariables($closure);
+        $closure = $this->parseCallableDeclarationAddition($closure);
         $closure->addChild($this->parseScope());
 
         return $this->setNodePositionsAndReturn($closure);
@@ -1146,19 +1148,30 @@ abstract class AbstractPHPParser
     /**
      * Parses a function or a method and adds it to the parent context node.
      *
-     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
+     * @param \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
     private function parseCallableDeclaration(AbstractASTCallable $callable)
     {
         $callable->addChild($this->parseFormalParameters());
+        $callable = $this->parseCallableDeclarationAddition($callable);
 
-        $this->consumeComments();
-        if ($this->tokenizer->peek() == Tokens::T_CURLY_BRACE_OPEN) {
+        if (Tokens::T_CURLY_BRACE_OPEN == $this->tokenizer->peek()) {
             $callable->addChild($this->parseScope());
         } else {
             $this->consumeToken(Tokens::T_SEMICOLON);
         }
+    }
+
+    /**
+     * Extension for version specific additions.
+     *
+     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @return \PDepend\Source\AST\AbstractASTCallable
+     */
+    protected function parseCallableDeclarationAddition($callable)
+    {
+        return $callable;
     }
 
     /**
@@ -4323,7 +4336,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\InvalidStateException
      * @since  0.9.6
      */
-    private function parseSelfReference(Token $token)
+    protected function parseSelfReference(Token $token)
     {
         if ($this->classOrInterface === null) {
             throw new InvalidStateException(
@@ -5256,20 +5269,30 @@ abstract class AbstractPHPParser
      */
     private function parseFormalParameterAndArrayTypeHint()
     {
+        $node = $this->parseArrayType();
+
+        $parameter = $this->parseFormalParameterOrByReference();
+        $parameter->prependChild($node);
+
+        return $parameter;
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTTypeArray
+     */
+    protected function parseArrayType()
+    {
         $token = $this->consumeToken(Tokens::T_ARRAY);
 
-        $node = $this->builder->buildAstTypeArray();
-        $node->configureLinesAndColumns(
+        $type = $this->builder->buildAstTypeArray();
+        $type->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,
             $token->startColumn,
             $token->endColumn
         );
 
-        $parameter = $this->parseFormalParameterOrByReference();
-        $parameter->prependChild($node);
-
-        return $parameter;
+        return $type;
     }
 
     /**
@@ -5317,13 +5340,19 @@ abstract class AbstractPHPParser
      */
     private function parseFormalParameterAndParentTypeHint()
     {
-        $token = $this->consumeToken(Tokens::T_PARENT);
-
-        $reference = $this->parseParentReference($token);
+        $reference = $this->parseParentType();
         $parameter = $this->parseFormalParameterOrByReference();
         $parameter->prependChild($reference);
 
         return $parameter;
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTParentReference
+     */
+    protected function parseParentType()
+    {
+        return $this->parseParentReference($this->consumeToken(Tokens::T_PARENT));
     }
 
     /**
@@ -5344,20 +5373,20 @@ abstract class AbstractPHPParser
      */
     private function parseFormalParameterAndSelfTypeHint()
     {
-        $token = $this->consumeToken(Tokens::T_SELF);
-
-        $self = $this->builder->buildAstSelfReference($this->classOrInterface);
-        $self->configureLinesAndColumns(
-            $token->startLine,
-            $token->endLine,
-            $token->startColumn,
-            $token->endColumn
-        );
+        $self = $this->parseSelfType();
 
         $parameter = $this->parseFormalParameterOrByReference();
         $parameter->addChild($self);
 
         return $parameter;
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTSelfReference
+     */
+    protected function parseSelfType()
+    {
+        return $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
     }
 
     /**
@@ -6649,6 +6678,11 @@ abstract class AbstractPHPParser
             $callable->addExceptionClassReference(
                 $this->builder->buildAstClassOrInterfaceReference($qualifiedName)
             );
+        }
+
+        // Stop here if return class already exists.
+        if ($callable->getReturnClass()) {
+            return;
         }
 
         // Get return annotation

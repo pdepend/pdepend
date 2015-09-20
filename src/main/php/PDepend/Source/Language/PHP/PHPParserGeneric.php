@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -168,6 +169,49 @@ class PHPParserGeneric extends AbstractPHPParser
             $this->tokenizer->next(),
             $this->tokenizer->getSourceFile()
         );
+    }
+
+    /**
+     * @param \PDepend\Source\AST\AbstractASTCallable $callable
+     * @return \PDepend\Source\AST\AbstractASTCallable
+     */
+    protected function parseCallableDeclarationAddition($callable)
+    {
+        $this->consumeComments();
+        if (Tokens::T_COLON != $this->tokenizer->peek()) {
+            return $callable;
+        }
+
+        $this->consumeToken(Tokens::T_COLON);
+
+        $type = $this->parseReturnTypeHint();
+        $callable->addChild($type);
+
+        return $callable;
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTType
+     */
+    protected function parseReturnTypeHint()
+    {
+        $this->consumeComments();
+
+        switch ($tokenType = $this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+                $type = $this->parseArrayType();
+                break;
+            case Tokens::T_SELF:
+                $type = $this->parseSelfType();
+                break;
+            case Tokens::T_PARENT:
+                $type = $this->parseParentType();
+                break;
+            default:
+                $type = $this->parseTypeHint();
+                break;
+        }
+        return $type;
     }
 
     /**

@@ -122,6 +122,196 @@ class PHPParserGenericVersion70Test extends AbstractTest
     }
 
     /**
+     * testFunctionReturnTypeHintInt
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintInt()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('int', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintFloat
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintFloat()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('float', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintString
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintString()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('string', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintBool
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintBool()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('bool', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintArray
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintArray()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isArray());
+        $this->assertSame('array', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintCallable
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintCallable()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertFalse($type->isArray());
+
+        $this->assertSame('callable', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintClass
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintClass()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertFalse($type->isArray());
+
+        $this->assertSame('\Iterator', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintInt
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintInt()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('int', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintFloat
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintFloat()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('float', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintString
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintString()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('string', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintBool
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintBool()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertSame('bool', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintArray
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintArray()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isArray());
+        $this->assertSame('array', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintCallable
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintCallable()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertFalse($type->isArray());
+
+        $this->assertSame('callable', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintClass
+     *
+     * @return void
+     */
+    public function testClosureReturnTypeHintClass()
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertFalse($type->isArray());
+
+        $this->assertSame('\Iterator', $type->getImage());
+    }
+
+    /**
      * @return \PDepend\Source\AST\ASTFormalParameter
      */
     protected function getFirstFormalParameterForTestCase()
