@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\AST;
 
-// @codeCoverageIgnoreStart
-
 /**
  * This is an abstract base class for invocation nodes.
  *
@@ -54,7 +52,4 @@ namespace PDepend\Source\AST;
  */
 abstract class ASTInvocation extends ASTExpression
 {
-
 }
-
-// @codeCoverageIgnoreEnd

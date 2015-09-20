@@ -52,5 +52,4 @@ namespace PDepend\Source\AST;
  */
 abstract class ASTIndexExpression extends ASTExpression
 {
-
 }

@@ -52,5 +52,4 @@ namespace PDepend\Source\Parser;
  */
 class TokenException extends ParserException
 {
-
 }

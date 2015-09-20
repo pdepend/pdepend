@@ -448,7 +448,6 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
                 // These statement are terminated by a semicolon
                 //case \PDepend\Source\Tokenizer\Tokens::T_RETURN:
                 //case \PDepend\Source\Tokenizer\Tokens::T_THROW:
-
                 case Tokens::T_IF:
                 case Tokens::T_TRY:
                 case Tokens::T_CASE:
@@ -463,7 +462,6 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
                 case Tokens::T_SEMICOLON:
                     ++$llines;
                     break;
-
                 case Tokens::T_DO:
                 case Tokens::T_FOR:
                     // Because statements at least require one semicolon
