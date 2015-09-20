@@ -185,7 +185,7 @@ class ASTProperty extends AbstractASTArtifact
      * @return boolean
      * @since  0.9.6
      */
-    public function isPrimitive()
+    public function isScalar()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTType'
@@ -193,7 +193,7 @@ class ASTProperty extends AbstractASTArtifact
         if ($typeNode === null) {
             return false;
         }
-        return $typeNode->isPrimitive();
+        return $typeNode->isScalar();
     }
 
     /**

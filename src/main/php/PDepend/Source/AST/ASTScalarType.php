@@ -44,47 +44,37 @@
 namespace PDepend\Source\AST;
 
 /**
- * Abstract base class for a type node.
+ * This class represents primitive types like integer, float, boolean, string
+ * etc.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTType extends ASTNode
+class ASTScalarType extends ASTType
 {
     /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     *
-     * @return boolean
-     */
-    public function isArray()
-    {
-        return false;
-    }
-
-    /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
+     * This method will return <b>true</b> when this type is a php primitive.
+     * For this concrete implementation the return value will be always true.
      *
      * @return boolean
      */
     public function isScalar()
     {
-        return false;
+        return true;
     }
 
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param mixed $data
      * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
     {
-        return $visitor->visitType($this, $data);
+        return $visitor->visitScalarType($this, $data);
     }
 }

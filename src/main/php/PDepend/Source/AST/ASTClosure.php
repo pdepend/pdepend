@@ -50,8 +50,21 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.12
  */
-class ASTClosure extends \PDepend\Source\AST\ASTNode
+class ASTClosure extends ASTNode implements ASTCallable
 {
+    /**
+     * @return \PDepend\Source\AST\ASTType
+     */
+    public function getReturnType()
+    {
+        foreach ($this->nodes as $node) {
+            if ($node instanceof ASTType) {
+                return $node;
+            }
+        }
+        return null;
+    }
+
     /**
      * This method will return <b>true</b> when this closure returns by
      * reference.

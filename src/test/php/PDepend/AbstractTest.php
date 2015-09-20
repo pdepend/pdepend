@@ -188,6 +188,18 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return \PDepend\Source\AST\ASTClosure
+     */
+    protected function getFirstClosureForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getFunctions()
+            ->current()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTClosure');
+    }
+
+    /**
      * Create a TextUi Runner
      *
      * @return Runner
