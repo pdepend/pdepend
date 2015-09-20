@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/23905939
- * @since     0.10.8
+ * @since 0.10.8
  */
 
 namespace PDepend\Bugs;
@@ -47,10 +47,10 @@ namespace PDepend\Bugs;
 /**
  * Test case for bug #23905939.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/23905939
- * @since     0.10.8
+ * @since 0.10.8
  *
  * @ticket 23905939
  * @covers \stdClass

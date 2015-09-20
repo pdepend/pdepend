@@ -38,7 +38,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2015 Matthias Mullie. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -56,7 +56,7 @@ use PDepend\Source\AST\ASTMethod;
  * methods and functions.
  *
  * @copyright 2015 Matthias Mullie. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware
 {

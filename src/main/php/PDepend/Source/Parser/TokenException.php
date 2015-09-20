@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,9 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.9.10
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.9.10
  */
 
 namespace PDepend\Source\Parser;
@@ -46,11 +46,10 @@ namespace PDepend\Source\Parser;
 /**
  * Base class for token/token stream related exceptions.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.9.10
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.9.10
  */
 class TokenException extends ParserException
 {
-
 }

@@ -38,7 +38,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2015 Matthias Mullie. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Metrics\Analyzer;
@@ -57,7 +57,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * methods and functions.
  *
  * @copyright 2015 Matthias Mullie. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware
 {
@@ -231,14 +231,14 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                  * “for (...)”, “if (...)”, “switch (...)”, “while(...)”,
                  * “try-catch( )” are counted together as one operator.
                  */
+                // case Tokens::T_SWITCH: // not followed by ()
+                // case Tokens::T_TRY: // not followed by ()
+                // case Tokens::T_DO: // always comes with while, which accounts for () already
                 case Tokens::T_IF:
                 case Tokens::T_FOR:
                 case Tokens::T_FOREACH:
                 case Tokens::T_WHILE:
                 case Tokens::T_CATCH:
-                // case Tokens::T_SWITCH: // not followed by ()
-                // case Tokens::T_TRY: // not followed by ()
-                // case Tokens::T_DO: // always comes with while, which accounts for () already
                     $operators[] = $token->image;
                     /*
                      * These are always followed by parenthesis, which would add
@@ -328,7 +328,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_CONST:
                     $skipUntil = Tokens::T_SEMICOLON;
                     break;
-
                 case Tokens::T_STRING:
                     // `define` is T_STRING, just like any other identifier.
                     if ($token->image === 'define') {

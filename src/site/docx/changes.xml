@@ -9,6 +9,13 @@
     </properties>
 
 	<body>
+            <release version="2.2.0"
+                     date=""
+                     description="">
+                <action date="d979462" due-to="knightstalker" dev="manuelpichler" type="fix" issue="143" system="github">
+                    Truncated summary when analyzing ISO-8859-1 input
+                </action>
+            </release>
 
             <release version="2.1.0"
                      date="2015/05/21"

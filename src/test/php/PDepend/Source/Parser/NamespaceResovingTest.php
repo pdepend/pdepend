@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,9 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.10.5
+ * @since 0.10.5
  */
 
 namespace PDepend\Source\Parser;
@@ -48,9 +48,9 @@ use PDepend\Source\AST\ASTClassOrInterfaceReference;
 /**
  * Test case for the namespace resolving in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.10.5
+ * @since 0.10.5
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */

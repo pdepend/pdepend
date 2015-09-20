@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,9 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     1.0.0
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
@@ -56,9 +56,9 @@ namespace PDepend\Source\AST;
  * $array = [ 1, 2 => 3, [ $a, &$b, 1 => &$c ] ];
  * </code>
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     1.0.0
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 1.0.0
  */
 class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
 {

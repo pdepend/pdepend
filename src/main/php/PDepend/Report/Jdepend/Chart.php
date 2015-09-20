@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,8 +36,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Report\Jdepend;
@@ -49,14 +49,15 @@ use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PDepend\Util\Utf8Util;
 use PDepend\Util\FileUtil;
 use PDepend\Util\ImageConvert;
 
 /**
  * Generates a chart with the aggregated metrics.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
@@ -188,7 +189,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 'abstraction'  =>  $metrics['a'],
                 'instability'  =>  $metrics['i'],
                 'distance'     =>  $metrics['d'],
-                'name'         =>  $namespace->getName()
+                'name'         =>  Utf8Util::ensureEncoding($namespace->getName())
             );
         }
 

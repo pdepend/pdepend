@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,9 +36,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.10.0
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.10.0
  */
 
 namespace PDepend\Util\Cache\Driver;
@@ -52,9 +52,9 @@ use PDepend\Util\Cache\CacheDriver;
  * on an in memory data structure. This means that all cached entries will get
  * lost when the php process exits.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.10.0
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.10.0
  */
 class MemoryCacheDriver implements CacheDriver
 {
