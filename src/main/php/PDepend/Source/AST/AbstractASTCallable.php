@@ -52,7 +52,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractASTCallable extends AbstractASTArtifact
+abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCallable
 {
     /**
      * The internal used cache instance.
@@ -140,7 +140,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * @access private
      * @since  0.9.6
      */
-    public function addChild(\PDepend\Source\AST\ASTNode $node)
+    public function addChild(ASTNode $node)
     {
         $this->nodes[] = $node;
     }
@@ -275,10 +275,26 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      */
     public function getReturnClass()
     {
-        if ($this->returnClassReference === null) {
-            return null;
+        if ($this->returnClassReference) {
+            return $this->returnClassReference->getType();
         }
-        return $this->returnClassReference->getType();
+        if (($node = $this->getReturnType()) instanceof ASTClassOrInterfaceReference) {
+            return $node->getType();
+        }
+        return null;
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTType
+     */
+    public function getReturnType()
+    {
+        foreach ($this->nodes as $node) {
+            if ($node instanceof ASTType) {
+                return $node;
+            }
+        }
+        return null;
     }
 
     /**
@@ -291,9 +307,8 @@ abstract class AbstractASTCallable extends AbstractASTArtifact
      * @return void
      * @since  0.9.5
      */
-    public function setReturnClassReference(
-        \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference
-    ) {
+    public function setReturnClassReference(ASTClassOrInterfaceReference $classReference)
+    {
         $this->returnClassReference = $classReference;
     }
 

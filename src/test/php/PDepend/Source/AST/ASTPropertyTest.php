@@ -330,7 +330,7 @@ class ASTPropertyTest extends AbstractTest
     }
 
     /**
-     * Tests that the {@link \PDepend\Source\AST\ASTProperty::isPrimitive()}
+     * Tests that the {@link \PDepend\Source\AST\ASTProperty::isScalar()}
      * method returns <b>true</b> for an as integer annotated property.
      *
      * @return void
@@ -338,11 +338,11 @@ class ASTPropertyTest extends AbstractTest
     public function testIsPrimitiveReturnsExpectedValueTrueForVarAnnotationWithIntegerTypeHint()
     {
         $property = $this->_getFirstPropertyInClass();
-        $this->assertTrue($property->isPrimitive());
+        $this->assertTrue($property->isScalar());
     }
 
     /**
-     * Tests that the {@link \PDepend\Source\AST\ASTProperty::isPrimitive()} method
+     * Tests that the {@link \PDepend\Source\AST\ASTProperty::isScalar()} method
      * returns <b>false</b> for an as class/interface annotated property.
      *
      * @return void
@@ -350,7 +350,7 @@ class ASTPropertyTest extends AbstractTest
     public function testIsPrimitiveReturnsExpectedValueFalseForVarAnnotationWithClassType()
     {
         $property = $this->_getFirstPropertyInClass();
-        $this->assertFalse($property->isPrimitive());
+        $this->assertFalse($property->isScalar());
     }
 
     /**
@@ -366,7 +366,7 @@ class ASTPropertyTest extends AbstractTest
     }
 
     /**
-     * Tests that the {@link \PDepend\Source\AST\ASTProperty::isPrimitive()} method
+     * Tests that the {@link \PDepend\Source\AST\ASTProperty::isScalar()} method
      * returns <b>false</b> for an property without var annotation.
      *
      * @return void
@@ -374,7 +374,7 @@ class ASTPropertyTest extends AbstractTest
     public function testIsPrimitiveReturnsExpectedValueFalseForPropertyWithoutVarAnnotation()
     {
         $property = $this->_getFirstPropertyInClass();
-        $this->assertFalse($property->isPrimitive());
+        $this->assertFalse($property->isScalar());
     }
 
     /**

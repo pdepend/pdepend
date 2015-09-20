@@ -56,6 +56,62 @@ namespace PDepend\Source\AST;
 class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
 {
     /**
+     * testHasTypeReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testHasTypeReturnsFalseByDefault()
+    {
+        $parameter = new ASTFormalParameter();
+        $parameter->addChild(new ASTVariableDeclarator());
+
+        $this->assertFalse($parameter->hasType());
+    }
+
+    /**
+     * testHasTypeReturnsTrueWhenSecondChildNodeExists
+     *
+     * @return void
+     */
+    public function testHasTypeReturnsTrueWhenSecondChildNodeExists()
+    {
+        $parameter = new ASTFormalParameter();
+        $parameter->addChild(new ASTScalarType('int'));
+        $parameter->addChild(new ASTVariableDeclarator());
+
+        $this->assertTrue($parameter->hasType());
+    }
+
+    /**
+     * testGetTypeThrowsAnExceptionByDefault
+     *
+     * @return void
+     */
+    public function testGetTypeThrowsAnExceptionByDefault()
+    {
+        $parameter = new ASTFormalParameter();
+        $parameter->addChild(new ASTVariableDeclarator());
+
+        $this->setExpectedException('\\OutOfBoundsException');
+
+        $parameter->getType();
+    }
+
+    /**
+     * testGetTypeReturnsAssociatedTypeInstance
+     *
+     * @return void
+     */
+    public function testGetTypeReturnsAssociatedTypeInstance()
+    {
+        $parameter = new ASTFormalParameter();
+        $parameter->addChild($scalar = new ASTScalarType('float'));
+        $parameter->addChild(new ASTVariableDeclarator());
+
+        $this->assertSame($scalar, $parameter->getType());
+    }
+
+    /**
      * testIsVariableArgListReturnsFalseByDefault
      *
      * @return void
@@ -117,7 +173,7 @@ class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testIsPassedByReferenceReturnsFalseByDefault()
     {
-        $param = new \PDepend\Source\AST\ASTFormalParameter();
+        $param = new ASTFormalParameter();
         $this->assertFalse($param->isPassedByReference());
     }
 
@@ -253,7 +309,7 @@ class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstFormalParameterInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
     }

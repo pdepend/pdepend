@@ -38,44 +38,41 @@
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
  */
 
 namespace PDepend\Source\AST;
 
 /**
- * This class represents primitive types like integer, float, boolean, string
- * etc.
+ * Test case for the {@link \PDepend\Source\AST\ASTScalarType} class.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTScalarType
+ * @group unittest
  */
-class ASTPrimitiveType extends ASTType
+class ASTScalarTypeTest extends ASTNodeTest
 {
     /**
-     * This method will return <b>true</b> when this type is a php primitive.
-     * For this concrete implementation the return value will be always true.
+     * testIsArrayReturnsFalse
      *
-     * @return boolean
+     * @return void
      */
-    public function isPrimitive()
+    public function testIsArrayReturnsFalse()
     {
-        return true;
+        $type = new ASTScalarType();
+        $this->assertFalse($type->isArray());
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
+     * testIsPrimitiveReturnsTrue
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
-     * @return mixed
-     * @since  0.9.12
+     * @return void
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function testIsPrimitiveReturnsTrue()
     {
-        return $visitor->visitPrimitiveType($this, $data);
+        $type = new ASTScalarType();
+        $this->assertTrue($type->isScalar());
     }
 }

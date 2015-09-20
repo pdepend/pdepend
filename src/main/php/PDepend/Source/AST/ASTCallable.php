@@ -43,36 +43,15 @@
 namespace PDepend\Source\AST;
 
 /**
- * Test case for the {@link \PDepend\Source\AST\ASTPrimitiveType} class.
+ * Base interface for all callables.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTPrimitiveType
- * @group unittest
  */
-class ASTPrimitiveTypeTest extends \PDepend\Source\AST\ASTNodeTest
+interface ASTCallable
 {
     /**
-     * testIsArrayReturnsFalse
-     *
-     * @return void
+     * @return \PDepend\Source\AST\ASTType
      */
-    public function testIsArrayReturnsFalse()
-    {
-        $type = new \PDepend\Source\AST\ASTPrimitiveType();
-        $this->assertFalse($type->isArray());
-    }
-
-    /**
-     * testIsPrimitiveReturnsTrue
-     *
-     * @return void
-     */
-    public function testIsPrimitiveReturnsTrue()
-    {
-        $type = new \PDepend\Source\AST\ASTPrimitiveType();
-        $this->assertTrue($type->isPrimitive());
-    }
+    public function getReturnType();
 }

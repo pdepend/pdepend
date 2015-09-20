@@ -919,12 +919,11 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new primitive type node.
      *
-     * @param string $image The source image for the primitive type.
-     *
-     * @return \PDepend\Source\AST\ASTPrimitiveType
+     * @param string $image
+     * @return \PDepend\Source\AST\ASTScalarType
      * @since  0.9.6
      */
-    public function buildAstPrimitiveType($image);
+    public function buildAstScalarType($image);
 
     /**
      * Builds a new literal node.
