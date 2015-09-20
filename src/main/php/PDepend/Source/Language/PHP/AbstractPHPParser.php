@@ -51,7 +51,6 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNode;
-use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTTrait;
@@ -230,14 +229,14 @@ abstract class AbstractPHPParser
     /**
      * Stack with all active token scopes.
      *
-     * @var \PDepend\Source\AST\Parser\TokenStack
+     * @var \PDepend\Source\Tokenizer\TokenStack
      */
     private $tokenStack;
 
     /**
      * Used identifier builder instance.
      *
-     * @var   \PDepend\Util\IdBuilder
+     * @var \PDepend\Util\IdBuilder
      * @since 0.9.12
      */
     private $idBuilder = null;
@@ -268,8 +267,8 @@ abstract class AbstractPHPParser
      * Constructs a new source parser.
      *
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder     $builder
-     * @param \PDepend\Util\Cache\CacheDriver     $cache
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
      */
     public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
@@ -6303,12 +6302,18 @@ abstract class AbstractPHPParser
     /**
      * Extracts the @package information from the given comment.
      *
-     * @param string $comment A doc comment block.
-     *
+     * @param string $comment
      * @return string
      */
     private function parsePackageAnnotation($comment)
     {
+        if (getenv('DISMISS_PACKAGES')) {
+            $this->packageName = null;
+            $this->globalPackageName = null;
+
+            return;
+        }
+
         $package = Builder::DEFAULT_NAMESPACE;
         if (preg_match('#\*\s*@package\s+(\S+)#', $comment, $match)) {
             $package = trim($match[1]);
