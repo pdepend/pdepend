@@ -501,6 +501,4 @@ class PHPParserGeneric extends AbstractPHPParser
     {
         return $this->parseStaticValueOrStaticArray();
     }
-
-
 }

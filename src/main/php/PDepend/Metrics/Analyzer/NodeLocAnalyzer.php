@@ -444,7 +444,6 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             }
 
             switch ($token->type) {
-
                 // These statement are terminated by a semicolon
                 //case \PDepend\Source\Tokenizer\Tokens::T_RETURN:
                 //case \PDepend\Source\Tokenizer\Tokens::T_THROW:
