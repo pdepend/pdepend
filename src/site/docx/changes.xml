@@ -10,8 +10,8 @@
 
 	<body>
             <release version="2.2.0"
-                     date=""
-                     description="">
+                     date="2015/09/19"
+                     description="This release contains beside several contributed additions and bugfixes better support for PHP 7 language constructs.">
                 <action date="b80ae7e" due-to="btbroot" dev="manuelpichler" type="fix" issue="119" system="github">
                     PDepend doesn't follow any symlinks to directories.
                 </action>
