@@ -43,8 +43,7 @@
 namespace PDepend\Report\Dependencies;
 
 use PDepend\Metrics\Analyzer;
-use PDepend\Metrics\AnalyzerNodeAware;
-use PDepend\Metrics\AnalyzerProjectAware;
+use PDepend\Metrics\Analyzer\ClassDependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
@@ -92,20 +91,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     protected $fileSet = array();
 
     /**
-     * List of all analyzers that implement the node aware interface
-     * {@link \PDepend\dependencies\AnalyzerNodeAware}.
-     *
-     * @var \PDepend\dependencies\AnalyzerNodeAware[]
+     * @var \PDepend\Metrics\Analyzer\DependencyAnalyzer
      */
-    private $nodeAwareAnalyzers = array();
-
-    /**
-     * List of all analyzers that implement the node aware interface
-     * {@link \PDepend\dependencies\AnalyzerProjectAware}.
-     *
-     * @var \PDepend\dependencies\AnalyzerProjectAware[]
-     */
-    private $projectAwareAnalyzers = array();
+    private $dependencyAnalyzer;
 
     /**
      * The internal used xml stack.
@@ -135,9 +123,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     public function getAcceptedAnalyzers()
     {
         return array(
-            'pdepend.analyzer.inheritance',
-            'pdepend.analyzer.hierarchy',
-            'pdepend.analyzer.coupling',
+            'pdepend.analyzer.class_dependency',
         );
     }
 
@@ -161,8 +147,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function log(Analyzer $analyzer)
     {
-        if ($analyzer instanceof AnalyzerNodeAware) {
-            $this->nodeAwareAnalyzers[] = $analyzer;
+        if ($analyzer instanceof ClassDependencyAnalyzer) {
+            $this->dependencyAnalyzer = $analyzer;
             return true;
         }
         return false;
@@ -236,13 +222,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $typeXml = $doc->createElement($typeIdentifier);
         $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
-
-        $this->writeNodeDependencies($typeXml, $type);
-        $this->writeFileReference($typeXml, $type->getCompilationUnit());
-
         $xml->appendChild($typeXml);
 
         array_push($this->xmlStack, $typeXml);
+        $this->writeNodeDependencies($typeXml, $type);
+        $this->writeFileReference($typeXml, $type->getCompilationUnit());
         array_pop($this->xmlStack);
     }
 
@@ -310,13 +294,31 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected function writeNodeDependencies(\DOMElement $xml, AbstractASTArtifact $node)
     {
-        $dependencies = array();
-        foreach ($this->nodeAwareAnalyzers as $analyzer) {
-            $dependencies = array_merge($dependencies, $analyzer->getNodedependencies($node));
+        if (!$this->dependencyAnalyzer) {
+            return;
         }
 
-        foreach ($dependencies as $name => $value) {
-            $xml->setAttribute($name, $value);
+        $xml = end($this->xmlStack);
+        $doc = $xml->ownerDocument;
+
+        $efferentXml = $doc->createElement('efferent');
+        $xml->appendChild($efferentXml);
+        foreach ($this->dependencyAnalyzer->getEfferents($node) as $type) {
+            $typeXml = $doc->createElement('type');
+            $typeXml->setAttribute('namespace', Utf8Util::ensureEncoding($type->getNamespaceName()));
+            $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+
+            $efferentXml->appendChild($typeXml);
+        }
+
+        $afferentXml = $doc->createElement('afferent');
+        $xml->appendChild($afferentXml);
+        foreach ($this->dependencyAnalyzer->getAfferents($node) as $type) {
+            $typeXml = $doc->createElement('type');
+            $typeXml->setAttribute('namespace', Utf8Util::ensureEncoding($type->getNamespaceName()));
+            $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+
+            $afferentXml->appendChild($typeXml);
         }
     }
 

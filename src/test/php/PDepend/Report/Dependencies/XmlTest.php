@@ -104,9 +104,7 @@ class XmlTest extends AbstractTest
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
         $expected = array(
-            'pdepend.analyzer.inheritance',
-            'pdepend.analyzer.hierarchy',
-            'pdepend.analyzer.coupling',
+            'pdepend.analyzer.class_dependency',
         );
 
         $this->assertEquals($expected, $actual);
@@ -130,14 +128,27 @@ class XmlTest extends AbstractTest
     }
 
     /**
-     * testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware
+     * testLogMethodReturnsFalseForWrongAnalyzer
      *
      * @return void
      */
-    public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
+    public function testLogMethodReturnsFalseForWrongAnalyzer()
     {
         $logger = new Xml();
         $actual = $logger->log($this->getMock('\\PDepend\\Metrics\\AnalyzerNodeAware'));
+
+        $this->assertFalse($actual);
+    }
+
+    /**
+     * testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer
+     *
+     * @return void
+     */
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer()
+    {
+        $logger = new Xml();
+        $actual = $logger->log($this->getMock('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer'));
 
         $this->assertTrue($actual);
     }
@@ -159,7 +170,49 @@ class XmlTest extends AbstractTest
         $log->close();
 
         $fileName = 'xml-log-without-metrics.xml';
-        // copy($this->resultFile, dirname(__FILE__) . "/_expected/{$fileName}");
+        $this->assertXmlStringEqualsXmlString(
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml($this->resultFile)
+        );
+    }
+
+    /**
+     * Tests that {@link \PDepend\Report\Dependencies\Xml::write()} generates the
+     * expected document structure for the source, with applied metrics.
+     *
+     * @return void
+     */
+    public function testXmlLogWithMetrics()
+    {
+        $this->namespaces = self::parseCodeResourceForTest();
+
+        $type = $this->getMock('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', array(), array(), '', false);
+        $type
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('class'));
+        $type
+            ->expects($this->any())
+            ->method('getNamespaceName')
+            ->will($this->returnValue('namespace'));
+
+        $analyzer = $this->getMock('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer');
+        $analyzer
+            ->expects($this->any())
+            ->method('getEfferents')
+            ->will($this->returnValue(array($type)));
+        $analyzer
+            ->expects($this->any())
+            ->method('getAfferents')
+            ->will($this->returnValue(array($type, $type)));
+
+        $log = new Xml();
+        $log->log($analyzer);
+        $log->setLogFile($this->resultFile);
+        $log->setArtifacts($this->namespaces);
+        $log->close();
+
+        $fileName = 'xml-log-with-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
