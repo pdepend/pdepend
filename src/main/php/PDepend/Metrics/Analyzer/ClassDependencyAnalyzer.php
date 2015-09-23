@@ -137,21 +137,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     }
 
     /**
-     * Returns the statistics for the requested node.
-     *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return array
-     */
-    public function getStats(AbstractASTArtifact $node)
-    {
-        $stats = array();
-        if (isset($this->nodeMetrics[$node->getId()])) {
-            $stats = $this->nodeMetrics[$node->getId()];
-        }
-        return $stats;
-    }
-
-    /**
      * Returns an array of all afferent nodes.
      *
      * @param  \PDepend\Source\AST\AbstractASTArtifact $node
