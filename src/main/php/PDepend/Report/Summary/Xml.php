@@ -292,6 +292,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $typeXml = $doc->createElement($typeIdentifier);
         $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+        $typeXml->setAttribute('start', Utf8Util::ensureEncoding($type->getStartLine()));
+        $typeXml->setAttribute('end', Utf8Util::ensureEncoding($type->getEndLine()));
 
         $this->writeNodeMetrics($typeXml, $type);
         $this->writeFileReference($typeXml, $type->getCompilationUnit());
@@ -323,6 +325,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $functionXml = $doc->createElement('function');
         $functionXml->setAttribute('name', Utf8Util::ensureEncoding($function->getName()));
+        $functionXml->setAttribute('start', Utf8Util::ensureEncoding($function->getStartLine()));
+        $functionXml->setAttribute('end', Utf8Util::ensureEncoding($function->getEndLine()));
 
         $this->writeNodeMetrics($functionXml, $function);
         $this->writeFileReference($functionXml, $function->getCompilationUnit());
@@ -354,6 +358,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $methodXml = $doc->createElement('method');
         $methodXml->setAttribute('name', Utf8Util::ensureEncoding($method->getName()));
+        $methodXml->setAttribute('start', Utf8Util::ensureEncoding($method->getStartLine()));
+        $methodXml->setAttribute('end', Utf8Util::ensureEncoding($method->getEndLine()));
 
         $this->writeNodeMetrics($methodXml, $method);
 
