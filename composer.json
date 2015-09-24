@@ -9,7 +9,7 @@
         "symfony/config": "^2.3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.*@stable",
+        "phpunit/phpunit": "^4.0.0",
         "squizlabs/php_codesniffer": "@stable"
     },
     "bin": ["src/bin/pdepend"],
