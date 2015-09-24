@@ -9,6 +9,14 @@
     </properties>
 
 	<body>
+            <release version="2.2.1"
+                     date="2015/09/24"
+                     description="With this release we made a dependency downgrade, so that we can support more environments.">
+                <action date="8601cc3" dev="ravage84" type="update" issue="223" system="github">
+                    Minimum Symfony version downgraded to 2.3.
+                </action>
+            </release>
+
             <release version="2.2.0"
                      date="2015/09/19"
                      description="This release contains beside several contributed additions and bugfixes better support for PHP 7 language constructs.">
