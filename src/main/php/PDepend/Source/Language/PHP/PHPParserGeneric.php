@@ -58,7 +58,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.20
  */
-class PHPParserGeneric extends AbstractPHPParser
+class PHPParserGeneric extends PHPParserVersion70
 {
     /**
      * Tests if the given token type is a reserved keyword in the supported PHP
@@ -301,44 +301,6 @@ class PHPParserGeneric extends AbstractPHPParser
         }
 
         return false;
-    }
-
-    /**
-     * Parses an integer value.
-     *
-     * @return \PDepend\Source\AST\ASTLiteral
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
-     * @since  1.0.0
-     */
-    protected function parseIntegerNumber()
-    {
-        $token = $this->consumeToken(Tokens::T_LNUMBER);
-
-        if ('0' === $token->image) {
-            if (Tokens::T_STRING === $this->tokenizer->peek()) {
-                $token1 = $this->consumeToken(Tokens::T_STRING);
-                if (preg_match('(^b[01]+$)', $token1->image)) {
-                    $token->image     = $token->image . $token1->image;
-                    $token->endLine   = $token1->endLine;
-                    $token->endColumn = $token1->endColumn;
-                } else {
-                    throw new UnexpectedTokenException(
-                        $token1,
-                        $this->tokenizer->getSourceFile()
-                    );
-                }
-            }
-        }
-
-        $literal = $this->builder->buildAstLiteral($token->image);
-        $literal->configureLinesAndColumns(
-            $token->startLine,
-            $token->endLine,
-            $token->startColumn,
-            $token->endColumn
-        );
-
-        return $literal;
     }
 
     /**

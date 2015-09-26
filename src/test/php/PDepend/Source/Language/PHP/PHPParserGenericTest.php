@@ -563,36 +563,6 @@ class PHPParserGenericTest extends AbstractTest
     }
 
     /**
-     * testParserHandlesBinaryIntegerLiteral
-     *
-     * @return void
-     * @since 1.0.0
-     */
-    public function testParserHandlesBinaryIntegerLiteral()
-    {
-        $method  = $this->getFirstMethodForTestCase();
-        $literal = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral');
-
-        $this->assertEquals('0b0100110100111', $literal->getImage());
-    }
-
-    /**
-     * testParserThrowsExceptionForInvalidBinaryIntegerLiteral
-     *
-     * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @since 1.0.0
-     */
-    public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
-    {
-        if (version_compare(phpversion(), '5.4alpha') >= 0)
-        {
-            $this->markTestSkipped( 'This test only affects PHP < 5.4' );
-        }
-        $this->getFirstMethodForTestCase();
-    }
-
-    /**
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void

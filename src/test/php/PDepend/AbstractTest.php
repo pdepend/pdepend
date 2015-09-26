@@ -337,6 +337,33 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the first class or interface that could be found in the code under
+     * test for the calling test case.
+     *
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     */
+    protected function getFirstTypeForTestCase()
+    {
+        return self::parseCodeResourceForTest()
+            ->current()
+            ->getTypes()
+            ->current();
+    }
+
+    /**
+     * Returns the first method that could be found in the code under test for
+     * the calling test case.
+     *
+     * @return \PDepend\Source\AST\ASTMethod
+     */
+    protected function getFirstMethodForTestCase()
+    {
+        return $this->getFirstTypeForTestCase()
+            ->getMethods()
+            ->current();
+    }
+
+    /**
      * Collects all children from a given node.
      *
      * @param \PDepend\Source\AST\ASTNode $node   The current root node.

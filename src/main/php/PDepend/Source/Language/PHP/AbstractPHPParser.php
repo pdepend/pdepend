@@ -4749,15 +4749,28 @@ abstract class AbstractPHPParser
      * Parses an integer value.
      *
      * @return \PDepend\Source\AST\ASTLiteral
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    abstract protected function parseIntegerNumber();
+    protected function parseIntegerNumber()
+    {
+        $token = $this->consumeToken(Tokens::T_LNUMBER);
+
+        $literal = $this->builder->buildAstLiteral($token->image);
+        $literal->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $literal;
+    }
 
     /**
      * Parses an array structure.
      *
      * @return \PDepend\Source\AST\ASTArray
-     * @since  1.0.0
+     * @since 1.0.0
      */
     private function doParseArray($static = false)
     {
