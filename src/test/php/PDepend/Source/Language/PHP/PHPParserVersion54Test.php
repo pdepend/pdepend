@@ -44,6 +44,9 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -83,5 +86,63 @@ class PHPParserVersion54Test extends AbstractTest
             $this->markTestSkipped( 'This test only affects PHP < 5.4' );
         }
         $this->getFirstMethodForTestCase();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsClassName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsClassName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsFunctionName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsFunctionName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsInterfaceName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsInterfaceName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsMethodName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsMethodName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getMockForAbstractClass(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion54',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

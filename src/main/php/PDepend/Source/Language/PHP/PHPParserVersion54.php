@@ -61,6 +61,48 @@ use PDepend\Source\Tokenizer\Tokens;
 abstract class PHPParserVersion54 extends AbstractPHPParser
 {
     /**
+     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
+     * name part.
+     *
+     * @param  integer $tokenType The type of a parsed token.
+     * @return boolean
+     * @since  0.10.6
+     */
+    protected function isClassName($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_NULL:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_STRING:
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Tests if the give token is a valid function name in the supported PHP
+     * version.
+     *
+     * @param integer $tokenType
+     * @return boolean
+     * @since 2.3
+     */
+    protected function isFunctionName($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_STRING:
+            case Tokens::T_NULL:
+            case Tokens::T_SELF:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_PARENT:
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * Tests if the given token type is a reserved keyword in the supported PHP
      * version.
      *

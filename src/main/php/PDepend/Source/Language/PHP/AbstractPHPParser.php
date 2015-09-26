@@ -449,32 +449,106 @@ abstract class AbstractPHPParser
     abstract protected function isKeyword($tokenType);
 
     /**
+     * Parses a valid class or interface name and returns the image of the parsed
+     * token.
+     *
+     * @return string
+     * @throws \PDepend\Source\Parser\TokenStreamEndException
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    protected function parseClassName()
+    {
+        $type = $this->tokenizer->peek();
+
+        if ($this->isClassName($type)) {
+            return $this->consumeToken($type)->image;
+        } elseif ($type === Tokenizer::T_EOF) {
+            throw new TokenStreamEndException($this->tokenizer);
+        }
+
+        throw new UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
+        );
+    }
+
+    /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
      * name part.
      *
-     * @param  integer $tokenType The type of a parsed token.
+     * @param integer $tokenType
      * @return boolean
-     * @since  0.10.6
+     * @since 0.10.6
      */
-    abstract protected function isClassName($tokenType);
+    protected function isClassName($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_NULL:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_YIELD:
+            case Tokens::T_STRING:
+            case Tokens::T_TRAIT_C:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_INSTEADOF:
+                return true;
+        }
+        return false;
+    }
 
     /**
-     * Parses a valid class or interface name for the currently configured php
-     * version.
+     * Parses a function name from the given tokenizer and returns the string
+     * literal representing the function name. If no valid token exists in the
+     * token stream, this method will throw an exception.
      *
      * @return string
-     * @since  0.9.20
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws \PDepend\Source\Parser\TokenStreamEndException
+     * @since 0.10.0
      */
-    abstract protected function parseClassName();
+    protected function parseFunctionName()
+    {
+        $tokenType = $this->tokenizer->peek();
+
+        if ($this->isFunctionName($tokenType)) {
+            return $this->consumeToken($tokenType)->image;
+        } elseif ($tokenType === Tokenizer::T_EOF) {
+            throw new TokenStreamEndException($this->tokenizer);
+        }
+
+        throw new UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->tokenizer->getSourceFile()
+        );
+    }
 
     /**
-     * Parses a valid method or function name for the currently configured php
+     * Tests if the give token is a valid function name in the supported PHP
      * version.
      *
-     * @return string
-     * @since  0.10.0
+     * @param integer $tokenType
+     * @return boolean
+     * @since 2.3
      */
-    abstract protected function parseFunctionName();
+    protected function isFunctionName($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_NULL:
+            case Tokens::T_SELF:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_YIELD:
+            case Tokens::T_PARENT:
+            case Tokens::T_STRING:
+            case Tokens::T_TRAIT_C:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_INSTEADOF:
+                return true;
+        }
+        return false;
+    }
 
     /**
      * Parses a trait declaration.

@@ -109,42 +109,16 @@ class PHPParserGeneric extends PHPParserVersion70
     }
 
     /**
-     * Parses a valid class or interface name and returns the image of the parsed
-     * token.
+     * Tests if the give token is a valid function name in the supported PHP
+     * version.
      *
-     * @return string
-     * @throws \PDepend\Source\Parser\TokenStreamEndException
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @param integer $tokenType
+     * @return boolean
+     * @since 2.3
      */
-    protected function parseClassName()
+    protected function isFunctionName($tokenType)
     {
-        $type = $this->tokenizer->peek();
-        
-        if ($this->isClassName($type)) {
-            return $this->consumeToken($type)->image;
-        } elseif ($type === Tokenizer::T_EOF) {
-            throw new TokenStreamEndException($this->tokenizer);
-        }
-        
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
-    }
-
-    /**
-     * Parses a function name from the given tokenizer and returns the string
-     * literal representing the function name. If no valid token exists in the
-     * token stream, this method will throw an exception.
-     *
-     * @return string
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
-     * @throws \PDepend\Source\Parser\TokenStreamEndException
-     */
-    public function parseFunctionName()
-    {
-        $type = $this->tokenizer->peek();
-        switch ($type) {
+        switch ($tokenType) {
             case Tokens::T_CLONE:
             case Tokens::T_STRING:
             case Tokens::T_USE:
@@ -158,16 +132,12 @@ class PHPParserGeneric extends PHPParserVersion70
             case Tokens::T_NAMESPACE:
             case Tokens::T_DIR:
             case Tokens::T_NS_C:
+            case Tokens::T_YIELD:
             case Tokens::T_PARENT:
             case Tokens::T_TRAIT_C:
-                return $this->consumeToken($type)->image;
-            case Tokenizer::T_EOF:
-                throw new TokenStreamEndException($this->tokenizer);
+                return true;
         }
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
+        return false;
     }
 
     /**
@@ -217,10 +187,9 @@ class PHPParserGeneric extends PHPParserVersion70
      * Tests if the given token type is a valid type hint in the supported
      * PHP version.
      *
-     * @param integer $tokenType Numerical token identifier.
-     *
+     * @param integer $tokenType
      * @return boolean
-     * @since  1.0.0
+     * @since 1.0.0
      */
     protected function isTypeHint($tokenType)
     {
