@@ -83,20 +83,6 @@ if (!defined('T_USE')) {
 }
 
 /**
- * Define character token that was removed in PHP 7
- */
-if (!defined('T_CHARACTER')) {
-    define('T_CHARACTER', 42005);
-}
-
-/**
- * Define bad character token that was removed in PHP 7
- */
-if (!defined('T_BAD_CHARACTER')) {
-    define('T_BAD_CHARACTER', 42006);
-}
-
-/**
  * Define PHP 5.3 'namespace' token constant.
  */
 if (!defined('T_NAMESPACE')) {
@@ -146,6 +132,27 @@ if (!defined('T_FINALLY')) {
 }
 
 /**
+ * Define character token that was removed in PHP 7
+ */
+if (!defined('T_CHARACTER')) {
+    define('T_CHARACTER', 42011);
+}
+
+/**
+ * Define bad character token that was removed in PHP 7
+ */
+if (!defined('T_BAD_CHARACTER')) {
+    define('T_BAD_CHARACTER', 42012);
+}
+
+/**
+ * Define PHP 7's '<=>' token constant
+ */
+if (!defined('T_SPACESHIP')) {
+    define('T_SPACESHIP', 42013);
+}
+
+/**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
  *
@@ -154,11 +161,6 @@ if (!defined('T_FINALLY')) {
  */
 class PHPTokenizerInternal implements Tokenizer
 {
-    /**
-     * Internally used transition token.
-     */
-    const T_ELLIPSIS = 23006;
-
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
@@ -250,6 +252,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_CLOSE_TAG                 =>  Tokens::T_CLOSE_TAG,
         T_INSTEADOF                 =>  Tokens::T_INSTEADOF,
         T_PROTECTED                 =>  Tokens::T_PROTECTED,
+        T_SPACESHIP                 =>  Tokens::T_SPACESHIP,
         T_CURLY_OPEN                =>  Tokens::T_CURLY_BRACE_OPEN,
         T_ENDFOREACH                =>  Tokens::T_ENDFOREACH,
         T_ENDDECLARE                =>  Tokens::T_ENDDECLARE,
@@ -294,6 +297,11 @@ class PHPTokenizerInternal implements Tokenizer
         T_FINALLY                   =>  Tokens::T_FINALLY,
         //T_DOLLAR_OPEN_CURLY_BRACES  =>  Tokens::T_CURLY_BRACE_OPEN,
     );
+
+    /**
+     * Internally used transition token.
+     */
+    const T_ELLIPSIS = 23006;
 
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
@@ -466,11 +474,18 @@ class PHPTokenizerInternal implements Tokenizer
         Tokens::T_CONCAT => array(
             Tokens::T_CONCAT => array(
                 'type'  => self::T_ELLIPSIS,
-                'image' => '..'
+                'image' => '..',
             ),
             self::T_ELLIPSIS  =>  array(
                 'type'  => Tokens::T_ELLIPSIS,
-                'image' => '...'
+                'image' => '...',
+            )
+        ),
+
+        Tokens::T_ANGLE_BRACKET_CLOSE => array(
+            Tokens::T_IS_SMALLER_OR_EQUAL => array(
+                'type'  => Tokens::T_SPACESHIP,
+                'image' => '<=>',
             )
         ),
     );

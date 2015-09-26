@@ -2475,7 +2475,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since  0.9.6
      */
-    private function parseOptionalExpression()
+    protected function parseOptionalExpression()
     {
         $expressions = array();
 
@@ -2700,10 +2700,8 @@ abstract class AbstractPHPParser
                     $expressions[] = $this->parseYield();
                     break;
                 default:
-                    throw new UnexpectedTokenException(
-                        $this->consumeToken($tokenType),
-                        $this->compilationUnit->getFileName()
-                    );
+                    $expressions[] = $this->parseOptionalExpressionForVersion();
+                    break;
             }
         }
 
@@ -2731,6 +2729,23 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * This method will be called when the base parser cannot handle an expression
+     * in the base version. In this method you can implement version specific
+     * expressions.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @since 2.2
+     */
+    protected function parseOptionalExpressionForVersion()
+    {
+        throw new UnexpectedTokenException(
+            $this->tokenizer->next(),
+            $this->compilationUnit->getFileName()
+        );
+    }
+
+    /**
      * Applies all reduce rules against the given expression list.
      *
      * @param \PDepend\Source\AST\ASTExpression[] $expressions Unprepared input
@@ -2739,7 +2754,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTExpression[]
      * @since  0.10.0
      */
-    private function reduce(array $expressions)
+    protected function reduce(array $expressions)
     {
         return $this->reduceUnaryExpression($expressions);
     }

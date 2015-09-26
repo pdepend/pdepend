@@ -308,7 +308,49 @@ class PHPParserGenericVersion70Test extends AbstractTest
         $this->assertFalse($type->isScalar());
         $this->assertFalse($type->isArray());
 
-        $this->assertSame('\Iterator', $type->getImage());
+        $this->assertSame('\\Iterator', $type->getImage());
+    }
+
+    /**
+     * testSpaceshipOperatorWithStrings
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorWithStrings()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        $this->assertSame('<=>', $expr->getImage());
+    }
+
+    /**
+     * testSpaceshipOperatorWithNumbers
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorWithNumbers()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        $this->assertSame('<=>', $expr->getImage());
+    }
+
+    /**
+     * testSpaceshipOperatorWithArrays
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorWithArrays()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getChild(1);
+
+        $this->assertSame('<=>', $expr->getImage());
     }
 
     /**

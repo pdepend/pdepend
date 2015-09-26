@@ -43,7 +43,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -500,5 +499,33 @@ class PHPParserGeneric extends AbstractPHPParser
     protected function parseConstantDeclaratorValue()
     {
         return $this->parseStaticValueOrStaticArray();
+    }
+
+    /**
+     * This method will be called when the base parser cannot handle an expression
+     * in the base version. In this method you can implement version specific
+     * expressions.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @since 2.2
+     */
+    protected function parseOptionalExpressionForVersion()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_SPACESHIP:
+                $token = $this->consumeToken(Tokens::T_SPACESHIP);
+
+                $expr = $this->builder->buildAstExpression();
+                $expr->setImage($token->image);
+                $expr->setStartLine($token->startLine);
+                $expr->setStartColumn($token->startColumn);
+                $expr->setEndLine($token->endLine);
+                $expr->setEndColumn($token->endColumn);
+
+                return $expr;
+            default:
+                return parent::parseOptionalExpressionForVersion();
+        }
     }
 }

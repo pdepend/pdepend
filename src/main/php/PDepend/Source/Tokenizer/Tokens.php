@@ -851,11 +851,16 @@ interface Tokens
     const T_FINALLY = 160;
 
     /**
-     * TOken that represents the '...' token
+     * Token that represents the '...' token
      *
      * @since 2.0.7
      */
     const T_ELLIPSIS = 161;
+
+    /**
+     * Token that represents the '<=>' spaceship operator
+     */
+    const T_SPACESHIP = 162;
 
     /**
      * Marks any content not between php tags.
