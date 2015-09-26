@@ -53,10 +53,13 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTTrait;
+use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -870,11 +873,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $tokenizer = new PHPTokenizerInternal();
             $tokenizer->setSourceFile($file);
 
-            $parser = new PHPParserGeneric(
-                $tokenizer,
-                $builder,
-                $cache
-            );
+            $parser = $this->createPHPParser($tokenizer, $builder, $cache);
             if ($ignoreAnnotations === true) {
                 $parser->setIgnoreAnnotations();
             }
@@ -882,6 +881,21 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $parser->parse();
         }
         return $builder->getNamespaces();
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return new PHPParserGeneric(
+            $tokenizer,
+            $builder,
+            $cache
+        );
     }
 }
 
