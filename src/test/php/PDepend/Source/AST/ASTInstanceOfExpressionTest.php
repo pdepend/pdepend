@@ -62,7 +62,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithStringIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -78,7 +78,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -94,7 +94,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -110,7 +110,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -126,7 +126,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithStdClass()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -142,7 +142,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithPHPIncompleteClass()
     {
         $this->assertInstanceOfGraphStatic(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),
@@ -158,7 +158,7 @@ class ASTInstanceOfExpressionTest extends \PDepend\Source\AST\ASTNodeTest
     public function testInstanceOfExpressionGraphWithStaticProperty()
     {
         $this->assertInstanceOfGraphProperty(
-            self::parseCodeResourceForTest()
+            $this->parseCodeResourceForTest()
                 ->current()
                 ->getFunctions()
                 ->current(),

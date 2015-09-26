@@ -531,7 +531,7 @@ class ASTPropertyTest extends AbstractTest
      */
     private function _getFirstPropertyInClass()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

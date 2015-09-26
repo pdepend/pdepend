@@ -138,7 +138,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTestWorkingDirectory()
     {
-        $resource = self::createCodeResourceUriForTest();
+        $resource = $this->createCodeResourceUriForTest();
         if (is_file($resource)) {
             return dirname($resource);
         }
@@ -181,7 +181,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstFunctionForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -192,7 +192,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstClosureForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
@@ -270,7 +270,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstTraitForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getTraits()
             ->current();
@@ -284,7 +284,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstClassForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -298,7 +298,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstClassMethodForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -314,7 +314,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstInterfaceForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current();
@@ -328,7 +328,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstInterfaceMethodForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current()
@@ -344,7 +344,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFirstTypeForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current();
@@ -655,7 +655,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * @return string
      * @throws \ErrorException
      */
-    protected static function createRunResourceURI($fileName = null)
+    protected function createRunResourceURI($fileName = null)
     {
         $uri = __DIR__ . '/_run/' . ($fileName ? $fileName : uniqid());
         if (file_exists($uri) === true) {
@@ -671,7 +671,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * @return string
      * @throws \ErrorException
      */
-    protected static function createCodeResourceURI($fileName)
+    protected function createCodeResourceURI($fileName)
     {
         $uri = realpath(__DIR__ . '/../../resources/files') . '/' . $fileName;
 
@@ -686,9 +686,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return string
      */
-    protected static function createCodeResourceUriForTest()
+    protected function createCodeResourceUriForTest()
     {
-        list($class, $method) = explode('::', self::getCallingTestMethod());
+        list($class, $method) = explode('::', $this->getCallingTestMethod());
 
         if (1 === count($parts = explode('\\', $class))) {
             $parts = explode('\\', $class);
@@ -708,9 +708,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $fileName = substr(join('/', $parts), 0, -4) . "/{$method}";
         try {
-            return self::createCodeResourceURI($fileName);
+            return $this->createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {
-            return self::createCodeResourceURI("{$fileName}.php");
+            return $this->createCodeResourceURI("{$fileName}.php");
         }
     }
 
@@ -719,7 +719,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return string
      */
-    protected static function getCallingTestMethod()
+    protected function getCallingTestMethod()
     {
         foreach (debug_backtrace() as $frame) {
             if (strpos($frame['function'], 'test') === 0) {
@@ -794,13 +794,12 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Parses the test code associated with the calling test method.
      *
      * @param boolean $ignoreAnnotations The parser should ignore annotations.
-     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    protected static function parseCodeResourceForTest($ignoreAnnotations = false)
+    protected function parseCodeResourceForTest($ignoreAnnotations = false)
     {
-        return self::parseSource(
-            self::createCodeResourceUriForTest(),
+        return $this->parseSource(
+            $this->createCodeResourceUriForTest(),
             $ignoreAnnotations
         );
     }
@@ -809,11 +808,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase
+     * @param string $testCase
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
 
@@ -821,12 +820,12 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $fileName) . DIRECTORY_SEPARATOR . $method;
 
         try {
-            $fileOrDirectory = self::createCodeResourceURI($fileName);
+            $fileOrDirectory = $this->createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {
-            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
+            $fileOrDirectory = $this->createCodeResourceURI($fileName . '.php');
         }
 
-        return self::parseSource($fileOrDirectory, $ignoreAnnotations);
+        return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
     }
 
     /**
@@ -837,10 +836,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseSource($fileOrDirectory, $ignoreAnnotations = false)
+    public function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
         if (file_exists($fileOrDirectory) === false) {
-            $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);
+            $fileOrDirectory = $this->createCodeResourceURI($fileOrDirectory);
         }
 
         if (is_dir($fileOrDirectory)) {

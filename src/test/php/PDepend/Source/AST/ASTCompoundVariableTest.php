@@ -120,7 +120,7 @@ class ASTCompoundVariableTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
     
     /**

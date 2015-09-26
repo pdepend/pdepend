@@ -63,7 +63,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsUseAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -73,7 +73,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsNullAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -83,7 +83,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsTrueAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -93,7 +93,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsCloneAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -103,7 +103,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsFalseAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -113,7 +113,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsStringAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -123,7 +123,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsObjectAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -133,6 +133,6 @@ class ParserBug17264279Test extends AbstractRegressionTest
      */
     public function testParserAcceptsNamespaceAsClassName()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 }

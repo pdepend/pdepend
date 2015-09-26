@@ -277,7 +277,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 4, col: 9, file: '
         );
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**

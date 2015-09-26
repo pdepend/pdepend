@@ -62,7 +62,7 @@ class ParserBug059Test extends AbstractRegressionTest
      */
     public function testParserSetsSourceFileForInterfaceMethod()
     {
-        $compilationUnit = self::parseCodeResourceForTest()
+        $compilationUnit = $this->parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current()
@@ -71,7 +71,7 @@ class ParserBug059Test extends AbstractRegressionTest
             ->getCompilationUnit();
 
         $this->assertEquals(
-            self::createCodeResourceUriForTest(),
+            $this->createCodeResourceUriForTest(),
             $compilationUnit->getFileName()
         );
     }
@@ -83,7 +83,7 @@ class ParserBug059Test extends AbstractRegressionTest
      */
     public function testParserSetsSourceFileForClassMethod()
     {
-        $compilationUnit = self::parseCodeResourceForTest()
+        $compilationUnit = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -92,7 +92,7 @@ class ParserBug059Test extends AbstractRegressionTest
             ->getCompilationUnit();
 
         $this->assertSame(
-            self::createCodeResourceUriForTest(),
+            $this->createCodeResourceUriForTest(),
             $compilationUnit->getFileName()
         );
     }
@@ -104,7 +104,7 @@ class ParserBug059Test extends AbstractRegressionTest
      */
     public function testParserSetsSourceFileForClassProperty()
     {
-        $compilationUnit = self::parseCodeResourceForTest()
+        $compilationUnit = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -113,7 +113,7 @@ class ParserBug059Test extends AbstractRegressionTest
             ->getCompilationUnit();
 
         $this->assertSame(
-            self::createCodeResourceUriForTest(),
+            $this->createCodeResourceUriForTest(),
             $compilationUnit->getFileName()
         );
     }

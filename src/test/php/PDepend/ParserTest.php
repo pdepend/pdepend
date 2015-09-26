@@ -83,7 +83,7 @@ class ParserTest extends AbstractTest
         $builder = new PHPBuilder();
 
         $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $parser = new PHPParserGeneric($tokenizer, $builder, $cache);
         $parser->setMaxNestingLevel(512);
@@ -104,7 +104,7 @@ class ParserTest extends AbstractTest
             \PDepend\Source\Builder\Builder::DEFAULT_NAMESPACE  =>  true
         );
 
-        $tmp = self::parseCodeResourceForTest();
+        $tmp = $this->parseCodeResourceForTest();
         $namespaces = array();
 
         $this->assertEquals(4, count($tmp));
@@ -135,13 +135,13 @@ class ParserTest extends AbstractTest
      */
     public function testParserWithUnclosedClassFail()
     {
-        $sourceFile = self::createCodeResourceUriForTest();
+        $sourceFile = $this->createCodeResourceUriForTest();
         $this->setExpectedException(
             '\\PDepend\\Source\\Parser\\TokenStreamEndException',
             "Unexpected end of token stream in file: {$sourceFile}."
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -157,7 +157,7 @@ class ParserTest extends AbstractTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -173,7 +173,7 @@ class ParserTest extends AbstractTest
             'Unexpected token: (, line: 3, col: 23, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -189,7 +189,7 @@ class ParserTest extends AbstractTest
             "Unexpected token: Bar, line: 3, col: 18, file: "
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -199,7 +199,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFunctionLineNumber()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[1]->getFunctions();
 
         $this->assertEquals(7, $functions[0]->getStartLine());
@@ -241,7 +241,7 @@ class ParserTest extends AbstractTest
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
         );
 
-        $namespaces = self::parseSource('/Parser/parser-sets-expected-function-tokens.php');
+        $namespaces = $this->parseSource('/Parser/parser-sets-expected-function-tokens.php');
         $functions = $namespaces[0]->getFunctions();
 
         $this->assertEquals($tokens, $functions[0]->getTokens());
@@ -254,7 +254,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFileComment()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->count()); // default
 
         $namespace = $namespaces[0];
@@ -284,7 +284,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserDoesntReuseTypeComment()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->count()); // +global
 
         $namespace = $namespaces[0];
@@ -304,7 +304,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserDoesntReuseFunctionComment()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->count()); // +global
 
         $namespace = $namespaces[0];
@@ -426,7 +426,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesClassWithMultipleImplementedInterfaces()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -441,7 +441,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesInterfaceWithMultipleParentInterfaces()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current();
@@ -456,7 +456,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectMethodLineNumber()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $method = $namespaces[2]
             ->getTypes()
@@ -503,7 +503,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserParseNewInstancePHP53()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $function = $namespaces->current()
             ->getFunctions()
             ->current();
@@ -521,7 +521,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFunctionDocComment()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $nodes = $namespaces->current()->getFunctions();
         $this->doTestParserSetsCorrectDocComment($nodes, 0);
@@ -534,7 +534,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFunctionReturnType()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $functions = $namespaces[0]->getFunctions();
         $this->assertEquals(3, count($functions));
@@ -606,7 +606,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectFunctionExceptionTypes()
     {
-        $functions = self::parseCodeResourceForTest()
+        $functions = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions();
 
@@ -634,7 +634,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForFunctions()
     {
-        $functions = self::parseCodeResourceForTest(true)
+        $functions = $this->parseCodeResourceForTest(true)
             ->current()
             ->getFunctions();
 
@@ -654,7 +654,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectMethodDocComment()
     {
-        $nodes = self::parseCodeResourceForTest()
+        $nodes = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -670,7 +670,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectMethodReturnType()
     {
-        $nodes = self::parseCodeResourceForTest()
+        $nodes = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -695,7 +695,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectMethodExceptionTypes()
     {
-        $nodes = self::parseCodeResourceForTest()
+        $nodes = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -729,7 +729,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
     {
-        $methods = self::parseCodeResourceForTest(true)
+        $methods = $this->parseCodeResourceForTest(true)
             ->current()
             ->getTypes()
             ->current()
@@ -751,7 +751,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectPropertyDocComment()
     {
-        $nodes    = self::parseCodeResourceForTest()
+        $nodes    = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -767,7 +767,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectPropertyVisibility()
     {
-        $nodes = self::parseCodeResourceForTest()
+        $nodes = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -800,7 +800,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsCorrectPropertyTypes()
     {
-        $nodes = self::parseCodeResourceForTest()
+        $nodes = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -839,7 +839,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsExpectedPropertyTypeForChainedComment()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -864,7 +864,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsExpectedPropertyTypeForChainedCommentInArray()
     {
-        $type = self::parseCodeResourceForTest()
+        $type = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -889,7 +889,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsExpectedReturnTypeForChainedComment()
     {
-        $type = self::parseCodeResourceForTest()
+        $type = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -914,7 +914,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsExpectedReturnTypeForChainedCommentInArray()
     {
-        $type = self::parseCodeResourceForTest()
+        $type = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -932,7 +932,7 @@ class ParserTest extends AbstractTest
      */
     public function testHandlesIgnoreAnnotationsCorrectForProperties()
     {
-        $nodes = self::parseCodeResourceForTest(true)
+        $nodes = $this->parseCodeResourceForTest(true)
             ->current()
             ->getTypes()
             ->current()
@@ -962,7 +962,7 @@ class ParserTest extends AbstractTest
             "/**\n * A second comment...\n */",
         );
 
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         foreach ($namespaces[0]->getTypes() as $type) {
             $actual[] = $type->getDocComment();
         }
@@ -977,7 +977,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSubpackageSupport()
     {
-        $namespace = self::parseCodeResourceForTest()->current();
+        $namespace = $this->parseCodeResourceForTest()->current();
         $this->assertEquals('PHP\Depend', $namespace->getName());
     }
 
@@ -988,7 +988,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsFileLevelFunctionPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $this->assertEquals(2, count($namespaces));
 
@@ -1060,7 +1060,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsAbstractPropertyOnClass()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -1075,7 +1075,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsAbstractModifierOnClass()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -1093,7 +1093,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsFinalPropertyOnClass()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -1108,7 +1108,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserSetsFinalModifierOnClass()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -1126,7 +1126,7 @@ class ParserTest extends AbstractTest
     public function testParserHandlesNestedArraysAsParameterDefaultValue()
     {
         // Current implementation cannot handle nested structures
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1136,7 +1136,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsCommentsInParseExpressionUntilCorrect()
     {
-        $method = self::parseCodeResourceForTest()
+        $method = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -1160,7 +1160,7 @@ class ParserTest extends AbstractTest
             'Unexpected token: {, line: 2, col: 29, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1176,7 +1176,7 @@ class ParserTest extends AbstractTest
             'Unexpected token: &, line: 2, col: 27, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1192,7 +1192,7 @@ class ParserTest extends AbstractTest
             'Unexpected token: ;, line: 4, col: 5, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1208,7 +1208,7 @@ class ParserTest extends AbstractTest
             'Unexpected token: &, line: 4, col: 12, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1224,7 +1224,7 @@ class ParserTest extends AbstractTest
             'Unexpected token: const, line: 4, col: 13, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1235,7 +1235,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
     {
-        $parameters = self::parseCodeResourceForTest()->current()
+        $parameters = $this->parseCodeResourceForTest()->current()
             ->getFunctions()
             ->current()
             ->getParameters();
@@ -1304,7 +1304,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserStripsLeadingSlashFromNamespacedClassName()
     {
-        $namespace = self::parseCodeResourceForTest()->current();
+        $namespace = $this->parseCodeResourceForTest()->current();
         $this->assertEquals('foo', $namespace->getName());
     }
 
@@ -1344,7 +1344,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1354,7 +1354,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1364,7 +1364,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesDoubleQuoteStringWithEscapedVariable()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -1382,7 +1382,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -1400,7 +1400,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -1418,7 +1418,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -1436,7 +1436,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
     {
-        $method = self::parseCodeResourceForTest()
+        $method = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -1462,7 +1462,7 @@ class ParserTest extends AbstractTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('restore')
-            ->will(self::returnValue(true));
+            ->will($this->returnValue(true));
         $cache->expects($this->never())
             ->method('store');
 
@@ -1481,7 +1481,7 @@ class ParserTest extends AbstractTest
      */
     public function testParseClosureAsFunctionArgument()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1491,7 +1491,7 @@ class ParserTest extends AbstractTest
      */
     public function testParseNowdocInMethodBody()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1501,7 +1501,7 @@ class ParserTest extends AbstractTest
      */
     public function testParseDoWhileStatement()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1511,7 +1511,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesCompoundExpressionInArrayBrackets()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1521,7 +1521,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesEmptyNonePhpCodeInMethodBody()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1531,7 +1531,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesPhpCloseTagInMethodBody()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1541,7 +1541,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesMultiplePhpCloseTagsInMethodBody()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1552,7 +1552,7 @@ class ParserTest extends AbstractTest
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -1562,7 +1562,7 @@ class ParserTest extends AbstractTest
      */
     public function testFunctionDocBlockIsCorrectlyParsed()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -1578,7 +1578,7 @@ class ParserTest extends AbstractTest
      */
     protected function getInterfaceForTest()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         return $namespaces[2]->getTypes()->current();
     }
@@ -1590,7 +1590,7 @@ class ParserTest extends AbstractTest
      */
     protected function getInterfaceMethodsForTest()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         return $namespaces[2]
             ->getInterfaces()
@@ -1605,7 +1605,7 @@ class ParserTest extends AbstractTest
      */
     protected function getClassForTest()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         return $namespaces[1]->getTypes()->current();
     }
 
@@ -1616,7 +1616,7 @@ class ParserTest extends AbstractTest
      */
     protected function getClassMethodsForTest()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         return $namespaces[1]->getClasses()->current()->getMethods();
     }
 

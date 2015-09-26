@@ -117,7 +117,7 @@ class ParserBug21500611Test extends AbstractRegressionTest
      */
     protected function getFirstHeredocInClass()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

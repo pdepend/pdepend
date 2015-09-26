@@ -158,7 +158,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -177,7 +177,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();
@@ -233,7 +233,7 @@ class ASTParameterTest extends AbstractTest
      */
     private function _getFirstMethodInClass()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

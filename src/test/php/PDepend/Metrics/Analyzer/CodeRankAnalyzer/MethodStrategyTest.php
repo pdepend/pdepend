@@ -63,7 +63,7 @@ class MethodStrategyTest extends AbstractTest
      */
     public function testStrategyCountsCorrectTypes()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         
         $idMap = array(
             'PDepend::CodeRankA'       =>  null,

@@ -191,7 +191,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateCrapIndex($testCase, $ccn)
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $options  = array('coverage-report' => $this->_createCloverReportFile());
         $analyzer = new CrapIndexAnalyzer($options);
@@ -223,10 +223,10 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     private function _createCloverReportFile()
     {
-        $pathName = self::createRunResourceURI('clover.xml');
+        $pathName = $this->createRunResourceURI('clover.xml');
 
         $content = file_get_contents(dirname(__FILE__) . '/_files/clover.xml');
-        $content = str_replace('${pathName}', dirname(self::createCodeResourceUriForTest()), $content);
+        $content = str_replace('${pathName}', dirname($this->createCodeResourceUriForTest()), $content);
         file_put_contents($pathName, $content);
 
         return $pathName;

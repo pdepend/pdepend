@@ -66,13 +66,13 @@ abstract class AbstractRegressionTest extends AbstractTest
             $this->createCodeResourceURI('config/')
         );
 
-        $file = self::createRunResourceURI('summary.xml');
+        $file = $this->createRunResourceURI('summary.xml');
 
         $log = new Xml();
         $log->setLogFile($file);
 
         $pdepend = $this->createEngineFixture();
-        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addFile($this->createCodeResourceUriForTest());
         $pdepend->addReportGenerator($log);
         $pdepend->analyze();
 
@@ -86,10 +86,10 @@ abstract class AbstractRegressionTest extends AbstractTest
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        return self::parseSource(
-            self::getSourceFileForTestCase($testCase), $ignoreAnnotations
+        return $this->parseSource(
+            $this->getSourceFileForTestCase($testCase), $ignoreAnnotations
         );
     }
 
@@ -99,13 +99,13 @@ abstract class AbstractRegressionTest extends AbstractTest
      * @param string $testCase The qualified test case name.
      * @return string
      */
-    protected static function getSourceFileForTestCase($testCase)
+    protected function getSourceFileForTestCase($testCase)
     {
         list($class, $method) = explode('::', $testCase);
 
         preg_match('(Bug(\d+)Test$)', $class, $match);
 
-        return self::createCodeResourceURI(
+        return $this->createCodeResourceURI(
             sprintf('bugs/%s/%s.php', $match[1], $method)
         );
     }

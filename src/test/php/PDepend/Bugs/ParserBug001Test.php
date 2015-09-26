@@ -62,7 +62,7 @@ class ParserBug001Test extends AbstractRegressionTest
      */
     public function testParserStaticCall()
     {
-        $method = self::parseCodeResourceForTest()
+        $method = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()

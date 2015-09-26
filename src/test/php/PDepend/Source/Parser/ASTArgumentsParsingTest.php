@@ -231,7 +231,7 @@ class ASTArgumentsParsingTest extends AbstractParserTest
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -242,7 +242,7 @@ class ASTArgumentsParsingTest extends AbstractParserTest
     private function _getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArguments'
         );
     }
@@ -255,7 +255,7 @@ class ASTArgumentsParsingTest extends AbstractParserTest
     private function _getFirstArgumentsOfMethod()
     {
         return $this->getFirstNodeOfTypeInClass(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArguments'
         );
     }

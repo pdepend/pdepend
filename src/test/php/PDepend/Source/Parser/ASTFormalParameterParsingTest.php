@@ -63,7 +63,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
      */
     public function testWithParentTypeHint()
     {
-        $typeHint = self::getFirstMethodFormalParameter()->getChild(0);
+        $typeHint = $this->getFirstMethodFormalParameter()->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $typeHint);
     }
 
@@ -75,7 +75,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
      */
     public function testWithParentTypeHintInFunctionThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -86,7 +86,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
      */
     public function testWithParentTypeHintInRootClassThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -94,9 +94,9 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
      * 
      * @return \PDepend\Source\AST\ASTFormalParameter
      */
-    private static function getFirstMethodFormalParameter()
+    private function getFirstMethodFormalParameter()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()

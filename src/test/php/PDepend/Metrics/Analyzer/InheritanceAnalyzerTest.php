@@ -69,7 +69,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $filter = CollectionArtifactFilter::getInstance();
         $filter->setFilter(new PackageArtifactFilter(array('library')));
 
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
@@ -88,7 +88,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $filter = CollectionArtifactFilter::getInstance();
         $filter->setFilter(new PackageArtifactFilter(array('library')));
 
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
@@ -237,7 +237,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
     public function testCalculatesExpectedMaxDepthOfInheritanceTreeMetric()
     {
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(3, $metrics['maxDIT']);
@@ -330,7 +330,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     private function _getCalculatedMetric($testCase, $metric)
     {
-        $namespaces = self::parseTestCaseSource($testCase);
+        $namespaces = $this->parseTestCaseSource($testCase);
         $namespace  = $namespaces->current();
 
         $analyzer = $this->createAnalyzer();

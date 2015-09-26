@@ -68,7 +68,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
      */
     public function testParserSetsExpectedPrimitivePropertyType($actual, $expected)
     {
-        $type = self::parseTestCase(__METHOD__ . '_' . $actual)
+        $type = $this->parseTestCase(__METHOD__ . '_' . $actual)
             ->current()
             ->getClasses()
             ->current()

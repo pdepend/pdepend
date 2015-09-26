@@ -253,7 +253,7 @@ class ASTLiteralTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -274,7 +274,7 @@ class ASTLiteralTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstLiteralInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTLiteral'
         );
     }

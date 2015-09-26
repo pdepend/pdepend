@@ -406,7 +406,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetrics()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);
@@ -444,7 +444,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsInvalidIdentifier()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);

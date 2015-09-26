@@ -63,7 +63,7 @@ class ParserBug008Test extends AbstractRegressionTest
      */
     public function testParserCurlyBrace()
     {
-        $namespace = self::parseCodeResourceForTest()->current();
+        $namespace = $this->parseCodeResourceForTest()->current();
         $classes = $namespace->getClasses();
         $methods = $classes[0]->getMethods();
 

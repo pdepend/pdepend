@@ -340,7 +340,7 @@ class PHPParserGenericTest extends AbstractTest
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -352,7 +352,7 @@ class PHPParserGenericTest extends AbstractTest
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -570,7 +570,7 @@ class PHPParserGenericTest extends AbstractTest
      */
     public function testParserThrowsExpectedExceptionForInvalidToken()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -581,7 +581,7 @@ class PHPParserGenericTest extends AbstractTest
      */
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -682,9 +682,8 @@ class PHPParserGenericTest extends AbstractTest
 
     /**
      * testParserAcceptsTraitAsMethodName
-     * 
+     *
      * @return void
-     * @since 1.0.0
      */
     public function testParserAcceptsTraitAsMethodName()
     {
@@ -696,7 +695,6 @@ class PHPParserGenericTest extends AbstractTest
      * testParserAcceptsTraitConstantAsMethodName
      *
      * @return void
-     * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsMethodName()
     {
@@ -708,7 +706,6 @@ class PHPParserGenericTest extends AbstractTest
      * testParserAcceptsTraitAsFunctionName
      *
      * @return void
-     * @since 1.0.0
      */
     public function testParserAcceptsTraitAsFunctionName()
     {
@@ -720,7 +717,6 @@ class PHPParserGenericTest extends AbstractTest
      * testParserAcceptsTraitConstantAsFunctionName
      *
      * @return void
-     * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsFunctionName()
     {
@@ -736,7 +732,7 @@ class PHPParserGenericTest extends AbstractTest
      */
     protected function getFirstTypeForTestCase()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current();

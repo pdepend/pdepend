@@ -361,7 +361,7 @@ class ASTPropertyPostfixTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -372,7 +372,7 @@ class ASTPropertyPostfixTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -383,7 +383,7 @@ class ASTPropertyPostfixTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**

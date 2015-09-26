@@ -726,7 +726,7 @@ class ASTMethodPostfixTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstMethodPostfixInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTMethodPostfix'
         );
     }

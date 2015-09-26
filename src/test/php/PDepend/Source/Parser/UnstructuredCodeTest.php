@@ -62,7 +62,7 @@ class UnstructuredCodeTest extends AbstractParserTest
      */
     public function testParserHandlesNonPhpCodeInFileProlog()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**

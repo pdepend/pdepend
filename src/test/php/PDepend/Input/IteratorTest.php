@@ -91,7 +91,7 @@ class IteratorTest extends AbstractTest
         $filter = $this->getMock('\\PDepend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
+            ->with($this->equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
         
         $iterator = new Iterator(
             new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
@@ -113,7 +113,7 @@ class IteratorTest extends AbstractTest
         $filter = $this->getMock('\\PDepend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo(__FILE__), self::equalTo(__FILE__));
+            ->with($this->equalTo(__FILE__), $this->equalTo(__FILE__));
 
         $iterator = new Iterator($files, $filter);
         $iterator->accept();
@@ -131,7 +131,7 @@ class IteratorTest extends AbstractTest
         $filter = $this->getMock('\\PDepend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo(__FILE__), self::equalTo(__FILE__));
+            ->with($this->equalTo(__FILE__), $this->equalTo(__FILE__));
 
         $iterator = new Iterator($files, $filter, 'c:\foo');
         $iterator->accept();
@@ -147,7 +147,7 @@ class IteratorTest extends AbstractTest
     protected function createFilteredFileList(array $extensions)
     {
         $files  = new Iterator(
-            new \DirectoryIterator(self::createCodeResourceUriForTest()),
+            new \DirectoryIterator($this->createCodeResourceUriForTest()),
             new ExtensionFilter($extensions)
         );
 

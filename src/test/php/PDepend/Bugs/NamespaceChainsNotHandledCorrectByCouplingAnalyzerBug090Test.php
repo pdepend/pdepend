@@ -66,7 +66,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerIgnoresObjectAllocation()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($namespaces);
@@ -82,7 +82,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsIdenticalFunctionCalls()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($namespaces);
@@ -98,7 +98,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsDifferentFunctionCalls()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($namespaces);
@@ -114,7 +114,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsIdenticalMethodCalls()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($namespaces);
@@ -130,7 +130,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      */
     public function testAnalyzerDetectsDifferentMethodCalls()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($namespaces);

@@ -65,7 +65,7 @@ class DependExcludePathFilterTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $directory = self::createCodeResourceUriForTest();
+        $directory = $this->createCodeResourceUriForTest();
         $pattern   = DIRECTORY_SEPARATOR . 'Integration';
 
         $pdepend = $this->createEngineFixture();
@@ -86,7 +86,7 @@ class DependExcludePathFilterTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $directory = self::createCodeResourceUriForTest();
+        $directory = $this->createCodeResourceUriForTest();
         $pattern   = $directory . DIRECTORY_SEPARATOR . 'Integration';
 
         if (0 === strpos($directory, '/scratch/')) {
@@ -119,7 +119,7 @@ class DependExcludePathFilterTest extends AbstractTest
     {
         $this->changeWorkingDirectory();
 
-        $directory = self::createCodeResourceUriForTest();
+        $directory = $this->createCodeResourceUriForTest();
         $pattern   = __FUNCTION__ . DIRECTORY_SEPARATOR . 'Integration';
 
         $pdepend = $this->createEngineFixture();

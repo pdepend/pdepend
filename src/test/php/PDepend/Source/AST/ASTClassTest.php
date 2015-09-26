@@ -1077,7 +1077,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesByInheritance()
     {
-        $classes = self::parseCodeResourceForTest()
+        $classes = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses();
 
@@ -1119,7 +1119,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeInInheritanceHierarchy()
     {
-        $types = self::parseCodeResourceForTest()
+        $types = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes();
 
@@ -1150,7 +1150,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeInClassInheritanceHierarchy()
     {
-        $types = self::parseCodeResourceForTest()
+        $types = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes();
 
@@ -1181,7 +1181,7 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeInClassAndInterfaceInheritanceHierarchy()
     {
-        $types = self::parseCodeResourceForTest()
+        $types = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes();
 
@@ -1277,7 +1277,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('restore');
@@ -1299,11 +1299,11 @@ class ASTClassTest extends AbstractASTArtifactTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with(self::equalTo(null), self::equalTo($tokens));
+            ->with($this->equalTo(null), $this->equalTo($tokens));
 
         $class = new ASTClass(__CLASS__);
         $class->setCache($cache)
@@ -1628,7 +1628,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
         $context->expects($this->once())
             ->method('registerClass')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
 
         $class->setContext($context)->__wakeup();
     }

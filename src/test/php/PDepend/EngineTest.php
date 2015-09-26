@@ -80,7 +80,7 @@ class EngineTest extends AbstractTest
     public function testAddDirectory()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
     }
 
     /**
@@ -91,7 +91,7 @@ class EngineTest extends AbstractTest
     public function testAnalyzeMethodReturnsAnIterator()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
 
         $this->assertInstanceOf('Iterator', $engine->analyze());
@@ -106,7 +106,7 @@ class EngineTest extends AbstractTest
     public function testAnalyze()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
         
         $metrics = $engine->analyze();
@@ -145,7 +145,7 @@ class EngineTest extends AbstractTest
     public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array(__METHOD__)));
        
         $this->assertEquals(0, count($engine->analyze()));
@@ -160,7 +160,7 @@ class EngineTest extends AbstractTest
     public function testAnalyzeSetsWithoutAnnotations()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array('inc')));
         $engine->setWithoutAnnotations();
         $namespaces = $engine->analyze();
@@ -184,7 +184,7 @@ class EngineTest extends AbstractTest
     public function testCountClasses()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
         $engine->analyze();
         
@@ -205,7 +205,7 @@ class EngineTest extends AbstractTest
         );
         
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->countClasses();
     }
     
@@ -218,7 +218,7 @@ class EngineTest extends AbstractTest
     public function testCountNamespaces()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
         
         $this->assertEquals(4, $engine->countNamespaces());
@@ -238,7 +238,7 @@ class EngineTest extends AbstractTest
         );
         
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->countNamespaces();
     }
     
@@ -251,7 +251,7 @@ class EngineTest extends AbstractTest
     public function testGetNamespace()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
         
         $namespaces = array(
@@ -281,7 +281,7 @@ class EngineTest extends AbstractTest
         );
         
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->getNamespace('package1');
     }
     
@@ -299,7 +299,7 @@ class EngineTest extends AbstractTest
         );
         
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
         $engine->getNamespace('nspace');
     }
@@ -314,7 +314,7 @@ class EngineTest extends AbstractTest
     public function testGetNamespaces()
     {
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         
         $namespace1 = $engine->analyze();
         $namespace2 = $engine->getNamespaces();
@@ -338,7 +338,7 @@ class EngineTest extends AbstractTest
         );
         
         $engine = $this->createEngineFixture();
-        $engine->addDirectory(self::createCodeResourceUriForTest());
+        $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->getNamespaces();
     }
 
@@ -350,7 +350,7 @@ class EngineTest extends AbstractTest
     public function testSupportForSingleFileIssue90()
     {
         $engine = $this->createEngineFixture();
-        $engine->addFile(self::createCodeResourceUriForTest());
+        $engine->addFile($this->createCodeResourceUriForTest());
         $engine->analyze();
 
         $namespaces = $engine->getNamespaces();
@@ -389,6 +389,6 @@ class EngineTest extends AbstractTest
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
     {
         $engine = $this->createEngineFixture();
-        $engine->addFile(self::createRunResourceURI('pdepend_'));
+        $engine->addFile($this->createRunResourceURI('pdepend_'));
     }
 }

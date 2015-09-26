@@ -302,7 +302,7 @@ class ASTClosureTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstClosureInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTClosure'
         );
     }

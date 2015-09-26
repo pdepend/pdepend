@@ -74,7 +74,7 @@ class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractRegressionTes
      */
     public function testHelperThrowsExceptionForInvalidToken()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -85,6 +85,6 @@ class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractRegressionTes
      */
     public function testHelperThrowsExceptionWithExpectedExceptionMessage()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

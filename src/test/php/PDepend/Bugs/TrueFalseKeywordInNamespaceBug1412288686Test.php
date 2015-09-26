@@ -58,7 +58,7 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
      * @return void
      */
     public function testTrueKeywordInNamespace() {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -67,6 +67,6 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
      * @return void
      */
     public function testFalseKeywordInNamespace() {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

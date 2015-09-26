@@ -63,7 +63,7 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue()
     {
-        $property = self::parseCodeResourceForTest()
+        $property = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -81,7 +81,7 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration()
     {
-        $property = self::parseCodeResourceForTest()
+        $property = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -99,7 +99,7 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue()
     {
-        $property = self::parseCodeResourceForTest()->current()
+        $property = $this->parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getProperties()
@@ -116,7 +116,7 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTest
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments()
     {
-        $property = self::parseCodeResourceForTest()->current()
+        $property = $this->parseCodeResourceForTest()->current()
             ->getClasses()
             ->current()
             ->getProperties()

@@ -183,7 +183,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesZeroInheritance()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $namespace = $namespaces[0];
 
         $interfaces = $namespace->getInterfaces();
@@ -198,7 +198,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesOneLevelInheritance()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $namespace = $namespaces[0];
 
         $interface = $namespace->getInterfaces()
@@ -214,7 +214,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesTwoLevelInheritance()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $interface = $namespaces[0]->getInterfaces()
             ->current();
 
@@ -228,7 +228,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetInterfacesComplexInheritance()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $interface = $namespaces[0]->getInterfaces()
             ->current();
 
@@ -243,7 +243,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeOfReturnsFalseForNonParents()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $interfaces = $namespaces[0]->getInterfaces();
 
         $this->assertFalse($interfaces[0]->isSubtypeOf($interfaces[1]));
@@ -335,7 +335,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     private function _testIsSubtypeOnInheritanceHierarchy(array $expected)
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $namespace = $namespaces->current();
         $current  = $namespace->getInterfaces()->current();
 
@@ -357,7 +357,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $class = $namespaces->current()
             ->getInterfaces()
@@ -376,7 +376,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations()
     {
-        $class = self::parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current();
@@ -537,7 +537,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('restore');
@@ -559,11 +559,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with(self::equalTo(null), self::equalTo($tokens));
+            ->with($this->equalTo(null), $this->equalTo($tokens));
 
         $interface = $this->createItem();
         $interface->setCache($cache)
@@ -889,7 +889,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
         $context->expects($this->once())
             ->method('registerInterface')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $interface->setContext($context)->__wakeup();
     }
@@ -904,7 +904,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('visitInterface')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $interface = $this->createItem();
         $interface->accept($visitor);

@@ -67,7 +67,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParameterContainsStartLineOfFirstToken()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()
@@ -84,7 +84,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParameterContainsEndLineOfLastToken()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()
@@ -101,7 +101,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedFunctionTokens()
     {
-        $function = self::parseTestCaseSource(__METHOD__)
+        $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current();
@@ -129,7 +129,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedFunctionTokensWithParameters()
     {
-        $function = self::parseTestCaseSource(__METHOD__)
+        $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current();
@@ -166,7 +166,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testFunctionContainsStartLineOfFirstToken()
     {
-        $function = self::parseTestCaseSource(__METHOD__)
+        $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current();
@@ -185,7 +185,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testFunctionContainsEndLineOfLastToken()
     {
-        $function = self::parseTestCaseSource(__METHOD__)
+        $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current();
@@ -204,7 +204,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedMethodTokens()
     {
-        $method = self::parseTestCaseSource(__METHOD__)
+        $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current()
@@ -235,7 +235,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedMethodTokensWithStaticModifier()
     {
-        $method = self::parseTestCaseSource(__METHOD__)
+        $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current()
@@ -267,7 +267,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers()
     {
-        $method = self::parseTestCaseSource(__METHOD__)
+        $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current()
@@ -300,7 +300,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testMethodContainsStartLineOfFirstToken()
     {
-        $method = self::parseTestCaseSource(__METHOD__)
+        $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current()
@@ -321,7 +321,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testMethodContainsEndLineOfLastToken()
     {
-        $method = self::parseTestCaseSource(__METHOD__)
+        $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current()
@@ -342,7 +342,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedClassTokens()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
+        $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current();
@@ -372,7 +372,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedClassTokensWithFinalModifier()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
+        $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current();
@@ -403,7 +403,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedClassTokensWithAbstractModifier()
     {
-        $class = self::parseTestCaseSource(__METHOD__)
+        $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current();
@@ -434,7 +434,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
      */
     public function testParserStoresExpectedInterfaceTokens()
     {
-        $interface = self::parseTestCaseSource(__METHOD__)
+        $interface = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getInterfaces()
             ->current();

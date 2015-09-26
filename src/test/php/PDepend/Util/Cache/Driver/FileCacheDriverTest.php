@@ -71,7 +71,7 @@ class FileCacheDriverTest extends AbstractDriverTest
     {
         parent::setUp();
 
-        $this->cacheDir = self::createRunResourceURI('cache');
+        $this->cacheDir = $this->createRunResourceURI('cache');
     }
 
     /**

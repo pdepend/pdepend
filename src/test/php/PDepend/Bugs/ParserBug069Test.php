@@ -103,7 +103,7 @@ class ParserBug069Test extends AbstractRegressionTest
      */
     public function testNotHandlesQualifiedFunctionCallAsDependencyInFunctionBody()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();

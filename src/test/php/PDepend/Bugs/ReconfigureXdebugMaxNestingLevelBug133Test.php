@@ -63,7 +63,7 @@ class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractRegressionTest
         ini_restore('xdebug.max_nesting_level');
         $level = ini_get('xdebug.max_nesting_level');
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
 
         $this->assertEquals($level, ini_get('xdebug.max_nesting_level'));
     }
@@ -81,6 +81,6 @@ class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractRegressionTest
 
         ini_set('xdebug.max_nesting_level', '100');
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

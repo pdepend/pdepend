@@ -99,7 +99,7 @@ class ASTSelfReferenceTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -110,7 +110,7 @@ class ASTSelfReferenceTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**

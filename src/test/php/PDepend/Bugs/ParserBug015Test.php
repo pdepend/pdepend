@@ -63,7 +63,7 @@ class ParserBug015Test extends AbstractRegressionTest
      */
     public function testParserBacktickExpression()
     {
-        $namespace = self::parseCodeResourceForTest()->current();
+        $namespace = $this->parseCodeResourceForTest()->current();
         $classes = $namespace->getClasses();
         $methods = $classes[0]->getMethods();
 

@@ -71,7 +71,7 @@ class FileCacheGarbageCollectorTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->cacheDir = self::createRunResourceURI('cache') . '/';
+        $this->cacheDir = $this->createRunResourceURI('cache') . '/';
         mkdir($this->cacheDir);
     }
 

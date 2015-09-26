@@ -62,7 +62,7 @@ class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTe
      */
     public function testParserHandlesVariableVariableAsForeachValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -72,7 +72,7 @@ class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTe
      */
     public function testParserHandlesVariableVariableAsForeachKey()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -82,6 +82,6 @@ class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTe
      */
     public function testParserHandlesVariableVariableAsForeachKeyAndValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

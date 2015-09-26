@@ -135,11 +135,11 @@ class ASTCompilationUnitTest extends AbstractTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('restore')
-            ->with(self::equalTo(__FUNCTION__));
+            ->with($this->equalTo(__FUNCTION__));
 
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setCache($cache);
@@ -158,11 +158,11 @@ class ASTCompilationUnitTest extends AbstractTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with(self::equalTo(__FUNCTION__), self::equalTo(array(1, 2, 3)));
+            ->with($this->equalTo(__FUNCTION__), $this->equalTo(array(1, 2, 3)));
 
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setCache($cache);
@@ -181,7 +181,7 @@ class ASTCompilationUnitTest extends AbstractTest
         $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
         $visitor->expects($this->once())
             ->method('visitCompilationUnit')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
 
         $file = new ASTCompilationUnit(null);
         $file->accept($visitor);
@@ -245,7 +245,7 @@ class ASTCompilationUnitTest extends AbstractTest
         );
         $node->expects($this->once())
             ->method('setCompilationUnit')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
 
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->addChild($node);
@@ -351,10 +351,10 @@ class ASTCompilationUnitTest extends AbstractTest
      */
     public function testGetSourceReturnsOriginalFileContents()
     {
-        $file = new ASTCompilationUnit(self::createCodeResourceUriForTest());
+        $file = new ASTCompilationUnit($this->createCodeResourceUriForTest());
 
         $actual   = $file->getSource();
-        $expected = file_get_contents(self::createCodeResourceUriForTest());
+        $expected = file_get_contents($this->createCodeResourceUriForTest());
 
         $this->assertEquals($expected, $actual);
     }

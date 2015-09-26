@@ -119,7 +119,7 @@ class DependencyAnalyzerTest extends AbstractMetricsTest
     {
         $visitor = new DependencyAnalyzer();
 
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $visitor->analyze($namespaces);
 
         $actual = array();

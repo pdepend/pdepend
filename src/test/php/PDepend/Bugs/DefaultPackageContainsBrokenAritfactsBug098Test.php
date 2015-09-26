@@ -63,7 +63,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
     public function testDefaultPackageDoesNotContainFunctionWithBrokenSignature()
     {
         $pdepend = $this->createEngineFixture();
-        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addFile($this->createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $functions = $pdepend->getNamespaces()
@@ -81,7 +81,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
     public function testDefaultPackageDoesNotContainClassWithBrokenMethod()
     {
         $pdepend = $this->createEngineFixture();
-        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addFile($this->createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $classes = $pdepend->getNamespaces()
@@ -99,7 +99,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
     public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
     {
         $pdepend = $this->createEngineFixture();
-        $pdepend->addFile(self::createCodeResourceUriForTest());
+        $pdepend->addFile($this->createCodeResourceUriForTest());
         $pdepend->analyze();
 
         $interfaces = $pdepend->getNamespaces()

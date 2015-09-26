@@ -198,8 +198,8 @@ class CommandTest extends AbstractTest
      */
     public function testCommandStartsProcessWithDummyLogger()
     {
-        $logFile  = self::createRunResourceURI();
-        $resource = self::createCodeResourceUriForTest();
+        $logFile  = $this->createRunResourceURI();
+        $resource = $this->createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
 
@@ -225,8 +225,8 @@ class CommandTest extends AbstractTest
      */
     public function testCommandReturnsExitCodeSuccessByDefault()
     {
-        $logFile  = self::createRunResourceURI();
-        $resource = self::createCodeResourceUriForTest();
+        $logFile  = $this->createRunResourceURI();
+        $resource = $this->createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
 
@@ -281,7 +281,7 @@ class CommandTest extends AbstractTest
                 '--without-annotations',
                 '--coderank-mode=property'
             ),
-            self::createCodeResourceUriForTest()
+            $this->createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
@@ -318,7 +318,7 @@ class CommandTest extends AbstractTest
 
         $actual = $this->runCommandAndReturnStatistics(
             array(),
-            self::createCodeResourceUriForTest()
+            $this->createCodeResourceUriForTest()
         );
         $this->assertEquals($expected, $actual);
     }
@@ -332,7 +332,7 @@ class CommandTest extends AbstractTest
      */
     private function runCommandAndReturnStatistics(array $argv, $pathName)
     {
-        $logFile = self::createRunResourceURI();
+        $logFile = $this->createRunResourceURI();
 
         $argv[] = '--dummy-logger=' . $logFile;
         $argv[] = '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist';
@@ -398,7 +398,7 @@ class CommandTest extends AbstractTest
             array(
                 '-d',
                 'html_errors',
-                '--dummy-logger=' . self::createRunResourceURI(),
+                '--dummy-logger=' . $this->createRunResourceURI(),
                 __FILE__
             )
         );
@@ -424,7 +424,7 @@ class CommandTest extends AbstractTest
             array(
                 '-d',
                 'html_errors=off',
-                '--dummy-logger=' . self::createRunResourceURI(),
+                '--dummy-logger=' . $this->createRunResourceURI(),
                 __FILE__
             )
         );
@@ -443,7 +443,7 @@ class CommandTest extends AbstractTest
     public function testCommandHandlesConfigurationFileCorrect()
     {
         // Sample config file
-        $configFile = self::createRunResourceURI('config.xml');
+        $configFile = $this->createRunResourceURI('config.xml');
         // Write a dummy config file.
         file_put_contents(
             $configFile,
@@ -462,7 +462,7 @@ class CommandTest extends AbstractTest
 
         $argv = array(
             '--configuration=' . $configFile,
-            '--dummy-logger=' . self::createRunResourceURI(),
+            '--dummy-logger=' . $this->createRunResourceURI(),
             __FILE__
         );
 
@@ -494,8 +494,8 @@ class CommandTest extends AbstractTest
     public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist()
     {
         $argv = array(
-            '--coverage-report=' . self::createRunResourceURI('foobar'),
-            '--dummy-logger=' . self::createRunResourceURI(),
+            '--coverage-report=' . $this->createRunResourceURI('foobar'),
+            '--dummy-logger=' . $this->createRunResourceURI(),
             __FILE__,
         );
 
@@ -513,7 +513,7 @@ class CommandTest extends AbstractTest
     {
         $argv = array(
             '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
-            '--dummy-logger=' . self::createRunResourceURI(),
+            '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
         );
@@ -530,7 +530,7 @@ class CommandTest extends AbstractTest
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
     {
-        $configFile = self::createRunResourceURI('config.xml');
+        $configFile = $this->createRunResourceURI('config.xml');
 
         $argv = array('--configuration=' . $configFile, __FILE__);
 

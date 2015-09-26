@@ -659,7 +659,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue()
     {
-        self::parseTestCase();
+        $this->parseTestCase();
     }
 
     /**
@@ -672,7 +672,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()
     {
-        self::parseTestCase();
+        $this->parseTestCase();
     }
 
     /**
@@ -685,7 +685,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserThrowsExpectedExceptionWhenDefaultValueContainsInvalidToken()
     {
-        self::parseTestCase();
+        $this->parseTestCase();
     }
 
     /**
@@ -695,7 +695,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstInterface()
     {
-        $namespaces = self::parseTestCase();
+        $namespaces = $this->parseTestCase();
         return $namespaces->current()
             ->getInterfaces()
             ->current();
@@ -708,7 +708,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstClass()
     {
-        $namespaces = self::parseTestCase();
+        $namespaces = $this->parseTestCase();
         return $namespaces->current()
             ->getClasses()
             ->current();
@@ -721,7 +721,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstMethod()
     {
-        $namespaces = self::parseTestCase();
+        $namespaces = $this->parseTestCase();
         return $namespaces->current()
             ->getClasses()
             ->current()
@@ -736,7 +736,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     private function _getFirstFunction()
     {
-        $namespaces = self::parseTestCase();
+        $namespaces = $this->parseTestCase();
         return $namespaces->current()
             ->getFunctions()
             ->current();

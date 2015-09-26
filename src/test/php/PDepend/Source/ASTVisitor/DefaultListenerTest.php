@@ -65,8 +65,8 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testDefaultImplementationCallsListeners()
     {
-        $codeUri = self::createCodeResourceUriForTest();
-        $namespaces = self::parseSource($codeUri);
+        $codeUri = $this->createCodeResourceUriForTest();
+        $namespaces = $this->parseSource($codeUri);
 
         $listener = new StubAbstractASTVisitListener();
         $visitor  = new StubAbstractASTVisitor();

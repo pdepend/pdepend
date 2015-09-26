@@ -67,6 +67,6 @@ class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTest
      */
     public function testUnexpectedTokenDoesNotQuitPDepend()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

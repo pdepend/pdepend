@@ -55,18 +55,6 @@ use PDepend\AbstractTest;
  */
 abstract class ASTNodeTest extends AbstractTest
 {
-//    /**
-//     * testGetImageReturnsEmptyStringByDefault
-//     *
-//     * @return void
-//     * @since 1.0.0
-//     */
-//    public function testGetImageReturnsEmptyStringByDefault()
-//    {
-//        $node = $this->createNodeInstance();
-//        $this->assertSame('', $node->getImage());
-//    }
-
     /**
      * testGetImageReturnsExpectedNodeImage
      *
@@ -809,7 +797,7 @@ abstract class ASTNodeTest extends AbstractTest
      *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
 

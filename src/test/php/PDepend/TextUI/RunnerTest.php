@@ -78,7 +78,7 @@ class RunnerTest extends AbstractTest
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
         $runner = $this->createTextUiRunner();
-        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
+        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
         $runner->run();
     }
 
@@ -110,7 +110,7 @@ class RunnerTest extends AbstractTest
 
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
-            self::createCodeResourceUriForTest()
+            $this->createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
@@ -144,7 +144,7 @@ class RunnerTest extends AbstractTest
 
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
-            self::createCodeResourceUriForTest()
+            $this->createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
@@ -182,7 +182,7 @@ class RunnerTest extends AbstractTest
         $runner = $this->createTextUiRunner();
         $actual = $this->_runRunnerAndReturnStatistics(
             $runner,
-            self::createCodeResourceUriForTest()
+            $this->createCodeResourceUriForTest()
         );
 
         $this->assertEquals($expected, $actual);
@@ -196,8 +196,8 @@ class RunnerTest extends AbstractTest
     public function testRunnerHasParseErrorsReturnsFalseForValidSource()
     {
         $runner = $this->createTextUiRunner();
-        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
-        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
+        $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI());
+        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
 
         $this->silentRun($runner);
 
@@ -212,8 +212,8 @@ class RunnerTest extends AbstractTest
     public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
     {
         $runner = $this->createTextUiRunner();
-        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
-        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
+        $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI());
+        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
 
         $this->silentRun($runner);
 
@@ -228,8 +228,8 @@ class RunnerTest extends AbstractTest
     public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
     {
         $runner = $this->createTextUiRunner();
-        $runner->addReportGenerator('dummy-logger', self::createRunResourceURI());
-        $runner->setSourceArguments(array(self::createCodeResourceUriForTest()));
+        $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI());
+        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
 
         ob_start();
         $runner->run();
@@ -248,7 +248,7 @@ class RunnerTest extends AbstractTest
     public function testRunnerThrowsExceptionForUndefinedLoggerClass()
     {
         $runner = $this->createTextUiRunner();
-        $runner->addReportGenerator('FooBarLogger', self::createRunResourceURI());
+        $runner->addReportGenerator('FooBarLogger', $this->createRunResourceURI());
         $runner->run();
     }
 
@@ -261,7 +261,7 @@ class RunnerTest extends AbstractTest
      */
     private function _runRunnerAndReturnStatistics(Runner $runner, $pathName)
     {
-        $logFile = self::createRunResourceURI();
+        $logFile = $this->createRunResourceURI();
 
         $runner->setSourceArguments(array($pathName));
         $runner->addReportGenerator('dummy-logger', $logFile);

@@ -60,6 +60,6 @@ class StringWithDollarStringLiteralBug162Test extends AbstractRegressionTest
      */
     public function testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

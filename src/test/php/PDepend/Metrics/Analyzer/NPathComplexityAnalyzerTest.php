@@ -84,7 +84,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $function = $namespaces->current()
             ->getFunctions()
             ->current();
@@ -110,7 +110,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $method   = $namespaces->current()
             ->getClasses()
             ->current()
@@ -531,7 +531,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     private function _getFirstFunctionForTestCase()
     {
-        return self::parseTestCaseSource(self::getCallingTestMethod())
+        return $this->parseTestCaseSource($this->getCallingTestMethod())
             ->current()
             ->getFunctions()
             ->current();
@@ -560,7 +560,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     private function _getFirstMethodForTestCase()
     {
-        return self::parseTestCaseSource(self::getCallingTestMethod())
+        return $this->parseTestCaseSource($this->getCallingTestMethod())
             ->current()
             ->getClasses()
             ->current()

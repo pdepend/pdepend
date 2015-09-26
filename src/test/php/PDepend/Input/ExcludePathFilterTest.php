@@ -208,7 +208,7 @@ class ExcludePathFilterTest extends AbstractTest
 
         $files = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
-                self::createCodeResourceUriForTest()
+                $this->createCodeResourceUriForTest()
             )
         );
 

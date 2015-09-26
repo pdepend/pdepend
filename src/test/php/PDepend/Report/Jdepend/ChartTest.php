@@ -75,7 +75,7 @@ class ChartTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->outputFile = self::createRunResourceURI('jdepend-test-out.svg');
+        $this->outputFile = $this->createRunResourceURI('jdepend-test-out.svg');
         if (file_exists($this->outputFile)) {
             unlink($this->outputFile);
         }
@@ -296,7 +296,7 @@ class ChartTest extends AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $fileName = self::createRunResourceURI('jdepend-test-out.png');
+        $fileName = $this->createRunResourceURI('jdepend-test-out.png');
         if (file_exists($fileName)) {
             unlink($fileName);
         }

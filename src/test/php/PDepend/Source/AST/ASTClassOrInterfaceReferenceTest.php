@@ -285,7 +285,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
     private function getFirstReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }
@@ -299,7 +299,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
     private function _getFirstReferenceInInterface()
     {
         return $this->getFirstNodeOfTypeInInterface(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
     }

@@ -133,7 +133,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateFunctionCCNAndCNN2ProjectMetrics()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 12, 'ccn2' => 16);
         $actual   = $analyzer->getProjectMetrics();
@@ -181,7 +181,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateCCNWithConditionalExprInCompoundExpr()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 2);
         $actual   = $analyzer->getProjectMetrics();
@@ -229,7 +229,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();
@@ -245,7 +245,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 4, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
@@ -261,7 +261,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateCCNDetectsExpressionsInAForLoop()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
@@ -277,7 +277,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateCCNDetectsExpressionsInAWhileLoop()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 4);
         $actual   = $analyzer->getProjectMetrics();
@@ -293,7 +293,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testCalculateProjectMetrics()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
         
         $expected = array('ccn' => 24, 'ccn2' => 32);
         $actual   = $analyzer->getProjectMetrics();
@@ -309,7 +309,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 3, 'ccn2' => 3);
         $actual   = $analyzer->getProjectMetrics();

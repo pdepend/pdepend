@@ -67,7 +67,7 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTest
      */
     public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName)
     {
-        $namespaces = self::parseSource($sourceFile);
+        $namespaces = $this->parseSource($sourceFile);
 
         $constants = $namespaces->current()
             ->getTypes()

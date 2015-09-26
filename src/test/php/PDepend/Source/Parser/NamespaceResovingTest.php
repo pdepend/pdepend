@@ -117,7 +117,7 @@ class NamespaceResovingTest extends AbstractParserTest
      */
     public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();
 
         $method = $namespaces->current()
@@ -152,7 +152,7 @@ class NamespaceResovingTest extends AbstractParserTest
      */
     public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();
         $namespaces->next();
 

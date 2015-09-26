@@ -69,12 +69,12 @@ abstract class AbstractFeatureTest extends AbstractTest
      * @param string $testCase
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    protected static function parseTestCase($testCase = null)
+    protected function parseTestCase($testCase = null)
     {
         if ($testCase === null) {
-            $testCase = self::getTestCaseMethod();
+            $testCase = $this->getTestCaseMethod();
         }
-        return self::parseTestCaseSource($testCase);
+        return $this->parseTestCaseSource($testCase);
     }
 
     /**
@@ -85,13 +85,13 @@ abstract class AbstractFeatureTest extends AbstractTest
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
             throw new \ErrorException('Unexpected class name format');
         }
-        return self::parseSource('issues/' . $match[1] . '/' . $method . '.php');
+        return $this->parseSource('issues/' . $match[1] . '/' . $method . '.php');
     }
 
     /**
@@ -99,7 +99,7 @@ abstract class AbstractFeatureTest extends AbstractTest
      *
      * @return string
      */
-    protected static function getTestCaseMethod()
+    protected function getTestCaseMethod()
     {
         $trace = debug_backtrace();
         foreach ($trace as $frame) {

@@ -60,7 +60,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      */
     public function testParserHandlesObjectPropertyAsForeachLoopKey()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -70,7 +70,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      */
     public function testParserHandlesObjectPropertyAsForeachLoopValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -80,7 +80,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      */
     public function testParserHandlesObjectPropertyAsForeachLoopKeyAndValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -90,7 +90,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      */
     public function testParserHandlesClassPropertyAsForeachLoopKey()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -100,7 +100,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      */
     public function testParserHandlesClassPropertyAsForeachLoopValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -110,6 +110,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      */
     public function testParserHandlesClassPropertyAsForeachLoopKeyAndValue()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

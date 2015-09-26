@@ -60,7 +60,7 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
      */
     public function testParserHandlesSimpleSignedDefaultValue()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()
@@ -75,7 +75,7 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
      */
     public function testParserHandlesMultipleSignedDefaultValue()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()
@@ -90,7 +90,7 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
      */
     public function testParserHandlesComplexSignedDefaultValue()
     {
-        $parameters = self::parseTestCaseSource(__METHOD__)
+        $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current()

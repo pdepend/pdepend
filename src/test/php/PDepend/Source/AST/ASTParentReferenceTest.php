@@ -104,7 +104,7 @@ class ASTParentReferenceTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTParentReferenceTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParentReferenceInClassWithoutParentThrowsException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -126,7 +126,7 @@ class ASTParentReferenceTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**

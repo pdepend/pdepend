@@ -61,7 +61,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserHandlesLambdaFunctionOnFileLevelBug70()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -71,7 +71,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserHandlesLambdaFunctionWithParametersBug70()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -81,7 +81,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserHandlesClosureFunctionWithBoundVariableBug70()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -91,7 +91,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserHandlesClosureFunctionWithBoundVariableByRefBug70()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -102,7 +102,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -112,7 +112,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserHandlesFunctionDeclarationWithinFunctionDeclarationBug70()
     {
-        $functions = self::parseCodeResourceForTest()
+        $functions = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions();
 
@@ -128,7 +128,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      */
     public function testParserHandlesClosureWithinFunctionDeclarationBug70()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();

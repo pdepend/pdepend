@@ -61,7 +61,7 @@ class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegr
      */
     public function testParserCreatesInvalidFunctionWhenReturnsByReference()
     {
-        $function = self::parseCodeResourceForTest()
+        $function = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current();
@@ -77,7 +77,7 @@ class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegr
      */
     public function testParserCreatesInvalidMethodWhenReturnsByReference()
     {
-        $method = self::parseCodeResourceForTest()
+        $method = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()

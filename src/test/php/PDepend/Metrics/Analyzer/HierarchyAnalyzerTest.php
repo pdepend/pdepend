@@ -64,7 +64,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
     public function testCalculatesExpectedNumberOfLeafClasses()
     {
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(2, $metrics['leafs']);
@@ -78,7 +78,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
     public function testCalculatesExpectedNumberOfAbstractClasses()
     {
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(1, $metrics['clsa']);
@@ -92,7 +92,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
     public function testCalculatesExpectedNumberOfConcreteClasses()
     {
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(2, $metrics['clsc']);
@@ -106,7 +106,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
     public function testCalculatesExpectedNumberOfRootClasses()
     {
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(1, $metrics['roots']);
@@ -120,7 +120,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
     public function testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses()
     {
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(0, $metrics['leafs']);

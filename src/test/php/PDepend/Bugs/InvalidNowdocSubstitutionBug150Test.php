@@ -60,7 +60,7 @@ class InvalidNowdocSubstitutionBug150Test extends AbstractRegressionTest
      */
     public function testTokenizerDoesNotDetectNowdocSyntaxInString()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->current()->getFunctions()->count());
     }
 }

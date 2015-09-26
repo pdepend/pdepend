@@ -60,7 +60,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
      */
     public function testParserAcceptsNullAsClassName()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -70,7 +70,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
      */
     public function testParserAcceptsNullAsInterfaceName()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -80,7 +80,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
      */
     public function testParserAcceptsTrueAsClassName()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -90,7 +90,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
      */
     public function testParserAcceptsTrueAsInterfaceName()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -100,7 +100,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
      */
     public function testParserAcceptsFalseAsClassName()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -110,6 +110,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTest
      */
     public function testParserAcceptsFalseAsInterfaceName()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

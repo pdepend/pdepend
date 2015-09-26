@@ -65,7 +65,7 @@ class ParserBug030Test extends AbstractRegressionTest
      */
     public function testCorrectClassTokensAreSet()
     {
-        $testClass = self::parseCodeResourceForTest()
+        $testClass = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current();

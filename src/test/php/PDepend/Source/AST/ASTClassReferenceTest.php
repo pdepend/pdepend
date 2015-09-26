@@ -223,7 +223,7 @@ class ASTClassReferenceTest extends \PDepend\Source\AST\ASTNodeTest
     private function _getFirstReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            self::getCallingTestMethod(),
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTClassReference'
         );
     }

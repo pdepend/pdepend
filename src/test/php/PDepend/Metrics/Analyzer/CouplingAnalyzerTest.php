@@ -79,7 +79,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $classes = $namespaces[0]->getClasses();
 
@@ -773,10 +773,10 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateProjectMetrics($testCase = null)
     {
-        $testCase = ($testCase ? $testCase : self::getCallingTestMethod());
+        $testCase = ($testCase ? $testCase : $this->getCallingTestMethod());
 
         $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource($testCase));
+        $analyzer->analyze($this->parseTestCaseSource($testCase));
 
         return $analyzer->getProjectMetrics();
     }

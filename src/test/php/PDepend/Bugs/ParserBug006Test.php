@@ -61,7 +61,7 @@ class ParserBug006Test extends AbstractRegressionTest
      */
     public function testParserNotSetsReferenceForVariableObjectInstantiation()
     {
-        $method  = self::parseCodeResourceForTest()
+        $method  = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

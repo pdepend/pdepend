@@ -108,7 +108,7 @@ class ASTStaticReferenceTest extends \PDepend\Source\AST\ASTNodeTest
             'The keyword "static" was used outside of a class/method scope.'
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTStaticReferenceTest extends \PDepend\Source\AST\ASTNodeTest
             'The keyword "static" was used outside of a class/method scope.'
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**

@@ -142,7 +142,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfPackages()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
         
@@ -157,7 +157,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfClassesInProject()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
         
@@ -172,7 +172,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfClassesInPackages()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
@@ -198,7 +198,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfInterfacesInProject()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
         
@@ -213,7 +213,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfInterfacesInPackages()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
@@ -239,7 +239,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfMethodsInProject()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
         
@@ -254,7 +254,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfMethodsInPackages()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
@@ -280,7 +280,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfFunctionsInProject()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
@@ -295,7 +295,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNumberOfFunctionsInPackages()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 

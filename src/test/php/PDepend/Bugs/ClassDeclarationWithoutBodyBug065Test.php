@@ -66,7 +66,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -82,7 +82,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -98,7 +98,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected token: {, line: 2, col: 28, file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
     
     /**
@@ -114,7 +114,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -130,7 +130,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -146,7 +146,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -162,7 +162,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -178,6 +178,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
             'Unexpected end of token stream in file: '
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

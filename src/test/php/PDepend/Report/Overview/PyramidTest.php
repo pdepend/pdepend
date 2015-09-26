@@ -117,7 +117,7 @@ class PyramidTest extends AbstractTest
         );
 
         $log = new Pyramid();
-        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
+        $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createComplexityAnalyzer());
         $log->log($this->createInheritanceAnalyzer());
         $log->log($this->createNodeCountAnalyzer());
@@ -138,7 +138,7 @@ class PyramidTest extends AbstractTest
         );
 
         $log = new Pyramid();
-        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
+        $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
         $log->log($this->createInheritanceAnalyzer());
         $log->log($this->createNodeCountAnalyzer());
@@ -159,7 +159,7 @@ class PyramidTest extends AbstractTest
         );
 
         $log = new Pyramid();
-        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
+        $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
         $log->log($this->createComplexityAnalyzer());
         $log->log($this->createNodeCountAnalyzer());
@@ -180,7 +180,7 @@ class PyramidTest extends AbstractTest
         );
 
         $log = new Pyramid();
-        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
+        $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
         $log->log($this->createComplexityAnalyzer());
         $log->log($this->createInheritanceAnalyzer());
@@ -201,7 +201,7 @@ class PyramidTest extends AbstractTest
         );
 
         $log = new Pyramid();
-        $log->setLogFile(self::createRunResourceURI('_tmp_.svg'));
+        $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
         $log->log($this->createComplexityAnalyzer());
         $log->log($this->createInheritanceAnalyzer());
@@ -216,7 +216,7 @@ class PyramidTest extends AbstractTest
      */
     public function testCollectedAndComputedValuesInOutputSVG()
     {
-        $output = self::createRunResourceURI('temp.svg');
+        $output = $this->createRunResourceURI('temp.svg');
         if (file_exists($output)) {
             unlink($output);
         }

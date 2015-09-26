@@ -63,7 +63,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithEmbeddedBacktickExpression()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -73,7 +73,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithEmbeddedExpression()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -83,7 +83,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesBacktickExpressionWithEmbeddedStringExpression()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -93,7 +93,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithEscapedVariable()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -103,7 +103,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesBacktickExpressionWithEscapedVariable()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -113,7 +113,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithVariableAndAssignment()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -123,7 +123,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithVariableNotAsFunctionCall()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -133,7 +133,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $method   = $namespaces->current()
             ->getClasses()
             ->current()

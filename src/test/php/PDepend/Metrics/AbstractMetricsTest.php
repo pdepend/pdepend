@@ -60,7 +60,7 @@ abstract class AbstractMetricsTest extends AbstractTest
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
 

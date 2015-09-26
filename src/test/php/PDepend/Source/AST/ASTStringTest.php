@@ -217,7 +217,7 @@ class ASTStringTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**

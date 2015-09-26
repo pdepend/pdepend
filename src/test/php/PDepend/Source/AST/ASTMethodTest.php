@@ -813,7 +813,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
      */
     protected function getFirstMethodInClass()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()

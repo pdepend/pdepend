@@ -62,8 +62,8 @@ class ImageConvertTest extends AbstractTest
      */
     public function testConvertMakesCopyForSameMimeType()
     {
-        $input  = self::createInputSvg();
-        $output = self::createRunResourceURI('pdepend.out.svg');
+        $input  = $this->createInputSvg();
+        $output = $this->createRunResourceURI('pdepend.out.svg');
 
         ImageConvert::convert($input, $output);
         $this->assertFileEquals($input, $output);
@@ -80,8 +80,8 @@ class ImageConvertTest extends AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $input  = self::createInputSvg();
-        $output = self::createRunResourceURI('pdepend.out.png');
+        $input  = $this->createInputSvg();
+        $output = $this->createRunResourceURI('pdepend.out.png');
 
         ImageConvert::convert($input, $output);
         $this->assertFileExists($output);
@@ -98,8 +98,8 @@ class ImageConvertTest extends AbstractTest
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $input  = self::createInputSvg();
-        $output = self::createRunResourceURI('pdepend');
+        $input  = $this->createInputSvg();
+        $output = $this->createRunResourceURI('pdepend');
 
         ImageConvert::convert($input, $output);
         $this->assertFileExists("{$output}.svg");
@@ -131,8 +131,8 @@ class ImageConvertTest extends AbstractTest
         $config = new Configuration($settings);
         ConfigurationInstance::set($config);
 
-        $input  = self::createInputSvg();
-        $output = self::createRunResourceURI('pdepend.svg');
+        $input  = $this->createInputSvg();
+        $output = $this->createRunResourceURI('pdepend.svg');
 
         ImageConvert::convert($input, $output);
 
@@ -166,8 +166,8 @@ class ImageConvertTest extends AbstractTest
         $config = new Configuration($settings);
         ConfigurationInstance::set($config);
 
-        $input  = self::createInputSvg();
-        $output = self::createRunResourceURI('pdepend.svg');
+        $input  = $this->createInputSvg();
+        $output = $this->createRunResourceURI('pdepend.svg');
 
         ImageConvert::convert($input, $output);
 
@@ -180,9 +180,9 @@ class ImageConvertTest extends AbstractTest
      *
      * @return string
      */
-    protected static function createInputSvg()
+    protected function createInputSvg()
     {
-        $input = self::createRunResourceURI(uniqid('input_')) . '.svg';
+        $input = $this->createRunResourceURI(uniqid('input_')) . '.svg';
         copy(dirname(__FILE__) . '/_input/pyramid.svg', $input);
 
         return $input;

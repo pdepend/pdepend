@@ -61,7 +61,6 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserHandlesBinaryIntegerLiteral
      *
      * @return void
-     * @since 1.0.0
      */
     public function testParserHandlesBinaryIntegerLiteral()
     {
@@ -76,7 +75,6 @@ class PHPParserVersion54Test extends AbstractTest
      *
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @since 1.0.0
      */
     public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
     {

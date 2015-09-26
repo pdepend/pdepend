@@ -87,7 +87,7 @@ class XmlTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->resultFile = self::createRunResourceURI('pdepend-log.xml');
+        $this->resultFile = $this->createRunResourceURI('pdepend-log.xml');
     }
 
     /**
@@ -142,7 +142,7 @@ class XmlTest extends AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
-        $this->packages = self::parseCodeResourceForTest();
+        $this->packages = $this->parseCodeResourceForTest();
 
         $this->analyzer = new DependencyAnalyzer();
         $this->analyzer->analyze($this->packages);
@@ -181,7 +181,7 @@ class XmlTest extends AbstractTest
      */
     protected function getNormalizedPathXml($fileName)
     {
-        $path = self::createCodeResourceUriForTest();
+        $path = $this->createCodeResourceUriForTest();
 
         return preg_replace(
             '(sourceFile="[^"]+/([^/"]+)")',

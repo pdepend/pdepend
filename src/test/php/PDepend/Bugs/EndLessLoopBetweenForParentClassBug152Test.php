@@ -60,7 +60,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass()
     {
-        self::parseCodeResourceForTest()
+        $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -75,7 +75,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
     {
-        self::parseCodeResourceForTest()
+        $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -89,7 +89,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces()
     {
-        self::parseCodeResourceForTest()
+        $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -103,7 +103,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2()
     {
-        self::parseCodeResourceForTest()
+        $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -117,7 +117,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3()
     {
-        $interfaces = self::parseCodeResourceForTest()
+        $interfaces = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -131,7 +131,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass()
     {
-        $parameters = self::parseCodeResourceForTest()
+        $parameters = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -148,7 +148,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage()
     {
-        $classes = self::parseCodeResourceForTest()
+        $classes = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses();
 

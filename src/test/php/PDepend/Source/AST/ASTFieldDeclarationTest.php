@@ -76,7 +76,7 @@ class ASTFieldDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
     {
-        $namespaces = self::parseCodeResourceForTest(true);
+        $namespaces = $this->parseCodeResourceForTest(true);
 
         $class = $namespaces->current()
             ->getClasses()

@@ -70,13 +70,13 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
      */
     public function testLogFileIsCreatedForUnstructuredCode($className, $extension)
     {
-        $file = self::createRunResourceURI() . '.' . $extension;
+        $file = $this->createRunResourceURI() . '.' . $extension;
 
         $generator = new $className();
         $generator->setLogFile($file);
 
         $engine = $this->createEngineFixture();
-        $engine->addFile(self::createCodeResourceUriForTest());
+        $engine->addFile($this->createCodeResourceUriForTest());
         $engine->addReportGenerator($generator);
         $engine->analyze();
 

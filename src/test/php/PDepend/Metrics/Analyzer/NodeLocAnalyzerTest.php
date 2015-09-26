@@ -83,7 +83,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectFunctionMetrics()
     {
-        $namespaces  = self::parseTestCaseSource(__METHOD__);
+        $namespaces  = $this->parseTestCaseSource(__METHOD__);
         $functions = $namespaces->current()
             ->getFunctions();
 
@@ -139,7 +139,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectFunctionFileMetrics()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $file     = $namespaces->current()
             ->getFunctions()
             ->current()
@@ -167,7 +167,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesClassMethodsIntoNcloc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -186,7 +186,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesClassPropertiesIntoNcloc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -205,7 +205,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerNotCalculatesClassPropertiesIntoEloc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -224,7 +224,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectClassFileMetrics()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $file     = $namespaces->current()
             ->getClasses()
             ->current()
@@ -251,7 +251,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectClassMetrics()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -277,7 +277,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectInterfaceFileLoc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $file     = $namespaces->current()
             ->getInterfaces()
             ->current()
@@ -304,7 +304,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectInterfaceLoc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $interface = $namespaces->current()
             ->getInterfaces()
             ->current();
@@ -330,7 +330,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesCorrectProjectMetrics()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($namespaces);
@@ -354,7 +354,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesElocOfZeroForAbstractMethod()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $method   = $namespaces->current()
             ->getClasses()
             ->current()
@@ -375,7 +375,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesElocOfZeroForInterfaceMethod()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $method   = $namespaces->current()
             ->getInterfaces()
             ->current()
@@ -396,7 +396,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerCalculatesClassConstantsIntoNcloc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -415,7 +415,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerNotCalculatesClassConstantsIntoEloc()
     {
-        $namespaces = self::parseTestCaseSource(__METHOD__);
+        $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -435,7 +435,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
     public function testCalculatesExpectedProjectLLocForFileWithInterfaces()
     {
         $analyzer = $this->_createAnalyzer();
-        $analyzer->analyze(self::parseTestCaseSource(__METHOD__));
+        $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(1, $metrics['lloc']);
@@ -449,7 +449,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedFileMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $file     = $namespaces->current()
             ->getClasses()
             ->current()
@@ -476,7 +476,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedClassMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $class    = $namespaces->current()
             ->getClasses()
             ->current();
@@ -502,7 +502,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedInterfaceMetricsFromCache()
     {
-        $namespaces  = self::parseCodeResourceForTest();
+        $namespaces  = $this->parseCodeResourceForTest();
         $interface = $namespaces->current()
             ->getInterfaces()
             ->current();
@@ -528,7 +528,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $method   = $namespaces->current()
             ->getClasses()
             ->current()
@@ -556,7 +556,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
         $function = $namespaces->current()
             ->getFunctions()
             ->current();
@@ -582,7 +582,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerRestoresExpectedProjectMetricsFromCache()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = $this->_createAnalyzer();
         $analyzer->analyze($namespaces);
@@ -705,7 +705,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateFunctionMetric($name)
     {
-        $namespaces = self::parseTestCaseSource(self::getCallingTestMethod());
+        $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
         $function = $namespaces->current()
             ->getFunctions()
             ->current();

@@ -67,7 +67,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces[0];
         $this->assertEquals(2, $namespace->getTypes()->count());
@@ -91,7 +91,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
         $this->assertEquals(3, $namespace->getTypes()->count());
@@ -112,7 +112,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces[0];
         $this->assertEquals(2, $namespace->getTypes()->count());
@@ -138,7 +138,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
         $this->assertEquals(3, $namespace->getTypes()->count());
@@ -159,7 +159,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
         $this->assertEquals(2, $namespace->getTypes()->count());
@@ -184,7 +184,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
         $this->assertEquals(2, $namespace->getTypes()->count());
@@ -213,7 +213,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
         $this->assertEquals(2, $namespace->getTypes()->count());
@@ -242,7 +242,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTest
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
     {
-        $namespaces = self::parseCodeResourceForTest();
+        $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
         $this->assertEquals(2, $namespace->getTypes()->count());

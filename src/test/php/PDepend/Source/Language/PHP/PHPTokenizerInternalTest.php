@@ -173,7 +173,7 @@ class PHPTokenizerInternalTest extends AbstractTest
     public function testInternalWithMixedContent()
     {
         $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = array(
             array(Tokens::T_OPEN_TAG, 1),
@@ -221,7 +221,7 @@ class PHPTokenizerInternalTest extends AbstractTest
     public function testInternalReturnsBOFTokenForPrevCall()
     {
         $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $this->assertEquals(Tokenizer::T_BOF, $tokenizer->prev());
     }
@@ -356,7 +356,7 @@ class PHPTokenizerInternalTest extends AbstractTest
     public function testTokenizerWithInlineHtmlBug24()
     {
         $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = array(
             array(Tokens::T_OPEN_TAG, 1),
@@ -417,7 +417,7 @@ class PHPTokenizerInternalTest extends AbstractTest
         }
 
         $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = array(
             array(Tokens::T_OPEN_TAG, 1),
@@ -444,7 +444,7 @@ class PHPTokenizerInternalTest extends AbstractTest
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
     {
         $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = array(
             array(Tokens::T_NO_PHP, '<html>
@@ -490,7 +490,7 @@ class PHPTokenizerInternalTest extends AbstractTest
     public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88()
     {
         $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = array(
             array(Tokens::T_NO_PHP, 'Hello', 1, 1, 1, 5),
@@ -534,7 +534,7 @@ Manuel', 3, 5, 61, 6),
     public function testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens()
     {
         $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $actual = array();
         while (is_object($token = $tokenizer->next())) {
@@ -563,7 +563,7 @@ Manuel', 3, 5, 61, 6),
     public function testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression()
     {
         $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $actual = array();
         while (is_object($token = $tokenizer->next())) {
@@ -612,7 +612,7 @@ Manuel', 3, 5, 61, 6),
     private function _getTokenTypesForTest()
     {
         $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(self::createCodeResourceUriForTest());
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $types = array();
         while (is_object($token = $tokenizer->next())) {

@@ -486,7 +486,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     private function _calculateClassMetrics()
     {
-        $namespaces = self::parseTestCaseSource(self::getCallingTestMethod());
+        $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());

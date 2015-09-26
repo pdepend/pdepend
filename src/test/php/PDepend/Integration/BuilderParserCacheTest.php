@@ -82,8 +82,8 @@ class BuilderParserCacheTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->cacheDir = self::createRunResourceURI('cacheDir');
-        $this->testFile = self::createRunResourceURI('testFile');
+        $this->cacheDir = $this->createRunResourceURI('cacheDir');
+        $this->testFile = $this->createRunResourceURI('testFile');
     }
 
     /**
@@ -126,7 +126,7 @@ class BuilderParserCacheTest extends AbstractTest
      */
     protected function parseSourceAndReturnBuilder($file)
     {
-        copy(self::createCodeResourceUriForTest() . '/' . $file, $this->testFile);
+        copy($this->createCodeResourceUriForTest() . '/' . $file, $this->testFile);
 
         $cache = new FileCacheDriver($this->cacheDir);
 

@@ -79,7 +79,7 @@ class XmlTest extends AbstractTest
     {
         parent::setUp();
 
-        $this->resultFile = self::createRunResourceURI('log-summary.xml');
+        $this->resultFile = $this->createRunResourceURI('log-summary.xml');
     }
 
     /**
@@ -174,7 +174,7 @@ class XmlTest extends AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
-        $this->namespaces = self::parseCodeResourceForTest();
+        $this->namespaces = $this->parseCodeResourceForTest();
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
@@ -224,7 +224,7 @@ class XmlTest extends AbstractTest
      */
     public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
     {
-        $this->namespaces = self::parseCodeResourceForTest();
+        $this->namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new AnalyzerNodeAndProjectAwareDummy(
             array('foo' => 42, 'bar' => 23),
@@ -252,7 +252,7 @@ class XmlTest extends AbstractTest
      */
     public function testNodeAwareAnalyzer()
     {
-        $this->namespaces = self::parseCodeResourceForTest();
+        $this->namespaces = $this->parseCodeResourceForTest();
 
         $input = array(
             array('loc'  =>  42),  array('ncloc'  =>  23),

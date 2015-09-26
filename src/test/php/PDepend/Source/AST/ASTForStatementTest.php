@@ -172,7 +172,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParserHandlesBooleanLiteralInForInit()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -333,7 +333,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParserHandlesBooleanLiteralInForExpression()
     {
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -358,7 +358,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParserHandlesParenthesisExpressionInForUpdate()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -368,7 +368,7 @@ class ASTForStatementTest extends \PDepend\Source\AST\ASTNodeTest
      */
     public function testParserHandlesBooleanLiteralInForUpdate()
     {
-        $this->assertNotNull(self::parseCodeResourceForTest());
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**

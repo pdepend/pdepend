@@ -62,7 +62,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
      */
     public function testParserSetsExpectedParentTypeHintReference()
     {
-        $parameters = self::parseCodeResourceForTest()
+        $parameters = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -87,7 +87,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
             'declaration is not in a class scope.'
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 
     /**
@@ -103,6 +103,6 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
             'class "Baz" does not declare a parent.'
         );
 
-        self::parseCodeResourceForTest();
+        $this->parseCodeResourceForTest();
     }
 }

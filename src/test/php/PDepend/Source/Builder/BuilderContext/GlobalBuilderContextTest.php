@@ -71,7 +71,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreTrait')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerTrait(new ASTTrait(__CLASS__));
@@ -87,7 +87,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreClass')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerClass(new ASTClass(__CLASS__));
@@ -103,7 +103,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreInterface')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerInterface(new ASTInterface(__CLASS__));
@@ -119,7 +119,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('restoreFunction')
-            ->with(self::isInstanceOf('PDepend\\Source\\AST\\ASTFunction'));
+            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTFunction'));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerFunction(new ASTFunction(__CLASS__));
@@ -136,7 +136,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('getTrait')
-            ->with(self::equalTo(__CLASS__));
+            ->with($this->equalTo(__CLASS__));
 
         $context = new GlobalBuilderContext($builder);
         $context->getTrait(__CLASS__);
@@ -152,7 +152,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('getClass')
-            ->with(self::equalTo(__CLASS__));
+            ->with($this->equalTo(__CLASS__));
 
         $context = new GlobalBuilderContext($builder);
         $context->getClass(__CLASS__);
@@ -168,7 +168,7 @@ class GlobalBuilderContextTest extends AbstractTest
         $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
         $builder->expects($this->once())
             ->method('getClassOrInterface')
-            ->with(self::equalTo(__CLASS__));
+            ->with($this->equalTo(__CLASS__));
 
         $context = new GlobalBuilderContext($builder);
         $context->getClassOrInterface(__CLASS__);

@@ -77,7 +77,7 @@ abstract class AbstractASTArtifactTest extends AbstractTest
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public static function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
 
@@ -85,12 +85,12 @@ abstract class AbstractASTArtifactTest extends AbstractTest
         $fileName = 'code/' . $fileName . '/' . $method;
 
         try {
-            $fileOrDirectory = self::createCodeResourceURI($fileName);
+            $fileOrDirectory = $this->createCodeResourceURI($fileName);
         } catch (ErrorException $e) {
-            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
+            $fileOrDirectory = $this->createCodeResourceURI($fileName . '.php');
         }
 
-        return self::parseSource($fileOrDirectory, $ignoreAnnotations);
+        return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
     }
 
     /**

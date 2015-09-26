@@ -63,7 +63,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
      */
     public function testParserHandlesSimpleCommaSeparatedConstantDefinition()
     {
-        $constants = self::parseCodeResourceForTest()
+        $constants = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -80,7 +80,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
      */
     public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments()
     {
-        $constants = self::parseCodeResourceForTest()
+        $constants = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
@@ -97,7 +97,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
      */
     public function testParserHandlesMultipleCommaSeparatedConstantDefinitions()
     {
-        $constants = self::parseCodeResourceForTest()
+        $constants = $this->parseCodeResourceForTest()
             ->current()
             ->getInterfaces()
             ->current()

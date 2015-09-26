@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Input\Iterator;
+
 /**
  * Test case for bug #164.
  *
@@ -64,9 +66,9 @@ class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegress
         $filter = $this->getMock('\\PDepend\\Input\\Filter');
         $filter->expects($this->once())
             ->method('accept')
-            ->with(self::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
+            ->with($this->equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
 
-        $iterator = new \PDepend\Input\Iterator(
+        $iterator = new Iterator(
             new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
             $filter,
             dirname(__FILE__)

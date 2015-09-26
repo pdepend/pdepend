@@ -168,7 +168,7 @@ class ASTCallableTest extends AbstractTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('restore');
@@ -190,7 +190,7 @@ class ASTCallableTest extends AbstractTest
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
             ->method('type')
-            ->with(self::equalTo('tokens'))
+            ->with($this->equalTo('tokens'))
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store');

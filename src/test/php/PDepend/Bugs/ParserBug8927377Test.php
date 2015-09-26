@@ -109,7 +109,7 @@ class ParserBug8927377Test extends AbstractRegressionTest
      */
     protected function getFirstPropertyPostfixInClass()
     {
-        return self::parseCodeResourceForTest()
+        return $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
