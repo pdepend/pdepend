@@ -332,14 +332,10 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
                 $this->afferentNodes[$id][] = $this->nodeSet[$caId];
             }
 
-            sort($this->afferentNodes[$id]);
-
             $this->efferentNodes[$id] = array();
             foreach ($metrics[self::M_EFFERENT_COUPLING] as $ceId) {
                 $this->efferentNodes[$id][] = $this->nodeSet[$ceId];
             }
-
-            sort($this->efferentNodes[$id]);
 
             $afferent = count($metrics[self::M_AFFERENT_COUPLING]);
             $efferent = count($metrics[self::M_EFFERENT_COUPLING]);
