@@ -5426,21 +5426,40 @@ abstract class AbstractPHPParser
      * Tests if the given token type is a valid formal parameter in the supported
      * PHP version.
      *
-     * @param integer $tokenType Numerical token identifier.
-     *
+     * @param integer $tokenType
      * @return boolean
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    abstract protected function isTypeHint($tokenType);
+    protected function isTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_STRING:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
+                return true;
+        }
+        return false;
+    }
 
     /**
-     * Parses a formal parameter type hint that is valid in the supported PHP
-     * version.
+     * Parses a type hint that is valid in the supported PHP version.
      *
      * @return \PDepend\Source\AST\ASTNode
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    abstract protected function parseTypeHint();
+    protected function parseTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_STRING:
+            case Tokens::T_BACKSLASH:
+            case Tokens::T_NAMESPACE:
+                $type = $this->builder->buildAstClassOrInterfaceReference(
+                    $this->parseQualifiedName()
+                );
+                break;
+        }
+        return $type;
+    }
 
     /**
      * Extracts all dependencies from a callable body.
@@ -5829,7 +5848,7 @@ abstract class AbstractPHPParser
         $tokenType = $this->tokenizer->peek();
 
         // Search for a namespace identifier
-        if ($tokenType === Tokens::T_STRING) {
+        if ($this->isClassName($tokenType)) {
             // Reset namespace property
             $this->namespaceName = null;
 

@@ -349,6 +349,7 @@ class PHPTokenizerInternal implements Tokenizer
         'yield'          =>  Tokens::T_YIELD,
         'parent'         =>  Tokens::T_PARENT,
         'finally'        =>  Tokens::T_FINALLY,
+        'callable'       =>  Tokens::T_CALLABLE,
         'insteadof'      =>  Tokens::T_INSTEADOF,
         'namespace'      =>  Tokens::T_NAMESPACE,
         '__dir__'        =>  Tokens::T_DIR,
@@ -436,22 +437,6 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
         Tokens::T_PARENT => array(
-            Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
-            Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
-            Tokens::T_CONST            =>  Tokens::T_STRING,
-            Tokens::T_FUNCTION         =>  Tokens::T_STRING,
-        ),
-        Tokens::T_TRAIT_C=> array(
-            Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
-            Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
-            Tokens::T_CONST            =>  Tokens::T_STRING,
-        ),
-        Tokens::T_TRAIT => array(
-            Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
-            Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
-            Tokens::T_CONST            =>  Tokens::T_STRING,
-        ),
-        Tokens::T_INSTEADOF => array(
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,

@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,25 +36,29 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since     0.9.20
+ * @since 2.3
  */
 
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion70} class.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
+ * @since 2.3
+ *
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion70
  * @group unittest
  */
-class PHPParserGenericVersion70Test extends AbstractTest
+class PHPParserVersion70Test extends AbstractTest
 {
     /**
      * testFormalParameterScalarTypeHintInt
@@ -350,5 +354,19 @@ class PHPParserGenericVersion70Test extends AbstractTest
             ->getChild(1);
 
         $this->assertSame('<=>', $expr->getImage());
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getMockForAbstractClass(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion70',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

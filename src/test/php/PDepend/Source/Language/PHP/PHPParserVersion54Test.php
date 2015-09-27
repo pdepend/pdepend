@@ -49,7 +49,7 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion54} class.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -128,6 +128,226 @@ class PHPParserVersion54Test extends AbstractTest
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsMethodName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsNamespaceName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsNamespaceName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsCalledFunction
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsCalledFunction()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsCalledMethod
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsCalledMethod()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForTraitAsConstant
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForTraitAsConstant()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsClassName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsClassName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsFunctionName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsFunctionName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsMethodName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsMethodName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsNamespaceName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsCalledMethod
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsCalledMethod()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForInsteadOfAsConstant
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForInsteadOfAsConstant()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsClassName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsClassName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsFunctionName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsFunctionName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsInterfaceName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsInterfaceName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsMethodName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsMethodName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsInterfaceName
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsNamespaceName()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsCalledFunction
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsCalledFunction()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsCalledMethod
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsCalledMethod()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExpectedExceptionForCallableAsConstant
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExpectedExceptionForCallableAsConstant()
     {
         $this->parseCodeResourceForTest();
     }

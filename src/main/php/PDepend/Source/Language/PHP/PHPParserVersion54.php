@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -58,7 +59,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.3
  */
-abstract class PHPParserVersion54 extends AbstractPHPParser
+abstract class PHPParserVersion54 extends PHPParserVersion53
 {
     /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
@@ -123,10 +124,88 @@ abstract class PHPParserVersion54 extends AbstractPHPParser
     }
 
     /**
+     * Tests if the given token type is a valid type hint in the supported
+     * PHP version.
+     *
+     * @param integer $tokenType
+     * @return boolean
+     * @since 1.0.0
+     */
+    protected function isTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_CALLABLE:
+                return true;
+            default:
+                return parent::isTypeHint($tokenType);
+        }
+    }
+
+    /**
+     * Parses a type hint that is valid in the supported PHP version.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 1.0.0
+     */
+    protected function parseTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_CALLABLE:
+                $this->consumeToken(Tokens::T_CALLABLE);
+                $type = $this->builder->buildAstTypeCallable();
+                break;
+            default:
+                $type = parent::parseTypeHint();
+                break;
+        }
+        return $type;
+    }
+
+    /**
+     * Tests if the next token is a valid array start delimiter in the supported
+     * PHP version.
+     *
+     * @return boolean
+     * @since 1.0.0
+     */
+    protected function isArrayStartDelimiter()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+            case Tokens::T_SQUARED_BRACKET_OPEN:
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Parses a php array declaration.
+     *
+     * @param \PDepend\Source\AST\ASTArray $array
+     * @param boolean $static
+     * @return \PDepend\Source\AST\ASTArray
+     * @since 1.0.0
+     */
+    protected function parseArray(ASTArray $array, $static = false)
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_SQUARED_BRACKET_OPEN:
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
+                $this->parseArrayElements($array, Tokens::T_SQUARED_BRACKET_CLOSE, $static);
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
+                break;
+            default:
+                parent::parseArray($array, $static);
+                break;
+        }
+        return $array;
+    }
+
+    /**
      * Parses an integer value.
      *
      * @return \PDepend\Source\AST\ASTLiteral
-     * @throws \PDepend\Source\Language\PHP\UnexpectedTokenException
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
     protected function parseIntegerNumber()
     {

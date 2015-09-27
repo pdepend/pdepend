@@ -157,6 +157,17 @@ class PHPParserGenericTest extends AbstractTest
     }
 
     /**
+     * testParserAcceptsInsteadofAsFunctionName
+     *
+     * @return void
+     */
+    public function testParserAcceptsInsteadofAsFunctionName()
+    {
+        $function = $this->getFirstFunctionForTestCase();
+        $this->assertSame('insteadOf', $function->getName());
+    }
+
+    /**
      * testParserAcceptsInsteadofAsInterfaceName
      *
      * @return void
@@ -165,6 +176,28 @@ class PHPParserGenericTest extends AbstractTest
     {
         $interface = $this->getFirstTypeForTestCase();
         $this->assertSame('insteadof', $interface->getName());
+    }
+
+    /**
+     * testParserAcceptsInsteadofAsMethodName
+     *
+     * @return void
+     */
+    public function testParserAcceptsInsteadofAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertSame('insteadOf', $method->getName());
+    }
+
+    /**
+     * testParserAcceptsInsteadofAsNamespaceName
+     *
+     * @return void
+     */
+    public function testParserAcceptsInsteadofAsNamespaceName()
+    {
+        $namespace = $this->getFirstTypeForTestCase()->getNamespaceName();
+        $this->assertSame('InsteadOf', $namespace);
     }
 
     /**

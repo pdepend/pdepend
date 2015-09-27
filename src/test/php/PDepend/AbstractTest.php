@@ -367,6 +367,17 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return \PDepend\Source\AST\ASTFormalParameter
+     */
+    protected function getFirstFormalParameterForTestCase()
+    {
+        return $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType(
+                'PDepend\\Source\\AST\\ASTFormalParameter'
+            );
+    }
+
+    /**
      * Collects all children from a given node.
      *
      * @param \PDepend\Source\AST\ASTNode $node   The current root node.
