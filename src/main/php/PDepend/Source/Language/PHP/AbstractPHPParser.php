@@ -3820,9 +3820,20 @@ abstract class AbstractPHPParser
      * property postfix expressions.
      *
      * @return \PDepend\Source\AST\ASTNode
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    abstract protected function parsePostfixIdentifier();
+    protected function parsePostfixIdentifier()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_STRING:
+                $node = $this->parseLiteral();
+                break;
+            default:
+                $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
+                break;
+        }
+        return $this->parseOptionalIndexExpression($node);
+    }
 
     /**
      * This method parses an optional member primary expression. It will parse

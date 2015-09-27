@@ -243,4 +243,23 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
 
         return $literal;
     }
+
+    /**
+     * Parses the class expr syntax supported since PHP 5.4.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 2.3
+     */
+    protected function parsePostfixIdentifier()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_CURLY_BRACE_OPEN:
+                $node = $this->parseCompoundExpression();
+                break;
+            default:
+                $node = parent::parsePostfixIdentifier();
+                break;
+        }
+        return $this->parseOptionalIndexExpression($node);
+    }
 }

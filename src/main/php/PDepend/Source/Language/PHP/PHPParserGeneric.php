@@ -142,29 +142,6 @@ class PHPParserGeneric extends PHPParserVersion70
     }
 
     /**
-     * This method parses a PHP version specific identifier for method and
-     * property postfix expressions.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     * @since  1.0.0
-     */
-    protected function parsePostfixIdentifier()
-    {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_STRING:
-                $node = $this->parseLiteral();
-                break;
-            case Tokens::T_CURLY_BRACE_OPEN:
-                $node = $this->parseCompoundExpression();
-                break;
-            default:
-                $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
-                break;
-        }
-        return $this->parseOptionalIndexExpression($node);
-    }
-
-    /**
      * Implements some quirks and hacks to support php here- and now-doc for
      * PHP 5.2.x versions :/
      *
