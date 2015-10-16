@@ -167,29 +167,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     }
 
     /**
-     * Returns an array of nodes that build a cycle for the requested node or it
-     * returns <b>null</b> if no cycle exists .
-     *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return \PDepend\Source\AST\AbstractASTArtifact[]
-     */
-    public function getCycle(AbstractASTArtifact $node)
-    {
-        if (array_key_exists($node->getId(), $this->collectedCycles)) {
-            return $this->collectedCycles[$node->getId()];
-        }
-
-        $list = array();
-        if ($this->collectCycle($list, $node)) {
-            $this->collectedCycles[$node->getId()] = $list;
-        } else {
-            $this->collectedCycles[$node->getId()] = null;
-        }
-
-        return $this->collectedCycles[$node->getId()];
-    }
-
-    /**
      * Visits a method node.
      *
      * @param  \PDepend\Source\AST\ASTMethod $method
