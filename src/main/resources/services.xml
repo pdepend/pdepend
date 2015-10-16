@@ -37,6 +37,10 @@
             <tag name="pdepend.logger" option="--summary-xml" message="Generates a xml log with all metrics." />
         </service>
 
+        <service id="pdepend.report.dependencies.xml" class="PDepend\Report\Dependencies\Xml">
+            <tag name="pdepend.logger" option="--dependency-xml" message="Generates a xml log with all dependencies." />
+        </service>
+
         <service id="pdepend.report.jdepend.xml" class="PDepend\Report\Jdepend\Xml">
             <tag name="pdepend.logger" option="--jdepend-xml" message="Generates the package dependency log." />
         </service>
@@ -85,6 +89,10 @@
         </service>
 
         <service id="pdepend.analyzer.dependency" class="PDepend\Metrics\Analyzer\DependencyAnalyzer">
+            <tag name="pdepend.analyzer" />
+        </service>
+
+        <service id="pdepend.analyzer.class_dependency" class="PDepend\Metrics\Analyzer\ClassDependencyAnalyzer">
             <tag name="pdepend.analyzer" />
         </service>
 

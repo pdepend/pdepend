@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependencies generated="2015-09-23T12:15:54" pdepend="@package_version@">
+  <package name="Report\Dependencies\Xml">
+    <class name="AbstractBase">
+      <efferent>
+        <type namespace="namespace" name="class"/>
+      </efferent>
+      <afferent>
+        <type namespace="namespace" name="class"/>
+        <type namespace="namespace" name="class"/>
+      </afferent>
+      <file name="???"/>
+    </class>
+  </package>
+</dependencies>

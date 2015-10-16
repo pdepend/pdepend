@@ -276,6 +276,10 @@ abstract class AbstractASTVisitor implements ASTVisitor
      */
     public function __call($method, $args)
     {
+        if (!isset($args[1])) {
+            throw new \RuntimeException("No node to visit provided for $method.");
+        }
+
         $value = $args[1];
         foreach ($args[0]->getChildren() as $child) {
             $value = $child->accept($this, $value);
