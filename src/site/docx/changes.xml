@@ -9,6 +9,16 @@
     </properties>
 
 	<body>
+            <release version="2.2.2"
+                     date="2015/10/16"
+                     description="This release adds a new analyzer that can be used to visualize namespace dependencies.">
+                <action date="a975553" dev="kore" type="update" issue="221" system="github">
+                    Added line numbers to summary log.
+                </action>
+                <action date="8a924f6" dev="kore" type="add" issue="222" system="github">
+                    Calculate type dependencies.
+                </action>
+            </release>
             <release version="2.2.1"
                      date="2015/09/24"
                      description="With this release we made a dependency downgrade, so that we can support more environments.">
