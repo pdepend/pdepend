@@ -210,6 +210,16 @@ class Command
             unset($options['--optimization']);
         }
 
+        if (isset($options['--quiet'])) {
+            $runSilent = true;
+            $processListener = new \PDepend\TextUI\NullResultPrinter();
+            unset($options['--quiet']);
+        } else {
+            $runSilent = false;
+            $processListener = new \PDepend\TextUI\ResultPrinter();
+        }
+        $this->runner->addProcessListener($processListener);
+
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
                 new \PDepend\DbusUI\ResultPrinter()
@@ -225,8 +235,10 @@ class Command
 
         try {
             // Output current pdepend version and author
-            $this->printVersion();
-            $this->printWorkarounds();
+            if ($runSilent === false) {
+                $this->printVersion();
+                $this->printWorkarounds();
+            }
 
             $startTime = time();
 
@@ -247,8 +259,9 @@ class Command
                 }
                 echo PHP_EOL;
             }
-
-            $this->printStatistics($startTime);
+            if ($runSilent === false) {
+                $this->printStatistics($startTime);
+            }
 
             return $result;
         } catch (\RuntimeException $e) {
@@ -472,6 +485,7 @@ class Command
         );
         echo PHP_EOL;
 
+        $this->printOption('--quiet', 'Prints errors only.', $length);
         $this->printOption('--debug', 'Prints debugging information.', $length);
         $this->printOption('--help', 'Print this help text.', $length);
         $this->printOption('--version', 'Print the current version.', $length);

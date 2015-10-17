@@ -8,10 +8,6 @@
         <service id="pdepend.textui.runner" class="PDepend\TextUI\Runner">
             <argument type="service" id="pdepend.report_generator_factory" />
             <argument type="service" id="pdepend.engine" />
-
-            <call method="addProcessListener">
-                <argument type="service" id="pdepend.textui.result_printer" />
-            </call>
         </service>
 
         <service id="pdepend.util.cache_factory" class="PDepend\Util\Cache\CacheFactory">
