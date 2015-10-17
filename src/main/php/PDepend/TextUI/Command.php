@@ -212,13 +212,11 @@ class Command
 
         if (isset($options['--quiet'])) {
             $runSilent = true;
-            $processListener = new \PDepend\TextUI\NullResultPrinter();
             unset($options['--quiet']);
         } else {
             $runSilent = false;
-            $processListener = new \PDepend\TextUI\ResultPrinter();
+            $this->runner->addProcessListener(new \PDepend\TextUI\ResultPrinter());
         }
-        $this->runner->addProcessListener($processListener);
 
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
