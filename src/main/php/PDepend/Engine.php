@@ -629,7 +629,10 @@ class Engine
         }
 
         $fileIterator = new \AppendIterator();
-        $fileIterator->append(new \ArrayIterator($this->files));
+
+        foreach ($this->files as $file) {
+            $fileIterator->append(new Iterator(new \GlobIterator($file), $this->fileFilter));
+        }
 
         foreach ($this->directories as $directory) {
             $fileIterator->append(
