@@ -210,6 +210,14 @@ class Command
             unset($options['--optimization']);
         }
 
+        if (isset($options['--quiet'])) {
+            $runSilent = true;
+            unset($options['--quiet']);
+        } else {
+            $runSilent = false;
+            $this->runner->addProcessListener(new \PDepend\TextUI\ResultPrinter());
+        }
+
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
                 new \PDepend\DbusUI\ResultPrinter()
@@ -225,8 +233,10 @@ class Command
 
         try {
             // Output current pdepend version and author
-            $this->printVersion();
-            $this->printWorkarounds();
+            if ($runSilent === false) {
+                $this->printVersion();
+                $this->printWorkarounds();
+            }
 
             $startTime = time();
 
@@ -247,17 +257,9 @@ class Command
                 }
                 echo PHP_EOL;
             }
-
-            $duration = time() - $startTime;
-            $hours = intval($duration / 3600);
-            $minutes = intval(($duration - $hours * 3600) / 60);
-            $seconds = $duration % 60;
-            echo PHP_EOL, 'Time: ', sprintf('%d:%02d:%02d', $hours, $minutes, $seconds);
-            if (function_exists('memory_get_peak_usage')) {
-                $memory = (memory_get_peak_usage(true) / (1024 * 1024));
-                printf('; Memory: %4.2fMb', $memory);
+            if ($runSilent === false) {
+                $this->printStatistics($startTime);
             }
-            echo PHP_EOL;
 
             return $result;
         } catch (\RuntimeException $e) {
@@ -481,6 +483,7 @@ class Command
         );
         echo PHP_EOL;
 
+        $this->printOption('--quiet', 'Prints errors only.', $length);
         $this->printOption('--debug', 'Prints debugging information.', $length);
         $this->printOption('--help', 'Print this help text.', $length);
         $this->printOption('--version', 'Print the current version.', $length);
@@ -622,5 +625,22 @@ class Command
     {
         $command = new Command();
         return $command->run();
+    }
+
+    /**
+     * @param $startTime
+     */
+    private function printStatistics($startTime)
+    {
+        $duration = time() - $startTime;
+        $hours = intval($duration / 3600);
+        $minutes = intval(($duration - $hours * 3600) / 60);
+        $seconds = $duration % 60;
+        echo PHP_EOL, 'Time: ', sprintf('%d:%02d:%02d', $hours, $minutes, $seconds);
+        if (function_exists('memory_get_peak_usage')) {
+            $memory = (memory_get_peak_usage(true) / (1024 * 1024));
+            printf('; Memory: %4.2fMb', $memory);
+        }
+        echo PHP_EOL;
     }
 }

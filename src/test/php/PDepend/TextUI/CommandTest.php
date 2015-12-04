@@ -543,6 +543,22 @@ class CommandTest extends AbstractTest
         );
     }
 
+    public function testQuietModeWillSuppressVersionAndWorkaroundsAndStatistics()
+    {
+        $argv = array(
+            '--quiet',
+            '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
+            '--dummy-logger=' . $this->createRunResourceURI(),
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+            __FILE__,
+        );
+
+        list($exitCode, $actual) = $this->executeCommand($argv);
+
+        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        $this->assertEmpty('', $actual);
+    }
+
     /**
      * Tests the help output with an optional prolog text.
      *
@@ -565,6 +581,7 @@ class CommandTest extends AbstractTest
         $this->assertRegExp('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
         $this->assertRegExp('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
         $this->assertRegExp('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
+        $this->assertRegExp('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
     }
 
     /**
