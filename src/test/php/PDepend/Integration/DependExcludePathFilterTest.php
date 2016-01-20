@@ -56,6 +56,29 @@ use PDepend\AbstractTest;
  */
 class DependExcludePathFilterTest extends AbstractTest
 {
+
+    /**
+     * testPDependFiltersSingleFileWithPattern
+     *
+     * @return void
+     */
+    public function testPDependFiltersSingleFileWithPattern()
+    {
+        $this->changeWorkingDirectory();
+
+        $directory = $this->createCodeResourceUriForTest();
+        $pattern   = '*/Integration/*';
+
+        $pdepend = $this->createEngineFixture();
+        $pdepend->addFile($this->createCodeResourceUriForTest().'/Integration/FilteredClass.php');
+        $pdepend->addFileFilter(
+            new \PDepend\Input\ExcludePathFilter(array($pattern))
+        );
+
+        $this->assertEquals(0, count($pdepend->analyze()));
+    }
+
+
     /**
      * testPDependFiltersByRelativePath
      *
@@ -74,7 +97,7 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(1, count($pdepend->analyze()));
+        $this->assertEquals(0, count($pdepend->analyze()));
     }
 
     /**
@@ -128,6 +151,6 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(2, count($pdepend->analyze()));
+        $this->assertEquals(1, count($pdepend->analyze()));
     }
 }
