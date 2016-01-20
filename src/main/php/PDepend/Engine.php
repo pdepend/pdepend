@@ -659,6 +659,12 @@ class Engine
             }
         }
 
+        foreach ($files as $key => $file) {
+            if (!$this->fileFilter->accept($file, $file)) {
+                unset($files[$key]);
+            }
+        }
+
         ksort($files);
         // END
 
