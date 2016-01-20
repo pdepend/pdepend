@@ -9,6 +9,19 @@
     </properties>
 
 	<body>
+            <release version="2.2.3"
+                     date="2015/12/04"
+                     description="This release includes several pending pull requests from GitHub.">
+                <action date="fb46614" dev="glady" type="fix" issue="226" system="github">
+                    Fixed division by zero issue.
+                </action>
+                <action date="9a710f7" dev="gooh" type="add" issue="221" system="github">
+                    Add --quiet option.
+                </action>
+                <action date="4e150db" dev="jeanCarloMachado" type="fix" issue="227" system="github">
+                    Fix support to files filters.
+                </action>
+            </release>
             <release version="2.2.2"
                      date="2015/10/16"
                      description="This release adds a new analyzer that can be used to visualize namespace dependencies.">
