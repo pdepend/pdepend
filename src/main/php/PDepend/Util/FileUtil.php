@@ -84,7 +84,7 @@ final class FileUtil
      */
     public static function getUserHomeDir()
     {
-        if ((PHP_OS === 'Darwin') || (false === stripos(PHP_OS, 'win'))) {
+        if ((PHP_OS === 'Darwin') || (PHP_OS === 'CYGWIN') || (false === stripos(PHP_OS, 'win'))) {
             return getenv('HOME');
         }
         return getenv('HOMEDRIVE') . getenv('HOMEPATH');
