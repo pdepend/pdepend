@@ -48,6 +48,7 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNode;
@@ -3516,7 +3517,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @return \PDepend\Source\AST\ASTDeclareStatement
-     * @since  0.10.0
+     * @since 0.10.0
      */
     private function parseDeclareStatement()
     {
@@ -3536,11 +3537,10 @@ abstract class AbstractPHPParser
      *
      * @param \PDepend\Source\AST\ASTDeclareStatement $stmt The declare statement that
      *        is the owner of this list.
-     *
      * @return \PDepend\Source\AST\ASTDeclareStatement
-     * @since  0.10.0
+     * @since 0.10.0
      */
-    private function parseDeclareList(\PDepend\Source\AST\ASTDeclareStatement $stmt)
+    private function parseDeclareList(ASTDeclareStatement $stmt)
     {
         $this->consumeComments();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
