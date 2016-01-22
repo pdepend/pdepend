@@ -12,17 +12,20 @@
             <release version="2.2.3"
                      date="2015/12/04"
                      description="This release includes several pending pull requests from GitHub.">
-                <action date="fb46614" dev="glady" type="fix" issue="226" system="github">
-                    Fixed division by zero issue.
-                </action>
                 <action date="9a710f7" dev="gooh" type="add" issue="221" system="github">
                     Add --quiet option.
+                </action>
+                <action date="fb46614" dev="glady" type="fix" issue="226" system="github">
+                    Fixed division by zero issue.
                 </action>
                 <action date="4e150db" dev="jeanCarloMachado" type="fix" issue="227" system="github">
                     Fix support to files filters.
                 </action>
                 <action date="126c38a" dev="2gr" type="fix" issue="230" system="github">
                     Fix handling cygwin home folder location.
+                </action>
+                <action date="57b54bd" dev="avindra" type="update" issue="236" system="github">
+                    Switch to PSR-4 for autoloading
                 </action>
             </release>
             <release version="2.2.2"
