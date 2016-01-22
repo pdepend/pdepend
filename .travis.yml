@@ -12,6 +12,7 @@ php:
 matrix:
     include:
         - php: 5.3
+          env: DEPENDENCIES=low
         - php: 5.4
           env: DEPENDENCIES=low
         - php: 5.5
@@ -19,7 +20,6 @@ matrix:
         - php: 7.0
         - php: hhvm
         - php: hhvm-nightly
-          env: DEPENDENCIES=high
     allow_failures:
         - php: hhvm
         - php: hhvm-nightly
@@ -31,10 +31,14 @@ env:
 
 before_script:
     - composer self-update
-    - if [ "${DEPENDENCIES}" = "low" ] ; then composer update --prefer-dist --prefer-lowest ; fi
+    - if [ $DEPENDENCIES = low ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
+    - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
     - composer install
 
-script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
+script:
+    - phpunit --configuration $TEST_CONFIG --colors --coverage-text
+#    - if [ $DEPENDENCIES = low ] ; phpunit --configuration $TEST_CONFIG --coverage-text ; fi
+#    - if [ ! $DEPENDENCIES ] ; phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 
 notifications:
     irc: "irc.freenode.org#pdepend"
