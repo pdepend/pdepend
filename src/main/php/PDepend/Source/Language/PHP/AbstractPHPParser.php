@@ -5213,7 +5213,6 @@ abstract class AbstractPHPParser
             case Tokens::T_ARRAY:
                 $parameter = $this->parseFormalParameterAndArrayTypeHint();
                 break;
-
             case ($this->isTypeHint($tokenType)):
                 $parameter = $this->parseFormalParameterAndTypeHint();
                 break;
