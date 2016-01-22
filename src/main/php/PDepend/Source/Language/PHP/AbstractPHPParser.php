@@ -5768,6 +5768,15 @@ abstract class AbstractPHPParser
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
             return join('', $fragments);
+        } else {
+            switch (strtolower($fragments[0])) {
+                case 'int':
+                case 'bool':
+                case 'float':
+                case 'string':
+                case 'callable':
+                    return $fragments[0];
+            }
         }
 
         // Search for an use alias
