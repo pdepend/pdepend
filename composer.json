@@ -14,6 +14,6 @@
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {
-        "psr-0": {"PDepend\\": "src/main/php/"}
+        "psr-4": {"PDepend\\": "src/main/php/PDepend"}
     }
 }
