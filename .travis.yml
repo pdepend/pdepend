@@ -1,18 +1,17 @@
 language: php
 
-php:
-    - 5.3
-    - 5.4
-    - 5.5
-    - 5.6
-    - 7.0
-    - hhvm
-    - hhvm-nightly
+#php:
+#    - 5.3
+#    - 5.4
+#    - 5.5
+#    - 5.6
+#    - 7.0
+#    - hhvm
+#    - hhvm-nightly
 
 matrix:
     include:
         - php: 5.3
-          env: DEPENDENCIES=low
         - php: 5.4
           env: DEPENDENCIES=low
         - php: 5.5
@@ -20,6 +19,7 @@ matrix:
         - php: 7.0
         - php: hhvm
         - php: hhvm-nightly
+          env: DEPENDENCIES=high
     allow_failures:
         - php: hhvm
         - php: hhvm-nightly
@@ -32,7 +32,7 @@ env:
 before_script:
     - composer self-update
     - if [ $DEPENDENCIES = low ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
-    - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
+    - if [ $DEPENDENCIES = high ] ; then composer update --prefer-dist ; fi
     - composer install
 
 script:
