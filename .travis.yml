@@ -10,15 +10,27 @@ php:
     - hhvm-nightly
 
 matrix:
+    include:
+        - php: 5.3
+        - php: 5.4
+          env: deps=low
+        - php: 5.5
+        - php: 5.6
+        - php: 7.0
+        - php: hhvm
+        - php: hhvm-nightly
+          env: deps=high
     allow_failures:
         - php: hhvm
         - php: hhvm-nightly
+    fast_finish: true
 
 env:
     - TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
     - composer self-update
+    - if [ "${deps}" = "low" ] ; then composer update --prefer-dist --prefer-lowest ; fi
     - composer install
 
 script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
