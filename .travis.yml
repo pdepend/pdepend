@@ -13,24 +13,25 @@ matrix:
     include:
         - php: 5.3
         - php: 5.4
-          env: deps=low
+          env: DEPENDENCIES=low
         - php: 5.5
         - php: 5.6
         - php: 7.0
         - php: hhvm
         - php: hhvm-nightly
-          env: deps=high
+          env: DEPENDENCIES=high
     allow_failures:
         - php: hhvm
         - php: hhvm-nightly
     fast_finish: true
 
 env:
-    - TEST_CONFIG="phpunit.xml.dist"
+    global:
+        TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
     - composer self-update
-    - if [ "${deps}" = "low" ] ; then composer update --prefer-dist --prefer-lowest ; fi
+    - if [ "${DEPENDENCIES}" = "low" ] ; then composer update --prefer-dist --prefer-lowest ; fi
     - composer install
 
 script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
