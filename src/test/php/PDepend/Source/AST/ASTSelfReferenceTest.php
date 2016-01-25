@@ -55,7 +55,7 @@ use PDepend\Source\Builder\BuilderContext;
  * @covers \PDepend\Source\AST\ASTSelfReference
  * @group unittest
  */
-class ASTSelfReferenceTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTSelfReferenceTest extends ASTNodeTest
 {
     /**
      * testGetTypeReturnsInjectedConstructorTargetArgument

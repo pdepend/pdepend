@@ -38,98 +38,54 @@
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 2.3
  */
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
- * Test case for the {@link \PDepend\Source\AST\ASTUnaryExpression} class.
+ * Represents a php class node.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTUnaryExpression
- * @group unittest
+ * @since 2.3
  */
-class ASTUnaryExpressionTest extends ASTNodeTest
+class ASTAnonymousClass extends ASTClass
 {
     /**
-     * testUnaryExpression
+     * Will return <b>true</b> if this class was declared anonymous in an
+     * allocation expression.
      *
-     * @return \PDepend\Source\AST\ASTUnaryExpression
-     * @since 1.0.2
+     * @return boolean
      */
-    public function testUnaryExpression()
+    public function isAnonymous()
     {
-        $expr = $this->_getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $expr);
-
-        return $expr;
+        return true;
     }
 
     /**
-     * testUnaryExpressionHasExpectedStartLine
+     * ASTVisitor method for node tree traversal.
      *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @return void
+     */
+    public function accept(ASTVisitor $visitor)
+    {
+        $visitor->visitClass($this);
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
      *
      * @return void
-     * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedStartLine($expr)
+    public function __wakeup()
     {
-        $this->assertEquals(4, $expr->getStartLine());
-    }
-
-    /**
-     * testUnaryExpressionHasExpectedStartColumn
-     *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     *
-     * @return void
-     * @depends testUnaryExpression
-     */
-    public function testUnaryExpressionHasExpectedStartColumn($expr)
-    {
-        $this->assertEquals(22, $expr->getStartColumn());
-    }
-
-    /**
-     * testUnaryExpressionHasExpectedEndLine
-     *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     *
-     * @return void
-     * @depends testUnaryExpression
-     */
-    public function testUnaryExpressionHasExpectedEndLine($expr)
-    {
-        $this->assertEquals(5, $expr->getEndLine());
-    }
-
-    /**
-     * testUnaryExpressionHasExpectedEndColumn
-     *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     *
-     * @return void
-     * @depends testUnaryExpression
-     */
-    public function testUnaryExpressionHasExpectedEndColumn($expr)
-    {
-        $this->assertEquals(14, $expr->getEndColumn());
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @return \PDepend\Source\AST\ASTUnaryExpression
-     */
-    private function _getFirstUnaryExpressionInFunction()
-    {
-        return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTUnaryExpression'
-        );
+        $this->methods = null;
     }
 }

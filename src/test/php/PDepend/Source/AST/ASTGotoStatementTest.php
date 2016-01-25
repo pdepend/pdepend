@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTGotoStatement
  * @group unittest
  */
-class ASTGotoStatementTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTGotoStatementTest extends ASTNodeTest
 {
     /**
      * testGotoStatementHasExpectedStartLine

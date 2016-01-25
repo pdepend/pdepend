@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConstantDefinition
  * @group unittest
  */
-class ASTConstantDefinitionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTConstantDefinitionTest extends ASTNodeTest
 {
     /**
      * Tests that the constant definition has the expected doc comment block.

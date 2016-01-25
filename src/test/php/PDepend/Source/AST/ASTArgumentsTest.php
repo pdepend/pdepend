@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTArguments
  * @group unittest
  */
-class ASTArgumentsTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTArgumentsTest extends ASTNodeTest
 {
     /**
      * testArgumentsGraphWithMagicClassConstant

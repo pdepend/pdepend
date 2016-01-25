@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTForInit
  * @group unittest
  */
-class ASTForInitTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTForInitTest extends ASTNodeTest
 {
     /**
      * testForInitHasExpectedStartLine

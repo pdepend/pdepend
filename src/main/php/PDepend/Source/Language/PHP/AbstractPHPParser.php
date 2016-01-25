@@ -46,6 +46,7 @@ use org\pdepend\reflection\exceptions\EndOfTokenStreamException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTType;
+use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTDeclareStatement;
@@ -189,7 +190,7 @@ abstract class AbstractPHPParser
      *
      * @var \PDepend\Source\AST\ASTCompilationUnit
      */
-    private $compilationUnit;
+    protected $compilationUnit;
 
     /**
      * The symbol table used to handle PHP 5.3 use statements.
@@ -737,11 +738,11 @@ abstract class AbstractPHPParser
     /**
      * Parses a parent class declaration for the given <b>$class</b>.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
+     * @param \PDepend\Source\AST\ASTClass $class
      * @return \PDepend\Source\AST\ASTClass
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    private function parseClassExtends(ASTClass $class)
+    protected function parseClassExtends(ASTClass $class)
     {
         $this->consumeToken(Tokens::T_EXTENDS);
         $this->tokenStack->push();
@@ -762,10 +763,10 @@ abstract class AbstractPHPParser
      * part of a interface declaration or in the <b>implements</b> part of a
      * class declaration.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $abstractType
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $abstractType
      * @return void
      */
-    private function parseInterfaceList(AbstractASTClassOrInterface $abstractType)
+    protected function parseInterfaceList(AbstractASTClassOrInterface $abstractType)
     {
         while (true) {
             $this->tokenStack->push();
@@ -791,7 +792,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a class/interface/trait body.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $type
+     * @param \PDepend\Source\AST\AbstractASTType $type
      * @return \PDepend\Source\AST\AbstractASTType
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      * @throws \PDepend\Source\Parser\TokenStreamEndException
@@ -1470,12 +1471,24 @@ abstract class AbstractPHPParser
         $token = $this->consumeToken(Tokens::T_NEW);
 
         $allocation = $this->builder->buildAstAllocationExpression($token->image);
-        $allocation = $this->parseExpressionTypeReference($allocation, true);
+        $allocation = $this->parseAllocationExpressionTypeReference($allocation);
 
         if ($this->isNextTokenArguments()) {
             $allocation->addChild($this->parseArguments());
         }
         return $this->setNodePositionsAndReturn($allocation);
+    }
+
+    /**
+     * Parse the type reference used in an allocation expression.
+     *
+     * @param \PDepend\Source\AST\ASTAllocationExpression $allocation
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 2.3
+     */
+    protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
+    {
+        return $this->parseExpressionTypeReference($allocation, true);
     }
 
     /**
@@ -1936,7 +1949,7 @@ abstract class AbstractPHPParser
      * @return boolean
      * @since  0.9.8
      */
-    private function isNextTokenArguments()
+    protected function isNextTokenArguments()
     {
         $this->consumeComments();
         return $this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN;
@@ -2069,11 +2082,10 @@ abstract class AbstractPHPParser
      * allocation node like {@link \PDepend\Source\AST\ASTAllocationExpression}.
      *
      * @param \PDepend\Source\AST\ASTNode $expr
-     * @param boolean                     $classRef
-     *
+     * @param boolean $classRef
      * @return \PDepend\Source\AST\ASTNode
      */
-    private function parseExpressionTypeReference(ASTNode $expr, $classRef)
+    protected function parseExpressionTypeReference(ASTNode $expr, $classRef)
     {
         // Peek next token and look for a static type identifier
         $this->consumeComments();
@@ -4151,7 +4163,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since  0.9.6
      */
-    private function parseArguments()
+    protected function parseArguments()
     {
         $this->consumeComments();
 

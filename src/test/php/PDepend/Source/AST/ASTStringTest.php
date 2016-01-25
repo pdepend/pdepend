@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTString
  * @group unittest
  */
-class ASTStringTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTStringTest extends ASTNodeTest
 {
     /**
      * testDoubleQuoteStringContainsTwoChildNodes

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTStaticVariableDeclaration
  * @group unittest
  */
-class ASTStaticVariableDeclarationTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTStaticVariableDeclarationTest extends ASTNodeTest
 {
     /**
      * testStaticVariableDeclaration

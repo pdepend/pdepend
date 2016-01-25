@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTraitUseStatement
  * @group unittest
  */
-class ASTTraitUseStatementTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTTraitUseStatementTest extends ASTNodeTest
 {
     /**
      * testHasExcludeForReturnsFalseIfNoInsteadExists

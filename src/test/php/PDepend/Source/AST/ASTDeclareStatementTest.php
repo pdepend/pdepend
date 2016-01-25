@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTDeclareStatement
  * @group unittest
  */
-class ASTDeclareStatementTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTDeclareStatementTest extends ASTNodeTest
 {
     /**
      * testDeclareStatementWithSingleParameter

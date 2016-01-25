@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTFormalParameter
  * @group unittest
  */
-class ASTFormalParameterTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTFormalParameterTest extends ASTNodeTest
 {
     /**
      * testHasTypeReturnsFalseByDefault

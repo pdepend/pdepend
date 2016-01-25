@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTShiftRightExpression
  * @group unittest
  */
-class ASTShiftRightExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTShiftRightExpressionTest extends ASTNodeTest
 {
     /**
      * testShiftRightExpressionReturnsExpectedImage

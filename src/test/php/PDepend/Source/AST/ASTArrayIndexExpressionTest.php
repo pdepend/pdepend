@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTArrayIndexExpression
  * @group unittest
  */
-class ASTArrayIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTArrayIndexExpressionTest extends ASTNodeTest
 {
     /**
      * testArrayIndexGraphDereferencedFromFunctionCall

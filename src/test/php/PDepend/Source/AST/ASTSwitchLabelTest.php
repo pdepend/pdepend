@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTSwitchLabel
  * @group unittest
  */
-class ASTSwitchLabelTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTSwitchLabelTest extends ASTNodeTest
 {
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames

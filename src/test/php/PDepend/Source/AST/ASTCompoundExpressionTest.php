@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTCompoundExpression
  * @group unittest
  */
-class ASTCompoundExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTCompoundExpressionTest extends ASTNodeTest
 {
     /**
      * testExpressionHasExpectedStartLine

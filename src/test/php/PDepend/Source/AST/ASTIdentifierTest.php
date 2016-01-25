@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTIdentifier
  * @group unittest
  */
-class ASTIdentifierTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTIdentifierTest extends ASTNodeTest
 {
     /**
      * testIdentifierHasExpectedStartLine

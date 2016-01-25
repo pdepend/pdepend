@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTExitExpression
  * @group unittest
  */
-class ASTExitExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTExitExpressionTest extends ASTNodeTest
 {
     /**
      * testExitExpressionWithExitCode

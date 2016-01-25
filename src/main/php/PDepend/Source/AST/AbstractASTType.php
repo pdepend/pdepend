@@ -134,7 +134,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @var   \PDepend\Source\AST\ASTMethod[]
      * @since 1.0.2
      */
-    private $methods = array();
+    protected $methods = array();
 
 
     /**

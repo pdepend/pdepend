@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTCompoundVariable
  * @group unittest
  */
-class ASTCompoundVariableTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTCompoundVariableTest extends ASTNodeTest
 {
     /**
      * Tests that a parsed compound variable has the expected object graph.

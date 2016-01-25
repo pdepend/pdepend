@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTCloneExpression
  * @group unittest
  */
-class ASTCloneExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTCloneExpressionTest extends ASTNodeTest
 {
     /**
      * testCloneExpressionHasExpectedStartLine

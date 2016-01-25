@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -176,6 +177,67 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
+     * Parse the type reference used in an allocation expression.
+     *
+     * @param \PDepend\Source\AST\ASTAllocationExpression $allocation
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 2.3
+     */
+    protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
+    {
+        if ($newAllocation = $this->parseAnonymousClassDeclaration($allocation)) {
+            return $newAllocation;
+        }
+        return parent::parseAllocationExpressionTypeReference($allocation);
+    }
+
+    protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
+    {
+        $this->consumeComments();
+
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_CLASS:
+                $this->consumeToken(Tokens::T_CLASS);
+                $this->consumeComments();
+
+                $class = $this->builder->buildAnonymousClass();
+                $class->setName(
+                    sprintf(
+                        'class@anonymous%s0x%s',
+                        $this->compilationUnit->getFileName(),
+                        uniqid('')
+                    )
+                );
+                $class->setCompilationUnit($this->compilationUnit);
+                $class->setUserDefined();
+
+                $allocation->addChild($class);
+
+                if ($this->isNextTokenArguments()) {
+                    $allocation->addChild($this->parseArguments());
+                }
+
+                $this->consumeComments();
+                $tokenType = $this->tokenizer->peek();
+
+                if ($tokenType === Tokens::T_EXTENDS) {
+                    $class = $this->parseClassExtends($class);
+
+                    $this->consumeComments();
+                    $tokenType = $this->tokenizer->peek();
+                }
+
+                if ($tokenType === Tokens::T_IMPLEMENTS) {
+                    $this->consumeToken(Tokens::T_IMPLEMENTS);
+                    $this->parseInterfaceList($class);
+                }
+
+                return $class;
+        }
+        return null;
+    }
+
+    /**
      * This method will be called when the base parser cannot handle an expression
      * in the base version. In this method you can implement version specific
      * expressions.
@@ -200,6 +262,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      */
     protected function parseExpressionVersion70()
     {
+        $this->consumeComments();
+
         switch ($this->tokenizer->peek()) {
             case Tokens::T_SPACESHIP:
                 $token = $this->consumeToken(Tokens::T_SPACESHIP);

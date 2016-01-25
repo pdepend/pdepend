@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTParentReference
  * @group unittest
  */
-class ASTParentReferenceTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTParentReferenceTest extends ASTNodeTest
 {
     /**
      * The mocked reference instance.

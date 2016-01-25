@@ -46,6 +46,7 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTClassReference;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -109,7 +110,7 @@ class PHPBuilder implements Builder
     /**
      * All generated {@link \PDepend\Source\AST\ASTTrait} objects
      *
-     * @var array
+     * @var \PDepend\Source\AST\ASTTrait[]
      */
     private $traits = array();
 
@@ -151,7 +152,7 @@ class PHPBuilder implements Builder
     /**
      * Cache of all traits created during the regular parsing process.
      *
-     * @var array
+     * @var \PDepend\Source\AST\ASTTrait[]
      */
     private $frozenTraits = array();
 
@@ -246,7 +247,7 @@ class PHPBuilder implements Builder
      * @param string $qualifiedName The full qualified trait name.
      *
      * @return \PDepend\Source\AST\ASTTrait
-     * @since  1.0.0
+     * @since 1.0.0
      */
     public function buildTrait($qualifiedName)
     {
@@ -357,6 +358,16 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds an anonymous class instance.
+     *
+     * @return \PDepend\Source\AST\ASTAnonymousClass
+     */
+    public function buildAnonymousClass()
+    {
+        return $this->buildAstNodeInstance('ASTAnonymousClass');
+    }
+
+    /**
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
@@ -373,7 +384,7 @@ class PHPBuilder implements Builder
             'Creating: \PDepend\Source\AST\ASTClassReference(' . $qualifiedName . ')'
         );
 
-        return new \PDepend\Source\AST\ASTClassReference($this->context, $qualifiedName);
+        return new ASTClassReference($this->context, $qualifiedName);
     }
 
     /**

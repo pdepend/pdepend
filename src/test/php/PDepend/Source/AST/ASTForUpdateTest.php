@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTForUpdate
  * @group unittest
  */
-class ASTForUpdateTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTForUpdateTest extends ASTNodeTest
 {
     /**
      * testForUpdateHasExpectedStartLine

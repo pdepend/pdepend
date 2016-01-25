@@ -80,6 +80,17 @@ class ASTClass extends AbstractASTClassOrInterface
     }
 
     /**
+     * Will return <b>true</b> if this class was declared anonymous in an
+     * allocation expression.
+     *
+     * @return boolean
+     */
+    public function isAnonymous()
+    {
+        return false;
+    }
+
+    /**
      * Returns all properties for this class.
      *
      * @return \PDepend\Source\AST\ASTProperty[]

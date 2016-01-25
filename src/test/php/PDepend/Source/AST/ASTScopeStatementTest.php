@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTScopeStatement
  * @group unittest
  */
-class ASTScopeStatementTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTScopeStatementTest extends ASTNodeTest
 {
     /**
      * testParserHandlesInlineScopeStatement

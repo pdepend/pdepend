@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTScope
  * @group unittest
  */
-class ASTScopeTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTScopeTest extends ASTNodeTest
 {
     /**
      * testScope

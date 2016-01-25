@@ -56,7 +56,7 @@ use PDepend\Source\Builder\BuilderContext;
  * @covers \PDepend\Source\AST\ASTTraitReference
  * @group unittest
  */
-class ASTTraitReferenceTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTTraitReferenceTest extends ASTNodeTest
 {
     /**
      * testGetTraitDelegatesToContextGetTraitMethod

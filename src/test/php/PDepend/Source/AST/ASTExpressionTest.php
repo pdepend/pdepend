@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTExpression
  * @group unittest
  */
-class ASTExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTExpressionTest extends ASTNodeTest
 {
     /**
      * testExpressionHasExpectedNumberOfChildNodes

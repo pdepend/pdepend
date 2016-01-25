@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTBreakStatement
  * @group unittest
  */
-class ASTBreakStatementTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTBreakStatementTest extends ASTNodeTest
 {
     /**
      * Tests the start line value.

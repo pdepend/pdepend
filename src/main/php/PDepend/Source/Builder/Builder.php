@@ -140,6 +140,13 @@ interface Builder extends \IteratorAggregate
     public function buildClass($qualifiedName);
 
     /**
+     * Builds an anonymous class instance.
+     *
+     * @return \PDepend\Source\AST\ASTAnonymousClass
+     */
+    public function buildAnonymousClass();
+
+    /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link \PDepend\Source\AST\ASTClass}
      * instance when no matching type exists.

@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTRequireExpression
  * @group unittest
  */
-class ASTRequireExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTRequireExpressionTest extends ASTNodeTest
 {
     /**
      * testIsOnceReturnsFalseByDefault

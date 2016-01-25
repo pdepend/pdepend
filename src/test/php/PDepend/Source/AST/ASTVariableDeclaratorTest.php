@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTVariableDeclarator
  * @group unittest
  */
-class ASTVariableDeclaratorTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTVariableDeclaratorTest extends ASTNodeTest
 {
     /**
      * testGetValueReturnsNullByDefault

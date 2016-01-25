@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTClosure
  * @group unittest
  */
-class ASTClosureTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTClosureTest extends ASTNodeTest
 {
     /**
      * testReturnsByReferenceReturnsFalseByDefault

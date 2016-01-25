@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTraitAdaptation
  * @group unittest
  */
-class ASTTraitAdaptationTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTTraitAdaptationTest extends ASTNodeTest
 {
     /**
      * testTraitAdaptation

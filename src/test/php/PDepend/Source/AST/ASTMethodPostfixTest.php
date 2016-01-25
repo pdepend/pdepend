@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTMethodPostfix
  * @group unittest
  */
-class ASTMethodPostfixTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTMethodPostfixTest extends ASTNodeTest
 {
     /**
      * testGetImageForVariableMethod

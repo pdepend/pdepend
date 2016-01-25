@@ -54,7 +54,7 @@ use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
  * @covers \PDepend\Source\AST\ASTStaticReference
  * @group unittest
  */
-class ASTStaticReferenceTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTStaticReferenceTest extends ASTNodeTest
 {
     /**
      * testGetTypeReturnsInjectedConstructorTargetArgument

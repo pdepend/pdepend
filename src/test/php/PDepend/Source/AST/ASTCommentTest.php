@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTComment
  * @group unittest
  */
-class ASTCommentTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTCommentTest extends ASTNodeTest
 {
     /**
      * testSingleLineCommentHasExpectedStartLine

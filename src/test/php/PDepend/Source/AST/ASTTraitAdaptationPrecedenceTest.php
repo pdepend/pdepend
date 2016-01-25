@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTraitAdaptationPrecedence
  * @group unittest
  */
-class ASTTraitAdaptationPrecedenceTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
 {
     /**
      * testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences

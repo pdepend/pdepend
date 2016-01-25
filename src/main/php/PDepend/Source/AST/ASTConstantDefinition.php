@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This class represents a single constant definition as it can occure in
  * class definition or interface declaration.
@@ -58,19 +60,18 @@ namespace PDepend\Source\AST;
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTConstantDefinition extends \PDepend\Source\AST\ASTNode
+class ASTConstantDefinition extends ASTNode
 {
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param mixed $data
      * @return mixed
-     * @since  0.9.12
+     * @since 0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitConstantDefinition($this, $data);
     }

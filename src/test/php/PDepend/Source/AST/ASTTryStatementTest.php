@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTryStatement
  * @group unittest
  */
-class ASTTryStatementTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTTryStatementTest extends ASTNodeTest
 {
     /**
      * testTryStatement

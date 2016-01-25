@@ -55,7 +55,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTStringIndexExpression
  * @group unittest
  */
-class ASTStringIndexExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTStringIndexExpressionTest extends ASTNodeTest
 {
     /**
      * testStringIndexExpression

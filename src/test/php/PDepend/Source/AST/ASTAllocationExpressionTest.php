@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTAllocationExpression
  * @group unittest
  */
-class ASTAllocationExpressionTest extends \PDepend\Source\AST\ASTNodeTest
+class ASTAllocationExpressionTest extends ASTNodeTest
 {
     /**
      * Tests the implementation with an allocation expression without arguments.
