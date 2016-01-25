@@ -36,7 +36,7 @@ before_script:
     - composer install
 
 script:
-    - phpunit --configuration $TEST_CONFIG --colors --coverage-text
+    - vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text
 #    - if [ $DEPENDENCIES = low ] ; phpunit --configuration $TEST_CONFIG --coverage-text ; fi
 #    - if [ ! $DEPENDENCIES ] ; phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 
