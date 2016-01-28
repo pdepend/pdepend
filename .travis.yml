@@ -36,7 +36,8 @@ before_script:
     - composer install
 
 script:
-    - vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text
+    - if [ $TRAVIS_PHP_VERSION = 5.3 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors ; fi
+    - if [ $TRAVIS_PHP_VERSION != 5.3 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 #    - if [ $DEPENDENCIES = low ] ; phpunit --configuration $TEST_CONFIG --coverage-text ; fi
 #    - if [ ! $DEPENDENCIES ] ; phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 
