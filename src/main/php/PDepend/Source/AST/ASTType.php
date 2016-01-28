@@ -50,7 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTType extends ASTNode
+class ASTType extends AbstractASTNode
 {
     /**
      * This method will return <b>true</b> when the underlying type is an array.

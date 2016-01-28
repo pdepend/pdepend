@@ -62,7 +62,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTCompoundVariable extends ASTNode
+class ASTCompoundVariable extends AbstractASTNode
 {
     /**
      * Accept method of the visitor design pattern. This method will be called

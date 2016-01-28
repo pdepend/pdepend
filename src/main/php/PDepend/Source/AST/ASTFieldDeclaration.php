@@ -64,7 +64,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTFieldDeclaration extends ASTNode
+class ASTFieldDeclaration extends AbstractASTNode
 {
     /**
      * This method returns a OR combined integer of the declared modifiers for

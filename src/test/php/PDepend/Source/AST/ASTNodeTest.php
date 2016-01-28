@@ -188,9 +188,9 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetParentsOfTypeReturnsExpectedParentNodes()
     {
         $parent0 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
-        $parent1 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTNode');
+        $parent1 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\AbstractASTNode');
         $parent2 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTScope');
-        $parent3 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTNode');
+        $parent3 = $this->getMockForAbstractClass('PDepend\\Source\\AST\\AbstractASTNode');
 
         $node = $this->createNodeInstance();
 
@@ -593,7 +593,7 @@ abstract class ASTNodeTest extends AbstractTest
      */
     private function getNodeMock()
     {
-        return $this->getMockForAbstractClass('PDepend\\Source\\AST\\ASTNode');
+        return $this->getMockForAbstractClass('PDepend\\Source\\AST\\AbstractASTNode');
     }
 
     /**

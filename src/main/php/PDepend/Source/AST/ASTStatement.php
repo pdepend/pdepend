@@ -50,7 +50,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.12
  */
-class ASTStatement extends ASTNode
+class ASTStatement extends AbstractASTNode
 {
     /**
      * Accept method of the visitor design pattern. This method will be called

@@ -56,7 +56,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTFormalParameter extends ASTNode
+class ASTFormalParameter extends AbstractASTNode
 {
     /**
      * Checks if this parameter has a type.

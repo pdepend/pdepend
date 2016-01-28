@@ -48,345 +48,110 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @since 2.3
  */
-abstract class ASTNode
+interface ASTNode
 {
-    /**
-     * Parsed child nodes of this node.
-     *
-     * @var \PDepend\Source\AST\ASTNode[]
-     */
-    protected $nodes = array();
-
-    /**
-     * The parent node of this node or <b>null</b> when this node is the root
-     * of a node tree.
-     *
-     * @var \PDepend\Source\AST\ASTNode
-     */
-    protected $parent = null;
-
-    /**
-     * An optional doc comment for this node.
-     *
-     * @var string
-     */
-    protected $comment = null;
-
-    /**
-     * Metadata for this node instance, serialized in a string. This string
-     * contains the start, end line, and the start, end column and the node
-     * image in a colon seperated string.
-     *
-     * @var   string
-     * @since 0.10.4
-     */
-    protected $metadata = '::::';
-
-    /**
-     * Constructs a new ast node instance.
-     *
-     * @param string $image The source image for this node.
-     */
-    public function __construct($image = null)
-    {
-        $this->metadata = str_repeat(':', $this->getMetadataSize() - 1);
-
-        $this->setImage($image);
-    }
-
     /**
      * Sets the image for this ast node.
      *
-     * @param string $image The image for this node.
-     *
+     * @param string $image
      * @return void
-     * @since  0.10.4
      */
-    public function setImage($image)
-    {
-        $this->setMetadata(4, $image);
-    }
+    public function setImage($image);
 
     /**
      * Returns the source image of this ast node.
      *
      * @return string
      */
-    public function getImage()
-    {
-        return $this->getMetadata(4);
-    }
+    public function getImage();
 
     /**
      * Sets the start line for this ast node.
      *
      * @param integer $startLine The node start line.
-     *
      * @return void
-     * @since  0.9.12
      */
-    public function setStartLine($startLine)
-    {
-        $this->setMetadataInteger(0, $startLine);
-    }
+    public function setStartLine($startLine);
 
     /**
      * Returns the start line for this ast node.
      *
      * @return integer
      */
-    public function getStartLine()
-    {
-        return $this->getMetadataInteger(0);
-    }
+    public function getStartLine();
 
     /**
      * Sets the start column for this ast node.
      *
-     * @param integer $startColumn The node start column.
-     *
+     * @param integer $startColumn
      * @return void
-     * @since  0.9.12
      */
-    public function setStartColumn($startColumn)
-    {
-        $this->setMetadataInteger(2, $startColumn);
-    }
+    public function setStartColumn($startColumn);
 
     /**
      * Returns the start column for this ast node.
      *
      * @return integer
      */
-    public function getStartColumn()
-    {
-        return $this->getMetadataInteger(2);
-    }
+    public function getStartColumn();
 
     /**
      * Sets the node's end line.
      *
-     * @param integer $endLine The node's end line.
-     *
+     * @param integer $endLine
      * @return void
-     * @since  0.9.12
      */
-    public function setEndLine($endLine)
-    {
-        $this->setMetadataInteger(1, $endLine);
-    }
+    public function setEndLine($endLine);
 
     /**
      * Returns the end line for this ast node.
      *
      * @return integer
      */
-    public function getEndLine()
-    {
-        return $this->getMetadataInteger(1);
-    }
+    public function getEndLine();
 
     /**
      * Sets the node's end column.
      *
-     * @param integer $endColumn The node's end column.
-     *
+     * @param integer $endColumn
      * @return void
-     * @since  0.9.12
      */
-    public function setEndColumn($endColumn)
-    {
-        $this->setMetadataInteger(3, $endColumn);
-    }
+    public function setEndColumn($endColumn);
 
     /**
      * Returns the end column for this ast node.
      *
      * @return integer
      */
-    public function getEndColumn()
-    {
-        return $this->getMetadataInteger(3);
-    }
-
-    /**
-     * For better performance we have moved the single setter methods for the
-     * node columns and lines into this configure method.
-     *
-     * @param integer $startLine   The node's start line.
-     * @param integer $endLine     The node's end line.
-     * @param integer $startColumn The node's start column.
-     * @param integer $endColumn   The node's end column.
-     *
-     * @return void
-     * @since  0.9.10
-     */
-    public function configureLinesAndColumns(
-        $startLine,
-        $endLine,
-        $startColumn,
-        $endColumn
-    ) {
-        $this->setMetadataInteger(0, $startLine);
-        $this->setMetadataInteger(1, $endLine);
-        $this->setMetadataInteger(2, $startColumn);
-        $this->setMetadataInteger(3, $endColumn);
-    }
-
-    /**
-     * Returns an integer value that was stored under the given index.
-     *
-     * @param integer $index The property instance.
-     *
-     * @return integer
-     * @since  0.10.4
-     */
-    protected function getMetadataInteger($index)
-    {
-        return (int) $this->getMetadata($index);
-    }
-
-    /**
-     * Stores an integer value under the given index in the internally used data
-     * string.
-     *
-     * @param integer $index The property instance.
-     * @param integer $value The property value.
-     *
-     * @return void
-     * @since  0.10.4
-     */
-    protected function setMetadataInteger($index, $value)
-    {
-        $this->setMetadata($index, $value);
-    }
-
-    /**
-     * Returns a boolean value that was stored under the given index.
-     *
-     * @param integer $index The property instance.
-     *
-     * @return boolean
-     * @since  0.10.4
-     */
-    protected function getMetadataBoolean($index)
-    {
-        return (bool) $this->getMetadata($index);
-    }
-
-    /**
-     * Stores a boolean value under the given index in the internally used data
-     * string.
-     *
-     * @param integer $index The property instance.
-     * @param boolean $value The property value.
-     *
-     * @return void
-     * @since  0.10.4
-     */
-    protected function setMetadataBoolean($index, $value)
-    {
-        $this->setMetadata($index, $value ? 1 : 0);
-    }
-
-    /**
-     * Returns the value that was stored under the given index.
-     *
-     * @param integer $index The property instance.
-     *
-     * @return mixed
-     * @since  0.10.4
-     */
-    protected function getMetadata($index)
-    {
-        $metadata = explode(':', $this->metadata, $this->getMetadataSize());
-        return $metadata[$index];
-    }
-
-    /**
-     * Stores the given value under the given index in an internal storage
-     * container.
-     *
-     * @param integer $index The property index.
-     * @param mixed   $value The property value.
-     *
-     * @return void
-     * @since  0.10.4
-     */
-    protected function setMetadata($index, $value)
-    {
-        $metadata         = explode(':', $this->metadata, $this->getMetadataSize());
-        $metadata[$index] = $value;
-
-        $this->metadata = join(':', $metadata);
-    }
-
-    /**
-     * Returns the total number of the used property bag.
-     *
-     * @return integer
-     * @since  0.10.4
-     */
-    protected function getMetadataSize()
-    {
-        return 5;
-    }
+    public function getEndColumn();
 
     /**
      * Returns the node instance for the given index or throws an exception.
      *
-     * @param integer $index Index of the requested node.
-     *
+     * @param integer $index
      * @return \PDepend\Source\AST\ASTNode
      * @throws \OutOfBoundsException When no node exists at the given index.
      */
-    public function getChild($index)
-    {
-        if (isset($this->nodes[$index])) {
-            return $this->nodes[$index];
-        }
-        throw new \OutOfBoundsException(
-            sprintf(
-                'No node found at index %d in node of type: %s',
-                $index,
-                get_class($this)
-            )
-        );
-    }
+    public function getChild($index);
 
     /**
      * This method returns all direct children of the actual node.
      *
      * @return \PDepend\Source\AST\ASTNode[]
      */
-    public function getChildren()
-    {
-        return $this->nodes;
-    }
+    public function getChildren();
 
     /**
      * This method will search recursive for the first child node that is an
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @param string $targetType Searched class or interface type.
-     *
+     * @param string $targetType
      * @return \PDepend\Source\AST\ASTNode
      */
-    public function getFirstChildOfType($targetType)
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                return $node;
-            }
-            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-        return null;
-    }
+    public function getFirstChildOfType($targetType);
 
     /**
      * This method will search recursive for all child nodes that are an
@@ -394,48 +159,27 @@ abstract class ASTNode
      * an empty <b>array</b> if no child exists for that.
      *
      * @param string $targetType Searched class or interface type.
-     * @param array  &$results   Already found node instances. This parameter
+     * @param array &$results Already found node instances. This parameter
      *        is only for internal usage.
-     *
      * @return \PDepend\Source\AST\ASTNode[]
      */
-    public function findChildrenOfType($targetType, array &$results = array())
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                $results[] = $node;
-            }
-            $node->findChildrenOfType($targetType, $results);
-        }
-        return $results;
-    }
+    public function findChildrenOfType($targetType, array &$results = array());
 
     /**
      * This method adds a new child node at the first position of the children.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The new child node.
-     *
+     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
-     * @since  0.10.2
      */
-    public function prependChild(\PDepend\Source\AST\ASTNode $node)
-    {
-        array_unshift($this->nodes, $node);
-        $node->setParent($this);
-    }
+    public function prependChild(ASTNode $node);
 
     /**
      * This method adds a new child node to this node instance.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The new child node.
-     *
+     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
      */
-    public function addChild(\PDepend\Source\AST\ASTNode $node)
-    {
-        $this->nodes[] = $node;
-        $node->setParent($this);
-    }
+    public function addChild(ASTNode $node);
 
     /**
      * Returns the parent node of this node or <b>null</b> when this node is
@@ -443,44 +187,24 @@ abstract class ASTNode
      *
      * @return \PDepend\Source\AST\ASTNode
      */
-    public function getParent()
-    {
-        return $this->parent;
-    }
+    public function getParent();
 
     /**
      * Traverses up the node tree and finds all parent nodes that are instances
      * of <b>$parentType</b>.
      *
-     * @param string $parentType Class/interface type you are looking for,
-     *
+     * @param string $parentType
      * @return \PDepend\Source\AST\ASTNode[]
      */
-    public function getParentsOfType($parentType)
-    {
-        $parents = array();
-
-        $parentNode = $this->parent;
-        while (is_object($parentNode)) {
-            if ($parentNode instanceof $parentType) {
-                array_unshift($parents, $parentNode);
-            }
-            $parentNode = $parentNode->getParent();
-        }
-        return $parents;
-    }
+    public function getParentsOfType($parentType);
 
     /**
      * Sets the parent node of this node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The parent node of this node.
-     *
+     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
      */
-    public function setParent(\PDepend\Source\AST\ASTNode $node)
-    {
-        $this->parent = $node;
-    }
+    public function setParent(ASTNode $node);
 
     /**
      * Returns a doc comment for this node or <b>null</b> when no comment was
@@ -488,10 +212,7 @@ abstract class ASTNode
      *
      * @return string
      */
-    public function getComment()
-    {
-        return $this->comment;
-    }
+    public function getComment();
 
     /**
      * Sets the raw doc comment for this node.
@@ -500,41 +221,5 @@ abstract class ASTNode
      *
      * @return void
      */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array(
-            'comment',
-            'metadata',
-            'nodes'
-        );
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a previously serialized object gets unserialized. This implementation of
-     * the wakeup method restores the dependencies between an ast node and the
-     * node's children.
-     *
-     * @return void
-     * @since  0.10.0
-     */
-    public function __wakeup()
-    {
-        foreach ($this->nodes as $node) {
-            $node->parent = $this;
-        }
-    }
+    public function setComment($comment);
 }

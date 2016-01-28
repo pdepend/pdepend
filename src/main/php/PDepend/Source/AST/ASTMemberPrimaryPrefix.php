@@ -69,7 +69,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTMemberPrimaryPrefix extends ASTNode
+class ASTMemberPrimaryPrefix extends AbstractASTNode
 {
     /**
      * Returns <b>true</b> when this member primary prefix represents a static

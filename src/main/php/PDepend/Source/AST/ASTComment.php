@@ -50,7 +50,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTComment extends ASTNode
+class ASTComment extends AbstractASTNode
 {
     /**
      * Accept method of the visitor design pattern. This method will be called

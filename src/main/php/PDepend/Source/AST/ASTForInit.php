@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTForInit extends ASTNode
+class ASTForInit extends AbstractASTNode
 {
     /**
      * Accept method of the visitor design pattern. This method will be called
