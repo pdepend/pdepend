@@ -100,20 +100,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     protected $nodes = array();
 
     /**
-     * The start line number of the class or interface declaration.
-     *
-     * @var integer
-     */
-    protected $startLine = 0;
-
-    /**
-     * The end line number of the class or interface declaration.
-     *
-     * @var integer
-     */
-    protected $endLine = 0;
-
-    /**
      * Name of the parent namespace for this class or interface instance. Or
      * <b>NULL</b> when no namespace was specified.
      *
@@ -387,26 +373,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
         $this->cache
             ->type('tokens')
             ->store($this->id, $tokens);
-    }
-
-    /**
-     * Returns the line number where the class or interface declaration starts.
-     *
-     * @return integer
-     */
-    public function getStartLine()
-    {
-        return $this->startLine;
-    }
-
-    /**
-     * Returns the line number where the class or interface declaration ends.
-     *
-     * @return integer
-     */
-    public function getEndLine()
-    {
-        return $this->endLine;
     }
 
     /**

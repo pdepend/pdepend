@@ -194,4 +194,24 @@ abstract class AbstractASTArtifact implements ASTArtifact
     {
         $this->docComment = $docComment;
     }
+
+    /**
+     * Returns the line number where the class or interface declaration starts.
+     *
+     * @return integer
+     */
+    public function getStartLine()
+    {
+        return $this->startLine;
+    }
+
+    /**
+     * Returns the line number where the class or interface declaration ends.
+     *
+     * @return integer
+     */
+    public function getEndLine()
+    {
+        return $this->endLine;
+    }
 }
