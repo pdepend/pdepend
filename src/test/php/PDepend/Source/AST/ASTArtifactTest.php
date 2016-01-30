@@ -137,7 +137,7 @@ class ASTArtifactTest extends AbstractTest
     public function testGetDocCommentReturnsNullByDefault()
     {
         $item = $this->getItemMock();
-        $this->assertNull($item->getDocComment());
+        $this->assertNull($item->getComment());
     }
 
     /**
@@ -148,9 +148,9 @@ class ASTArtifactTest extends AbstractTest
     public function testGetDocCommentReturnsInjectedDocCommentValue()
     {
         $item = $this->getItemMock();
-        $item->setDocComment('/** Manuel */');
+        $item->setComment('/** Manuel */');
 
-        $this->assertSame('/** Manuel */', $item->getDocComment());
+        $this->assertSame('/** Manuel */', $item->getComment());
     }
 
     /**

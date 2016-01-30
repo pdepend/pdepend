@@ -585,7 +585,7 @@ abstract class AbstractPHPParser
 
         $trait = $this->builder->buildTrait($qualifiedName);
         $trait->setCompilationUnit($this->compilationUnit);
-        $trait->setDocComment($this->docComment);
+        $trait->setComment($this->docComment);
         $trait->setId($this->idBuilder->forClassOrInterface($trait));
         $trait->setUserDefined();
 
@@ -626,7 +626,7 @@ abstract class AbstractPHPParser
 
         $interface = $this->builder->buildInterface($qualifiedName);
         $interface->setCompilationUnit($this->compilationUnit);
-        $interface->setDocComment($this->docComment);
+        $interface->setComment($this->docComment);
         $interface->setId($this->idBuilder->forClassOrInterface($interface));
         $interface->setUserDefined();
 
@@ -691,7 +691,7 @@ abstract class AbstractPHPParser
         $class = $this->builder->buildClass($qualifiedName);
         $class->setCompilationUnit($this->compilationUnit);
         $class->setModifiers($this->modifiers);
-        $class->setDocComment($this->docComment);
+        $class->setComment($this->docComment);
         $class->setId($this->idBuilder->forClassOrInterface($class));
         $class->setUserDefined();
 
@@ -1035,7 +1035,7 @@ abstract class AbstractPHPParser
             $this->compilationUnit->addChild($callable);
         }
 
-        $callable->setDocComment($this->docComment);
+        $callable->setComment($this->docComment);
         $callable->setTokens($this->tokenStack->pop());
         $this->prepareCallable($callable);
 
@@ -1157,7 +1157,7 @@ abstract class AbstractPHPParser
         $methodName = $this->parseFunctionName();
 
         $method = $this->builder->buildMethod($methodName);
-        $method->setDocComment($this->docComment);
+        $method->setComment($this->docComment);
         $method->setCompilationUnit($this->compilationUnit);
 
         $this->classOrInterface->addMethod($method);
@@ -6480,7 +6480,7 @@ abstract class AbstractPHPParser
         ) {
             $this->globalPackageName = $package;
 
-            $this->compilationUnit->setDocComment($comment);
+            $this->compilationUnit->setComment($comment);
         }
         return $package;
     }
@@ -6667,7 +6667,7 @@ abstract class AbstractPHPParser
         }
 
         // Get all @throws Types
-        $throws = $this->parseThrowsAnnotations($callable->getDocComment());
+        $throws = $this->parseThrowsAnnotations($callable->getComment());
         foreach ($throws as $qualifiedName) {
             $callable->addExceptionClassReference(
                 $this->builder->buildAstClassOrInterfaceReference($qualifiedName)
@@ -6680,7 +6680,7 @@ abstract class AbstractPHPParser
         }
 
         // Get return annotation
-        $qualifiedName = $this->parseReturnAnnotation($callable->getDocComment());
+        $qualifiedName = $this->parseReturnAnnotation($callable->getComment());
         if ($qualifiedName !== null) {
             $callable->setReturnClassReference(
                 $this->builder->buildAstClassOrInterfaceReference($qualifiedName)

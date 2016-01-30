@@ -476,7 +476,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'nodes',
             'startLine',
             'endLine',
-            'docComment',
+            'comment',
             'returnsReference',
             'returnClassReference',
             'exceptionClassReferences'

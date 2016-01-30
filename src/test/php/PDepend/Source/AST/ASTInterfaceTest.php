@@ -847,7 +847,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
                 'parentClassReference',
                 'cache',
                 'context',
-                'docComment',
+                'comment',
                 'endLine',
                 'modifiers',
                 'name',

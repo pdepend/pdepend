@@ -468,7 +468,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         return array(
             'cache',
             'context',
-            'docComment',
+            'comment',
             'endLine',
             'modifiers',
             'name',

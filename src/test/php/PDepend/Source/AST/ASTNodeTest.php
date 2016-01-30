@@ -424,7 +424,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetStartColumnReturnsInjectedEndLineValue()
     {
         $node = $this->getNodeMock();
-        $node->setStartColumn(42);
+        $node->configureLinesAndColumns(0, 0, 42, 0);
 
         $this->assertEquals(42, $node->getStartColumn());
     }
@@ -448,7 +448,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetStartLineReturnsInjectedEndLineValue()
     {
         $node = $this->getNodeMock();
-        $node->setStartLine(42);
+        $node->configureLinesAndColumns(42, 0, 0, 0);
 
         $this->assertEquals(42, $node->getStartLine());
     }
@@ -472,7 +472,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetEndColumnReturnsInjectedEndLineValue()
     {
         $node = $this->getNodeMock();
-        $node->setEndColumn(42);
+        $node->configureLinesAndColumns(0, 0, 0, 42);
 
         $this->assertEquals(42, $node->getEndColumn());
     }
@@ -496,7 +496,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetEndLineReturnsInjectedEndLineValue()
     {
         $node = $this->getNodeMock();
-        $node->setEndLine(42);
+        $node->configureLinesAndColumns(0, 42, 0, 0);
 
         $this->assertEquals(42, $node->getEndLine());
     }

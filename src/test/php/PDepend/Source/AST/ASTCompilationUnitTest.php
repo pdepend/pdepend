@@ -109,7 +109,7 @@ class ASTCompilationUnitTest extends AbstractTest
     public function testGetDocCommentReturnsNullByDefault()
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertNull($file->getDocComment());
+        $this->assertNull($file->getComment());
     }
 
     /**
@@ -120,9 +120,9 @@ class ASTCompilationUnitTest extends AbstractTest
     public function testGetDocCommentReturnsInjectedDocCommentValue()
     {
         $file = new ASTCompilationUnit(null);
-        $file->setDocComment('/** Manuel */');
+        $file->setComment('/** Manuel */');
 
-        $this->assertEquals('/** Manuel */', $file->getDocComment());
+        $this->assertEquals('/** Manuel */', $file->getComment());
     }
 
     /**
@@ -221,7 +221,7 @@ class ASTCompilationUnitTest extends AbstractTest
             array(
                 'cache',
                 'childNodes',
-                'docComment',
+                'comment',
                 'endLine',
                 'fileName',
                 'startLine',

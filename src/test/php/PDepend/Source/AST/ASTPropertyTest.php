@@ -178,7 +178,7 @@ class ASTPropertyTest extends AbstractTest
     public function testGetDocCommentReturnsNullByDefault()
     {
         $property = $this->_getFirstPropertyInClass();
-        $this->assertNull($property->getDocComment());
+        $this->assertNull($property->getComment());
     }
 
     /**
@@ -189,7 +189,7 @@ class ASTPropertyTest extends AbstractTest
     public function testGetDocCommentReturnsExpectedPropertyComment()
     {
         $property = $this->_getFirstPropertyInClass();
-        $this->assertEquals('/** Manuel */', $property->getDocComment());
+        $this->assertEquals('/** Manuel */', $property->getComment());
     }
 
     /**

@@ -80,7 +80,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      *
      * @var string
      */
-    protected $docComment = null;
+    protected $comment = null;
 
     /**
      * The files start line. This property must always have the value <em>1</em>.
@@ -226,28 +226,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
     }
 
     /**
-     * Returns the doc comment for this item or <b>null</b>.
-     *
-     * @return string
-     */
-    public function getDocComment()
-    {
-        return $this->docComment;
-    }
-
-    /**
-     * Sets the doc comment for this item.
-     *
-     * @param string $docComment The doc comment block.
-     *
-     * @return void
-     */
-    public function setDocComment($docComment)
-    {
-        $this->docComment = $docComment;
-    }
-
-    /**
      * Adds a source item that was parsed from this source file.
      *
      * @param  \PDepend\Source\AST\AbstractASTArtifact $artifact
@@ -328,7 +306,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
         return array(
             'cache',
             'childNodes',
-            'docComment',
+            'comment',
             'endLine',
             'fileName',
             'startLine',

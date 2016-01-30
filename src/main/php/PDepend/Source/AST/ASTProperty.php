@@ -219,7 +219,7 @@ class ASTProperty extends AbstractASTArtifact
      *
      * @return string
      */
-    public function getDocComment()
+    public function getComment()
     {
         return $this->fieldDeclaration->getComment();
     }

@@ -263,7 +263,7 @@ class ParserTest extends AbstractTest
         $class = $namespace->getClasses()->current();
         $this->assertNotNull($class);
 
-        $actual = $class->getCompilationUnit()->getDocComment();
+        $actual = $class->getCompilationUnit()->getComment();
         $this->assertNotNull($actual);
 
         $expected = "/**\n"
@@ -293,7 +293,7 @@ class ParserTest extends AbstractTest
         $class = $namespace->getClasses()->current();
         $this->assertNotNull($class);
 
-        $actual = $class->getCompilationUnit()->getDocComment();
+        $actual = $class->getCompilationUnit()->getComment();
         $this->assertNull($actual);
     }
 
@@ -313,7 +313,7 @@ class ParserTest extends AbstractTest
         $function = $namespace->getFunctions()->current();
         $this->assertNotNull($function);
 
-        $actual = $function->getCompilationUnit()->getDocComment();
+        $actual = $function->getCompilationUnit()->getComment();
         $this->assertNull($actual);
     }
 
@@ -964,7 +964,7 @@ class ParserTest extends AbstractTest
 
         $namespaces = $this->parseCodeResourceForTest();
         foreach ($namespaces[0]->getTypes() as $type) {
-            $actual[] = $type->getDocComment();
+            $actual[] = $type->getComment();
         }
 
         $this->assertEquals($expected, $actual);
@@ -1567,8 +1567,10 @@ class ParserTest extends AbstractTest
             ->getFunctions()
             ->current();
 
-        $this->assertEquals( $function->getDocComment(),
-            "/**\n * This is the function docblock for foo\n *\n */" );
+        $this->assertEquals(
+            $function->getComment(),
+            "/**\n * This is the function docblock for foo\n *\n */"
+        );
     }
 
     /**
@@ -1640,7 +1642,7 @@ class ParserTest extends AbstractTest
 
         $actual = array();
         foreach ($nodes as $callable) {
-            $actual[] = $callable->getDocComment();
+            $actual[] = $callable->getComment();
         }
 
         $this->assertEquals($expected, $actual);

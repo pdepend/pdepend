@@ -294,7 +294,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
                 'nodes',
                 'startLine',
                 'endLine',
-                'docComment',
+                'comment',
                 'returnsReference',
                 'returnClassReference',
                 'exceptionClassReferences'

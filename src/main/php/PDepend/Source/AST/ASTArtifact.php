@@ -50,12 +50,13 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface ASTArtifact
+interface ASTArtifact// extends ASTNode
 {
     /**
      * Returns the artifact name.
      *
      * @return string
+     * @deprecated Use getImage() inherit from ASTNode class.
      */
     public function getName();
 
