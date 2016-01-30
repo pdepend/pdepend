@@ -61,7 +61,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsTwoChildNodes()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertEquals(2, count($string->getChildren()));
     }
 
@@ -72,7 +72,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsExpectedTextContent()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertContains("Hello", $string->getChild(0)->getImage());
     }
 
@@ -83,7 +83,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testBacktickExpressionContainsTwoChildNodes()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertEquals(2, count($string->getChildren()));
     }
 
@@ -94,7 +94,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testBacktickExpressionContainsExpectedCompoundVariable()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $string->getChild(0));
     }
 
@@ -105,7 +105,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringWithEmbeddedComplexBacktickExpression()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $actual = array();
         foreach ($string->getChildren() as $child) {
             $actual[] = $child->getImage();
@@ -122,7 +122,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testBacktickExpressionWithEmbeddedComplexDoubleQuoteString()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $actual = array();
         foreach ($string->getChildren() as $child) {
             $actual[] = $child->getImage();
@@ -139,7 +139,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsVariable()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(0));
     }
 
@@ -150,7 +150,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsVariableAfterNotOperator()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(1));
     }
 
@@ -161,7 +161,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsVariableAfterSilenceOperator()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(1));
     }
 
@@ -172,7 +172,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsCompoundVariable()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $string->getChild(0));
     }
 
@@ -183,7 +183,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsCompoundExpressionAfterLiteral()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundExpression', $string->getChild(1));
     }
 
@@ -194,7 +194,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(1));
     }
 
@@ -205,7 +205,7 @@ class ASTStringTest extends ASTNodeTest
      */
     public function testDoubleQuoteStringContainsDollarLiteralForVariableVariable()
     {
-        $string = $this->_getFirstStringInFunction(__METHOD__);
+        $string = $this->getFirstStringInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $string->getChild(0));
     }
 
@@ -218,6 +218,50 @@ class ASTStringTest extends ASTNodeTest
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
         $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testStringStartLine
+     *
+     * @return void
+     */
+    public function testStringStartLine()
+    {
+        $string = $this->getFirstStringInFunction(__METHOD__);
+        $this->assertSame(7, $string->getStartLine());
+    }
+
+    /**
+     * testStringEndLine
+     *
+     * @return void
+     */
+    public function testStringEndLine()
+    {
+        $string = $this->getFirstStringInFunction(__METHOD__);
+        $this->assertSame(8, $string->getEndLine());
+    }
+
+    /**
+     * testStringStartColumn
+     *
+     * @return void
+     */
+    public function testStringStartColumn()
+    {
+        $string = $this->getFirstStringInFunction(__METHOD__);
+        $this->assertSame(17, $string->getStartColumn());
+    }
+
+    /**
+     * testStringEndColumn
+     *
+     * @return void
+     */
+    public function testStringEndColumn()
+    {
+        $string = $this->getFirstStringInFunction(__METHOD__);
+        $this->assertSame(8, $string->getEndColumn());
     }
 
     /**
@@ -237,7 +281,7 @@ class ASTStringTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTString
      */
-    private function _getFirstStringInFunction($testCase)
+    private function getFirstStringInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
