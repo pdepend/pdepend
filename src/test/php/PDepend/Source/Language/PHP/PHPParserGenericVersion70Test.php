@@ -44,6 +44,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTExpression;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -341,7 +342,7 @@ class PHPParserGenericVersion70Test extends AbstractTest
     /**
      * testSpaceshipOperatorWithArrays
      *
-     * @return void
+     * @return \PDepend\Source\AST\ASTNode
      */
     public function testSpaceshipOperatorWithArrays()
     {
@@ -350,61 +351,47 @@ class PHPParserGenericVersion70Test extends AbstractTest
             ->getChild(1);
 
         $this->assertSame('<=>', $expr->getImage());
+
+        return $expr;
     }
 
     /**
-     * testSpaceshipOperatorStartLine
-     *
+     * @param \PDepend\Source\AST\ASTExpression $expr
      * @return void
+     * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorStartLine()
+    public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr)
     {
-        $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getChild(1);
-
         $this->assertSame(6, $expr->getStartLine());
     }
 
     /**
-     * testSpaceshipOperatorEndLine
-     *
+     * @param \PDepend\Source\AST\ASTExpression $expr
      * @return void
+     * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorEndLine()
+    public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr)
     {
-        $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getChild(1);
-
         $this->assertSame(6, $expr->getEndLine());
     }
 
     /**
-     * testSpaceshipOperatorStartColumn
-     *
+     * @param \PDepend\Source\AST\ASTExpression $expr
      * @return void
+     * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorStartColumn()
+    public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr)
     {
-        $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getChild(1);
-
         $this->assertSame(27, $expr->getStartColumn());
     }
 
     /**
-     * testSpaceshipOperatorEndColumn
-     *
+     * @param \PDepend\Source\AST\ASTExpression $expr
      * @return void
+     * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorEndColumn()
+    public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr)
     {
-        $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getChild(1);
-
         $this->assertSame(29, $expr->getEndColumn());
     }
 }
