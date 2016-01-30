@@ -357,6 +357,62 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * testSpaceshipOperatorStartLine
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorStartLine()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getChild(1);
+
+        $this->assertSame(6, $expr->getStartLine());
+    }
+
+    /**
+     * testSpaceshipOperatorEndLine
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorEndLine()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getChild(1);
+
+        $this->assertSame(6, $expr->getEndLine());
+    }
+
+    /**
+     * testSpaceshipOperatorStartColumn
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorStartColumn()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getChild(1);
+
+        $this->assertSame(27, $expr->getStartColumn());
+    }
+
+    /**
+     * testSpaceshipOperatorEndColumn
+     *
+     * @return void
+     */
+    public function testSpaceshipOperatorEndColumn()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getChild(1);
+
+        $this->assertSame(29, $expr->getEndColumn());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
