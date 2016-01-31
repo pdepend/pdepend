@@ -670,6 +670,7 @@ class PHPTokenizerInternal implements Tokenizer
 
         // Previous found type
         $previousType = null;
+        $previousStartColumn = 0;
 
         while ($token = current($tokens)) {
             $type  = null;
@@ -718,6 +719,8 @@ class PHPTokenizerInternal implements Tokenizer
                         $image = self::$reductionMap[$type][$previousType]['image'];
                         $type = self::$reductionMap[$type][$previousType]['type'];
 
+                        $startColumn = $previousStartColumn;
+
                         array_pop($this->tokens);
                     }
 
@@ -754,6 +757,9 @@ class PHPTokenizerInternal implements Tokenizer
 
                 // Store token in internal list
                 $this->tokens[] = $token;
+
+                // Store previous start column
+                $previousStartColumn = $startColumn;
 
                 // Count newlines in token
                 $lines = substr_count($image, "\n");
