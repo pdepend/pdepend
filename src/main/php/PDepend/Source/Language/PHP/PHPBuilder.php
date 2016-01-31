@@ -693,12 +693,13 @@ class PHPBuilder implements Builder
     /**
      * Builds a new expression node.
      *
+     * @param string $image
      * @return \PDepend\Source\AST\ASTExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    public function buildAstExpression()
+    public function buildAstExpression($image = null)
     {
-        return $this->buildAstNodeInstance('ASTExpression');
+        return $this->buildAstNodeInstance('ASTExpression', $image);
     }
 
     /**
@@ -903,6 +904,23 @@ class PHPBuilder implements Builder
     public function buildAstConditionalExpression()
     {
         return $this->buildAstNodeInstance('ASTConditionalExpression', '?');
+    }
+
+    /**
+     * Builds a new print-expression.
+     *
+     * <code>
+     * -------------
+     * print "qafoo";
+     * -------------
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTConditionalExpression
+     * @since 2.3
+     */
+    public function buildAstPrintExpression()
+    {
+        return $this->buildAstNodeInstance('ASTPrintExpression', 'print');
     }
 
     /**
@@ -2330,11 +2348,10 @@ class PHPBuilder implements Builder
     /**
      * Creates a {@link \PDepend\Source\AST\ASTNode} instance.
      *
-     * @param string $className Local name of the ast node class.
-     * @param string $image     Optional image for the created ast node.
-     *
+     * @param string $className
+     * @param string $image
      * @return \PDepend\Source\AST\ASTNode
-     * @since  0.9.12
+     * @since 0.9.12
      */
     private function buildAstNodeInstance($className, $image = null)
     {

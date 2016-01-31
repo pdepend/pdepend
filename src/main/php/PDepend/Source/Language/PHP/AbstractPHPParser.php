@@ -2740,6 +2740,18 @@ abstract class AbstractPHPParser
                     $this->consumeToken($tokenType);
                     break;
                 case Tokens::T_PRINT: // TODO: Implement print expression
+                    $token = $this->consumeToken($tokenType);
+
+                    $expr = $this->builder->buildAstPrintExpression();
+                    $expr->configureLinesAndColumns(
+                        $token->startLine,
+                        $token->endLine,
+                        $token->startColumn,
+                        $token->endColumn
+                    );
+
+                    $expressions[] = $expr;
+                    break;
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -2762,12 +2774,13 @@ abstract class AbstractPHPParser
                 case Tokens::T_BITWISE_XOR:
                     $token = $this->consumeToken($tokenType);
 
-                    $expr = $this->builder->buildAstExpression();
-                    $expr->setImage($token->image);
-                    $expr->setStartLine($token->startLine);
-                    $expr->setStartColumn($token->startColumn);
-                    $expr->setEndLine($token->endLine);
-                    $expr->setEndColumn($token->endColumn);
+                    $expr = $this->builder->buildAstExpression($token->image);
+                    $expr->configureLinesAndColumns(
+                        $token->startLine,
+                        $token->endLine,
+                        $token->startColumn,
+                        $token->endColumn
+                    );
 
                     $expressions[] = $expr;
                     break;
@@ -2776,10 +2789,12 @@ abstract class AbstractPHPParser
                     $token = $this->consumeToken($tokenType);
 
                     $expr = $this->builder->buildAstUnaryExpression($token->image);
-                    $expr->setStartLine($token->startLine);
-                    $expr->setStartColumn($token->startColumn);
-                    $expr->setEndLine($token->endLine);
-                    $expr->setEndColumn($token->endColumn);
+                    $expr->configureLinesAndColumns(
+                        $token->startLine,
+                        $token->endLine,
+                        $token->startColumn,
+                        $token->endColumn
+                    );
 
                     $expressions[] = $expr;
                     break;
@@ -2863,8 +2878,13 @@ abstract class AbstractPHPParser
                 $child = $expressions[$i + 1];
 
                 $expr->addChild($child);
-                $expr->setEndColumn($child->getEndColumn());
-                $expr->setEndLine($child->getEndLine());
+
+                $expr->configureLinesAndColumns(
+                    $expr->getStartLine(),
+                    $child->getEndLine(),
+                    $expr->getStartColumn(),
+                    $child->getEndColumn()
+                );
 
                 unset($expressions[$i + 1]);
             }
@@ -4085,10 +4105,12 @@ abstract class AbstractPHPParser
         $postfix = $this->builder->buildAstPropertyPostfix($image);
         $postfix->addChild($node);
 
-        $postfix->setEndLine($node->getEndLine());
-        $postfix->setEndColumn($node->getEndColumn());
-        $postfix->setStartLine($node->getStartLine());
-        $postfix->setStartColumn($node->getStartColumn());
+        $postfix->configureLinesAndColumns(
+            $node->getStartLine(),
+            $node->getEndLine(),
+            $node->getStartColumn(),
+            $node->getEndColumn()
+        );
 
         return $postfix;
     }
@@ -4148,10 +4170,12 @@ abstract class AbstractPHPParser
         $postfix->addChild($node);
         $postfix->addChild($args);
 
-        $postfix->setEndLine($args->getEndLine());
-        $postfix->setEndColumn($args->getEndColumn());
-        $postfix->setStartLine($node->getStartLine());
-        $postfix->setStartColumn($node->getStartColumn());
+        $postfix->configureLinesAndColumns(
+            $node->getStartLine(),
+            $args->getEndLine(),
+            $node->getStartColumn(),
+            $args->getEndColumn()
+        );
 
         return $this->parseOptionalMemberPrimaryPrefix($postfix);
     }
@@ -4271,24 +4295,27 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTAssignmentExpression
      * @since  0.9.12
      */
-    private function parseAssignmentExpression(\PDepend\Source\AST\ASTNode $left)
+    private function parseAssignmentExpression(ASTNode $left)
     {
         $token = $this->consumeToken($this->tokenizer->peek());
 
         $node = $this->builder->buildAstAssignmentExpression($token->image);
         $node->addChild($left);
-        $node->setStartLine($left->getStartLine());
-        $node->setStartColumn($left->getStartColumn());
 
         // TODO: Change this into a mandatory expression in later versions
         if (($expr = $this->parseOptionalExpression()) != null) {
             $node->addChild($expr);
-            $node->setEndLine($expr->getEndLine());
-            $node->setEndColumn($expr->getEndColumn());
         } else {
-            $node->setEndLine($left->getEndLine());
-            $node->setEndColumn($left->getEndColumn());
+            $expr = $left;
         }
+
+        $node->configureLinesAndColumns(
+            $left->getStartLine(),
+            $expr->getEndLine(),
+            $left->getStartColumn(),
+            $expr->getEndColumn()
+        );
+
         return $node;
     }
 
@@ -5046,14 +5073,21 @@ abstract class AbstractPHPParser
         $token = $this->consumeToken($delimiterType);
 
         $string = $this->builder->buildAstString();
-        $string->setStartLine($token->startLine);
-        $string->setStartColumn($token->startColumn);
+        $startLine = $token->startLine;
+        $startColumn = $token->startColumn;
 
         $this->parseStringExpressions($string, $delimiterType);
 
         $token = $this->consumeToken($delimiterType);
-        $string->setEndLine($token->endLine);
-        $string->setEndColumn($token->endColumn);
+        $endLine = $token->endLine;
+        $endColumn = $token->endColumn;
+
+        $string->configureLinesAndColumns(
+            $startLine,
+            $endLine,
+            $startColumn,
+            $endColumn
+        );
 
         return $string;
     }

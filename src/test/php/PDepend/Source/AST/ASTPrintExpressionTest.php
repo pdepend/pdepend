@@ -38,33 +38,79 @@
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
  */
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
- * This node class represents an isste-expression/function.
+ * Test case for the {@link \PDepend\Source\AST\ASTPrintExpression} class.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
+ *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTPrintExpression
+ * @group unittest
  */
-class ASTIssetExpression extends ASTExpression
+class ASTPrintExpressionTest extends ASTNodeTest
 {
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
-     * @since 0.9.12
+     * @return \PDepend\Source\AST\ASTPrintExpression
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    public function testSimplePrintExpression()
     {
-        return $visitor->visitIssetExpression($this, $data);
+        $print = $this->getFirstPrintInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTPrintExpression', $print);
+
+        return $print;
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTPrintExpression $expr
+     * @return void
+     * @depends testSimplePrintExpression
+     */
+    public function testSimplePrintExpressionHasExpectedStartLine(ASTPrintExpression $expr)
+    {
+        $this->assertSame(4, $expr->getStartLine());
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTPrintExpression $expr
+     * @return void
+     * @depends testSimplePrintExpression
+     */
+    public function testSimplePrintExpressionHasExpectedEndLine(ASTPrintExpression $expr)
+    {
+        $this->assertSame(4, $expr->getEndLine());
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTPrintExpression $expr
+     * @return void
+     * @depends testSimplePrintExpression
+     */
+    public function testSimplePrintExpressionHasExpectedStartColumn(ASTPrintExpression $expr)
+    {
+        $this->assertSame(5, $expr->getStartColumn());
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTPrintExpression $expr
+     * @return void
+     * @depends testSimplePrintExpression
+     */
+    public function testSimplePrintExpressionHasExpectedEndColumn(ASTPrintExpression $expr)
+    {
+        $this->assertSame(9, $expr->getEndColumn());
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTPrintExpression
+     */
+    private function getFirstPrintInFunction()
+    {
+        return $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTPrintExpression');
     }
 }

@@ -60,7 +60,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
 {
     /**
      * testGetImage
-     * 
+     *
      * @return void
      */
     public function testGetImage()

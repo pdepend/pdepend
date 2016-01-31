@@ -53,27 +53,11 @@ namespace PDepend\Source\AST;
 interface ASTNode
 {
     /**
-     * Sets the image for this ast node.
-     *
-     * @param string $image
-     * @return void
-     */
-    public function setImage($image);
-
-    /**
      * Returns the source image of this ast node.
      *
      * @return string
      */
     public function getImage();
-
-    /**
-     * Sets the start line for this ast node.
-     *
-     * @param integer $startLine The node start line.
-     * @return void
-     */
-    public function setStartLine($startLine);
 
     /**
      * Returns the start line for this ast node.
@@ -83,14 +67,6 @@ interface ASTNode
     public function getStartLine();
 
     /**
-     * Sets the start column for this ast node.
-     *
-     * @param integer $startColumn
-     * @return void
-     */
-    public function setStartColumn($startColumn);
-
-    /**
      * Returns the start column for this ast node.
      *
      * @return integer
@@ -98,27 +74,11 @@ interface ASTNode
     public function getStartColumn();
 
     /**
-     * Sets the node's end line.
-     *
-     * @param integer $endLine
-     * @return void
-     */
-    public function setEndLine($endLine);
-
-    /**
      * Returns the end line for this ast node.
      *
      * @return integer
      */
     public function getEndLine();
-
-    /**
-     * Sets the node's end column.
-     *
-     * @param integer $endColumn
-     * @return void
-     */
-    public function setEndColumn($endColumn);
 
     /**
      * Returns the end column for this ast node.
@@ -166,22 +126,6 @@ interface ASTNode
     public function findChildrenOfType($targetType, array &$results = array());
 
     /**
-     * This method adds a new child node at the first position of the children.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
-     * @return void
-     */
-    public function prependChild(ASTNode $node);
-
-    /**
-     * This method adds a new child node to this node instance.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
-     * @return void
-     */
-    public function addChild(ASTNode $node);
-
-    /**
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
@@ -197,14 +141,6 @@ interface ASTNode
      * @return \PDepend\Source\AST\ASTNode[]
      */
     public function getParentsOfType($parentType);
-
-    /**
-     * Sets the parent node of this node.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
-     * @return void
-     */
-    public function setParent(ASTNode $node);
 
     /**
      * Returns a doc comment for this node or <b>null</b> when no comment was

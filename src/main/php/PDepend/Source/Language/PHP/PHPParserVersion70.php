@@ -268,12 +268,13 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case Tokens::T_SPACESHIP:
                 $token = $this->consumeToken(Tokens::T_SPACESHIP);
 
-                $expr = $this->builder->buildAstExpression();
-                $expr->setImage($token->image);
-                $expr->setStartLine($token->startLine);
-                $expr->setStartColumn($token->startColumn);
-                $expr->setEndLine($token->endLine);
-                $expr->setEndColumn($token->endColumn);
+                $expr = $this->builder->buildAstExpression($token->image);
+                $expr->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
 
                 return $expr;
         }

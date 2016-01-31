@@ -51,6 +51,7 @@ use PDepend\AbstractTest;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\AST\ASTNode
+ * @covers \PDepend\Source\AST\AbstractASTNode
  * @group unittest
  */
 abstract class ASTNodeTest extends AbstractTest
@@ -603,8 +604,8 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testPrependChildAddsChildAtFirstPosition()
     {
-        $child1 = $this->getMock('PDepend\\Source\\AST\\ASTNode');
-        $child2 = $this->getMock('PDepend\\Source\\AST\\ASTNode');
+        $child1 = $this->getMock('PDepend\\Source\\AST\\AbstractASTNode');
+        $child2 = $this->getMock('PDepend\\Source\\AST\\AbstractASTNode');
 
         $parent = $this->createNodeInstance();
         $parent->prependChild($child2);
@@ -658,7 +659,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
         $node2 = $this->getMock(
-            '\PDepend\Source\AST\ASTNode',
+            '\PDepend\Source\AST\AbstractASTNode',
             array(),
             array(),
             'PDepend_Source_AST_ASTNode_' . md5(microtime())
@@ -682,7 +683,7 @@ abstract class ASTNodeTest extends AbstractTest
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
         $node1 = $this->getMock(
-            '\PDepend\Source\AST\ASTNode',
+            '\PDepend\Source\AST\AbstractASTNode',
             array(),
             array(),
             'PDepend_Source_AST_ASTNode_' . md5(microtime())
@@ -691,7 +692,7 @@ abstract class ASTNodeTest extends AbstractTest
             ->method('getFirstChildOfType');
 
         $node3 = $this->getMock(
-            '\PDepend\Source\AST\ASTNode',
+            '\PDepend\Source\AST\AbstractASTNode',
             array(),
             array(),
             'PDepend_Source_AST_ASTNode_' . md5(microtime())
@@ -717,7 +718,7 @@ abstract class ASTNodeTest extends AbstractTest
         $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
         
         $node2 = $this->getMock(
-            '\PDepend\Source\AST\ASTNode',
+            '\PDepend\Source\AST\AbstractASTNode',
             array(),
             array(),
             $name
@@ -742,7 +743,7 @@ abstract class ASTNodeTest extends AbstractTest
         $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
 
         $node2 = $this->getMock(
-            '\PDepend\Source\AST\ASTNode',
+            '\PDepend\Source\AST\AbstractASTNode',
             array(),
             array(),
             $name

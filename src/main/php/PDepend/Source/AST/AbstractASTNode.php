@@ -118,18 +118,6 @@ abstract class AbstractASTNode implements ASTNode
     }
 
     /**
-     * Sets the start line for this ast node.
-     *
-     * @param integer $startLine
-     * @return void
-     * @since 0.9.12
-     */
-    public function setStartLine($startLine)
-    {
-        $this->setMetadataInteger(0, $startLine);
-    }
-
-    /**
      * Returns the start line for this ast node.
      *
      * @return integer
@@ -137,18 +125,6 @@ abstract class AbstractASTNode implements ASTNode
     public function getStartLine()
     {
         return $this->getMetadataInteger(0);
-    }
-
-    /**
-     * Sets the start column for this ast node.
-     *
-     * @param integer $startColumn
-     * @return void
-     * @since 0.9.12
-     */
-    public function setStartColumn($startColumn)
-    {
-        $this->setMetadataInteger(2, $startColumn);
     }
 
     /**
@@ -162,18 +138,6 @@ abstract class AbstractASTNode implements ASTNode
     }
 
     /**
-     * Sets the node's end line.
-     *
-     * @param integer $endLine
-     * @return void
-     * @since 0.9.12
-     */
-    public function setEndLine($endLine)
-    {
-        $this->setMetadataInteger(1, $endLine);
-    }
-
-    /**
      * Returns the end line for this ast node.
      *
      * @return integer
@@ -181,18 +145,6 @@ abstract class AbstractASTNode implements ASTNode
     public function getEndLine()
     {
         return $this->getMetadataInteger(1);
-    }
-
-    /**
-     * Sets the node's end column.
-     *
-     * @param integer $endColumn
-     * @return void
-     * @since 0.9.12
-     */
-    public function setEndColumn($endColumn)
-    {
-        $this->setMetadataInteger(3, $endColumn);
     }
 
     /**

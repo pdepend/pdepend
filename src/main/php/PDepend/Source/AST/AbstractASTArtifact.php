@@ -206,18 +206,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
     }
 
     /**
-     * Sets the start line for this ast node.
-     *
-     * @param integer $startLine The node start line.
-     * @return void
-     */
-    public function setStartLine($startLine)
-    {
-        $this->startLine = $startLine;
-    }
-
-
-    /**
      * Returns the line number where the class or interface declaration ends.
      *
      * @return integer

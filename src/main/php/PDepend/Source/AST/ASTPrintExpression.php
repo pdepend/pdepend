@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
  */
 
 namespace PDepend\Source\AST;
@@ -46,14 +45,22 @@ namespace PDepend\Source\AST;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * This node class represents an isste-expression/function.
+ * This class represents a print node.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
+ * @since 2.3
  */
-class ASTIssetExpression extends ASTExpression
+class ASTPrintExpression extends ASTExpression
 {
+    /**
+     * ASTPrintExpression constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct('print');
+    }
+
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
@@ -61,10 +68,9 @@ class ASTIssetExpression extends ASTExpression
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @param mixed $data
      * @return mixed
-     * @since 0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
-        return $visitor->visitIssetExpression($this, $data);
+        return $visitor->visitPrintExpression($this, $data);
     }
 }
