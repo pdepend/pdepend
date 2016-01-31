@@ -586,6 +586,10 @@ class PHPBuilderTest extends AbstractTest
      */
     public function testGetClassOrInterfaceReturnsClassInExtensionPackage()
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('HHVM works different here.');
+        }
+
         $builder = $this->createBuilder();
         $this->assertEquals(
             '+reflection',

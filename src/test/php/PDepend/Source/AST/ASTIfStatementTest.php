@@ -358,6 +358,10 @@ class ASTIfStatementTest extends ASTNodeTest
      */
     public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf()
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('HHVM works different here.');
+        }
+
         $stmt = $this->_getFirstIfStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIfStatement', $stmt->getChild(2));
     }
