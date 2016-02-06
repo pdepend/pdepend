@@ -3,10 +3,10 @@
 :Description:  This article describes the Object-Oriented software metric CA -
                Afferent Coupling. It can be used to measure the responsibility
                of a component, package, class or method within a software 
-               system. The content of this article is based on UncleBob's
                whitepaper "OO Design Quality Metrics - An Analysis of 
+               system. The content of this article is based on Uncle Bob's
                Dependencies", published 1994.
-:Keywords:     CA, Afferent Coupling, UncleBob, Robert C. Martin, Class Coupling, Package Coupling, Responsibility, Testing
+:Keywords:     CA, Afferent Coupling, Uncle Bob, Robert C. Martin, Class Coupling, Package Coupling, Responsibility, Testing
 
 The *Afferent Coupling* or *CA* metric describes the number of unique 
 incoming dependencies into a software artifact. An artifact can be
@@ -18,7 +18,7 @@ the artifact's responsibility.
 
 Normally responsibility isn't a bad thing in a software system. Good 
 examples are core packages and components, like error and exception 
-handling, or the used unit testing framework. All these lowlevel 
+handling, or the used unit testing framework. All these low level 
 components have usually a very high *Afferent Coupling*, because they
 are utilized by the several parts of the software. On the other hand
 these components will rarely be changed during the lifetime of an 
@@ -28,7 +28,7 @@ have a really good test coverage for components with a high *Afferent
 Coupling* and to monitor all changes to these components carefully.
 
 A detailed description of the *CA* metric and it's impact on the stability 
-of a software system can be found in UncleBob's whitepaper "OO Design Quality
+of a software system can be found in Uncle Bob's whitepaper "OO Design Quality
 Metrics - An Analysis of Dependencies" [#ubdqm]_.
 
 Thresholds
@@ -45,7 +45,7 @@ See also
 --------
 
 - `Coupling Between Objects`__: *Coupling Between Objects* or *CBO* is the
-  oposite coupling metric for a software artifact.
+  opposite coupling metric for a software artifact.
 
 - `Efferent Coupling`__: The *Efferent Coupling* or *CE* is a software metric
   that describes the reverse perspective on dependencies.

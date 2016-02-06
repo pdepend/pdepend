@@ -6,7 +6,7 @@
                used by PHP_Depend.
 :Keywords:     WMC, Cyclomatic Complexity, Weighted Method per Class, Chidamber & Kemerer
 
-The *Weighted Method Count* or *Weighted Method per Class* metric was orginally
+The *Weighted Method Count* or *Weighted Method per Class* metric was originally
 defined in A Metrics Suite for Object Oriented Design by Chidamber & Kemerer
 [#ckoom]_.
 
@@ -22,7 +22,7 @@ of the methods' complexity. Possible complexity values are:
 
 PHP_Depend uses the sum of `Cyclomatic Complexity Numbers`__ of all methods
 and constructors declared in a class to calculate the WMC metric. A lower WMC
-usually indicates to a class with bettwer abstraction and polymorphism. While
+usually indicates to a class with better abstraction and polymorphism. While
 a class with a high complexity value is a good indicator that it this class is 
 very application specific and does more than one job, and therefore harder to
 test, reuse and maintain.
@@ -46,7 +46,7 @@ Bibliography
 
 .. [#mcccn] http://www.literateprogramming.com/mccabe.pdf
 
-  IEEE Transactions on Software Enginerring, A Complexity Measure,
+  IEEE Transactions on Software Engineering, A Complexity Measure,
   Thomas McCabe, 1976
 
 __ /documentation/software-metrics/cyclomatic-complexity.html

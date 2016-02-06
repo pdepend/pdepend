@@ -43,7 +43,7 @@ task like building source statistics? The answer is easy.
   facts of a given source base. 
 * PHP_Depend scales with growing source bases, where human code
   reviews will fail at some day.
-* PHP_Depend allows you to indentify suspect parts in a software
+* PHP_Depend allows you to identify suspect parts in a software
   system that should be part of a code review, without looking into
   the source.
 * PHP_Depend also supports some fancy metrics that will become very

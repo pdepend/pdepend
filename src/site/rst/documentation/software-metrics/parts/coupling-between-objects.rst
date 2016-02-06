@@ -23,7 +23,7 @@ of a software the inter coupling between different classes should be kept to a
 minimum. Beside reusability a high coupling has a second drawback, a class that
 is coupled to other classes is sensitive to changes in that classes and as a 
 result it becomes more difficult to maintain and gets more error-prone.
-Additionally it is harder to test a heavly coupled class in isolation and it is
+Additionally it is harder to test a heavily coupled class in isolation and it is
 harder to understand such a class. Therefore you should keep the number of
 dependencies at a minimum.
 
@@ -39,7 +39,7 @@ See also
 --------
 
 - `Efferent Coupling`__: *Efferent Coupling* or *CE* is a different name for
-  the same metric, that is frequently used in the literatur.
+  the same metric, that is frequently used in the literature.
 
 - `Afferent Coupling`__: The *Afferent Coupling* or *CA* is a metric that
   calculates the reverse coupling of a class.

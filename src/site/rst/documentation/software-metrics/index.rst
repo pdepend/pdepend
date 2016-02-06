@@ -20,8 +20,8 @@ of an application's code base.
 +========+============================================+=========+=========+======+=======+========+
 | ahh    | *Average Hierarchy Height*                 | X       |         |      |       |        |
 |        |                                            |         |         |      |       |        |
-|        | The average of the maximum lenght from a   |         |         |      |       |        |
-|        | root class to ist deepest subclass         |         |         |      |       |        |
+|        | The average of the maximum length from a   |         |         |      |       |        |
+|        | root class to its deepest subclass         |         |         |      |       |        |
 |        | subclass                                   |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
 | andc   | *Average Number of Derived Classes*        | X       |         |      |       |        |
@@ -62,7 +62,7 @@ of an application's code base.
 |        | Measures the size of the interface from    |         |         |      |       |        |
 |        | other parts of the system to a class.      |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
-| cloc   | *Comment Lines fo Code*                    | X       |         | X    | X     | X      |
+| cloc   | *Comment Lines of Code*                    | X       |         | X    | X     | X      |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
 | clsa   | *Number of Abstract Classes*               | X       |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
