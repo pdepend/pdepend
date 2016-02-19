@@ -9,6 +9,13 @@
     </properties>
 
 	<body>
+            <release version="2.2.4"
+                     date="2016/02/19"
+                     description="This release adds support for complex expressions in property, constant and parameter declarations.">
+                <action date="0087c94" dev="manuelpichler" type="add" issue="238" system="github">
+                    Unexpected token errors for 5.6 "constant expression" initializers.
+                </action>
+            </release>
             <release version="2.2.3"
                      date="2015/12/04"
                      description="This release includes several pending pull requests from GitHub.">
