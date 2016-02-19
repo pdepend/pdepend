@@ -38,38 +38,50 @@
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 2.3
  */
 
-namespace PDepend\Bugs;
+namespace PDepend\Source\Language\PHP;
+
+use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Test case for bug #98. The default package contains software artifacts like
- * functions or classes that are broken. This can result in a fatal error during
- * the analysis phase.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion56} class.
  *
  * @copyright 2008-2015 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 2.3
  *
- * @covers \stdClass
- * @group regressiontest
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion56
+ * @group unittest
  */
-class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTest
+class PHPParserVersion56Test extends AbstractTest
 {
     /**
-     * Tests that the result does not contain an interface with a broken body.
+     * testComplexExpressionInParameterDefaultValue
      *
      * @return void
      */
-    public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
+    public function testComplexExpressionInParameterDefaultValue()
     {
-        $pdepend = $this->createEngineFixture();
-        $pdepend->addFile($this->createCodeResourceUriForTest());
-        $pdepend->analyze();
+        $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormatParameter');
+    }
 
-        $interfaces = $pdepend->getNamespaces()
-            ->current()
-            ->getInterfaces();
-
-        $this->assertEquals(1, count($interfaces));
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getMockForAbstractClass(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion56',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

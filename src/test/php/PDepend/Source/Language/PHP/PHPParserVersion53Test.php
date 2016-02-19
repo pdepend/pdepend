@@ -72,6 +72,17 @@ class PHPParserVersion53Test extends AbstractTest
     }
 
     /**
+     * testParserThrowsExceptionForParameterWithExpressionValue
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExceptionForParameterWithExpressionValue()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
