@@ -171,7 +171,7 @@ class PHPParserGeneric extends PHPParserVersion70
      * @return \PDepend\Source\AST\ASTValue
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      * @todo Handle shift left/right expressions in ASTValue
-     */
+     */ /*
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
         switch ($this->tokenizer->peek()) {
@@ -191,7 +191,7 @@ class PHPParserGeneric extends PHPParserVersion70
         }
 
         return $value;
-    }
+    }*/
 
     /**
      * This method will parse a formal parameter. A formal parameter is at least

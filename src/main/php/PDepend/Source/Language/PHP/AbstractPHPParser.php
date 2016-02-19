@@ -1675,9 +1675,9 @@ abstract class AbstractPHPParser
      * Parses a cast-expression node.
      *
      * @return \PDepend\Source\AST\ASTCaseExpression
-     * @since  0.10.0
+     * @since 0.10.0
      */
-    private function parseCastExpression()
+    protected function parseCastExpression()
     {
         $token = $this->consumeToken($this->tokenizer->peek());
 
@@ -2130,9 +2130,9 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @return \PDepend\Source\AST\ASTConditionalExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    private function parseConditionalExpression()
+    protected function parseConditionalExpression()
     {
         $this->tokenStack->push();
         $this->consumeToken(Tokens::T_QUESTION_MARK);
@@ -2193,9 +2193,9 @@ abstract class AbstractPHPParser
      * This method parses a boolean and-expression.
      *
      * @return \PDepend\Source\AST\ASTBooleanAndExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    private function parseBooleanAndExpression()
+    protected function parseBooleanAndExpression()
     {
         $token = $this->consumeToken(Tokens::T_BOOLEAN_AND);
 
@@ -2213,9 +2213,9 @@ abstract class AbstractPHPParser
      * This method parses a boolean or-expression.
      *
      * @return \PDepend\Source\AST\ASTBooleanOrExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    private function parseBooleanOrExpression()
+    protected function parseBooleanOrExpression()
     {
         $token = $this->consumeToken(Tokens::T_BOOLEAN_OR);
 
@@ -2233,9 +2233,9 @@ abstract class AbstractPHPParser
      * This method parses a logical <b>and</b>-expression.
      *
      * @return \PDepend\Source\AST\ASTLogicalAndExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    private function parseLogicalAndExpression()
+    protected function parseLogicalAndExpression()
     {
         $token = $this->consumeToken(Tokens::T_LOGICAL_AND);
 
@@ -2253,9 +2253,9 @@ abstract class AbstractPHPParser
      * This method parses a logical <b>or</b>-expression.
      *
      * @return \PDepend\Source\AST\ASTLogicalOrExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    private function parseLogicalOrExpression()
+    protected function parseLogicalOrExpression()
     {
         $token = $this->consumeToken(Tokens::T_LOGICAL_OR);
 
@@ -2273,9 +2273,9 @@ abstract class AbstractPHPParser
      * This method parses a logical <b>xor</b>-expression.
      *
      * @return \PDepend\Source\AST\ASTLogicalXorExpression
-     * @since  0.9.8
+     * @since 0.9.8
      */
-    private function parseLogicalXorExpression()
+    protected function parseLogicalXorExpression()
     {
         $token = $this->consumeToken(Tokens::T_LOGICAL_XOR);
 
@@ -3690,9 +3690,9 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @return \PDepend\Source\AST\ASTNode
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    private function parseParenthesisExpressionOrPrimaryPrefix()
+    protected function parseParenthesisExpressionOrPrimaryPrefix()
     {
         $expr = $this->parseParenthesisExpression();
 
@@ -4212,9 +4212,9 @@ abstract class AbstractPHPParser
      * several php language constructs like, isset, empty, unset etc.
      *
      * @return \PDepend\Source\AST\ASTNode
-     * @since  0.9.12
+     * @since 0.9.12
      */
-    private function parseVariableOrConstantOrPrimaryPrefix()
+    protected function parseVariableOrConstantOrPrimaryPrefix()
     {
         $this->consumeComments();
         switch ($this->tokenizer->peek()) {
@@ -4293,9 +4293,9 @@ abstract class AbstractPHPParser
      *        expression that will be parsed by this method.
      *
      * @return \PDepend\Source\AST\ASTAssignmentExpression
-     * @since  0.9.12
+     * @since 0.9.12
      */
-    private function parseAssignmentExpression(ASTNode $left)
+    protected function parseAssignmentExpression(ASTNode $left)
     {
         $token = $this->consumeToken($this->tokenizer->peek());
 
@@ -4386,9 +4386,9 @@ abstract class AbstractPHPParser
      * Parses a simple PHP constant use and returns a corresponding node.
      *
      * @return \PDepend\Source\AST\ASTNode
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    private function parseConstant()
+    protected function parseConstant()
     {
         $this->tokenStack->push();
         switch ($type = $this->tokenizer->peek()) {
@@ -4842,7 +4842,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTNode
      * @throws UnexpectedTokenException
      */
-    private function parseLiteralOrString()
+    protected function parseLiteralOrString()
     {
         $tokenType = $this->tokenizer->peek();
 
@@ -4896,7 +4896,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTArray
      * @since 1.0.0
      */
-    private function doParseArray($static = false)
+    protected function doParseArray($static = false)
     {
         $this->tokenStack->push();
 

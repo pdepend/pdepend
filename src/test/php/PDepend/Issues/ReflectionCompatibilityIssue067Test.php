@@ -676,19 +676,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
     }
 
     /**
-     * Tests that the parser throws an exception when the default value contains
-     * an invalid token.
-     *
-     * @return void
-     * @covers \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     */
-    public function testParserThrowsExpectedExceptionWhenDefaultValueContainsInvalidToken()
-    {
-        $this->parseTestCase();
-    }
-
-    /**
      * Returns the first interface in the test case file.
      *
      * @return \PDepend\Source\AST\ASTInterface
