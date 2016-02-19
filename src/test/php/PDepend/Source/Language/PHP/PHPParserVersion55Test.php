@@ -72,6 +72,28 @@ class PHPParserVersion55Test extends AbstractTest
     }
 
     /**
+     * testParserThrowsExceptionForComplexExpressionInConstantDeclarator
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExceptionForComplexExpressionInConstantDeclarator()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testParserThrowsExceptionForComplexExpressionInFieldDeclaration
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testParserThrowsExceptionForComplexExpressionInFieldDeclaration()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

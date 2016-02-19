@@ -166,4 +166,43 @@ class PHPParserGenericVersion56Test extends AbstractTest
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
     }
+
+    /**
+     * testComplexExpressionInParameterInitializer
+     *
+     * @return void
+     */
+    public function testComplexExpressionInParameterInitializer()
+    {
+        $node = $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+
+        $this->assertNotNull($node);
+    }
+
+    /**
+     * testComplexExpressionInConstantDeclarator
+     *
+     * @return void
+     */
+    public function testComplexExpressionInConstantDeclarator()
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+
+        $this->assertNotNull($node);
+    }
+
+    /**
+     * testComplexExpressionInFieldDeclaration
+     *
+     * @return void
+     */
+    public function testComplexExpressionInFieldDeclaration()
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+
+        $this->assertNotNull($node);
+    }
 }

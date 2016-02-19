@@ -61,14 +61,42 @@ use PDepend\Util\Cache\CacheDriver;
 class PHPParserVersion56Test extends AbstractTest
 {
     /**
-     * testComplexExpressionInParameterDefaultValue
+     * testComplexExpressionInParameterInitializer
      *
      * @return void
      */
-    public function testComplexExpressionInParameterDefaultValue()
+    public function testComplexExpressionInParameterInitializer()
     {
-        $this->getFirstFunctionForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormatParameter');
+        $node = $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+
+        $this->assertNotNull($node);
+    }
+
+    /**
+     * testComplexExpressionInConstantInitializer
+     *
+     * @return void
+     */
+    public function testComplexExpressionInConstantDeclarator()
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+
+        $this->assertNotNull($node);
+    }
+
+    /**
+     * testComplexExpressionInFieldDeclaration
+     *
+     * @return void
+     */
+    public function testComplexExpressionInFieldDeclaration()
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+
+        $this->assertNotNull($node);
     }
 
     /**
