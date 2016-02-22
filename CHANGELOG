@@ -1,3 +1,22 @@
+pdepend-2.2.3 (2016/02/22)
+==========================
+
+This release includes several pending pull requests from GitHub. 
+Beside that this release adds support for complex expressions in 
+property, constant and parameter declarations, introduced with PHP 
+5.6.
+
+- Fixed #226: Fixed division by zero issue. Fixed in commit #fb46614.
+- Fixed #227: Fix support to files filters. Fixed in commit #4e150db.
+- Fixed #230: Fix handling cygwin home folder location. Fixed in 
+  commit #126c38a.
+- Implemented #221: Add --quiet option. Implemented in commit 
+  #9a710f7.
+- Implemented #236: Switch to PSR-4 for autoloading Implemented in 
+  commit #57b54bd.
+- Implemented #238: Unexpected token errors for 5.6 "constant 
+  expression" initializers. Implemented in commit #0087c94.
+
 pdepend-2.2.2 (2015/10/16)
 ==========================
 
