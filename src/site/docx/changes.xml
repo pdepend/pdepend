@@ -10,7 +10,7 @@
 
 	<body>
             <release version="2.2.3"
-                     date="2015/12/04"
+                     date="2016/02/22"
                      description="This release includes several pending pull requests from GitHub. Beside that this release adds support for complex expressions in property, constant and parameter declarations, introduced with PHP 5.6.">
                 <action date="9a710f7" dev="gooh" type="add" issue="221" system="github">
                     Add --quiet option.
