@@ -134,14 +134,37 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 case Tokens::T_SR:
                     $expressions[] = $this->parseShiftRightExpression();
                     break;
-                case Tokens::T_DIR:
-                case Tokens::T_FILE:
-                case Tokens::T_LINE:
-                case Tokens::T_NS_C:
-                case Tokens::T_FUNC_C:
-                case Tokens::T_CLASS_C:
-                case Tokens::T_METHOD_C:
-                    $expressions[] = $this->parseConstant();
+                case Tokens::T_STRING_VARNAME: // TODO: Implement this
+                case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
+                case Tokens::T_MINUS:
+                case Tokens::T_MUL:
+                case Tokens::T_DIV:
+                case Tokens::T_MOD:
+                case Tokens::T_IS_EQUAL: // TODO: Implement compare expressions
+                case Tokens::T_IS_NOT_EQUAL:
+                case Tokens::T_IS_IDENTICAL:
+                case Tokens::T_IS_NOT_IDENTICAL:
+                case Tokens::T_BITWISE_OR:
+                case Tokens::T_BITWISE_AND:
+                case Tokens::T_BITWISE_NOT:
+                case Tokens::T_BITWISE_XOR:
+                case Tokens::T_IS_GREATER_OR_EQUAL:
+                case Tokens::T_IS_SMALLER_OR_EQUAL:
+                case Tokens::T_ANGLE_BRACKET_OPEN:
+                case Tokens::T_ANGLE_BRACKET_CLOSE:
+                case Tokens::T_EMPTY:
+                case Tokens::T_CONCAT:
+                    $token = $this->consumeToken($tokenType);
+
+                    $expr = $this->builder->buildAstExpression($token->image);
+                    $expr->configureLinesAndColumns(
+                        $token->startLine,
+                        $token->endLine,
+                        $token->startColumn,
+                        $token->endColumn
+                    );
+
+                    $expressions[] = $expr;
                     break;
                 case Tokens::T_EQUAL:
                 case Tokens::T_OR_EQUAL:
@@ -159,42 +182,19 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                         array_pop($expressions)
                     );
                     break;
+                case Tokens::T_DIR:
+                case Tokens::T_FILE:
+                case Tokens::T_LINE:
+                case Tokens::T_NS_C:
+                case Tokens::T_FUNC_C:
+                case Tokens::T_CLASS_C:
+                case Tokens::T_METHOD_C:
+                    $expressions[] = $this->parseConstant();
+                    break;
                 // TODO: Handle comments here
                 case Tokens::T_COMMENT:
                 case Tokens::T_DOC_COMMENT:
                     $this->consumeToken($tokenType);
-                    break;
-                case Tokens::T_STRING_VARNAME: // TODO: Implement this
-                case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
-                case Tokens::T_MINUS:
-                case Tokens::T_MUL:
-                case Tokens::T_DIV:
-                case Tokens::T_MOD:
-                case Tokens::T_IS_EQUAL: // TODO: Implement compare expressions
-                case Tokens::T_IS_NOT_EQUAL:
-                case Tokens::T_IS_IDENTICAL:
-                case Tokens::T_IS_NOT_IDENTICAL:
-                case Tokens::T_IS_GREATER_OR_EQUAL:
-                case Tokens::T_IS_SMALLER_OR_EQUAL:
-                case Tokens::T_ANGLE_BRACKET_OPEN:
-                case Tokens::T_ANGLE_BRACKET_CLOSE:
-                case Tokens::T_EMPTY:
-                case Tokens::T_CONCAT:
-                case Tokens::T_BITWISE_OR:
-                case Tokens::T_BITWISE_AND:
-                case Tokens::T_BITWISE_NOT:
-                case Tokens::T_BITWISE_XOR:
-                    $token = $this->consumeToken($tokenType);
-
-                    $expr = $this->builder->buildAstExpression($token->image);
-                    $expr->configureLinesAndColumns(
-                        $token->startLine,
-                        $token->endLine,
-                        $token->startColumn,
-                        $token->endColumn
-                    );
-
-                    $expressions[] = $expr;
                     break;
                 case Tokens::T_AT:
                 case Tokens::T_EXCLAMATION_MARK:
