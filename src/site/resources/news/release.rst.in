@@ -53,8 +53,8 @@ dependency.
 
 __ /download/release/@PROJECT_VERSION@/changelog.html
 __ /download/release/@PROJECT_VERSION@/changelog.html
-__ http://static.pdepend.org/php/latest/pdepend.phar
+__ https://static.pdepend.org/php/latest/pdepend.phar
 __ http://getcomposer.org
 __ http://getcomposer.org/composer.phar
-__ http://static.pdepend.org/php/@PROJECT_VERSION@/pdepend.phar
+__ https://static.pdepend.org/php/@PROJECT_VERSION@/pdepend.phar
 __ http://packagist.org/packages/pdepend/pdepend
