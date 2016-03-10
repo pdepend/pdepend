@@ -22,6 +22,8 @@ matrix:
 #        - php: hhvm-nightly
     fast_finish: true
 
+sudo: false
+
 env:
     global:
         TEST_CONFIG="phpunit.xml.dist"
