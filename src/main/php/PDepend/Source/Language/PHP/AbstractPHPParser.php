@@ -51,6 +51,7 @@ use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTIndexExpression;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
@@ -3922,12 +3923,14 @@ abstract class AbstractPHPParser
         $tokenType = $this->tokenizer->peek();
 
         switch ($tokenType) {
+            case Tokens::T_CALLABLE:
+                /* Fixme */
             case Tokens::T_STRING:
                 $child = $this->parseIdentifier();
                 $child = $this->parseOptionalIndexExpression($child);
 
                 // TODO: Move this in a separate method
-                if ($child instanceof \PDepend\Source\AST\ASTIndexExpression) {
+                if ($child instanceof ASTIndexExpression) {
                     $this->consumeComments();
                     if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
                         $prefix->addChild($this->parsePropertyPostfix($child));
@@ -6709,7 +6712,7 @@ abstract class AbstractPHPParser
         }
 
         // Stop here if return class already exists.
-        if ($callable->getReturnClass()) {
+        if ($callable->hasReturnClass()) {
             return;
         }
 

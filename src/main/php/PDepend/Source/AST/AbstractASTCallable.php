@@ -285,6 +285,24 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
+     * Tests if this callable has a return class and return <b>true</b> if it is
+     * configured.
+     *
+     * @return boolean
+     * @since 2.2.4
+     */
+    public function hasReturnClass()
+    {
+        if ($this->returnClassReference) {
+            return true;
+        }
+        if (($node = $this->getReturnType()) instanceof ASTClassOrInterfaceReference) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return \PDepend\Source\AST\ASTType
      */
     public function getReturnType()
