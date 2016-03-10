@@ -9,6 +9,13 @@
     </properties>
 
 	<body>
+            <release version="2.2.4"
+                     date="2016/03/10"
+                     description="This releases closes a bug in PDepend's parsing code for PHP 7 return types, that caused a invalid state in the internal AST representation. This bug was issued in PHPMD's issue tracker first by user radmen.">
+                <action date="ffe9957" dev="manuelpichler" type="fix" due-to="radmen" system="github">
+                    Cannot create new nodes, when internal state is frozen. #328
+                </action>
+            </release>
             <release version="2.2.3"
                      date="2016/02/22"
                      description="This release includes several pending pull requests from GitHub. Beside that this release adds support for complex expressions in property, constant and parameter declarations, introduced with PHP 5.6.">

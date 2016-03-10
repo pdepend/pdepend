@@ -1,3 +1,13 @@
+pdepend-2.2.4 (2016/03/10)
+==========================
+
+This releases closes a bug in PDepend's parsing code for PHP 7 return 
+types, that caused a invalid state in the internal AST representation. 
+This bug was issued in PHPMD's issue tracker first by user radmen.
+
+- Cannot create new nodes, when internal state is frozen. #328 Fixed 
+  in commit #ffe9957.
+
 pdepend-2.2.3 (2016/02/22)
 ==========================
 
