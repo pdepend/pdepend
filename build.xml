@@ -182,4 +182,24 @@
         </exec>
     </target>
 
+    <target name="-package:phar:before~hooked" extensionOf="-package:phar:before~hook">
+        <exec executable="php" failonerror="true">
+            <arg line="composer.phar" />
+            <arg line="update" />
+            <arg line="--prefer-dist" /> 
+            <arg line="--prefer-lowest" />
+            <arg line="--prefer-stable" />
+        </exec>
+    </target>
+
+    <target name="-package:phar:after~hooked" extensionOf="-package:phar:after~hook">
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="stash" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="stash" />
+            <arg line="drop" />
+        </exec>
+    </target>
+
 </project>
