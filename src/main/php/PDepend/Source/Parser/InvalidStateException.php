@@ -55,8 +55,8 @@ class InvalidStateException extends ParserException
      * Constructs a new invalid state exception.
      *
      * @param integer $lineNumber Line number where the parser has stopped.
-     * @param string  $fileName   The source file where this exception occured.
-     * @param string  $reason     Short description what has happend.
+     * @param string  $fileName   The source file where this exception occurred.
+     * @param string  $reason     Short description what has happened.
      */
     public function __construct($lineNumber, $fileName, $reason)
     {

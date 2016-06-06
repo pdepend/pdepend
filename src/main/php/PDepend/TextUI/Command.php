@@ -246,7 +246,7 @@ class Command
                 $errors = $this->runner->getParseErrors();
 
                 printf(
-                    '%sThe following error%s occured:%s',
+                    '%sThe following error%s occurred:%s',
                     PHP_EOL,
                     count($errors) > 1 ? 's' : '',
                     PHP_EOL
