@@ -77,6 +77,10 @@ class ExtensionFilter implements Filter
      */
     public function accept($relative, $absolute)
     {
+        if (strpos($absolute, 'php://') === 0) {
+            return true;
+        }
+
         $extension = pathinfo($relative, PATHINFO_EXTENSION);
 
         return in_array($extension, $this->extensions);
