@@ -214,7 +214,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         // The complexity of each child has no minimum
         foreach ($node->getChildren() as $child) {
-            $cn = $this->sumComplexity($child)
+            $cn = $this->sumComplexity($child);
             $npath = MathUtil::add($npath, $cn);
         }
 
