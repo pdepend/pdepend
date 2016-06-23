@@ -160,7 +160,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSiblingConditionalExpressions()
     {
-        $this->assertEquals(25, $this->_calculateFunctionMetric());
+        $this->assertEquals(4, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -173,7 +173,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSiblingExpressions()
     {
-        $this->assertEquals(15, $this->_calculateFunctionMetric());
+        $this->assertEquals(6, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -217,7 +217,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForComplexFunction()
     {
-        $this->assertEquals(60, $this->_calculateFunctionMetric());
+        $this->assertEquals(24, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -239,7 +239,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration()
     {
-        $this->assertEquals(625, $this->_calculateFunctionMetric());
+        $this->assertEquals(16, $this->_calculateFunctionMetric());
     }
 
     /**
@@ -389,7 +389,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForReturnStatementWithConditionalStatement()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -462,7 +462,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleConditionalStatement()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->_calculateMethodMetric());
     }
 
     /**
@@ -472,7 +472,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForTwoNestedConditionalStatements()
     {
-        $this->assertEquals(9, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->_calculateMethodMetric());
     }
 
     /**
@@ -482,7 +482,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForThreeNestedConditionalStatements()
     {
-        $this->assertEquals(13, $this->_calculateMethodMetric());
+        $this->assertEquals(6, $this->_calculateMethodMetric());
     }
 
     /**
@@ -493,7 +493,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConditionalStatementWithLogicalExpressions()
     {
-        $this->assertEquals(6, $this->_calculateMethodMetric());
+        $this->assertEquals(5, $this->_calculateMethodMetric());
     }
 
     /**
@@ -505,7 +505,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
     public function testNPathComplexityForReturnStatementWithConditional()
     {
         $npath = $this->_calculateMethodMetric();
-        $this->assertEquals(6, $npath);
+        $this->assertEquals(3, $npath);
     }
 
     /**
