@@ -263,10 +263,12 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseExpressionVersion70()
     {
         $this->consumeComments();
+        $nextTokenType = $this->tokenizer->peek();
 
-        switch ($this->tokenizer->peek()) {
+        switch ($nextTokenType) {
             case Tokens::T_SPACESHIP:
-                $token = $this->consumeToken(Tokens::T_SPACESHIP);
+            case Tokens::T_COALESCE:
+                $token = $this->consumeToken($nextTokenType);
 
                 $expr = $this->builder->buildAstExpression($token->image);
                 $expr->configureLinesAndColumns(

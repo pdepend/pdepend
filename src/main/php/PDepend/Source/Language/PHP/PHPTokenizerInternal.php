@@ -153,6 +153,13 @@ if (!defined('T_SPACESHIP')) {
 }
 
 /**
+ * Define PHP 7's '??' token constant
+ */
+if (!defined('T_COALESCE')) {
+    define('T_COALESCE', 42014);
+}
+
+/**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
  *
@@ -295,6 +302,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_CONSTANT_ENCAPSED_STRING  =>  Tokens::T_CONSTANT_ENCAPSED_STRING,
         T_YIELD                     =>  Tokens::T_YIELD,
         T_FINALLY                   =>  Tokens::T_FINALLY,
+        T_COALESCE                  =>  Tokens::T_COALESCE,
         //T_DOLLAR_OPEN_CURLY_BRACES  =>  Tokens::T_CURLY_BRACE_OPEN,
     );
 
