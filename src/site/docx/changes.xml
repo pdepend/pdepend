@@ -9,6 +9,14 @@
     </properties>
 
 	<body>
+            <release version="2.2.5"
+                     date=""
+                     description="">
+                <action date="8e80aaa" dev="manuelpichler" type="fix" due-to="k-jackson" system="github" issue="267">
+                    Fix UnexpectedTokenException on null coalesce operator
+                </action>
+            </release>
+
             <release version="2.2.4"
                      date="2016/03/10"
                      description="This releases closes a bug in PDepend's parsing code for PHP 7 return types, that caused a invalid state in the internal AST representation. This bug was issued in PHPMD's issue tracker first by user radmen.">
