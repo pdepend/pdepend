@@ -400,6 +400,20 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * testNullCoalesceOperator
+     *
+     * @return void
+     */
+    public function testNullCoalesceOperator()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        $this->assertSame('??', $expr->getImage());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
