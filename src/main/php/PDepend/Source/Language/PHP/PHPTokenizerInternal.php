@@ -479,6 +479,13 @@ class PHPTokenizerInternal implements Tokenizer
                 'image' => '<=>',
             )
         ),
+
+        Tokens::T_QUESTION_MARK => array(
+            Tokens::T_QUESTION_MARK => array(
+                'type'  => Tokens::T_COALESCE,
+                'image' => '??',
+            )
+        ),
     );
 
     /**
