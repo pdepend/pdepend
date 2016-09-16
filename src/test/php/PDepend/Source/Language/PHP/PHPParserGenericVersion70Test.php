@@ -394,4 +394,18 @@ class PHPParserGenericVersion70Test extends AbstractTest
     {
         $this->assertSame(29, $expr->getEndColumn());
     }
+
+    /**
+     * testNullCoalesceOperator
+     *
+     * @return void
+     */
+    public function testNullCoalesceOperator()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        $this->assertSame('??', $expr->getImage());
+    }
 }
