@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use org\pdepend\reflection\exceptions\EndOfTokenStreamException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTType;
@@ -469,10 +468,7 @@ abstract class AbstractPHPParser
             throw new TokenStreamEndException($this->tokenizer);
         }
 
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -520,10 +516,7 @@ abstract class AbstractPHPParser
             throw new TokenStreamEndException($this->tokenizer);
         }
 
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -881,10 +874,7 @@ abstract class AbstractPHPParser
                     $type->addChild($this->parseTraitUseStatement());
                     break;
                 default:
-                    throw new UnexpectedTokenException(
-                        $this->tokenizer->next(),
-                        $this->tokenizer->getSourceFile()
-                    );
+                    $this->throwUnexpectedTokenException();
             }
 
             $tokenType = $this->tokenizer->peek();
@@ -951,10 +941,8 @@ abstract class AbstractPHPParser
 
             $tokenType = $this->tokenizer->peek();
         }
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
+
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -2842,10 +2830,7 @@ abstract class AbstractPHPParser
      */
     protected function parseOptionalExpressionForVersion()
     {
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->compilationUnit->getFileName()
-        );
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -2953,10 +2938,8 @@ abstract class AbstractPHPParser
                     break 2;
             }
         }
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
+
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -3091,10 +3074,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if (false === in_array($this->tokenizer->peek(), array(Tokens::T_CATCH, Tokens::T_FINALLY))) {
-            throw new UnexpectedTokenException(
-                $this->tokenizer->next(),
-                $this->tokenizer->getSourceFile()
-            );
+            $this->throwUnexpectedTokenException();
         }
 
         while ($this->tokenizer->peek() === Tokens::T_CATCH) {
@@ -4240,10 +4220,7 @@ abstract class AbstractPHPParser
                 $node = $this->parseMemberPrefixOrFunctionPostfix();
                 break;
             default:
-                throw new UnexpectedTokenException(
-                    $this->tokenizer->next(),
-                    $this->compilationUnit->getFileName()
-                );
+                $this->throwUnexpectedTokenException();
         }
 
         return $node;
@@ -4976,10 +4953,7 @@ abstract class AbstractPHPParser
             if ($static) {
                 $tokens = $this->tokenStack->pop();
 
-                throw new UnexpectedTokenException(
-                    end($tokens),
-                    $this->compilationUnit->getFileName()
-                );
+                $this->throwUnexpectedTokenException(end($tokens));
             }
 
             $element->setByReference();
@@ -4987,10 +4961,7 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
         if ($this->isKeyword($this->tokenizer->peek())) {
-            throw new UnexpectedTokenException(
-                $this->tokenizer->next(),
-                $this->compilationUnit->getFileName()
-            );
+            $this->throwUnexpectedTokenException();
         }
 
         $element->addChild($this->parseExpression());
@@ -5554,8 +5525,8 @@ abstract class AbstractPHPParser
      *
      * @return \PDepend\Source\AST\ASTNode
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
-     * @throws \PDepend\Source\Parser\EndOfTokenStreamException
-     * @since  1.0.0
+     * @throws \PDepend\Source\Parser\TokenStreamEndException
+     * @since 1.0.0
      */
     private function parseStatement()
     {
@@ -5563,9 +5534,9 @@ abstract class AbstractPHPParser
             return $stmt;
         }
         if (is_object($token = $this->tokenizer->next())) {
-            throw new UnexpectedTokenException($token, $this->compilationUnit->getFileName());
+            $this->throwUnexpectedTokenException($token);
         }
-        throw new EndOfTokenStreamException($this->compilationUnit->getFileName());
+        throw new TokenStreamEndException($this->compilationUnit->getFileName());
     }
 
     /**
@@ -6109,6 +6080,11 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $this->tokenStack->push();
 
+        $tokenType = $this->tokenizer->peek();
+        if (false === $this->isKeyword($tokenType)) {
+
+        }
+
         $token = $this->consumeToken(Tokens::T_STRING);
 
         $this->consumeComments();
@@ -6423,10 +6399,7 @@ abstract class AbstractPHPParser
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
-        throw new UnexpectedTokenException(
-            $this->tokenizer->next(),
-            $this->tokenizer->getSourceFile()
-        );
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -6737,17 +6710,13 @@ abstract class AbstractPHPParser
      */
     protected function consumeToken($tokenType)
     {
-        $token = $this->tokenizer->next();
-        if ($token === Tokenizer::T_EOF) {
-            throw new TokenStreamEndException($this->tokenizer);
-        } elseif ($token->type == $tokenType) {
-            return $this->tokenStack->add($token);
+        switch ($this->tokenizer->peek()) {
+            case $tokenType:
+                return $this->tokenStack->add($this->tokenizer->next());
+            case Tokenizer::T_EOF:
+                throw new TokenStreamEndException($this->tokenizer);
         }
-
-        throw new UnexpectedTokenException(
-            $token,
-            $this->tokenizer->getSourceFile()
-        );
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -6771,5 +6740,21 @@ abstract class AbstractPHPParser
                 $this->packageName = $this->parsePackageAnnotation($token->image);
             }
         }
+    }
+
+    /**
+     * Throws an UnexpectedTokenException
+     *
+     * @param \PDepend\Source\Tokenizer\Token $token
+     * @return void
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @since 2.2.5
+     */
+    protected function throwUnexpectedTokenException(Token $token = null)
+    {
+        throw new UnexpectedTokenException(
+            (null === $token) ? $this->tokenizer->next() : $token,
+            $this->tokenizer->getSourceFile()
+        );
     }
 }
