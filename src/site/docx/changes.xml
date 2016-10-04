@@ -10,8 +10,8 @@
 
 	<body>
             <release version="2.2.5"
-                     date=""
-                     description="">
+                     date="2016/10/04"
+                     description="Bugfix release.">
                 <action date="8e80aaa" dev="manuelpichler" type="fix" due-to="k-jackson" system="github" issue="267">
                     Fix UnexpectedTokenException on null coalesce operator
                 </action>

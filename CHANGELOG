@@ -1,3 +1,11 @@
+pdepend-2.2.5 (2016/10/04)
+==========================
+
+Bugfix release.
+
+- Fixed #267: Fix UnexpectedTokenException on null coalesce operator 
+  Fixed in commit #8e80aaa.
+
 pdepend-2.2.4 (2016/03/10)
 ==========================
 
