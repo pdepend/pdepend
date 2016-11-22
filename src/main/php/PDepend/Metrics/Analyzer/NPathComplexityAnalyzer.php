@@ -203,20 +203,24 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitConditionalExpression($node, $data)
     {
+        // Calculate the complexity of the condition
+        $parent = $node->getParent()->getChild(0);
+        $npath = $this->sumComplexity($parent);
+        
         // New PHP 5.3 ifsetor-operator $x ?: $y
         if (count($node->getChildren()) === 1) {
-            $npath = '4';
-        } else {
-            $npath = '3';
+            $npath = MathUtil::mul($npath, '2');
         }
 
+        // The complexity of each child has no minimum
         foreach ($node->getChildren() as $child) {
-            if (($cn = $this->sumComplexity($child)) === '0') {
-                $cn = '1';
-            }
+            $cn = $this->sumComplexity($child);
             $npath = MathUtil::add($npath, $cn);
         }
 
+        // Add 2 for the branching per the NPath spec
+        $npath = MathUtil::add($npath, '2');
+        
         return MathUtil::mul($npath, $data);
     }
 
