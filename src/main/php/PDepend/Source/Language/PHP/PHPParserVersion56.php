@@ -250,6 +250,36 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
+     * Parses use declarations that are valid in the supported php version.
+     *
+     * @return void
+     */
+    protected function parseUseDeclarations()
+    {
+        // Consume use keyword
+        $this->consumeToken(Tokens::T_USE);
+        $this->consumeComments();
+
+        // Consume const and function tokens
+        $nextToken = $this->tokenizer->peek();
+        switch ($nextToken) {
+            case Tokens::T_CONST:
+            case Tokens::T_FUNCTION:
+                $this->consumeToken($nextToken);
+        }
+
+        // Parse all use declarations
+        $this->parseUseDeclaration();
+        $this->consumeComments();
+
+        // Consume closing semicolon
+        $this->consumeToken(Tokens::T_SEMICOLON);
+
+        // Reset any previous state
+        $this->reset();
+    }
+
+    /**
      * This method will be called when the base parser cannot handle an expression
      * in the base version. In this method you can implement version specific
      * expressions.

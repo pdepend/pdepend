@@ -5941,7 +5941,7 @@ abstract class AbstractPHPParser
      * @return void
      * @since 0.9.5
      */
-    private function parseUseDeclarations()
+    protected function parseUseDeclarations()
     {
         // Consume use keyword
         $this->consumeToken(Tokens::T_USE);
@@ -5965,7 +5965,7 @@ abstract class AbstractPHPParser
      * @return void
      * @since 0.9.5
      */
-    private function parseUseDeclaration()
+    protected function parseUseDeclaration()
     {
         $fragments = $this->parseQualifiedNameRaw();
         $this->consumeComments();
