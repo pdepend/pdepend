@@ -229,7 +229,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $dom->appendChild($metrics);
 
-        $dom->save($this->logFile);
+        $buffer = $dom->saveXML();
+        file_put_contents($this->logFile, $buffer);
     }
 
     /**
