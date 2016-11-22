@@ -83,6 +83,17 @@ class PHPParserVersion53Test extends AbstractTest
     }
 
     /**
+     * testParserAllowsKeywordCallableAsPropertyName
+     *
+     * @return void
+     */
+    public function testParserAllowsKeywordCallableAsPropertyName()
+    {
+        $method = $this->getFirstClassMethodForTestCase();
+        $this->assertNotNull($method);
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

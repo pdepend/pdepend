@@ -343,17 +343,6 @@ class PHPParserVersion54Test extends AbstractTest
     }
 
     /**
-     * testParserThrowsExpectedExceptionForCallableAsCalledMethod
-     *
-     * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     */
-    public function testParserThrowsExpectedExceptionForCallableAsCalledMethod()
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
      * testParserThrowsExpectedExceptionForCallableAsConstant
      *
      * @return void

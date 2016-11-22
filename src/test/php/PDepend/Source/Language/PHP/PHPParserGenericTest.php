@@ -758,6 +758,17 @@ class PHPParserGenericTest extends AbstractTest
     }
 
     /**
+     * testParserAllowsKeywordCallableAsPropertyName
+     *
+     * @return void
+     */
+    public function testParserAllowsKeywordCallableAsPropertyName()
+    {
+        $method = $this->getFirstClassMethodForTestCase();
+        $this->assertNotNull($method);
+    }
+
+    /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
