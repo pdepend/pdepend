@@ -9,10 +9,42 @@
     </properties>
 
 	<body>
+        <release version="2.3.0"
+                 date="2016/11/22"
+                 description="This release closes multiple bugs/issue and has merged several outstanding pull requests. Beside that it is now possible to pipe source through STDIN into pdepend.">
+            <action date="bce6145" dev="manuelpichler" type="add" system="github">
+                Support for PHP's ** pow expression implemented.
+            </action>
+            <action date="df0e9c5" dev="offsides" type="fix" system="github" issue="263">
+                Fix NPath calculations for the ternary operator.
+            </action>
+            <action date="3ef2328" dev="zonuexe" type="update" system="github" issue="262">
+                Support stdin implemented.
+            </action>
+            <action date="20b36c1" dev="atailouloute" type="fix" system="github" issue="260">
+                Fix typos
+            </action>
+            <action date="fa2afc6" dev="fridolin-koch" type="fix" system="github" issue="259">
+                DOMDocument file handling.
+            </action>
+            <action date="dc9128b" dev="schnittstabil" type="fix" system="github" issue="247">
+                Fix handling of use declarations with const and function keywords.
+            </action>
+            <action date="62d1406" dev="armen" type="update" system="github" issue="231">
+                Apply the filter on files as well.
+            </action>
+            <action date="332672a" dev="tobarja" type="fix" system="github" issue="240">
+                Fix some typos from the website.
+            </action>
+            <action date="" dev="manuelpichler" due-to="csizmazia" type="fix" system="github" issue="249">
+                Unexpected token: callable
+            </action>
+        </release>
+
             <release version="2.2.6"
                      date="2016/10/04"
                      description="Bugfix release.">
-                <action date="8e80aaa" dev="manuelpichler" type="fix" due-to="k-jackson" system="github" issue="267">
+                <action date="8e80aaa" dev="k-jackson" type="fix" due-to="k-jackson" system="github" issue="267">
                     Fix UnexpectedTokenException on null coalesce operator
                 </action>
             </release>
