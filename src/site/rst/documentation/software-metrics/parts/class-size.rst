@@ -4,7 +4,7 @@
                in the literature and how it is implemented in PHP_Depend. Later in
                this article we describe the impact of the class size on several
                quality-factors in a software system.
-:Keywords:     CSZ, CS, Class Size, Khaled et al., Optiomal Class Size, SRP, Single Responsibility Principle, testability, responsibility, maintainability
+:Keywords:     CSZ, CS, Class Size, Khaled et al., Optimal Class Size, SRP, Single Responsibility Principle, testability, responsibility, maintainability
 
 The *Class Size* or *CSZ* metric is a another measure for the complexity and
 size of a class. In many publications and books this metric is frequently
@@ -18,7 +18,7 @@ number of statements, respectively the *Logical Lines Of Code* (*LLOC*), to
 measure the size of class. The second variant uses the *Lines Of Code* (*LOC*)
 as an indicator for the class size.
 
-The third variant uses two language constructs of object-oriented progamming
+The third variant uses two language constructs of object-oriented programming
 languages to measure the size of class and calculates the sum of both values.
 These to language constructs are methods and attributes, so that the existing
 metrics *Number Of Methods* (*NOM*) and *Number Of Attributes* (*VARS*) can 
@@ -29,11 +29,11 @@ be reused to calculate the *Class Size*.
 PHP_Depend implements this third variant of *Class Size* metric algorithm to
 measure the size of a class.
 
-As several researches and studies on procedual software projects have shown,
+As several researches and studies on procedural software projects have shown,
 the optimal size of a software component, lies somewhere between too small
 and too large, to be less fault-prone. This model can be visualized with an
 u-curve, where the lower arc of the U represents the optimal size of a
-component. But this model does not apply to object-orientend software systems,
+component. But this model does not apply to object-oriented software systems,
 as Khaled et al. have shown in their paper [#ooocsz]_. Object-oriented systems
 tend to be more fault-prone when they get bigger and less fault-prone when
 they use small classes and follow the Single Responsibility Principle (SRP)
@@ -57,7 +57,7 @@ Bibliography
 
 .. [#ooocsz] http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.94.7296&rep=rep1&type=pdf
 
-  IEEE Transactions on Softare Engineering; The Optimal Class Size for
+  IEEE Transactions on Software Engineering; The Optimal Class Size for
   Object-Oriented Software; Khaled, Benlarbi, Nishith & Shesh; 2002
 
 .. [#poodsrp] http://www.objectmentor.com/resources/articles/srp.pdf

@@ -1,4 +1,4 @@
-If you like to participate on the social coding plattform `GitHub`__, you can
+If you like to participate on the social coding platform `GitHub`__, you can
 use `PHP_Depend's`__ GitHub mirror to fork and contribute to the project.
 
 .. class:: shell

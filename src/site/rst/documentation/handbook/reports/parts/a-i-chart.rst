@@ -74,7 +74,7 @@ close to the *Main sequence* we have a fifth metric, the package distance
   
 .. [#ubmoodqm] http://www.objectmentor.com/resources/articles/oodmetrc.pdf
 
-  *OO Design Quality Metrics - An Analysis of Dependencies*; Robert C. Matrin;
+  *OO Design Quality Metrics - An Analysis of Dependencies*; Robert C. Martin;
   1994
   
 __ http://objectmentor.com

@@ -43,7 +43,7 @@ Image Convert
 The ``<image-convert>`` element is a container for all configuration settings
 available for the image convert component. It is used by PHP_Depend to render
 the different graphical reports like the `Overview Pyramid`__ or the the
-*Abstraction & Instabilit* chart. ::
+*Abstraction & Instability* chart. ::
 
   <?xml version="1.0" ?>
   <symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
@@ -197,7 +197,7 @@ History
 The command line option to specify a xml configuration file already exists
 for a long time in PHP_Depend, but the configuration file wasn't really in
 use until version 0.10.0. Since this release we have started to provide an
-`XML-Schema`__ for the configuration fike and we moved several command line
+`XML-Schema`__ for the configuration file and we moved several command line
 options or previously hard-coded-switches into the xml configuration file.
 
 Starting with 2.0 the format was changed to allow integration in the

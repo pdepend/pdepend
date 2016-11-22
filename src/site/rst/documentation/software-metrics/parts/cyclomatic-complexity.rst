@@ -18,13 +18,13 @@ existing source code.
 A look at this list of statements may result in the questions:
 Is this list wrong, it doesn't list ``else`` and ``default``?
 But it is correct. The assumption is that both statements
-will contain the defaut execution path of a program which 
+will contain the default execution path of a program which 
 also exists when there are no special cases to capture.
 
 Each decision path gets the value *1* and the sum of all these
 values represents the Cyclomatic Complexity of the analyzed
 software fragment. Note that each function and method also 
-counts with a value of *1* With this knowlegde we can now 
+counts with a value of *1* With this knowledge we can now 
 calculate the complexity of the following example code: ::
 
   <?php                                 
@@ -32,7 +32,7 @@ calculate the complexity of the following example code: ::
   // -------------------------------------------------------------
   class CyclomaticComplexityNumber                        // |  0
   {                                                       // |  0
-      public function exampe( $x, $y )                    // |  1
+      public function example( $x, $y )                   // |  1
       {                                                   // |  0
           if ( $x > 23 || $y < 42 )                       // |  1
           {                                               // |  0
@@ -71,7 +71,7 @@ and Checkstyle report it as Cyclomatic Complexity of an
 analyzed software fragment.
 
 Now we get a complexity value of *8* when we apply the CCN2 
-to the previous example, what is a growt of the software's 
+to the previous example, what is a growth of the software's 
 complexity of 60%.
  
 Due to the fact that Cyclomatic Complexity Number was 
@@ -125,7 +125,7 @@ metric?
 Mostly the complex parts of an application contain business
 critical logic. But this complexity has negative impacts on 
 the readability and understandability of source code. Those
-parts will normally become a maintainence and bug fixing
+parts will normally become a maintenance and bug fixing
 nightmare, because no one knows all the constraints, side
 effects and what's exactly going on in that part of the 
 software. This situation results in the well known saying
@@ -209,8 +209,8 @@ was going on in this method. ::
 The first thing to do is to make sure that the test suite 
 is good enough to ensure that the required refactorings 
 will not change the public behavior of the component or
-class. When this is donw and we are sure our that api
-breaks will be detected by the test suitewe can start to
+class. When this is done and we are sure our that api
+breaks will be detected by the test suite we can start to
 extract logic into separate methods.
 
 The following example shows the result of the refactoring: ::
@@ -253,5 +253,5 @@ Number of *5* is much easier to read and understand.
 
 .. [#cabeccn] http://www.literateprogramming.com/mccabe.pdf
 
-  IEEE Transactions on Software Enginerring; *A Complexity Measure*;
+  IEEE Transactions on Software Engineering; *A Complexity Measure*;
   Thomas J. McCabe; 1976

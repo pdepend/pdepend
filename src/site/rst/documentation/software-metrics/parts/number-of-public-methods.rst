@@ -6,7 +6,7 @@
                implementation of this metric in PHP_Depend.
 :Keywords:     NPM, Number of Public Methods, Software Metric, Lorenz and Kidd
 
-The *Number of Public Methods* or *NPM* metric was orginally described in the 
+The *Number of Public Methods* or *NPM* metric was originally described in the 
 fundamental book *Object-Oriented Software Metrics* of Lorenz and Kidd
 [#lkoom]_.
 

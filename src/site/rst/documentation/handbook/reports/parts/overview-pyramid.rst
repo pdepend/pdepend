@@ -164,7 +164,7 @@ The benefit of the Overview Pyramid
 Of course, the final question is, which advantages offers the Overview
 Pyramid?
 
-The Overview Pyramid provides a simple and size indipendent way to get a
+The Overview Pyramid provides a simple and size independent way to get a
 first impression of a software system, and this without an expensive source
 code analysis. Thus the Overview Pyramid is an effective tool for a first
 cost estimate for an unknown system. With the help of this tool and know-how,
@@ -180,7 +180,7 @@ be a good help during the planning phase of a new project.
 
 .. [#cabeccn] http://www.literateprogramming.com/mccabe.pdf
 
-  IEEE Transactions on Software Enginerring; *A Complexity Measure*;
+  IEEE Transactions on Software Engineering; *A Complexity Measure*;
   Thomas J. McCabe; 1976
 
 __ /documentation/software-metrics/cyclomatic-complexity.html
