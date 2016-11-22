@@ -16,7 +16,7 @@ a few bug fixes and improvements for PHP_Depend.
 * Implemented `#121`__: Parse arguments of the ASTForeachStatement. Implemented
   in svn revision `#1115`__.
 * Critical issue in PHP_Depend's temporary data cache fixed. This bug 
-  only occured when running several instances of PHP_Depend in  
+  only occurred when running several instances of PHP_Depend in
   parallel. In this setup the used cache key `spl_object_hash()`__ has 
   caused a corrupted cache, because different php process instances 
   have written different data to the same cache file.

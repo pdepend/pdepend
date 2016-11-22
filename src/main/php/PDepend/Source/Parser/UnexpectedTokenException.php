@@ -56,7 +56,7 @@ class UnexpectedTokenException extends TokenException
      * Constructs a new unexpected token exception.
      *
      * @param Token  $token    The last parsed token instance.
-     * @param string $fileName The file where the exception occured.
+     * @param string $fileName The file where the exception occurred.
      */
     public function __construct(Token $token, $fileName)
     {

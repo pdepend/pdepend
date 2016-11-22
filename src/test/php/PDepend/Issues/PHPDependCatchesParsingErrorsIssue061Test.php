@@ -78,12 +78,12 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 
     /**
      * Tests that the {@link \PDepend\TextUI\Runner::hasErrors()} method will
-     * return <b>false</b> when not parsing error occured.
+     * return <b>false</b> when not parsing error occurred.
      *
      * @return void
      * @covers \PDepend\TextUI\Runner
      */
-    public function testRunnerReturnsFalseWhenNoErrorOccuredDuringTheParsingProcess()
+    public function testRunnerReturnsFalseWhenNoErrorOccurredDuringTheParsingProcess()
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI('pdepend.log'));
@@ -95,12 +95,12 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 
     /**
      * Tests that the {@link \PDepend\TextUI\Runner::hasErrors()} method will
-     * return <b>true</b> when a parsing error occured.
+     * return <b>true</b> when a parsing error occurred.
      *
      * @return void
      * @covers \PDepend\TextUI\Runner
      */
-    public function testRunnerReturnsTrueWhenAnErrorOccuredDuringTheParsingProcess()
+    public function testRunnerReturnsTrueWhenAnErrorOccurredDuringTheParsingProcess()
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI('pdepend.log'));
@@ -129,16 +129,16 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 
         list($exitCode, $output) = $this->runTextUICommand();
 
-        $this->assertNotContains('Following errors occured:', $output);
+        $this->assertNotContains('Following errors occurred:', $output);
     }
 
     /**
-     * testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess
+     * testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess
      *
      * @return void
      * @covers \PDepend\TextUI\Command
      */
-    public function testCommandPrintsExceptionMessageWhenAnErrorOccuredDuringTheParsingProcess()
+    public function testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess()
     {
         $this->prepareArgv(
             array(
