@@ -149,7 +149,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $bias = 0.1;
 
         $svg = new \DOMDocument('1.0', 'UTF-8');
-        $svg->load(dirname(__FILE__) . '/chart.svg');
+        $svg->loadXML(file_get_contents(dirname(__FILE__) . '/chart.svg'));
 
         $layer = $svg->getElementById('jdepend.layer');
 
