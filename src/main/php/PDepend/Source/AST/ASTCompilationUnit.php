@@ -128,7 +128,9 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function __construct($fileName)
     {
-        if ($fileName !== null) {
+        if (strpos($fileName, 'php://') === 0) {
+            $this->fileName = $fileName;
+        } elseif ($fileName !== null) {
             $this->fileName = realpath($fileName);
         }
     }
@@ -350,7 +352,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     protected function readSource()
     {
-        if ($this->source === null && file_exists($this->fileName)) {
+        if ($this->source === null && (file_exists($this->fileName) || strpos($this->fileName, 'php://') === 0)) {
             $source = file_get_contents($this->fileName);
 
             $this->source = str_replace(array("\r\n", "\r"), "\n", $source);

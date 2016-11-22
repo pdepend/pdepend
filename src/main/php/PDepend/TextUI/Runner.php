@@ -280,10 +280,10 @@ class Runner
         // Try to set all source directories.
         try {
             foreach ($this->sourceArguments as $sourceArgument) {
-                if (is_file($sourceArgument)) {
-                    $engine->addFile($sourceArgument);
-                } else {
+                if (is_dir($sourceArgument)) {
                     $engine->addDirectory($sourceArgument);
+                } else {
+                    $engine->addFile($sourceArgument);
                 }
             }
         } catch (\Exception $e) {

@@ -333,7 +333,11 @@ abstract class AbstractPHPParser
             ->setCache($this->cache)
             ->setId($this->idBuilder->forFile($this->compilationUnit));
 
-        $hash = md5_file($this->compilationUnit->getFileName());
+        if ($this->compilationUnit->getFileName() === 'php://stdin') {
+            $hash = md5('php://stdin');
+        } else {
+            $hash = md5_file($this->compilationUnit->getFileName());
+        }
 
         if ($this->cache->restore($this->compilationUnit->getId(), $hash)) {
             return;
