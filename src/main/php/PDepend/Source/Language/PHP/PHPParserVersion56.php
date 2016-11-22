@@ -140,6 +140,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 case Tokens::T_MUL:
                 case Tokens::T_DIV:
                 case Tokens::T_MOD:
+                case Tokens::T_POW:
                 case Tokens::T_IS_EQUAL: // TODO: Implement compare expressions
                 case Tokens::T_IS_NOT_EQUAL:
                 case Tokens::T_IS_IDENTICAL:
@@ -246,5 +247,49 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
         $value->setValue($expr);
 
         return $value;
+    }
+
+    /**
+     * This method will be called when the base parser cannot handle an expression
+     * in the base version. In this method you can implement version specific
+     * expressions.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @since 2.2
+     */
+    protected function parseOptionalExpressionForVersion()
+    {
+        if ($expression = $this->parseExpressionVersion56()) {
+            return $expression;
+        }
+        return parent::parseOptionalExpressionForVersion();
+    }
+
+    /**
+     * In this method we implement parsing of PHP 5.6 specific expressions.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 2.3
+     */
+    protected function parseExpressionVersion56()
+    {
+        $this->consumeComments();
+        $nextTokenType = $this->tokenizer->peek();
+
+        switch ($nextTokenType) {
+            case Tokens::T_POW:
+                $token = $this->consumeToken($nextTokenType);
+
+                $expr = $this->builder->buildAstExpression($token->image);
+                $expr->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
+
+                return $expr;
+        }
     }
 }

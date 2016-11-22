@@ -868,6 +868,11 @@ interface Tokens
     const T_COALESCE = 163;
 
     /**
+     * Token that represents the '**' null coalescing operator
+     */
+    const T_POW = 164;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

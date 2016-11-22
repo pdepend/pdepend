@@ -205,4 +205,30 @@ class PHPParserGenericVersion56Test extends AbstractTest
 
         $this->assertNotNull($node);
     }
+
+    /**
+     * testPowExpressionInMethodBody
+     *
+     * @return void
+     */
+    public function testPowExpressionInMethodBody()
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+
+        $this->assertSame('**', $node->getChild(0)->getChild(1)->getImage());
+    }
+
+    /**
+     * testPowExpressionInFieldDeclaration
+     *
+     * @return void
+     */
+    public function testPowExpressionInFieldDeclaration()
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+
+        $this->assertNotNull($node);
+    }
 }

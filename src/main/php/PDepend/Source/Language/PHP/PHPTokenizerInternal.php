@@ -160,6 +160,13 @@ if (!defined('T_COALESCE')) {
 }
 
 /**
+ * Define PHP 7's '**' token constant
+ */
+if (!defined('T_POW')) {
+    define('T_POW', 42015);
+}
+
+/**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
  *
@@ -183,6 +190,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_FOR                       =>  Tokens::T_FOR,
         T_INC                       =>  Tokens::T_INC,
         T_NEW                       =>  Tokens::T_NEW,
+        T_POW                       =>  Tokens::T_POW,
         T_TRY                       =>  Tokens::T_TRY,
         T_USE                       =>  Tokens::T_USE,
         T_VAR                       =>  Tokens::T_VAR,
@@ -484,6 +492,13 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_QUESTION_MARK => array(
                 'type'  => Tokens::T_COALESCE,
                 'image' => '??',
+            )
+        ),
+
+        Tokens::T_MUL => array(
+            Tokens::T_MUL => array(
+                'type'  => Tokens::T_POW,
+                'image' => '**',
             )
         ),
     );
