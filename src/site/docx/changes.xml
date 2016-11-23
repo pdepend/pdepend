@@ -9,6 +9,19 @@
     </properties>
 
 	<body>
+        <release version="2.3.2"
+                 date="2016/11/23"
+                 description="Bugfix release that closes a caching issue that was introduced in 2.3.1.">
+            <action date="48d8081" dev="manuelpichler" due-to="adeelshah" type="fix" system="github" issue="276">
+                Uncaught Error: Call to a member function type() on null in
+            </action>
+            <action date="4968ed4" dev="manuelpichler" due-to="pilgerone" type="fix" system="github">
+                Allow list as method name under PHP 7
+            </action>
+            <action date="31cf053" dev="manuelpichler" due-to="azzeddinefaik" type="fix" system="github" issue="277">
+                serialize(): "comment" is returned from __sleep multiple times in store in FileCacheDriver.php
+            </action>
+        </release>
         <release version="2.3.1"
                  date="2016/11/23"
                  description="">
