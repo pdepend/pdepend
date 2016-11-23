@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCatchStatement} class.
  *
@@ -89,6 +91,38 @@ class ASTAnonymousClassTest extends ASTNodeTest
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getEndColumn());
+    }
+
+    /**
+     * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
+     *
+     * @return void
+     */
+    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
+    {
+        $class = new ASTAnonymousClass(__CLASS__);
+        $class->setCache(new MemoryCacheDriver());
+
+        $this->assertEquals(
+            array(
+                'metadata',
+                'constants',
+                'interfaceReferences',
+                'parentClassReference',
+                'cache',
+                'context',
+                'comment',
+                'endLine',
+                'modifiers',
+                'name',
+                'nodes',
+                'namespaceName',
+                'startLine',
+                'userDefined',
+                'id'
+            ),
+            $class->__sleep()
+        );
     }
 
     /**

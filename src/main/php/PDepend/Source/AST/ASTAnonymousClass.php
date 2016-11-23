@@ -236,7 +236,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     public function __sleep()
     {
-        return array_merge(array('comment', 'metadata', 'nodes'), parent::__sleep());
+        return array_merge(array('metadata'), parent::__sleep());
     }
 
     /**
