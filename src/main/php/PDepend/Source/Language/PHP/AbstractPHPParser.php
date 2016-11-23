@@ -233,7 +233,7 @@ abstract class AbstractPHPParser
      *
      * @var \PDepend\Source\Tokenizer\TokenStack
      */
-    private $tokenStack;
+    protected $tokenStack;
 
     /**
      * Used identifier builder instance.
@@ -655,7 +655,7 @@ abstract class AbstractPHPParser
      *
      * @return \PDepend\Source\AST\ASTClass
      */
-    private function parseClassDeclaration()
+    protected function parseClassDeclaration()
     {
         $this->tokenStack->push();
 
@@ -678,7 +678,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTClass
      * @since 1.0.0
      */
-    private function parseClassSignature()
+    protected function parseClassSignature()
     {
         $this->parseClassModifiers();
         $this->consumeToken(Tokens::T_CLASS);
@@ -795,7 +795,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      * @throws \PDepend\Source\Parser\TokenStreamEndException
      */
-    private function parseTypeBody(AbstractASTType $type)
+    protected function parseTypeBody(AbstractASTType $type)
     {
         $this->classOrInterface = $type;
 
@@ -1955,7 +1955,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTNode
      * @since 0.9.8
      */
-    private function setNodePositionsAndReturn(ASTNode $node)
+    protected function setNodePositionsAndReturn(ASTNode $node)
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
 

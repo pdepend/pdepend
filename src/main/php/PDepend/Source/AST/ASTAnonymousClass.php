@@ -54,14 +54,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  */
 class ASTAnonymousClass extends ASTClass implements ASTNode
 {
-
-    /**
-     * Parsed child nodes of this node.
-     *
-     * @var \PDepend\Source\AST\ASTNode[]
-     */
-    protected $nodes = array();
-
     /**
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
@@ -71,21 +63,23 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     protected $parent = null;
 
     /**
-     * An optional doc comment for this node.
-     *
-     * @var string
-     */
-    protected $comment = null;
-
-    /**
      * Metadata for this node instance, serialized in a string. This string
      * contains the start, end line, and the start, end column and the node
-     * image in a colon seperated string.
+     * image in a colon separated string.
      *
      * @var string
      * @since 0.10.4
      */
-    protected $metadata = '::::';
+    protected $metadata = ':::';
+
+    /**
+     * @param string $image
+     * @return void
+     */
+    public function setImage($image)
+    {
+        $this->setName($image);
+    }
 
     /**
      * Returns the source image of this ast node.
@@ -94,7 +88,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     public function getImage()
     {
-        return $this->getMetadata(4);
+        return $this->getName();
     }
 
     /**
@@ -148,89 +142,12 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * @return void
      * @since 0.9.10
      */
-    public function configureLinesAndColumns(
-      $startLine,
-      $endLine,
-      $startColumn,
-      $endColumn
-    ) {
+    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn)
+    {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);
         $this->setMetadataInteger(2, $startColumn);
         $this->setMetadataInteger(3, $endColumn);
-    }
-
-    /**
-     * Returns the node instance for the given index or throws an exception.
-     *
-     * @param integer $index
-     * @return \PDepend\Source\AST\ASTNode
-     * @throws \OutOfBoundsException When no node exists at the given index.
-     */
-    public function getChild($index)
-    {
-        if (isset($this->nodes[$index])) {
-            return $this->nodes[$index];
-        }
-        throw new \OutOfBoundsException(
-          sprintf(
-            'No node found at index %d in node of type: %s',
-            $index,
-            get_class($this)
-          )
-        );
-    }
-
-    /**
-     * This method returns all direct children of the actual node.
-     *
-     * @return \PDepend\Source\AST\ASTNode[]
-     */
-    public function getChildren()
-    {
-        return $this->nodes;
-    }
-
-    /**
-     * This method will search recursive for the first child node that is an
-     * instance of the given <b>$targetType</b>. The returned value will be
-     * <b>null</b> if no child exists for that.
-     *
-     * @param string $targetType
-     * @return \PDepend\Source\AST\ASTNode
-     */
-    public function getFirstChildOfType($targetType)
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                return $node;
-            }
-            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * This method will search recursive for all child nodes that are an
-     * instance of the given <b>$targetType</b>. The returned value will be
-     * an empty <b>array</b> if no child exists for that.
-     *
-     * @param string $targetType Searched class or interface type.
-     * @param array  &$results   Already found node instances. This parameter
-     *        is only for internal usage.
-     * @return \PDepend\Source\AST\ASTNode[]
-     */
-    public function findChildrenOfType($targetType, array &$results = array())
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                $results[] = $node;
-            }
-            $node->findChildrenOfType($targetType, $results);
-        }
-        return $results;
     }
 
     /**
@@ -277,26 +194,15 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     }
 
     /**
-     * Returns a doc comment for this node or <b>null</b> when no comment was
-     * found.
+     * This method adds a new child node at the first position of the children.
      *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * Sets the raw doc comment for this node.
-     *
-     * @param string $comment The doc comment block for this node.
-     *
+     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
      */
-    public function setComment($comment)
+    public function prependChild(ASTNode $node)
     {
-        $this->comment = $comment;
+        array_unshift($this->nodes, $node);
+        $node->setParent($this);
     }
 
     /**
@@ -311,14 +217,13 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     }
 
     /**
-     * ASTVisitor method for node tree traversal.
-     *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param mixed $data
      * @return void
      */
-    public function accept(ASTVisitor $visitor)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
-        $visitor->visitClass($this);
+        return $visitor->visitAnonymousClass($this, $data);
     }
 
     /**
@@ -331,10 +236,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     public function __sleep()
     {
-        return array_merge(
-          array('comment', 'metadata', 'nodes'),
-          parent::__sleep()
-        );
+        return array_merge(array('comment', 'metadata', 'nodes'), parent::__sleep());
     }
 
     /**
@@ -421,6 +323,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     protected function getMetadataSize()
     {
-        return 5;
+        return 4;
     }
 }

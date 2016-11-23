@@ -172,7 +172,13 @@ abstract class AbstractASTType extends AbstractASTArtifact
         if (isset($this->nodes[$index])) {
             return $this->nodes[$index];
         }
-        throw new \OutOfBoundsException("No child at index {$index} exists.");
+        throw new \OutOfBoundsException(
+            sprintf(
+                'No node found at index %d in node of type: %s',
+                $index,
+                get_class($this)
+            )
+        );
     }
 
     /**
