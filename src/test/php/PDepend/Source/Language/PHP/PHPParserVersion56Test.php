@@ -126,6 +126,24 @@ class PHPParserVersion56Test extends AbstractTest
     }
 
     /**
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testListKeywordAsMethodNameThrowsException()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testListKeywordAsFunctionNameThrowsException()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

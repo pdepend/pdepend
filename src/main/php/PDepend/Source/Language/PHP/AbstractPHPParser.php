@@ -551,6 +551,33 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @return string
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws \PDepend\Source\Parser\TokenStreamEndException
+     */
+    protected function parseMethodName()
+    {
+        $tokenType = $this->tokenizer->peek();
+
+        if ($this->isMethodName($tokenType)) {
+            return $this->consumeToken($tokenType)->image;
+        } elseif ($tokenType === Tokenizer::T_EOF) {
+            throw new TokenStreamEndException($this->tokenizer);
+        }
+
+        $this->throwUnexpectedTokenException();
+    }
+
+    /**
+     * @param integer $tokenType
+     * @return bool
+     */
+    protected function isMethodName($tokenType)
+    {
+        return $this->isFunctionName($tokenType);
+    }
+
+    /**
      * Parses a trait declaration.
      *
      * @return \PDepend\Source\AST\ASTTrait
@@ -1147,7 +1174,7 @@ abstract class AbstractPHPParser
 
         $returnsReference = $this->parseOptionalByReference();
 
-        $methodName = $this->parseFunctionName();
+        $methodName = $this->parseMethodName();
 
         $method = $this->builder->buildMethod($methodName);
         $method->setComment($this->docComment);
@@ -1351,7 +1378,7 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_DOUBLE_COLON);
             $this->consumeComments();
 
-            return array($this->parseFunctionName(), $traitReference);
+            return array($this->parseMethodName(), $traitReference);
         }
         $this->tokenStack->pop();
 
@@ -1396,7 +1423,7 @@ abstract class AbstractPHPParser
         }
 
         if (Tokens::T_SEMICOLON !== $this->tokenizer->peek()) {
-            $stmt->setNewName($this->parseFunctionName());
+            $stmt->setNewName($this->parseMethodName());
         }
         return $stmt;
     }

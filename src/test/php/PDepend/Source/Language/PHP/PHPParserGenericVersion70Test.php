@@ -408,4 +408,22 @@ class PHPParserGenericVersion70Test extends AbstractTest
 
         $this->assertSame('??', $expr->getImage());
     }
+
+    /**
+     * @return void
+     */
+    public function testListKeywordAsMethodName()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertNotNull($method);
+    }
+
+    /**
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testListKeywordAsFunctionNameThrowsException()
+    {
+        $this->parseCodeResourceForTest();
+    }
 }
