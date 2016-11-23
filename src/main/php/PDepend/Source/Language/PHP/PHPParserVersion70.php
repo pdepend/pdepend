@@ -73,6 +73,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function isMethodName($tokenType)
     {
         switch ($tokenType) {
+            case Tokens::T_EMPTY:
             case Tokens::T_LIST:
                 return true;
         }

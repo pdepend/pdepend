@@ -6111,11 +6111,11 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         $tokenType = $this->tokenizer->peek();
-        if (false === $this->isKeyword($tokenType)) {
-
+        if (false === $this->isMethodName($tokenType)) {
+            $this->throwUnexpectedTokenException();
         }
 
-        $token = $this->consumeToken(Tokens::T_STRING);
+        $token = $this->consumeToken($tokenType);
 
         $this->consumeComments();
         $this->consumeToken(Tokens::T_EQUAL);
