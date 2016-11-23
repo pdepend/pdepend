@@ -9,6 +9,13 @@
     </properties>
 
 	<body>
+        <release version="2.3.1"
+                 date="2016/11/23"
+                 description="">
+            <action date="2111906" dev="jimdelois" type="fix" system="github" issue="250">
+                Updating ASTAnonymousClass to implement ASTNode, retaining class behavior.
+            </action>
+        </release>
         <release version="2.3.0"
                  date="2016/11/22"
                  description="This release closes multiple bugs/issue and has merged several outstanding pull requests. Beside that it is now possible to pipe source through STDIN into pdepend.">
