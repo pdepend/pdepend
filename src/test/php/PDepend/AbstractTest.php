@@ -111,6 +111,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->clearRunResources();
         $this->resetWorkingDirectory();
 
+        if (function_exists('gc_collect_cycles')) {
+            gc_collect_cycles();
+        }
+
         parent::tearDown();
     }
 
