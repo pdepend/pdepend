@@ -1950,12 +1950,12 @@ abstract class AbstractPHPParser
     /**
      * This method configures the given node with its start and end positions.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The node to prepare.
-     *
+     * @param \PDepend\Source\AST\ASTNode $node
+     * @param array &$tokens
      * @return \PDepend\Source\AST\ASTNode
      * @since 0.9.8
      */
-    protected function setNodePositionsAndReturn(ASTNode $node)
+    protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = null)
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
 

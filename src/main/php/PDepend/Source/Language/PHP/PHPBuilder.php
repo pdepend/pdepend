@@ -364,7 +364,9 @@ class PHPBuilder implements Builder
      */
     public function buildAnonymousClass()
     {
-        return $this->buildAstNodeInstance('ASTAnonymousClass');
+        return $this->buildAstNodeInstance('ASTAnonymousClass')
+            ->setCache($this->cache)
+            ->setContext($this->context);
     }
 
     /**

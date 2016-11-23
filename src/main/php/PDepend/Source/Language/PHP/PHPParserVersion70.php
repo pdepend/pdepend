@@ -241,9 +241,11 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
                 $allocation->addChild(
                     $this->setNodePositionsAndReturn(
-                        $this->parseTypeBody($class)
+                        $this->parseTypeBody($class),
+                        $tokens
                     )
                 );
+                $class->setTokens($tokens);
 
                 return $allocation;
         }
