@@ -191,6 +191,13 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return parent::parseAllocationExpressionTypeReference($allocation);
     }
 
+    /**
+     * Attempts to the next sequence of tokens as an anonymous class and adds it to the allocation expression
+     *
+     * @param \PDepend\Source\AST\ASTAllocationExpression $allocation
+     *
+     * @return null|\PDepend\Source\AST\ASTAnonymousClass
+     */
     protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
     {
         $this->consumeComments();
