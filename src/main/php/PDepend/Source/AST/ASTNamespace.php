@@ -53,13 +53,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTNamespace extends AbstractASTArtifact
 {
     /**
-     * The namespace name.
-     *
-     * @var string
-     */
-    protected $name = '';
-
-    /**
      * The unique identifier for this function.
      *
      * @var string
@@ -96,18 +89,8 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function __construct($name)
     {
-        $this->name = $name;
+        parent::__construct($name);
         $this->id = spl_object_hash($this);
-    }
-
-    /**
-     * Returns the namespace name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

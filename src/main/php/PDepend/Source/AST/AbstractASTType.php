@@ -382,6 +382,17 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
+     * @return string
+     */
+    public function getNamespacedName()
+    {
+        if (null === $this->namespaceName) {
+            return $this->name;
+        }
+        return sprintf('%s\\%s', $this->namespaceName, $this->name);
+    }
+
+    /**
      * Returns the name of the parent namespace.
      *
      * @return string

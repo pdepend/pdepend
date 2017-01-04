@@ -103,6 +103,16 @@ abstract class AbstractASTArtifact implements ASTArtifact
     }
 
     /**
+     * Returns the source image of this ast node.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->name;
+    }
+
+    /**
      * Returns the item name.
      *
      * @return string
@@ -124,6 +134,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
     {
         $this->name = $name;
     }
+
+
 
     /**
      * Returns a id for this code node.
