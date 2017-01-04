@@ -45,6 +45,7 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -429,6 +430,49 @@ class PHPParserVersion70Test extends AbstractTest
     public function testListKeywordAsFunctionNameThrowsException()
     {
         $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTNamespace
+     */
+    public function testGroupUseStatement()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+        $this->assertNotNull($namespaces);
+
+        return $namespaces[0];
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @return void
+     * @depends testGroupUseStatement
+     */
+    public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace)
+    {
+        $classes = $namespace->getClasses();
+        $class = $classes[0];
+
+        $this->assertEquals(
+            'FooLibrary\Bar\Baz\ClassB',
+            $class->getParentClass()->getNamespacedName()
+        );
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNamespace $namespace
+     * @return void
+     * @depends testGroupUseStatement
+     */
+    public function testGroupUseStatementAliasResolution(ASTNamespace $namespace)
+    {
+        $classes = $namespace->getClasses();
+        $class = $classes[1];
+
+        $this->assertEquals(
+            'FooLibrary\Bar\Baz\ClassD',
+            $class->getParentClass()->getNamespacedName()
+        );
     }
 
     /**

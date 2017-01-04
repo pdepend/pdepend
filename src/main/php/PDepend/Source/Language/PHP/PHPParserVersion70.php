@@ -340,4 +340,67 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
         return $parameter;
     }
+
+    /**
+     * @param array $fragments
+     * @return void
+     */
+    protected function parseUseDeclarationForVersion(array $fragments)
+    {
+        if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
+            return $this->parseUseDeclarationVersion70($fragments);
+        }
+        return parent::parseUseDeclarationForVersion($fragments);
+    }
+
+    /**
+     * @param array $fragments
+     * @return void
+     */
+    protected function parseUseDeclarationVersion70(array $fragments)
+    {
+        $namespacePrefixReplaced = $this->namespacePrefixReplaced;
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+        $this->consumeComments();
+
+        do {
+            $subFragments = $this->parseQualifiedNameRaw();
+            $this->consumeComments();
+
+            $image = $this->parseNamespaceImage($subFragments);
+
+            if (Tokens::T_COMMA != $this->tokenizer->peek()) {
+                break;
+            }
+
+            $this->consumeToken(Tokens::T_COMMA);
+            $this->consumeComments();
+
+            // Add mapping between image and qualified name to symbol table
+            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+        } while (true);
+
+        $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+        $this->consumeComments();
+
+        $this->namespacePrefixReplaced = $namespacePrefixReplaced;
+    }
+
+    /**
+     * @param array $previousElements
+     * @return string
+     */
+    protected function parseQualifiedNameElement(array $previousElements)
+    {
+        if (Tokens::T_CURLY_BRACE_OPEN !== $this->tokenizer->peek()) {
+            return parent::parseQualifiedNameElement($previousElements);
+        }
+        if (count($previousElements) > 2 && '\\' === end($previousElements)) {
+            return null;
+        }
+        $this->throwUnexpectedTokenException($this->tokenizer->next());
+    }
 }

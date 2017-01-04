@@ -155,7 +155,7 @@ abstract class AbstractPHPParser
      *
      * @var boolean
      */
-    private $namespacePrefixReplaced = false;
+    protected $namespacePrefixReplaced = false;
 
     /**
      * The name of the last detected namespace.
@@ -197,7 +197,7 @@ abstract class AbstractPHPParser
      *
      * @var \PDepend\Source\Parser\SymbolTable
      */
-    private $useSymbolTable;
+    protected $useSymbolTable;
 
     /**
      * The last parsed doc comment or <b>null</b>.
@@ -5851,7 +5851,7 @@ abstract class AbstractPHPParser
      * @return array(string)
      * @since 0.9.5
      */
-    private function parseQualifiedNameRaw()
+    protected function parseQualifiedNameRaw()
     {
         // Reset namespace prefix flag
         $this->namespacePrefixReplaced = false;
@@ -5891,7 +5891,10 @@ abstract class AbstractPHPParser
 
             // Append to qualified name
             $qualifiedName[] = '\\';
-            $qualifiedName[] = $this->parseClassName();
+
+            if ($nextElement = $this->parseQualifiedNameElement($qualifiedName)) {
+                $qualifiedName[] = $nextElement;
+            }
 
             $this->consumeComments();
 
@@ -5900,6 +5903,15 @@ abstract class AbstractPHPParser
         } while ($tokenType === Tokens::T_BACKSLASH);
 
         return $qualifiedName;
+    }
+
+    /**
+     * @param array $previousElements
+     * @return string
+     */
+    protected function parseQualifiedNameElement(array $previousElements)
+    {
+        return $this->parseClassName();
     }
 
     /**
@@ -6003,18 +6015,7 @@ abstract class AbstractPHPParser
             array_unshift($fragments, '\\');
         }
 
-        if ($this->tokenizer->peek() === Tokens::T_AS) {
-            $this->consumeToken(Tokens::T_AS);
-            $this->consumeComments();
-
-            $image = $this->consumeToken(Tokens::T_STRING)->image;
-            $this->consumeComments();
-        } else {
-            $image = end($fragments);
-        }
-
-        // Add mapping between image and qualified name to symbol table
-        $this->useSymbolTable->add($image, join('', $fragments));
+        $this->parseUseDeclarationForVersion($fragments);
 
         // Check for a following use declaration
         if ($this->tokenizer->peek() === Tokens::T_COMMA) {
@@ -6024,6 +6025,36 @@ abstract class AbstractPHPParser
 
             $this->parseUseDeclaration();
         }
+    }
+
+    /**
+     * @param array $fragments
+     * @return void
+     */
+    protected function parseUseDeclarationForVersion(array $fragments)
+    {
+        $image = $this->parseNamespaceImage($fragments);
+
+        // Add mapping between image and qualified name to symbol table
+        $this->useSymbolTable->add($image, join('', $fragments));
+    }
+
+    /**
+     * @param array $fragments
+     * @return string
+     */
+    protected function parseNamespaceImage(array $fragments)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_AS) {
+            $this->consumeToken(Tokens::T_AS);
+            $this->consumeComments();
+
+            $image = $this->consumeToken(Tokens::T_STRING)->image;
+            $this->consumeComments();
+        } else {
+            $image = end($fragments);
+        }
+        return $image;
     }
 
     /**
