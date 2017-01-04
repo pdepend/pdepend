@@ -61,6 +61,7 @@ use PDepend\Source\AST\State;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Parser\MissingValueException;
+use PDepend\Source\Parser\NoActiveScopeException;
 use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
@@ -419,6 +420,8 @@ abstract class AbstractPHPParser
 
     /**
      * Restores the parser environment back.
+     *
+     * @throws NoActiveScopeException
      *
      * @return void
      * @since 0.9.12
@@ -5808,6 +5811,8 @@ abstract class AbstractPHPParser
      * PDepend\Source\Parser::parse();
      * </code>
      *
+     * @throws NoActiveScopeException
+     *
      * @return string
      * @link   http://php.net/manual/en/language.namespaces.importing.php
      */
@@ -5905,6 +5910,8 @@ abstract class AbstractPHPParser
     /**
      * This method parses a PHP 5.3 namespace declaration.
      *
+     * @throws NoActiveScopeException
+     *
      * @return void
      * @since 0.9.5
      */
@@ -5988,6 +5995,8 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single use declaration and adds a mapping between
      * short name and full qualified name to the use symbol table.
+     *
+     * @throws NoActiveScopeException
      *
      * @return void
      * @since 0.9.5
