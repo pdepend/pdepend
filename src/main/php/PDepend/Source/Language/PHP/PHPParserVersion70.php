@@ -216,55 +216,58 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
     {
         $this->consumeComments();
-
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_CLASS:
-                $this->tokenStack->push();
-
-                $this->consumeToken(Tokens::T_CLASS);
-                $this->consumeComments();
-
-                $class = $this->builder->buildAnonymousClass();
-                $class->setName(
-                    sprintf(
-                        'class@anonymous%s0x%s',
-                        $this->compilationUnit->getFileName(),
-                        uniqid('')
-                    )
-                );
-                $class->setCompilationUnit($this->compilationUnit);
-                $class->setUserDefined();
-
-                if ($this->isNextTokenArguments()) {
-                    $class->addChild($this->parseArguments());
-                }
-
-                $this->consumeComments();
-                $tokenType = $this->tokenizer->peek();
-
-                if ($tokenType === Tokens::T_EXTENDS) {
-                    $class = $this->parseClassExtends($class);
-
-                    $this->consumeComments();
-                    $tokenType = $this->tokenizer->peek();
-                }
-
-                if ($tokenType === Tokens::T_IMPLEMENTS) {
-                    $this->consumeToken(Tokens::T_IMPLEMENTS);
-                    $this->parseInterfaceList($class);
-                }
-
-                $allocation->addChild(
-                    $this->setNodePositionsAndReturn(
-                        $this->parseTypeBody($class),
-                        $tokens
-                    )
-                );
-                $class->setTokens($tokens);
-
-                return $allocation;
+        if (Tokens::T_CLASS !== $this->tokenizer->peek()) {
+            return null;
         }
-        return null;
+
+        $classOrInterface = $this->classOrInterface;
+
+        $this->tokenStack->push();
+
+        $this->consumeToken(Tokens::T_CLASS);
+        $this->consumeComments();
+
+        $class = $this->builder->buildAnonymousClass();
+        $class->setName(
+            sprintf(
+                'class@anonymous%s0x%s',
+                $this->compilationUnit->getFileName(),
+                uniqid('')
+            )
+        );
+        $class->setCompilationUnit($this->compilationUnit);
+        $class->setUserDefined();
+
+        if ($this->isNextTokenArguments()) {
+            $class->addChild($this->parseArguments());
+        }
+
+        $this->consumeComments();
+        $tokenType = $this->tokenizer->peek();
+
+        if ($tokenType === Tokens::T_EXTENDS) {
+            $class = $this->parseClassExtends($class);
+
+            $this->consumeComments();
+            $tokenType = $this->tokenizer->peek();
+        }
+
+        if ($tokenType === Tokens::T_IMPLEMENTS) {
+            $this->consumeToken(Tokens::T_IMPLEMENTS);
+            $this->parseInterfaceList($class);
+        }
+
+        $allocation->addChild(
+            $this->setNodePositionsAndReturn(
+                $this->parseTypeBody($class),
+                $tokens
+            )
+        );
+        $class->setTokens($tokens);
+
+        $this->classOrInterface = $classOrInterface;
+
+        return $allocation;
     }
 
     /**

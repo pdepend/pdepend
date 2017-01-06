@@ -219,7 +219,7 @@ abstract class AbstractPHPParser
      *
      * @var \PDepend\Source\AST\AbstractASTClassOrInterface
      */
-    private $classOrInterface;
+    protected $classOrInterface;
 
     /**
      * If this property is set to <b>true</b> the parser will ignore all doc
