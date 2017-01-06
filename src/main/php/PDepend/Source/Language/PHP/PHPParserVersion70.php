@@ -365,6 +365,13 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         $this->consumeComments();
 
         do {
+            $nextToken = $this->tokenizer->peek();
+            switch ($nextToken) {
+                case Tokens::T_CONST:
+                case Tokens::T_FUNCTION:
+                    $this->consumeToken($nextToken);
+            }
+
             $subFragments = $this->parseQualifiedNameRaw();
             $this->consumeComments();
 
