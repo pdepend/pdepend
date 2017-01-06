@@ -142,6 +142,10 @@ class XmlTest extends AbstractTest
      */
     public function testXmlLogWithoutMetrics()
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('HHVM works different here.');
+        }
+
         $this->packages = $this->parseCodeResourceForTest();
 
         $this->analyzer = new DependencyAnalyzer();
