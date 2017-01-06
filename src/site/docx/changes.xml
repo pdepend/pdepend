@@ -19,7 +19,10 @@
                 PHP 7 - Group use declarations
             </action>
             <action date="00a61c6" dev="manuelpichler" due-to="webmailcontatos" type="fix" system="github" issue="281">
-                Anonymous class - Internal parser state issue fixed.
+                PHP 7 - Anonymous Class - Internal parser state issues
+            </action>
+            <action date="e611915" dev="manuelpichler" due-to="powellblyth" type="fix" system="github" issue="269">
+                Unexpected token: :: (implicit object / method usage)
             </action>
         </release>
         <release version="2.3.2"
