@@ -46,6 +46,7 @@ use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTDeclareStatement;
@@ -2532,12 +2533,11 @@ abstract class AbstractPHPParser
      * This method parses multiple expressions and adds them as children to the
      * given <b>$exprList</b> node.
      *
-     * @param \PDepend\Source\AST\ASTNode $exprList Parent that accepts multiple expr.
-     *
+     * @param \PDepend\Source\AST\ASTNode
      * @return \PDepend\Source\AST\ASTNode
      * @since 1.0.0
      */
-    private function parseExpressionList(\PDepend\Source\AST\ASTNode $exprList)
+    private function parseExpressionList(ASTNode $exprList)
     {
         $this->consumeComments();
         while ($expr = $this->parseOptionalExpression()) {
@@ -4225,11 +4225,20 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if (Tokens::T_PARENTHESIS_CLOSE !== $this->tokenizer->peek()) {
-            $arguments = $this->parseExpressionList($arguments);
+            $arguments = $this->parseArgumentList($arguments);
         }
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn($arguments);
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTArguments $arguments
+     * @return \PDepend\Source\AST\ASTArguments
+     */
+    protected function parseArgumentList(ASTArguments $arguments)
+    {
+        return $this->parseExpressionList($arguments);
     }
 
     /**
