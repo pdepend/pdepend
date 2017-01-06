@@ -383,6 +383,14 @@ class PHPParserVersion54Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testMagicTraitConstantInString()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

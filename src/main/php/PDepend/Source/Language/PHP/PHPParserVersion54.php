@@ -262,4 +262,17 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
         }
         return $this->parseOptionalIndexExpression($node);
     }
+
+    /**
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parseOptionalExpressionForVersion()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_TRAIT_C:
+                return $this->parseConstant();
+            default:
+                return parent::parseOptionalExpressionForVersion();
+        }
+    }
 }
