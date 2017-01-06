@@ -112,6 +112,16 @@ class PHPParserVersion55Test extends AbstractTest
     }
 
     /**
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessageRegExp (^Unexpected token: \.\.\., line: 6, col: 9, file: )
+     */
+    public function testEllipsisOperatorInFunctionCallThrowsException()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

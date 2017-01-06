@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokenizer;
@@ -320,5 +321,36 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
 
                 return $expr;
         }
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTArguments $arguments
+     * @return \PDepend\Source\AST\ASTArguments
+     */
+    protected function parseArgumentList(ASTArguments $arguments)
+    {
+        while (true) {
+            $this->consumeComments();
+            if (Tokens::T_ELLIPSIS === $this->tokenizer->peek()) {
+                $this->consumeToken(Tokens::T_ELLIPSIS);
+            }
+
+            $this->consumeComments();
+            if (null === ($expr = $this->parseOptionalExpression())) {
+                break;
+            }
+
+            $arguments->addChild($expr);
+
+            $this->consumeComments();
+            if (Tokens::T_COMMA === $this->tokenizer->peek()) {
+                $this->consumeToken(Tokens::T_COMMA);
+                $this->consumeComments();
+
+                continue;
+            }
+        }
+
+        return $arguments;
     }
 }

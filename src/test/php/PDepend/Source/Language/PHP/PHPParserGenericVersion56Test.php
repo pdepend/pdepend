@@ -231,4 +231,12 @@ class PHPParserGenericVersion56Test extends AbstractTest
 
         $this->assertNotNull($node);
     }
+
+    /**
+     * @return void
+     */
+    public function testEllipsisOperatorInFunctionCall()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
 }

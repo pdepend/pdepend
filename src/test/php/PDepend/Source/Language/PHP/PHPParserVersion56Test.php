@@ -170,6 +170,14 @@ class PHPParserVersion56Test extends AbstractTest
      */
     public function testUniformVariableSyntaxThrowsException()
     {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
+    public function testEllipsisOperatorInFunctionCall()
+    {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
