@@ -40,38 +40,19 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\AST;
-
-use PDepend\Source\ASTVisitor\ASTVisitor;
+namespace PDepend\Source\Parser;
 
 /**
- * Abstract base class for code item.
- *
- * @copyright 2008-2015 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * This type of exception is thrown when an operation is performed
+ * on a symbol table and there is no active scope.
  */
-interface ASTArtifact /* extends ASTNode */
+class NoActiveScopeException extends ParserException
 {
     /**
-     * Returns the artifact name.
-     *
-     * @return string
-     * @deprecated Use getImage() inherit from ASTNode class.
+     * Constructs a new no active scope exception.
      */
-    public function getName();
-
-    /**
-     * Returns a id for this code node.
-     *
-     * @return string
-     */
-    public function getId();
-
-    /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor);
+    public function __construct()
+    {
+        parent::__construct('No active scope in symbol table.');
+    }
 }

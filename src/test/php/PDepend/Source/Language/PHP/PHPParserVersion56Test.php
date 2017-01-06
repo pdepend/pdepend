@@ -128,6 +128,7 @@ class PHPParserVersion56Test extends AbstractTest
     /**
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessageRegExp (Unexpected token: list, line: 4, col: 21, file: )
      */
     public function testListKeywordAsMethodNameThrowsException()
     {
@@ -137,8 +138,27 @@ class PHPParserVersion56Test extends AbstractTest
     /**
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessageRegExp (Unexpected token: list, line: 2, col: 10, file: )
      */
     public function testListKeywordAsFunctionNameThrowsException()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
+    public function testUseStatement()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessageRegExp (^Unexpected token: \{, line: 2, col: 24, file:)
+     */
+    public function testGroupUseStatementThrowsException()
     {
         $this->parseCodeResourceForTest();
     }

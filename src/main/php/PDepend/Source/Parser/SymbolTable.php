@@ -76,17 +76,23 @@ class SymbolTable
     }
 
     /**
-     * This method destorys the top most scope.
+     * This method destroys the top most scope.
+     *
+     * @throws NoActiveScopeException
      *
      * @return void
      */
     public function destroyScope()
     {
-        // Remove scope from stack
-        array_pop($this->scopeStack);
+        $this->ensureActiveScopeExists();
 
-        // Update current scope to latest in stack
-        $this->scope = end($this->scopeStack);
+        // Destroy current active scope
+        $this->scope = null;
+
+        // Try to restore previously active scope
+        if (count($this->scopeStack) > 0) {
+            $this->scope = array_pop($this->scopeStack);
+        }
     }
 
     /**
@@ -94,26 +100,27 @@ class SymbolTable
      *
      * @param  string $key   The key of this scope value.
      * @param  mixed  $value A new scope value.
+     *
+     * @throws NoActiveScopeException
+     *
      * @return void
      */
     public function add($key, $value)
     {
-        if (is_array($this->scope) === false) {
-            throw new UnderflowException('No active scope.');
-        }
-        $this->scope[strtolower($key)] = $value;
+        $this->ensureActiveScopeExists();
+        $this->scope[$this->normalizeKey($key)] = $value;
     }
 
     /**
      * Resets the current scope
      *
+     * @throws NoActiveScopeException
+     *
      * @return void
      */
     public function resetScope()
     {
-        if (is_array($this->scope) === false) {
-            throw new UnderflowException('No active scope.');
-        }
+        $this->ensureActiveScopeExists();
         $this->scope = array();
     }
 
@@ -122,19 +129,47 @@ class SymbolTable
      * exists in the current scope. The returned value will <b>null</b> if no
      * value exists for the given key.
      *
-     * @param  string $key The key for a searched scope value.
+     * @param string $key The key for a searched scope value.
+     *
+     * @throws NoActiveScopeException
+     *
      * @return mixed
      */
     public function lookup($key)
     {
-        if (is_array($this->scope) === false) {
-            throw new UnderflowException('No active scope.');
-        }
+        $this->ensureActiveScopeExists();
 
-        $key = strtolower($key);
-        if (isset($this->scope[$key])) {
-            return $this->scope[$key];
+        $normalizedKey = $this->normalizeKey($key);
+
+        return isset($this->scope[$normalizedKey])
+            ? $this->scope[$normalizedKey]
+            : null;
+    }
+
+    /**
+     * Checks if there is an active scope.
+     *
+     * @throws NoActiveScopeException if no active scope exists.
+     *
+     * @return void
+     */
+    private function ensureActiveScopeExists()
+    {
+        if (null === $this->scope) {
+            throw new NoActiveScopeException();
         }
-        return null;
+    }
+
+    /**
+     * Normalizes the <code>$key</code>, so it's the same for
+     * <code>add()</code> and <code>lookup()</code> operations.
+     *
+     * @param string $key
+     *
+     * @return string normalized key
+     */
+    private function normalizeKey($key)
+    {
+        return strtolower($key);
     }
 }

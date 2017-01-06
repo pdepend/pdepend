@@ -172,6 +172,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
         if (isset($this->afferentNodes[$node->getId()])) {
             $afferents = $this->afferentNodes[$node->getId()];
         }
+        ksort($afferents);
+
         return $afferents;
     }
 
@@ -187,6 +189,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
         if (isset($this->efferentNodes[$node->getId()])) {
             $efferents = $this->efferentNodes[$node->getId()];
         }
+        ksort($efferents);
+
         return $efferents;
     }
 

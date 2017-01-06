@@ -61,6 +61,7 @@ use PDepend\Source\AST\State;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Parser\MissingValueException;
+use PDepend\Source\Parser\NoActiveScopeException;
 use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
@@ -155,7 +156,7 @@ abstract class AbstractPHPParser
      *
      * @var boolean
      */
-    private $namespacePrefixReplaced = false;
+    protected $namespacePrefixReplaced = false;
 
     /**
      * The name of the last detected namespace.
@@ -197,7 +198,7 @@ abstract class AbstractPHPParser
      *
      * @var \PDepend\Source\Parser\SymbolTable
      */
-    private $useSymbolTable;
+    protected $useSymbolTable;
 
     /**
      * The last parsed doc comment or <b>null</b>.
@@ -419,6 +420,8 @@ abstract class AbstractPHPParser
 
     /**
      * Restores the parser environment back.
+     *
+     * @throws NoActiveScopeException
      *
      * @return void
      * @since 0.9.12
@@ -5808,6 +5811,8 @@ abstract class AbstractPHPParser
      * PDepend\Source\Parser::parse();
      * </code>
      *
+     * @throws NoActiveScopeException
+     *
      * @return string
      * @link   http://php.net/manual/en/language.namespaces.importing.php
      */
@@ -5851,7 +5856,7 @@ abstract class AbstractPHPParser
      * @return array(string)
      * @since 0.9.5
      */
-    private function parseQualifiedNameRaw()
+    protected function parseQualifiedNameRaw()
     {
         // Reset namespace prefix flag
         $this->namespacePrefixReplaced = false;
@@ -5891,7 +5896,10 @@ abstract class AbstractPHPParser
 
             // Append to qualified name
             $qualifiedName[] = '\\';
-            $qualifiedName[] = $this->parseClassName();
+
+            if ($nextElement = $this->parseQualifiedNameElement($qualifiedName)) {
+                $qualifiedName[] = $nextElement;
+            }
 
             $this->consumeComments();
 
@@ -5903,7 +5911,18 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @param array $previousElements
+     * @return string
+     */
+    protected function parseQualifiedNameElement(array $previousElements)
+    {
+        return $this->parseClassName();
+    }
+
+    /**
      * This method parses a PHP 5.3 namespace declaration.
+     *
+     * @throws NoActiveScopeException
      *
      * @return void
      * @since 0.9.5
@@ -5989,6 +6008,8 @@ abstract class AbstractPHPParser
      * This method parses a single use declaration and adds a mapping between
      * short name and full qualified name to the use symbol table.
      *
+     * @throws NoActiveScopeException
+     *
      * @return void
      * @since 0.9.5
      */
@@ -6003,18 +6024,7 @@ abstract class AbstractPHPParser
             array_unshift($fragments, '\\');
         }
 
-        if ($this->tokenizer->peek() === Tokens::T_AS) {
-            $this->consumeToken(Tokens::T_AS);
-            $this->consumeComments();
-
-            $image = $this->consumeToken(Tokens::T_STRING)->image;
-            $this->consumeComments();
-        } else {
-            $image = end($fragments);
-        }
-
-        // Add mapping between image and qualified name to symbol table
-        $this->useSymbolTable->add($image, join('', $fragments));
+        $this->parseUseDeclarationForVersion($fragments);
 
         // Check for a following use declaration
         if ($this->tokenizer->peek() === Tokens::T_COMMA) {
@@ -6024,6 +6034,36 @@ abstract class AbstractPHPParser
 
             $this->parseUseDeclaration();
         }
+    }
+
+    /**
+     * @param array $fragments
+     * @return void
+     */
+    protected function parseUseDeclarationForVersion(array $fragments)
+    {
+        $image = $this->parseNamespaceImage($fragments);
+
+        // Add mapping between image and qualified name to symbol table
+        $this->useSymbolTable->add($image, join('', $fragments));
+    }
+
+    /**
+     * @param array $fragments
+     * @return string
+     */
+    protected function parseNamespaceImage(array $fragments)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_AS) {
+            $this->consumeToken(Tokens::T_AS);
+            $this->consumeComments();
+
+            $image = $this->consumeToken(Tokens::T_STRING)->image;
+            $this->consumeComments();
+        } else {
+            $image = end($fragments);
+        }
+        return $image;
     }
 
     /**
