@@ -225,7 +225,6 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
         if ($count == 0) {
             return null;
         } elseif ($count == 1) {
-
             // @todo ASTValue must be a valid node.
             $value->setValue($expressions[0]);
 
