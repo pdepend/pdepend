@@ -251,7 +251,7 @@ class PyramidTest extends AbstractTest
         );
 
         $svg = new \DOMDocument();
-        $svg->load($output);
+        $svg->load($output, LIBXML_NOWARNING);
 
         // TODO: Replace this loop assertion
         foreach ($expected as $name => $value) {

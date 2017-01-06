@@ -181,7 +181,7 @@ class ChartTest extends AbstractTest
         $logger->close();
 
         $svg = new \DOMDocument();
-        $svg->load($this->outputFile);
+        $svg->load($this->outputFile, LIBXML_NOWARNING);
 
         $xpath = new \DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
@@ -209,7 +209,7 @@ class ChartTest extends AbstractTest
         $logger->close();
 
         $svg = new \DOMDocument();
-        $svg->load($this->outputFile);
+        $svg->load($this->outputFile, LIBXML_NOWARNING);
 
         $xpath = new \DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
@@ -267,7 +267,7 @@ class ChartTest extends AbstractTest
         $logger->close();
 
         $svg = new \DOMDocument();
-        $svg->load($this->outputFile);
+        $svg->load($this->outputFile, LIBXML_NOWARNING);
 
         $xpath = new \DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
