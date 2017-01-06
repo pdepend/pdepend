@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTIndexExpression;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchStatement;
@@ -3708,8 +3709,17 @@ abstract class AbstractPHPParser
      */
     protected function parseParenthesisExpressionOrPrimaryPrefix()
     {
-        $expr = $this->parseParenthesisExpression();
+        return $this->parseParenthesisExpressionOrPrimaryPrefixForVersion(
+            $this->parseParenthesisExpression()
+        );
+    }
 
+    /**
+     * @param \PDepend\Source\AST\ASTExpression $expr
+     * @return \PDepend\Source\AST\ASTExpression
+     */
+    protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
+    {
         $this->consumeComments();
         if (Tokens::T_OBJECT_OPERATOR === $this->tokenizer->peek()) {
             return $this->parseMemberPrimaryPrefix($expr->getChild(0));
@@ -3894,7 +3904,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseOptionalMemberPrimaryPrefix(ASTNode $node)
+    protected function parseOptionalMemberPrimaryPrefix(ASTNode $node)
     {
         $this->consumeComments();
 
@@ -3924,7 +3934,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseMemberPrimaryPrefix(ASTNode $node)
+    protected function parseMemberPrimaryPrefix(ASTNode $node)
     {
         // Consume double colon and optional comments
         $token = $this->consumeToken(Tokens::T_OBJECT_OPERATOR);
@@ -4022,7 +4032,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseStaticMemberPrimaryPrefix(ASTNode $node)
+    protected function parseStaticMemberPrimaryPrefix(ASTNode $node)
     {
         $token = $this->consumeToken(Tokens::T_DOUBLE_COLON);
 

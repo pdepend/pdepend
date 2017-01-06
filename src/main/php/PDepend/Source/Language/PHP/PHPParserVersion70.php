@@ -44,6 +44,8 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -265,6 +267,38 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 return $allocation;
         }
         return null;
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTNode $node
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parseOptionalMemberPrimaryPrefix(ASTNode $node)
+    {
+        $this->consumeComments();
+        if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
+            return $this->parseStaticMemberPrimaryPrefix($node);
+        }
+        if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
+            return $this->parseMemberPrimaryPrefix($node);
+        }
+        return $node;
+    }
+
+    /**
+     * @param \PDepend\Source\AST\ASTExpression $expr
+     * @return \PDepend\Source\AST\ASTExpression
+     */
+    protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
+    {
+        $this->consumeComments();
+        if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
+            return $this->parseStaticMemberPrimaryPrefix($expr->getChild(0));
+        }
+        if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
+            return $this->parseMemberPrimaryPrefix($expr->getChild(0));
+        }
+        return $expr;
     }
 
     /**

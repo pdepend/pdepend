@@ -18,6 +18,9 @@
             <action date="fd4aaca" dev="manuelpichler" due-to="PierreLvx" type="fix" system="github" issue="282">
                 PHP 7 - Group use declarations
             </action>
+            <action date="00a61c6" dev="manuelpichler" due-to="webmailcontatos" type="fix" system="github" issue="281">
+                Anonymous class - Internal parser state issue fixed.
+            </action>
         </release>
         <release version="2.3.2"
                  date="2016/11/23"
