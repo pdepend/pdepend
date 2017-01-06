@@ -4424,11 +4424,14 @@ abstract class AbstractPHPParser
             case Tokens::T_FUNC_C:
             case Tokens::T_CLASS_C:
             case Tokens::T_METHOD_C:
+            case Tokens::T_TRAIT_C:
                 $token = $this->consumeToken($type);
-                $const = $this->builder->buildAstConstant($token->image);
+
+                return $this->setNodePositionsAndReturn(
+                    $this->builder->buildAstConstant($token->image)
+                );
                 break;
         }
-        return $this->setNodePositionsAndReturn($const);
     }
 
     /**
