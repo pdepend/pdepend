@@ -261,7 +261,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     public function getDependencies()
     {
         return new ASTClassOrInterfaceReferenceIterator(
-            $this->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference')
+            $this->findChildrenOfType(
+                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            )
         );
     }
 

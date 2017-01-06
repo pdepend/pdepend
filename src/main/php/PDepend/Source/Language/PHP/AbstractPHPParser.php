@@ -5755,8 +5755,10 @@ abstract class AbstractPHPParser
 
         $comment = $this->builder->buildAstComment($token->image);
         if (preg_match(self::REGEXP_INLINE_TYPE, $token->image, $match)) {
+            $image = $this->useSymbolTable->lookup($match[1]) ?: $match[1];
+
             $comment->addChild(
-                $this->builder->buildAstClassOrInterfaceReference($match[1])
+                $this->builder->buildAstClassOrInterfaceReference($image)
             );
         }
 
@@ -6626,7 +6628,7 @@ abstract class AbstractPHPParser
         $throws = array();
         if (preg_match_all(self::REGEXP_THROWS_TYPE, $comment, $matches) > 0) {
             foreach ($matches[1] as $match) {
-                $throws[] = $match;
+                $throws[] = $this->useSymbolTable->lookup($match) ?: $match;
             }
         }
         return $throws;
@@ -6642,12 +6644,18 @@ abstract class AbstractPHPParser
      */
     private function parseReturnAnnotation($comment)
     {
-        if (preg_match(self::REGEXP_RETURN_TYPE, $comment, $match) > 0) {
-            foreach (explode('|', end($match)) as $type) {
-                if (Type::isScalarType($type) === false) {
-                    return $type;
-                }
+        if (0 === preg_match(self::REGEXP_RETURN_TYPE, $comment, $match)) {
+            return null;
+        }
+
+        foreach (explode('|', end($match)) as $image) {
+            $image = $this->useSymbolTable->lookup($image) ?: $image;
+
+            if (Type::isScalarType($image)) {
+                continue;
             }
+
+            return $image;
         }
         return null;
     }
@@ -6662,7 +6670,12 @@ abstract class AbstractPHPParser
     private function parseVarAnnotation($comment)
     {
         if (preg_match(self::REGEXP_VAR_TYPE, $comment, $match) > 0) {
-            return array_map('trim', explode('|', end($match)));
+            return array_map(
+                function ($image) {
+                    return $this->useSymbolTable->lookup($image) ?: $image;
+                },
+                array_map('trim', explode('|', end($match)))
+            );
         }
         return array();
     }

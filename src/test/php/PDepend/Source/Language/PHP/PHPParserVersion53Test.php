@@ -112,6 +112,20 @@ class PHPParserVersion53Test extends AbstractTest
     }
 
     /**
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
+     */
+    public function testParserResolvesDependenciesInDocComments()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+        $classes = $namespaces[0]->getClasses();
+        $dependencies = $classes[0]->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference');
+
+        $this->assertSame(1, count($dependencies));
+
+        return $dependencies;
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
