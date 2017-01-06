@@ -470,4 +470,12 @@ class PHPParserGenericVersion70Test extends AbstractTest
             $class->getParentClass()->getNamespacedName()
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testUniformVariableSyntax()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
 }

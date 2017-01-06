@@ -156,11 +156,21 @@ class PHPParserVersion56Test extends AbstractTest
     /**
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessageRegExp (^Unexpected token: \{, line: 2, col: 24, file:)
+     * @expectedExceptionMessageRegExp (^Unexpected token: \{, line: 2, col: 24, file: )
      */
     public function testGroupUseStatementThrowsException()
     {
         $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessageRegExp (^Unexpected token: ::, line: 8, col: 24, file: )
+     */
+    public function testUniformVariableSyntaxThrowsException()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
