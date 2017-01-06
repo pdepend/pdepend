@@ -48,7 +48,7 @@ use PDepend\Source\Parser\SymbolTable;
 /**
  * Test case for the {@link SymbolTable} class.
  *
- * @covers SymbolTable
+ * @covers \PDepend\Source\Parser\SymbolTable
  * @group unittest
  */
 class SymbolTableTest extends AbstractTest
