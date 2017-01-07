@@ -30,6 +30,9 @@
             <action date="078e532" dev="manuelpichler" type="fix" system="github" issue="204">
                 Support for the ... operator in function calls
             </action>
+            <action date="d4bf7bb" dev="manuelpichler" due-to="Brandon0" type="fix" system="github" issue="290">
+                Unexpected token: ARRAY (reserved keyword as a class constant)
+            </action>
         </release>
         <release version="2.3.2"
                  date="2016/11/23"
