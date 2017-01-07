@@ -6670,9 +6670,11 @@ abstract class AbstractPHPParser
     private function parseVarAnnotation($comment)
     {
         if (preg_match(self::REGEXP_VAR_TYPE, $comment, $match) > 0) {
+            $useSymbolTable = $this->useSymbolTable;
+
             return array_map(
-                function ($image) {
-                    return $this->useSymbolTable->lookup($image) ?: $image;
+                function ($image) use ($useSymbolTable) {
+                    return $useSymbolTable->lookup($image) ?: $image;
                 },
                 array_map('trim', explode('|', end($match)))
             );
