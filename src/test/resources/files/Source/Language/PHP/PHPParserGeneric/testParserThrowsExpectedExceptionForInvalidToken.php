@@ -1,7 +1,7 @@
 <?php
 class testParserThrowsExpectedExceptionForInvalidToken
 {
-    public function array()
+    public function 42()
     {
         
     }

@@ -24,6 +24,12 @@
             <action date="e611915" dev="manuelpichler" due-to="powellblyth" type="fix" system="github" issue="269">
                 Unexpected token: :: (implicit object / method usage)
             </action>
+            <action date="b76e2b0" dev="manuelpichler" due-to="yoosefi" type="fix" system="github" issue="285">
+                Parse the magic constant __TRAIT__
+            </action>
+            <action date="078e532" dev="manuelpichler" type="fix" system="github" issue="204">
+                Support for the ... operator in function calls
+            </action>
         </release>
         <release version="2.3.2"
                  date="2016/11/23"
