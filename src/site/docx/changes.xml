@@ -9,31 +9,31 @@
     </properties>
 
 	<body>
-        <release version="2.3.3"
-                 date="2017/01/04"
-                 description="">
+        <release version="2.4.0"
+                 date="2017/01/10"
+                 description="This release implements language features like Anonymous Classes, Group use Declarations, Uniform Variable Syntax or Loosening Reserved Word Restrictions that were introduced with PHP 7.0, so that PDepend 2.4 is now PHP 7.0 compatible.">
             <action date="1265259" dev="kalimatas" type="update" system="github" issue="280">
                 Refactor SymbolTable
             </action>
-            <action date="fd4aaca" dev="manuelpichler" due-to="PierreLvx" type="fix" system="github" issue="282">
+            <action date="fd4aaca" dev="manuelpichler" due-to="PierreLvx" type="add" system="github" issue="282">
                 PHP 7 - Group use declarations
             </action>
             <action date="00a61c6" dev="manuelpichler" due-to="webmailcontatos" type="fix" system="github" issue="281">
                 PHP 7 - Anonymous Class - Internal parser state issues
             </action>
-            <action date="e611915" dev="manuelpichler" due-to="powellblyth" type="fix" system="github" issue="269">
+            <action date="e611915" dev="manuelpichler" due-to="powellblyth" type="add" system="github" issue="269">
                 Unexpected token: :: (implicit object / method usage)
             </action>
             <action date="b76e2b0" dev="manuelpichler" due-to="yoosefi" type="fix" system="github" issue="285">
                 Parse the magic constant __TRAIT__
             </action>
-            <action date="078e532" dev="manuelpichler" type="fix" system="github" issue="204">
+            <action date="078e532" dev="manuelpichler" type="add" system="github" issue="204">
                 Support for the ... operator in function calls
             </action>
             <action date="e81411f" dev="manuelpichler" due-to="buskamuza" type="fix" system="github" issue="210">
                 Partial Class Namespace is Calculated Twice: in Global and it's Own Namespace
             </action>
-            <action date="d4bf7bb" dev="manuelpichler" due-to="Brandon0" type="fix" system="github" issue="290">
+            <action date="d4bf7bb" dev="manuelpichler" due-to="Brandon0" type="add" system="github" issue="290">
                 Unexpected token: ARRAY (reserved keyword as a class constant)
             </action>
         </release>

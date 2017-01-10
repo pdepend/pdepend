@@ -1,3 +1,40 @@
+pdepend-2.4.0 (2017/01/10)
+==========================
+
+This release implements language features like Anonymous Classes, 
+Group use Declarations, Uniform Variable Syntax or Loosening Reserved 
+Word Restrictions that were introduced with PHP 7.0, so that PDepend 
+2.4 is now PHP 7.0 compatible.
+
+- Fixed #281: PHP 7 - Anonymous Class - Internal parser state issues 
+  Fixed in commit #00a61c6.
+- Fixed #285: Parse the magic constant __TRAIT__ Fixed in commit 
+  #b76e2b0.
+- Fixed #210: Partial Class Namespace is Calculated Twice: in Global 
+  and it's Own Namespace Fixed in commit #e81411f.
+- Implemented #280: Refactor SymbolTable Implemented in commit 
+  #1265259.
+- Implemented #282: PHP 7 - Group use declarations Implemented in 
+  commit #fd4aaca.
+- Implemented #269: Unexpected token: :: (implicit object / method 
+  usage) Implemented in commit #e611915.
+- Implemented #204: Support for the ... operator in function calls 
+  Implemented in commit #078e532.
+- Implemented #290: Unexpected token: ARRAY (reserved keyword as a 
+  class constant) Implemented in commit #d4bf7bb.
+
+pdepend-2.3.2 (2016/11/23)
+==========================
+
+Bugfix release that closes a caching issue that was introduced in 
+2.3.1.
+
+- Fixed #276: Uncaught Error: Call to a member function type() on null 
+  in Fixed in commit #48d8081.
+- Allow list as method name under PHP 7 Fixed in commit #4968ed4.
+- Fixed #277: serialize(): "comment" is returned from __sleep multiple 
+  times in store in FileCacheDriver.php Fixed in commit #31cf053.
+
 pdepend-2.3.1 (2016/11/23)
 ==========================
 
