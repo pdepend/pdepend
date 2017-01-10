@@ -172,6 +172,10 @@
             <arg line="dist/${project.name}-${project.version}.phar" />
             <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.phar" />
         </exec>
+        <exec dir="${commons:builddir}" executable="scp" failonerror="true">
+            <arg line="dist/${project.name}-${project.version}.bz2.phar" />
+            <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.bz2.phar" />
+        </exec>
         <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
             <arg line="${remote.shell.credentials}" />
             <arg line="cd '${project.web.release.dir}/..' ; rm latest ; ln -s '${project.version}' latest" />

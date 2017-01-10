@@ -10,7 +10,7 @@ Version @PROJECT_VERSION@ released
 We are proud to announce version `@PROJECT_VERSION@`__ of PDepend. For more
 details visit the version release `site`__.
 
-The prefered way to install PDepend is as a `phar`__ archive:
+The prefered way to install PDepend is as a `phar`__ (`bz2`__) archive:
 
 .. class:: shell
 
@@ -48,13 +48,15 @@ And finally let Composer install the project dependencies:
 Download
 --------
 
-Download the latest version of PHP_Depend as a `Phar archive`__ or `Composer`__
+Download the latest version of PHP_Depend as a `Phar archive`__ (`bz2`__) or `Composer`__
 dependency.
 
 __ /download/release/@PROJECT_VERSION@/changelog.html
 __ /download/release/@PROJECT_VERSION@/changelog.html
 __ https://static.pdepend.org/php/latest/pdepend.phar
+__ https://static.pdepend.org/php/latest/pdepend.bz2.phar
 __ http://getcomposer.org
 __ http://getcomposer.org/composer.phar
 __ https://static.pdepend.org/php/@PROJECT_VERSION@/pdepend.phar
+__ https://static.pdepend.org/php/@PROJECT_VERSION@/pdepend.bz2.phar
 __ http://packagist.org/packages/pdepend/pdepend
