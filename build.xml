@@ -25,12 +25,12 @@
         phar archive works as expected.
 
         Parameters:
-            ${-package:phar:filename}  Name of the created phar file.
+            ${-phar:filename}  Name of the created phar file.
     -->
-    <target name="-pdepend:package:phar:after~hooked" extensionOf="-package:phar:after~hook">
+    <target name="-pdepend:phar:after~hooked" extensionOf="-phar:after~hook">
         <antcall target="-package-execute">
             <param name="-package.includepath" value="${commons:tmpdir}"/>
-            <param name="-package.executable" value="${-package:phar:filename}" />
+            <param name="-package.executable" value="${-phar:filename}" />
         </antcall>
     </target>
 
@@ -186,7 +186,7 @@
         </exec>
     </target>
 
-    <target name="-package:phar:before~hooked" extensionOf="-package:phar:before~hook">
+    <target name="-phar:before~hooked" extensionOf="-phar:before~hook">
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />
             <arg line="update" />
@@ -196,7 +196,7 @@
         </exec>
     </target>
 
-    <target name="-package:phar:after~hooked" extensionOf="-package:phar:after~hook">
+    <target name="-phar:after~hooked" extensionOf="-phar:after~hook">
         <exec executable="git" dir="${basedir}" failonerror="true">
             <arg line="stash" />
         </exec>
