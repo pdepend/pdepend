@@ -529,14 +529,10 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * Tests if the give token is a valid function name in the supported PHP
-     * version.
-     *
      * @param integer $tokenType
      * @return boolean
-     * @since 2.3
      */
-    protected function isFunctionName($tokenType)
+    private function isAllowedName($tokenType)
     {
         switch ($tokenType) {
             case Tokens::T_NULL:
@@ -553,6 +549,28 @@ abstract class AbstractPHPParser
                 return true;
         }
         return false;
+    }
+
+    /**
+     * @param integer $tokenType
+     * @return boolean
+     */
+    protected function isConstantName($tokenType)
+    {
+        return $this->isAllowedName($tokenType);
+    }
+
+    /**
+     * Tests if the give token is a valid function name in the supported PHP
+     * version.
+     *
+     * @param integer $tokenType
+     * @return boolean
+     * @since 2.3
+     */
+    protected function isFunctionName($tokenType)
+    {
+        return $this->isAllowedName($tokenType);
     }
 
     /**
@@ -579,7 +597,7 @@ abstract class AbstractPHPParser
      */
     protected function isMethodName($tokenType)
     {
-        return $this->isFunctionName($tokenType);
+        return $this->isAllowedName($tokenType);
     }
 
     /**
@@ -6175,7 +6193,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         $tokenType = $this->tokenizer->peek();
-        if (false === $this->isMethodName($tokenType)) {
+        if (false === $this->isConstantName($tokenType)) {
             $this->throwUnexpectedTokenException();
         }
 

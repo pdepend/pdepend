@@ -82,6 +82,24 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     }
 
     /**
+     * @param integer $tokenType
+     * @return boolean
+     */
+    protected function isConstantName($tokenType)
+    {
+        return $this->isFunctionName($tokenType);
+    }
+
+    /**
+     * @param integer $tokenType
+     * @return bool
+     */
+    protected function isMethodName($tokenType)
+    {
+        return $this->isFunctionName($tokenType);
+    }
+
+    /**
      * Tests if the give token is a valid function name in the supported PHP
      * version.
      *

@@ -492,6 +492,22 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testClassConstantNames()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClassMethodNames()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

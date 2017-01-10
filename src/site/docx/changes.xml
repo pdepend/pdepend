@@ -30,6 +30,9 @@
             <action date="078e532" dev="manuelpichler" type="fix" system="github" issue="204">
                 Support for the ... operator in function calls
             </action>
+            <action date="e81411f" dev="manuelpichler" due-to="buskamuza" type="fix" system="github" issue="210">
+                Partial Class Namespace is Calculated Twice: in Global and it's Own Namespace
+            </action>
             <action date="d4bf7bb" dev="manuelpichler" due-to="Brandon0" type="fix" system="github" issue="290">
                 Unexpected token: ARRAY (reserved keyword as a class constant)
             </action>
