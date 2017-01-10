@@ -46,7 +46,6 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTNode;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -77,6 +76,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         switch ($tokenType) {
             case Tokens::T_EMPTY:
             case Tokens::T_LIST:
+            case Tokens::T_ARRAY:
+            case Tokens::T_NEW:
                 return true;
         }
         return parent::isMethodName($tokenType);
