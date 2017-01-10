@@ -1,7 +1,7 @@
 @echo off
 REM This file is part of PDepend.
 REM
-REM Copyright (c) 2008-2015, Manuel Pichler <mapi@pdepend.org>.
+REM Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
 REM All rights reserved.
 REM
 REM Redistribution and use in source and binary forms, with or without
