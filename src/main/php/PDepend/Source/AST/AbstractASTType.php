@@ -368,7 +368,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Sets the tokens for this type.
      *
-     * @param  \PDepend\Source\Tokenizer\Token[] $tokens The generated tokens.
+     * @param \PDepend\Source\Tokenizer\Token[] $tokens
      * @return void
      */
     public function setTokens(array $tokens)
@@ -386,7 +386,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function getNamespacedName()
     {
-        if (null === $this->namespaceName) {
+        if (null === $this->namespace || $this->namespace->isPackageAnnotation()) {
             return $this->name;
         }
         return sprintf('%s\\%s', $this->namespaceName, $this->name);

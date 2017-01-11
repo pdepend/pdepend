@@ -381,6 +381,40 @@ class ASTTraitTest extends AbstractASTArtifactTest
     }
 
     /**
+     * @return void
+     */
+    public function testGetNamespacedName()
+    {
+        $trait = new ASTTrait('MyTrait');
+        $this->assertSame('MyTrait', $trait->getNamespacedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedNameWithNamespaceDeclaration()
+    {
+        $trait = new ASTTrait('MyTrait');
+        $trait->setNamespace(new ASTNamespace('My\\Namespace'));
+
+        $this->assertSame('My\\Namespace\\MyTrait', $trait->getNamespacedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedNameWithPackageAnnotation()
+    {
+        $namespace = new ASTNamespace('My\\Namespace');
+        $namespace->setPackageAnnotation(true);
+
+        $Trait = new ASTTrait('MyTrait');
+        $Trait->setNamespace($namespace);
+
+        $this->assertSame('MyTrait', $Trait->getNamespacedName());
+    }
+
+    /**
      * testAcceptInvokesVisitTraitOnGivenVisitor
      *
      * @return void

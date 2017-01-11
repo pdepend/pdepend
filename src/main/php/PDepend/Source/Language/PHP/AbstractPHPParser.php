@@ -1164,16 +1164,16 @@ abstract class AbstractPHPParser
 
         // First check for an existing namespace
         if ($this->namespaceName !== null) {
-            $packageName = $this->namespaceName;
+            $namespaceName = $this->namespaceName;
         } elseif ($this->packageName !== Builder::DEFAULT_NAMESPACE) {
-            $packageName = $this->packageName;
+            $namespaceName = $this->packageName;
         } else {
-            $packageName = $this->globalPackageName;
+            $namespaceName = $this->globalPackageName;
         }
 
-        $this->builder
-            ->buildNamespace($packageName)
-            ->addFunction($function);
+        $namespace = $this->builder->buildNamespace($namespaceName);
+        $namespace->setPackageAnnotation(null === $this->namespaceName);
+        $namespace->addFunction($function);
 
         // Store function in source file, because we need them during the file's
         // __wakeup() phase for function declarations within another function or
@@ -6570,7 +6570,10 @@ abstract class AbstractPHPParser
      */
     private function getNamespaceOrPackage()
     {
-        return $this->builder->buildNamespace($this->getNamespaceOrPackageName());
+        $namespace = $this->builder->buildNamespace($this->getNamespaceOrPackageName());
+        $namespace->setPackageAnnotation(null === $this->namespaceName);
+
+        return $namespace;
     }
 
     /**

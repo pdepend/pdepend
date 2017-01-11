@@ -293,6 +293,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $typeXml = $doc->createElement($typeIdentifier);
         $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+        $typeXml->setAttribute('fqname', Utf8Util::ensureEncoding($type->getNamespacedName()));
         $typeXml->setAttribute('start', Utf8Util::ensureEncoding($type->getStartLine()));
         $typeXml->setAttribute('end', Utf8Util::ensureEncoding($type->getEndLine()));
 

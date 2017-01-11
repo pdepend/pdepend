@@ -83,6 +83,11 @@ class ASTNamespace extends AbstractASTArtifact
     private $userDefined = null;
 
     /**
+     * @var boolean
+     */
+    protected $packageAnnotation = false;
+
+    /**
      * Constructs a new namespace for the given <b>$name</b>
      *
      * @param string $name
@@ -286,6 +291,22 @@ class ASTNamespace extends AbstractASTArtifact
             // Remove this as parent
             $function->unsetNamespace();
         }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPackageAnnotation()
+    {
+        return $this->packageAnnotation;
+    }
+
+    /**
+     * @param boolean $packageAnnotation
+     */
+    public function setPackageAnnotation($packageAnnotation)
+    {
+        $this->packageAnnotation = $packageAnnotation;
     }
 
     /**

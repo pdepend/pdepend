@@ -9,7 +9,7 @@
     </function>
   </package>
   <package name="pkg1" baz="23" foobar="42">
-    <class name="FooBar" start="30" end="49" baz="23" foobar="42">
+    <class fqname="FooBar" name="FooBar" start="30" end="49" baz="23" foobar="42">
       <file name="???"/>
       <method name="x" start="43" end="43" baz="23" foobar="42"/>
       <method name="y" start="44" end="48" baz="23" foobar="42"/>
@@ -19,7 +19,7 @@
     </function>
   </package>
   <package name="pkg3" baz="23" foobar="42">
-    <class name="Bar" start="23" end="25" baz="23" foobar="42">
+    <class fqname="Bar" name="Bar" start="23" end="25" baz="23" foobar="42">
       <file name="???"/>
       <method name="y" start="24" end="24" baz="23" foobar="42"/>
     </class>

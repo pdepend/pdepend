@@ -226,7 +226,7 @@ class ASTNamespaceTest extends AbstractTest
     public function testRemoveTypeResetsPackageReferenceFromRemovedType()
     {
         $namespace = new ASTNamespace('package1');
-        $class   = new ASTClass('Class');
+        $class = new ASTClass('Class');
 
         $namespace->addType($class);
         $namespace->removeType($class);
@@ -460,5 +460,25 @@ class ASTNamespaceTest extends AbstractTest
         $namespace->addFunction(new ASTFunction("foo", 0));
 
         $this->assertTrue($namespace->isUserDefined());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPackageAnnotationReturnsFalseByDefault()
+    {
+        $namespace = new ASTNamespace('namespace');
+        $this->assertFalse($namespace->isPackageAnnotation());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPackageAnnotationReturnsFalseTrue()
+    {
+        $namespace = new ASTNamespace('namespace');
+        $namespace->setPackageAnnotation(true);
+
+        $this->assertTrue($namespace->isPackageAnnotation());
     }
 }
