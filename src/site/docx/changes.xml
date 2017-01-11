@@ -9,6 +9,13 @@
     </properties>
 
 	<body>
+        <release version="2.4.1"
+                 date="2017/01/11"
+                 description="This release closes a bug within PDepend's parser when keywords are used as method or constant names in PHP 7.0">
+            <action date="8f07ac7" dev="manuelpichler" type="fix">
+                Fixes a issue with methods or constants with keyword identifiers called/accessed in PHP 7.
+            </action>
+        </release>
         <release version="2.4.0"
                  date="2017/01/10"
                  description="This release implements language features like Anonymous Classes, Group use Declarations, Uniform Variable Syntax or Loosening Reserved Word Restrictions that were introduced with PHP 7.0, so that PDepend 2.4 is now PHP 7.0 compatible.">
