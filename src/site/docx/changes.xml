@@ -13,7 +13,7 @@
                  date="2017/01/11"
                  description="This release closes a bug within PDepend's parser when keywords are used as method or constant names in PHP 7.0">
             <action date="8f07ac7" dev="manuelpichler" type="fix">
-                Fixes a issue with methods or constants with keyword identifiers called/accessed in PHP 7.
+                Fixes an issue with methods or constants with keyword identifiers called/accessed in PHP 7.
             </action>
         </release>
         <release version="2.4.0"

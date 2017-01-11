@@ -4,7 +4,7 @@ pdepend-2.4.1 (2017/01/11)
 This release closes a bug within PDepend's parser when keywords are 
 used as method or constant names in PHP 7.0
 
-- Fixes a issue with methods or constants with keyword identifiers 
+- Fixes an issue with methods or constants with keyword identifiers 
   called/accessed in PHP 7. Fixed in commit #8f07ac7.
 
 pdepend-2.4.0 (2017/01/10)
