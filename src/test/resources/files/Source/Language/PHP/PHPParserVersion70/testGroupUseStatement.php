@@ -9,6 +9,8 @@ use foo\math\{ Math, const PI, function sin, function cos, function cosh };
 
 use my\math\{ const SINDELFINGEN };
 
+use my\ { ClassE, ClassF, ClassG, ClassH as Bofiz };
+
 class ExtendingClass extends ClassB
 {
 
