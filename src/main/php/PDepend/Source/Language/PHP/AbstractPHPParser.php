@@ -5294,7 +5294,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
-    private function parseFormalParameterOrTypeHintOrByReference()
+    protected function parseFormalParameterOrTypeHintOrByReference()
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
