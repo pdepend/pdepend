@@ -9,6 +9,19 @@
     </properties>
 
 	<body>
+        <release version="2.5.0"
+                 date="2017/01/19"
+                 description="This release closes a parsing bug in PDepend 2.4.1, starts with the implementation of PHP 7.1 support and adds a new attribute for the fully-qualified-classname to the summary report.">
+            <action date="c5c53eb" dev="juliendufresne" type="add" system="github" issue="294">
+                Add support for PHP 7.1 optionals.
+            </action>
+            <action date="3e523f5" dev="manuelpichler" due-to="PierreLvx" type="fix" system="github" issue="282">
+                Issue with grouped use statements when only a single level namespace prefix was used.
+            </action>
+            <action date="13e9cbc" dev="manuelpichler" due-to="sebastianbergmann" type="add" system="github" issue="88">
+                Fully qualified classname in summary report.
+            </action>
+        </release>
         <release version="2.4.1"
                  date="2017/01/11"
                  description="This release closes a bug within PDepend's parser when keywords are used as method or constant names in PHP 7.0">

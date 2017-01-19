@@ -1,3 +1,17 @@
+pdepend-2.5.0 (2017/01/19)
+==========================
+
+This release closes a parsing bug in PDepend 2.4.1, starts with the 
+implementation of PHP 7.1 support and adds a new attribute for the 
+fully-qualified-classname to the summary report.
+
+- Fixed #282: Issue with grouped use statements when only a single 
+  level namespace prefix was used. Fixed in commit #3e523f5.
+- Implemented #294: Add support for PHP 7.1 optionals. Implemented in 
+  commit #c5c53eb.
+- Implemented #88: Fully qualified classname in summary report. 
+  Implemented in commit #13e9cbc.
+
 pdepend-2.4.1 (2017/01/11)
 ==========================
 
