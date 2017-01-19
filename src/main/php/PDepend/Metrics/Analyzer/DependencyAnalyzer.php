@@ -457,7 +457,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
      * @param  \PDepend\Source\AST\ASTNamespace[] &$list
-     * @param  \PDepend\Source\AST\ASTNamespace   $namespace
+     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.
      */
