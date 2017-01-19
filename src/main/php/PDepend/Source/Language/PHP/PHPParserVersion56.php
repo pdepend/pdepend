@@ -70,8 +70,6 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
         $expressions = array();
 
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
-            $expr = null;
-
             switch ($tokenType) {
                 case Tokens::T_COMMA:
                 case Tokens::T_CLOSE_TAG:
