@@ -246,13 +246,14 @@ class XmlTest extends AbstractTest
     }
 
     /**
-     * testNodeAwareAnalyzer
-     *
+     * @param string $fixture
+     * @param string $expectation
      * @return void
+     * @dataProvider dataProviderNodeAware
      */
-    public function testNodeAwareAnalyzer()
+    public function testNodeAwareAnalyzer($fixture, $expectation)
     {
-        $this->namespaces = $this->parseCodeResourceForTest();
+        $this->namespaces = $this->parseSource($fixture);
 
         $input = array(
             array('loc'  =>  42),  array('ncloc'  =>  23),
@@ -298,10 +299,23 @@ class XmlTest extends AbstractTest
 
         $log->close();
 
-        $fileName = 'node-aware-result-set.xml';
         $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$expectation}"),
             $this->getNormalizedPathXml($this->resultFile)
+        );
+    }
+
+    public function dataProviderNodeAware()
+    {
+        return array(
+            array(
+                'Report/Summary/Xml/testNodeAwareAnalyzerWithNamespaces.php',
+                'node-aware-result-set-with-namespaces.xml',
+            ),
+            array(
+                'Report/Summary/Xml/testNodeAwareAnalyzerWithPackages.php',
+                'node-aware-result-set-with-packages.xml',
+            ),
         );
     }
 
@@ -310,7 +324,7 @@ class XmlTest extends AbstractTest
         return preg_replace(
             array('(file\s+name="[^"]+")', '(generated="[^"]*")'),
             array('file name="' . __FILE__ . '"', 'generated=""'),
-             file_get_contents($fileName)
+            file_get_contents($fileName)
         );
     }
 }
