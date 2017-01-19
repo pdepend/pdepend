@@ -1,3 +1,15 @@
+build:
+    environment:
+        php:
+            version: 7.0
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=some-file'
+                coverage:
+                    file: 'some-file'
+                    format: 'clover'
+
 checks:
     php:
         code_rating: true
