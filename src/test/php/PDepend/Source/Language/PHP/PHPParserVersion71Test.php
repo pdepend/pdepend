@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,54 +36,52 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Abstract base class for a type node.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion71} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion71
+ * @group unittest
  */
-class ASTType extends AbstractASTNode
+class PHPParserVersion71Test extends AbstractTest
 {
     /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     *
-     * @return boolean
+     * @return void
      */
-    public function isArray()
+    public function testNullableTypeHintParameter()
     {
-        return false;
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
-     *
-     * @return boolean
+     * @return void
      */
-    public function isScalar()
+    public function testNullableTypeHintReturn()
     {
-        return false;
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
-     * @since 0.9.12
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        return $visitor->visitType($this, $data);
+        return $this->getMockForAbstractClass(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion71',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

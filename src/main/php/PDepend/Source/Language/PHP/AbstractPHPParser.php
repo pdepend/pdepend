@@ -3964,10 +3964,8 @@ abstract class AbstractPHPParser
         $tokenType = $this->tokenizer->peek();
 
         switch ($tokenType) {
-            case Tokens::T_CALLABLE:
-                /* Fixme */
-            case Tokens::T_STRING:
-                $child = $this->parseIdentifier();
+            case ($this->isMethodName($tokenType)):
+                $child = $this->parseIdentifier($tokenType);
                 $child = $this->parseOptionalIndexExpression($child);
 
                 // TODO: Move this in a separate method
@@ -4869,12 +4867,13 @@ abstract class AbstractPHPParser
      * Parses a static identifier expression, as it is used for method and
      * function names.
      *
+     * @param integer $tokenType
      * @return \PDepend\Source\AST\ASTIdentifier
      * @since 0.9.12
      */
-    protected function parseIdentifier()
+    protected function parseIdentifier($tokenType = Tokens::T_STRING)
     {
-        $token = $this->consumeToken(Tokens::T_STRING);
+        $token = $this->consumeToken($tokenType);
 
         $node = $this->builder->buildAstIdentifier($token->image);
         $node->configureLinesAndColumns(
@@ -5295,7 +5294,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
-    private function parseFormalParameterOrTypeHintOrByReference()
+    protected function parseFormalParameterOrTypeHintOrByReference()
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();

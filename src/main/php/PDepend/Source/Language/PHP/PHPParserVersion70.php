@@ -142,7 +142,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return parent::isConstantName($tokenType);
     }
 
-
     /**
      * @param integer $tokenType
      * @return bool
@@ -154,6 +153,23 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 return true;
         }
         return $this->isConstantName($tokenType);
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parsePostfixIdentifier()
+    {
+        $tokenType = $this->tokenizer->peek();
+        switch (true) {
+            case ($this->isConstantName($tokenType)):
+                $node = $this->parseLiteral();
+                break;
+            default:
+                $node = parent::parsePostfixIdentifier();
+                break;
+        }
+        return $this->parseOptionalIndexExpression($node);
     }
 
     /**
@@ -516,7 +532,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         if (Tokens::T_CURLY_BRACE_OPEN !== $this->tokenizer->peek()) {
             return parent::parseQualifiedNameElement($previousElements);
         }
-        if (count($previousElements) > 2 && '\\' === end($previousElements)) {
+        if (count($previousElements) >= 2 && '\\' === end($previousElements)) {
             return null;
         }
         $this->throwUnexpectedTokenException($this->tokenizer->next());

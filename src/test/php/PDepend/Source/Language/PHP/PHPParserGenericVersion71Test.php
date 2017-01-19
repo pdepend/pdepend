@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2013, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,56 +36,39 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @since     0.9.20
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\AbstractTest;
 
 /**
- * Abstract base class for a type node.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
+ * @group unittest
  */
-class ASTType extends AbstractASTNode
+class PHPParserGenericVersion71Test extends AbstractTest
 {
     /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     *
-     * @return boolean
+     * @return void
      */
-    public function isArray()
+    public function testNullableTypeHintParameter()
     {
-        return false;
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
-     *
-     * @return boolean
+     * @return void
      */
-    public function isScalar()
+    public function testNullableTypeHintReturn()
     {
-        return false;
-    }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
-     * @since 0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitType($this, $data);
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 }
