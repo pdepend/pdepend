@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * Abstract base class for a type node.
  *
@@ -77,13 +79,12 @@ class ASTType extends AbstractASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
+     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param mixed $data
      * @return mixed
-     * @since  0.9.12
+     * @since 0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitType($this, $data);
     }
