@@ -9,7 +9,7 @@
     </function>
   </package>
   <package name="pkg1" loc="101" ncloc="99">
-    <class name="FooBar" start="30" end="49" loc="90" ncloc="80">
+    <class fqname="FooBar" name="FooBar" start="30" end="49" loc="90" ncloc="80">
       <file name="???"/>
       <method name="x" start="43" end="43" loc="50" ncloc="45"/>
       <method name="y" start="44" end="48" loc="30" ncloc="22"/>
@@ -19,7 +19,7 @@
     </function>
   </package>
   <package name="pkg3" loc="42" ncloc="23">
-    <class name="Bar" start="23" end="25" loc="33" ncloc="20">
+    <class fqname="Bar" name="Bar" start="23" end="25" loc="33" ncloc="20">
       <file name="???"/>
       <method name="y" start="24" end="24" loc="9" ncloc="7"/>
     </class>

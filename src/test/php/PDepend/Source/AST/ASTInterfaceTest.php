@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
@@ -828,6 +827,40 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         serialize($interface);
 
         $this->assertFalse($interface->isCached());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedName()
+    {
+        $interface = new ASTInterface('MyInterface');
+        $this->assertSame('MyInterface', $interface->getNamespacedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedNameWithNamespaceDeclaration()
+    {
+        $interface = new ASTInterface('MyInterface');
+        $interface->setNamespace(new ASTNamespace('My\\Namespace'));
+
+        $this->assertSame('My\\Namespace\\MyInterface', $interface->getNamespacedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedNameWithPackageAnnotation()
+    {
+        $namespace = new ASTNamespace('My\\Namespace');
+        $namespace->setPackageAnnotation(true);
+
+        $interface = new ASTInterface('MyInterface');
+        $interface->setNamespace($namespace);
+
+        $this->assertSame('MyInterface', $interface->getNamespacedName());
     }
 
     /**

@@ -1564,6 +1564,40 @@ class ASTClassTest extends AbstractASTArtifactTest
     }
 
     /**
+     * @return void
+     */
+    public function testGetNamespacedName()
+    {
+        $class = new ASTClass('MyClass');
+        $this->assertSame('MyClass', $class->getNamespacedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedNameWithNamespaceDeclaration()
+    {
+        $class = new ASTClass('MyClass');
+        $class->setNamespace(new ASTNamespace('My\\Namespace'));
+
+        $this->assertSame('My\\Namespace\\MyClass', $class->getNamespacedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNamespacedNameWithPackageAnnotation()
+    {
+        $namespace = new ASTNamespace('My\\Namespace');
+        $namespace->setPackageAnnotation(true);
+
+        $class = new ASTClass('MyClass');
+        $class->setNamespace($namespace);
+
+        $this->assertSame('MyClass', $class->getNamespacedName());
+    }
+
+    /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      *
      * @return void
