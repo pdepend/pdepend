@@ -6034,6 +6034,12 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_USE);
         $this->consumeComments();
 
+        if ($this->tokenizer->peek() === Tokens::T_FUNCTION) {
+            // Consume function keyword
+            $this->consumeToken(Tokens::T_FUNCTION);
+            $this->consumeComments();
+        }
+
         // Parse all use declarations
         $this->parseUseDeclaration();
         $this->consumeComments();
