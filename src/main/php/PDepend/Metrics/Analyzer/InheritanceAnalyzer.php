@@ -86,7 +86,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      *
      * @var array(integer)
      */
-    private $rootClasses = null;
+    private $rootClasses = array();
 
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
