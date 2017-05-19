@@ -217,23 +217,14 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             $f = (20 - $r + 190) - ($item['instability'] * 190);
 
             $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
+            $title = $svg->createElement('title', $item['name']);
 
             $ellipse->setAttribute('id', uniqid('pdepend_'));
             $ellipse->setAttribute('title', $item['name']);
+            $ellipse->appendChild($title);
             $ellipse->setAttribute('transform', $transform);
 
             $layer->appendChild($ellipse);
-
-            $result = preg_match('#\\\\([^\\\\]+)$#', $item['name'], $found);
-            if ($result && count($found)) {
-                $angle = rand(0, 314) / 100 - 1.57;
-                $legend = $legendTemplate->cloneNode(true);
-                $legend->setAttribute('x', $e + $r * (1 + cos($angle)));
-                $legend->setAttribute('y', $f + $r * (1 + sin($angle)));
-                $legend->nodeValue = $found[1];
-                $legendTemplate->parentNode->appendChild($legend);
-            }
-
         }
 
         $bad->parentNode->removeChild($bad);
