@@ -136,11 +136,10 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      */
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
-        switch ($tokenType) {
-            case Tokens::T_CONST:
-                $definition = $this->parseConstantDefinition();
-                $definition->setModifiers($modifiers);
-                return $definition;
+        if ($tokenType == Tokens::T_CONST) {
+            $definition = $this->parseConstantDefinition();
+            $definition->setModifiers($modifiers);
+            return $definition;
         }
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
     }
