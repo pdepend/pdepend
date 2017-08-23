@@ -1212,22 +1212,6 @@ class ParserTest extends AbstractTest
     }
 
     /**
-     * Tests that the parser throws an exception when it detects an invalid
-     * token in a method or property declaration.
-     *
-     * @return void
-     */
-    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
-    {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: const, line: 4, col: 13, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
      * Tests that the parser handles the <b>parent</b> keyword within the default
      * value of a function.
      *

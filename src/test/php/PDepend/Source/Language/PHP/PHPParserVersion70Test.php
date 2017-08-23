@@ -524,6 +524,22 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * Tests that the parser throws an exception when it detects an invalid
+     * token in a method or property declaration.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: const, line: 4, col: 13, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

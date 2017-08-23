@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -124,5 +125,23 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         }
 
         return parent::parseTypeHint();
+    }
+
+    /**
+     * Override this in later PHPParserVersions as necessary
+     * @param integer $tokenType
+     * @param integer $modifiers
+     * @return \PDepend\Source\AST\ASTConstantDefinition;
+     * @throws UnexpectedTokenException
+     */
+    protected function parseUnknownDeclaration($tokenType, $modifiers)
+    {
+        switch ($tokenType) {
+            case Tokens::T_CONST:
+                $definition = $this->parseConstantDefinition();
+                $definition->setModifiers($modifiers);
+                return $definition;
+        }
+        return parent::parseUnknownDeclaration($tokenType, $modifiers);
     }
 }
