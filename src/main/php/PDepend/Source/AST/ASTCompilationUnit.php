@@ -361,24 +361,4 @@ class ASTCompilationUnit extends AbstractASTArtifact
             $this->endLine   = substr_count($this->source, "\n") + 1;
         }
     }
-    
-    // Deprecated methods
-    // @codeCoverageIgnoreStart
-
-    /**
-     * This method can be called by the PDepend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return     void
-     * @since  0.9.12
-     * @deprecated Since 0.10.0
-     */
-    public function free()
-    {
-        fwrite(STDERR, __METHOD__ . ' is deprecated since version 0.10.0' . PHP_EOL);
-    }
-
-    // @codeCoverageIgnoreEnd
 }

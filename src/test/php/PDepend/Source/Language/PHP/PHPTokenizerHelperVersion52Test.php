@@ -219,27 +219,6 @@ class PHPTokenizerHelperVersion52Test extends AbstractTest
     }
 
     /**
-     * testHelperThrowsExpectedExceptionWhenTokenGetAllFails
-     *
-     * @return void
-     * @expectedException \PDepend\Source\Parser\TokenException
-     */
-    public function testHelperThrowsExpectedExceptionWhenTokenGetAllFails()
-    {
-        if (version_compare(phpversion(), '5.3.0') >= 0) {
-            $this->markTestSkipped('This test only works with PHP versions < 5.2.0'); 
-        }
-
-        PHPTokenizerHelperVersion52::tokenize(
-            '<?php
-            class MyClass {
-            /*
-            }
-            ?>'
-        );
-    }
-
-    /**
      * This method will append the third token array element, which contains the
      * line number of a token. This feature was introduced with PHP version
      * 5.2.2.
@@ -247,17 +226,10 @@ class PHPTokenizerHelperVersion52Test extends AbstractTest
      * @param array(mixed) $tokens The input token array.
      *
      * @return array(mixed)
+     * @todo Refactor, has become useless after dropping PHP 5.3 support.
      */
     protected function appendLineNumberInPHP522(array $tokens)
     {
-        if (version_compare(phpversion(), '5.2.2') >= 0) {
-            return $tokens;
-        }
-        foreach ($tokens as $idx => $token) {
-            if (is_array($token) === true) {
-                $tokens[$idx][2] = 1;
-            }
-        }
         return $tokens;
     }
 }
