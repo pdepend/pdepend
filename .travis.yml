@@ -1,18 +1,7 @@
 language: php
 
-#php:
-#    - 5.3
-#    - 5.4
-#    - 5.5
-#    - 5.6
-#    - 7.0
-#    - hhvm
-#    - hhvm-nightly
-
 matrix:
     include:
-        - php: 5.3
-          env: DEPENDENCIES=low
         - php: 5.4
           env: DEPENDENCIES=low
         - php: 5.5
@@ -38,8 +27,6 @@ before_script:
 script:
     - if [ $TRAVIS_PHP_VERSION != 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors ; fi
     - if [ $TRAVIS_PHP_VERSION  = 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
-#    - if [ $TRAVIS_PHP_VERSION != 5.6 ] && [ $TRAVIS_PHP_VERSION != 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors ; fi
-#    - if [ $TRAVIS_PHP_VERSION  = 5.6 ] || [ $TRAVIS_PHP_VERSION  = 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 
 notifications:
     irc: "irc.freenode.org#pdepend"
