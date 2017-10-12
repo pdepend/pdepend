@@ -706,11 +706,7 @@ class PHPTokenizerInternal implements Tokenizer
             $source
         );
 
-        if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tokens = PHPTokenizerHelperVersion52::tokenize($source);
-        } else {
-            $tokens = token_get_all($source);
-        }
+        $tokens = token_get_all($source);
 
         $tokens = $this->substituteTokens($tokens);
 

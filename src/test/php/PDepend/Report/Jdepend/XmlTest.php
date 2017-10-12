@@ -134,40 +134,6 @@ class XmlTest extends AbstractTest
     }
 
     /**
-     * Tests that {@link \PDepend\Report\Jdepend\Xml::write()} generates the
-     * expected document structure for the source, but without any applied
-     * metrics.
-     *
-     * @return void
-     */
-    public function testXmlLogWithoutMetrics()
-    {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM works different here.');
-        }
-        if (version_compare(phpversion(), '5.3.0') >= 0) {
-            $this->markTestSkipped('5.3.0 has a sorting issue here :-(');
-        }
-
-        $this->packages = $this->parseCodeResourceForTest();
-
-        $this->analyzer = new DependencyAnalyzer();
-        $this->analyzer->analyze($this->packages);
-
-        $log = new Xml();
-        $log->setLogFile($this->resultFile);
-        $log->setArtifacts($this->packages);
-        $log->log($this->analyzer);
-        $log->close();
-
-        $fileName = 'pdepend-log' . CORE_PACKAGE . '.xml';
-        $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
-            file_get_contents($this->resultFile)
-        );
-    }
-
-    /**
      * testXmlLogAcceptsOnlyTheCorrectAnalyzer
      *
      * @return void

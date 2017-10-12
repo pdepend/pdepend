@@ -142,29 +142,6 @@ class PHPParserGeneric extends PHPParserVersion71
     }
 
     /**
-     * Implements some quirks and hacks to support php here- and now-doc for
-     * PHP 5.2.x versions :/
-     *
-     * @return \PDepend\Source\AST\ASTHeredoc
-     * @since 1.0.0
-     */
-    protected function parseHeredoc()
-    {
-        $heredoc = parent::parseHeredoc();
-        if (version_compare(phpversion(), "5.3.0alpha") >= 0) {
-            return $heredoc;
-        }
-
-        // Consume dangling semicolon
-        $this->tokenizer->next();
-
-        $token = $this->tokenizer->next();
-        preg_match('(/\*(\'|")\*/)', $token->image, $match);
-
-        return $heredoc;
-    }
-
-    /**
      * Parses additional static values that are valid in the supported php version.
      *
      * @param \PDepend\Source\AST\ASTValue $value

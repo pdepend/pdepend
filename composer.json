@@ -3,7 +3,7 @@
     "description": "Official version of pdepend to be handled with Composer",
     "license": "BSD-3-Clause",
     "require": {
-        "php": ">=5.3.7",
+        "php": ">=5.4.0",
         "symfony/dependency-injection": "^2.3.0|^3",
         "symfony/filesystem": "^2.3.0|^3",
         "symfony/config": "^2.3.0|^3"
