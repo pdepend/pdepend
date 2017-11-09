@@ -240,7 +240,7 @@ class FileCacheDriver implements CacheDriver
         // avoid error if we dont find files
         if ($glob !== false) {
             foreach (glob("{$file}*.*") as $f) {
-                unlink($f);
+                @unlink($f);
             }
         }
     }
