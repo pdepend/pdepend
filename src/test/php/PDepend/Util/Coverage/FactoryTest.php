@@ -76,10 +76,6 @@ class FactoryTest extends AbstractTest
      */
     public function testCreateMethodThrowsExceptionWhenFileDoesNotExist()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM works different here.');
-        }
-
         $factory = new Factory();
         $factory->create(__FUNCTION__);
     }
