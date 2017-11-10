@@ -115,7 +115,10 @@ final class PHPTokenizerHelperVersion52
      */
     private static function doTokenize($source)
     {
-        ini_set('track_errors', 'on');
+        if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
+            ini_set('track_errors', 'on');
+        }
+
         $php_errormsg = null;
 
         $tokens = @token_get_all($source);
