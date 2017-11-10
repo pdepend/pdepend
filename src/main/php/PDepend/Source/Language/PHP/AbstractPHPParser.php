@@ -987,7 +987,7 @@ abstract class AbstractPHPParser
 
                     return $declaration;
                 default:
-                    break 2;
+                    return $this->parseUnknownDeclaration($tokenType, $modifiers);
             }
 
             $this->consumeToken($tokenType);
@@ -996,6 +996,17 @@ abstract class AbstractPHPParser
             $tokenType = $this->tokenizer->peek();
         }
 
+        $this->throwUnexpectedTokenException();
+    }
+
+    /**
+     * Override this in later PHPParserVersions as necessary
+     * @param integer $tokenType
+     * @param integer $modifiers
+     * @throws UnexpectedTokenException
+     */
+    protected function parseUnknownDeclaration($tokenType, $modifiers)
+    {
         $this->throwUnexpectedTokenException();
     }
 
@@ -6122,7 +6133,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTConstantDefinition
      * @since 0.9.6
      */
-    private function parseConstantDefinition()
+    protected function parseConstantDefinition()
     {
         $this->tokenStack->push();
 

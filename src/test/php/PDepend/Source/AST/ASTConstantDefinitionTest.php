@@ -55,6 +55,117 @@ namespace PDepend\Source\AST;
 class ASTConstantDefinitionTest extends ASTNodeTest
 {
     /**
+     * Tests that the field declaration <b>setModifiers()</b> method accepts all
+     * valid combinations of modifiers.
+     *
+     * @param integer $modifiers Combinations of valid modifiers.
+     * @return void
+     * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
+     */
+    public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
+    {
+        $definition = new ASTConstantDefinition();
+
+        $definition->setModifiers($modifiers);
+        $this->assertEquals($modifiers, $definition->getModifiers());
+    }
+
+    /**
+     * Tests that the <b>setModifiers()</b> method throws an exception when an
+     * invalid modifier or modifier combination was set.
+     *
+     * @param integer $modifiers Combinations of invalid modifiers.
+     *
+     * @return void
+     * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
+     */
+    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
+    {
+        $definition = new ASTConstantDefinition();
+
+        $this->setExpectedException(
+            'InvalidArgumentException',
+            'Invalid field modifiers given, allowed modifiers are ' .
+            'IS_PUBLIC, IS_PROTECTED and IS_PRIVATE.'
+        );
+
+        $definition->setModifiers($modifiers);
+    }
+
+    /**
+     * testIsPublicReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testIsPublicReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        $this->assertFalse($declaration->isPublic());
+    }
+
+    /**
+     * testIsPublicReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     */
+    public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(State::IS_PUBLIC);
+
+        $this->assertTrue($declaration->isPublic());
+    }
+
+    /**
+     * testIsProtectedReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testIsProtectedReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        $this->assertFalse($declaration->isProtected());
+    }
+
+
+    /**
+     * testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     */
+    public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(State::IS_PROTECTED);
+
+        $this->assertTrue($declaration->isProtected());
+    }
+
+    /**
+     * testIsPrivateReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testIsPrivateReturnsFalseByDefault()
+    {
+        $declaration = $this->createNodeInstance();
+        $this->assertFalse($declaration->isPrivate());
+    }
+
+    /**
+     * testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet
+     *
+     * @return void
+     */
+    public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet()
+    {
+        $declaration = $this->createNodeInstance();
+        $declaration->setModifiers(State::IS_PRIVATE);
+
+        $this->assertTrue($declaration->isPrivate());
+    }
+
+    /**
      * Tests that the constant definition has the expected doc comment block.
      *
      * @return void
@@ -254,6 +365,58 @@ class ASTConstantDefinitionTest extends ASTNodeTest
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(), 
             'PDepend\\Source\\AST\\ASTConstantDefinition'
+        );
+    }
+
+    /**
+     * Returns valid field declation modifiers.
+     *
+     * @return array
+     */
+    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
+    {
+        return array(
+            array(State::IS_PRIVATE),
+            array(State::IS_PROTECTED),
+            array(State::IS_PUBLIC),
+        );
+    }
+
+    /**
+     * Returns invalid field declation modifiers.
+     *
+     * @return array
+     */
+    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
+    {
+        return array(
+            array(State::IS_ABSTRACT),
+            array(State::IS_FINAL),
+            array(State::IS_STATIC),
+            array(
+                State::IS_PRIVATE |
+                State::IS_ABSTRACT
+            ),
+            array(
+                State::IS_PROTECTED |
+                State::IS_ABSTRACT
+            ),
+            array(
+                State::IS_PUBLIC |
+                State::IS_FINAL
+            ),
+            array(
+                State::IS_PUBLIC |
+                State::IS_STATIC
+            ),
+            array(
+                State::IS_PROTECTED |
+                State::IS_STATIC
+            ),
+            array(
+                State::IS_PRIVATE |
+                State::IS_STATIC
+            ),
         );
     }
 }
