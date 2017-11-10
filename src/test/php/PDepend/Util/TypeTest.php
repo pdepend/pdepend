@@ -62,9 +62,6 @@ class TypeTest extends AbstractTest
      */
     public function testIsInternalTypeDetectsInternalClassPrefixedWithBackslash()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM works different here.');
-        }
         $this->assertTrue(Type::isInternalType('\LogicException'));
     }
 
@@ -189,9 +186,6 @@ class TypeTest extends AbstractTest
      */
     public function testIsInternalPackageReturnsTrueForPhpStandardLibrary()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM works different here.');
-        }
         if (!extension_loaded('spl')) {
             $this->markTestSkipped('SPL extension not loaded.');
         }
@@ -205,10 +199,6 @@ class TypeTest extends AbstractTest
      */
     public function testGetTypePackageReturnsExpectedExtensionNameForClassPrefixedWithBackslash()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM works different here.');
-        }
-
         $extensionName = Type::getTypePackage('\LogicException');
         $this->assertEquals('+spl', $extensionName);
     }

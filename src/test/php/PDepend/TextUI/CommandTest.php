@@ -164,10 +164,6 @@ class CommandTest extends AbstractTest
      */
     public function testCommandCliErrorMessageIfNoArgvArrayExists()
     {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM works different here.');
-        }
-        
         list(, $actual) = $this->executeCommand();
         $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
         $this->assertHelpOutput($actual, $startsWith);

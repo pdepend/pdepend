@@ -9,7 +9,7 @@ command line:
   PHP_Depend 0.9.4 by Manuel Pichler
 
 Now that PHP_Depend was installed correct and works, run PHP_Depend against its
-own source and generate a xml report and some charts. 
+own source and generate an XML report and some charts. 
 
 .. class:: shell
 
@@ -59,7 +59,7 @@ own source and generate a xml report and some charts.
 
   Time: 00:13; Memory: 15.00Mb
 
-This command has produced one xml-report named *summary.xml* that contains a
+This command has produced one XML-report named *summary.xml* that contains a
 summary of all metrics collected for the analyzed php source code. ::
 
   <?xml version="1.0" encoding="UTF-8"?>
