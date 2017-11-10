@@ -198,7 +198,9 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         // Sort items by size
         usort(
             $items,
-            create_function('$a, $b', 'return ($a["size"] - $b["size"]);')
+            function ($a, $b) {
+                return ($a['size'] - $b['size']);
+            }
         );
 
         foreach ($items as $item) {
