@@ -69,7 +69,7 @@ class CommandTest extends AbstractTest
      *
      * @var string
      */
-    private $usageOutput = "Usage: pdepend [options] [logger] <dir[,dir[,...]]>\n\n";
+    private $usageOutput = 'Usage: pdepend [options] [logger] <dir[,dir[,...]]>' . PHP_EOL . PHP_EOL;
 
     protected function setUp()
     {
@@ -77,7 +77,7 @@ class CommandTest extends AbstractTest
 
         $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
 
-        $this->versionOutput = sprintf("PDepend %s\n\n", $data['project.version']);
+        $this->versionOutput = sprintf('PDepend %s%s%s', $data['project.version'], PHP_EOL, PHP_EOL);
     }
 
     /**
