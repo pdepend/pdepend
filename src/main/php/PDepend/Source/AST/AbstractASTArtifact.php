@@ -145,7 +145,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     public function getId()
     {
         if ($this->id === null) {
-            $this->id = md5(microtime());
+            $this->id = md5(uniqid('', TRUE));
         }
         return $this->id;
     }
