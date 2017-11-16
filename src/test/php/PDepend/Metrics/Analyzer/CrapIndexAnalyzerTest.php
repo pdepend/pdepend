@@ -226,7 +226,8 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
         $pathName = $this->createRunResourceURI('clover.xml');
 
         $content = file_get_contents(dirname(__FILE__) . '/_files/clover.xml');
-        $content = str_replace('${pathName}', dirname($this->createCodeResourceUriForTest()), $content);
+        $directory = dirname($this->createCodeResourceUriForTest()) . DIRECTORY_SEPARATOR;
+        $content = str_replace('${pathName}', $directory, $content);
         file_put_contents($pathName, $content);
 
         return $pathName;

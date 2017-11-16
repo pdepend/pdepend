@@ -136,7 +136,7 @@ class ExcludePathFilterTest extends AbstractTest
      */
     public function testExcludePathFilterRejectsFile()
     {
-        $actual   = $this->createFilteredFileList(array('/package2.php'));
+        $actual   = $this->createFilteredFileList(array(DIRECTORY_SEPARATOR . 'package2.php'));
         $expected = array('package1.php', 'package3.php');
 
         $this->assertEquals($expected, $actual);
@@ -149,7 +149,7 @@ class ExcludePathFilterTest extends AbstractTest
      */
     public function testExcludePathFilterRejectsFiles()
     {
-        $actual   = $this->createFilteredFileList(array('/package2.php', '*1.php'));
+        $actual   = $this->createFilteredFileList(array(DIRECTORY_SEPARATOR . 'package2.php', '*1.php'));
         $expected = array('package3.php');
 
         $this->assertEquals($expected, $actual);
@@ -162,7 +162,7 @@ class ExcludePathFilterTest extends AbstractTest
      */
     public function testExcludePathFilterRejectsDirectory()
     {
-        $actual   = $this->createFilteredFileList(array('/package1'));
+        $actual   = $this->createFilteredFileList(array(DIRECTORY_SEPARATOR . 'package1'));
         $expected = array('file2.php', 'file3.php');
 
         $this->assertEquals($expected, $actual);
@@ -175,7 +175,7 @@ class ExcludePathFilterTest extends AbstractTest
      */
     public function testExcludePathFilterRejectsDirectories()
     {
-        $actual   = $this->createFilteredFileList(array('/package1', 'package3'));
+        $actual   = $this->createFilteredFileList(array(DIRECTORY_SEPARATOR . 'package1', 'package3'));
         $expected = array('file2.php');
 
         $this->assertEquals($expected, $actual);
@@ -188,7 +188,7 @@ class ExcludePathFilterTest extends AbstractTest
      */
     public function testExcludePathFilterRejectsFilesAndDirectories()
     {
-        $actual   = $this->createFilteredFileList(array('/package1', '/file3.php'));
+        $actual   = $this->createFilteredFileList(array(DIRECTORY_SEPARATOR . 'package1', DIRECTORY_SEPARATOR . 'file3.php'));
         $expected = array('file2.php');
 
         $this->assertEquals($expected, $actual);
