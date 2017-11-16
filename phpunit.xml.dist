@@ -18,6 +18,7 @@
             <exclude>
                 <!-- Exclude all vendor files -->
                 <directory suffix=".php">vendor/</directory>
+                <directory suffix=".php">src/test</directory>
                 <!-- Exclude this exotic result printer -->
                 <file>src/main/php/PDepend/DbusUI/ResultPrinter.php</file>
             </exclude>
