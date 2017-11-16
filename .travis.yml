@@ -30,11 +30,8 @@ before_script:
     - composer install
 
 script:
-    - if [ $TRAVIS_PHP_VERSION != 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors ; fi
-    - if [ $TRAVIS_PHP_VERSION  = 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
+    - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
     - bash <(curl -s https://codecov.io/bash)
-#    - if [ $TRAVIS_PHP_VERSION != 5.6 ] && [ $TRAVIS_PHP_VERSION != 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors ; fi
-#    - if [ $TRAVIS_PHP_VERSION  = 5.6 ] || [ $TRAVIS_PHP_VERSION  = 7.0 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 
 notifications:
     irc: "irc.freenode.org#pdepend"
