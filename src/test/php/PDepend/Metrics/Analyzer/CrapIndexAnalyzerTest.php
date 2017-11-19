@@ -241,7 +241,8 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     private function _createCyclomaticComplexityAnalyzerMock($ccn = 42)
     {
-        $mock = $this->getMock('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
+        $mock = $this->getMockBuilder('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer')
+            ->getMock();
         $mock->expects($this->any())
             ->method('getCCN2')
             ->will($this->returnValue($ccn));

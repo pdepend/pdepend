@@ -146,8 +146,11 @@ class XmlTest extends AbstractTest
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware()
     {
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerProjectAware')
+            ->getMock();
+
         $logger = new Xml();
-        $actual = $logger->log($this->getMock('\\PDepend\\Metrics\\AnalyzerProjectAware'));
+        $actual = $logger->log($analyzer);
 
         $this->assertTrue($actual);
     }
@@ -159,8 +162,11 @@ class XmlTest extends AbstractTest
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
     {
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
+            ->getMock();
+
         $logger = new Xml();
-        $actual = $logger->log($this->getMock('\\PDepend\\Metrics\\AnalyzerNodeAware'));
+        $actual = $logger->log($analyzer);
 
         $this->assertTrue($actual);
     }

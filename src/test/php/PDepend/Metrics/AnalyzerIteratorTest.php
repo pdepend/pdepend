@@ -62,7 +62,8 @@ class AnalyzerIteratorTest extends AbstractTest
      */
     public function testIteratorReturnsEnabledAnalyzerInstances()
     {
-        $analyzer = $this->getMock('\\PDepend\\Metrics\\Analyzer');
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer')
+            ->getMock();
         $analyzer->expects($this->exactly(2))
             ->method('isEnabled')
             ->will($this->returnValue(true));
@@ -78,7 +79,8 @@ class AnalyzerIteratorTest extends AbstractTest
      */
     public function testIteratorDoesNotReturnDisabledAnalyzerInstances()
     {
-        $analyzer = $this->getMock('\\PDepend\\Metrics\\Analyzer');
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer')
+            ->getMock();
         $analyzer->expects($this->at(0))
             ->method('isEnabled')
             ->will($this->returnValue(true));

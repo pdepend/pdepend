@@ -83,7 +83,9 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testGetCCNReturnsZeroForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        $this->assertEquals(0, $analyzer->getCcn($this->getMock('\\PDepend\\Source\\AST\\ASTArtifact')));
+        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+            ->getMock();
+        $this->assertEquals(0, $analyzer->getCcn($astArtifact));
     }
 
     /**
@@ -94,7 +96,9 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     public function testGetCCN2ReturnsZeroForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        $this->assertEquals(0, $analyzer->getCcn2($this->getMock('\\PDepend\\Source\\AST\\ASTArtifact')));
+        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+            ->getMock();
+        $this->assertEquals(0, $analyzer->getCcn2($astArtifact));
     }
 
     /**
