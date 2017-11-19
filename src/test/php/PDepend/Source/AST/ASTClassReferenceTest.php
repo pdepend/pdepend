@@ -248,6 +248,9 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+        
+        return $context;
     }
 }

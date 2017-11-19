@@ -65,7 +65,8 @@ class ASTTraitReferenceTest extends ASTNodeTest
      */
     public function testGetTraitDelegatesToContextGetTraitMethod()
     {
-        $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
         $context->expects($this->once())
             ->method('getTrait')
             ->with($this->equalTo(__CLASS__));
@@ -173,6 +174,9 @@ class ASTTraitReferenceTest extends ASTNodeTest
      */
     protected function getBuilderContextMock()
     {
-        return $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+        
+        return $context;
     }
 }

@@ -596,22 +596,16 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
-        $node1 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $node2 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
@@ -631,31 +625,22 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
-        $node1 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
-        $node2 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $node3 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node3 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
@@ -675,22 +660,16 @@ class ASTClassTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
-        $node1 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $node2 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
@@ -1641,7 +1620,10 @@ class ASTClassTest extends AbstractASTArtifactTest
 
         $method = new ASTMethod(__FUNCTION__);
         $class->addMethod($method);
-        $class->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
+        
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+        $class->setContext($context);
 
         $file = new ASTCompilationUnit(__FILE__);
         $class->setCompilationUnit($file);
@@ -1659,7 +1641,8 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class = new ASTClass(__CLASS__);
 
-        $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
         $context->expects($this->once())
             ->method('registerClass')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
@@ -1677,7 +1660,10 @@ class ASTClassTest extends AbstractASTArtifactTest
         $class = new ASTClass(__CLASS__);
         $class->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $class->setCache(new MemoryCacheDriver());
-        $class->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
+        
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+        $class->setContext($context);
 
         return $class;
     }

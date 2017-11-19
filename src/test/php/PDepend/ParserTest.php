@@ -1438,7 +1438,8 @@ class ParserTest extends AbstractTest
      */
     public function testParserStopsProcessingWhenCacheContainsValidResult()
     {
-        $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
+        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+            ->getMock();
 
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);

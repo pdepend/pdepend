@@ -79,7 +79,8 @@ class CollectionArtifactFilterTest extends AbstractTest
     {
         $class = new ASTClass(__CLASS__);
 
-        $filter = $this->getMock('\\PDepend\\Source\\AST\\ASTArtifactList\\ArtifactFilter');
+        $filter = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifactList\\ArtifactFilter')
+            ->getMock();
         $filter->expects($this->once())
             ->method('accept')
             ->with($this->equalTo($class));

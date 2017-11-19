@@ -604,8 +604,10 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testPrependChildAddsChildAtFirstPosition()
     {
-        $child1 = $this->getMock('PDepend\\Source\\AST\\AbstractASTNode');
-        $child2 = $this->getMock('PDepend\\Source\\AST\\AbstractASTNode');
+        $child1 = $this->getMockBuilder('PDepend\\Source\\AST\\AbstractASTNode')
+            ->getMock();
+        $child2 = $this->getMockBuilder('PDepend\\Source\\AST\\AbstractASTNode')
+            ->getMock();
 
         $parent = $this->createNodeInstance();
         $parent->prependChild($child2);
@@ -623,7 +625,8 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $methodName = 'visit' . substr(get_class($this), 22, -4);
 
-        $visitor = $this->getMock('\\PDepend\\Source\ASTVisitor\\ASTVisitor');
+        $visitor = $this->getMockBuilder('\\PDepend\\Source\ASTVisitor\\ASTVisitor')
+            ->getMock();
         $visitor->expects($this->once())
             ->method('__call')
             ->with($this->equalTo($methodName));
@@ -641,7 +644,8 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $methodName = 'visit' . substr(get_class($this), 22, -4);
 
-        $visitor = $this->getMock('\\PDepend\\Source\ASTVisitor\\ASTVisitor');
+        $visitor = $this->getMockBuilder('\\PDepend\\Source\ASTVisitor\\ASTVisitor')
+            ->getMock();
         $visitor->expects($this->once())
             ->method('__call')
             ->with($this->equalTo($methodName))
@@ -658,12 +662,9 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
-        $node2 = $this->getMock(
-            '\PDepend\Source\AST\AbstractASTNode',
-            array(),
-            array(),
-            'PDepend_Source_AST_ASTNode_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('\PDepend\Source\AST\AbstractASTNode')
+            ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
@@ -682,21 +683,15 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
-        $node1 = $this->getMock(
-            '\PDepend\Source\AST\AbstractASTNode',
-            array(),
-            array(),
-            'PDepend_Source_AST_ASTNode_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('\PDepend\Source\AST\AbstractASTNode')
+            ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
-        $node3 = $this->getMock(
-            '\PDepend\Source\AST\AbstractASTNode',
-            array(),
-            array(),
-            'PDepend_Source_AST_ASTNode_' . md5(microtime())
-        );
+        $node3 = $this->getMockBuilder('\PDepend\Source\AST\AbstractASTNode')
+            ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
+            ->getMock();
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
@@ -717,12 +712,9 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
         
-        $node2 = $this->getMock(
-            '\PDepend\Source\AST\AbstractASTNode',
-            array(),
-            array(),
-            $name
-        );
+        $node2 = $this->getMockBuilder('\PDepend\Source\AST\AbstractASTNode')
+            ->setMockClassName($name)
+            ->getMock();
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
@@ -742,12 +734,9 @@ abstract class ASTNodeTest extends AbstractTest
     {
         $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
 
-        $node2 = $this->getMock(
-            '\PDepend\Source\AST\AbstractASTNode',
-            array(),
-            array(),
-            $name
-        );
+        $node2 = $this->getMockBuilder('\PDepend\Source\AST\AbstractASTNode')
+            ->setMockClassName($name)
+            ->getMock();
         $node2->expects($this->once())
             ->method('findChildrenOfType')
             ->will($this->returnValue(array()));

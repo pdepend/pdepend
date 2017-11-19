@@ -134,8 +134,11 @@ class XmlTest extends AbstractTest
      */
     public function testLogMethodReturnsFalseForWrongAnalyzer()
     {
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
+            ->getMock();
+        
         $logger = new Xml();
-        $actual = $logger->log($this->getMock('\\PDepend\\Metrics\\AnalyzerNodeAware'));
+        $actual = $logger->log($analyzer);
 
         $this->assertFalse($actual);
     }
@@ -147,8 +150,11 @@ class XmlTest extends AbstractTest
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer()
     {
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer')
+            ->getMock();
+        
         $logger = new Xml();
-        $actual = $logger->log($this->getMock('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer'));
+        $actual = $logger->log($analyzer);
 
         $this->assertTrue($actual);
     }
@@ -186,7 +192,9 @@ class XmlTest extends AbstractTest
     {
         $this->namespaces = self::parseCodeResourceForTest();
 
-        $type = $this->getMock('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', array(), array(), '', false);
+        $type = $this->getMockBuilder('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
         $type
             ->expects($this->any())
             ->method('getName')
@@ -196,7 +204,8 @@ class XmlTest extends AbstractTest
             ->method('getNamespaceName')
             ->will($this->returnValue('namespace'));
 
-        $analyzer = $this->getMock('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer');
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer')
+            ->getMock();
         $analyzer
             ->expects($this->any())
             ->method('getEfferents')
