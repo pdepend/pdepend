@@ -82,6 +82,32 @@ class IteratorTest extends AbstractTest
     }
 
     /**
+     * Tests that iterator returns only files.
+     * 
+     * @return void
+     */
+    public function testIteratorReturnsOnlyFiles()
+    {
+        $directory=$this->createCodeResourceUriForTest();
+        $pattern = $directory . DIRECTORY_SEPARATOR . 'Ignored';
+
+        $files  = new Iterator(
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)),
+            new ExcludePathFilter(array($pattern))
+        );
+
+        $actual = array();
+        foreach ($files as $file) {
+            $actual[] = $file->getFilename();
+        }
+        sort($actual);
+
+        $expected = array('file.php', 'file_process.php');
+        
+        $this->assertEquals($expected,$actual);
+    }
+    
+    /**
      * testIteratorPassesLocalPathToFilterWhenRootIsPresent
      *
      * @return void
