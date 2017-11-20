@@ -265,7 +265,8 @@ class PyramidTest extends AbstractTest
 
     private function createCouplingAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\CouplingAnalyzer');
+        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\CouplingAnalyzer')
+            ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -280,7 +281,8 @@ class PyramidTest extends AbstractTest
 
     private function createComplexityAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
+        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer')
+            ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -294,7 +296,8 @@ class PyramidTest extends AbstractTest
 
     private function createInheritanceAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer');
+        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer')
+            ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -309,7 +312,8 @@ class PyramidTest extends AbstractTest
 
     private function createNodeCountAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer');
+        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer')
+            ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
@@ -326,7 +330,8 @@ class PyramidTest extends AbstractTest
 
     private function createNodeLocAnalyzer()
     {
-        $mock = $this->getMock('\\PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer');
+        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer')
+            ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(

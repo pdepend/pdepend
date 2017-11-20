@@ -192,15 +192,11 @@ class ASTParentReferenceTest extends ASTNodeTest
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTParentReference(
-            $this->referenceMock = $this->getMock(
-                '\PDepend\Source\AST\ASTClassOrInterfaceReference',
-                array(),
-                array(null, __CLASS__),
-                '',
-                false
-            )
-        );
+        $this->referenceMock = $this->getMockBuilder('\PDepend\Source\AST\ASTClassOrInterfaceReference')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return new \PDepend\Source\AST\ASTParentReference($this->referenceMock);
     }
 
     /**

@@ -178,7 +178,8 @@ class ASTCompilationUnitTest extends AbstractTest
      */
     public function testAcceptInvokesVisitFileOnGivenVisitor()
     {
-        $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
+        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
+            ->getMock();
         $visitor->expects($this->once())
             ->method('visitCompilationUnit')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
@@ -238,11 +239,10 @@ class ASTCompilationUnitTest extends AbstractTest
      */
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
     {
-        $node = $this->getMock(
-            'PDepend\\Source\\AST\\ASTClass',
-            array('setCompilationUnit'),
-            array(__CLASS__)
-        );
+        $node = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
+            ->setMethods(array('setCompilationUnit'))
+            ->setConstructorArgs(array(__CLASS__))
+            ->getMock();
         $node->expects($this->once())
             ->method('setCompilationUnit')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));

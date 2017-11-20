@@ -66,22 +66,16 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
     {
-        $node1 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $node2 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->never())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
@@ -101,31 +95,22 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
     {
-        $node1 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->never())
             ->method('getFirstChildOfType');
 
-        $node2 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $node3 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node3 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node3->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue($node1));
@@ -145,22 +130,16 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull()
     {
-        $node1 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node1->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
 
-        $node2 = $this->getMock(
-            'PDepend\\Source\\AST\\ASTNode',
-            array(),
-            array(),
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
+            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->getMock();
         $node2->expects($this->once())
             ->method('getFirstChildOfType')
             ->will($this->returnValue(null));
@@ -396,15 +375,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference()
     {
         $interface = $this->createItem();
-        $interface->setParentClassReference(
-            $this->getMock(
-                '\\PDepend\\Source\\AST\\ASTClassReference',
-                array(),
-                array(),
-                '',
-                false
-            )
-        );
+
+        $reference = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTClassReference')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $interface->setParentClassReference($reference);
     }
 
     /**
@@ -919,7 +894,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     {
         $interface = $this->createItem();
 
-        $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
         $context->expects($this->once())
             ->method('registerInterface')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
@@ -934,7 +910,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testAcceptInvokesVisitInterfaceOnGivenVisitor()
     {
-        $visitor = $this->getMock('\\PDepend\\Source\\ASTVisitor\\ASTVisitor');
+        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
+            ->getMock();
         $visitor->expects($this->once())
             ->method('visitInterface')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
@@ -953,7 +930,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $interface = new ASTInterface(__CLASS__);
         $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $interface->setCache(new MemoryCacheDriver());
-        $interface->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
+        
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+        $interface->setContext($context);
 
         return $interface;
     }

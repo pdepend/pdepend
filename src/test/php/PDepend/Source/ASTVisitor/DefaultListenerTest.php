@@ -220,11 +220,15 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerCallsStartVisitNodeForPassedParameterInstance()
     {
-        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('startVisitNode'));
+        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
+            ->setMethods(array('startVisitNode'))
+            ->getMock();
         $listener->expects($this->once())
             ->method('startVisitNode');
 
-        $parameter = $this->getMock('PDepend\\Source\\AST\\ASTParameter', array(), array(null), '', false);
+        $parameter = $this->getMockBuilder('PDepend\\Source\\AST\\ASTParameter')
+            ->disableOriginalConstructor()
+            ->getMock();
         $listener->startVisitParameter($parameter);
     }
 
@@ -235,11 +239,15 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerCallsEndVisitNodeForPassedParameterInstance()
     {
-        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('endVisitNode'));
+        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
+            ->setMethods(array('endVisitNode'))
+            ->getMock();
         $listener->expects($this->once())
             ->method('endVisitNode');
 
-        $parameter = $this->getMock('PDepend\\Source\\AST\\ASTParameter', array(), array(null), '', false);
+        $parameter = $this->getMockBuilder('PDepend\\Source\\AST\\ASTParameter')
+            ->disableOriginalConstructor()
+            ->getMock();
         $listener->endVisitParameter($parameter);
     }
 
@@ -251,7 +259,9 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerInvokesStartVisitNotForTrait()
     {
-        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('startVisitNode'));
+        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
+            ->setMethods(array('startVisitNode'))
+            ->getMock();
         $listener->expects($this->once())
             ->method('startVisitNode');
 
@@ -266,7 +276,9 @@ class DefaultListenerTest extends AbstractTest
      */
     public function testListenerInvokesEndVisitNotForTrait()
     {
-        $listener = $this->getMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener', array('endVisitNode'));
+        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
+            ->setMethods(array('endVisitNode'))
+            ->getMock();
         $listener->expects($this->once())
             ->method('endVisitNode');
 
