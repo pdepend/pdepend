@@ -65,7 +65,8 @@ class ASTSelfReferenceTest extends ASTNodeTest
     public function testGetTypeReturnsInjectedConstructorTargetArgument()
     {
         $target  = $this->getMockForAbstractClass('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', array(__CLASS__));
-        $context = $this->getMock('PDepend\\Source\\Builder\\BuilderContext');
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
 
         $reference = new \PDepend\Source\AST\ASTSelfReference($context, $target);
         $this->assertSame($target, $reference->getType());
@@ -80,7 +81,8 @@ class ASTSelfReferenceTest extends ASTNodeTest
     {
         $target = $this->getMockForAbstractClass('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', array(__CLASS__));
 
-        $builder = $this->getMock('\\PDepend\\Source\\Builder\\Builder');
+        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+            ->getMock();
         $builder->expects($this->once())
             ->method('getClassOrInterface');
 
@@ -218,8 +220,11 @@ class ASTSelfReferenceTest extends ASTNodeTest
      */
     protected function createNodeInstance()
     {
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+
         return new \PDepend\Source\AST\ASTSelfReference(
-            $this->getMock('PDepend\\Source\\Builder\\BuilderContext'),
+            $context,
             $this->getMockForAbstractClass('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', array(__CLASS__))
         );
     }

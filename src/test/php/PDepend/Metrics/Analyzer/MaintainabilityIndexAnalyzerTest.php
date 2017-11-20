@@ -83,7 +83,9 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
     public function testGetNodeMetricsReturnsNothingForUnknownNode()
     {
         $analyzer = $this->_createAnalyzer();
-        $this->assertEquals(array(), $analyzer->getNodeMetrics($this->getMock('\\PDepend\\Source\\AST\\ASTArtifact')));
+        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+            ->getMock();
+        $this->assertEquals(array(), $analyzer->getNodeMetrics($astArtifact));
     }
 
     /**

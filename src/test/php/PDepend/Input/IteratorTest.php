@@ -114,7 +114,8 @@ class IteratorTest extends AbstractTest
      */
     public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
     {
-        $filter = $this->getMock('\\PDepend\\Input\\Filter');
+        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+            ->getMock();
         $filter->expects($this->once())
             ->method('accept')
             ->with($this->equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
@@ -136,7 +137,8 @@ class IteratorTest extends AbstractTest
     {
         $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
 
-        $filter = $this->getMock('\\PDepend\\Input\\Filter');
+        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+            ->getMock();
         $filter->expects($this->once())
             ->method('accept')
             ->with($this->equalTo(__FILE__), $this->equalTo(__FILE__));
@@ -154,7 +156,8 @@ class IteratorTest extends AbstractTest
     {
         $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
 
-        $filter = $this->getMock('\\PDepend\\Input\\Filter');
+        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+            ->getMock();
         $filter->expects($this->once())
             ->method('accept')
             ->with($this->equalTo(__FILE__), $this->equalTo(__FILE__));

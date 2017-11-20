@@ -226,7 +226,8 @@ class ChartTest extends AbstractTest
     {
         $nodes = $this->_createPackages(true, true);
 
-        $analyzer = $this->getMock('\\PDepend\\Metrics\\Analyzer\\DependencyAnalyzer');
+        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\DependencyAnalyzer')
+            ->getMock();
         $analyzer->expects($this->atLeastOnce())
             ->method('getStats')
             ->will(
@@ -345,12 +346,11 @@ class ChartTest extends AbstractTest
      */
     private function _createPackage($userDefined, $packageName)
     {
-        $packageA = $this->getMock(
-            '\\PDepend\\Source\\AST\\ASTNamespace',
-            array('isUserDefined'),
-            array($packageName),
-            'package_' . md5(microtime())
-        );
+        $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
+            ->setMethods(array('isUserDefined'))
+            ->setConstructorArgs(array($packageName))
+            ->setMockClassName('package_' . md5(microtime()))
+            ->getMock();
         $packageA->expects($this->atLeastOnce())
             ->method('isUserDefined')
             ->will($this->returnValue($userDefined));

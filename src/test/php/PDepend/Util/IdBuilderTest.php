@@ -84,8 +84,19 @@ class IdBuilderTest extends AbstractTest
     {
         $builder = new IdBuilder();
 
-        $identifier0 = $builder->forFile(new ASTCompilationUnit(__FILE__));
-        $identifier1 = $builder->forFile(new ASTCompilationUnit(strtolower(__FILE__)));
+        $unitStub0 = $this->getMockBuilder('\PDepend\Source\AST\ASTCompilationUnit')
+                ->disableOriginalConstructor()
+                ->getMock();
+        $unitStub0->method('getFileName')
+                ->willReturn(__FILE__);
+        $identifier0 = $builder->forFile($unitStub0);
+
+        $unitStub1 = $this->getMockBuilder('\PDepend\Source\AST\ASTCompilationUnit')
+                ->disableOriginalConstructor()
+                ->getMock();
+        $unitStub1->method('getFileName')
+                ->willReturn(strtolower(__FILE__));
+        $identifier1 = $builder->forFile($unitStub1);
 
         $this->assertNotEquals($identifier0, $identifier1);
     }

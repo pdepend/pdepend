@@ -492,7 +492,12 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockWithoutConstructor($className)
     {
-        return $this->getMock($className, array('__construct'), array(), '', false);
+        $mock = $this->getMockBuilder($className)
+            ->setMethods(array('__construct'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $mock;
     }
 
     /**
@@ -539,7 +544,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCacheFixture()
     {
-        return $this->getMock('\\PDepend\\Util\\Cache\\CacheDriver');
+        $cache = $this->getMockBuilder('\\PDepend\\Util\\Cache\\CacheDriver')
+            ->getMock();
+        
+        return $cache;
     }
 
     /**
@@ -588,7 +596,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $class = new ASTClass($name);
         $class->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $class->setCache(new MemoryCacheDriver());
-        $class->setContext($this->getMock('PDepend\\Source\\Builder\\BuilderContext'));
+        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+            ->getMock();
+        $class->setContext($context);
 
         return $class;
     }
@@ -691,7 +701,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCodeResourceURI($fileName)
     {
-        $uri = realpath(__DIR__ . '/../../resources/files') . '/' . $fileName;
+        $uri = realpath(__DIR__ . '/../../resources/files') . DIRECTORY_SEPARATOR . $fileName;
 
         if (file_exists($uri) === false) {
             throw new \ErrorException("File '{$fileName}' does not exists.");
@@ -724,7 +734,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             array_unshift($parts, strtolower(array_shift($parts)));
         }
 
-        $fileName = substr(join('/', $parts), 0, -4) . "/{$method}";
+        $fileName = substr(join(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
         try {
             return $this->createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {

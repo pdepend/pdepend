@@ -63,12 +63,13 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsReturnsAnEmptyArrayByDefault()
     {
+        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+            ->getMock();
+
         $analyzer = new CouplingAnalyzer();
         $this->assertEquals(
             array(),
-            $analyzer->getNodeMetrics(
-                $this->getMock('\\PDepend\\Source\\AST\\ASTArtifact')
-            )
+            $analyzer->getNodeMetrics($astArtifact)
         );
     }
 

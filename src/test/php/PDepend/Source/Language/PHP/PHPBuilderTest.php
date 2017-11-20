@@ -139,11 +139,9 @@ class PHPBuilderTest extends AbstractTest
      */
     public function testRestoreFunctionUsesGetNamespaceNameMethod()
     {
-        $function = $this->getMock(
-            'PDepend\\Source\\AST\\ASTFunction',
-            array(),
-            array(__FUNCTION__)
-        );
+        $function = $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
+            ->setConstructorArgs(array(__FUNCTION__))
+            ->getMock();
         $function->expects($this->once())
             ->method('getNamespaceName');
 
