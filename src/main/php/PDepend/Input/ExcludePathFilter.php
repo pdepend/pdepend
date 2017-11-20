@@ -74,6 +74,7 @@ class ExcludePathFilter implements Filter
      */
     public function __construct(array $patterns)
     {
+        $patterns = preg_filter('/^/', DIRECTORY_SEPARATOR, $patterns);
         $quoted = array_map('preg_quote', $patterns);
 
         $this->relative = '(' . str_replace('\*', '.*', join('|', $quoted)) . ')i';
