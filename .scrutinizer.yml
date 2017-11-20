@@ -1,19 +1,8 @@
-build:
-    environment:
-        php:
-            version: 7.1.0
-    tests:
-        override:
-            -
-                command: 'vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-clover=clover.xml'
-                coverage:
-                    file: 'coverage.xml'
-                    format: 'clover'
-
 checks:
     php:
         code_rating: true
         duplication: true
+
 filter:
     excluded_paths:
         - src/test/resources/files/
