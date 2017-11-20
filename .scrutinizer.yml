@@ -5,7 +5,7 @@ build:
     tests:
         override:
             -
-                command: 'vendor/bin/phpunit --configuration phpunit.xml.dist'
+                command: 'vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-clover=clover.xml'
                 coverage:
                     file: 'coverage.xml'
                     format: 'clover'
@@ -17,3 +17,8 @@ checks:
 filter:
     excluded_paths:
         - src/test/resources/files/
+
+tools:
+    external_code_coverage:
+        timeout: 600
+        runs: 2

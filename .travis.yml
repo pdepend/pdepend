@@ -33,5 +33,9 @@ script:
     - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
     - bash <(curl -s https://codecov.io/bash)
 
+after_script:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+
 notifications:
     irc: "irc.freenode.org#pdepend"
