@@ -14,11 +14,11 @@ matrix:
         - php: 7.0
           env: SYMFONY_VERSION=^3.0
         - php: 7.1
-          env: SYMFONY_VERSION=^4.0
+          env: SYMFONY_VERSION=^4.0@RC
         - php: 7.2
-          env: SYMFONY_VERSION=^4.0
+          env: SYMFONY_VERSION=^4.0@RC
         - php: nightly
-          env: SYMFONY_VERSION=^4.0
+          env: SYMFONY_VERSION=^4.0@RC
     allow_failures:
       - php: nightly
     fast_finish: true
