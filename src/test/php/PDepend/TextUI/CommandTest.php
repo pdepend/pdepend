@@ -44,7 +44,6 @@ namespace PDepend\TextUI;
 
 use PDepend\AbstractTest;
 use PDepend\Util\ConfigurationInstance;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Test case for the text ui command.
