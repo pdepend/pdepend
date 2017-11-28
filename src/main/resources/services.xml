@@ -14,7 +14,7 @@
             <argument type="service" id="pdepend.configuration" />
         </service>
 
-        <service id="pdepend.engine" class="PDepend\Engine">
+        <service id="pdepend.engine" class="PDepend\Engine" public="true">
             <argument type="service" id="pdepend.configuration" />
             <argument type="service" id="pdepend.util.cache_factory" />
             <argument type="service" id="pdepend.analyzer_factory" />
@@ -53,7 +53,7 @@
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="pdepend.analyzer.class_level" class="PDepend\Metrics\Analyzer\ClassLevelAnalyzer">
+        <service id="pdepend.analyzer.class_level" class="PDepend\Metrics\Analyzer\ClassLevelAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
 
             <call method="addAnalyzer">
@@ -61,62 +61,62 @@
             </call>
         </service>
 
-        <service id="pdepend.analyzer.code_rank" class="PDepend\Metrics\Analyzer\CodeRankAnalyzer">
+        <service id="pdepend.analyzer.code_rank" class="PDepend\Metrics\Analyzer\CodeRankAnalyzer" public="true">
             <tag name="pdepend.analyzer" option="--coderank-mode" message="Used CodeRank strategies. Comma separated list of 'inheritance'(default), 'property' and 'method'." value="*[,...]" />
         </service>
 
-        <service id="pdepend.analyzer.cohesion" class="PDepend\Metrics\Analyzer\CohesionAnalyzer">
+        <service id="pdepend.analyzer.cohesion" class="PDepend\Metrics\Analyzer\CohesionAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.coupling" class="PDepend\Metrics\Analyzer\CouplingAnalyzer">
+        <service id="pdepend.analyzer.coupling" class="PDepend\Metrics\Analyzer\CouplingAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.crap_index" class="PDepend\Metrics\Analyzer\CrapIndexAnalyzer">
+        <service id="pdepend.analyzer.crap_index" class="PDepend\Metrics\Analyzer\CrapIndexAnalyzer" public="true">
             <tag name="pdepend.analyzer" option="--coverage-report" message="Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover option." />
             <call method="addAnalyzer">
                 <argument type="service" id="pdepend.analyzer.cyclomatic_complexity" />
             </call>
         </service>
 
-        <service id="pdepend.analyzer.cyclomatic_complexity" class="PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer">
+        <service id="pdepend.analyzer.cyclomatic_complexity" class="PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.dependency" class="PDepend\Metrics\Analyzer\DependencyAnalyzer">
+        <service id="pdepend.analyzer.dependency" class="PDepend\Metrics\Analyzer\DependencyAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.class_dependency" class="PDepend\Metrics\Analyzer\ClassDependencyAnalyzer">
+        <service id="pdepend.analyzer.class_dependency" class="PDepend\Metrics\Analyzer\ClassDependencyAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.hierarchy" class="PDepend\Metrics\Analyzer\HierarchyAnalyzer">
+        <service id="pdepend.analyzer.hierarchy" class="PDepend\Metrics\Analyzer\HierarchyAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.inheritance" class="PDepend\Metrics\Analyzer\InheritanceAnalyzer">
+        <service id="pdepend.analyzer.inheritance" class="PDepend\Metrics\Analyzer\InheritanceAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.npath_complexity" class="PDepend\Metrics\Analyzer\NPathComplexityAnalyzer">
+        <service id="pdepend.analyzer.npath_complexity" class="PDepend\Metrics\Analyzer\NPathComplexityAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.node_count" class="PDepend\Metrics\Analyzer\NodeCountAnalyzer">
+        <service id="pdepend.analyzer.node_count" class="PDepend\Metrics\Analyzer\NodeCountAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.node_loc" class="PDepend\Metrics\Analyzer\NodeLocAnalyzer">
+        <service id="pdepend.analyzer.node_loc" class="PDepend\Metrics\Analyzer\NodeLocAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.halstead" class="PDepend\Metrics\Analyzer\HalsteadAnalyzer">
+        <service id="pdepend.analyzer.halstead" class="PDepend\Metrics\Analyzer\HalsteadAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
 
-        <service id="pdepend.analyzer.maintainability" class="PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer">
+        <service id="pdepend.analyzer.maintainability" class="PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer" public="true">
             <tag name="pdepend.analyzer" />
         </service>
     </services>
