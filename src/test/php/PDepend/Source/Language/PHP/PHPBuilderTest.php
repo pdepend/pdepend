@@ -829,6 +829,20 @@ class PHPBuilderTest extends AbstractTest
     }
 
     /**
+     * testBuildASTTypeCallableReturnsExpectedType
+     *
+     * @return void
+     * @since 1.0.0
+     */
+    public function testBuildASTTypeIterableReturnsExpectedType()
+    {
+        $this->assertInstanceOf(
+            'PDepend\\Source\\AST\\ASTTypeIterable',
+            $this->createBuilder()->buildAstTypeIterable()
+        );
+    }
+
+    /**
      * testBuildASTHeredocReturnsExpectedType
      *
      * @return void
