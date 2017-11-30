@@ -61,7 +61,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testSingleLineCommentHasExpectedStartLine()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testSingleLineCommentHasExpectedStartColumn()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(5, $comment->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testSingleLineCommentHasExpectedEndLine()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testSingleLineCommentHasExpectedEndColumn()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(48, $comment->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testMultiLineCommentHasExpectedStartLine()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getStartLine());
     }
 
@@ -116,7 +116,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testMultiLineCommentHasExpectedStartColumn()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(5, $comment->getStartColumn());
     }
 
@@ -127,7 +127,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testMultiLineCommentHasExpectedEndLine()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(8, $comment->getEndLine());
     }
 
@@ -138,7 +138,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testMultiLineCommentHasExpectedEndColumn()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(7, $comment->getEndColumn());
     }
 
@@ -149,7 +149,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testDocCommentHasExpectedStartLine()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getStartLine());
     }
 
@@ -160,7 +160,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testDocCommentHasExpectedStartColumn()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(5, $comment->getStartColumn());
     }
 
@@ -171,7 +171,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testDocCommentHasExpectedEndLine()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(8, $comment->getEndLine());
     }
 
@@ -182,7 +182,7 @@ class ASTCommentTest extends ASTNodeTest
      */
     public function testDocCommentHasExpectedEndColumn()
     {
-        $comment = $this->_getFirstCommentInClass(__METHOD__);
+        $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(7, $comment->getEndColumn());
     }
 
@@ -193,7 +193,7 @@ class ASTCommentTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTComment
      */
-    private function _getFirstCommentInClass($testCase)
+    private function getFirstCommentInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
             $testCase,

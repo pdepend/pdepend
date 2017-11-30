@@ -62,7 +62,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
      *
      * @param string $actual   The actual used type identifier.
      * @param string $expected The expected primitive type image.
-     * 
+     *
      * @return void
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */

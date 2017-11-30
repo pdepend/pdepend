@@ -73,7 +73,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      */
     public function testAllocationExpressionForSelfProperty()
     {
-        $allocation = $this->_getFirstAllocationInClass();
+        $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
@@ -85,7 +85,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      */
     public function testAllocationExpressionForParentProperty()
     {
-        $allocation = $this->_getFirstAllocationInClass();
+        $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
@@ -97,7 +97,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      */
     public function testAllocationExpressionForStaticProperty()
     {
-        $allocation = $this->_getFirstAllocationInClass();
+        $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
@@ -109,7 +109,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      */
     public function testAllocationExpressionForThisProperty()
     {
-        $allocation = $this->_getFirstAllocationInClass();
+        $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $allocation->getChild(0));
     }
 
@@ -121,7 +121,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      */
     public function testAllocationExpressionForObjectProperty()
     {
-        $allocation = $this->_getFirstAllocationInClass();
+        $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
     }
 
@@ -287,7 +287,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      * @return ASTAllocationExpression
      * @since 1.0.1
      */
-    private function _getFirstAllocationInClass()
+    private function getFirstAllocationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),

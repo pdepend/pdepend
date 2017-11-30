@@ -62,7 +62,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionOnStaticClassMember()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -81,7 +81,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionOnSelfClassMember()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInClass(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -100,7 +100,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionOnParentClassMember()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInClass(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -119,7 +119,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionOnFunctionPostfix()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -137,7 +137,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionOnStaticVariableMember()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -151,7 +151,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
 
     /**
      * testPreIncrementExpressionsInArithmeticOperation
-     * 
+     *
      * @return void
      */
     public function testPreIncrementExpressionsInArithmeticOperation()
@@ -171,7 +171,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -182,7 +182,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertEquals(13, $expr->getStartColumn());
     }
 
@@ -193,7 +193,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
@@ -204,7 +204,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      */
     public function testPreIncrementExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstPreIncrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertEquals(20, $expr->getEndColumn());
     }
 
@@ -214,10 +214,11 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      * @param string $testCase Name of the calling test case.
      * @return \PDepend\Source\AST\ASTPreIncrementExpression
      */
-    private function _getFirstPreIncrementExpressionInClass($testCase)
+    private function getFirstPreIncrementExpressionInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, 'PDepend\\Source\\AST\\ASTPreIncrementExpression'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTPreIncrementExpression'
         );
     }
 
@@ -227,10 +228,11 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
      * @param string $testCase Name of the calling test case.
      * @return \PDepend\Source\AST\ASTPreIncrementExpression
      */
-    private function _getFirstPreIncrementExpressionInFunction($testCase)
+    private function getFirstPreIncrementExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTPreIncrementExpression'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTPreIncrementExpression'
         );
     }
 }

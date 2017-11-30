@@ -62,7 +62,7 @@ class ASTTryStatementTest extends ASTNodeTest
      */
     public function testTryStatement()
     {
-        $stmt = $this->_getFirstTryStatementInFunction();
+        $stmt = $this->getFirstTryStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTryStatement', $stmt);
 
         return $stmt;
@@ -154,7 +154,7 @@ class ASTTryStatementTest extends ASTNodeTest
     public function testTryStatementContainsMultipleChildInstancesOfCatchStatement()
     {
         $actual = array();
-        foreach ($this->_getFirstTryStatementInFunction(__METHOD__)->getChildren() as $child) {
+        foreach ($this->getFirstTryStatementInFunction(__METHOD__)->getChildren() as $child) {
             $actual[] = get_class($child);
         }
 
@@ -177,7 +177,7 @@ class ASTTryStatementTest extends ASTNodeTest
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows()
     {
-        $this->_getFirstTryStatementInFunction();
+        $this->getFirstTryStatementInFunction();
     }
 
     /**
@@ -185,7 +185,7 @@ class ASTTryStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTryStatement
      */
-    private function _getFirstTryStatementInFunction()
+    private function getFirstTryStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

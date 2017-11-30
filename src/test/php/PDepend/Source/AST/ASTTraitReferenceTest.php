@@ -77,13 +77,13 @@ class ASTTraitReferenceTest extends ASTNodeTest
     
     /**
      * testTraitReference
-     * 
+     *
      * @return \PDepend\Source\AST\ASTTraitReference
      * @since 1.0.2
      */
     public function testTraitReference()
     {
-        $reference = $this->_getFirstTraitReferenceInClass();
+        $reference = $this->getFirstTraitReferenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitReference', $reference);
         
         return $reference;
@@ -91,7 +91,7 @@ class ASTTraitReferenceTest extends ASTNodeTest
 
     /**
      * testTraitReferenceHasExpectedStartLine
-     * 
+     *
      * @param \PDepend\Source\AST\ASTTraitReference $reference
      *
      * @return void
@@ -146,7 +146,7 @@ class ASTTraitReferenceTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTraitReference
      */
-    private function _getFirstTraitReferenceInClass()
+    private function getFirstTraitReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),

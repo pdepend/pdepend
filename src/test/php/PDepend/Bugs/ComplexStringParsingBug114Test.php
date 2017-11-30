@@ -58,7 +58,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTest
 {
     /**
      * testParserHandlesStringWithEmbeddedBacktickExpression
-     * 
+     *
      * @return void
      */
     public function testParserHandlesStringWithEmbeddedBacktickExpression()

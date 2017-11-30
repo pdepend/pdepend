@@ -178,5 +178,4 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
 
         return parent::parseScalarOrCallableTypeHint($image);
     }
-
 }

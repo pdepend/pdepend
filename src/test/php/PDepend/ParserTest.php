@@ -1113,8 +1113,7 @@ class ParserTest extends AbstractTest
             ->getClasses()
             ->current();
 
-        $this->assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL
-        );
+        $this->assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL);
     }
 
     /**

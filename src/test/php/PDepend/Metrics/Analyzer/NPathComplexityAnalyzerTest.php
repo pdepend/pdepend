@@ -89,12 +89,12 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
             ->getFunctions()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($function);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($function);
@@ -117,12 +117,12 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
             ->getMethods()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($method);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($method);
@@ -138,7 +138,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForNestedIfStatementsWithScope()
     {
-        $this->assertEquals(4, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->calculateMethodMetric());
     }
 
     /**
@@ -149,7 +149,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForNestedIfStatementsWithoutScope()
     {
-        $this->assertEquals(4, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->calculateMethodMetric());
     }
 
     /**
@@ -160,7 +160,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSiblingConditionalExpressions()
     {
-        $this->assertEquals(4, $this->_calculateFunctionMetric());
+        $this->assertEquals(4, $this->calculateFunctionMetric());
     }
 
     /**
@@ -173,7 +173,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSiblingExpressions()
     {
-        $this->assertEquals(6, $this->_calculateFunctionMetric());
+        $this->assertEquals(6, $this->calculateFunctionMetric());
     }
 
     /**
@@ -184,7 +184,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForTwoSiblingIfStatetements()
     {
-        $this->assertEquals(4, $this->_calculateFunctionMetric());
+        $this->assertEquals(4, $this->calculateFunctionMetric());
     }
 
     /**
@@ -195,7 +195,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForForeachStatementWithNestedIfStatetements()
     {
-        $this->assertEquals(3, $this->_calculateFunctionMetric());
+        $this->assertEquals(3, $this->calculateFunctionMetric());
     }
 
     /**
@@ -206,7 +206,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSiblingIfStatementsAndForeachStatement()
     {
-        $this->assertEquals(12, $this->_calculateFunctionMetric());
+        $this->assertEquals(12, $this->calculateFunctionMetric());
     }
 
     /**
@@ -217,7 +217,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForComplexFunction()
     {
-        $this->assertEquals(24, $this->_calculateFunctionMetric());
+        $this->assertEquals(24, $this->calculateFunctionMetric());
     }
 
     /**
@@ -228,7 +228,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForComplexNestedControlStatements()
     {
-        $this->assertEquals(63, $this->_calculateFunctionMetric());
+        $this->assertEquals(63, $this->calculateFunctionMetric());
     }
     
     /**
@@ -239,7 +239,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration()
     {
-        $this->assertEquals(16, $this->_calculateFunctionMetric());
+        $this->assertEquals(16, $this->calculateFunctionMetric());
     }
 
     /**
@@ -249,7 +249,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityIsZeroForEmptyMethod()
     {
-        $this->assertEquals(1, $this->_calculateMethodMetric());
+        $this->assertEquals(1, $this->calculateMethodMetric());
     }
 
     /**
@@ -259,7 +259,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForMethodWithSimpleIfStatement()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -269,7 +269,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForIfStatementWithNestedDynamicIdentifier()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -279,7 +279,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConsecutiveIfStatements()
     {
-        $this->assertEquals(80, $this->_calculateMethodMetric());
+        $this->assertEquals(80, $this->calculateMethodMetric());
     }
 
     /**
@@ -289,7 +289,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConsecutiveIfElseIfStatements()
     {
-        $this->assertEquals(4, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->calculateMethodMetric());
     }
 
     /**
@@ -299,7 +299,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConsecutiveIfElsifStatements()
     {
-        $this->assertEquals(4, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->calculateMethodMetric());
     }
 
     /**
@@ -309,7 +309,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForEmptyWhileStatement()
     {
-        $this->assertEquals(3, $this->_calculateMethodMetric());
+        $this->assertEquals(3, $this->calculateMethodMetric());
     }
 
     /**
@@ -319,7 +319,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForNestedWhileStatements()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(5, $this->calculateMethodMetric());
     }
 
     /**
@@ -329,7 +329,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleDoWhileStatement()
     {
-        $this->assertEquals(3, $this->_calculateMethodMetric());
+        $this->assertEquals(3, $this->calculateMethodMetric());
     }
 
     /**
@@ -339,7 +339,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleForStatement()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -349,7 +349,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForComplexForStatement()
     {
-        $this->assertEquals(4, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->calculateMethodMetric());
     }
 
     /**
@@ -359,7 +359,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleForeachStatement()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -369,7 +369,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleReturnStatement()
     {
-        $this->assertEquals(1, $this->_calculateMethodMetric());
+        $this->assertEquals(1, $this->calculateMethodMetric());
     }
 
     /**
@@ -379,7 +379,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForReturnStatementWithBooleanExpressions()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -389,7 +389,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForReturnStatementWithConditionalStatement()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -400,7 +400,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleSwitchStatement()
     {
-        $this->assertEquals(1, $this->_calculateMethodMetric());
+        $this->assertEquals(1, $this->calculateMethodMetric());
     }
 
     /**
@@ -411,7 +411,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSwitchStatementWithMultipleCaseStatements()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(5, $this->calculateMethodMetric());
     }
 
     /**
@@ -422,7 +422,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSwitchStatementWithComplexCaseStatements()
     {
-        $this->assertEquals(8, $this->_calculateMethodMetric());
+        $this->assertEquals(8, $this->calculateMethodMetric());
     }
 
     /**
@@ -432,7 +432,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleTryCatchStatement()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -442,7 +442,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForTryStatementWithMutlipleCatchStatements()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(5, $this->calculateMethodMetric());
     }
 
     /**
@@ -452,7 +452,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForTryCatchStatementWithNestedIfStatements()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(5, $this->calculateMethodMetric());
     }
 
     /**
@@ -462,7 +462,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForSimpleConditionalStatement()
     {
-        $this->assertEquals(2, $this->_calculateMethodMetric());
+        $this->assertEquals(2, $this->calculateMethodMetric());
     }
 
     /**
@@ -472,7 +472,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForTwoNestedConditionalStatements()
     {
-        $this->assertEquals(4, $this->_calculateMethodMetric());
+        $this->assertEquals(4, $this->calculateMethodMetric());
     }
 
     /**
@@ -482,7 +482,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForThreeNestedConditionalStatements()
     {
-        $this->assertEquals(6, $this->_calculateMethodMetric());
+        $this->assertEquals(6, $this->calculateMethodMetric());
     }
 
     /**
@@ -493,7 +493,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForConditionalStatementWithLogicalExpressions()
     {
-        $this->assertEquals(5, $this->_calculateMethodMetric());
+        $this->assertEquals(5, $this->calculateMethodMetric());
     }
 
     /**
@@ -504,7 +504,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testNPathComplexityForReturnStatementWithConditional()
     {
-        $npath = $this->_calculateMethodMetric();
+        $npath = $this->calculateMethodMetric();
         $this->assertEquals(3, $npath);
     }
 
@@ -515,10 +515,10 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @return integer
      * @since 0.9.12
      */
-    private function _calculateFunctionMetric()
+    private function calculateFunctionMetric()
     {
-        return $this->_calculateNPathComplexity(
-            $this->_getFirstFunctionForTestCase()
+        return $this->calculateNPathComplexity(
+            $this->getFirstFunctionForTestCaseInternal()
         );
     }
 
@@ -529,7 +529,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @return \PDepend\Source\AST\ASTFunction
      * @since 0.9.12
      */
-    private function _getFirstFunctionForTestCase()
+    private function getFirstFunctionForTestCaseInternal()
     {
         return $this->parseTestCaseSource($this->getCallingTestMethod())
             ->current()
@@ -544,10 +544,10 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @return integer
      * @since 0.9.12
      */
-    private function _calculateMethodMetric()
+    private function calculateMethodMetric()
     {
-        return $this->_calculateNPathComplexity(
-            $this->_getFirstMethodForTestCase()
+        return $this->calculateNPathComplexity(
+            $this->getFirstMethodForTestCaseInternal()
         );
     }
 
@@ -558,7 +558,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @return \PDepend\Source\AST\ASTMethod
      * @since 0.9.12
      */
-    private function _getFirstMethodForTestCase()
+    private function getFirstMethodForTestCaseInternal()
     {
         return $this->parseTestCaseSource($this->getCallingTestMethod())
             ->current()
@@ -575,9 +575,9 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @return string
      * @since 0.9.12
      */
-    private function _calculateNPathComplexity(AbstractASTCallable $callable)
+    private function calculateNPathComplexity(AbstractASTCallable $callable)
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $callable->accept($analyzer);
 
         $metrics = $analyzer->getNodeMetrics($callable);
@@ -590,7 +590,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      * @return \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
      * @since 1.0.0
      */
-    private function _createAnalyzer()
+    private function createAnalyzer()
     {
         $analyzer = new NPathComplexityAnalyzer();
         $analyzer->setCache($this->cache);

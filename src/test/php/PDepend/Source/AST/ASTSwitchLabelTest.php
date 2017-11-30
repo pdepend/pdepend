@@ -81,7 +81,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testDefaultFlagIsSetOnDefaultLabel()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
         $this->assertTrue($label->isDefault());
     }
 
@@ -93,7 +93,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testDefaultFlagIsNotSetOnCaseLabel()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
         $this->assertFalse($label->isDefault());
     }
 
@@ -105,7 +105,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabel()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
 
         return $label;
@@ -170,7 +170,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabelCanBeTerminatedWithSemicolon()
     {
-        $this->_getFirstSwitchLabelInFunction();
+        $this->getFirstSwitchLabelInFunction();
     }
 
     /**
@@ -180,7 +180,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabelWithNestedSwitchStatementHasExpectedChildren()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
 
         $actual = array();
         foreach ($label->getChildren() as $child) {
@@ -204,7 +204,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabelWithNestedNonePhpCode()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
 
         return $label;
@@ -270,7 +270,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabelDefault()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
 
         return $label;
@@ -335,7 +335,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchDefaultLabelCanBeTerminatedWithSemicolon()
     {
-        $this->_getFirstSwitchLabelInFunction();
+        $this->getFirstSwitchLabelInFunction();
     }
 
     /**
@@ -345,7 +345,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
 
         $actual = array();
         foreach ($label->getChildren() as $child) {
@@ -368,7 +368,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testSwitchLabelDefaultWithNestedNonePhpCode()
     {
-        $label = $this->_getFirstSwitchLabelInFunction();
+        $label = $this->getFirstSwitchLabelInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
 
         return $label;
@@ -433,7 +433,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testParserHandlesSwitchLabelWithNestedScopeStatement()
     {
-        $this->_getFirstSwitchLabelInFunction();
+        $this->getFirstSwitchLabelInFunction();
     }
 
     /**
@@ -444,7 +444,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody()
     {
-        $this->_getFirstSwitchLabelInFunction();
+        $this->getFirstSwitchLabelInFunction();
     }
 
     /**
@@ -452,7 +452,7 @@ class ASTSwitchLabelTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTSwitchLabel
      */
-    private function _getFirstSwitchLabelInFunction()
+    private function getFirstSwitchLabelInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

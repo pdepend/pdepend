@@ -281,7 +281,7 @@ class ASTCastExpressionTest extends ASTNodeTest
      */
     public function testParserHandlesNestedCastExpressions()
     {
-        $expr = $this->_getFirstCastExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -300,7 +300,7 @@ class ASTCastExpressionTest extends ASTNodeTest
      */
     public function testCastExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstCastExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -311,7 +311,7 @@ class ASTCastExpressionTest extends ASTNodeTest
      */
     public function testCastExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstCastExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(12, $expr->getStartColumn());
     }
 
@@ -322,7 +322,7 @@ class ASTCastExpressionTest extends ASTNodeTest
      */
     public function testCastExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstCastExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
@@ -333,7 +333,7 @@ class ASTCastExpressionTest extends ASTNodeTest
      */
     public function testCastExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstCastExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(26, $expr->getEndColumn());
     }
 
@@ -344,10 +344,11 @@ class ASTCastExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTCastExpression
      */
-    private function _getFirstCastExpressionInFunction($testCase)
+    private function getFirstCastExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTCastExpression'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTCastExpression'
         );
     }
 }

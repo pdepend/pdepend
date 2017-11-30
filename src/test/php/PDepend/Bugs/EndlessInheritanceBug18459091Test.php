@@ -77,7 +77,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
 
     /**
      * testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
-     * 
+     *
      * @return void
      * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
@@ -133,7 +133,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
 
     /**
      * testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy
-     * 
+     *
      * @return void
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy()
@@ -205,7 +205,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
 
     /**
      * testFullStackNotRunsEndless
-     * 
+     *
      * @return void
      */
     public function testFullStackNotRunsEndless()

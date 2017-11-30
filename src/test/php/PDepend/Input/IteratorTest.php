@@ -83,7 +83,7 @@ class IteratorTest extends AbstractTest
 
     /**
      * Tests that iterator returns only files.
-     * 
+     *
      * @return void
      */
     public function testIteratorReturnsOnlyFiles()
@@ -104,7 +104,7 @@ class IteratorTest extends AbstractTest
 
         $expected = array('file.php', 'file_process.php');
         
-        $this->assertEquals($expected,$actual);
+        $this->assertEquals($expected, $actual);
     }
     
     /**

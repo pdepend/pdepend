@@ -62,7 +62,7 @@ class ASTThrowStatementTest extends ASTNodeTest
      */
     public function testThrowStatement()
     {
-        $stmt = $this->_getFirstThrowStatementInFunction();
+        $stmt = $this->getFirstThrowStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $stmt);
 
         return $stmt;
@@ -125,7 +125,7 @@ class ASTThrowStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTThrowStatement
      */
-    private function _getFirstThrowStatementInFunction()
+    private function getFirstThrowStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

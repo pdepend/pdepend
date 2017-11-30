@@ -61,7 +61,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testThirdChildOfForeachStatementIsASTScopeStatement()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
     }
 
@@ -72,7 +72,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -83,7 +83,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -94,7 +94,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
@@ -105,7 +105,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
@@ -116,7 +116,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementContainsExpressionAsFirstChild()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
 
@@ -127,7 +127,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithoutKeyAndWithValue()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(1));
     }
 
@@ -138,7 +138,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithoutKeyAndWithValueByReference()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(1));
     }
 
@@ -149,7 +149,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithKeyAndValue()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(2));
     }
 
@@ -160,7 +160,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithKeyAndValueByReference()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(2));
     }
 
@@ -171,7 +171,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithObjectPropertyByReference()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(1));
     }
 
@@ -182,7 +182,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithKeyAndObjectPropertyByReference()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(2));
     }
 
@@ -193,7 +193,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithObjectPropertyAsKey()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $stmt->getChild(1));
     }
 
@@ -204,7 +204,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithObjectPropertyAsValue()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $stmt->getChild(1));
     }
 
@@ -215,7 +215,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithObjectPropertyAsKeyAndValue()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $stmt->getChild(1));
     }
 
@@ -227,7 +227,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementThrowsExpectedExceptionForKeyByReference()
     {
-        $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->getFirstForeachStatementInFunction(__METHOD__);
     }
 
     /**
@@ -237,7 +237,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithCommentBeforeClosingParenthesis()
     {
-        $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->getFirstForeachStatementInFunction(__METHOD__);
     }
 
     /**
@@ -247,7 +247,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementAlternativeScopeHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -258,7 +258,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementAlternativeScopeHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -269,7 +269,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementAlternativeScopeHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
@@ -280,7 +280,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementAlternativeScopeHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(15, $stmt->getEndColumn());
     }
 
@@ -291,7 +291,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementTerminatedByPhpCloseTag()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertEquals(9, $stmt->getEndColumn());
     }
 
@@ -302,7 +302,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithList()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(1));
     }
 
@@ -313,7 +313,7 @@ class ASTForeachStatementTest extends ASTNodeTest
      */
     public function testForeachStatementWithKeyAndList()
     {
-        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(2));
     }
 
@@ -324,10 +324,11 @@ class ASTForeachStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTForeachStatement
      */
-    private function _getFirstForeachStatementInFunction($testCase)
+    private function getFirstForeachStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTForeachStatement'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTForeachStatement'
         );
     }
 }

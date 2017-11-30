@@ -52,5 +52,4 @@ namespace PDepend\Source\Language\PHP;
  */
 abstract class PHPParserVersion55 extends PHPParserVersion54
 {
-
 }

@@ -64,7 +64,7 @@ class FileCacheDriverTest extends AbstractDriverTest
 
     /**
      * Initializes a temporary working directory.
-     * 
+     *
      * @return void
      */
     protected function setUp()

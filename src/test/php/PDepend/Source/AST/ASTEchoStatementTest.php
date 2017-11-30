@@ -61,7 +61,7 @@ class ASTEchoStatementTest extends ASTNodeTest
      */
     public function testEchoStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTEchoStatementTest extends ASTNodeTest
      */
     public function testEchoStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTEchoStatementTest extends ASTNodeTest
      */
     public function testEchoStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTEchoStatementTest extends ASTNodeTest
      */
     public function testEchoStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
         $this->assertEquals(26, $stmt->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTEchoStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTEchoStatement
      */
-    private function _getFirstEchoStatementInFunction($testCase)
+    private function getFirstEchoStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

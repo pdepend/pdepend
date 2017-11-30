@@ -61,7 +61,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTest
      */
     public function testBooleanOrExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTest
      */
     public function testBooleanOrExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
         $this->assertEquals(18, $expr->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTest
      */
     public function testBooleanOrExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTest
      */
     public function testBooleanOrExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
         $this->assertEquals(19, $expr->getEndColumn());
     }
     
@@ -105,7 +105,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTBooleanOrExpression
      */
-    private function _getFirstBooleanOrExpressionInFunction($testCase)
+    private function getFirstBooleanOrExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

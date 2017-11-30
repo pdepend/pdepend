@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -57,7 +57,7 @@ class ASTCompilationUnitTest extends AbstractTest
 {
     /**
      * testGetNameReturnsTheFileName
-     * 
+     *
      * @return void
      */
     public function testGetNameReturnsTheFileName()
@@ -212,7 +212,7 @@ class ASTCompilationUnitTest extends AbstractTest
 
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
-     * 
+     *
      * @return void
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()

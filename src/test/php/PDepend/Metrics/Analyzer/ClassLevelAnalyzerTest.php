@@ -110,7 +110,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
     {
         $this->assertEquals(
             array('impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'),
-            array_keys($this->_calculateClassMetrics())
+            array_keys($this->calculateClassMetrics())
         );
     }
 
@@ -121,7 +121,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateIMPLMetric()
     {
-        $this->assertEquals(4, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(4, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -131,7 +131,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateIMPLMetric1()
     {
-        $this->assertEquals(6, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(6, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -141,7 +141,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateIMPLMetric2()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(2, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -151,7 +151,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateIMPLMetricContainsUnknownImplementedInterface()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(1, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -161,7 +161,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(1, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -171,7 +171,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateIMPLMetricContainsInternalImplementedInterface()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('impl'));
+        $this->assertEquals(1, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -181,7 +181,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCISMetricZeroInheritance()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(2, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -191,7 +191,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCISMetricOneLevelInheritance()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(2, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -201,7 +201,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCISMetricTwoLevelInheritance()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(3, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -211,7 +211,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('cis'));
+        $this->assertEquals(2, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -221,7 +221,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCSZMetricZeroInheritance()
     {
-        $this->assertEquals(6, $this->_calculateClassMetric('csz'));
+        $this->assertEquals(6, $this->calculateClassMetric('csz'));
     }
 
     /**
@@ -231,7 +231,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCSZMetricOneLevelInheritance()
     {
-        $this->assertEquals(4, $this->_calculateClassMetric('csz'));
+        $this->assertEquals(4, $this->calculateClassMetric('csz'));
     }
 
     /**
@@ -241,7 +241,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('csz'));
+        $this->assertEquals(2, $this->calculateClassMetric('csz'));
     }
 
     /**
@@ -251,7 +251,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForEmptyClass()
     {
-        $this->assertEquals(0, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(0, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -261,7 +261,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForClassWithPublicMethod()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(1, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -271,7 +271,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForClassWithPublicMethods()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(3, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -281,7 +281,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForClassWithPublicStaticMethod()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(1, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -291,7 +291,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForClassWithProtectedMethod()
     {
-        $this->assertEquals(0, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(0, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -301,7 +301,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForClassWithPrivateMethod()
     {
-        $this->assertEquals(0, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(0, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -311,7 +311,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateNpmMetricForClassWithAllVisibilityMethods()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('npm'));
+        $this->assertEquals(1, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -321,7 +321,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateVARSMetricZeroInheritance()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('vars'));
+        $this->assertEquals(1, $this->calculateClassMetric('vars'));
     }
 
     /**
@@ -331,7 +331,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateVARSMetricOneLevelInheritance()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('vars'));
+        $this->assertEquals(3, $this->calculateClassMetric('vars'));
     }
 
     /**
@@ -341,7 +341,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateVARSiMetric()
     {
-        $this->assertEquals(4, $this->_calculateClassMetric('varsi'));
+        $this->assertEquals(4, $this->calculateClassMetric('varsi'));
     }
 
     /**
@@ -351,7 +351,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateVARSiMetricWithInheritance()
     {
-        $this->assertEquals(5, $this->_calculateClassMetric('varsi'));
+        $this->assertEquals(5, $this->calculateClassMetric('varsi'));
     }
 
     /**
@@ -361,7 +361,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateVARSnpMetric()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('varsnp'));
+        $this->assertEquals(2, $this->calculateClassMetric('varsnp'));
     }
 
     /**
@@ -371,7 +371,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateVARSnpMetricWithInheritance()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('varsnp'));
+        $this->assertEquals(1, $this->calculateClassMetric('varsnp'));
     }
 
     /**
@@ -381,7 +381,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCMetric()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('wmc'));
+        $this->assertEquals(3, $this->calculateClassMetric('wmc'));
     }
 
     /**
@@ -391,7 +391,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCMetricOneLevelInheritance()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('wmc'));
+        $this->assertEquals(3, $this->calculateClassMetric('wmc'));
     }
 
     /**
@@ -401,7 +401,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCMetricTwoLevelInheritance()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('wmc'));
+        $this->assertEquals(3, $this->calculateClassMetric('wmc'));
     }
 
     /**
@@ -411,7 +411,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCiMetric()
     {
-        $this->assertEquals(3, $this->_calculateClassMetric('wmci'));
+        $this->assertEquals(3, $this->calculateClassMetric('wmci'));
     }
 
     /**
@@ -421,7 +421,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCiMetricOneLevelInheritance()
     {
-        $this->assertEquals(4, $this->_calculateClassMetric('wmci'));
+        $this->assertEquals(4, $this->calculateClassMetric('wmci'));
     }
 
     /**
@@ -431,7 +431,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCiMetricTwoLevelInheritance()
     {
-        $this->assertEquals(5, $this->_calculateClassMetric('wmci'));
+        $this->assertEquals(5, $this->calculateClassMetric('wmci'));
     }
 
     /**
@@ -441,7 +441,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCnpMetric()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('wmcnp'));
+        $this->assertEquals(1, $this->calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -451,7 +451,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCnpMetricOneLevelInheritance()
     {
-        $this->assertEquals(2, $this->_calculateClassMetric('wmcnp'));
+        $this->assertEquals(2, $this->calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -461,7 +461,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateWMCnpMetricTwoLevelInheritance()
     {
-        $this->assertEquals(1, $this->_calculateClassMetric('wmcnp'));
+        $this->assertEquals(1, $this->calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -472,9 +472,9 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      *
      * @return mixed
      */
-    private function _calculateClassMetric($name)
+    private function calculateClassMetric($name)
     {
-        $metrics = $this->_calculateClassMetrics();
+        $metrics = $this->calculateClassMetrics();
         return $metrics[$name];
     }
 
@@ -484,7 +484,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      *
      * @return mixed
      */
-    private function _calculateClassMetrics()
+    private function calculateClassMetrics()
     {
         $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
 
@@ -506,7 +506,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsForTrait()
     {
-        $metrics = $this->_calculateTraitMetrics();
+        $metrics = $this->calculateTraitMetrics();
 
         $this->assertInternalType('array', $metrics);
 
@@ -677,7 +677,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * @return mixed
      * @since 1.0.6
      */
-    private function _calculateTraitMetrics()
+    private function calculateTraitMetrics()
     {
         $namespaces = $this->parseCodeResourceForTest();
 

@@ -104,7 +104,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoccMetricForClassWithoutChildren()
     {
-        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
+        $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'nocc'));
     }
 
     /**
@@ -114,7 +114,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoccMetricForClassWithDirectChildren()
     {
-        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
+        $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'nocc'));
     }
 
     /**
@@ -124,7 +124,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren()
     {
-        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'nocc'));
+        $this->assertEquals(1, $this->getCalculatedMetric(__METHOD__, 'nocc'));
     }
 
     /**
@@ -134,7 +134,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricNoInheritance()
     {
-        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -144,7 +144,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricOneLevelInheritance()
     {
-        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(1, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -154,7 +154,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricTwoLevelNoInheritance()
     {
-        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -164,7 +164,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricThreeLevelNoInheritance()
     {
-        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -174,7 +174,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricFourLevelNoInheritance()
     {
-        $this->assertEquals(4, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(4, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -184,7 +184,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo()
     {
-        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -194,7 +194,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateDITMetricForInternalParentIncrementsMetricWithTwo()
     {
-        $this->assertEquals(3, $this->_getCalculatedMetric(__METHOD__, 'dit'));
+        $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
 
     /**
@@ -250,7 +250,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoamMetricForClassWithoutParent()
     {
-        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+        $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'noam'));
     }
 
     /**
@@ -260,7 +260,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoamMetricForClassWithDirectParent()
     {
-        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+        $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'noam'));
     }
 
     /**
@@ -270,7 +270,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoamMetricForClassWithIndirectParent()
     {
-        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noam'));
+        $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'noam'));
     }
 
     /**
@@ -280,7 +280,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoomMetricForClassWithoutParent()
     {
-        $this->assertEquals(0, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+        $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'noom'));
     }
 
     /**
@@ -290,7 +290,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoomMetricForClassWithParent()
     {
-        $this->assertEquals(2, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+        $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'noom'));
     }
 
     /**
@@ -300,7 +300,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods()
     {
-        $this->assertEquals(1, $this->_getCalculatedMetric(__METHOD__, 'noom'));
+        $this->assertEquals(1, $this->getCalculatedMetric(__METHOD__, 'noom'));
     }
 
     /**
@@ -328,7 +328,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      *
      * @return mixed
      */
-    private function _getCalculatedMetric($testCase, $metric)
+    private function getCalculatedMetric($testCase, $metric)
     {
         $namespaces = $this->parseTestCaseSource($testCase);
         $namespace  = $namespaces->current();

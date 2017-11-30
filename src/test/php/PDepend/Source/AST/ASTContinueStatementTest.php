@@ -61,7 +61,7 @@ class ASTContinueStatementTest extends ASTNodeTest
      */
     public function testContinueStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTContinueStatementTest extends ASTNodeTest
      */
     public function testContinueStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
         $this->assertEquals(9, $stmt->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTContinueStatementTest extends ASTNodeTest
      */
     public function testContinueStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
         $this->assertEquals(7, $stmt->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTContinueStatementTest extends ASTNodeTest
      */
     public function testContinueStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
         $this->assertEquals(17, $stmt->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTContinueStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTContinueStatement
      */
-    private function _getFirstContinueStatementInFunction($testCase)
+    private function getFirstContinueStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

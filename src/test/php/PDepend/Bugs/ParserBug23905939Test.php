@@ -60,7 +60,7 @@ class ParserBug23905939Test extends AbstractRegressionTest
 {
     /**
      * testParserExtractsCorrectClassPackage
-     * 
+     *
      * @return void
      */
     public function testParserExtractsCorrectClassPackage()

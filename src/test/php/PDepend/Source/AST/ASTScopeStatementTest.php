@@ -62,7 +62,7 @@ class ASTScopeStatementTest extends ASTNodeTest
      */
     public function testParserHandlesInlineScopeStatement()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
+        $stmt = $this->getFirstScopeStatementInFunction();
         $this->assertEquals(1, count($stmt->getChildren()));
 
         return $stmt;
@@ -138,7 +138,7 @@ class ASTScopeStatementTest extends ASTNodeTest
      */
     public function testScopeStatement()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
+        $stmt = $this->getFirstScopeStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt);
 
         return $stmt;
@@ -198,13 +198,13 @@ class ASTScopeStatementTest extends ASTNodeTest
 
     /**
      * testScopeStatementWithAlternative
-     * 
+     *
      * @return \PDepend\Source\AST\ASTScopeStatement
      * @since 1.0.2
      */
     public function testScopeStatementWithAlternative()
     {
-        $stmt = $this->_getFirstScopeStatementInFunction();
+        $stmt = $this->getFirstScopeStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt);
 
         return $stmt;
@@ -267,7 +267,7 @@ class ASTScopeStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTScopeStatement
      */
-    private function _getFirstScopeStatementInFunction()
+    private function getFirstScopeStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
