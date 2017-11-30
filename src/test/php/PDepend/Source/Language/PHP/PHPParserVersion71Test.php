@@ -80,6 +80,42 @@ class PHPParserVersion71Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testIterableTypeHintParameter()
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertTrue($type->isArray());
+        $this->assertSame('iterable', $type->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIterableTypeHintReturn()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+        
+        $this->assertFalse($type->isScalar());
+        $this->assertTrue($type->isArray());
+        $this->assertSame('iterable', $type->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testVoidTypeHintReturn()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+        
+        $this->assertTrue($type->isScalar());
+        $this->assertFalse($type->isArray());
+        $this->assertSame('void', $type->getImage());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
