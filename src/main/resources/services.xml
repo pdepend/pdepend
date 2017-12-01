@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="pdepend.textui.runner" class="PDepend\TextUI\Runner">
+        <service id="pdepend.textui.runner" class="PDepend\TextUI\Runner" public="true">
             <argument type="service" id="pdepend.report_generator_factory" />
             <argument type="service" id="pdepend.engine" />
         </service>
@@ -20,16 +20,16 @@
             <argument type="service" id="pdepend.analyzer_factory" />
         </service>
 
-        <service id="pdepend.analyzer_factory" class="PDepend\Metrics\AnalyzerFactory">
+        <service id="pdepend.analyzer_factory" class="PDepend\Metrics\AnalyzerFactory" public="true">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="pdepend.configuration" class="PDepend\Util\Configuration">
+        <service id="pdepend.configuration" class="PDepend\Util\Configuration" public="true">
         </service>
 
         <service id="pdepend.textui.result_printer" class="PDepend\TextUI\ResultPrinter" />
 
-        <service id="pdepend.report.summary.xml" class="PDepend\Report\Summary\Xml">
+        <service id="pdepend.report.summary.xml" class="PDepend\Report\Summary\Xml" public="true">
             <tag name="pdepend.logger" option="--summary-xml" message="Generates a xml log with all metrics." />
         </service>
 
@@ -37,7 +37,7 @@
             <tag name="pdepend.logger" option="--dependency-xml" message="Generates a xml log with all dependencies." />
         </service>
 
-        <service id="pdepend.report.jdepend.xml" class="PDepend\Report\Jdepend\Xml">
+        <service id="pdepend.report.jdepend.xml" class="PDepend\Report\Jdepend\Xml" public="true">
             <tag name="pdepend.logger" option="--jdepend-xml" message="Generates the package dependency log." />
         </service>
 
@@ -49,7 +49,7 @@
             <tag name="pdepend.logger" option="--overview-pyramid" message="Generates a chart with an Overview Pyramid for the analyzed project." />
         </service>
 
-        <service id="pdepend.report_generator_factory" class="PDepend\Report\ReportGeneratorFactory">
+        <service id="pdepend.report_generator_factory" class="PDepend\Report\ReportGeneratorFactory" public="true">
             <argument type="service" id="service_container" />
         </service>
 
