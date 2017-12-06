@@ -13,7 +13,7 @@
 
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/main/php/PHP</directory>
+            <directory suffix=".php">src/main/php/</directory>
 
             <exclude>
                 <!-- Exclude all vendor files -->
