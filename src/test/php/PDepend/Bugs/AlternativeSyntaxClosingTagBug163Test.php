@@ -61,6 +61,7 @@ class AlternativeSyntaxClosingTagBug163Test extends AbstractRegressionTest
      */
     public function testParserHandlesAlternativeSyntaxTerminatedByClosingTag()
     {
-        $this->parseTestCaseSource(__METHOD__);
+        $parsedTest = $this->parseTestCaseSource(__METHOD__);
+        $this->assertInstanceOf('\PDepend\Source\AST\ASTArtifactList', $parsedTest);
     }
 }

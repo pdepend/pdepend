@@ -57,15 +57,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects an
      * interface without a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testInterfaceDeclarationWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -73,15 +70,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects an
      * interface declaration with extend but without a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testInterfaceDeclarationWithExtendWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -89,15 +83,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects an
      * interface declaration with extend with invalid end of interface list.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected token: {, line: 2, col: 28, file: 
      * @return void
      */
     public function testInterfaceDeclarationWithInvalidInterfaceList()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected token: {, line: 2, col: 28, file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
     
@@ -105,15 +96,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration without a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testClassDeclarationWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -121,15 +109,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with extend but without a parent class name and a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testClassDeclarationWithExtendsWithoutClassName()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -137,15 +122,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with implements but without a interface name and a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testClassDeclarationWithExtendsWithoutInterfaceName()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -153,15 +135,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with parent interface but without a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testClassDeclarationWithParentInterfaceWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -169,15 +148,12 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with an incomplete parent interface list and without a body.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected end of token stream in file:
      * @return void
      */
     public function testClassDeclarationWithIncompleteParentInterfaceWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 }
