@@ -48,6 +48,7 @@ use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTExpression;
@@ -3273,11 +3274,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
 
-        $catch->addChild(
-            $this->builder->buildAstClassOrInterfaceReference(
-                $this->parseQualifiedName()
-            )
-        );
+        $this->parseCatchExceptionClass($catch);
 
         $this->consumeComments();
         $catch->addChild($this->parseVariable());
@@ -3290,6 +3287,20 @@ abstract class AbstractPHPParser
         return $this->setNodePositionsAndReturn($catch);
     }
 
+    /**
+     * This method parses class references in catch statement.
+     * 
+     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     */
+    protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
+    {
+        $stmt->addChild(
+            $this->builder->buildAstClassOrInterfaceReference(
+                $this->parseQualifiedName()
+            )
+        );
+    }
+    
     /**
      * This method parses a finally-statement.
      *
