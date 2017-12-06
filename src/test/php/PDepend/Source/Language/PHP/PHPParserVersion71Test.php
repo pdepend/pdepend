@@ -66,6 +66,40 @@ class PHPParserVersion71Test extends AbstractTest
     /**
      * @return void
      */
+    public function testConstVisibilityInInterfacePublic()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testConstVisibilityInInterfaceProtected()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException',
+            'Constant can\'t be declared private or protected in interface "TestInterface".'
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
+    public function testConstVisibilityInInterfacePrivate()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException',
+            'Constant can\'t be declared private or protected in interface "TestInterface".'
+        );
+        
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
     public function testCatchMultipleExceptionClasses()
     {
         $this->assertNotNull($this->parseCodeResourceForTest());        

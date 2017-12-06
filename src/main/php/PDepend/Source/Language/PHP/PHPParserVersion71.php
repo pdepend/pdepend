@@ -43,6 +43,9 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\State;
+use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -138,10 +141,31 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     {
         if ($tokenType == Tokens::T_CONST) {
             $definition = $this->parseConstantDefinition();
-            $definition->setModifiers($modifiers);
+            $constantModifiers = $this->getModifiersForConstantDefinition($tokenType, $modifiers);
+            $definition->setModifiers($constantModifiers);
             return $definition;
         }
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
+    }
+    
+    private function getModifiersForConstantDefinition($tokenType, $modifiers)
+    {
+        $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
+        $modifiers &= $allowed;
+      
+        if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
+            throw new InvalidStateException(
+                $this->tokenizer->next()->startLine,
+                (string) $this->compilationUnit,
+                sprintf(
+                   'Constant can\'t be declared private or protected in ' .
+                    'interface "%s".',
+                    $this->classOrInterface->getName()
+                )
+            );
+        }
+            
+        return $modifiers;
     }
     
     /**
