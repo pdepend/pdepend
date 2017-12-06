@@ -363,6 +363,7 @@ class PHPTokenizerInternal implements Tokenizer
         'false'          =>  Tokens::T_FALSE,
         'trait'          =>  Tokens::T_TRAIT,
         'yield'          =>  Tokens::T_YIELD,
+        'yield from'     =>  Tokens::T_YIELD,
         'parent'         =>  Tokens::T_PARENT,
         'finally'        =>  Tokens::T_FINALLY,
         'callable'       =>  Tokens::T_CALLABLE,
