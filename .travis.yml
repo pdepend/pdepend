@@ -36,7 +36,7 @@ before_script:
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update; fi;
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/filesystem:${SYMFONY_VERSION}" --no-update; fi;
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/config:${SYMFONY_VERSION}" --no-update; fi;
-    - if [ $DEPENDENCIES = low ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
+    - if [ $DEPENDENCIES = "low" ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
     - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
     - composer install
 
