@@ -43,6 +43,9 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\State;
+use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -138,9 +141,77 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     {
         if ($tokenType == Tokens::T_CONST) {
             $definition = $this->parseConstantDefinition();
-            $definition->setModifiers($modifiers);
+            $constantModifiers = $this->getModifiersForConstantDefinition($tokenType, $modifiers);
+            $definition->setModifiers($constantModifiers);
             return $definition;
         }
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
+    }
+    
+    private function getModifiersForConstantDefinition($tokenType, $modifiers)
+    {
+        $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
+        $modifiers &= $allowed;
+      
+        if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
+            throw new InvalidStateException(
+                $this->tokenizer->next()->startLine,
+                (string) $this->compilationUnit,
+                sprintf(
+                   'Constant can\'t be declared private or protected in ' .
+                    'interface "%s".',
+                    $this->classOrInterface->getName()
+                )
+            );
+        }
+            
+        return $modifiers;
+    }
+    
+    /**
+     * Tests if the given image is a PHP 7 type hint.
+     *
+     * @param string $image
+     * @return boolean
+     */
+    protected function isScalarOrCallableTypeHint($image)
+    {
+        switch (strtolower($image)) {
+            case 'iterable':
+            case 'void':
+                return true;
+        }
+
+        return parent::isScalarOrCallableTypeHint($image);
+    }
+
+    /**
+     * Parses a scalar type hint or a callable type hint.
+     *
+     * @param string $image
+     * @return \PDepend\Source\AST\ASTType
+     */
+    protected function parseScalarOrCallableTypeHint($image)
+    {
+        switch (strtolower($image)) {
+            case 'void':
+                return $this->builder->buildAstScalarType($image);
+            case 'iterable':
+                return $this->builder->buildAstTypeIterable();
+        }
+
+        return parent::parseScalarOrCallableTypeHint($image);
+    }
+
+    protected function parseCatchExceptionClass(\PDepend\Source\AST\ASTCatchStatement $stmt) {
+        do {
+            $repeat = false;
+            parent::parseCatchExceptionClass($stmt);
+
+            if (Tokens::T_BITWISE_OR === $this->tokenizer->peek()) {
+                $this->consumeToken(Tokens::T_BITWISE_OR);
+                $repeat = true;
+            }
+        } while ($repeat === true);
     }
 }

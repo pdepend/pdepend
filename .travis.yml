@@ -8,11 +8,19 @@ matrix:
         - php: 5.4
           env: DEPENDENCIES=low
         - php: 5.5
+          env: SYMFONY_VERSION=^2.0
         - php: 5.6
+          env: SYMFONY_VERSION=^2.0
+        - php: 5.6
+          env: SYMFONY_VERSION=^3.0
         - php: 7.0
+          env: SYMFONY_VERSION=^3.0
         - php: 7.1
+          env: SYMFONY_VERSION=^4.0
         - php: 7.2
+          env: SYMFONY_VERSION=^4.0
         - php: nightly
+          env: SYMFONY_VERSION=^4.0
     allow_failures:
       - php: nightly
     fast_finish: true
@@ -25,8 +33,11 @@ env:
 
 before_script:
     - composer self-update
-    - if [ $DEPENDENCIES = low ] ; then composer update --no-dev --prefer-dist --prefer-lowest --prefer-stable ; fi
-    - if [ ! $DEPENDENCIES ] ; then composer update --no-dev --prefer-dist ; fi
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update; fi;
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/filesystem:${SYMFONY_VERSION}" --no-update; fi;
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/config:${SYMFONY_VERSION}" --no-update; fi;
+    - if [ $DEPENDENCIES = "low" ] ; then composer update --no-dev --prefer-dist --prefer-lowest --prefer-stable ; fi
+    - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
     - composer install
 
 script:

@@ -939,6 +939,14 @@ interface Builder extends \IteratorAggregate
     public function buildAstTypeCallable();
 
     /**
+     * Builds a new node for the iterable type.
+     *
+     * @return \PDepend\Source\AST\ASTTypeIterable
+     * @since  2.5.1
+     */
+    public function buildAstTypeIterable();
+
+    /**
      * Builds a new primitive type node.
      *
      * @param string $image

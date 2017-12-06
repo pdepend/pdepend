@@ -66,6 +66,48 @@ class PHPParserVersion71Test extends AbstractTest
     /**
      * @return void
      */
+    public function testConstVisibilityInInterfacePublic()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testConstVisibilityInInterfaceProtected()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException',
+            'Constant can\'t be declared private or protected in interface "TestInterface".'
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
+    public function testConstVisibilityInInterfacePrivate()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException',
+            'Constant can\'t be declared private or protected in interface "TestInterface".'
+        );
+        
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCatchMultipleExceptionClasses()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());        
+    }
+    
+    /**
+     * @return void
+     */
     public function testNullableTypeHintParameter()
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
@@ -77,6 +119,42 @@ class PHPParserVersion71Test extends AbstractTest
     public function testNullableTypeHintReturn()
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIterableTypeHintParameter()
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertTrue($type->isArray());
+        $this->assertSame('iterable', $type->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIterableTypeHintReturn()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+        
+        $this->assertFalse($type->isScalar());
+        $this->assertTrue($type->isArray());
+        $this->assertSame('iterable', $type->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testVoidTypeHintReturn()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+        
+        $this->assertTrue($type->isScalar());
+        $this->assertFalse($type->isArray());
+        $this->assertSame('void', $type->getImage());
     }
 
     /**

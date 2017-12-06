@@ -1455,7 +1455,18 @@ class PHPBuilder implements Builder
     {
         return $this->buildAstNodeInstance('ASTTypeCallable');
     }
-
+    
+    /**
+     * Builds a new node for the iterable type.
+     *
+     * @return \PDepend\Source\AST\ASTTypeIterable
+     * @since  2.5.1
+     */
+    public function buildAstTypeIterable()
+    {
+        return $this->buildAstNodeInstance('ASTTypeIterable');
+    }
+    
     /**
      * Builds a new primitive type node.
      *
