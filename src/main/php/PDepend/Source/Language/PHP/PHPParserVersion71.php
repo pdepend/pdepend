@@ -153,7 +153,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
         $modifiers &= $allowed;
       
-        if ( $this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0 ) {
+        if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
             throw new InvalidStateException(
                 $this->tokenizer->next()->startLine,
                 (string) $this->compilationUnit,
