@@ -25,8 +25,8 @@ env:
 
 before_script:
     - composer self-update
-    - if [ $DEPENDENCIES = low ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
-    - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
+    - if [ $DEPENDENCIES = low ] ; then composer update --no-dev --prefer-dist --prefer-lowest --prefer-stable ; fi
+    - if [ ! $DEPENDENCIES ] ; then composer update --no-dev --prefer-dist ; fi
     - composer install
 
 script:
