@@ -55,14 +55,12 @@ class SymbolTableTest extends AbstractTest
 {
     /**
      * Tests that no symbol can be added to a symbol table without active scope.
+     *
+     * @expectedException \PDepend\Source\Parser\NoActiveScopeException
+     * @expectedExceptionMessage No active scope in symbol table.
      */
     public function testCannotAddSymbolToASymbolTableWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
-            'No active scope in symbol table.'
-        );
-
         $symbolTable = new SymbolTable();
         $symbolTable->destroyScope();
         $symbolTable->add('key', 'value');
@@ -70,14 +68,12 @@ class SymbolTableTest extends AbstractTest
 
     /**
      * Tests that cannot perform lookup on a symbol table without active scope.
+     *
+     * @expectedException \PDepend\Source\Parser\NoActiveScopeException
+     * @expectedExceptionMessage No active scope in symbol table.
      */
     public function testCannotPerformLookupOnASymbolTableWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
-            'No active scope in symbol table.'
-        );
-
         $symbolTable = new SymbolTable();
         $symbolTable->destroyScope();
         $symbolTable->lookup('key');
@@ -85,14 +81,12 @@ class SymbolTableTest extends AbstractTest
 
     /**
      * Tests that cannot reset a scope, if there is no active scope.
+     * 
+     * @expectedException \PDepend\Source\Parser\NoActiveScopeException
+     * @expectedExceptionMessage No active scope in symbol table.
      */
     public function testCannotResetWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
-            'No active scope in symbol table.'
-        );
-
         $symbolTable = new SymbolTable();
         $symbolTable->destroyScope();
         $symbolTable->resetScope();
@@ -100,14 +94,12 @@ class SymbolTableTest extends AbstractTest
 
     /**
      * Tests that cannot destroy a scope, if there is no active scope.
+     * 
+     * @expectedException \PDepend\Source\Parser\NoActiveScopeException
+     * @expectedExceptionMessage No active scope in symbol table.
      */
     public function testCannotDestroyWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
-            'No active scope in symbol table.'
-        );
-
         $symbolTable = new SymbolTable();
         $symbolTable->destroyScope();
         $symbolTable->destroyScope();

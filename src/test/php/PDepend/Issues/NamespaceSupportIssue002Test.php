@@ -109,15 +109,12 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
     /**
      * Tests that parser throws an expected exception.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: as, line: 2, col: 19, file:
      * @return void
      */
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: as, line: 2, col: 19, file: '
-        );
-
         $this->parseSource('issues/002-004-use-declaration.php');
     }
 
@@ -173,16 +170,12 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      * Tests that the parser does not accept an empty namespace identifier for
      * the semicolon syntax.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ;, line: 2, col: 18, file:
      * @return void
      */
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: ;, line: 2, col: 18, file: '
-
-        );
-
         $this->parseSource('issues/002-008-namespace-declaration.php');
     }
 
@@ -190,16 +183,12 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      * Tests that the parser does not accept a leading backslash in a namespace
      * identifier.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: {, line: 2, col: 13, file: 
      * @return void
      */
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: {, line: 2, col: 13, file: '
-
-        );
-
         $this->parseSource('issues/002-009-namespace-declaration.php');
     }
 

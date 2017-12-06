@@ -101,30 +101,24 @@ class ASTStaticReferenceTest extends ASTNodeTest
     /**
      * Tests that an invalid static results in the expected exception.
      *
+     * @expectedException \PDepend\Source\Parser\InvalidStateException
+     * @expectedExceptionMessage The keyword "static" was used outside of a class/method scope.
      * @return void
      */
     public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
-            'The keyword "static" was used outside of a class/method scope.'
-        );
-
         $this->parseCodeResourceForTest();
     }
 
     /**
      * Tests that an invalid static results in the expected exception.
      *
+     * @expectedException \PDepend\Source\Parser\InvalidStateException
+     * @expectedExceptionMessage The keyword "static" was used outside of a class/method scope.
      * @return void
      */
     public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
-            'The keyword "static" was used outside of a class/method scope.'
-        );
-
         $this->parseCodeResourceForTest();
     }
 

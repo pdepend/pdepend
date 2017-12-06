@@ -93,15 +93,12 @@ class ReportGeneratorFactoryTest extends AbstractTest
      * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
      * fails with an exception for an invalid logger identifier.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unknown generator with identifier "foo-bar-xml".
      * @return void
      */
     public function testCreateGeneratorWithInvalidIdentifierFail()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
-            'Unknown generator with identifier "foo-bar-xml".'
-        );
-
         $factory = $this->createReportGeneratorFactory();
         $factory->createGenerator('foo-bar-xml', 'pdepend.xml');
     }

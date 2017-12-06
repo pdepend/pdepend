@@ -141,18 +141,14 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      *
      * @param integer $modifiers Combinations of invalid modifiers.
      *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid field modifiers given, allowed modifiers are IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.
      * @return void
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
     {
         $declaration = new ASTFieldDeclaration();
-
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Invalid field modifiers given, allowed modifiers are ' .
-            'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.'
-        );
 
         $declaration->setModifiers($modifiers);
     }

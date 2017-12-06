@@ -43,10 +43,6 @@
 namespace PDepend;
 
 use PDepend\Source\AST\ASTArtifactList;
-use PDepend\Source\AST\ASTForeachStatement;
-use PDepend\Source\AST\ASTLiteral;
-use PDepend\Source\AST\ASTString;
-use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
@@ -88,6 +84,8 @@ class ParserTest extends AbstractTest
         $parser = new PHPParserGeneric($tokenizer, $builder, $cache);
         $parser->setMaxNestingLevel(512);
         $parser->parse();
+
+        $this->assertNotNull($parser);
     }
 
     /**
@@ -136,8 +134,10 @@ class ParserTest extends AbstractTest
     public function testParserWithUnclosedClassFail()
     {
         $sourceFile = $this->createCodeResourceUriForTest();
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\TokenStreamEndException'
+        );
+        $this->expectExceptionMessage(
             "Unexpected end of token stream in file: {$sourceFile}."
         );
 
@@ -148,15 +148,12 @@ class ParserTest extends AbstractTest
      * Tests that the parser throws an exception if it reaches the end of the
      * stream but not all function curly braces are closed.
      *
+     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
+     * @expectedExceptionMessage Unexpected end of token stream in file: 
      * @return void
      */
     public function testParserWithUnclosedFunctionFail()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException',
-            'Unexpected end of token stream in file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -164,15 +161,12 @@ class ParserTest extends AbstractTest
      * Tests that the parser throws an exception if it finds an invalid
      * function signature.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected token: (, line: 3, col: 23, file:
      * @return void
      */
     public function testParserWithInvalidFunction1Fail()
     {
-        $this->setExpectedException(
-            '\\RuntimeException',
-            'Unexpected token: (, line: 3, col: 23, file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -180,15 +174,12 @@ class ParserTest extends AbstractTest
      * Tests that the parser throws an exception if it finds an invalid
      * function signature.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unexpected token: Bar, line: 3, col: 18, file:
      * @return void
      */
     public function testParserWithInvalidFunction2Fail()
     {
-        $this->setExpectedException(
-            '\\RuntimeException',
-            "Unexpected token: Bar, line: 3, col: 18, file: "
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -1151,15 +1142,12 @@ class ParserTest extends AbstractTest
      * Tests that the parser throws an exception for an unclosed array
      * declaration within the default value of a parameter.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: {, line: 2, col: 29, file: 
      * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: {, line: 2, col: 29, file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -1167,15 +1155,12 @@ class ParserTest extends AbstractTest
      * Tests that the parser throws an exception when it detects an invalid
      * token within the parameter declaration of a function or method.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: &, line: 2, col: 27, file:
      * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: &, line: 2, col: 27, file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -1183,15 +1168,12 @@ class ParserTest extends AbstractTest
      * Tests that the parser throws an exception when it detects an invalid
      * token in a class body.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ;, line: 4, col: 5, file:
      * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: ;, line: 4, col: 5, file: '
-        );
-
         $this->parseCodeResourceForTest();
     }
 
@@ -1203,10 +1185,8 @@ class ParserTest extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: &, line: 4, col: 12, file: '
-        );
+        $this->expectException('\\PDepend\\Source\\Parser\\UnexpectedTokenException');
+        $this->expectExceptionMessage('Unexpected token: &, line: 4, col: 12, file: ');
 
         $this->parseCodeResourceForTest();
     }

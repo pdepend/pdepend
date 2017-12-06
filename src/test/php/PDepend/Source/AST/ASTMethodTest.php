@@ -396,12 +396,11 @@ class ASTMethodTest extends AbstractASTArtifactTest
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method
      * fails with an exception for an invalid modifier value.
      *
+     * @expectedException \InvalidArgumentException
      * @return void
      */
     public function testSetInvalidModifierFail()
     {
-        $this->setExpectedException('InvalidArgumentException');
-
         $method = new ASTMethod('method');
         $method->setModifiers(-1);
     }

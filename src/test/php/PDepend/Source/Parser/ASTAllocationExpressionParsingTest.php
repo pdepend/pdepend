@@ -269,14 +269,12 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      * Tests that invalid allocation expression results in the expected
      * exception.
      *
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ;, line: 4, col: 9, file:
      * @return void
      */
     public function testInvalidAllocationExpressionResultsInExpectedException()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: ;, line: 4, col: 9, file: '
-        );
         $this->parseCodeResourceForTest();
     }
 

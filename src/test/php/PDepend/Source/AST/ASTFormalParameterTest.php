@@ -85,14 +85,13 @@ class ASTFormalParameterTest extends ASTNodeTest
     /**
      * testGetTypeThrowsAnExceptionByDefault
      *
+     * @expectedException \OutOfBoundsException
      * @return void
      */
     public function testGetTypeThrowsAnExceptionByDefault()
     {
         $parameter = new ASTFormalParameter();
         $parameter->addChild(new ASTVariableDeclarator());
-
-        $this->setExpectedException('\\OutOfBoundsException');
 
         $parameter->getType();
     }
