@@ -66,6 +66,14 @@ class PHPParserVersion71Test extends AbstractTest
     /**
      * @return void
      */
+    public function testCatchMultipleExceptionClasses()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());        
+    }
+    
+    /**
+     * @return void
+     */
     public function testNullableTypeHintParameter()
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
