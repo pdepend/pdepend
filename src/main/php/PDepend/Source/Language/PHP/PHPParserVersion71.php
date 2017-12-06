@@ -203,4 +203,15 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseScalarOrCallableTypeHint($image);
     }
 
+    protected function parseCatchExceptionClass(\PDepend\Source\AST\ASTCatchStatement $stmt) {
+        do {
+            $repeat = false;
+            parent::parseCatchExceptionClass($stmt);
+
+            if (Tokens::T_BITWISE_OR === $this->tokenizer->peek()) {
+                $this->consumeToken(Tokens::T_BITWISE_OR);
+                $repeat = true;
+            }
+        } while ($repeat === true);
+    }
 }
