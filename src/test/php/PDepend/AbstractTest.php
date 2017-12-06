@@ -826,10 +826,13 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
      */
     protected function parseCodeResourceForTest($ignoreAnnotations = false)
     {
-        return $this->parseSource(
+        $parsedSource = $this->parseSource(
             $this->createCodeResourceUriForTest(),
             $ignoreAnnotations
         );
+        $this->assertNotNull($parsedSource);
+
+        return $parsedSource;
     }
 
     /**
