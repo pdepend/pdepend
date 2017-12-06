@@ -1,3 +1,30 @@
+pdepend-2.5.1 (2017/12/06)
+==========================
+
+This release contains many bugfixes, enables Scrutinizer and adds code coverage integration. HHVM support was dropped. Full support for missing language features for PHP <= 7.1 were added.
+
+- Support for "yield from" in PHP 7.0 [\#350](https://github.com/pdepend/pdepend/pull/350) ([emirb](https://github.com/emirb))
+- Support for constant visibility in interfaces in PHP 7.1 [\#349](https://github.com/pdepend/pdepend/pull/349) ([KacerCZ](https://github.com/KacerCZ))
+- Support catch of multiple exception types in PHP 7.1 [\#348](https://github.com/pdepend/pdepend/pull/348) ([KacerCZ](https://github.com/KacerCZ))
+- Added support for PHP 7.1 types - iterable and void [\#342](https://github.com/pdepend/pdepend/pull/342) ([KacerCZ](https://github.com/KacerCZ))
+- Add Symfony 4 support [\#340](https://github.com/pdepend/pdepend/pull/340) ([surikman](https://github.com/surikman))
+- Fix Scrutinizer config [\#336](https://github.com/pdepend/pdepend/pull/336) ([emirb](https://github.com/emirb))
+- Fixed PHPUnit warnings [\#333](https://github.com/pdepend/pdepend/pull/333) ([KacerCZ](https://github.com/KacerCZ))
+- Codecov explicit coverage file [\#332](https://github.com/pdepend/pdepend/pull/332) ([emirb](https://github.com/emirb))
+- Add codecov.io integration [\#331](https://github.com/pdepend/pdepend/pull/331) ([emirb](https://github.com/emirb))
+- Use uniqid\(\) in AbstractASTArtifact::getId\(\) instead of microtime\(\) [\#330](https://github.com/pdepend/pdepend/pull/330) ([KacerCZ](https://github.com/KacerCZ))
+- Fix Iterator so it will not return directories [\#329](https://github.com/pdepend/pdepend/pull/329) ([KacerCZ](https://github.com/KacerCZ))
+- Fix tests on Windows [\#328](https://github.com/pdepend/pdepend/pull/328) ([KacerCZ](https://github.com/KacerCZ))
+- PHP 7.2 fixes [\#326](https://github.com/pdepend/pdepend/pull/326) ([emirb](https://github.com/emirb))
+- Capitalize XML word [\#325](https://github.com/pdepend/pdepend/pull/325) ([bocharsky-bw](https://github.com/bocharsky-bw))
+- Fix typo [\#321](https://github.com/pdepend/pdepend/pull/321) ([ravage84](https://github.com/ravage84))
+- Fixes \#193 regression [\#319](https://github.com/pdepend/pdepend/pull/319) ([mdeboer](https://github.com/mdeboer))
+- Remove running of PHP 5.3 build since dropped by Travis. [\#316](https://github.com/pdepend/pdepend/pull/316) ([niconoe-](https://github.com/niconoe-))
+- Fix issue \#297 adding support for constant visibility into the parser for PHP 7.1 [\#314](https://github.com/pdepend/pdepend/pull/314) ([mmucklo](https://github.com/mmucklo))
+- Remove references to HHVM [\#309](https://github.com/pdepend/pdepend/pull/309) ([ravage84](https://github.com/ravage84))
+- fix count\(\): Parameter must be an array or an object that implements ... [\#303](https://github.com/pdepend/pdepend/pull/303) ([remicollet](https://github.com/remicollet))
+- "a xml" -\> "an xml" [\#300](https://github.com/pdepend/pdepend/pull/300) ([bocharsky-bw](https://github.com/bocharsky-bw))
+
 pdepend-2.5.0 (2017/01/19)
 ==========================
 
