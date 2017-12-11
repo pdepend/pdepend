@@ -33,7 +33,7 @@
             <tag name="pdepend.logger" option="--summary-xml" message="Generates a xml log with all metrics." />
         </service>
 
-        <service id="pdepend.report.dependencies.xml" class="PDepend\Report\Dependencies\Xml">
+        <service id="pdepend.report.dependencies.xml" class="PDepend\Report\Dependencies\Xml" public="true">
             <tag name="pdepend.logger" option="--dependency-xml" message="Generates a xml log with all dependencies." />
         </service>
 
@@ -41,11 +41,11 @@
             <tag name="pdepend.logger" option="--jdepend-xml" message="Generates the package dependency log." />
         </service>
 
-        <service id="pdepend.report.jdepend.chart" class="PDepend\Report\Jdepend\Chart">
+        <service id="pdepend.report.jdepend.chart" class="PDepend\Report\Jdepend\Chart" public="true">
             <tag name="pdepend.logger" option="--jdepend-chart" message="Generates a diagram of the analyzed packages." />
         </service>
 
-        <service id="pdepend.report.overview.pyramid" class="PDepend\Report\Overview\Pyramid">
+        <service id="pdepend.report.overview.pyramid" class="PDepend\Report\Overview\Pyramid" public="true">
             <tag name="pdepend.logger" option="--overview-pyramid" message="Generates a chart with an Overview Pyramid for the analyzed project." />
         </service>
 
