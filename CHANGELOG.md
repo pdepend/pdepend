@@ -1,3 +1,10 @@
+pdepend-2.5.2 (2017/12/13)
+=
+
+This release contains a single bugfix for missing command options.
+
+- Fix for GH355: Unknown option --jdepend-chart [\#356](https://github.com/pdepend/pdepend/pull/356) ([manuelpichler](https://github.com/manuelpichler))
+
 pdepend-2.5.1 (2017/12/06)
 ==========================
 
