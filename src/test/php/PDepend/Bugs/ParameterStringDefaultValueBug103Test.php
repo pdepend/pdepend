@@ -70,6 +70,7 @@ class ParameterStringDefaultValueBug103Test extends AbstractRegressionTest
             ->current()
             ->getParameters();
 
-        $parameters[0]->getDefaultValue();
+        $defaultValue = $parameters[0]->getDefaultValue();
+        $this->assertSame('x (\$x) y', $defaultValue);
     }
 }

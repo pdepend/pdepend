@@ -66,7 +66,8 @@ class EngineTest extends AbstractTest
         $dir = dirname(__FILE__) . '/foobar';
         $msg = "Invalid directory '{$dir}' added.";
         
-        $this->setExpectedException('InvalidArgumentException', $msg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($msg);
         
         $engine = $this->createEngineFixture();
         $engine->addDirectory($dir);
@@ -80,6 +81,7 @@ class EngineTest extends AbstractTest
     public function testAddDirectory()
     {
         $engine = $this->createEngineFixture();
+        $this->assertInstanceOf('\PDepend\Engine', $engine);
         $engine->addDirectory($this->createCodeResourceUriForTest());
     }
 
@@ -133,7 +135,8 @@ class EngineTest extends AbstractTest
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
     {
         $engine = $this->createEngineFixture();
-        $this->setExpectedException('RuntimeException', 'No source directory and file set.');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('No source directory and file set.');
         $engine->analyze();
     }
     
@@ -195,15 +198,12 @@ class EngineTest extends AbstractTest
      * Tests that the {@link \PDepend\Engine::countClasses()} method fails
      * with an exception if the code was not analyzed before.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage countClasses() doesn't work before the source was analyzed.
      * @return void
      */
     public function testCountClassesWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException', 
-            'countClasses() doesn\'t work before the source was analyzed.'
-        );
-        
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->countClasses();
@@ -228,15 +228,12 @@ class EngineTest extends AbstractTest
      * Tests that the {@link \PDepend\Engine::countNamespaces()} method
      * fails with an exception if the code was not analyzed before.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage countNamespaces() doesn't work before the source was analyzed.
      * @return void
      */
     public function testCountNamespacesWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'countNamespaces() doesn\'t work before the source was analyzed.'
-        );
-        
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->countNamespaces();
@@ -271,15 +268,12 @@ class EngineTest extends AbstractTest
      * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if the code was not analyzed before.
      *
+     * @expectedException \RuntimeException
+     * @expectedException "getNamespace() doesn't work before the source was analyzed."
      * @return void
      */
     public function testGetNamespaceWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'getNamespace() doesn\'t work before the source was analyzed.'
-        );
-        
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->getNamespace('package1');
@@ -289,15 +283,12 @@ class EngineTest extends AbstractTest
      * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if you request an invalid package.
      *
+     * @expectedException \OutOfBoundsException
+     * @expectedExceptionMessage Unknown namespace "nspace".
      * @return void
      */
     public function testGetNamespacesWithUnknownPackageFail()
     {
-        $this->setExpectedException(
-            'OutOfBoundsException',
-            'Unknown namespace "nspace".'
-        );
-        
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
@@ -327,16 +318,13 @@ class EngineTest extends AbstractTest
     /**
      * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * fails with an exception if the code was not analyzed before.
-     *
+     * 
+     * @expectedException \RuntimeException
+     * @expectedException "getNamespaces() doesn't work before the source was analyzed."
      * @return void
      */
     public function testGetNamespacesWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'getNamespaces() doesn\'t work before the source was analyzed.'
-        );
-        
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->getNamespaces();

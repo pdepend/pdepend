@@ -94,7 +94,7 @@ class ASTVariableTest extends ASTNodeTest
      */
     public function testAcceptInvokesAcceptOnChildNode()
     {
-        // Not valid for leaf nodes.
+        $this->markTestSkipped('Not valid for leaf nodes.');
     }
 
     /**

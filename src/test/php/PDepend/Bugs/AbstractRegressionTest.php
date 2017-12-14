@@ -76,6 +76,8 @@ abstract class AbstractRegressionTest extends AbstractTest
         $pdepend->addReportGenerator($log);
         $pdepend->analyze();
 
+        $this->assertNotNull($file);
+
         return $file;
     }
 

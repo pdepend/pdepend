@@ -60,16 +60,14 @@ class StrategyFactoryTest extends AbstractTest
      * Tests that the factory throws the expected exception for an invalid
      * strategy identifier.
      *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Cannot load file for identifier "foo_bar_baz".
+     *
      * @return void
      */
     public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier()
     {
         $factory = new StrategyFactory();
-
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Cannot load file for identifier "foo_bar_baz".'
-        );
 
         $factory->createStrategy('foo_bar_baz');
     }

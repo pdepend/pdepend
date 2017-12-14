@@ -76,18 +76,14 @@ class ASTConstantDefinitionTest extends ASTNodeTest
      *
      * @param integer $modifiers Combinations of invalid modifiers.
      *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid field modifiers given, allowed modifiers are IS_PUBLIC, IS_PROTECTED and IS_PRIVATE.
      * @return void
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
     {
         $definition = new ASTConstantDefinition();
-
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Invalid field modifiers given, allowed modifiers are ' .
-            'IS_PUBLIC, IS_PROTECTED and IS_PRIVATE.'
-        );
 
         $definition->setModifiers($modifiers);
     }

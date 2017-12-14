@@ -72,28 +72,22 @@ class PHPParserVersion71Test extends AbstractTest
     }
 
     /**
+     * @expectedException \PDepend\Source\Parser\InvalidStateException
+     * @expectedExceptionMessage Constant can't be declared private or protected in interface "TestInterface".
      * @return void
      */
     public function testConstVisibilityInInterfaceProtected()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
-            'Constant can\'t be declared private or protected in interface "TestInterface".'
-        );
-
         $this->parseCodeResourceForTest();
     }
 
     /**
+     * @expectedException \PDepend\Source\Parser\InvalidStateException
+     * @expectedExceptionMessage Constant can't be declared private or protected in interface "TestInterface".
      * @return void
      */
     public function testConstVisibilityInInterfacePrivate()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
-            'Constant can\'t be declared private or protected in interface "TestInterface".'
-        );
-        
         $this->parseCodeResourceForTest();
     }
 

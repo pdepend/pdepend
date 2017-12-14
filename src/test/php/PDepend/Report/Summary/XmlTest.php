@@ -126,15 +126,12 @@ class XmlTest extends AbstractTest
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
      *
+     * @expectedException \PDepend\Report\NoLogOutputException
+     * @expectedExceptionMessage The log target is not configured for 'PDepend\Report\Summary\Xml'.
      * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Report\\NoLogOutputException',
-            "The log target is not configured for 'PDepend\\Report\\Summary\\Xml'."
-        );
-
         $logger = new Xml();
         $logger->close();
     }

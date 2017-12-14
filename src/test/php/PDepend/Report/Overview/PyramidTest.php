@@ -80,15 +80,12 @@ class PyramidTest extends AbstractTest
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
      *
+     * @expectedException \PDepend\Report\NoLogOutputException
+     * @expectedExceptionMessage The log target is not configured for 'PDepend\Report\Overview\Pyramid'.
      * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Report\\NoLogOutputException',
-            "The log target is not configured for 'PDepend\\Report\\Overview\\Pyramid'."
-        );
-
         $logger = new Pyramid();
         $logger->close();
     }
@@ -107,15 +104,12 @@ class PyramidTest extends AbstractTest
     /**
      * Tests that the logger checks for the required analyzer.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Missing Coupling analyzer.
      * @return void
      */
     public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
-            'Missing Coupling analyzer.'
-        );
-
         $log = new Pyramid();
         $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createComplexityAnalyzer());
@@ -128,15 +122,12 @@ class PyramidTest extends AbstractTest
     /**
      * Tests that the logger checks for the required analyzer.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Missing Cyclomatic Complexity analyzer.
      * @return void
      */
     public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
-            'Missing Cyclomatic Complexity analyzer.'
-        );
-
         $log = new Pyramid();
         $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
@@ -149,15 +140,12 @@ class PyramidTest extends AbstractTest
     /**
      * Tests that the logger checks for the required analyzer.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Missing Inheritance analyzer.
      * @return void
      */
     public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
-            'Missing Inheritance analyzer.'
-        );
-
         $log = new Pyramid();
         $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
@@ -170,15 +158,12 @@ class PyramidTest extends AbstractTest
     /**
      * Tests that the logger checks for the required analyzer.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Missing Node Count analyzer.
      * @return void
      */
     public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
-            'Missing Node Count analyzer.'
-        );
-
         $log = new Pyramid();
         $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());
@@ -191,15 +176,12 @@ class PyramidTest extends AbstractTest
     /**
      * Tests that the logger checks for the required analyzer.
      *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Missing Node LOC analyzer.
      * @return void
      */
     public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
-            'Missing Node LOC analyzer.'
-        );
-
         $log = new Pyramid();
         $log->setLogFile($this->createRunResourceURI('_tmp_.svg'));
         $log->log($this->createCouplingAnalyzer());

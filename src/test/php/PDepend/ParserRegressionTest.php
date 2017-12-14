@@ -64,7 +64,7 @@ class ParserRegressionTest extends AbstractTest
      */
     public function testParserHandlesSourceFileWithoutException($pathName)
     {
-        $this->parseSource($pathName);
+        $this->assertNotNull($this->parseSource($pathName));
     }
 
     /**

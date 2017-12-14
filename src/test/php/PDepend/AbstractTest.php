@@ -68,7 +68,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * The current working directory.
@@ -826,10 +826,13 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function parseCodeResourceForTest($ignoreAnnotations = false)
     {
-        return $this->parseSource(
+        $parsedSource = $this->parseSource(
             $this->createCodeResourceUriForTest(),
             $ignoreAnnotations
         );
+        $this->assertNotNull($parsedSource);
+
+        return $parsedSource;
     }
 
     /**

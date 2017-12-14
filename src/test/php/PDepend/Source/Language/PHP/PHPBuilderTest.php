@@ -647,6 +647,8 @@ class PHPBuilderTest extends AbstractTest
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
      *
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Cannot create new nodes, when internal state is frozen.
      * @return void
      */
     public function testBuildASTClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen()
@@ -657,11 +659,6 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getClass('Foo');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
         $builder->buildAstClassOrInterfaceReference('Bar');
     }
 
@@ -669,6 +666,8 @@ class PHPBuilderTest extends AbstractTest
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
      *
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Cannot create new nodes, when internal state is frozen.
      * @return void
      */
     public function testBuildClassThrowsExpectedExceptionWhenStateIsFrozen()
@@ -679,11 +678,6 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getClass('Foo');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
         $builder->buildClass('Bar');
     }
 
@@ -691,6 +685,8 @@ class PHPBuilderTest extends AbstractTest
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
      *
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Cannot create new nodes, when internal state is frozen.
      * @return void
      */
     public function testBuildASTClassReferenceThrowsExpectedExceptionWhenStateIsFrozen()
@@ -701,11 +697,6 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getClass('Foo');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
         $builder->buildAstClassReference('Bar');
     }
 
@@ -713,6 +704,8 @@ class PHPBuilderTest extends AbstractTest
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
      *
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Cannot create new nodes, when internal state is frozen.
      * @return void
      */
     public function testBuildInterfaceThrowsExpectedExceptionWhenStateIsFrozen()
@@ -723,11 +716,6 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getInterface('Inter');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
         $builder->buildInterface('Face');
     }
 
@@ -735,6 +723,8 @@ class PHPBuilderTest extends AbstractTest
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
      *
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Cannot create new nodes, when internal state is frozen.
      * @return void
      */
     public function testBuildMethodThrowsExpectedExceptionWhenStateIsFrozen()
@@ -745,11 +735,6 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getInterface('Inter');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
-
         $builder->buildMethod('invoke');
     }
 
@@ -757,6 +742,8 @@ class PHPBuilderTest extends AbstractTest
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
      *
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage Cannot create new nodes, when internal state is frozen.
      * @return void
      */
     public function testBuildFunctionThrowsExpectedExceptionWhenStateIsFrozen()
@@ -766,11 +753,6 @@ class PHPBuilderTest extends AbstractTest
 
         // Freeze object
         $builder->getInterface('Inter');
-
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Cannot create new nodes, when internal state is frozen.'
-        );
 
         $builder->buildFunction('prop');
     }

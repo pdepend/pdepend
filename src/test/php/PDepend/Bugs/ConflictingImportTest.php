@@ -47,7 +47,7 @@ class ConflictingImportTest extends AbstractRegressionTest
     public function testSymfonyExtension()
     {
         // force compilation of both conflicting files
-        new \ReflectionClass('PDepend\DependencyInjection\Extension');
-        new \ReflectionClass('PDepend\DependencyInjection\PdependExtension');
+        $this->assertInstanceOf('\ReflectionClass', new \ReflectionClass('PDepend\DependencyInjection\Extension'));
+        $this->assertInstanceOf('\ReflectionClass', new \ReflectionClass('PDepend\DependencyInjection\PdependExtension'));
     }
 }
