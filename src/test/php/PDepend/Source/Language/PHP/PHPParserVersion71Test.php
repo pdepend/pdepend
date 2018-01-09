@@ -158,6 +158,18 @@ class PHPParserVersion71Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testVoidTypeHintReturnNamespaced()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertTrue($type->isScalar());
+        $this->assertFalse($type->isArray());
+        $this->assertSame('void', $type->getImage());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
