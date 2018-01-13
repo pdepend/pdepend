@@ -229,17 +229,19 @@ class Engine
      */
     public function addFile($file)
     {
-        if ($file === '-' || $file === 'php://stdin') {
-            $fileName = 'php://stdin';
-        } else {
-            $fileName = realpath($file);
-
-            if (!is_file($fileName)) {
-                throw new \InvalidArgumentException(sprintf('The given file "%s" does not exist.', $file));
-            }
+        if ($file === '-') {
+            $file = 'php://stdin';
         }
 
-        $this->files[] = $fileName;
+        if (strpos($file, 'php://') === 0) {
+            $this->files[] = $file;
+        } else {
+            if (!is_file($file)) {
+                throw new \InvalidArgumentException(sprintf('The given file "%s" does not exist.', $file));
+            }
+
+            $this->files[] = realpath($file);
+        }
     }
 
     /**
@@ -635,7 +637,11 @@ class Engine
         $fileIterator = new \AppendIterator();
 
         foreach ($this->files as $file) {
-            $fileIterator->append(new Iterator(new \GlobIterator($file), $this->fileFilter));
+            if (strpos($file, 'php://') === 0) {
+                $fileIterator->append(new \ArrayIterator(array(new \SplFileObject($file))));
+            } else {
+                $fileIterator->append(new Iterator(new \GlobIterator($file), $this->fileFilter));
+            }
         }
 
         foreach ($this->directories as $directory) {
@@ -661,7 +667,7 @@ class Engine
             if (is_string($file)) {
                 $files[$file] = $file;
             } else {
-                $pathname         = realpath($file->getPathname());
+                $pathname = $file->getRealPath() ?: $file->getPathname();
                 $files[$pathname] = $pathname;
             }
         }
