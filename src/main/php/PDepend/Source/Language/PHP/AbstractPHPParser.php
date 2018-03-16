@@ -6577,6 +6577,12 @@ abstract class AbstractPHPParser
      */
     private function getNamespaceOrPackageName()
     {
+        if (getenv('PREFER_LOGICAL_PACKAGENAMES')) {
+            if ($this->packageName === null) {
+                return $this->namespaceName;
+            }
+            return $this->packageName;
+        }
         if ($this->namespaceName === null) {
             return $this->packageName;
         }
