@@ -389,7 +389,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             return $this->parseStaticMemberPrimaryPrefix($expr->getChild(0));
         }
         if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
-            return $this->parseMemberPrimaryPrefix($expr->getChild(0));
+            $node = count($expr->getChildren()) === 0 ? $expr : $expr->getChild(0);
+            return $this->parseMemberPrimaryPrefix($node);
         }
         return $expr;
     }
