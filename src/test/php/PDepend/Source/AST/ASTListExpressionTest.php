@@ -303,6 +303,34 @@ class ASTListExpressionTest extends ASTNodeTest
     }
 
     /**
+     * testListExpressionWithKeys
+     *
+     * @return \PDepend\Source\AST\ASTListExpression
+     * @since 1.0.2
+     */
+    public function testListExpressionWithKeys()
+    {
+        $expr = $this->_getFirstListExpressionInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
+
+        return $expr;
+    }
+
+    /**
+     * testListExpressionWithKeysAndNestedList
+     *
+     * @return \PDepend\Source\AST\ASTListExpression
+     * @since 1.0.2
+     */
+    public function testListExpressionWithKeysAndNestedList()
+    {
+        $expr = $this->_getFirstListExpressionInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
+
+        return $expr;
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @return \PDepend\Source\AST\ASTListExpression

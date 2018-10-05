@@ -248,6 +248,8 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         }
         $this->consumeComments();
 
+        $withKeys = null;
+
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
             // The variable is optional:
             //   list(, , , , $something) = ...;
@@ -260,6 +262,18 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
                 case Tokens::T_PARENTHESIS_CLOSE:
                 case Tokens::T_SQUARED_BRACKET_CLOSE:
                     break 2;
+                case Tokens::T_CONSTANT_ENCAPSED_STRING:
+                    if ($withKeys !== null && !$withKeys) {
+                        throw new InvalidStateException(
+                            $this->tokenizer->next()->startLine,
+                            (string) $this->compilationUnit,
+                            'Cannot mix keyed and unkeyed array entries in assignments'
+                        );
+                    }
+
+                    $withKeys = true;
+                    $list->addChild($this->parseArrayElement());
+                    break;
                 case Tokens::T_LIST:
                     if (!$oldStyle) {
                         throw new InvalidStateException(
@@ -286,6 +300,15 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
                     $this->consumeComments();
                     break;
                 default:
+                    if ($withKeys !== null && $withKeys) {
+                        throw new InvalidStateException(
+                            $this->tokenizer->next()->startLine,
+                            (string) $this->compilationUnit,
+                            'Cannot mix keyed and unkeyed array entries in assignments'
+                        );
+                    }
+
+                    $withKeys = false;
                     $list->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
                     $this->consumeComments();
                     break;
