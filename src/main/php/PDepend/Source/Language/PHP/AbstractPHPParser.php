@@ -1605,11 +1605,12 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTListExpression
      * @since 0.9.12
      */
-    private function parseListExpression()
+    protected function parseListExpression()
     {
         $this->tokenStack->push();
 
         $token = $this->consumeToken(Tokens::T_LIST);
+
         $this->consumeComments();
 
         $list = $this->builder->buildAstListExpression($token->image);
@@ -2428,7 +2429,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTStatement
      * @since 0.9.12
      */
-    private function parseStatementBody(\PDepend\Source\AST\ASTStatement $stmt)
+    protected function parseStatementBody(\PDepend\Source\AST\ASTStatement $stmt)
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -2593,7 +2594,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since 1.0.1
      */
-    private function parseExpression()
+    protected function parseExpression()
     {
         if (null === ($expr = $this->parseOptionalExpression())) {
             $token = $this->consumeToken($this->tokenizer->peek());
@@ -3494,7 +3495,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTForeachStatement
      * @since 0.9.8
      */
-    private function parseForeachStatement()
+    protected function parseForeachStatement()
     {
         $this->tokenStack->push();
         $token = $this->consumeToken(Tokens::T_FOREACH);
@@ -3512,7 +3513,7 @@ abstract class AbstractPHPParser
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
             $foreach->addChild($this->parseVariableOrMemberByReference());
         } else {
-            if ($this->tokenizer->peek() == Tokens::T_LIST) {
+            if ($this->tokenizer->peek() === Tokens::T_LIST) {
                 $foreach->addChild($this->parseListExpression());
             } else {
                 $foreach->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
@@ -3520,12 +3521,10 @@ abstract class AbstractPHPParser
                 if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
                     $this->consumeToken(Tokens::T_DOUBLE_ARROW);
 
-                    if ($this->tokenizer->peek() == Tokens::T_LIST) {
+                    if ($this->tokenizer->peek() === Tokens::T_LIST) {
                         $foreach->addChild($this->parseListExpression());
                     } else {
-                        $foreach->addChild(
-                            $this->parseVariableOrMemberOptionalByReference()
-                        );
+                        $foreach->addChild($this->parseVariableOrMemberOptionalByReference());
                     }
                 }
             }
@@ -4599,7 +4598,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTUnaryExpression
      * @since 0.9.18
      */
-    private function parseVariableOrMemberOptionalByReference()
+    protected function parseVariableOrMemberOptionalByReference()
     {
         $this->consumeComments();
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
@@ -4625,7 +4624,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTUnaryExpression
      * @since 0.9.18
      */
-    private function parseVariableOrMemberByReference()
+    protected function parseVariableOrMemberByReference()
     {
         $this->tokenStack->push();
 

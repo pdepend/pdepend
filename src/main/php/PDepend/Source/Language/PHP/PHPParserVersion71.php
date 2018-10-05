@@ -47,6 +47,7 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -213,5 +214,139 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
                 $repeat = true;
             }
         } while ($repeat === true);
+    }
+
+    /**
+     * This method parses a single list-statement node.
+     *
+     * @param bool $oldStyle
+     *
+     * @return \PDepend\Source\AST\ASTListExpression
+     * @since 0.9.12
+     */
+    protected function parseListExpression($oldStyle = null)
+    {
+        $this->tokenStack->push();
+
+        if ($oldStyle === null) {
+            // Variant can initially be null, but must be same if nested
+            $oldStyle = $this->tokenizer->peek() === Tokens::T_LIST;
+        }
+
+        if ($oldStyle) {
+            $token = $this->consumeToken(Tokens::T_LIST);
+        } else {
+            $token = $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
+        }
+
+        $this->consumeComments();
+
+        $list = $this->builder->buildAstListExpression($token->image);
+
+        if ($oldStyle) {
+            $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+        }
+        $this->consumeComments();
+
+        while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
+            // The variable is optional:
+            //   list(, , , , $something) = ...;
+            // is valid.
+            switch ($tokenType) {
+                case Tokens::T_COMMA:
+                    $this->consumeToken(Tokens::T_COMMA);
+                    $this->consumeComments();
+                    break;
+                case Tokens::T_PARENTHESIS_CLOSE:
+                case Tokens::T_SQUARED_BRACKET_CLOSE:
+                    break 2;
+                case Tokens::T_LIST:
+                    if (!$oldStyle) {
+                        throw new InvalidStateException(
+                            $this->tokenizer->next()->startLine,
+                            (string) $this->compilationUnit,
+                            'Cannot mix [] and list()'
+                        );
+                    }
+
+                    $list->addChild($this->parseListExpression($oldStyle));
+                    $this->consumeComments();
+                    break;
+                case Tokens::T_SQUARED_BRACKET_OPEN:
+                    if ($oldStyle) {
+                        // Old and new style must not be nested
+                        throw new InvalidStateException(
+                            $this->tokenizer->next()->startLine,
+                            (string) $this->compilationUnit,
+                            'Cannot mix [] and list()'
+                        );
+                    }
+
+                    $list->addChild($this->parseListExpression($oldStyle));
+                    $this->consumeComments();
+                    break;
+                default:
+                    $list->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
+                    $this->consumeComments();
+                    break;
+            }
+        }
+
+        if ($oldStyle) {
+            $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+        } else {
+            $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
+        }
+
+        return $this->setNodePositionsAndReturn($list);
+    }
+
+    /**
+     * This method parses a single foreach-statement node.
+     *
+     * @return \PDepend\Source\AST\ASTForeachStatement
+     * @since 0.9.8
+     */
+    protected function parseForeachStatement()
+    {
+        $this->tokenStack->push();
+        $token = $this->consumeToken(Tokens::T_FOREACH);
+
+        $foreach = $this->builder->buildAstForeachStatement($token->image);
+
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+
+        $foreach->addChild($this->parseExpression());
+
+        $this->consumeToken(Tokens::T_AS);
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
+            $foreach->addChild($this->parseVariableOrMemberByReference());
+        } else {
+            if (in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN), true)) {
+                $foreach->addChild($this->parseListExpression());
+            } else {
+                $foreach->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
+
+                if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+                    $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+
+                    if (in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN), true)) {
+                        $foreach->addChild($this->parseListExpression());
+                    } else {
+                        $foreach->addChild($this->parseVariableOrMemberOptionalByReference());
+                    }
+                }
+            }
+        }
+
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+
+        return $this->setNodePositionsAndReturn(
+            $this->parseStatementBody($foreach)
+        );
     }
 }
