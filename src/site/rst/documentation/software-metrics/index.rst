@@ -137,8 +137,8 @@ of an application's code base.
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
 | hnt    | *Halstead Length*                          |         |         |      |       | X      |
 |        |                                            |         |         |      |       |        |
-|        | The total number of operator occurrences and|        |         |      |       |        |
-|        | the total number of operand occurrences    |         |         |      |       |        |
+|        | The total number of operator occurrences   |         |         |      |       |        |
+|        | and the total number of operand occurrences|         |         |      |       |        |
 |        |                                            |         |         |      |       |        |
 |        |   **HND = N1 + N2**                        |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
