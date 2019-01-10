@@ -168,6 +168,12 @@ of an application's code base.
 |        |                                            |         |         |      |       |        |
 |        | Maximum depth of inheritance               |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
+| mi     | *Maintainability Index*                    |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Calculates an index value between 0 and 100|         |         |      |       |        |
+|        | that represents the relative ease of       |         |         |      |       |        | 
+|        | maintaining the code                       |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
 | noam   | *Number Of Added Methods*                  |         |         |      | X     |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
 | nocc   | *Number Of Child Classes*                  |         |         |      | X     |        |
