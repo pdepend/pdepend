@@ -95,6 +95,13 @@ of an application's code base.
 |        |                                            |         |         |      |       |        |
 |        | Referenced Classes                         |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hb     | *Halstead Bugs*                            |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Halstead estimate for the number of error  |         |         |      |       |        |
+|        | in the implementation                      |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HB = POW(HE, 2/3) / 3000**             |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
 | leafs  | *Number of Leaf Classes*                   | X       |         |      |       |        |
 |        |                                            |         |         |      |       |        |
 |        | (final) classes                            |         |         |      |       |        |
