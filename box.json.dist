@@ -1,5 +1,5 @@
 {
-    "output": "./pdepend.phar",
+    "output": "build/pdepend.phar",
     "compression": "GZ",
     "directories": ["src/main", "vendor"],
     "banner": [
