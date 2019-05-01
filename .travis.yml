@@ -22,6 +22,7 @@ before_script:
 
 script:
     - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
+    - make package && ./pdepend.phar --version
     - bash <(curl -s https://codecov.io/bash) -f coverage.xml
 
 after_script:

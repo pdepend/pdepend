@@ -1,6 +1,7 @@
 .abc
 .idea
 .project
+build
 build.privates
 build_number_*.build
 PHP_Depend-*.tgz
