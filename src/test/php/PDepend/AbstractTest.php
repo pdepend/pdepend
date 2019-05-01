@@ -54,13 +54,13 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
-use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract test case implementation for the PDepend namespace.
@@ -68,7 +68,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends TestCase
 {
     /**
      * The current working directory.
@@ -116,6 +116,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         }
 
         parent::tearDown();
+    }
+
+    protected function setExpectedException(string $exception, string $message = '')
+    {
+        $this->expectException($exception);
+        if (!empty($message)) {
+            $this->expectExceptionMessage($message);
+        }
     }
 
     /**
@@ -444,42 +452,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $actual = self::collectGraph($node);
         self::assertEquals($graph, $actual);
-    }
-
-    /**
-     * Helper method to allow PHPUnit versions < 3.5.x
-     *
-     * @param string $expected The expected class or interface.
-     * @param mixed  $actual   The actual variable/value.
-     * @param string $message  Optional error/fail message.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public static function assertInstanceOf($expected, $actual, $message = '')
-    {
-        if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
-            return parent::assertInstanceOf($expected, $actual, $message);
-        }
-        return parent::assertType($expected, $actual, $message);
-    }
-
-    /**
-     * Helper method to allow PHPUnit versions < 3.5.x
-     *
-     * @param string $expected The expected internal type.
-     * @param mixed  $actual   The actual variable/value.
-     * @param string $message  Optional error/fail message.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public static function assertInternalType($expected, $actual, $message = '')
-    {
-        if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
-            return parent::assertInternalType($expected, $actual, $message);
-        }
-        return parent::assertType($expected, $actual, $message);
     }
 
     /**

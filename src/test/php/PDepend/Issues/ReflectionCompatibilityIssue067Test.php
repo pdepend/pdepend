@@ -235,7 +235,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
     public function testParserHandlesParameterDefaultValueFloat()
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertEquals(42.23, $parameters[0]->getDefaultValue(), null, 0.001);
+        $this->assertEquals(42.23, $parameters[0]->getDefaultValue(), '', 0.001);
     }
 
     /**

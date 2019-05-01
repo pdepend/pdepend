@@ -257,7 +257,7 @@ class PyramidTest extends AbstractTest
         foreach ($expected as $name => $value) {
             $elem = $svg->getElementById("pdepend.{$name}");
             $this->assertInstanceOf('\\DOMElement', $elem);
-            $this->assertEquals($value, $elem->nodeValue, null, 0.01);
+            $this->assertEquals($value, $elem->nodeValue, '', 0.01);
         }
 
         unlink($output);

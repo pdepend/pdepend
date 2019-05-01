@@ -282,8 +282,8 @@ class ChartTest extends AbstractTest
         $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
         $matrixB  = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
-        $this->assertEquals(0.3333333, $matches[1], null, 0.000001);
-        $this->assertEquals(0.3333333, $matches[4], null, 0.000001);
+        $this->assertEquals(0.3333333, $matches[1], '', 0.000001);
+        $this->assertEquals(0.3333333, $matches[4], '', 0.000001);
     }
 
     /**

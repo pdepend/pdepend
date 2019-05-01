@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<phpunit bootstrap="src/test/php/PDepend/bootstrap.php">
+<phpunit bootstrap="src/test/php/PDepend/bootstrap.php"
+         beStrictAboutTestsThatDoNotTestAnything="false"
+>
     <php>
         <ini name="date.timezone" value="UTC" />
     </php>

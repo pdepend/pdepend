@@ -75,7 +75,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertEquals(0.7368, $project['andc'], null, 0.0001);
+        $this->assertEquals(0.7368, $project['andc'], '', 0.0001);
     }
 
     /**
