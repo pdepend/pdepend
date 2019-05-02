@@ -1,7 +1,8 @@
 {
-    "output": "build/pdepend.phar",
+    "base-path": "build/phar",
+    "output": "../pdepend.phar",
     "compression": "GZ",
-    "directories": ["src/main", "vendor"],
+    "directories": ["src/bin", "src/main", "vendor"],
     "banner": [
         "This file is part of PDepend.",
         "",
