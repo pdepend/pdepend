@@ -1,8 +1,5 @@
 default: build
 
-PHP_VERSION:=$(shell php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')
-TOOLBOX_VERSION?=dev
-
 build: install test
 .PHONY: build
 
