@@ -2,6 +2,7 @@
     "name": "pdepend/pdepend",
     "description": "Official version of pdepend to be handled with Composer",
     "license": "BSD-3-Clause",
+    "type": "library",
     "require": {
         "php": ">=5.3.7",
         "symfony/dependency-injection": "^2.3.0|^3|^4",
