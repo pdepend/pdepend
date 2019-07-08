@@ -4,7 +4,7 @@ matrix:
     include:
         - php: 5.3
           dist: precise
-          env: DEPENDENCIES=low
+          env: BUILD_PHAR=true
         - php: 5.4
           env: DEPENDENCIES=low
         - php: 5.5
@@ -36,13 +36,19 @@ before_script:
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update; fi;
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/filesystem:${SYMFONY_VERSION}" --no-update; fi;
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/config:${SYMFONY_VERSION}" --no-update; fi;
-    - if [ $DEPENDENCIES = "low" ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
+    - if [ "$DEPENDENCIES" = "low" ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
     - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
     - composer install
 
 script:
     - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
     - bash <(curl -s https://codecov.io/bash) -f coverage.xml
+    - |
+      if [[ $BUILD_PHAR = 'true' ]]; then
+        git submodule update --init &&
+        ant package -D-phar:filename=./pdepend.phar &&
+        ./pdepend.phar --version
+      fi
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
@@ -50,3 +56,18 @@ after_script:
 
 notifications:
     irc: "irc.freenode.org#pdepend"
+
+deploy:
+- provider: releases
+  api_key: $GITHUB_TOKEN
+  file: pdepend.phar
+  skip_cleanup: true
+  on:
+      tags: true
+      repo: pdepend/pdepend
+      condition: "$BUILD_PHAR"
+
+addons:
+    snaps:
+    - name: ant
+      classic: true
