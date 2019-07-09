@@ -1,61 +1,76 @@
 language: php
 
 matrix:
-    include:
-        - php: 5.3
-          dist: precise
-          env: BUILD_PHAR=true
-        - php: 5.4
-          env: DEPENDENCIES=low
-        - php: 5.5
-          env: SYMFONY_VERSION=^2.0
-        - php: 5.6
-          env: SYMFONY_VERSION=^2.0
-        - php: 5.6
-          env: SYMFONY_VERSION=^3.0
-        - php: 7.0
-          env: SYMFONY_VERSION=^3.0
-        - php: 7.1
-          env: SYMFONY_VERSION=^4.0
-        - php: 7.2
-          env: SYMFONY_VERSION=^4.0
-        - php: nightly
-          env: SYMFONY_VERSION=^4.0
-    allow_failures:
-      - php: nightly
-    fast_finish: true
+  include:
+    - php: 5.3
+      dist: precise
+    - php: 5.3
+      dist: precise
+      env: DEPENDENCIES=low
+    - php: 5.4
+    - php: 5.4
+      env: DEPENDENCIES=low
+    - php: 5.5
+    - php: 5.5
+      env: DEPENDENCIES=low
+    - php: 5.6
+    - php: 5.6
+      env: DEPENDENCIES=low
+    - php: 7.0
+    - php: 7.0
+      env: DEPENDENCIES=low
+    - php: 7.1
+    - php: 7.1
+      env: DEPENDENCIES=low
+    - php: 7.2
+    # Could be enabled when we'll upgrade PHPUnit
+    # - php: 7.2
+    #   env: DEPENDENCIES=low
+    - php: 7.3
+    # Could be enabled when we'll upgrade PHPUnit
+    # - php: 7.3
+    #   env: DEPENDENCIES=low
+    - php: 5.3
+      dist: precise
+      env: BUILD_PHAR=true
+  fast_finish: true
 
 sudo: false
 
 env:
-    global:
-        TEST_CONFIG="phpunit.xml.dist"
+  global:
+    TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
-    - composer self-update
-    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update; fi;
-    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/filesystem:${SYMFONY_VERSION}" --no-update; fi;
-    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/config:${SYMFONY_VERSION}" --no-update; fi;
-    - if [ "$DEPENDENCIES" = "low" ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
-    - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
-    - composer install
+  - composer self-update
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update; fi;
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/filesystem:${SYMFONY_VERSION}" --no-update; fi;
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/config:${SYMFONY_VERSION}" --no-update; fi;
+  - if [ "$DEPENDENCIES" = "low" ]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
+  - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --prefer-stable; fi
 
 script:
-    - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
-    - bash <(curl -s https://codecov.io/bash) -f coverage.xml
-    - |
-      if [[ $BUILD_PHAR = 'true' ]]; then
-        git submodule update --init &&
-        ant package -D-phar:filename=./pdepend.phar &&
-        ./pdepend.phar --version
-      fi
+  - |
+    if [[ $BUILD_PHAR != 'true' ]]; then
+      vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
+      bash <(curl -s https://codecov.io/bash) -f coverage.xml
+    fi
+  - |
+    if [[ $BUILD_PHAR = 'true' ]]; then
+      git submodule update --init &&
+      ant package -D-phar:filename=./pdepend.phar &&
+      ./pdepend.phar --version
+    fi
 
 after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+  - |
+    if [[ $BUILD_PHAR != 'true' ]]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+    fi
 
 notifications:
-    irc: "irc.freenode.org#pdepend"
+  irc: "irc.freenode.org#pdepend"
 
 deploy:
 - provider: releases
@@ -63,9 +78,9 @@ deploy:
   file: pdepend.phar
   skip_cleanup: true
   on:
-      tags: true
-      repo: pdepend/pdepend
-      condition: "$BUILD_PHAR"
+    tags: true
+    repo: pdepend/pdepend
+    condition: "$BUILD_PHAR"
 
 addons:
     snaps:
