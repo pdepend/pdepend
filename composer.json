@@ -11,7 +11,9 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8|^5.7",
-        "squizlabs/php_codesniffer": "^2.0.0"
+        "squizlabs/php_codesniffer": "^2.0.0",
+        "gregwar/rst": "^1.0",
+        "easy-doc/easy-doc": "^1.1"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {
