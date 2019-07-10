@@ -13,10 +13,16 @@
         "phpunit/phpunit": "^4.8|^5.7",
         "squizlabs/php_codesniffer": "^2.0.0",
         "gregwar/rst": "^1.0",
-        "easy-doc/easy-doc": "^1.1"
+        "easy-doc/easy-doc": "0.0.0 || ^1.1"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "build-website": "easy-doc build src/site/config.php --verbose"
     }
 }
