@@ -86,6 +86,13 @@ class PhpMdEnvironment extends Environment
         );
     }
 
+    public function absoluteRelativePath($url)
+    {
+        var_dump(parent::absoluteRelativePath($url));
+
+        return preg_replace('/^\.\/\//', './', parent::absoluteRelativePath($url));
+    }
+
     public function relativeUrl($url)
     {
         $root = substr($url, 0, 1) === '/';
@@ -100,7 +107,7 @@ $parser = new Parser($env);
 $parser->registerDirective(new ClassDirective());
 
 return array(
-    'index'            => 'documentation/getting-started.html',
+    'index'            => 'news.html',
     'baseHref'         => $env->getBaseHref(),
     'cname'            => getenv('CNAME'),
     'websiteDirectory' => __DIR__.'/../../dist/website',
@@ -109,13 +116,8 @@ return array(
     'layout'           => __DIR__.'/resources/layout.php',
     'extensions'       => array(
         'rst' => function ($file) use ($parser, $changelogContent) {
-            $content = file_get_contents($file);
-            $content = str_replace(
-                '.. include:: ../release/parts/latest.rst',
-                $changelogContent,
-                $content
-            );
-            $content = $parser->parse($content);
+            $parser->getEnvironment()->setCurrentDirectory(dirname($file));
+            $content = $parser->parseFile($file);
             // Rewrite links anchors
             $content = preg_replace_callback('/(<a id="[^"]+"><\/a>)\s*<h(?<level>[1-6])([^>]*>)(?<content>[\s\S]*)<\/h\\g<level>>/U', function ($match) {
                 $level = $match['level'];

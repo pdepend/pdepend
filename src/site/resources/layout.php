@@ -16,7 +16,7 @@
     <meta name="DC.date" content="<?php echo date('r'); ?>"/>
     <meta name="DC.rights" content="CC by-nc-sa"/>
 
-    <link rel="canonical" href="https://pdepend.org/"/>
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
     <link rel="icon" href="<?php echo $baseHref ?? ''; ?>/images/favicon.png" type="image/png"/>
 
     <link rel="Stylesheet" type="text/css" href="<?php echo $baseHref ?? ''; ?>/css/screen.css" media="screen"/>
@@ -31,6 +31,11 @@
 <div class="header">
     <div class="viewport">
         <ul class="navigation">
+            <li<?php if (($uri ?? '') === '/news.html') {
+                echo ' class="requested"';
+            } ?>>
+                <a href="<?php echo $baseHref ?? ''; ?>/news.html" title="News">News</a>
+            </li>
             <li<?php if (($uri ?? '') === '/documentation/getting-started.html') {
                 echo ' class="requested"';
             } ?>>
