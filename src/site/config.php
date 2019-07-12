@@ -86,13 +86,6 @@ class PhpMdEnvironment extends Environment
         );
     }
 
-    public function absoluteRelativePath($url)
-    {
-        var_dump(parent::absoluteRelativePath($url));
-
-        return preg_replace('/^\.\/\//', './', parent::absoluteRelativePath($url));
-    }
-
     public function relativeUrl($url)
     {
         $root = substr($url, 0, 1) === '/';
@@ -101,7 +94,6 @@ class PhpMdEnvironment extends Environment
     }
 }
 
-$changelogContent = file_get_contents(__DIR__.'/../../CHANGELOG.md');
 $env = new PhpMdEnvironment;
 $parser = new Parser($env);
 $parser->registerDirective(new ClassDirective());
@@ -115,7 +107,7 @@ return array(
     'assetsDirectory'  => __DIR__.'/resources/web',
     'layout'           => __DIR__.'/resources/layout.php',
     'extensions'       => array(
-        'rst' => function ($file) use ($parser, $changelogContent) {
+        'rst' => function ($file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));
             $content = $parser->parseFile($file);
             // Rewrite links anchors
@@ -133,7 +125,7 @@ return array(
                 $content
             );
 
-            return $content;
+            return preg_replace('/^\s*<hr\s*\/?>/', '', $content);
         },
     ),
 );
