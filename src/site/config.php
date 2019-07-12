@@ -20,14 +20,14 @@ class ParagraphClassNode extends ParagraphNode
 
     public function render()
     {
-        $text = $this->value;
+        $text = trim($this->value);
         $class = $this->class;
 
-        if (trim($text)) {
-            return '<p'.($class ? ' class="'.$class.'"' : '').'>'.$text.'</p>';
-        } else {
+        if ($text === '') {
             return '';
         }
+
+        return '<p'.($class ? ' class="'.$class.'"' : '').'>'.$text.'</p>';
     }
 }
 
