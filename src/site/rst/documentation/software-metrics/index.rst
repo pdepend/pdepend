@@ -2,9 +2,6 @@
 Software metrics supported by PHP_Depend
 ========================================
 
-.. contents::
-   :depth: 2
-
 PHP Depend can generate a large set of software metrics from a given code base,
 these values can be used to measure the quality of a software project and they
 help to identify that parts of an application where a refactoring should be

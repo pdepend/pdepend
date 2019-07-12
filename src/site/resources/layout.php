@@ -43,10 +43,11 @@
 <div class="header">
     <div class="viewport">
         <ul class="navigation">
-            <li><h2 class="navigation">Contents</h2></li>
+            <!--
             <li class="requested">
                 <a href="/news.html" title="News">News</a>
             </li>
+            -->
             <li>
                 <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
             </li>
