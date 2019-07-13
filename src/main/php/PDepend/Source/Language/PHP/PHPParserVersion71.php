@@ -70,6 +70,11 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion71 extends PHPParserVersion70
 {
+    protected function isListUnpacking()
+    {
+        return in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN));
+    }
+
     /**
      * @return \PDepend\Source\AST\ASTType
      */

@@ -1609,12 +1609,20 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        $token = $this->consumeToken(Tokens::T_LIST);
-        $this->consumeComments();
+        $shortSyntax = ($this->tokenizer->peek() !== Tokens::T_LIST);
 
-        $list = $this->builder->buildAstListExpression($token->image);
+        if ($shortSyntax) {
+            $token = $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
+            $list = $this->builder->buildAstListExpression($token->image);
+        } else {
+            $token = $this->consumeToken(Tokens::T_LIST);
+            $this->consumeComments();
 
-        $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+            $list = $this->builder->buildAstListExpression($token->image);
+
+            $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+        }
+
         $this->consumeComments();
 
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
@@ -1626,9 +1634,11 @@ abstract class AbstractPHPParser
                     $this->consumeToken(Tokens::T_COMMA);
                     $this->consumeComments();
                     break;
+                case Tokens::T_SQUARED_BRACKET_CLOSE:
                 case Tokens::T_PARENTHESIS_CLOSE:
                     break 2;
                 case Tokens::T_LIST:
+                case Tokens::T_SQUARED_BRACKET_OPEN:
                     $list->addChild($this->parseListExpression());
                     $this->consumeComments();
                     break;
@@ -1639,7 +1649,7 @@ abstract class AbstractPHPParser
             }
         }
 
-        $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+        $this->consumeToken($shortSyntax ? Tokens::T_SQUARED_BRACKET_CLOSE : Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn($list);
     }
@@ -3489,6 +3499,16 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * This methods return true if the token matches a list opening in the current PHP version level.
+     * @return bool
+     * @since 2.6.0
+     */
+    protected function isListUnpacking()
+    {
+        return $this->tokenizer->peek() === Tokens::T_LIST;
+    }
+
+    /**
      * This method parses a single foreach-statement node.
      *
      * @return \PDepend\Source\AST\ASTForeachStatement
@@ -3512,7 +3532,7 @@ abstract class AbstractPHPParser
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
             $foreach->addChild($this->parseVariableOrMemberByReference());
         } else {
-            if ($this->tokenizer->peek() == Tokens::T_LIST) {
+            if ($this->isListUnpacking()) {
                 $foreach->addChild($this->parseListExpression());
             } else {
                 $foreach->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
@@ -3520,7 +3540,7 @@ abstract class AbstractPHPParser
                 if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
                     $this->consumeToken(Tokens::T_DOUBLE_ARROW);
 
-                    if ($this->tokenizer->peek() == Tokens::T_LIST) {
+                    if ($this->isListUnpacking()) {
                         $foreach->addChild($this->parseListExpression());
                     } else {
                         $foreach->addChild(
