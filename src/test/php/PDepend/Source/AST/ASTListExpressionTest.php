@@ -264,6 +264,21 @@ class ASTListExpressionTest extends ASTNodeTest
     }
 
     /**
+     * testListExpressionWithSquaredBrackets
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBrackets()
+    {
+        $parameters = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFormalParameters'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+    }
+
+    /**
      * testListExpressionWithCompoundVariable
      *
      * @return void
