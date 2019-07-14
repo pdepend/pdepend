@@ -2700,6 +2700,7 @@ abstract class AbstractPHPParser
                     $expressions[] = $this->parseIssetExpression();
                     break;
                 case Tokens::T_LIST:
+                case Tokens::T_SQUARED_BRACKET_OPEN:
                     $expressions[] = $this->parseListExpression();
                     break;
                 case Tokens::T_QUESTION_MARK:
