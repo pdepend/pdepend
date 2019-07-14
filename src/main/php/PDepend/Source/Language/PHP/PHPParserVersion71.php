@@ -55,8 +55,6 @@ use PDepend\Source\Tokenizer\Tokens;
  * TODO:
  * - void
  *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.void-functions
- * - Symmetric array destructuring
- *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.symmetric-array-destructuring
  * - Class constant visibility
  *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.class-constant-visibility
  * - Multi catch exception handling
