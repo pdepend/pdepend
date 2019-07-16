@@ -7,56 +7,28 @@ Version 2.4.1 released
 :Description:  Auto generated release announcement.
 :Keywords:     Release, Version, Trait, bugfixes
 
-We are proud to announce version `2.4.1`__ of PDepend. For more
-details visit the version release `site`__.
+We are proud to announce version `2.4.1 <https://github.com/pdepend/pdepend/releases>`_ of PDepend. For more
+details visit the version release `site <https://github.com/pdepend/pdepend/releases>`_.
 
-The prefered way to install PDepend is as a `phar`__ (`bz2`__) archive:
-
-.. class:: shell
-
-::
-
-  ~ $ wget http://static.pdepend.org/php/latest/pdepend.phar
-
-or you can use `composer`__ by just adding PHP_Depend as a 
-dependency to your ``composer.json`` ::
-
-  {
-      "require": {
-
-          "pdepend/pdepend" : "2.4.1"
-      }
-  }
-
-Then install Composer in your project (or `download the composer.phar`__
-directly):
+Use `composer <http://getcomposer.org>`_ to install PHP_Depend:
 
 .. class:: shell
 
 ::
 
-  ~ $ curl -s http://getcomposer.org/installer | php
+  curl -s http://getcomposer.org/installer | php
+  php composer.phar require pdepend/pdepend
 
-And finally let Composer install the project dependencies:
+Or if you already have composer installed globally:
 
 .. class:: shell
 
 ::
 
-  ~ $ php composer.phar install
+  composer require pdepend/pdepend
 
 Download
 --------
 
-Download the latest version of PHP_Depend as a `Phar archive`__ (`bz2`__) or `Composer`__
-dependency.
-
-__ /download/release/2.4.1/changelog.html
-__ /download/release/2.4.1/changelog.html
-__ https://static.pdepend.org/php/latest/pdepend.phar
-__ https://static.pdepend.org/php/latest/pdepend.bz2.phar
-__ http://getcomposer.org
-__ http://getcomposer.org/composer.phar
-__ https://static.pdepend.org/php/2.4.1/pdepend.phar
-__ https://static.pdepend.org/php/2.4.1/pdepend.bz2.phar
-__ http://packagist.org/packages/pdepend/pdepend
+Future releases (since 2.6.0) will also be released as PHAR files on
+`GitHub <https://github.com/pdepend/pdepend/releases>`_
