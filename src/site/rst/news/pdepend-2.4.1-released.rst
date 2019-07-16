@@ -2,11 +2,6 @@
 Version 2.4.1 released
 =======================
 
-:Author:       Manuel Pichler
-:Copyright:    All rights reserved
-:Description:  Auto generated release announcement.
-:Keywords:     Release, Version, Trait, bugfixes
-
 We are proud to announce version `2.4.1 <https://github.com/pdepend/pdepend/releases>`_ of PDepend. For more
 details visit the version release `site <https://github.com/pdepend/pdepend/releases>`_.
 
