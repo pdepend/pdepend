@@ -243,6 +243,31 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
+     * Parses any expression that is surrounded by an opening and a closing
+     * parenthesis
+     *
+     * @return \PDepend\Source\AST\ASTExpression
+     */
+    protected function parseParenthesisExpression()
+    {
+        $this->tokenStack->push();
+        $this->consumeComments();
+
+        $expr = $this->builder->buildAstExpression();
+        $expr = $this->parseBraceExpression(
+            $expr,
+            $this->consumeToken(Tokens::T_PARENTHESIS_OPEN),
+            Tokens::T_PARENTHESIS_CLOSE
+        );
+
+        if ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {
+            $expr->addChild($this->parseArguments());
+        }
+
+        return $this->setNodePositionsAndReturn($expr);
+    }
+
+    /**
      * Tests if the given image is a PHP 7 type hint.
      *
      * @param string $image
