@@ -17,14 +17,20 @@ env:
 
 before_script:
     - composer self-update
-    - if [ $DEPENDENCIES = "low" ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
-    - if [ ! $DEPENDENCIES ] ; then composer update --prefer-dist ; fi
+    - if [ $DEPENDENCIES = "low" ]; then composer update --prefer-dist --prefer-lowest --prefer-stable --no-update; fi
+    - if [ ! $DEPENDENCIES ]; then composer update --prefer-dist  --no-update; fi
     - composer install
 
 script:
     - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
     - make package && ./build/pdepend.phar --version
     - bash <(curl -s https://codecov.io/bash) -f coverage.xml
+    - |
+      if [[ $BUILD_PHAR = 'true' ]]; then
+        git submodule update --init &&
+        ant package -D-phar:filename=./pdepend.phar &&
+        ./pdepend.phar --version
+      fi
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
@@ -34,13 +40,16 @@ notifications:
     irc: "irc.freenode.org#pdepend"
 
 deploy:
-    provider: releases
-    api_key:
-        secure: LLotlFFZYAud5hxpxitvReMFanKIU5r6gtFsuxstbcr0tYQSxK8Wr0Uo0OPHqBT6c3LqZivqSIFkxEl7Hg/voutHpNDV5jCnLUmvkyFGSp4eNBy+YNoabGR8Hg3Y2a+DfD+fJmFisbMfbfY9sulq24GghTfToVX75vhW5fsTZWGTyvDbl0A5EPxNhIQzrCVfJfWT7f0TN0T/+hnGzoqEaofKfJctkJpW7R4e+DQ0s7J1ydG1cEBGC7n3PdvHp/Ab5EqnBrpvjIrH4ljsVl+fAEAJjN7qjEQNQp4M2xeb0DQ5EaPXi/NukPq/0itb5IgHg2F+RHdCYDoWeP16hl/dkgB9aZacnr9aiPDL0s2kNJ8ujmReyFqcw50YYcUmlZT61VeZ0qGiVmwRQ+eTdf3il9WosAaJ349z2aRrr4aR4CvAoSxmpThrzU0TwIKnmey1Rb+4kCWsJTwEg46+tZWuQgOpdv/la9SCSqhWbB6Qn8KqYlm1eK1hpxKS+KxVeby1k7lloO02Y37tjEpyt/2u0z2F9KNojChTxUeSzW66cEi4Ox6q+y3zi++6qj0BVzxbmjxuFSzhe9ZaL3gyWmOKuSywVnJ5UmQw9CL4gg91iZWNbKRcpO5H1oiBSdK5jMFcfCof1UmAuL34ygFbNVk7Aco6ssgBUROqTEjjW2acrzQ=
-    file:
-        - build/pdepend.phar
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file: pdepend.phar
     skip_cleanup: true
     on:
-        tags: true
-        repo: jakzal/pdepend
-        condition: "$EXECUTE_DEPLOYMENT"
+      tags: true
+      repo: pdepend/pdepend
+      condition: "$BUILD_PHAR"
+
+addons:
+  snaps:
+    - name: ant
+      classic: true
