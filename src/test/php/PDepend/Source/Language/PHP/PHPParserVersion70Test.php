@@ -560,4 +560,9 @@ class PHPParserVersion70Test extends AbstractTest
             array($tokenizer, $builder, $cache)
         );
     }
+
+    public function testParenthesisAroundCallableParsesArguments()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
 }
