@@ -69,9 +69,23 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion71 extends PHPParserVersion70
 {
-    protected function isListUnpacking()
+    private function consumeQuestionMark()
     {
-        return in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN));
+        if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
+            $this->consumeToken(Tokens::T_QUESTION_MARK);
+        }
+    }
+
+    /**
+     * This methods return true if the token matches a list opening in the current PHP version level.
+     *
+     * @param int $tokenType
+     * @return bool
+     * @since 2.6.0
+     */
+    protected function isListUnpacking($tokenType = null)
+    {
+        return in_array($tokenType ?: $this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN));
     }
 
     /**
@@ -80,11 +94,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     protected function parseReturnTypeHint()
     {
         $this->consumeComments();
-
-        $tokenType = $this->tokenizer->peek();
-        if (Tokens::T_QUESTION_MARK === $tokenType) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
+        $this->consumeQuestionMark();
 
         return parent::parseReturnTypeHint();
     }
@@ -111,10 +121,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     protected function parseFormalParameterOrTypeHintOrByReference()
     {
         $this->consumeComments();
-        $tokenType = $this->tokenizer->peek();
-        if ($tokenType === Tokens::T_QUESTION_MARK) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
+        $this->consumeQuestionMark();
 
         return parent::parseFormalParameterOrTypeHintOrByReference();
     }
@@ -126,10 +133,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      */
     protected function parseTypeHint()
     {
-        $tokenType = $this->tokenizer->peek();
-        if (Tokens::T_QUESTION_MARK === $tokenType) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
+        $this->consumeQuestionMark();
 
         return parent::parseTypeHint();
     }

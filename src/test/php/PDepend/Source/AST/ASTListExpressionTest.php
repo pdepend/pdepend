@@ -279,6 +279,36 @@ class ASTListExpressionTest extends ASTNodeTest
     }
 
     /**
+     * testListExpressionWithSquaredBracketsAndEmptySlot
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBracketsAndEmptySlot()
+    {
+        $parameters = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFormalParameters'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+    }
+
+    /**
+     * testListExpressionWithArrayAndEmptySlot
+     *
+     * @return void
+     */
+    public function testListExpressionWithArrayAndEmptySlot()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: ,, line: 4, col: 18, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * testFunctionVoidReturnType
      *
      * @return void
@@ -341,6 +371,8 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithKeys()
     {
+        $this->markTestIncomplete('Lists with keys to be implemented.');
+
         $expr = $this->_getFirstListExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 
@@ -355,6 +387,8 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithKeysAndNestedList()
     {
+        $this->markTestIncomplete('Nested lists to be implemented.');
+
         $expr = $this->_getFirstListExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 

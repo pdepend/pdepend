@@ -652,9 +652,11 @@ class PHPTokenizerInternal implements Tokenizer
         $this->tokenize();
         
         $offset = 0;
+
         do {
             $type = $this->tokens[$this->index + ++$offset]->type;
         } while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT);
+
         return $type;
     }
 

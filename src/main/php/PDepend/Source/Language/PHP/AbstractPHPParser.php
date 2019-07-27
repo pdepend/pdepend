@@ -1602,12 +1602,13 @@ abstract class AbstractPHPParser
     /**
      * Throws an exception if the given token is not a valid list unpacking opening token for current PHP level.
      *
-     * @param int $tokenType
+     * @param int                             $tokenType
+     * @param \PDepend\Source\Tokenizer\Token $unexpectedToken
      */
-    private function ensureTokenIsListUnpackingOpening($tokenType)
+    private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null)
     {
         if (!$this->isListUnpacking($tokenType)) {
-            $this->throwUnexpectedTokenException($this->tokenizer->prevToken());
+            $this->throwUnexpectedTokenException($unexpectedToken ?: $this->tokenizer->prevToken());
         }
     }
 
@@ -5047,6 +5048,9 @@ abstract class AbstractPHPParser
      */
     protected function parseArrayElements(ASTArray $array, $endDelimiter, $static = false)
     {
+        $consecutiveComma = null;
+        $openingToken = $this->tokenizer->prevToken();
+        $useSquaredBrackets = ($endDelimiter === Tokens::T_SQUARED_BRACKET_CLOSE);
         $this->consumeComments();
 
         while ($endDelimiter !== $this->tokenizer->peek()) {
@@ -5058,6 +5062,24 @@ abstract class AbstractPHPParser
                 $this->consumeToken(Tokens::T_COMMA);
                 $this->consumeComments();
             }
+
+            if ($useSquaredBrackets && $this->isListUnpacking(Tokens::T_SQUARED_BRACKET_OPEN)) {
+                while (Tokens::T_COMMA === $this->tokenizer->peek()) {
+                    $consecutiveComma = $this->tokenizer->prevToken();
+                    $this->consumeToken(Tokens::T_COMMA);
+                    $this->consumeComments();
+                }
+            }
+        }
+
+        // If this array is in fact a destructuring list
+        if ($this->tokenizer->peekNext() === Tokens::T_EQUAL) {
+            if ($useSquaredBrackets) {
+                $this->ensureTokenIsListUnpackingOpening(Tokens::T_SQUARED_BRACKET_OPEN, $openingToken);
+            }
+        } elseif ($consecutiveComma) {
+            // If it's not a destructuring list, it must not contain 2 consecutive commas
+            $this->throwUnexpectedTokenException($consecutiveComma);
         }
 
         return $array;

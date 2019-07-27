@@ -592,7 +592,7 @@ class PHPParserVersion70Test extends AbstractTest
     {
         $this->setExpectedException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: void, line: 2, col: 23, file: '
+            'Unexpected token: [, line: 4, col: 5, file: '
         );
 
         $this->parseCodeResourceForTest();
