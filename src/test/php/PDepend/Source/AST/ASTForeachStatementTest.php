@@ -318,6 +318,28 @@ class ASTForeachStatementTest extends ASTNodeTest
     }
 
     /**
+     * testForeachStatementWithList
+     *
+     * @return void
+     */
+    public function testForeachStatementWithShortList()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(1));
+    }
+
+    /**
+     * testForeachStatementWithList
+     *
+     * @return void
+     */
+    public function testForeachStatementWithKeyAndShortList()
+    {
+        $stmt = $this->_getFirstForeachStatementInFunction(__METHOD__);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(2));
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.

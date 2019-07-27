@@ -3541,13 +3541,10 @@ abstract class AbstractPHPParser
                 if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
                     $this->consumeToken(Tokens::T_DOUBLE_ARROW);
 
-                    if ($this->isListUnpacking()) {
-                        $foreach->addChild($this->parseListExpression());
-                    } else {
-                        $foreach->addChild(
-                            $this->parseVariableOrMemberOptionalByReference()
-                        );
-                    }
+                    $foreach->addChild($this->isListUnpacking()
+                        ? $this->parseListExpression()
+                        : $this->parseVariableOrMemberOptionalByReference()
+                    );
                 }
             }
         }

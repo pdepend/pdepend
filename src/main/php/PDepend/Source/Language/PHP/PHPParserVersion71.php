@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
@@ -206,7 +207,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseScalarOrCallableTypeHint($image);
     }
 
-    protected function parseCatchExceptionClass(\PDepend\Source\AST\ASTCatchStatement $stmt) {
+    protected function parseCatchExceptionClass(ASTCatchStatement $stmt) {
         do {
             $repeat = false;
             parent::parseCatchExceptionClass($stmt);
