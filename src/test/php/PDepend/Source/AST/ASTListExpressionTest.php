@@ -279,6 +279,22 @@ class ASTListExpressionTest extends ASTNodeTest
     }
 
     /**
+     * testFunctionVoidReturnType
+     *
+     * @return void
+     */
+    public function testFunctionVoidReturnType()
+    {
+        /** @var ASTScalarType $type */
+        $type = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\Source\AST\ASTScalarType'
+        );
+
+        $this->assertSame('void', $type->getImage());
+    }
+
+    /**
      * testListExpressionWithCompoundVariable
      *
      * @return void
