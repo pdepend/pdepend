@@ -229,11 +229,9 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case Tokens::T_NAMESPACE:
                 $name = $this->parseQualifiedName();
 
-                if ($this->isScalarOrCallableTypeHint($name)) {
-                    $type = $this->parseScalarOrCallableTypeHint($name);
-                } else {
-                    $type = $this->builder->buildAstClassOrInterfaceReference($name);
-                }
+                $type = $this->isScalarOrCallableTypeHint($name)
+                    ? $this->parseScalarOrCallableTypeHint($name)
+                    : $this->builder->buildAstClassOrInterfaceReference($name);
                 break;
             default:
                 $type = parent::parseTypeHint();
@@ -256,6 +254,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case 'float':
             case 'string':
             case 'callable':
+            case 'iterable':
+            case 'void':
                 return true;
         }
 
@@ -266,7 +266,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTType
+     * @return \PDepend\Source\AST\ASTType|boolean
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -278,6 +278,9 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 return $this->builder->buildAstScalarType($image);
             case 'callable':
                 return $this->builder->buildAstTypeCallable();
+            case 'void':
+            case 'iterable':
+                $this->throwUnexpectedTokenException($this->tokenizer->prevToken());
         }
 
         return false;
@@ -292,10 +295,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      */
     protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
     {
-        if ($newAllocation = $this->parseAnonymousClassDeclaration($allocation)) {
-            return $newAllocation;
-        }
-        return parent::parseAllocationExpressionTypeReference($allocation);
+        return $this->parseAnonymousClassDeclaration($allocation)
+            ?: parent::parseAllocationExpressionTypeReference($allocation);
     }
 
     /**

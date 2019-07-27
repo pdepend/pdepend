@@ -1600,6 +1600,18 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Throws an exception if the given token is not a valid list unpacking opening token for current PHP level.
+     *
+     * @param int $tokenType
+     */
+    private function ensureTokenIsListUnpackingOpening($tokenType)
+    {
+        if (!$this->isListUnpacking($tokenType)) {
+            $this->throwUnexpectedTokenException($this->tokenizer->prevToken());
+        }
+    }
+
+    /**
      * This method parses a single list-statement node.
      *
      * @return \PDepend\Source\AST\ASTListExpression
@@ -1609,7 +1621,9 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        $shortSyntax = ($this->tokenizer->peek() !== Tokens::T_LIST);
+        $tokenType = $this->tokenizer->peek();
+        $this->ensureTokenIsListUnpackingOpening($tokenType);
+        $shortSyntax = ($tokenType !== Tokens::T_LIST);
 
         if ($shortSyntax) {
             $token = $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
@@ -3501,12 +3515,14 @@ abstract class AbstractPHPParser
 
     /**
      * This methods return true if the token matches a list opening in the current PHP version level.
+     *
+     * @param int $tokenType
      * @return bool
      * @since 2.6.0
      */
-    protected function isListUnpacking()
+    protected function isListUnpacking($tokenType = null)
     {
-        return $this->tokenizer->peek() === Tokens::T_LIST;
+        return ($tokenType ?: $this->tokenizer->peek()) === Tokens::T_LIST;
     }
 
     /**
@@ -5032,15 +5048,18 @@ abstract class AbstractPHPParser
     protected function parseArrayElements(ASTArray $array, $endDelimiter, $static = false)
     {
         $this->consumeComments();
+
         while ($endDelimiter !== $this->tokenizer->peek()) {
             $array->addChild($this->parseArrayElement($static));
 
             $this->consumeComments();
+
             if (Tokens::T_COMMA === $this->tokenizer->peek()) {
                 $this->consumeToken(Tokens::T_COMMA);
                 $this->consumeComments();
             }
         }
+
         return $array;
     }
 

@@ -569,6 +569,36 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * Tests that the parser throws an exception when using :void on PHP < 7.1.
+     *
+     * @return void
+     */
+    public function testVoidTypeHintReturn()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: void, line: 2, col: 23, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Tests that the parser throws an exception when using [...] = ... with PHP < 7.1.
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBrackets()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: void, line: 2, col: 23, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
