@@ -138,6 +138,16 @@ class PHPParserVersion55Test extends AbstractTest
     }
 
     /**
+     * Tests that ::class is allowed PHP >= 5.5.
+     *
+     * @return void
+     */
+    public function testDoubleColonClass()
+    {
+        $this->assertInstanceOf('PDepend\Source\AST\ASTArtifactList', $this->parseCodeResourceForTest());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

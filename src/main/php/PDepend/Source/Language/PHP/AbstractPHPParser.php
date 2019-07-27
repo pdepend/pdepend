@@ -1056,6 +1056,7 @@ abstract class AbstractPHPParser
             if ($tokenType !== Tokens::T_COMMA) {
                 break;
             }
+
             $this->consumeToken(Tokens::T_COMMA);
 
             $this->consumeComments();
@@ -3499,6 +3500,7 @@ abstract class AbstractPHPParser
     private function parseForInit()
     {
         $this->consumeComments();
+
         if (Tokens::T_SEMICOLON === $this->tokenizer->peek()) {
             return null;
         }
@@ -4255,15 +4257,9 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTClassFqnPostfix
      * @since 2.0.0
      */
-    private function parseFullQualifiedClassNamePostfix()
+    protected function parseFullQualifiedClassNamePostfix()
     {
-        $this->tokenStack->push();
-
-        $this->consumeToken(Tokens::T_CLASS_FQN);
-
-        return $this->setNodePositionsAndReturn(
-            $this->builder->buildAstClassFqnPostfix()
-        );
+        $this->throwUnexpectedTokenException();
     }
 
     /**
@@ -4280,7 +4276,7 @@ abstract class AbstractPHPParser
      */
     private function extractPostfixImage(ASTNode $node)
     {
-        while ($node instanceof \PDepend\Source\AST\ASTIndexExpression) {
+        while ($node instanceof ASTIndexExpression) {
             $node = $node->getChild(0);
         }
         return $node->getImage();
@@ -6492,6 +6488,7 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_EQUAL);
             $declarator->setValue($this->parseStaticValueOrStaticArray());
         }
+
         return $this->setNodePositionsAndReturn($declarator);
     }
 
@@ -6505,15 +6502,19 @@ abstract class AbstractPHPParser
     protected function parseStaticValueOrStaticArray()
     {
         $this->consumeComments();
+
         if ($this->isArrayStartDelimiter()) {
             // TODO: Use default value as value!
             $defaultValue = $this->doParseArray(true);
+            var_dump($defaultValue);
+            exit;
 
             $value = new ASTValue();
             $value->setValue(array());
 
             return $value;
         }
+
         return $this->parseStaticValue();
     }
 
@@ -6534,6 +6535,7 @@ abstract class AbstractPHPParser
         $signed = 1;
 
         $tokenType = $this->tokenizer->peek();
+
         while ($tokenType !== Tokenizer::T_EOF) {
             switch ($tokenType) {
                 case Tokens::T_COMMA:
@@ -6542,6 +6544,7 @@ abstract class AbstractPHPParser
                     if ($defaultValue->isValueAvailable() === true) {
                         return $defaultValue;
                     }
+
                     throw new MissingValueException($this->tokenizer);
                 case Tokens::T_NULL:
                     $this->consumeToken(Tokens::T_NULL);
@@ -6583,6 +6586,14 @@ abstract class AbstractPHPParser
                 case Tokens::T_DOUBLE_QUOTE:
                     $defaultValue->setValue($this->parseStringSequence($tokenType));
                     break;
+                case Tokens::T_BACKSLASH:
+                    // Tokens::T_STRING T_BACKSLASH
+                    $defaultValue->setValue(
+                        $this->builder->buildAstClassOrInterfaceReference(
+                            $this->parseQualifiedName()
+                        )
+                    );
+                    break;
                 case Tokens::T_DIR:
                 case Tokens::T_FILE:
                 case Tokens::T_LINE:
@@ -6594,7 +6605,6 @@ abstract class AbstractPHPParser
                 case Tokens::T_STATIC:
                 case Tokens::T_CLASS_C:
                 case Tokens::T_METHOD_C:
-                case Tokens::T_BACKSLASH:
                 case Tokens::T_SQUARED_BRACKET_OPEN:
                 case Tokens::T_SQUARED_BRACKET_CLOSE:
                     // There is a default value but we don't handle it at the moment.
@@ -6836,20 +6846,25 @@ abstract class AbstractPHPParser
         }
 
         $reference = $this->parseFieldDeclarationClassOrInterfaceReference();
+
         if ($reference !== null) {
             return $reference;
         }
 
         $annotations = $this->parseVarAnnotation($this->docComment);
+
         foreach ($annotations as $annotation) {
             if (Type::isPrimitiveType($annotation) === true) {
                 return $this->builder->buildAstScalarType(
                     Type::getPrimitiveType($annotation)
                 );
-            } elseif (Type::isArrayType($annotation) === true) {
+            }
+
+            if (Type::isArrayType($annotation) === true) {
                 return $this->builder->buildAstTypeArray();
             }
         }
+
         return null;
     }
 
@@ -6863,6 +6878,7 @@ abstract class AbstractPHPParser
     private function parseFieldDeclarationClassOrInterfaceReference()
     {
         $annotations = $this->parseVarAnnotation($this->docComment);
+
         foreach ($annotations as $annotation) {
             if (Type::isScalarType($annotation) === false) {
                 return $this->builder->buildAstClassOrInterfaceReference(
@@ -6870,13 +6886,14 @@ abstract class AbstractPHPParser
                 );
             }
         }
+
         return null;
     }
 
     /**
      * This method parses a yield-statement node.
      *
-     * @return \PDepend\Source\AST\ASTYieldStatmenet
+     * @return \PDepend\Source\AST\ASTYieldStatement
      */
     private function parseYield()
     {
@@ -6899,11 +6916,13 @@ abstract class AbstractPHPParser
         }
 
         $this->consumeComments();
+
         if (Tokens::T_PARENTHESIS_CLOSE === $this->tokenizer->peek()) {
             return $this->setNodePositionsAndReturn($yield);
         }
 
         $this->parseStatementTermination();
+
         return $this->setNodePositionsAndReturn($yield);
     }
 

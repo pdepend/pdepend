@@ -479,6 +479,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
             return $this->parseUseDeclarationVersion70($fragments);
         }
+
         return parent::parseUseDeclarationForVersion($fragments);
     }
 
@@ -534,9 +535,11 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         if (Tokens::T_CURLY_BRACE_OPEN !== $this->tokenizer->peek()) {
             return parent::parseQualifiedNameElement($previousElements);
         }
+
         if (count($previousElements) >= 2 && '\\' === end($previousElements)) {
             return null;
         }
+
         $this->throwUnexpectedTokenException($this->tokenizer->next());
     }
 }

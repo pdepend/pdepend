@@ -157,14 +157,22 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        $this->markTestIncomplete('We do not handle default values.');
-        $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
-                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
-        );
+        /** @var \PDepend\Source\AST\ASTFieldDeclaration $fieldDeclaration */
+        $fieldDeclaration = $this->getFirstClassForTestCase(__METHOD__)->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $fieldDeclaration);
+
+        /** @var \PDepend\Source\AST\ASTVariableDeclarator $variableDeclarator */
+        $variableDeclarator = $fieldDeclaration->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
+        $this->assertTrue($variableDeclarator->getValue()->isValueAvailable());
+
+        /** @var \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference */
+        $classReference = $variableDeclarator->getValue()->getValue();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $classReference);
+
+        $this->assertSame('\\Iterator', $classReference->getImage());
     }
 
     /**
