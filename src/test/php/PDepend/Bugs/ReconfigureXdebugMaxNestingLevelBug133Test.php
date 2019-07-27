@@ -75,10 +75,6 @@ class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractRegressionTest
      */
     public function testParserReconfiguresXdebugMaxNestingLevel()
     {
-        if (version_compare(phpversion(), '5.2.10') < 0) {
-            $this->markTestSkipped();
-        }
-
         ini_set('xdebug.max_nesting_level', '100');
 
         $this->parseCodeResourceForTest();

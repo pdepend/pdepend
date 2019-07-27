@@ -97,6 +97,7 @@ abstract class PHPParserVersion53 extends AbstractPHPParser
                     $this->tokenizer->getSourceFile()
                 );
         }
+
         return $array;
     }
 }
