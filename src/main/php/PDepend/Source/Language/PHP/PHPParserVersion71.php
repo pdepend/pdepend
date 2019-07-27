@@ -77,6 +77,16 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     }
 
     /**
+     * Return true if current PHP level supports keys in lists.
+     *
+     * @return bool
+     */
+    protected function supportsKeysInList()
+    {
+        return true;
+    }
+
+    /**
      * This methods return true if the token matches a list opening in the current PHP version level.
      *
      * @param int $tokenType

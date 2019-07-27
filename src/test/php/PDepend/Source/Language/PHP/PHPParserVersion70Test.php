@@ -599,6 +599,36 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * testListExpressionWithKeys
+     *
+     * @return void
+     */
+    public function testListExpressionWithKeys()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: "a", line: 4, col: 10, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testListExpressionWithKeysAndNestedList
+     *
+     * @return void
+     */
+    public function testListExpressionWithKeysAndNestedList()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: \'a\', line: 4, col: 10, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

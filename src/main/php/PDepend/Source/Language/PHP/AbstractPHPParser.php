@@ -44,22 +44,25 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
-use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTIndexExpression;
 use PDepend\Source\AST\ASTInterface;
-use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableVariable;
 use PDepend\Source\AST\State;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Parser\InvalidStateException;
@@ -1613,6 +1616,16 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Return true if current PHP level supports keys in lists.
+     *
+     * @return bool
+     */
+    protected function supportsKeysInList()
+    {
+        return false;
+    }
+
+    /**
      * This method parses a single list-statement node.
      *
      * @return \PDepend\Source\AST\ASTListExpression
@@ -1658,7 +1671,29 @@ abstract class AbstractPHPParser
                     $this->consumeComments();
                     break;
                 default:
-                    $list->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
+                    $startToken = $this->tokenizer->currentToken();
+                    $node = $this->parseOptionalExpression();
+
+                    if ($node && !$this->isReadWriteVariable($node)) {
+                        if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+                            if (!$this->supportsKeysInList()) {
+                                $this->throwUnexpectedTokenException($startToken);
+                            }
+
+                            $this->consumeComments();
+                            $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+                            $this->consumeComments();
+                            $list->addChild(in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
+                                ? $this->parseListExpression()
+                                : $this->parseVariableOrConstantOrPrimaryPrefix()
+                            );
+                            $this->consumeComments();
+
+                            break;
+                        }
+                    }
+
+                    $list->addChild($node ?: $this->parseVariableOrConstantOrPrimaryPrefix());
                     $this->consumeComments();
                     break;
             }
@@ -4005,7 +4040,7 @@ abstract class AbstractPHPParser
      *
      * @param  \PDepend\Source\AST\ASTNode $node The left node in the parsed member
      *        primary expression.
-     * @return \PDepend\Source\AST\ASTMemberPrimaryPrefix
+     * @return ASTMemberPrimaryPrefix
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -4101,7 +4136,7 @@ abstract class AbstractPHPParser
      *
      * @param  \PDepend\Source\AST\ASTNode $node The left node in the parsed member
      *        primary expression.
-     * @return \PDepend\Source\AST\ASTMemberPrimaryPrefix
+     * @return ASTMemberPrimaryPrefix
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -4637,9 +4672,11 @@ abstract class AbstractPHPParser
     private function parseVariableOrMemberOptionalByReference()
     {
         $this->consumeComments();
+
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
             return $this->parseVariableOrMemberByReference();
         }
+
         return $this->parseVariableOrConstantOrPrimaryPrefix();
     }
 
@@ -4676,7 +4713,7 @@ abstract class AbstractPHPParser
     /**
      * This method parses a simple PHP variable.
      *
-     * @return \PDepend\Source\AST\ASTVariable
+     * @return ASTVariable
      * @throws UnexpectedTokenException
      * @since 0.9.6
      */
@@ -4837,7 +4874,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @param  \PDepend\Source\Tokenizer\Token $token The dollar token.
-     * @return \PDepend\Source\AST\ASTCompoundVariable
+     * @return ASTCompoundVariable
      * @since 0.10.0
      */
     private function parseCompoundVariable(Token $token)
@@ -6605,11 +6642,11 @@ abstract class AbstractPHPParser
      */
     private function isReadWriteVariable($expr)
     {
-        return ($expr instanceof \PDepend\Source\AST\ASTVariable
-            || $expr instanceof \PDepend\Source\AST\ASTFunctionPostfix
-            || $expr instanceof \PDepend\Source\AST\ASTVariableVariable
-            || $expr instanceof \PDepend\Source\AST\ASTCompoundVariable
-            || $expr instanceof \PDepend\Source\AST\ASTMemberPrimaryPrefix);
+        return $expr instanceof ASTVariable
+            || $expr instanceof ASTFunctionPostfix
+            || $expr instanceof ASTVariableVariable
+            || $expr instanceof ASTCompoundVariable
+            || $expr instanceof ASTMemberPrimaryPrefix;
     }
 
     /**

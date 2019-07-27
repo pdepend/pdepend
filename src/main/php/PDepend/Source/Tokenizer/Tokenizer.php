@@ -93,6 +93,14 @@ interface Tokenizer
     public function prevToken();
 
     /**
+     * Returns the current token or null if there is no more.
+     *
+     * @return \PDepend\Source\Tokenizer\Token|null
+     * @since  2.6.0
+     */
+    public function currentToken();
+
+    /**
      * Returns the next token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
      * there is no next token.
      *

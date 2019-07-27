@@ -43,10 +43,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\AST\ASTValue;
-use PDepend\Source\Parser\TokenStreamEndException;
-use PDepend\Source\Parser\UnexpectedTokenException;
-use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**

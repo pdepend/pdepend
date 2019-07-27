@@ -371,8 +371,6 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithKeys()
     {
-        $this->markTestIncomplete('Lists with keys to be implemented.');
-
         $expr = $this->_getFirstListExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 
@@ -387,8 +385,6 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithKeysAndNestedList()
     {
-        $this->markTestIncomplete('Nested lists to be implemented.');
-
         $expr = $this->_getFirstListExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 

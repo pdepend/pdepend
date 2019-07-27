@@ -591,8 +591,7 @@ class PHPTokenizerInternal implements Tokenizer
     }
 
     /**
-     * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
-     * there is no next token.
+     * Returns the previous token or null if there is no one yet.
      *
      * @return Token|null
      */
@@ -602,6 +601,22 @@ class PHPTokenizerInternal implements Tokenizer
 
         if ($this->index > 0 && $this->index < $this->count - 1) {
             return $this->tokens[$this->index - 1];
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the current token or null if there is no more.
+     *
+     * @return Token|null
+     */
+    public function currentToken()
+    {
+        $this->tokenize();
+
+        if ($this->index < $this->count - 1) {
+            return $this->tokens[$this->index];
         }
 
         return null;
