@@ -1215,12 +1215,11 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
     {
-        $parameters = $this->parseCodeResourceForTest()->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
+        $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
 
         $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $parameters[0]->getDefaultValue());
+        $this->assertSame('parent', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**

@@ -370,12 +370,15 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseOptionalMemberPrimaryPrefix(ASTNode $node)
     {
         $this->consumeComments();
+
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
             return $this->parseStaticMemberPrimaryPrefix($node);
         }
+
         if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
             return $this->parseMemberPrimaryPrefix($node);
         }
+
         return $node;
     }
 
@@ -386,13 +389,16 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
     {
         $this->consumeComments();
+
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
             return $this->parseStaticMemberPrimaryPrefix($expr->getChild(0));
         }
+
         if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
             $node = count($expr->getChildren()) === 0 ? $expr : $expr->getChild(0);
             return $this->parseMemberPrimaryPrefix($node);
         }
+
         return $expr;
     }
 
@@ -407,10 +413,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      */
     protected function parseOptionalExpressionForVersion()
     {
-        if ($expression = $this->parseExpressionVersion70()) {
-            return $expression;
-        }
-        return parent::parseOptionalExpressionForVersion();
+        return $this->parseExpressionVersion70()
+            ?: parent::parseOptionalExpressionForVersion();
     }
 
     /**

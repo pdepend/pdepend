@@ -1409,6 +1409,7 @@ abstract class AbstractPHPParser
         $qualifiedName = $this->parseQualifiedName();
 
         $this->consumeComments();
+
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
             $traitReference = $this->setNodePositionsAndReturn(
                 $this->builder->buildAstTraitReference($qualifiedName)
@@ -1419,6 +1420,7 @@ abstract class AbstractPHPParser
 
             return array($this->parseMethodName(), $traitReference);
         }
+
         $this->tokenStack->pop();
 
         return array($qualifiedName);
@@ -1534,6 +1536,7 @@ abstract class AbstractPHPParser
         if ($this->isNextTokenArguments()) {
             $allocation->addChild($this->parseArguments());
         }
+
         return $this->setNodePositionsAndReturn($allocation);
     }
 
@@ -2192,15 +2195,10 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method parses a type identifier as it is used in expression nodes
-     * like {@link \PDepend\Source\AST\ASTInstanceOfExpression} or an object
-     * allocation node like {@link \PDepend\Source\AST\ASTAllocationExpression}.
-     *
-     * @param \PDepend\Source\AST\ASTNode $expr
-     * @param boolean $classRef
-     * @return \PDepend\Source\AST\ASTNode
+     * @param $classRef
+     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference|ASTNode|\PDepend\Source\AST\ASTSelfReference|\PDepend\Source\AST\ASTStaticReference
      */
-    protected function parseExpressionTypeReference(ASTNode $expr, $classRef)
+    private function parseStandAloneExpressionTypeReference($classRef)
     {
         // Peek next token and look for a static type identifier
         $this->consumeComments();
@@ -2226,9 +2224,25 @@ abstract class AbstractPHPParser
                 break;
         }
 
+        return $ref;
+    }
+
+    /**
+     * This method parses a type identifier as it is used in expression nodes
+     * like {@link \PDepend\Source\AST\ASTInstanceOfExpression} or an object
+     * allocation node like {@link \PDepend\Source\AST\ASTAllocationExpression}.
+     *
+     * @param \PDepend\Source\AST\ASTNode $expr
+     * @param boolean $classRef
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parseExpressionTypeReference(ASTNode $expr, $classRef)
+    {
         $expr->addChild(
             $this->parseOptionalMemberPrimaryPrefix(
-                $this->parseOptionalStaticMemberPrimaryPrefix($ref)
+                $this->parseOptionalStaticMemberPrimaryPrefix(
+                    $this->parseStandAloneExpressionTypeReference($classRef)
+                )
             )
         );
 
@@ -4110,6 +4124,7 @@ abstract class AbstractPHPParser
         if ($this->tokenizer->peek() === Tokens::T_DOUBLE_COLON) {
             return $this->parseStaticMemberPrimaryPrefix($node);
         }
+
         return $node;
     }
 
@@ -4570,6 +4585,7 @@ abstract class AbstractPHPParser
                 $this->parseSelfReference($token)
             );
         }
+
         return $this->builder->buildAstConstant($token->image);
     }
 
@@ -4645,6 +4661,7 @@ abstract class AbstractPHPParser
                 $this->parseParentReference($token)
             );
         }
+
         return $this->builder->buildAstConstant($token->image);
     }
 
@@ -6389,10 +6406,11 @@ abstract class AbstractPHPParser
         if ($tokenType === Tokens::T_PARENTHESIS_OPEN
             || $tokenType === Tokens::T_DOUBLE_COLON
         ) {
-            $static = $this->parseStaticReference($token);
-
-            $prefix = $this->parseStaticMemberPrimaryPrefix($static);
-            return $this->setNodePositionsAndReturn($prefix);
+            return $this->setNodePositionsAndReturn(
+                $this->parseStaticMemberPrimaryPrefix(
+                    $this->parseStaticReference($token)
+                )
+            );
         } elseif ($tokenType === Tokens::T_FUNCTION) {
             $closure = $this->parseClosureDeclaration();
             $closure->setStatic(true);
@@ -6400,8 +6418,9 @@ abstract class AbstractPHPParser
             return $this->setNodePositionsAndReturn($closure);
         }
 
-        $declaration = $this->parseStaticVariableDeclaration($token);
-        return $this->setNodePositionsAndReturn($declaration);
+        return $this->setNodePositionsAndReturn(
+            $this->parseStaticVariableDeclaration($token)
+        );
 
     }
 
@@ -6506,8 +6525,6 @@ abstract class AbstractPHPParser
         if ($this->isArrayStartDelimiter()) {
             // TODO: Use default value as value!
             $defaultValue = $this->doParseArray(true);
-            var_dump($defaultValue);
-            exit;
 
             $value = new ASTValue();
             $value->setValue(array());
@@ -6586,23 +6603,34 @@ abstract class AbstractPHPParser
                 case Tokens::T_DOUBLE_QUOTE:
                     $defaultValue->setValue($this->parseStringSequence($tokenType));
                     break;
+                case Tokens::T_STATIC:
+                case Tokens::T_SELF:
+                case Tokens::T_PARENT:
+                    $node = $this->parseStandAloneExpressionTypeReference(true);
+
+                    if ($this->tokenizer->peek() === Tokens::T_DOUBLE_COLON) {
+                        $node->addChild($this->parseStaticMemberPrimaryPrefix($node));
+                    }
+
+                    $defaultValue->setValue($node);
+                    break;
+                case Tokens::T_STRING:
                 case Tokens::T_BACKSLASH:
-                    // Tokens::T_STRING T_BACKSLASH
-                    $defaultValue->setValue(
-                        $this->builder->buildAstClassOrInterfaceReference(
-                            $this->parseQualifiedName()
-                        )
+                    $node = $this->builder->buildAstClassOrInterfaceReference(
+                        $this->parseQualifiedName()
                     );
+
+                    if ($this->tokenizer->peek() === Tokens::T_DOUBLE_COLON) {
+                        $node->addChild($this->parseStaticMemberPrimaryPrefix($node));
+                    }
+
+                    $defaultValue->setValue($node);
                     break;
                 case Tokens::T_DIR:
                 case Tokens::T_FILE:
                 case Tokens::T_LINE:
-                case Tokens::T_SELF:
                 case Tokens::T_NS_C:
                 case Tokens::T_FUNC_C:
-                case Tokens::T_PARENT:
-                case Tokens::T_STRING:
-                case Tokens::T_STATIC:
                 case Tokens::T_CLASS_C:
                 case Tokens::T_METHOD_C:
                 case Tokens::T_SQUARED_BRACKET_OPEN:

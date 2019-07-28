@@ -188,14 +188,22 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        $this->markTestIncomplete('We do not handle default values.');
-        $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
-                'PDepend\\Source\\AST\\ASTSelfReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
-        );
+        /** @var \PDepend\Source\AST\ASTFieldDeclaration $fieldDeclaration */
+        $fieldDeclaration = $this->getFirstClassForTestCase(__METHOD__)->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $fieldDeclaration);
+
+        /** @var \PDepend\Source\AST\ASTVariableDeclarator $variableDeclarator */
+        $variableDeclarator = $fieldDeclaration->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
+        $this->assertTrue($variableDeclarator->getValue()->isValueAvailable());
+
+        /** @var \PDepend\Source\AST\ASTSelfReference $classReference */
+        $classReference = $variableDeclarator->getValue()->getValue();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $classReference);
+
+        $this->assertSame('self', $classReference->getImage());
     }
 
     /**
@@ -207,14 +215,13 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        $this->markTestIncomplete('We do not handle default values.');
-        $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
-                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
-        );
+        /** @var \PDepend\Source\AST\ASTParameter[] $parameters */
+        $parameters = $this->getFirstClassMethodForTestCase(__METHOD__)->getParameters();
+        $this->assertCount(1, $parameters);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParameter', $parameters[0]);
+
+        $this->assertSame('testClassFqnPostfixAsParameterInitializer', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -226,14 +233,13 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        $this->markTestIncomplete('We do not handle default values.');
-        $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
-                'PDepend\\Source\\AST\\ASTSelfReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
-        );
+        /** @var \PDepend\Source\AST\ASTParameter[] $parameters */
+        $parameters = $this->getFirstClassMethodForTestCase(__METHOD__)->getParameters();
+        $this->assertCount(1, $parameters);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParameter', $parameters[0]);
+
+        $this->assertSame('self', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -245,14 +251,15 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        $this->markTestIncomplete('We do not handle default values.');
-        $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
-                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
-        );
+        /** @var \PDepend\Source\AST\ASTConstantDefinition $constantDefinition */
+        $constantDefinition = $this->getFirstClassForTestCase()->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constantDefinition);
+
+        /** @var \PDepend\Source\AST\ASTConstantDeclarator $constantDefinition */
+        $constantDeclarator = $constantDefinition->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $constantDeclarator);
     }
 
     /**
@@ -264,14 +271,15 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        $this->markTestIncomplete('We do not handle default values.');
-        $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
-                'PDepend\\Source\\AST\\ASTSelfReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
-        );
+        /** @var \PDepend\Source\AST\ASTConstantDefinition $constantDefinition */
+        $constantDefinition = $this->getFirstClassForTestCase()->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constantDefinition);
+
+        /** @var \PDepend\Source\AST\ASTConstantDeclarator $constantDefinition */
+        $constantDeclarator = $constantDefinition->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $constantDeclarator);
     }
 
     /**
