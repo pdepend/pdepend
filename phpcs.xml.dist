@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_Depend">
+	<description>Coding standard for PDepend.</description>
+
+	<file>scripts</file>
+	<file>src</file>
+        
+        <!-- Website content -->
+        <exclude-pattern>src/site/</exclude-pattern>
+        <!-- Files for unit tests -->
+        <exclude-pattern>src/test/resources/</exclude-pattern>
+
+	<arg name="colors"/>
+	<arg value="np"/>
+
+	<rule ref="PSR2"/>
+
+</ruleset>

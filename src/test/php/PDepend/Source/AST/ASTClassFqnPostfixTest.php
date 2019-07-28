@@ -65,7 +65,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      */
     public function testGetImage()
     {
-        $postfix = $this->_getFirstClassFqnPostfixInClass();
+        $postfix = $this->getFirstClassFqnPostfixInClass();
         $this->assertEquals('class', $postfix->getImage());
     }
 
@@ -77,7 +77,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     public function testClassFqnPostfixStructureWithStatic()
     {
         $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
+            $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             array(
                 'PDepend\\Source\\AST\\ASTStaticReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
@@ -92,7 +92,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      */
     public function testGetImageWorksCaseInsensitive()
     {
-        $postfix = $this->_getFirstClassFqnPostfixInClass();
+        $postfix = $this->getFirstClassFqnPostfixInClass();
         $this->assertEquals('class', $postfix->getImage());
     }
 
@@ -104,7 +104,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     public function testClassFqnPostfixStructureWithSelf()
     {
         $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
+            $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             array(
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
@@ -120,7 +120,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     public function testClassFqnPostfixStructureWithParent()
     {
         $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
+            $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             array(
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
@@ -136,7 +136,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
     public function testClassFqnPostfixStructureWithClassName()
     {
         $this->assertGraphEquals(
-            $this->_getFirstMemberPrimaryPrefixInClass(__METHOD__),
+            $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             array(
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
@@ -289,7 +289,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      */
     public function testClassFqnPostfixHasExpectedStartLine()
     {
-        $postfix = $this->_getFirstClassFqnPostfixInClass(__METHOD__);
+        $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
         $this->assertEquals(6, $postfix->getStartLine());
     }
 
@@ -300,7 +300,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      */
     public function testClassFqnPostfixHasExpectedStartColumn()
     {
-        $postfix = $this->_getFirstClassFqnPostfixInClass(__METHOD__);
+        $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
         $this->assertEquals(26, $postfix->getStartColumn());
     }
 
@@ -311,7 +311,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      */
     public function testClassFqnPostfixHasExpectedEndLine()
     {
-        $postfix = $this->_getFirstClassFqnPostfixInClass(__METHOD__);
+        $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
         $this->assertEquals(6, $postfix->getEndLine());
     }
 
@@ -322,7 +322,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      */
     public function testClassFqnPostfixHasExpectedEndColumn()
     {
-        $postfix = $this->_getFirstClassFqnPostfixInClass(__METHOD__);
+        $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
         $this->assertEquals(63, $postfix->getEndColumn());
     }
 
@@ -341,7 +341,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTClassFqnPostfix
      */
-    private function _getFirstClassFqnPostfixInClass()
+    private function getFirstClassFqnPostfixInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
@@ -355,7 +355,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTMemberPrimaryPrefix
      */
-    private function _getFirstMemberPrimaryPrefixInClass($testCase)
+    private function getFirstMemberPrimaryPrefixInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
             $testCase,

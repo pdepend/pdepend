@@ -61,7 +61,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionOnStaticClassMember()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -80,7 +80,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionOnSelfClassMember()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInClass(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -99,7 +99,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionOnParentClassMember()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInClass(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -118,7 +118,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionOnFunctionPostfix()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -136,7 +136,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionOnStaticVariableMember()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
             array(
@@ -155,7 +155,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -166,7 +166,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(12, $expr->getStartColumn());
     }
 
@@ -177,7 +177,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(7, $expr->getEndLine());
     }
 
@@ -188,7 +188,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      */
     public function testPreDecrementExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstPreDecrementExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(21, $expr->getEndColumn());
     }
 
@@ -198,7 +198,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      * @param string $testCase Name of the calling test case.
      * @return \PDepend\Source\AST\ASTPreDecrementExpression
      */
-    private function _getFirstPreDecrementExpressionInClass($testCase)
+    private function getFirstPreDecrementExpressionInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
             $testCase,
@@ -213,10 +213,11 @@ class ASTPreDecrementExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTPreDecrementExpression
      */
-    private function _getFirstPreDecrementExpressionInFunction($testCase)
+    private function getFirstPreDecrementExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTPreDecrementExpression'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTPreDecrementExpression'
         );
     }
 }

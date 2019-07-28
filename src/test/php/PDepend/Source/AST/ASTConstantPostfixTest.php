@@ -61,7 +61,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      */
     public function testConstantPostfixStructureForSimpleStaticAccess()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
+        $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
         $this->assertEquals('BAZ', $postfix->getImage());
     }
 
@@ -72,7 +72,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      */
     public function testConstantPostfixStructureForStaticAccessOnVariable()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
+        $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $postfix->getChild(0));
     }
 
@@ -83,7 +83,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      */
     public function testConstantPostfixHasExpectedStartLine()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
+        $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
         $this->assertEquals(4, $postfix->getStartLine());
     }
 
@@ -94,7 +94,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      */
     public function testConstantPostfixHasExpectedStartColumn()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
+        $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
         $this->assertEquals(11, $postfix->getStartColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      */
     public function testConstantPostfixHasExpectedEndLine()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
+        $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
         $this->assertEquals(4, $postfix->getEndLine());
     }
 
@@ -116,7 +116,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      */
     public function testConstantPostfixHasExpectedEndColumn()
     {
-        $postfix = $this->_getFirstConstantPostfixInFunction(__METHOD__);
+        $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
         $this->assertEquals(13, $postfix->getEndColumn());
     }
 
@@ -127,7 +127,7 @@ class ASTConstantPostfixTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTConstantPostfix
      */
-    private function _getFirstConstantPostfixInFunction($testCase)
+    private function getFirstConstantPostfixInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

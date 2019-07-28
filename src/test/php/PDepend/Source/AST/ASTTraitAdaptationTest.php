@@ -58,13 +58,13 @@ class ASTTraitAdaptationTest extends ASTNodeTest
 {
     /**
      * testTraitAdaptation
-     * 
+     *
      * @return \PDepend\Source\AST\ASTTraitAdaptation
      * @since 1.0.2
      */
     public function testTraitAdaptation()
     {
-        $scope = $this->_getFirstTraitAdaptationInClass();
+        $scope = $this->getFirstTraitAdaptationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptation', $scope);
         
         return $scope;
@@ -72,7 +72,7 @@ class ASTTraitAdaptationTest extends ASTNodeTest
    
     /**
      * testTraitAdaptationHasExpectedStartLine
-     * 
+     *
      * @param \PDepend\Source\AST\ASTTraitAdaptation $scope
      *
      * @return void
@@ -127,7 +127,7 @@ class ASTTraitAdaptationTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTraitAdaptation
      */
-    private function _getFirstTraitAdaptationInClass()
+    private function getFirstTraitAdaptationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
@@ -135,4 +135,3 @@ class ASTTraitAdaptationTest extends ASTNodeTest
         );
     }
 }
-

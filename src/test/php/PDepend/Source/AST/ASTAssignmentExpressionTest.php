@@ -62,7 +62,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
     public function testAssignmentExpressionFromMethodInvocation()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(),
+            $this->getFirstAssignmentExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
@@ -82,7 +82,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
     public function testAssignmentExpressionFromPropertyAccess()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(),
+            $this->getFirstAssignmentExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
@@ -101,7 +101,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
     public function testAssignmentExpressionFromFunctionReturnValue()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(),
+            $this->getFirstAssignmentExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
@@ -116,13 +116,13 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
 
     /**
      * Tests the resulting object graph.
-     * 
+     *
      * @return void
      */
     public function testAssignmentExpressionGraphForIntegerLiteral()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(),
+            $this->getFirstAssignmentExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTLiteral'
@@ -138,7 +138,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
     public function testAssignmentExpressionGraphForFloatLiteral()
     {
         $this->assertGraphEquals(
-            $this->_getFirstAssignmentExpressionInFunction(),
+            $this->getFirstAssignmentExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTLiteral'
@@ -154,7 +154,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('=', $expr->getImage());
     }
 
@@ -166,7 +166,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithAndEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('&=', $expr->getImage());
     }
 
@@ -178,7 +178,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithConcatEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('.=', $expr->getImage());
     }
 
@@ -190,7 +190,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithDivEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('/=', $expr->getImage());
     }
 
@@ -202,7 +202,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithMinusEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('-=', $expr->getImage());
     }
 
@@ -214,7 +214,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithModEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('%=', $expr->getImage());
     }
 
@@ -226,7 +226,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithMulEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('*=', $expr->getImage());
     }
 
@@ -238,7 +238,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithOrEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('|=', $expr->getImage());
     }
 
@@ -250,7 +250,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithPlusEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('+=', $expr->getImage());
     }
 
@@ -262,7 +262,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithXorEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('^=', $expr->getImage());
     }
 
@@ -274,7 +274,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithShiftLeftEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('<<=', $expr->getImage());
     }
 
@@ -286,7 +286,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testAssignmentExpressionWithShiftRightEqual()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertEquals('>>=', $expr->getImage());
     }
 
@@ -298,7 +298,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testVariableAssignmentExpression()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
@@ -364,7 +364,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testStaticPropertyAssignmentExpression()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
@@ -430,7 +430,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testObjectPropertyAssignmentExpression()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
@@ -496,7 +496,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      */
     public function testChainedPropertyAssignmentExpression()
     {
-        $expr = $this->_getFirstAssignmentExpressionInFunction();
+        $expr = $this->getFirstAssignmentExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $expr);
 
         return $expr;
@@ -559,7 +559,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTAssignmentExpression
      */
-    private function _getFirstAssignmentExpressionInFunction()
+    private function getFirstAssignmentExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

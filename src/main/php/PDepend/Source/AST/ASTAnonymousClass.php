@@ -256,7 +256,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
         }
 
         parent::__wakeup();
-
     }
 
     /**

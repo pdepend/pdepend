@@ -2474,7 +2474,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\TokenStreamEndException
      * @since 0.9.6
      */
-    private function parseBraceExpression(
+    protected function parseBraceExpression(
         ASTNode $node,
         Token $start,
         $closeToken
@@ -3860,7 +3860,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.9.8
      */
-    private function parseParenthesisExpression()
+    protected function parseParenthesisExpression()
     {
         $this->tokenStack->push();
         $this->consumeComments();
@@ -6125,7 +6125,6 @@ abstract class AbstractPHPParser
             $this->namespaceName = $qualifiedName;
 
             $this->useSymbolTable->resetScope();
-
         } elseif ($tokenType === Tokens::T_BACKSLASH) {
             // Same namespace reference, something like:
             //   new namespace\Foo();
@@ -6421,7 +6420,6 @@ abstract class AbstractPHPParser
         return $this->setNodePositionsAndReturn(
             $this->parseStaticVariableDeclaration($token)
         );
-
     }
 
     /**

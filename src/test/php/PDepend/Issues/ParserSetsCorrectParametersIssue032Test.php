@@ -113,7 +113,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
      */
     public function testParserSetsExpectedNumberOfMethodParameters()
     {
-        $parameters = $this->_getParametersOfFirstMethod();
+        $parameters = $this->getParametersOfFirstMethod();
         $this->assertEquals(3, count($parameters));
     }
 
@@ -125,7 +125,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
     public function testParserSetsExpectedPositionOfMethodParameters()
     {
         $actual = array();
-        foreach ($this->_getParametersOfFirstMethod() as $parameter) {
+        foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = $parameter->getPosition();
         }
         $this->assertEquals(array(0, 1, 2), $actual);
@@ -139,7 +139,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
     public function testParserSetsMethodParametersInExpectedOrder()
     {
         $actual = array();
-        foreach ($this->_getParametersOfFirstMethod() as $parameter) {
+        foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = $parameter->getName();
         }
         $this->assertEquals(array('$foo', '$bar', '$foobar'), $actual);
@@ -153,7 +153,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
     public function testParserSetsExpectedTypeHintsForMethodParameters()
     {
         $actual = array();
-        foreach ($this->_getParametersOfFirstMethod() as $parameter) {
+        foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = is_null($parameter->getClass());
         }
         $this->assertEquals(array(true, false, true), $actual);
@@ -164,7 +164,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
      *
      * @return \PDepend\Source\AST\ASTParameter[]
      */
-    private function _getParametersOfFirstMethod()
+    private function getParametersOfFirstMethod()
     {
         $namespaces = $this->parseTestCase();
         return $namespaces->current()

@@ -112,7 +112,6 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      */
     public function endFileParsing(Tokenizer $tokenizer)
     {
-
     }
 
     /**

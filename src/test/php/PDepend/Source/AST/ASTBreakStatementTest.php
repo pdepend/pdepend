@@ -61,7 +61,7 @@ class ASTBreakStatementTest extends ASTNodeTest
      */
     public function testBreakStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTBreakStatementTest extends ASTNodeTest
      */
     public function testBreakStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
         $this->assertEquals(9, $stmt->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTBreakStatementTest extends ASTNodeTest
      */
     public function testBreakStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
         $this->assertEquals(7, $stmt->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTBreakStatementTest extends ASTNodeTest
      */
     public function testBreakStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
         $this->assertEquals(17, $stmt->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTBreakStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTBreakStatement
      */
-    private function _getFirstBreakStatementInFunction($testCase)
+    private function getFirstBreakStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

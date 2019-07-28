@@ -64,7 +64,7 @@ class ASTHeredocTest extends ASTNodeTest
     {
         $this->assertInstanceOf(
             'PDepend\\Source\\AST\\ASTLiteral',
-            $this->_getFirstHeredocInClass()->getChild(0)
+            $this->getFirstHeredocInClass()->getChild(0)
         );
     }
 
@@ -75,7 +75,7 @@ class ASTHeredocTest extends ASTNodeTest
      */
     public function testHeredocHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstHeredocInFunction();
+        $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -86,7 +86,7 @@ class ASTHeredocTest extends ASTNodeTest
      */
     public function testHeredocHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstHeredocInFunction();
+        $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(10, $stmt->getStartColumn());
     }
 
@@ -97,7 +97,7 @@ class ASTHeredocTest extends ASTNodeTest
      */
     public function testHeredocHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstHeredocInFunction();
+        $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(8, $stmt->getEndLine());
     }
 
@@ -108,7 +108,7 @@ class ASTHeredocTest extends ASTNodeTest
      */
     public function testHeredocHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstHeredocInFunction();
+        $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(3, $stmt->getEndColumn());
     }
 
@@ -117,7 +117,7 @@ class ASTHeredocTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTHeredoc
      */
-    private function _getFirstHeredocInFunction()
+    private function getFirstHeredocInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -130,7 +130,7 @@ class ASTHeredocTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTHeredoc
      */
-    private function _getFirstHeredocInClass()
+    private function getFirstHeredocInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),

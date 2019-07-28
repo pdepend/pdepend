@@ -102,7 +102,7 @@ class ExtensionFilterTest extends AbstractTest
         $actual = array();
         foreach ($files as $file) {
             if ($filter->accept($file, $file)
-                && $file->isFile() 
+                && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')
             ) {
                 $actual[] = $file->getFilename();

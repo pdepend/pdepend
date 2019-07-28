@@ -90,7 +90,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
     }
 
     /**
-     * Tests that the parser handles multiple comma separated constant 
+     * Tests that the parser handles multiple comma separated constant
      * definitions as expected.
      *
      * @return void

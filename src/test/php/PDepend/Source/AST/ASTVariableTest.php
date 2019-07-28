@@ -105,7 +105,7 @@ class ASTVariableTest extends ASTNodeTest
      */
     public function testVariable()
     {
-        $variable = $this->_getFirstVariableInClass();
+        $variable = $this->getFirstVariableInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
 
         return $variable;
@@ -168,10 +168,10 @@ class ASTVariableTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTVariable
      */
-    private function _getFirstVariableInClass()
+    private function getFirstVariableInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTVariable'
         );
     }

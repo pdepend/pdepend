@@ -411,7 +411,6 @@ class DependencyAnalyzer extends AbstractAnalyzer
                     $metrics[self::M_NUMBER_OF_CLASSES]
                 );
             }
-
         }
     }
 

@@ -77,7 +77,7 @@ class ASTArrayElementTest extends ASTNodeTest
     public function testArrayElementGraphSimpleValue()
     {
         $this->assertGraph(
-            $this->_getFirstArrayElementInFunction(),
+            $this->getFirstArrayElementInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
             )
@@ -104,7 +104,7 @@ class ASTArrayElementTest extends ASTNodeTest
     public function testArrayElementGraphSimpleValueByReference()
     {
         $this->assertGraph(
-            $this->_getFirstArrayElementInFunction(),
+            $this->getFirstArrayElementInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
             )
@@ -132,7 +132,7 @@ class ASTArrayElementTest extends ASTNodeTest
     public function testArrayElementGraphKeyValue()
     {
         $this->assertGraph(
-            $this->_getFirstArrayElementInFunction(),
+            $this->getFirstArrayElementInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
@@ -161,7 +161,7 @@ class ASTArrayElementTest extends ASTNodeTest
     public function testArrayElementGraphKeyValueByReference()
     {
         $this->assertGraph(
-            $this->_getFirstArrayElementInFunction(),
+            $this->getFirstArrayElementInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
@@ -209,7 +209,7 @@ class ASTArrayElementTest extends ASTNodeTest
     public function testArrayElementGraphWithTwoDimensions()
     {
         $this->assertGraph(
-            $this->_getFirstArrayElementInFunction(),
+            $this->getFirstArrayElementInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTLiteral'                              . ' ("bar")',
                 'PDepend\\Source\\AST\\ASTArray'                                . ' ()', array(
@@ -238,7 +238,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementByReferenceReturnsFalseByDefault()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertFalse($array->isByReference());
     }
 
@@ -249,7 +249,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementByReferenceReturnsTrueForValue()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertTrue($array->isByReference());
     }
 
@@ -260,7 +260,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementByReferenceReturnsFalseForKeyValue()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertFalse($array->isByReference());
     }
 
@@ -271,7 +271,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementByReferenceReturnsTrueForKeyValue()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertTrue($array->isByReference());
     }
 
@@ -282,7 +282,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementHasExpectedStartLine()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertEquals(5, $array->getStartLine());
     }
 
@@ -293,7 +293,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementHasExpectedStartColumn()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertEquals(9, $array->getStartColumn());
     }
 
@@ -304,7 +304,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementHasExpectedEndLine()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertEquals(11, $array->getEndLine());
     }
 
@@ -315,7 +315,7 @@ class ASTArrayElementTest extends ASTNodeTest
      */
     public function testArrayElementHasExpectedEndColumn()
     {
-        $array = $this->_getFirstArrayElementInFunction();
+        $array = $this->getFirstArrayElementInFunction();
         $this->assertEquals(29, $array->getEndColumn());
     }
 
@@ -324,7 +324,7 @@ class ASTArrayElementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTArrayElement
      */
-    private function _getFirstArrayElementInFunction()
+    private function getFirstArrayElementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

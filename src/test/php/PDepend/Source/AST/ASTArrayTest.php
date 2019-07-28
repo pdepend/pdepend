@@ -74,7 +74,7 @@ class ASTArrayTest extends ASTNodeTest
     public function testArrayGraphForEmptyArrayDefinition()
     {
         $this->assertGraph(
-            $this->_getFirstArrayInFunction(),
+            $this->getFirstArrayInFunction(),
             array()
         );
     }
@@ -97,7 +97,7 @@ class ASTArrayTest extends ASTNodeTest
     public function testArrayGraphForEmptyShortArrayDefinition()
     {
         $this->assertGraph(
-            $this->_getFirstArrayInFunction(),
+            $this->getFirstArrayInFunction(),
             array()
         );
     }
@@ -109,7 +109,7 @@ class ASTArrayTest extends ASTNodeTest
      */
     public function testArrayHasExpectedStartLine()
     {
-        $array = $this->_getFirstArrayInFunction();
+        $array = $this->getFirstArrayInFunction();
         $this->assertEquals(4, $array->getStartLine());
     }
 
@@ -120,7 +120,7 @@ class ASTArrayTest extends ASTNodeTest
      */
     public function testArrayHasExpectedStartColumn()
     {
-        $array = $this->_getFirstArrayInFunction();
+        $array = $this->getFirstArrayInFunction();
         $this->assertEquals(12, $array->getStartColumn());
     }
 
@@ -131,7 +131,7 @@ class ASTArrayTest extends ASTNodeTest
      */
     public function testArrayHasExpectedEndLine()
     {
-        $array = $this->_getFirstArrayInFunction();
+        $array = $this->getFirstArrayInFunction();
         $this->assertEquals(13, $array->getEndLine());
     }
 
@@ -142,7 +142,7 @@ class ASTArrayTest extends ASTNodeTest
      */
     public function testArrayHasExpectedEndColumn()
     {
-        $array = $this->_getFirstArrayInFunction();
+        $array = $this->getFirstArrayInFunction();
         $this->assertEquals(5, $array->getEndColumn());
     }
 
@@ -151,7 +151,7 @@ class ASTArrayTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTArray
      */
-    private function _getFirstArrayInFunction()
+    private function getFirstArrayInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

@@ -51,13 +51,15 @@ namespace PDepend\Bugs;
  * @covers \stdClass
  * @group regressiontest
  */
-class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTest {
+class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTest
+{
     /**
      * testTrueKeywordInNamespace
      *
      * @return void
      */
-    public function testTrueKeywordInNamespace() {
+    public function testTrueKeywordInNamespace()
+    {
         $this->parseCodeResourceForTest();
     }
 
@@ -66,7 +68,8 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testFalseKeywordInNamespace() {
+    public function testFalseKeywordInNamespace()
+    {
         $this->parseCodeResourceForTest();
     }
 }

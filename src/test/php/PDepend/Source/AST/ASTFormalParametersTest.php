@@ -63,7 +63,7 @@ class ASTFormalParametersTest extends ASTNodeTest
      */
     public function testFormalParametersHasExpectedStartLine()
     {
-        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $param = $this->getFirstFormalParametersInFunction(__METHOD__);
         $this->assertEquals(2, $param->getStartLine());
     }
 
@@ -74,7 +74,7 @@ class ASTFormalParametersTest extends ASTNodeTest
      */
     public function testFormalParametersHasExpectedStartColumn()
     {
-        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $param = $this->getFirstFormalParametersInFunction(__METHOD__);
         $this->assertEquals(52, $param->getStartColumn());
     }
 
@@ -85,7 +85,7 @@ class ASTFormalParametersTest extends ASTNodeTest
      */
     public function testFormalParametersHasExpectedEndLine()
     {
-        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $param = $this->getFirstFormalParametersInFunction(__METHOD__);
         $this->assertEquals(6, $param->getEndLine());
     }
 
@@ -96,7 +96,7 @@ class ASTFormalParametersTest extends ASTNodeTest
      */
     public function testFormalParametersHasExpectedEndColumn()
     {
-        $param = $this->_getFirstFormalParametersInFunction(__METHOD__);
+        $param = $this->getFirstFormalParametersInFunction(__METHOD__);
         $this->assertEquals(1, $param->getEndColumn());
     }
 
@@ -107,7 +107,7 @@ class ASTFormalParametersTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTFormalParameters
      */
-    private function _getFirstFormalParametersInFunction($testCase)
+    private function getFirstFormalParametersInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

@@ -159,8 +159,7 @@ class XmlTest extends AbstractTest
         return preg_replace(
             '(sourceFile="[^"]+/([^/"]+)")',
             'sourceFile="' . $path . '/\\1"',
-             file_get_contents($fileName)
+            file_get_contents($fileName)
         );
     }
-
 }

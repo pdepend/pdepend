@@ -225,7 +225,6 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
     {
-
     }
 
     /**
@@ -253,6 +252,5 @@ class StubASTVisitor implements ASTVisitor
      */
     public function __call($method, $args)
     {
-
     }
 }

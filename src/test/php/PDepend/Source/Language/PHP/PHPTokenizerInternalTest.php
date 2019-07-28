@@ -59,7 +59,7 @@ class PHPTokenizerInternalTest extends AbstractTest
 {
     /**
      * testTokenizerReturnsExpectedConstantForTraitKeyword
-     * 
+     *
      * @return void
      * @since 1.0.0
      */
@@ -83,7 +83,7 @@ class PHPTokenizerInternalTest extends AbstractTest
                 Tokens::T_CURLY_BRACE_CLOSE,
                 Tokens::T_CURLY_BRACE_CLOSE,
             ),
-            $this->_getTokenTypesForTest()
+            $this->getTokenTypesForTest()
         );
     }
 
@@ -113,7 +113,7 @@ class PHPTokenizerInternalTest extends AbstractTest
                 Tokens::T_CURLY_BRACE_CLOSE,
                 Tokens::T_CURLY_BRACE_CLOSE,
             ),
-            $this->_getTokenTypesForTest()
+            $this->getTokenTypesForTest()
         );
     }
 
@@ -161,7 +161,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -269,7 +269,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CLOSE_TAG
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -301,7 +301,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE,
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -345,7 +345,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE,
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -568,7 +568,7 @@ Manuel', 3, 5, 61, 6),
             Tokens::T_SEMICOLON,
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -577,7 +577,7 @@ Manuel', 3, 5, 61, 6),
      *
      * @return array(integer)
      */
-    private function _getTokenTypesForTest()
+    private function getTokenTypesForTest()
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());

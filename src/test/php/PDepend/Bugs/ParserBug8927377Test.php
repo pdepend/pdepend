@@ -60,7 +60,7 @@ class ParserBug8927377Test extends AbstractRegressionTest
 {
     /**
      * testPropertyPostfixHasExpectedStartLine
-     * 
+     *
      * @return void
      */
     public function testPropertyPostfixHasExpectedStartLine()
@@ -104,7 +104,7 @@ class ParserBug8927377Test extends AbstractRegressionTest
 
     /**
      * Returns the property postfix found in a class.
-     * 
+     *
      * @return \PDepend\Source\AST\ASTPropertyPostfix
      */
     protected function getFirstPropertyPostfixInClass()

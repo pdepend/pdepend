@@ -61,7 +61,7 @@ class ASTForUpdateTest extends ASTNodeTest
      */
     public function testForUpdateHasExpectedStartLine()
     {
-        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
+        $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(4, $init->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTForUpdateTest extends ASTNodeTest
      */
     public function testForUpdateHasExpectedStartColumn()
     {
-        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
+        $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(36, $init->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTForUpdateTest extends ASTNodeTest
      */
     public function testForUpdateHasExpectedEndLine()
     {
-        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
+        $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(4, $init->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTForUpdateTest extends ASTNodeTest
      */
     public function testForUpdateHasExpectedEndColumn()
     {
-        $init = $this->_getFirstForUpdateInFunction(__METHOD__);
+        $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(45, $init->getEndColumn());
     }
 
@@ -105,10 +105,11 @@ class ASTForUpdateTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTForUpdate
      */
-    private function _getFirstForUpdateInFunction($testCase)
+    private function getFirstForUpdateInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTForUpdate'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTForUpdate'
         );
     }
 }
