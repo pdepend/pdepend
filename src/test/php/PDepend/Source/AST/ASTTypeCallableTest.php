@@ -63,7 +63,7 @@ class ASTTypeCallableTest extends ASTNodeTest
      */
     public function testCallableTypeIsHandledCaseInsensitive()
     {
-        $this->assertNotNull($this->_getFirstCallableTypeInFunction());
+        $this->assertNotNull($this->getFirstCallableTypeInFunction());
     }
 
     /**
@@ -74,7 +74,7 @@ class ASTTypeCallableTest extends ASTNodeTest
      */
     public function testCallableType()
     {
-        $type = $this->_getFirstCallableTypeInFunction();
+        $type = $this->getFirstCallableTypeInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeCallable', $type);
 
         return $type;
@@ -137,7 +137,7 @@ class ASTTypeCallableTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTypeCallable
      */
-    private function _getFirstCallableTypeInFunction()
+    private function getFirstCallableTypeInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

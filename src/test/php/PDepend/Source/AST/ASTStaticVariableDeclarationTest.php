@@ -62,7 +62,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTest
      */
     public function testStaticVariableDeclaration()
     {
-        $declaration = $this->_getFirstStaticVariableDeclarationInFunction();
+        $declaration = $this->getFirstStaticVariableDeclarationInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticVariableDeclaration', $declaration);
 
         return $declaration;
@@ -72,7 +72,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTest
      * Tests that the declaration has the expected start line value.
      *
      * @param \PDepend\Source\AST\ASTStringIndexExpression $declaration
-     * 
+     *
      * @return void
      * @depends testStaticVariableDeclaration
      */
@@ -125,7 +125,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTStringIndexExpression
      */
-    private function _getFirstStaticVariableDeclarationInFunction()
+    private function getFirstStaticVariableDeclarationInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

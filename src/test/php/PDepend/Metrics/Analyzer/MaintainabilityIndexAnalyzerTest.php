@@ -82,7 +82,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetNodeMetricsReturnsNothingForUnknownNode()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
             ->getMock();
         $this->assertEquals(array(), $analyzer->getNodeMetrics($astArtifact));
@@ -98,7 +98,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = array();
@@ -127,7 +127,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $classes = $namespaces[0]->getClasses();
@@ -161,12 +161,12 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($functions[0]);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($functions[0]);
@@ -186,12 +186,12 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($methods[0]);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($methods[0]);
@@ -205,7 +205,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
      * @return \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
      * @since 1.0.0
      */
-    private function _createAnalyzer()
+    private function createAnalyzer()
     {
         $analyzer = new MaintainabilityIndexAnalyzer();
         $analyzer->setCache($this->cache);

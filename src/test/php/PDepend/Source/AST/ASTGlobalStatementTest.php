@@ -61,7 +61,7 @@ class ASTGlobalStatementTest extends ASTNodeTest
      */
     public function testGlobalStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
         $this->assertSame(4, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTGlobalStatementTest extends ASTNodeTest
      */
     public function testGlobalStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
         $this->assertSame(5, $stmt->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTGlobalStatementTest extends ASTNodeTest
      */
     public function testGlobalStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
         $this->assertSame(6, $stmt->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTGlobalStatementTest extends ASTNodeTest
      */
     public function testGlobalStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
         $this->assertSame(19, $stmt->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTGlobalStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTGlobalStatement
      */
-    private function _getFirstGlobalStatementInFunction($testCase)
+    private function getFirstGlobalStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

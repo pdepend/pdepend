@@ -41,6 +41,7 @@
  */
 
 namespace PDepend\Source\AST;
+
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTFieldDeclaration;
 
@@ -63,7 +64,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $declaration = $this->getFirstFieldDeclarationInClass();
 
         $reference = $declaration->getChild(0);
         $this->assertEquals(__FUNCTION__, $reference->getType()->getName());
@@ -98,7 +99,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      */
     public function testClassReferenceForJavaStyleArrayNotation()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $declaration = $this->getFirstFieldDeclarationInClass();
         $reference = $declaration->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
         );
@@ -278,7 +279,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedStartLine()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(4, $declaration->getStartLine());
     }
 
@@ -289,7 +290,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedStartColumn()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(5, $declaration->getStartColumn());
     }
 
@@ -300,7 +301,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedEndLine()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(5, $declaration->getEndLine());
     }
 
@@ -311,7 +312,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      */
     public function testFieldDeclarationHasExpectedEndColumn()
     {
-        $declaration = $this->_getFirstFieldDeclarationInClass();
+        $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(22, $declaration->getEndColumn());
     }
 
@@ -320,7 +321,7 @@ class ASTFieldDeclarationTest extends ASTNodeTest
      *
      * @return ASTFieldDeclaration
      */
-    private function _getFirstFieldDeclarationInClass()
+    private function getFirstFieldDeclarationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
@@ -384,4 +385,3 @@ class ASTFieldDeclarationTest extends ASTNodeTest
         );
     }
 }
-?>

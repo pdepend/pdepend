@@ -59,7 +59,7 @@ class TokenStackTest extends AbstractParserTest
 {
     /**
      * testAddReturnsGivenTokenInstance
-     * 
+     *
      * @return void
      */
     public function testAddReturnsGivenTokenInstance()

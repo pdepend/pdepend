@@ -62,7 +62,7 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTest
 {
     /**
      * testWmciMetricIsCalculatedForCurrentAndNotParentClass
-     * 
+     *
      * @return void
      */
     public function testWmciMetricIsCalculatedForCurrentAndNotParentClass()

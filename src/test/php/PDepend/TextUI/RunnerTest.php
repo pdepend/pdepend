@@ -108,7 +108,7 @@ class RunnerTest extends AbstractTest
         $runner->setWithoutAnnotations();
         $runner->setFileExtensions(array('inc'));
 
-        $actual = $this->_runRunnerAndReturnStatistics(
+        $actual = $this->runRunnerAndReturnStatistics(
             $runner,
             $this->createCodeResourceUriForTest()
         );
@@ -142,7 +142,7 @@ class RunnerTest extends AbstractTest
         $runner = $this->createTextUiRunner();
         $runner->setWithoutAnnotations();
 
-        $actual = $this->_runRunnerAndReturnStatistics(
+        $actual = $this->runRunnerAndReturnStatistics(
             $runner,
             $this->createCodeResourceUriForTest()
         );
@@ -180,7 +180,7 @@ class RunnerTest extends AbstractTest
         );
 
         $runner = $this->createTextUiRunner();
-        $actual = $this->_runRunnerAndReturnStatistics(
+        $actual = $this->runRunnerAndReturnStatistics(
             $runner,
             $this->createCodeResourceUriForTest()
         );
@@ -259,7 +259,7 @@ class RunnerTest extends AbstractTest
      * @param $pathName The source path.
      * @return array
      */
-    private function _runRunnerAndReturnStatistics(Runner $runner, $pathName)
+    private function runRunnerAndReturnStatistics(Runner $runner, $pathName)
     {
         $logFile = $this->createRunResourceURI();
 

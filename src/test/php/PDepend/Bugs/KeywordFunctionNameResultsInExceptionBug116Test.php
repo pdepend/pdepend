@@ -55,7 +55,7 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
 {
     /**
      * testParserNotThrowsAnExceptionForKeywordUse
-     * 
+     *
      * @return void
      */
     public function testParserNotThrowsAnExceptionForKeywordUse()

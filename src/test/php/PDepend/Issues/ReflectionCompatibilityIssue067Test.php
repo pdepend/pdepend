@@ -171,7 +171,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForNullDefaultValue
-     * 
+     *
      * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForNullDefaultValue()
@@ -481,7 +481,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserSetsUserDefinedFlagForClass()
     {
-        $actual = $this->_getFirstClass()->isUserDefined();
+        $actual = $this->getFirstClass()->isUserDefined();
         $this->assertTrue($actual);
     }
 
@@ -493,7 +493,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserNotSetsUserDefinedFlagForUnknownClass()
     {
-        $class  = $this->_getFirstClass();
+        $class  = $this->getFirstClass();
         $actual = $class->getParentClass()->isUserDefined();
 
         $this->assertFalse($actual);
@@ -506,7 +506,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserSetsUserDefinedFlagForInterface()
     {
-        $this->assertTrue($this->_getFirstInterface()->isUserDefined());
+        $this->assertTrue($this->getFirstInterface()->isUserDefined());
     }
 
     /**
@@ -517,7 +517,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserNotSetsUserDefinedFlagForUnknownInterface()
     {
-        $interface = $this->_getFirstInterface()->getInterfaces()->current();
+        $interface = $this->getFirstInterface()->getInterfaces()->current();
         $this->assertFalse($interface->isUserDefined());
     }
 
@@ -529,7 +529,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserFlagsFunctionWithReturnsReference()
     {
-        $this->assertTrue($this->_getFirstFunction()->returnsReference());
+        $this->assertTrue($this->getFirstFunction()->returnsReference());
     }
 
     /**
@@ -540,7 +540,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserDoesNotFlagFunctionWithReturnsReference()
     {
-        $this->assertFalse($this->_getFirstFunction()->returnsReference());
+        $this->assertFalse($this->getFirstFunction()->returnsReference());
     }
 
     /**
@@ -551,7 +551,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserFlagsClassMethodWithReturnsReferences()
     {
-        $actual = $this->_getFirstMethod()->returnsReference();
+        $actual = $this->getFirstMethod()->returnsReference();
         $this->assertTrue($actual);
     }
 
@@ -563,7 +563,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserDoesNotFlagClassMethodWithReturnsReferences()
     {
-        $actual = $this->_getFirstMethod()->returnsReference();
+        $actual = $this->getFirstMethod()->returnsReference();
         $this->assertFalse($actual);
     }
 
@@ -575,7 +575,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserSetsFunctionStaticVariableSingleUninitialized()
     {
-        $actual   = $this->_getFirstFunction()->getStaticVariables();
+        $actual   = $this->getFirstFunction()->getStaticVariables();
         $expected = array('x' => null);
 
         $this->assertEquals($expected, $actual);
@@ -589,7 +589,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserSetsFunctionStaticVariableSingleInitialized()
     {
-        $actual   = $this->_getFirstFunction()->getStaticVariables();
+        $actual   = $this->getFirstFunction()->getStaticVariables();
         $expected = array('x' => 42);
 
         $this->assertEquals($expected, $actual);
@@ -603,7 +603,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserSetsFunctionStaticVariablesInSingleDeclaration()
     {
-        $actual   = $this->_getFirstFunction()->getStaticVariables();
+        $actual   = $this->getFirstFunction()->getStaticVariables();
         $expected = array('x' => true, 'y' => null, 'z' => array());
 
         $this->assertEquals($expected, $actual);
@@ -617,7 +617,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserSetsFunctionStaticVariablesInMultipleDeclarations()
     {
-        $actual   = $this->_getFirstFunction()->getStaticVariables();
+        $actual   = $this->getFirstFunction()->getStaticVariables();
         $expected = array('x' => false, 'y' => null, 'z' => 3.14);
 
         $this->assertEquals($expected, $actual);
@@ -630,7 +630,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserStaticVariablesDoNotConflictWithStaticInvoke()
     {
-        $actual   = $this->_getFirstMethod()->getStaticVariables();
+        $actual   = $this->getFirstMethod()->getStaticVariables();
         $expected = array();
 
         $this->assertEquals($expected, $actual);
@@ -643,7 +643,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      */
     public function testParserStaticVariablesDoNotConflictWithStaticAllocation()
     {
-        $actual   = $this->_getFirstMethod()->getStaticVariables();
+        $actual   = $this->getFirstMethod()->getStaticVariables();
         $expected = array('x' => true, 'y' => false);
 
         $this->assertEquals($expected, $actual);
@@ -680,7 +680,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      *
      * @return \PDepend\Source\AST\ASTInterface
      */
-    private function _getFirstInterface()
+    private function getFirstInterface()
     {
         $namespaces = $this->parseTestCase();
         return $namespaces->current()
@@ -693,7 +693,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      *
      * @return \PDepend\Source\AST\ASTClass
      */
-    private function _getFirstClass()
+    private function getFirstClass()
     {
         $namespaces = $this->parseTestCase();
         return $namespaces->current()
@@ -706,7 +706,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      *
      * @return \PDepend\Source\AST\ASTMethod
      */
-    private function _getFirstMethod()
+    private function getFirstMethod()
     {
         $namespaces = $this->parseTestCase();
         return $namespaces->current()
@@ -721,7 +721,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      *
      * @return \PDepend\Source\AST\ASTFunction
      */
-    private function _getFirstFunction()
+    private function getFirstFunction()
     {
         $namespaces = $this->parseTestCase();
         return $namespaces->current()

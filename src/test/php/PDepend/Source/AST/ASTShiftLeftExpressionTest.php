@@ -74,7 +74,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTest
      */
     public function testShiftLeftExpression()
     {
-        $expr = $this->_getFirstShiftLeftExpressionInFunction();
+        $expr = $this->getFirstShiftLeftExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTShiftLeftExpression', $expr);
 
         return $expr;
@@ -137,7 +137,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTShiftLeftExpression
      */
-    private function _getFirstShiftLeftExpressionInFunction()
+    private function getFirstShiftLeftExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -145,4 +145,3 @@ class ASTShiftLeftExpressionTest extends ASTNodeTest
         );
     }
 }
-

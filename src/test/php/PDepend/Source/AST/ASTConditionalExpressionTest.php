@@ -61,7 +61,7 @@ class ASTConditionalExpressionTest extends ASTNodeTest
      */
     public function testConditionalExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTConditionalExpressionTest extends ASTNodeTest
      */
     public function testConditionalExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
         $this->assertEquals(18, $expr->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTConditionalExpressionTest extends ASTNodeTest
      */
     public function testConditionalExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTConditionalExpressionTest extends ASTNodeTest
      */
     public function testConditionalExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstConditionalExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
         $this->assertEquals(26, $expr->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTConditionalExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTConditionalExpression
      */
-    private function _getFirstConditionalExpressionInFunction($testCase)
+    private function getFirstConditionalExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

@@ -679,7 +679,7 @@ class PHPParserGenericTest extends AbstractTest
 
     /**
      * testParserAcceptsDirConstantAsFunctionName
-     * 
+     *
      * @return void
      * @since 1.0.0
      */

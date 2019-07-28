@@ -78,7 +78,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexGraphDereferencedFromFunctionCall()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
@@ -111,7 +111,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexGraphDereferencedFromVariableFunctionCall()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTVariable',
@@ -146,7 +146,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexGraphDereferencedFromMethodCall()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
@@ -183,7 +183,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexGraphDereferencedFromVariableMethodCall()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
@@ -220,7 +220,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexGraphDereferencedFromStaticMethodCall()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
@@ -257,7 +257,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexGraphDereferencedFromVariableStaticMethodCall()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
@@ -281,7 +281,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexExpressionGraphForVariable()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTLiteral'
@@ -301,7 +301,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexExpressionGraphForProperty()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTLiteral'
@@ -321,7 +321,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
     public function testArrayIndexExpressionGraphForChainedArrayAccess()
     {
         $this->assertGraphEquals(
-            $this->_getFirstArrayIndexExpressionInFunction(),
+            $this->getFirstArrayIndexExpressionInFunction(),
             array(
                 'PDepend\\Source\\AST\\ASTArrayIndexExpression',
                 'PDepend\\Source\\AST\\ASTArrayIndexExpression',
@@ -340,7 +340,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
      */
     public function testArrayIndexExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction();
+        $expr = $this->getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -351,7 +351,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
      */
     public function testArrayIndexExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction();
+        $expr = $this->getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(10, $expr->getStartColumn());
     }
 
@@ -362,7 +362,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
      */
     public function testArrayIndexExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction();
+        $expr = $this->getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(6, $expr->getEndLine());
     }
 
@@ -373,7 +373,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
      */
     public function testArrayIndexExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstArrayIndexExpressionInFunction();
+        $expr = $this->getFirstArrayIndexExpressionInFunction();
         $this->assertEquals(13, $expr->getEndColumn());
     }
 
@@ -382,10 +382,10 @@ class ASTArrayIndexExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTArrayIndexExpression
      */
-    private function _getFirstArrayIndexExpressionInFunction()
+    private function getFirstArrayIndexExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArrayIndexExpression'
         );
     }

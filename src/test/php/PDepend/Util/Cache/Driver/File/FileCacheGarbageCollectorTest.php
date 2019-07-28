@@ -131,7 +131,6 @@ class FileCacheGarbageCollectorTest extends AbstractTest
 
     protected function createFile($mtime = 0, $atime = 0)
     {
-
         $time = time();
 
         $mtime = $time - $mtime;

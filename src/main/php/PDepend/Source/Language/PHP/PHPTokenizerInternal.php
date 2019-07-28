@@ -782,7 +782,6 @@ class PHPTokenizerInternal implements Tokenizer
 
                         array_pop($this->tokens);
                     }
-
                 } elseif (isset($tokenMap[$token[0]])) {
                     $type = $tokenMap[$token[0]];
                     // Check for a context sensitive alternative

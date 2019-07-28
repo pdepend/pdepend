@@ -235,7 +235,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 $legend->nodeValue = $found[1];
                 $legendTemplate->parentNode->appendChild($legend);
             }
-
         }
 
         $bad->parentNode->removeChild($bad);

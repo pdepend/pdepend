@@ -58,7 +58,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
 {
     /**
      * Tests that the parser handles a comma separated property declaration.
-     * 
+     *
      * @return void
      */
     public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration()

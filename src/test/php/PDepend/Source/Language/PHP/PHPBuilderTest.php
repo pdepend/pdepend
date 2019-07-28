@@ -1723,7 +1723,7 @@ class PHPBuilderTest extends AbstractTest
 
     /**
      * testBuildASTArrayIndexExpressionReturnsExpectedType
-     * 
+     *
      * @return void
      */
     public function testBuildASTArrayIndexExpressionReturnsExpectedType()
@@ -1928,7 +1928,7 @@ class PHPBuilderTest extends AbstractTest
 
     /**
      * testBuildASTPostfixExpressionReturnsExpectedType
-     * 
+     *
      * @return void
      */
     public function testBuildASTPostfixExpressionReturnsExpectedType()
@@ -1967,7 +1967,7 @@ class PHPBuilderTest extends AbstractTest
 
     /**
      * testBuildASTMemberPrimaryPrefixReturnsExpectedType
-     * 
+     *
      * @return void
      * @since 1.0.0
      */

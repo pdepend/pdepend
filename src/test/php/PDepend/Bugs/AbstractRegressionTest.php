@@ -89,7 +89,8 @@ abstract class AbstractRegressionTest extends AbstractTest
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         return $this->parseSource(
-            $this->getSourceFileForTestCase($testCase), $ignoreAnnotations
+            $this->getSourceFileForTestCase($testCase),
+            $ignoreAnnotations
         );
     }
 

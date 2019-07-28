@@ -6016,7 +6016,6 @@ abstract class AbstractPHPParser
             $this->namespaceName = $qualifiedName;
 
             $this->useSymbolTable->resetScope();
-
         } elseif ($tokenType === Tokens::T_BACKSLASH) {
             // Same namespace reference, something like:
             //   new namespace\Foo();
@@ -6310,7 +6309,6 @@ abstract class AbstractPHPParser
 
         $declaration = $this->parseStaticVariableDeclaration($token);
         return $this->setNodePositionsAndReturn($declaration);
-
     }
 
     /**

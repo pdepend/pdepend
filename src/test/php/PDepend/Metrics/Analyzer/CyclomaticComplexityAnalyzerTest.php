@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -82,7 +82,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetCCNReturnsZeroForUnknownNode()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
             ->getMock();
         $this->assertEquals(0, $analyzer->getCcn($astArtifact));
@@ -95,7 +95,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testGetCCN2ReturnsZeroForUnknownNode()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
             ->getMock();
         $this->assertEquals(0, $analyzer->getCcn2($astArtifact));
@@ -110,7 +110,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = array();
@@ -136,7 +136,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateFunctionCCNAndCNN2ProjectMetrics()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 12, 'ccn2' => 16);
@@ -154,7 +154,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $classes = $namespaces[0]->getClasses();
@@ -184,7 +184,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCCNWithConditionalExprInCompoundExpr()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 2);
@@ -203,7 +203,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $this->assertEquals(3, $analyzer->getCcn($functions[0]));
@@ -219,7 +219,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $this->assertEquals(3, $analyzer->getCcn2($functions[0]));
@@ -232,7 +232,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 3, 'ccn2' => 3);
@@ -248,7 +248,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 4, 'ccn2' => 4);
@@ -264,7 +264,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCCNDetectsExpressionsInAForLoop()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 4);
@@ -280,7 +280,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateCCNDetectsExpressionsInAWhileLoop()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 2, 'ccn2' => 4);
@@ -296,7 +296,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculateProjectMetrics()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
         
         $expected = array('ccn' => 24, 'ccn2' => 32);
@@ -312,7 +312,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $expected = array('ccn' => 3, 'ccn2' => 3);
@@ -332,12 +332,12 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($functions[0]);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($functions[0]);
@@ -357,12 +357,12 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($methods[0]);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($methods[0]);
@@ -376,7 +376,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      * @return \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
      * @since 1.0.0
      */
-    private function _createAnalyzer()
+    private function createAnalyzer()
     {
         $analyzer = new CyclomaticComplexityAnalyzer();
         $analyzer->setCache($this->cache);

@@ -58,12 +58,12 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
 {
     /**
      * testGetNewNameReturnsNullByDefault
-     * 
+     *
      * @return void
      */
     public function testGetNewNameReturnsNullByDefault()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertNull($alias->getNewName());
     }
 
@@ -74,7 +74,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testGetNewNameReturnsExpectedValue()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals('myMethodAlias', $alias->getNewName());
     }
 
@@ -85,7 +85,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testGetNewModifierReturnsMinusOneByDefault()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(-1, $alias->getNewModifier());
     }
 
@@ -96,7 +96,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testGetNewModifierReturnsExpectedIsPublicValue()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(
             State::IS_PUBLIC,
             $alias->getNewModifier()
@@ -110,7 +110,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testGetNewModifierReturnsExpectedIsProtectedValue()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(
             State::IS_PROTECTED,
             $alias->getNewModifier()
@@ -144,7 +144,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testGetNewModifierReturnsExpectedIsPrivateValue()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(State::IS_PRIVATE, $alias->getNewModifier());
     }
 
@@ -156,7 +156,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testTraitAdaptationAlias()
     {
-        $alias = $this->_getFirstTraitAdaptationAliasInClass();
+        $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptationAlias', $alias);
 
         return $alias;
@@ -219,7 +219,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTraitAdaptationAlias
      */
-    private function _getFirstTraitAdaptationAliasInClass()
+    private function getFirstTraitAdaptationAliasInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
@@ -235,7 +235,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      */
     public function testTraitReference()
     {
-        $reference = $this->_getFirstTraitReferenceInClass();
+        $reference = $this->getFirstTraitReferenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitReference', $reference);
 
         return $reference;
@@ -298,10 +298,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTraitReference
      */
-    private function _getFirstTraitReferenceInClass()
+    private function getFirstTraitReferenceInClass()
     {
-        return $this->_getFirstTraitAdaptationAliasInClass()
+        return $this->getFirstTraitAdaptationAliasInClass()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTTraitReference');
     }
 }
-

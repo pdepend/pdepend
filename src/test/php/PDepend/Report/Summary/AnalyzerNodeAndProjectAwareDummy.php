@@ -87,7 +87,8 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener) {
+    public function addAnalyzeListener(AnalyzerListener $listener)
+    {
     }
 
     /**
@@ -96,7 +97,8 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(AnalyzerListener $listener) {
+    public function removeAnalyzeListener(AnalyzerListener $listener)
+    {
     }
 
     /**

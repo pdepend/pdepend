@@ -92,7 +92,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
 
     /**
      * testParserThrowsExpectedExceptionForParentTypeHintWithRootClass
-     * 
+     *
      * @return void
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()

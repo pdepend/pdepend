@@ -63,7 +63,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testGetIdReturnsExpectedObjectHash()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getId());
     }
 
@@ -74,7 +74,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariableIssue67()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertTrue($parameters[0]->allowsNull());
     }
 
@@ -86,7 +86,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertTrue($parameters[0]->allowsNull());
     }
 
@@ -98,7 +98,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertFalse($parameters[0]->allowsNull());
     }
 
@@ -110,7 +110,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertTrue($parameters[0]->allowsNull());
     }
 
@@ -122,7 +122,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertFalse($parameters[0]->allowsNull());
     }
 
@@ -134,7 +134,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67()
     {
-        $parameter = $this->_getFirstMethodInClass()->getParameters();
+        $parameter = $this->getFirstMethodInClass()->getParameters();
         $this->assertTrue($parameter[0]->allowsNull());
     }
 
@@ -196,7 +196,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet()
     {
-        $parameters = $this->_getFirstMethodInClass()->getParameters();
+        $parameters = $this->getFirstMethodInClass()->getParameters();
         $this->assertNull($parameters[0]->getClass());
     }
 
@@ -219,7 +219,7 @@ class ASTParameterTest extends AbstractTest
      */
     public function testParameterReturnsExpectedDeclaringMethod()
     {
-        $method     = $this->_getFirstMethodInClass();
+        $method     = $this->getFirstMethodInClass();
         $parameters = $method->getParameters();
         $this->assertSame($method, $parameters[0]->getDeclaringFunction());
     }
@@ -231,7 +231,7 @@ class ASTParameterTest extends AbstractTest
      * @return \PDepend\Source\AST\ASTMethod
      * @since 1.0.0
      */
-    private function _getFirstMethodInClass()
+    private function getFirstMethodInClass()
     {
         return $this->parseCodeResourceForTest()
             ->current()

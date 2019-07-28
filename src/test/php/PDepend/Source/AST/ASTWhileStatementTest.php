@@ -61,7 +61,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      */
     public function testWhileStatementGraphWithBooleanExpressions()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction();
+        $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertEquals(2, count($stmt->getChildren()));
     }
 
@@ -72,7 +72,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      */
     public function testFirstChildOfWhileStatementIsASTExpression()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction();
+        $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
 
@@ -83,7 +83,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      */
     public function testSecondChildOfWhileStatementIsASTScopeStatement()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction();
+        $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
     }
 
@@ -95,7 +95,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      */
     public function testWhileStatement()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction();
+        $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTWhileStatement', $stmt);
 
         return $stmt;
@@ -161,7 +161,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      */
     public function testWhileStatementWithAlternativeScope()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction();
+        $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTWhileStatement', $stmt);
 
         return $stmt;
@@ -226,7 +226,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      */
     public function testWhileStatementTerminatedByPhpCloseTag()
     {
-        $stmt = $this->_getFirstWhileStatementInFunction();
+        $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertEquals(9, $stmt->getEndColumn());
     }
 
@@ -235,7 +235,7 @@ class ASTWhileStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTWhileStatement
      */
-    private function _getFirstWhileStatementInFunction()
+    private function getFirstWhileStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

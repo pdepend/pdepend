@@ -105,7 +105,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTest
      */
     public function testVariableDeclarator()
     {
-        $declarator = $this->_getFirstVariableDeclaratorInFunction();
+        $declarator = $this->getFirstVariableDeclaratorInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $declarator);
 
         return $declarator;
@@ -164,7 +164,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTVariableDeclarator
      */
-    private function _getFirstVariableDeclaratorInFunction()
+    private function getFirstVariableDeclaratorInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

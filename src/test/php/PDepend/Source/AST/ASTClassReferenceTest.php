@@ -115,7 +115,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testClassReferenceHasExpectedStartLine()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(4, $reference->getStartLine());
     }
 
@@ -126,7 +126,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testClassReferenceHasExpectedStartColumn()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(16, $reference->getStartColumn());
     }
 
@@ -137,7 +137,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testClassReferenceHasExpectedEndLine()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(4, $reference->getEndLine());
     }
 
@@ -148,7 +148,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testClassReferenceHasExpectedEndColumn()
     {
-        $reference = $this->_getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(18, $reference->getEndColumn());
     }
 
@@ -160,7 +160,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testReferenceInClassExtendsHasExpectedStartLine()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(2, $reference->getStartLine());
     }
 
@@ -172,7 +172,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testReferenceInClassExtendsHasExpectedStartColumn()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(65, $reference->getStartColumn());
     }
 
@@ -184,7 +184,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testReferenceInClassExtendsHasExpectedEndLine()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(2, $reference->getEndLine());
     }
 
@@ -196,7 +196,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      */
     public function testReferenceInClassExtendsHasExpectedEndColumn()
     {
-        $reference = $this->_getFirstReferenceInClass();
+        $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(65, $reference->getEndColumn());
     }
 
@@ -207,10 +207,11 @@ class ASTClassReferenceTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTClassReference
      */
-    private function _getFirstReferenceInFunction($testCase)
+    private function getFirstReferenceInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTClassReference'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTClassReference'
         );
     }
 
@@ -220,7 +221,7 @@ class ASTClassReferenceTest extends ASTNodeTest
      * @return \PDepend\Source\AST\ASTClassReference
      * @since 0.10.5
      */
-    private function _getFirstReferenceInClass()
+    private function getFirstReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
