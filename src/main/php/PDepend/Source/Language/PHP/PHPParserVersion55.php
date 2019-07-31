@@ -57,6 +57,8 @@ abstract class PHPParserVersion55 extends PHPParserVersion54
     /**
      * Parses a full qualified class name postfix.
      *
+     * parseFullQualifiedClassNamePostfix() exists since 2.0.0 and have been customized for PHP 5.5 since 2.6.0.
+     *
      * @return \PDepend\Source\AST\ASTClassFqnPostfix
      * @since 2.0.0
      */
