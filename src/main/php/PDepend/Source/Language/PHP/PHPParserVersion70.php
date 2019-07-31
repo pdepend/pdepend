@@ -294,7 +294,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTType|boolean
+     * @return \PDepend\Source\AST\ASTType|false
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
