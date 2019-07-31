@@ -44,6 +44,10 @@ namespace PDepend\DbusUI;
 
 // This is just fun and it is not really testable
 // @codeCoverageIgnoreStart
+use Dbus;
+use DBusArray;
+use DBusDict;
+use DBusUInt32;
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
