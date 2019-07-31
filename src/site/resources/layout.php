@@ -73,5 +73,6 @@
         <div class="clear"></div>
     </div>
 </div>
+<?php echo getenv('FOOTER_HOOK') ?: ''; ?>
 </body>
 </html>
