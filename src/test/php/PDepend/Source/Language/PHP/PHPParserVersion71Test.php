@@ -102,7 +102,7 @@ class PHPParserVersion71Test extends AbstractTest
      */
     public function testCatchMultipleExceptionClasses()
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());        
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
     
     /**

@@ -1689,8 +1689,7 @@ abstract class AbstractPHPParser
                             $this->consumeComments();
                             $list->addChild(in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
                                 ? $this->parseListExpression()
-                                : $this->parseVariableOrConstantOrPrimaryPrefix()
-                            );
+                                : $this->parseVariableOrConstantOrPrimaryPrefix());
                             $this->consumeComments();
 
                             break;
@@ -3365,7 +3364,7 @@ abstract class AbstractPHPParser
 
     /**
      * This method parses class references in catch statement.
-     * 
+     *
      * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
      */
     protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
@@ -3611,8 +3610,7 @@ abstract class AbstractPHPParser
 
                     $foreach->addChild($this->isListUnpacking()
                         ? $this->parseListExpression()
-                        : $this->parseVariableOrMemberOptionalByReference()
-                    );
+                        : $this->parseVariableOrMemberOptionalByReference());
                 }
             }
         }

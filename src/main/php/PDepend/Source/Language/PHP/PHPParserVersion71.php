@@ -176,8 +176,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
                 $this->tokenizer->next()->startLine,
                 (string) $this->compilationUnit,
                 sprintf(
-                   'Constant can\'t be declared private or protected in ' .
-                    'interface "%s".',
+                    'Constant can\'t be declared private or protected in interface "%s".',
                     $this->classOrInterface->getName()
                 )
             );
@@ -221,7 +220,8 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseScalarOrCallableTypeHint($image);
     }
 
-    protected function parseCatchExceptionClass(ASTCatchStatement $stmt) {
+    protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
+    {
         do {
             $repeat = false;
             parent::parseCatchExceptionClass($stmt);
