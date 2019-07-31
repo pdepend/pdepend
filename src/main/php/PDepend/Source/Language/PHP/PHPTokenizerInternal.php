@@ -305,7 +305,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_OPEN_TAG_WITH_ECHO        =>  Tokens::T_OPEN_TAG_WITH_ECHO,
         T_IS_GREATER_OR_EQUAL       =>  Tokens::T_IS_GREATER_OR_EQUAL,
         T_IS_SMALLER_OR_EQUAL       =>  Tokens::T_IS_SMALLER_OR_EQUAL,
-        T_PAAMAYIM_NEKUDOTAYIM      =>  Tokens::T_DOUBLE_COLON,
+        //T_PAAMAYIM_NEKUDOTAYIM      =>  Tokens::T_DOUBLE_COLON,
         T_ENCAPSED_AND_WHITESPACE   =>  Tokens::T_ENCAPSED_AND_WHITESPACE,
         T_CONSTANT_ENCAPSED_STRING  =>  Tokens::T_CONSTANT_ENCAPSED_STRING,
         T_YIELD                     =>  Tokens::T_YIELD,
@@ -432,13 +432,6 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_NAMESPACE        =>  Tokens::T_STRING,
-            Tokens::T_CONST            =>  Tokens::T_STRING,
-            Tokens::T_FUNCTION         =>  Tokens::T_STRING,
-        ),
-
-        Tokens::T_PARENT => array(
-            Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
-            Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
