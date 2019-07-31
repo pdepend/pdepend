@@ -55,10 +55,8 @@ class ASTCompilationUnitNotFoundException extends \RuntimeException
 {
     /**
      * Constructs a new exception instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $owner
      */
-    public function __construct(AbstractASTArtifact $owner)
+    public function __construct()
     {
         parent::__construct('The mandatory parent was not defined.');
     }

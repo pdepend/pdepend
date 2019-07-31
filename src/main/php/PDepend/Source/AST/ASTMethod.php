@@ -202,7 +202,7 @@ class ASTMethod extends AbstractASTCallable
     public function getCompilationUnit()
     {
         if ($this->parent === null) {
-            throw new ASTCompilationUnitNotFoundException($this);
+            throw new ASTCompilationUnitNotFoundException();
         }
         return $this->parent->getCompilationUnit();
     }
