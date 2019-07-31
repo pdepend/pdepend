@@ -6,8 +6,10 @@ matrix:
       dist: precise
       env: BUILD_PHAR=true
     - php: 5.4
+      dist: trusty
       env: DEPENDENCIES=low
     - php: 5.5
+      dist: trusty
       env: SYMFONY_VERSION=^2.0
     - php: 5.6
       env: SYMFONY_VERSION=^2.0
