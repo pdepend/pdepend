@@ -8,10 +8,14 @@ matrix:
       dist: precise
       env: DEPENDENCIES=low
     - php: 5.4
+      dist: trusty
     - php: 5.4
+      dist: trusty
       env: DEPENDENCIES=low
     - php: 5.5
+      dist: trusty
     - php: 5.5
+      dist: trusty
       env: DEPENDENCIES=low
     - php: 5.6
     - php: 5.6
