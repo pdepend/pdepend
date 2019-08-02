@@ -1678,22 +1678,20 @@ abstract class AbstractPHPParser
                     $startToken = $this->tokenizer->currentToken();
                     $node = $this->parseOptionalExpression();
 
-                    if ($node && !$this->isReadWriteVariable($node)) {
-                        if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
-                            if (!$this->supportsKeysInList()) {
-                                $this->throwUnexpectedTokenException($startToken);
-                            }
-
-                            $this->consumeComments();
-                            $this->consumeToken(Tokens::T_DOUBLE_ARROW);
-                            $this->consumeComments();
-                            $list->addChild(in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
-                                ? $this->parseListExpression()
-                                : $this->parseVariableOrConstantOrPrimaryPrefix());
-                            $this->consumeComments();
-
-                            break;
+                    if ($node && !$this->isReadWriteVariable($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+                        if (!$this->supportsKeysInList()) {
+                            $this->throwUnexpectedTokenException($startToken);
                         }
+
+                        $this->consumeComments();
+                        $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+                        $this->consumeComments();
+                        $list->addChild(in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
+                            ? $this->parseListExpression()
+                            : $this->parseVariableOrConstantOrPrimaryPrefix());
+                        $this->consumeComments();
+
+                        break;
                     }
 
                     $list->addChild($node ?: $this->parseVariableOrConstantOrPrimaryPrefix());
