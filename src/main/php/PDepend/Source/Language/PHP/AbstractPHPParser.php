@@ -5886,15 +5886,8 @@ abstract class AbstractPHPParser
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
             return join('', $fragments);
-        } else {
-            switch (strtolower($fragments[0])) {
-                case 'int':
-                case 'bool':
-                case 'float':
-                case 'string':
-                case 'callable':
-                    return $fragments[0];
-            }
+        } elseif ($this->isScalarOrCallableTypeHint($fragments[0])) {
+            return $fragments[0];
         }
 
         // Search for an use alias
@@ -5971,6 +5964,18 @@ abstract class AbstractPHPParser
         } while ($tokenType === Tokens::T_BACKSLASH);
 
         return $qualifiedName;
+    }
+
+    /**
+     * Determines if the given image is a PHP 7 type hint.
+     *
+     * @param string $image
+     * @return boolean
+     */
+    protected function isScalarOrCallableTypeHint($image)
+    {
+        // Scalar & callable type hints were not present in PHP 5
+        return false;
     }
 
     /**
