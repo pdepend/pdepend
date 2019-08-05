@@ -5,11 +5,8 @@ Usage
 
 .. class:: prev
 
-`GitHub Repository`__
+`GitHub Repository </documentation/handbook/installation/github-repository.html>`_
 
 .. class:: next
 
-`Reports`__
-
-__ /documentation/handbook/installation/github-repository.html
-__ /documentation/handbook/reports.html
+`Reports </documentation/handbook/reports.html>`_

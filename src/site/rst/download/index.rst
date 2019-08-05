@@ -28,10 +28,6 @@ Requirements
 PHP Depend itself is considered stable at its current state and relies on the
 following software components:
 
-- `PHP 5.2.3`__
-- `pecl/imagick`__ *(optional)*
-- `ImageMagick`__ *(optional)*
-
-__ http://php.net/downloads.php
-__ http://pecl.php.net/package/imagick
-__ http://www.imagemagick.org/
+- `PHP 5.3.7 <http://php.net/downloads.php>`_
+- `pecl/imagick <http://pecl.php.net/package/imagick>`_ *(optional)*
+- `ImageMagick <http://www.imagemagick.org/>`_ *(optional)*
