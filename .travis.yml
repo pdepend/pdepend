@@ -52,10 +52,11 @@ before_script:
 
 script:
   - |
-    if [[ $BUILD_PHAR != 'true' ]]; then
+    if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' ]]; then
       vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
       bash <(curl -s https://codecov.io/bash) -f coverage.xml
     fi
+  - if [[ $WEBSITE = 'true' ]]; then composer build-website; fi
   - |
     if [[ $BUILD_PHAR = 'true' ]]; then
       git submodule update --init &&
@@ -74,16 +75,23 @@ notifications:
   irc: "irc.freenode.org#pdepend"
 
 deploy:
-- provider: releases
-  api_key: $GITHUB_TOKEN
-  file: pdepend.phar
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: pdepend/pdepend
-    condition: "$BUILD_PHAR"
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: dist/website
+    on:
+      branch: master
+      condition: $WEBSITE
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file: pdepend.phar
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: pdepend/pdepend
+      condition: "$BUILD_PHAR"
 
 addons:
-    snaps:
+  snaps:
     - name: ant
       classic: true

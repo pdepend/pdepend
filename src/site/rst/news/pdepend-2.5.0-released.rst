@@ -2,61 +2,28 @@
 Version 2.5.0 released
 =======================
 
-:Author:       Manuel Pichler
-:Copyright:    All rights reserved
-:Description:  Auto generated release announcement.
-:Keywords:     Release, Version, Trait, bugfixes
+We are proud to announce version `2.5.0 <https://github.com/pdepend/pdepend/releases>`_ of PDepend. For more
+details visit the version release `site <https://github.com/pdepend/pdepend/releases>`_.
 
-We are proud to announce version `2.5.0`__ of PDepend. For more
-details visit the version release `site`__.
-
-The prefered way to install PDepend is as a `phar`__ (`bz2`__) archive:
+Use `composer <http://getcomposer.org>`_ to install PHP_Depend:
 
 .. class:: shell
 
 ::
 
-  ~ $ wget http://static.pdepend.org/php/latest/pdepend.phar
+  curl -s http://getcomposer.org/installer | php
+  php composer.phar require pdepend/pdepend
 
-or you can use `composer`__ by just adding PHP_Depend as a 
-dependency to your ``composer.json`` ::
-
-  {
-      "require": {
-
-          "pdepend/pdepend" : "2.5.0"
-      }
-  }
-
-Then install Composer in your project (or `download the composer.phar`__
-directly):
+Or if you already have composer installed globally:
 
 .. class:: shell
 
 ::
 
-  ~ $ curl -s http://getcomposer.org/installer | php
-
-And finally let Composer install the project dependencies:
-
-.. class:: shell
-
-::
-
-  ~ $ php composer.phar install
+  composer require pdepend/pdepend
 
 Download
 --------
 
-Download the latest version of PHP_Depend as a `Phar archive`__ (`bz2`__) or `Composer`__
-dependency.
-
-__ /download/release/2.5.0/changelog.html
-__ /download/release/2.5.0/changelog.html
-__ https://static.pdepend.org/php/latest/pdepend.phar
-__ https://static.pdepend.org/php/latest/pdepend.bz2.phar
-__ http://getcomposer.org
-__ http://getcomposer.org/composer.phar
-__ https://static.pdepend.org/php/2.5.0/pdepend.phar
-__ https://static.pdepend.org/php/2.5.0/pdepend.bz2.phar
-__ http://packagist.org/packages/pdepend/pdepend
+Future releases (since 2.6.0) will also be released as PHAR files on
+`GitHub <https://github.com/pdepend/pdepend/releases>`_
