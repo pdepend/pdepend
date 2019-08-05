@@ -80,7 +80,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTest
      */
     public function testParserInjectsValueObjectIntoConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass();
+        $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $declarator->getValue());
     }
 
@@ -91,7 +91,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTest
      */
     public function testParserInjectsExpectedScalarValueIntoConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass();
+        $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertEquals(42, $declarator->getValue()->getValue());
     }
 
@@ -103,7 +103,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTest
      */
     public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass();
+        $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertEquals('Testing!', $declarator->getValue()->getValue());
     }
 
@@ -115,7 +115,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTest
      */
     public function testConstantDeclarator()
     {
-        $declarator = $this->_getFirstConstantDeclaratorInClass();
+        $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $declarator);
 
         return $declarator;
@@ -178,10 +178,10 @@ class ASTConstantDeclaratorTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTConstantDeclarator
      */
-    private function _getFirstConstantDeclaratorInClass()
+    private function getFirstConstantDeclaratorInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTConstantDeclarator'
         );
     }

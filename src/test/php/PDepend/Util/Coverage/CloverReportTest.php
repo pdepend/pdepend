@@ -62,7 +62,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testReportReturnsExpected0PercentCoverage()
     {
-        $report   = $this->_createCloverReport();
+        $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
@@ -75,7 +75,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testReportReturnsExpected50PercentCoverage()
     {
-        $report   = $this->_createCloverReport();
+        $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(50, $coverage);
@@ -88,7 +88,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testReportReturnsExpected100PercentCoverage()
     {
-        $report   = $this->_createCloverReport();
+        $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(100, $coverage);
@@ -101,7 +101,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testReportReturnsExpected100PercentCoverageWithCoverageIgnore()
     {
-        $report   = $this->_createCloverReport();
+        $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(100, $coverage);
@@ -114,7 +114,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testReportReturnsExpected0PercentCoverageForOneLineMethod()
     {
-        $report   = $this->_createCloverReport();
+        $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
@@ -127,7 +127,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testNamespacedReportReturnsExpected0PercentCoverage()
     {
-        $report   = $this->_createNamespacedCloverReport();
+        $report   = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
@@ -140,7 +140,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testNamespacedReportReturnsExpected50PercentCoverage()
     {
-        $report   = $this->_createNamespacedCloverReport();
+        $report   = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(50, $coverage);
@@ -153,7 +153,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testNamespacedReportReturnsExpected100PercentCoverage()
     {
-        $report   = $this->_createNamespacedCloverReport();
+        $report   = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(100, $coverage);
@@ -166,7 +166,7 @@ class CloverReportTest extends AbstractTest
      */
     public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists()
     {
-        $report   = $this->_createCloverReport();
+        $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
         $this->assertEquals(0, $coverage);
@@ -177,7 +177,7 @@ class CloverReportTest extends AbstractTest
      *
      * @return \PDepend\Util\Coverage\CloverReport
      */
-    private function _createCloverReport()
+    private function createCloverReport()
     {
         $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover.xml');
         return new CloverReport($sxml);
@@ -188,7 +188,7 @@ class CloverReportTest extends AbstractTest
      *
      * @return \PDepend\Util\Coverage\CloverReport
      */
-    private function _createNamespacedCloverReport()
+    private function createNamespacedCloverReport()
     {
         $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover-namespaced.xml');
         return new CloverReport($sxml);

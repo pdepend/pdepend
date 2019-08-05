@@ -63,7 +63,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      */
     public function testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences()
     {
-        $stmt = $this->_getFirstTraitAdaptationPrecedenceInClass();
+        $stmt = $this->getFirstTraitAdaptationPrecedenceInClass();
         $this->assertEquals(
             3,
             count(
@@ -82,7 +82,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      */
     public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException()
     {
-        $this->_getFirstTraitAdaptationPrecedenceInClass();
+        $this->getFirstTraitAdaptationPrecedenceInClass();
     }
 
     /**
@@ -93,7 +93,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      */
     public function testTraitAdaptationPrecedence()
     {
-        $precedence = $this->_getFirstTraitAdaptationPrecedenceInClass();
+        $precedence = $this->getFirstTraitAdaptationPrecedenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence', $precedence);
 
         return $precedence;
@@ -156,7 +156,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTraitAdaptationPrecedence
      */
-    private function _getFirstTraitAdaptationPrecedenceInClass()
+    private function getFirstTraitAdaptationPrecedenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
@@ -172,7 +172,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      */
     public function testTraitReference()
     {
-        $reference = $this->_getFirstTraitReferenceInClass();
+        $reference = $this->getFirstTraitReferenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitReference', $reference);
 
         return $reference;
@@ -235,9 +235,9 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTTraitReference
      */
-    private function _getFirstTraitReferenceInClass()
+    private function getFirstTraitReferenceInClass()
     {
-        return $this->_getFirstTraitAdaptationPrecedenceInClass()
+        return $this->getFirstTraitAdaptationPrecedenceInClass()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTTraitReference');
     }
 }

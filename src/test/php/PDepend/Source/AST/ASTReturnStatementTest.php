@@ -62,7 +62,7 @@ class ASTReturnStatementTest extends ASTNodeTest
      */
     public function testReturnStatement()
     {
-        $stmt = $this->_getFirstReturnStatementInFunction();
+        $stmt = $this->getFirstReturnStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $stmt);
 
         return $stmt;
@@ -127,7 +127,7 @@ class ASTReturnStatementTest extends ASTNodeTest
      */
     public function testParserHandlesEmptyReturnStatement()
     {
-        $stmt = $this->_getFirstReturnStatementInFunction();
+        $stmt = $this->getFirstReturnStatementInFunction();
         $this->assertEquals(12, $stmt->getEndColumn());
     }
 
@@ -138,7 +138,7 @@ class ASTReturnStatementTest extends ASTNodeTest
      */
     public function testParserHandlesReturnStatementWithSimpleBoolean()
     {
-        $stmt = $this->_getFirstReturnStatementInFunction();
+        $stmt = $this->getFirstReturnStatementInFunction();
         $this->assertEquals(17, $stmt->getEndColumn());
     }
 
@@ -147,7 +147,7 @@ class ASTReturnStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTReturnStatement
      */
-    private function _getFirstReturnStatementInFunction()
+    private function getFirstReturnStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

@@ -61,7 +61,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstCatchStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstCatchStatementInFunction(__METHOD__);
         $this->assertEquals(7, $stmt->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstCatchStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstCatchStatementInFunction(__METHOD__);
         $this->assertEquals(29, $stmt->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementVariableHasExpectedStartLine()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+        $variable = $this->getFirstCatchStatementInFunction(__METHOD__)
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(8, $variable->getStartLine());
     }
@@ -117,7 +117,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementVariableHasExpectedStartColumn()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+        $variable = $this->getFirstCatchStatementInFunction(__METHOD__)
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(9, $variable->getStartColumn());
     }
@@ -129,7 +129,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementVariableHasExpectedEndLine()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+        $variable = $this->getFirstCatchStatementInFunction(__METHOD__)
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(8, $variable->getStartLine());
     }
@@ -141,7 +141,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testCatchStatementVariableHasExpectedEndColumn()
     {
-        $variable = $this->_getFirstCatchStatementInFunction(__METHOD__)
+        $variable = $this->getFirstCatchStatementInFunction(__METHOD__)
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
         $this->assertEquals(10, $variable->getEndColumn());
     }
@@ -153,7 +153,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      */
     public function testThirdChildOfCatchStatementIsScopeStatement()
     {
-        $stmt = $this->_getFirstCatchStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstCatchStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
     }
 
@@ -164,7 +164,7 @@ class ASTCatchStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTCatchStatement
      */
-    private function _getFirstCatchStatementInFunction($testCase)
+    private function getFirstCatchStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

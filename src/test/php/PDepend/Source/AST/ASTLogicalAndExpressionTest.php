@@ -63,7 +63,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTest
      */
     public function testLogicalAndExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -74,7 +74,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTest
      */
     public function testLogicalAndExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
         $this->assertEquals(18, $expr->getStartColumn());
     }
 
@@ -85,7 +85,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTest
      */
     public function testLogicalAndExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
     }
 
@@ -96,7 +96,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTest
      */
     public function testLogicalAndExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
         $this->assertEquals(20, $expr->getEndColumn());
     }
 
@@ -107,7 +107,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTLogicalAndExpression
      */
-    private function _getFirstLogicalAndExpressionInFunction($testCase)
+    private function getFirstLogicalAndExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

@@ -61,7 +61,7 @@ class ASTExpressionTest extends ASTNodeTest
      */
     public function testExpressionHasExpectedNumberOfChildNodes()
     {
-        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(5, count($expr->getChild(0)->getChildren()));
     }
 
@@ -72,7 +72,7 @@ class ASTExpressionTest extends ASTNodeTest
      */
     public function testExpressionGraphWithBooleanExpressions()
     {
-        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $expected   = array(
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTVariable',
@@ -92,7 +92,7 @@ class ASTExpressionTest extends ASTNodeTest
      */
     public function testExpressionHasExpectedStartLine()
     {
-        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
@@ -103,7 +103,7 @@ class ASTExpressionTest extends ASTNodeTest
      */
     public function testExpressionHasExpectedStartColumn()
     {
-        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(8, $expr->getStartColumn());
     }
 
@@ -114,7 +114,7 @@ class ASTExpressionTest extends ASTNodeTest
      */
     public function testExpressionHasExpectedEndLine()
     {
-        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(6, $expr->getEndLine());
     }
 
@@ -125,7 +125,7 @@ class ASTExpressionTest extends ASTNodeTest
      */
     public function testExpressionHasExpectedEndColumn()
     {
-        $expr = $this->_getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(14, $expr->getEndColumn());
     }
 
@@ -136,10 +136,11 @@ class ASTExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTExpression
      */
-    private function _getFirstExpressionInFunction($testCase)
+    private function getFirstExpressionInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTExpression'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTExpression'
         );
     }
 }

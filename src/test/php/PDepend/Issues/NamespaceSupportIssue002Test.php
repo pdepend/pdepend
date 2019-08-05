@@ -180,7 +180,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
         $this->setExpectedException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: ;, line: 2, col: 18, file: '
-
         );
 
         $this->parseSource('issues/002-008-namespace-declaration.php');
@@ -197,7 +196,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
         $this->setExpectedException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: {, line: 2, col: 13, file: '
-
         );
 
         $this->parseSource('issues/002-009-namespace-declaration.php');

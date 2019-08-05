@@ -128,4 +128,3 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTest
         );
     }
 }
-?>

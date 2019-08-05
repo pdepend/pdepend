@@ -15,7 +15,7 @@ if (isset($argv[1])) {
     } else {
         $file = $argv[1];
     }
-} else if (false === file_exists($file) || time() - filemtime($file) > 7200) {
+} elseif (false === file_exists($file) || time() - filemtime($file) > 7200) {
     shell_exec(sprintf("wget -c '%s'", $url));
     touch($file);
 }
@@ -103,7 +103,8 @@ function test($type, $code, $image, $constant, array &$valid)
 
 function dump($type, array $valid)
 {
-    $code = sprintf('
+    $code = sprintf(
+        '
     /**
      * Tests if the give token is a valid %s name in the supported PHP
      * version.

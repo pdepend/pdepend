@@ -769,7 +769,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         // Is it not installed?
         if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
-
             $path  = realpath(dirname(__FILE__) . '/../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
@@ -780,7 +779,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
-        self::_initVersionCompatibility();
+        self::initVersionCompatibility();
     }
 
     /**
@@ -807,7 +806,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    private static function _initVersionCompatibility()
+    private static function initVersionCompatibility()
     {
         $reflection = new \ReflectionClass('Iterator');
         $extension  = strtolower($reflection->getExtensionName());

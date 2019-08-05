@@ -96,7 +96,7 @@ class ASTValueTest extends AbstractTest
 
     /**
      * testGetValueReturnsNullByDefault
-     * 
+     *
      * @return void
      */
     public function testGetValueReturnsNullByDefault()

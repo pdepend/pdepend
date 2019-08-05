@@ -173,7 +173,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
      */
     public function testReferenceInInterfaceExtendsHasExpectedStartLine()
     {
-        $reference = $this->_getFirstReferenceInInterface();
+        $reference = $this->getFirstReferenceInInterface();
         $this->assertEquals(3, $reference->getStartLine());
     }
 
@@ -185,7 +185,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
      */
     public function testReferenceInInterfaceExtendsHasExpectedStartColumn()
     {
-        $reference = $this->_getFirstReferenceInInterface();
+        $reference = $this->getFirstReferenceInInterface();
         $this->assertEquals(13, $reference->getStartColumn());
     }
 
@@ -197,7 +197,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
      */
     public function testReferenceInInterfaceExtendsHasExpectedEndLine()
     {
-        $reference = $this->_getFirstReferenceInInterface();
+        $reference = $this->getFirstReferenceInInterface();
         $this->assertEquals(3, $reference->getEndLine());
     }
 
@@ -209,7 +209,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
      */
     public function testReferenceInInterfaceExtendsHasExpectedEndColumn()
     {
-        $reference = $this->_getFirstReferenceInInterface();
+        $reference = $this->getFirstReferenceInInterface();
         $this->assertEquals(15, $reference->getEndColumn());
     }
 
@@ -296,7 +296,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
      * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
      * @since 0.10.5
      */
-    private function _getFirstReferenceInInterface()
+    private function getFirstReferenceInInterface()
     {
         return $this->getFirstNodeOfTypeInInterface(
             $this->getCallingTestMethod(),

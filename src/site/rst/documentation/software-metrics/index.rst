@@ -92,9 +92,70 @@ of an application's code base.
 |        |                                            |         |         |      |       |        |
 |        | Referenced Classes                         |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hb     | *Halstead Bugs*                            |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Estimated number of errors                 |         |         |      |       |        |
+|        | in the implementation                      |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HB = POW(HE, 2/3) / 3000**             |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hd     | *Halstead Difficulty*                      |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | The difficulty of the program to write or  |         |         |      |       |        |
+|        | understand, e.g. when doing code review    |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HD = (n1 / 2) * (N2 / n2)**            |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| he     | *Halstead Effort*                          |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Measures the amount of mental activity     |         |         |      |       |        |
+|        | needed to translate the existing algorithm |         |         |      |       |        |
+|        | into implementation                        |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HE = HV * HD**                         |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hi     | *Halstead Intelligence Content*            |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Determines the amount of intelligence      |         |         |      |       |        |
+|        | stated in the program                      |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HI = HV / HD**                         |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hl     | *Halstead Level*                           |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        |   **HL = 1 / HD**                          |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hnd    | *Halstead Vocabulary*                      |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | The total number of unique operator and    |         |         |      |       |        |
+|        | unique operand occurrences                 |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HND = n1 + n2**                        |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hnt    | *Halstead Length*                          |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | The total number of operator occurrences   |         |         |      |       |        |
+|        | and the total number of operand occurrences|         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HND = N1 + N2**                        |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| ht     | *Halstead Programming Time*                |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Shows time needed to translate             |         |         |      |       |        |
+|        | the existing algorithm into implementation |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HT = HE / 18**                         |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| hv     | *Halstead Volume*                          |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Represents the size, in bits, of space     |         |         |      |       |        |
+|        | necessary for storing the progream         |         |         |      |       |        |
+|        |                                            |         |         |      |       |        |
+|        |   **HV = N * log2(n)**                     |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
 | leafs  | *Number of Leaf Classes*                   | X       |         |      |       |        |
 |        |                                            |         |         |      |       |        |
-|        | (finla) classes                            |         |         |      |       |        |
+|        | (final) classes                            |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
 | lloc   | *Logical Lines Of Code*                    | X       |         | X    | X     | X      |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
@@ -103,6 +164,12 @@ of an application's code base.
 | maxDIT | *Max Depth of Inheritance Tree*            | X       |         |      |       |        |
 |        |                                            |         |         |      |       |        |
 |        | Maximum depth of inheritance               |         |         |      |       |        |
++--------+--------------------------------------------+---------+---------+------+-------+--------+
+| mi     | *Maintainability Index*                    |         |         |      |       | X      |
+|        |                                            |         |         |      |       |        |
+|        | Calculates an index value between 0 and 100|         |         |      |       |        |
+|        | that represents the relative ease of       |         |         |      |       |        | 
+|        | maintaining the code                       |         |         |      |       |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+
 | noam   | *Number Of Added Methods*                  |         |         |      | X     |        |
 +--------+--------------------------------------------+---------+---------+------+-------+--------+

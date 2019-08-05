@@ -56,7 +56,7 @@ class ParserBug006Test extends AbstractRegressionTest
 {
     /**
      * testParserNotSetsReferenceForVariableObjectInstantiation
-     * 
+     *
      * @return void
      */
     public function testParserNotSetsReferenceForVariableObjectInstantiation()

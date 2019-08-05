@@ -188,7 +188,9 @@ class ExcludePathFilterTest extends AbstractTest
      */
     public function testExcludePathFilterRejectsFilesAndDirectories()
     {
-        $actual   = $this->createFilteredFileList(array(DIRECTORY_SEPARATOR . 'package1', DIRECTORY_SEPARATOR . 'file3.php'));
+        $actual   = $this->createFilteredFileList(
+            array(DIRECTORY_SEPARATOR . 'package1', DIRECTORY_SEPARATOR . 'file3.php')
+        );
         $expected = array('file2.php');
 
         $this->assertEquals($expected, $actual);
@@ -215,7 +217,7 @@ class ExcludePathFilterTest extends AbstractTest
         $actual = array();
         foreach ($files as $file) {
             if ($filter->accept($file, $file)
-                && $file->isFile() 
+                && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')
             ) {
                 $actual[] = $file->getFilename();

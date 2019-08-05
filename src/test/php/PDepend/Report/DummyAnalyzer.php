@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -78,7 +78,6 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      */
     public function __construct(array $options = array())
     {
-        
     }
     
     /**

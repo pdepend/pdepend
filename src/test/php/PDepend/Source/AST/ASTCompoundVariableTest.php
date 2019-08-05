@@ -61,7 +61,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableGraphWithInlineLiteral()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTString', $string);
@@ -74,7 +74,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableGraphWithInlineConstantEscapedLiteral()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $literal = $variable->getChild(0);
         $this->assertEquals("'FOO{\$bar}'", $literal->getImage());
@@ -87,7 +87,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableGraphWithInlineBacktickLiteral()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTString', $string);
@@ -100,7 +100,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableGraphWithMemberPrimaryPrefix()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
         $expected = array(
             'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
             'PDepend\\Source\\AST\\ASTVariable',
@@ -130,7 +130,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableHasExpectedStartLine()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(4, $variable->getStartLine());
     }
 
@@ -141,7 +141,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableHasExpectedStartColumn()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(5, $variable->getStartColumn());
     }
 
@@ -152,7 +152,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableHasExpectedEndLine()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(7, $variable->getEndLine());
     }
 
@@ -163,7 +163,7 @@ class ASTCompoundVariableTest extends ASTNodeTest
      */
     public function testCompoundVariableHasExpectedEndColumn()
     {
-        $variable = $this->_getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(11, $variable->getEndColumn());
     }
 
@@ -174,10 +174,11 @@ class ASTCompoundVariableTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTCompoundVariable
      */
-    private function _getFirstVariableInFunction($testCase)
+    private function getFirstVariableInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTCompoundVariable'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTCompoundVariable'
         );
     }
 }

@@ -57,7 +57,7 @@ class FileUtilTest extends AbstractTest
 {
     /**
      * testGetSysTempDirReturnsExpectedDirectory
-     * 
+     *
      * @return void
      */
     public function testGetSysTempDirReturnsExpectedDirectory()
@@ -93,5 +93,4 @@ class FileUtilTest extends AbstractTest
             FileUtil::getUserHomeDirOrSysTempDir()
         );
     }
-
 }

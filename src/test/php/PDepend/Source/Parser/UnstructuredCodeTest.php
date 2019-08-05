@@ -57,7 +57,7 @@ class UnstructuredCodeTest extends AbstractParserTest
 {
     /**
      * testParserHandlesNonPhpCodeInFileProlog
-     * 
+     *
      * @return void
      */
     public function testParserHandlesNonPhpCodeInFileProlog()
@@ -67,7 +67,7 @@ class UnstructuredCodeTest extends AbstractParserTest
 
     /**
      * testParserHandlesConditionalClassDeclaration
-     * 
+     *
      * @return void
      */
     public function testParserHandlesConditionalClassDeclaration()

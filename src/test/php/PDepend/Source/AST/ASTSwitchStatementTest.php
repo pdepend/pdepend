@@ -61,7 +61,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testSwitchStatementGraphWithBooleanExpressions()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $stmt = $this->getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $children[0]);
@@ -74,7 +74,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testSwitchStatementGraphWithLabels()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $stmt = $this->getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[1]);
@@ -89,7 +89,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testSwitchStatement()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $stmt = $this->getFirstSwitchStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $stmt);
 
         return $stmt;
@@ -154,7 +154,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testParserIgnoresDocCommentInSwitchStatement()
     {
-        $this->_getFirstSwitchStatementInFunction();
+        $this->getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -164,7 +164,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testParserIgnoresCommentInSwitchStatement()
     {
-        $this->_getFirstSwitchStatementInFunction();
+        $this->getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -175,7 +175,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException()
     {
-        $this->_getFirstSwitchStatementInFunction();
+        $this->getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -186,7 +186,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testUnclosedSwitchStatementResultsInExpectedException()
     {
-        $this->_getFirstSwitchStatementInFunction();
+        $this->getFirstSwitchStatementInFunction();
     }
 
     /**
@@ -197,7 +197,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testSwitchStatementWithAlternativeScope()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $stmt = $this->getFirstSwitchStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $stmt);
 
         return $stmt;
@@ -262,7 +262,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testSwitchStatementTerminatedByPhpCloseTag()
     {
-        $stmt = $this->_getFirstSwitchStatementInFunction();
+        $stmt = $this->getFirstSwitchStatementInFunction();
         $this->assertEquals(9, $stmt->getEndColumn());
     }
 
@@ -274,7 +274,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      */
     public function testSwitchStatementWithNestedNonePhpCode()
     {
-        $switch = $this->_getFirstSwitchStatementInFunction();
+        $switch = $this->getFirstSwitchStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $switch);
 
         return $switch;
@@ -337,7 +337,7 @@ class ASTSwitchStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTSwitchStatement
      */
-    private function _getFirstSwitchStatementInFunction()
+    private function getFirstSwitchStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

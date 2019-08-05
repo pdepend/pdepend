@@ -131,5 +131,4 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     public function setOptions(array $options = array())
     {
     }
-
 }

@@ -67,7 +67,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testGetImageForVariableFunction()
     {
-        $postfix = $this->_getFirstFunctionPostfixInFunction();
+        $postfix = $this->getFirstFunctionPostfixInFunction();
         $this->assertEquals('$function', $postfix->getImage());
     }
 
@@ -83,7 +83,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testGetImageForArrayIndexedVariableFunction()
     {
-        $postfix = $this->_getFirstFunctionPostfixInFunction();
+        $postfix = $this->getFirstFunctionPostfixInFunction();
         $this->assertEquals('$function', $postfix->getImage());
     }
 
@@ -94,7 +94,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixGraphForSimpleInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTArguments',
@@ -111,7 +111,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixGraphForVariableInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTArguments'
@@ -127,7 +127,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixGraphForCompoundVariableInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTCompoundVariable',
             'PDepend\\Source\\AST\\ASTConstant',
@@ -140,12 +140,12 @@ class ASTFunctionPostfixTest extends ASTNodeTest
 
     /**
      * testFunctionPostfixGraphForArrayIndexedVariableInvocation
-     * 
+     *
      * @return void
      */
     public function testFunctionPostfixGraphForArrayIndexedVariableInvocation()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTArrayIndexExpression',
             'PDepend\\Source\\AST\\ASTArrayIndexExpression',
@@ -165,7 +165,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixGraphForInvocationWithMemberPrimaryPrefixMethod()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTArguments',
@@ -182,7 +182,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixGraphForInvocationWithMemberPrimaryPrefixProperty()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTArguments',
@@ -199,7 +199,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixGraphForObjectProperty()
     {
-        $postfix  = $this->_getFirstFunctionPostfixInFunction();
+        $postfix  = $this->getFirstFunctionPostfixInFunction();
         $expected = array(
             'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
             'PDepend\\Source\\AST\\ASTVariable',
@@ -220,7 +220,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixHasExpectedStartLine()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction();
+        $init = $this->getFirstFunctionPostfixInFunction();
         $this->assertEquals(4, $init->getStartLine());
     }
 
@@ -231,7 +231,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixHasExpectedStartColumn()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction();
+        $init = $this->getFirstFunctionPostfixInFunction();
         $this->assertEquals(5, $init->getStartColumn());
     }
 
@@ -242,7 +242,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixHasExpectedEndLine()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction();
+        $init = $this->getFirstFunctionPostfixInFunction();
         $this->assertEquals(8, $init->getEndLine());
     }
 
@@ -253,7 +253,7 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      */
     public function testFunctionPostfixHasExpectedEndColumn()
     {
-        $init = $this->_getFirstFunctionPostfixInFunction();
+        $init = $this->getFirstFunctionPostfixInFunction();
         $this->assertEquals(13, $init->getEndColumn());
     }
 
@@ -272,10 +272,10 @@ class ASTFunctionPostfixTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTFunctionPostfix
      */
-    private function _getFirstFunctionPostfixInFunction()
+    private function getFirstFunctionPostfixInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTFunctionPostfix'
         );
     }

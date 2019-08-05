@@ -168,7 +168,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
      */
     public function testStaticReference()
     {
-        $reference = $this->_getFirstStaticReferenceInClass();
+        $reference = $this->getFirstStaticReferenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticReference', $reference);
 
         return $reference;
@@ -251,7 +251,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
      * @param string $testCase Name of the calling test case.
      * @return \PDepend\Source\AST\ASTStaticReference
      */
-    private function _getFirstStaticReferenceInClass()
+    private function getFirstStaticReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),

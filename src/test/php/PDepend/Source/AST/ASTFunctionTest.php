@@ -66,7 +66,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testReturnsReferenceReturnsExpectedTrue()
     {
-        $function = $this->_getFirstFunctionForTestCase();
+        $function = $this->getFirstFunctionForTestCaseInternal();
         $this->assertTrue($function->returnsReference());
     }
 
@@ -77,7 +77,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testReturnsReferenceReturnsExpectedFalse()
     {
-        $function = $this->_getFirstFunctionForTestCase();
+        $function = $this->getFirstFunctionForTestCaseInternal();
         $this->assertFalse($function->returnsReference());
     }
 
@@ -101,7 +101,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
     {
         $this->assertEquals(
             array('a' => 42, 'b' => 23),
-            $this->_getFirstFunctionForTestCase()->getStaticVariables()
+            $this->getFirstFunctionForTestCaseInternal()->getStaticVariables()
         );
     }
 
@@ -114,7 +114,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
     {
         $this->assertEquals(
             array('a' => 42, 'b' => 23, 'c' => 17),
-            $this->_getFirstFunctionForTestCase()->getStaticVariables()
+            $this->getFirstFunctionForTestCaseInternal()->getStaticVariables()
         );
     }
 
@@ -177,7 +177,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testClassReferenceForJavaStyleArrayNotation()
     {
-        $function = $this->_getFirstFunctionForTestCase();
+        $function = $this->getFirstFunctionForTestCaseInternal();
         $type = $function->getReturnClass();
 
         $this->assertEquals('Sindelfingen', $type->getName());
@@ -495,7 +495,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionStillReferencesSameDependency()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
@@ -511,7 +511,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionStillReferencesSameReturnClass()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
@@ -527,7 +527,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionStillReferencesSameParameterClass()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
@@ -543,7 +543,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionStillReferencesSameExceptionClass()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
@@ -559,7 +559,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionStillReferencesSameDependencyInterface()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame(
@@ -575,7 +575,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionStillReferencesSamePackage()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame($orig->getNamespace(), $copy->getNamespace());
@@ -588,7 +588,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionIsInSameNamespace()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertEquals(
@@ -604,7 +604,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionNotAddsDublicateToPackage()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertEquals(1, count($copy->getNamespace()->getFunctions()));
@@ -617,7 +617,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      */
     public function testUnserializedFunctionIsChildOfParentPackage()
     {
-        $orig = $this->_getFirstFunctionForTestCase();
+        $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
         $this->assertSame($copy, $orig->getNamespace()->getFunctions()->current());
@@ -643,7 +643,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
      *
      * @return ASTFunction
      */
-    private function _getFirstFunctionForTestCase()
+    private function getFirstFunctionForTestCaseInternal()
     {
         return $this->parseCodeResourceForTest()
             ->current()
