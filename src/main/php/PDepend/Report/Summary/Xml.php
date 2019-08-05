@@ -109,7 +109,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * The internal used xml stack.
      *
-     * @var DOMElement[]
+     * @var \DOMElement[]
      */
     private $xmlStack = array();
 

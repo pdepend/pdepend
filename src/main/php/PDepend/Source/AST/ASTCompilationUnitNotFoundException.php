@@ -60,6 +60,12 @@ class ASTCompilationUnitNotFoundException extends \RuntimeException
      */
     public function __construct(AbstractASTArtifact $owner)
     {
-        parent::__construct('The mandatory parent was not defined.');
+        parent::__construct(
+            sprintf(
+                'The mandatory parent was not defined for the %s named %s.',
+                get_class($owner),
+                $owner->getName()
+            )
+        );
     }
 }

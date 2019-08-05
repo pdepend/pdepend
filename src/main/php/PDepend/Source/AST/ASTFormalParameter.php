@@ -101,7 +101,7 @@ class ASTFormalParameter extends AbstractASTNode
      */
     public function setVariableArgList()
     {
-        return $this->setMetadataBoolean(6, true);
+        $this->setMetadataBoolean(6, true);
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTFormalParameter extends AbstractASTNode
      */
     public function setPassedByReference()
     {
-        return $this->setMetadataBoolean(5, true);
+        $this->setMetadataBoolean(5, true);
     }
 
     /**
