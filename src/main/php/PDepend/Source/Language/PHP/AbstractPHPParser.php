@@ -238,7 +238,7 @@ abstract class AbstractPHPParser
     /**
      * Stack with all active token scopes.
      *
-     * @var \PDepend\Source\Tokenizer\TokenStack
+     * @var \PDepend\Source\Parser\TokenStack
      */
     protected $tokenStack;
 
@@ -1789,7 +1789,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a cast-expression node.
      *
-     * @return \PDepend\Source\AST\ASTCaseExpression
+     * @return \PDepend\Source\AST\ASTCastExpression
      * @since 0.10.0
      */
     protected function parseCastExpression()

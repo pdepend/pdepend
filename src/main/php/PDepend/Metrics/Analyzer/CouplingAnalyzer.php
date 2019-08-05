@@ -299,7 +299,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     public function visitClass(ASTClass $class)
     {
         $this->initDependencyMap($class);
-        return parent::visitClass($class);
+        parent::visitClass($class);
     }
 
     /**
@@ -313,7 +313,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     public function visitInterface(ASTInterface $interface)
     {
         $this->initDependencyMap($interface);
-        return parent::visitInterface($interface);
+        parent::visitInterface($interface);
     }
 
     /**
