@@ -70,7 +70,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     protected $constants = null;
 
@@ -208,7 +208,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns an <b>array</b> with all constants defined in this class or
      * interface.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getConstants()
     {

@@ -204,7 +204,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns the tokens found in the function body.
      *
-     * @return array(mixed)
+     * @return array<mixed>
      */
     public function getTokens()
     {

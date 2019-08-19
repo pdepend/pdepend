@@ -60,7 +60,7 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTest
      * constant names correct.
      *
      * @param string         $sourceFile   Name of the test file.
-     * @param array(integer) $constantName Name of the expected constant
+     * @param array<integer> $constantName Name of the expected constant
      *
      * @return void
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName

@@ -82,7 +82,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * </code>
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {

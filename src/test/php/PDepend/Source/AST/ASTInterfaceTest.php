@@ -307,7 +307,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     /**
      * _testIsSubtypeOnInheritanceHierarchy
      *
-     * @param array(string=>boolean) $expected Expected result.
+     * @param array<string, boolean> $expected Expected result.
      *
      * @return void
      */

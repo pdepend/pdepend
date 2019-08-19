@@ -79,7 +79,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     protected $constants = null;
 

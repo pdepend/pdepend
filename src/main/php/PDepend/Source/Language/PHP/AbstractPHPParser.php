@@ -5909,7 +5909,7 @@ abstract class AbstractPHPParser
      * This method parses a qualified PHP 5.3 class, interface and namespace
      * identifier and returns the collected tokens as a string array.
      *
-     * @return array(string)
+     * @return array<string>
      * @since 0.9.5
      */
     protected function parseQualifiedNameRaw()
@@ -6710,7 +6710,7 @@ abstract class AbstractPHPParser
      * it returns the found property types.
      *
      * @param  string $comment A doc comment text.
-     * @return array(string)
+     * @return array<string>
      */
     private function parseVarAnnotation($comment)
     {

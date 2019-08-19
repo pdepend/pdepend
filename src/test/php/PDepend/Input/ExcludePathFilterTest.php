@@ -200,9 +200,9 @@ class ExcludePathFilterTest extends AbstractTest
      * Creates an array with those files that were acceptable for the exclude
      * path filter.
      *
-     * @param array(string) $excludes The filtered patterns
+     * @param array<string> $excludes The filtered patterns
      *
-     * @return array(string)
+     * @return array<string>
      */
     protected function createFilteredFileList(array $excludes)
     {

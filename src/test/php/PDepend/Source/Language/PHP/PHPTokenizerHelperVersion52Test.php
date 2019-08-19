@@ -244,9 +244,9 @@ class PHPTokenizerHelperVersion52Test extends AbstractTest
      * line number of a token. This feature was introduced with PHP version
      * 5.2.2.
      *
-     * @param array(mixed) $tokens The input token array.
+     * @param array<mixed> $tokens The input token array.
      *
-     * @return array(mixed)
+     * @return array<mixed>
      */
     protected function appendLineNumberInPHP522(array $tokens)
     {

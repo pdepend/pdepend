@@ -55,7 +55,7 @@ class CloverReport implements Report
     /**
      * Holds the line coverage for all files found in the coverage report.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $fileLineCoverage = array();
 
@@ -139,7 +139,7 @@ class CloverReport implements Report
      * Returns the lines of the covered file.
      *
      * @param  string $fileName The source file name.
-     * @return array(boolean)
+     * @return array<boolean>
      */
     private function getLines($fileName)
     {

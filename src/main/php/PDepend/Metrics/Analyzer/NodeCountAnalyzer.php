@@ -110,7 +110,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Collected node metrics
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 
@@ -128,7 +128,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * </code>
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -152,7 +152,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * )
      * </code>
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getProjectMetrics()
     {

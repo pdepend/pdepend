@@ -769,7 +769,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      *
      * @param string $testCase Optional name of the calling test case.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      * @since 0.10.2
      */
     private function calculateProjectMetrics($testCase = null)

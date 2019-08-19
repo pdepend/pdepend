@@ -68,7 +68,7 @@ class Command
     /**
      * The recieved cli options
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     private $options = array();
 

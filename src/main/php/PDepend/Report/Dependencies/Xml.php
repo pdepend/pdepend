@@ -118,7 +118,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getAcceptedAnalyzers()
     {

@@ -154,7 +154,7 @@ class Application
     /**
      * Returns available logger options and documentation messages.
      *
-     * @return array(string => string)
+     * @return array<string, string>
      */
     public function getAvailableLoggerOptions()
     {
@@ -164,7 +164,7 @@ class Application
     /**
      * Returns available analyzer options and documentation messages.
      *
-     * @return array(string => string)
+     * @return array<string, string>
      */
     public function getAvailableAnalyzerOptions()
     {
@@ -172,7 +172,7 @@ class Application
     }
 
     /**
-     * @return array(string => string)
+     * @return array<string, string>
      */
     private function getAvailableOptionsFor($serviceTag)
     {

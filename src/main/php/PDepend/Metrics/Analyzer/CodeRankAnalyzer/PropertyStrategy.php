@@ -57,14 +57,14 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     /**
      * All found nodes.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodes = array();
 
     /**
      * Returns the collected nodes.
      *
-     * @return array(string=>array)
+     * @return array<string, array>
      */
     public function getCollectedNodes()
     {

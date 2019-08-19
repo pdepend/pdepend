@@ -95,14 +95,14 @@ class Engine
     /**
      * List of source directories.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $directories = array();
 
     /**
      * List of source code file names.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $files = array();
 
@@ -158,7 +158,7 @@ class Engine
     /**
      * List of analyzer options.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     private $options = array();
 

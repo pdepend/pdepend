@@ -82,7 +82,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 

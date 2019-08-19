@@ -84,7 +84,7 @@ class ExtensionManager
     /**
      * Return all activated extensions.
      *
-     * @return array(\PDepend\DependencyInjection\Extension)
+     * @return array<\PDepend\DependencyInjection\Extension>
      */
     public function getActivatedExtensions()
     {

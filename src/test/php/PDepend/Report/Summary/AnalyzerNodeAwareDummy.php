@@ -57,14 +57,14 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
     /**
      * Dummy node metrics.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     protected $nodeMetrics = null;
 
     /**
      * Constructs a new analyzer dummy instance.
      *
-     * @param array(string=>array) $nodeMetrics Dummy node metrics.
+     * @param array<string, array> $nodeMetrics Dummy node metrics.
      */
     public function __construct(array $nodeMetrics = array())
     {
@@ -117,7 +117,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      * Returns an array with metrics for the requested node.
      *
      * @param \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -130,7 +130,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
     /**
      * Set global options
      *
-     * @param array(string=>mixed) $options
+     * @param array<string, mixed> $options
      * @since 2.0.1
      */
     public function setOptions(array $options = array())

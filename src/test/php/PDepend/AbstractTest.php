@@ -387,7 +387,7 @@ abstract class AbstractTest extends TestCase
      * @param \PDepend\Source\AST\ASTNode $node   The current root node.
      * @param array                   $actual Previous filled list.
      *
-     * @return array(string)
+     * @return array<string>
      */
     protected static function collectChildNodes(ASTNode $node, array $actual = array())
     {
@@ -403,7 +403,7 @@ abstract class AbstractTest extends TestCase
      * object graph.
      *
      * @param \PDepend\Source\AST\ASTNode $node
-     * @param array(string) $expected
+     * @param array<string> $expected
      *
      * @return void
      */

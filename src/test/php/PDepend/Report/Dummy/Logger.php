@@ -64,7 +64,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
     /**
      * The logger input data.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     private $input = array(
         'code'       =>  null,
@@ -94,7 +94,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getAcceptedAnalyzers()
     {
