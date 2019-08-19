@@ -60,7 +60,7 @@ class SymbolTable
     /**
      * The currently active scope.
      *
-     * @var array<string, string>
+     * @var array<string, string>|null
      */
     private $scope = array();
 

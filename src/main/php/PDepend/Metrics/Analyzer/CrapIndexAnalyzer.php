@@ -89,9 +89,9 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      *
-     * @var \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+     * @var \PDepend\Metrics\Analyzer
      */
-    private $ccnAnalyzer = array();
+    private $ccnAnalyzer = null;
 
     /**
      * Returns <b>true</b> when this analyzer is enabled.

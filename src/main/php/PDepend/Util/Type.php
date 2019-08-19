@@ -142,7 +142,7 @@ final class Type
     /**
      * List of scalar php types.
      *
-     * @var array<string>
+     * @var array<string, bool>
      */
     private static $scalarTypes = array(
         self::IMAGE_ARRAY                   =>  true,

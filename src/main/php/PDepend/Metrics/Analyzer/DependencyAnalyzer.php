@@ -113,7 +113,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array<string, array>
+     * @var array<string, array|null>
      */
     private $collectedCycles = array();
 
