@@ -64,7 +64,7 @@ class PHPParserGeneric extends PHPParserVersion71
      * Tests if the given token type is a reserved keyword in the supported PHP
      * version.
      *
-     * @param  $tokenType
+     * @param  integer $tokenType
      * @return boolean
      * @since  1.1.1
      */
