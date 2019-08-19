@@ -247,7 +247,7 @@ class Runner
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
-     * @return boolean
+     * @return integer
      * @throws \RuntimeException An exception with a readable error message and
      * an exit code.
      */

@@ -193,7 +193,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns normalized source code with stripped whitespaces.
      *
-     * @return array<integer, string>
+     * @return string
      */
     public function getSource()
     {

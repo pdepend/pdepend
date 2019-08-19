@@ -146,7 +146,7 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns an array with all {@link \PDepend\Source\AST\ASTTrait}
      * instances declared in this namespace.
      *
-     * @return array
+     * @return \PDepend\Source\AST\ASTArtifactList
      * @since  1.0.0
      */
     public function getTraits()
