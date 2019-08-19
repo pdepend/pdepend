@@ -549,7 +549,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Prepared token list.
      *
-     * @var Token[]
+     * @var Token[]|null
      */
     protected $tokens = null;
 
@@ -683,7 +683,7 @@ class PHPTokenizerInternal implements Tokenizer
      */
     private function tokenize()
     {
-        if ($this->tokens) {
+        if ($this->tokens !== null) {
             return;
         }
 

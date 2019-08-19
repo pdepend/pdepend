@@ -75,9 +75,9 @@ class Command
     /**
      * The directories/files to be analyzed
      *
-     * @var string
+     * @var array<integer, string>
      */
-    private $source;
+    private $source = array();
 
     /**
      * The used text ui runner.
