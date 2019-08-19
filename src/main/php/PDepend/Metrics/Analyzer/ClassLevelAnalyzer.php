@@ -192,7 +192,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     {
         $this->fireStartClass($class);
 
-        $impl  = $class->getInterfaces()->count();
+        $impl  = count($class->getInterfaces());
         $varsi = $this->calculateVarsi($class);
         $wmci  = $this->calculateWmciForClass($class);
 

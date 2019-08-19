@@ -364,7 +364,7 @@ class Engine
 
         $classes = 0;
         foreach ($this->namespaces as $namespace) {
-            $classes += $namespace->getTypes()->count();
+            $classes += count($namespace->getTypes());
         }
         return $classes;
     }
