@@ -1908,7 +1908,7 @@ class PHPBuilder implements Builder
      * matching instance or <b>null</b> if no match exists.
      *
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTTrait
+     * @return \PDepend\Source\AST\ASTTrait|null
      * @since  0.9.5
      */
     protected function findTrait($qualifiedName)
@@ -1980,7 +1980,7 @@ class PHPBuilder implements Builder
      * matching instance or <b>null</b> if no match exists.
      *
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return \PDepend\Source\AST\ASTInterface|null
      * @since  0.9.5
      */
     protected function findInterface($qualifiedName)
@@ -2049,7 +2049,7 @@ class PHPBuilder implements Builder
      * matching instance or <b>null</b> if no match exists.
      *
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTClass
+     * @return \PDepend\Source\AST\ASTClass|null
      * @since  0.9.5
      */
     protected function findClass($qualifiedName)
@@ -2074,7 +2074,7 @@ class PHPBuilder implements Builder
      *
      * @param  array  $instances
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\AbstractASTType
+     * @return \PDepend\Source\AST\AbstractASTType|null
      * @since  0.9.5
      */
     protected function findType(array $instances, $qualifiedName)

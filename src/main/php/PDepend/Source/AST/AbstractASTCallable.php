@@ -66,7 +66,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var   \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @var   \PDepend\Source\AST\ASTClassOrInterfaceReference|null
      * @since 0.9.5
      */
     protected $returnClassReference = null;

@@ -2611,7 +2611,7 @@ abstract class AbstractPHPParser
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
@@ -5629,7 +5629,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional statement or returns <b>null</b>.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 0.9.8
      */
     private function parseOptionalStatement()

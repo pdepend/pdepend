@@ -310,7 +310,7 @@ abstract class AbstractASTNode implements ASTNode
      * <b>null</b> if no child exists for that.
      *
      * @param string $targetType
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      */
     public function getFirstChildOfType($targetType)
     {
