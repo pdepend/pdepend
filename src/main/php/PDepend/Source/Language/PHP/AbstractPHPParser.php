@@ -3432,7 +3432,7 @@ abstract class AbstractPHPParser
      *      ------------------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTForInit
+     * @return \PDepend\Source\AST\ASTForInit|null
      * @since 0.9.8
      */
     private function parseForInit()
@@ -3470,7 +3470,7 @@ abstract class AbstractPHPParser
      *                                        -------------------------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTForUpdate
+     * @return \PDepend\Source\AST\ASTForUpdate|null
      * @since 0.9.12
      */
     private function parseForUpdate()
@@ -6678,7 +6678,7 @@ abstract class AbstractPHPParser
      *
      * @param string $comment A doc comment text.
      *
-     * @return string
+     * @return string|null
      */
     private function parseReturnAnnotation($comment)
     {
@@ -6725,7 +6725,7 @@ abstract class AbstractPHPParser
      * doc comment information. The returned value will be <b>null</b> when no
      * type information exists.
      *
-     * @return \PDepend\Source\AST\ASTType
+     * @return \PDepend\Source\AST\ASTType|null
      * @since 0.9.6
      */
     private function parseFieldDeclarationType()
@@ -6757,7 +6757,7 @@ abstract class AbstractPHPParser
      * Extracts non scalar types from a field doc comment and creates a
      * matching type instance.
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference|null
      * @since 0.9.6
      */
     private function parseFieldDeclarationClassOrInterfaceReference()

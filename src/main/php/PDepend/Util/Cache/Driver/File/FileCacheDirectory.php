@@ -137,7 +137,7 @@ class FileCacheDirectory
     /**
      * Reads the stored cache version number from the cache root directory.
      *
-     * @return string
+     * @return string|null
      */
     protected function readVersion()
     {

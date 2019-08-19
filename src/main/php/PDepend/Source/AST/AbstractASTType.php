@@ -198,7 +198,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @access private
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
      */
