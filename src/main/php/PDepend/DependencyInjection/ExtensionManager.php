@@ -55,7 +55,7 @@ class ExtensionManager
     /**
      * Activate an extension based on a class name.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @param  string $className
      * @return void
      */

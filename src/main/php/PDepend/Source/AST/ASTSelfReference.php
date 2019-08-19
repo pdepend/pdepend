@@ -82,7 +82,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
      * Constructs a new type holder instance.
      *
      * @param \PDepend\Source\Builder\BuilderContext          $context
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $target
      */
     public function __construct(BuilderContext $context, AbstractASTClassOrInterface $target)
     {

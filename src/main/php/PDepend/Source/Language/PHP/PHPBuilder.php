@@ -87,7 +87,7 @@ class PHPBuilder implements Builder
     /**
      * This property holds all packages found during the parsing phase.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[]
+     * @var   \PDepend\Source\AST\ASTNamespace[]
      * @since 0.9.12
      */
     private $preparedNamespaces = null;

@@ -841,7 +841,7 @@ class PHPTokenizerInternal implements Tokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array &$tokens Reference to the current token stream.
+     * @param array $tokens Reference to the current token stream.
      *
      * @return string
      */

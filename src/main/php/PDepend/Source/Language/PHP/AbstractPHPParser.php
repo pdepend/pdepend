@@ -454,7 +454,7 @@ abstract class AbstractPHPParser
      * Tests if the given token type is a reserved keyword in the supported PHP
      * version.
      *
-     * @param  $tokenType
+     * @param  integer $tokenType
      * @return boolean
      * @since 1.1.1
      */
@@ -1751,7 +1751,7 @@ abstract class AbstractPHPParser
      * node this can be a {@link \PDepend\Source\AST\ASTPostIncrementExpression} or
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
-     * @param  array &$expressions List of previous parsed expression nodes.
+     * @param  array $expressions List of previous parsed expression nodes.
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
      */
@@ -1813,7 +1813,7 @@ abstract class AbstractPHPParser
      * node this can be a {@link \PDepend\Source\AST\ASTPostDecrementExpression} or
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
-     * @param array &$expressions List of previous parsed expression nodes.
+     * @param array $expressions List of previous parsed expression nodes.
      *
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
@@ -2013,7 +2013,7 @@ abstract class AbstractPHPParser
      * This method configures the given node with its start and end positions.
      *
      * @param \PDepend\Source\AST\ASTNode $node
-     * @param array &$tokens
+     * @param array|null $tokens
      * @return \PDepend\Source\AST\ASTNode
      * @since 0.9.8
      */
@@ -2563,7 +2563,7 @@ abstract class AbstractPHPParser
      * This method parses multiple expressions and adds them as children to the
      * given <b>$exprList</b> node.
      *
-     * @param \PDepend\Source\AST\ASTNode
+     * @param \PDepend\Source\AST\ASTNode $exprList
      * @return \PDepend\Source\AST\ASTNode
      * @since 1.0.0
      */

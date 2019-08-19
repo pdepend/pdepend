@@ -279,7 +279,7 @@ class Engine
     /**
      * Sets analyzer options.
      *
-     * @param  array(string=>mixed) $options The analyzer options.
+     * @param  array<string, mixed> $options The analyzer options.
      * @return void
      */
     public function setOptions(array $options = array())

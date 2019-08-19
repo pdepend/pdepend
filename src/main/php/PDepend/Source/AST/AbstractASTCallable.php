@@ -184,7 +184,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Will find all children for the given type.
      *
      * @param string $targetType The target class or interface type.
-     * @param array  &$results   The found children.
+     * @param array  $results    The found children.
      *
      * @return \PDepend\Source\AST\ASTNode[]
      * @access private

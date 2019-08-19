@@ -119,7 +119,7 @@ interface ASTNode
      * an empty <b>array</b> if no child exists for that.
      *
      * @param string $targetType Searched class or interface type.
-     * @param array &$results Already found node instances. This parameter
+     * @param array  $results Already found node instances. This parameter
      *        is only for internal usage.
      * @return \PDepend\Source\AST\ASTNode[]
      */
