@@ -214,7 +214,7 @@ class Engine
     {
         $dir = realpath($directory);
 
-        if (!is_dir($dir)) {
+        if ($dir === false || !is_dir($dir)) {
             throw new \InvalidArgumentException("Invalid directory '{$directory}' added.");
         }
 
