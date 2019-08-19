@@ -5568,7 +5568,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 1.0.0
      */
     protected function parseTypeHint()
@@ -5577,12 +5577,12 @@ abstract class AbstractPHPParser
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
-                $type = $this->builder->buildAstClassOrInterfaceReference(
+                return $this->builder->buildAstClassOrInterfaceReference(
                     $this->parseQualifiedName()
                 );
-                break;
         }
-        return $type;
+
+        return null;
     }
 
     /**
