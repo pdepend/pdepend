@@ -342,11 +342,9 @@ class ASTProperty extends AbstractASTArtifact
      */
     public function __toString()
     {
-        $default = ($this->isDefault() === true ? ' <default>' : '');
         $static  = '';
 
         if ($this->isStatic() === true) {
-            $default = '';
             $static  = ' static';
         }
 
@@ -358,8 +356,7 @@ class ASTProperty extends AbstractASTArtifact
         }
 
         return sprintf(
-            'Property [%s%s%s %s ]%s',
-            $default,
+            'Property [%s%s %s ]%s',
             $visibility,
             $static,
             $this->getName(),
