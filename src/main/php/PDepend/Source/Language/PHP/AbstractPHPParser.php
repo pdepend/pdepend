@@ -3314,7 +3314,7 @@ abstract class AbstractPHPParser
 
         $token = $this->consumeToken(Tokens::T_FINALLY);
 
-        $finally = $this->builder->buildAstFinallyStatement($token->image);
+        $finally = $this->builder->buildAstFinallyStatement();
         $finally->addChild($this->parseRegularScope());
 
         return $this->setNodePositionsAndReturn($finally);
