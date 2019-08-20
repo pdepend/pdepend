@@ -2192,7 +2192,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param $classRef
+     * @param boolean $classRef
      * @return \PDepend\Source\AST\ASTClassOrInterfaceReference|ASTNode|\PDepend\Source\AST\ASTSelfReference|\PDepend\Source\AST\ASTStaticReference
      */
     private function parseStandAloneExpressionTypeReference($classRef)
