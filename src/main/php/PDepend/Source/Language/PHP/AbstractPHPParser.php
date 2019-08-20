@@ -2427,15 +2427,8 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        if ($classReference === true) {
-            return $this->setNodePositionsAndReturn(
-                $this->builder->buildAstClassReference(
-                    $this->parseQualifiedName()
-                )
-            );
-        }
         return $this->setNodePositionsAndReturn(
-            $this->builder->buildAstClassOrInterfaceReference(
+            $this->builder->{'buildAstClass'.($classReference === true ? '': 'OrInterface').'Reference'}(
                 $this->parseQualifiedName()
             )
         );
