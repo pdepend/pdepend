@@ -308,7 +308,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 return $this->builder->buildAstTypeCallable();
             case 'void':
             case 'iterable':
-                $this->throwUnexpectedTokenException($this->tokenizer->prevToken());
+                throw $this->getUnexpectedTokenException($this->tokenizer->prevToken());
         }
 
         return false;

@@ -1615,7 +1615,7 @@ abstract class AbstractPHPParser
     private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null)
     {
         if (!$this->isListUnpacking($tokenType)) {
-            $this->throwUnexpectedTokenException($unexpectedToken ?: $this->tokenizer->prevToken());
+            throw $this->getUnexpectedTokenException($unexpectedToken ?: $this->tokenizer->prevToken());
         }
     }
 
@@ -1680,7 +1680,7 @@ abstract class AbstractPHPParser
 
                     if ($node && !$this->isReadWriteVariable($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
                         if (!$this->supportsKeysInList()) {
-                            $this->throwUnexpectedTokenException($startToken);
+                            throw $this->getUnexpectedTokenException($startToken);
                         }
 
                         $this->consumeComments();
@@ -4270,7 +4270,7 @@ abstract class AbstractPHPParser
      */
     protected function parseFullQualifiedClassNamePostfix()
     {
-        $this->throwUnexpectedTokenException();
+        throw $this->getUnexpectedTokenException();
     }
 
     /**
@@ -5118,7 +5118,7 @@ abstract class AbstractPHPParser
             }
         } elseif ($consecutiveComma) {
             // If it's not a destructuring list, it must not contain 2 consecutive commas
-            $this->throwUnexpectedTokenException($consecutiveComma);
+            throw $this->getUnexpectedTokenException($consecutiveComma);
         }
 
         return $array;
