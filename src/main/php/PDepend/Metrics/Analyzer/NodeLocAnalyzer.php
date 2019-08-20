@@ -94,7 +94,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     /**
      * Collected project metrics.
      *
-     * @var array(string=>integer)
+     * @var array<string, integer>
      */
     private $projectMetrics = array(
         self::M_LINES_OF_CODE              =>  0,

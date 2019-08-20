@@ -75,7 +75,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Calculated crap metrics.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $metrics = null;
 
@@ -89,9 +89,9 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      *
-     * @var \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+     * @var \PDepend\Metrics\Analyzer
      */
-    private $ccnAnalyzer = array();
+    private $ccnAnalyzer = null;
 
     /**
      * Returns <b>true</b> when this analyzer is enabled.
@@ -108,7 +108,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      * when no metrics exist for the given node.
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>float)
+     * @return array<string, float>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -122,7 +122,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      * Returns an array with analyzer class names that are required by the crap
      * index analyzers.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getRequiredAnalyzers()
     {

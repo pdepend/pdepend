@@ -55,7 +55,7 @@ interface AggregateAnalyzer extends Analyzer
      * This method must return an <b>array</b> of class names for required
      * analyzers.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getRequiredAnalyzers();
     

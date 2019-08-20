@@ -575,7 +575,7 @@ Manuel', 3, 5, 61, 6),
      * Returns an array with the token types found in a file associated with
      * the currently running test.
      *
-     * @return array(integer)
+     * @return array<integer>
      */
     private function getTokenTypesForTest()
     {

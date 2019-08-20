@@ -59,14 +59,14 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * All found nodes.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodes = array();
 
     /**
      * Returns the collected nodes.
      *
-     * @return array(string=>array)
+     * @return array<string, array>
      */
     public function getCollectedNodes()
     {

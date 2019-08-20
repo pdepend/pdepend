@@ -66,7 +66,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * The in memory cache.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     protected $cache = array();
 

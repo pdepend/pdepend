@@ -562,7 +562,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
     /**
      * @param array $previousElements
-     * @return string
+     * @return string|null
      */
     protected function parseQualifiedNameElement(array $previousElements)
     {
@@ -574,6 +574,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             return null;
         }
 
-        $this->throwUnexpectedTokenException($this->tokenizer->next());
+        throw $this->getUnexpectedTokenException($this->tokenizer->next());
     }
 }

@@ -7,7 +7,7 @@ class MyPropertyClass2
     /**
      * Comment...
      *
-     * @var array(MyPropertyClass2)
+     * @var MyPropertyClass2[]
      */
     private $property1;
 

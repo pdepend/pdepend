@@ -53,7 +53,7 @@ class ExtensionFilter implements Filter
     /**
      * Whitelist of accepted file extensions.
      *
-     * @var array(string)
+     * @var array<string>
      */
     protected $extensions = array();
 

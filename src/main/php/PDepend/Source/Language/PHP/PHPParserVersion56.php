@@ -62,7 +62,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
      * Parses additional static values that are valid in the supported php version.
      *
      * @param  \PDepend\Source\AST\ASTValue $value
-     * @return \PDepend\Source\AST\ASTValue
+     * @return \PDepend\Source\AST\ASTValue|null
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)

@@ -60,7 +60,7 @@ use PDepend\Source\AST\ASTMethod;
 class IdBuilder
 {
     /**
-     * @var array(array)
+     * @var array<array>
      *
      * @deprecated 3.0.0 This property will no longer be accessible on the public access level in next major version.
      */

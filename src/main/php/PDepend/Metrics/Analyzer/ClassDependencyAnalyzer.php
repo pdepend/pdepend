@@ -82,7 +82,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 
@@ -231,7 +231,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Collects the dependencies between the two given classes.
      *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $typeB
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $typeA
      * @param \PDepend\Source\AST\AbstractASTClassOrInterface $typeB
      *
      * @return void
@@ -305,7 +305,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact[] &$list
+     * @param  \PDepend\Source\AST\AbstractASTArtifact[] $list
      * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.

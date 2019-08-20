@@ -591,7 +591,7 @@ class CommandTest extends AbstractTest
      *
      * @param array $argv The cli parameters.
      *
-     * @return array(mixed)
+     * @return array<mixed>
      */
     private function executeCommand(array $argv = null)
     {
