@@ -59,7 +59,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
     /**
      * Test input data.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $input = array(
         'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),

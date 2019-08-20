@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
 class ASTClosure extends AbstractASTNode implements ASTCallable
 {
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return \PDepend\Source\AST\ASTType|null
      */
     public function getReturnType()
     {

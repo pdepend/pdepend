@@ -55,7 +55,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * The parent for this class node.
      *
-     * @var   \PDepend\Source\AST\ASTClassReference
+     * @var   \PDepend\Source\AST\ASTClassReference|null
      * @since 0.9.5
      */
     protected $parentClassReference = null;
@@ -70,14 +70,14 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     protected $constants = null;
 
     /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return \PDepend\Source\AST\ASTClass|null
      * @throws \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function getParentClass()
@@ -130,7 +130,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a reference onto the parent class of this class node or <b>null</b>.
      *
-     * @return \PDepend\Source\AST\ASTClassReference
+     * @return \PDepend\Source\AST\ASTClassReference|null
      * @since  0.9.5
      */
     public function getParentClassReference()
@@ -208,7 +208,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns an <b>array</b> with all constants defined in this class or
      * interface.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getConstants()
     {

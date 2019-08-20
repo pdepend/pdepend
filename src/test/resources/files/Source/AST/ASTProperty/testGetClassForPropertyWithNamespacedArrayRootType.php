@@ -2,7 +2,7 @@
 class testGetClassForPropertyWithNamespacedArrayRootType
 {
     /**
-     * @var array(\bar\Foo)
+     * @var \bar\Foo[]
      */
     public $foo = null;
 }

@@ -118,14 +118,14 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Number of all root classes within the analyzed source code.
      *
-     * @var array(string=>boolean)
+     * @var array<string, boolean>
      */
     private $roots = array();
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
-     * @var array(string=>boolean)
+     * @var array<string, boolean>
      */
     private $noneLeafs = array();
 
@@ -147,7 +147,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * )
      * </code>
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 
@@ -177,7 +177,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getProjectMetrics()
     {
@@ -198,7 +198,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * requested node, this method will return an empty <b>array</b>.
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {

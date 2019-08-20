@@ -2,7 +2,7 @@
 class Foo
 {
     /**
-     * @var array()
+     * @var array
      */
     protected $data;
 }

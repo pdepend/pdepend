@@ -61,7 +61,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
     /**
      * Collected visit order.
      *
-     * @var array(string=>integer)
+     * @var array<string, integer>
      */
     public $visits = array();
 

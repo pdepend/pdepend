@@ -75,7 +75,7 @@ class StrategyFactory
     /**
      * List of all valid properties.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $validStrategies = array(
         self::STRATEGY_INHERITANCE,

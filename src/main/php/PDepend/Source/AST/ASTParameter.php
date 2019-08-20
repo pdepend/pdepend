@@ -172,7 +172,7 @@ class ASTParameter extends AbstractASTArtifact
      * This method will return the class where the parent method was declared.
      * The returned value will be <b>null</b> if the parent is a function.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
     public function getDeclaringClass()
@@ -210,7 +210,7 @@ class ASTParameter extends AbstractASTArtifact
      * Returns the class type of this parameter. This method will return
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
     public function getClass()

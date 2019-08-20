@@ -56,7 +56,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * @var array(Extension)
+     * @var array<Extension>
      */
     private $extensions = array();
 

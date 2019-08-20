@@ -178,7 +178,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @var array(integer=>integer)
+     * @var array<integer, integer>
      */
     protected static $tokenMap = array(
         T_AS                        =>  Tokens::T_AS,
@@ -322,7 +322,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
-     * @var array(string=>integer)
+     * @var array<string, integer>
      */
     protected static $literalMap = array(
         '@'              =>  Tokens::T_AT,
@@ -376,7 +376,7 @@ class PHPTokenizerInternal implements Tokenizer
 
     /**
      *
-     * @var array(mixed=>array)
+     * @var array<mixed, array>
      */
     protected static $substituteTokens = array(
         T_DOLLAR_OPEN_CURLY_BRACES  =>  array('$', '{'),
@@ -385,7 +385,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * BuilderContext sensitive alternative mappings.
      *
-     * @var array(integer=>array)
+     * @var array<integer, array>
      */
     protected static $alternativeMap = array(
         Tokens::T_USE => array(
@@ -549,7 +549,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Prepared token list.
      *
-     * @var Token[]
+     * @var Token[]|null
      */
     protected $tokens = null;
 
@@ -654,9 +654,9 @@ class PHPTokenizerInternal implements Tokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array(array) $tokens Unprepared array of php tokens.
+     * @param array<array> $tokens Unprepared array of php tokens.
      *
-     * @return array(array)
+     * @return array<array>
      */
     private function substituteTokens(array $tokens)
     {
@@ -683,7 +683,7 @@ class PHPTokenizerInternal implements Tokenizer
      */
     private function tokenize()
     {
-        if ($this->tokens) {
+        if ($this->tokens !== null) {
             return;
         }
 
@@ -841,7 +841,7 @@ class PHPTokenizerInternal implements Tokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array &$tokens Reference to the current token stream.
+     * @param array $tokens Reference to the current token stream.
      *
      * @return string
      */
@@ -875,7 +875,7 @@ class PHPTokenizerInternal implements Tokenizer
      *
      * @param string $token The unknown string token.
      *
-     * @return array(integer => mixed)
+     * @return array<integer, mixed>
      */
     private function generateUnknownToken($token)
     {

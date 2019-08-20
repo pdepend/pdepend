@@ -85,9 +85,9 @@ class ExtensionFilterTest extends AbstractTest
      * Creates an array with those files that were acceptable for the extension
      * filter.
      *
-     * @param array(string) $includes The file extensions
+     * @param array<string> $includes The file extensions
      *
-     * @return array(string)
+     * @return array<string>
      */
     protected function createFilteredFileList(array $includes)
     {

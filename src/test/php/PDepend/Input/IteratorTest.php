@@ -169,9 +169,9 @@ class IteratorTest extends AbstractTest
     /**
      * Creates an array of file names that were returned by the input iterator.
      *
-     * @param array(string) $extensions The accepted file extension.
+     * @param array<string> $extensions The accepted file extension.
      *
-     * @return array(string)
+     * @return array<string>
      */
     protected function createFilteredFileList(array $extensions)
     {

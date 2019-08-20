@@ -65,7 +65,7 @@ class PackageArtifactFilter implements ArtifactFilter
     /**
      * Constructs a new namespace filter for the given list of namespace names.
      *
-     * @param array(string) $namespaces
+     * @param array<string> $namespaces
      */
     public function __construct(array $namespaces)
     {
