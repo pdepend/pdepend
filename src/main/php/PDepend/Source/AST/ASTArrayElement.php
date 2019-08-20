@@ -80,7 +80,7 @@ class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
      */
     public function setByReference()
     {
-        return $this->setMetadataBoolean(5, true);
+        $this->setMetadataBoolean(5, true);
     }
 
     /**

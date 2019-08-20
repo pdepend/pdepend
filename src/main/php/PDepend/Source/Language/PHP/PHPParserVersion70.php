@@ -509,10 +509,12 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseUseDeclarationForVersion(array $fragments)
     {
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
-            return $this->parseUseDeclarationVersion70($fragments);
+            $this->parseUseDeclarationVersion70($fragments);
+
+            return;
         }
 
-        return parent::parseUseDeclarationForVersion($fragments);
+        parent::parseUseDeclarationForVersion($fragments);
     }
 
     /**
