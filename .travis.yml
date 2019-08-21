@@ -31,6 +31,7 @@ matrix:
     # - php: 7.2
     #   env: DEPENDENCIES=low
     - php: 7.3
+      env: COVERAGE=true
     # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
@@ -47,7 +48,9 @@ env:
   global:
     TEST_CONFIG="phpunit.xml.dist"
 
+
 before_script:
+  - phpenv config-rm xdebug.ini || echo "XDebug is not enabled"
   - composer self-update
   - if [ "$DEPENDENCIES" = "low" ]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
   - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --prefer-stable; fi
@@ -55,8 +58,8 @@ before_script:
 script:
   - |
     if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' ]]; then
-      vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml
-      bash <(curl -s https://codecov.io/bash) -f coverage.xml
+      if [ "$COVERAGE" != "true" ]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
+      if [ "$COVERAGE" = "true" ]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml; fi
     fi
   - if [[ $WEBSITE = 'true' ]]; then composer build-website; fi
   - |
@@ -68,9 +71,9 @@ script:
 
 after_script:
   - |
-    if [[ $BUILD_PHAR != 'true' ]]; then
-      wget https://scrutinizer-ci.com/ocular.phar
-      php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+    if [[ -f coverage.xml ]]; then
+      bash <(curl -s https://codecov.io/bash) -f coverage.xml
+      wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.xml
     fi
 
 notifications:
