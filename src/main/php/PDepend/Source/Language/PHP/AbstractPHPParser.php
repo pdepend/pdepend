@@ -1700,7 +1700,8 @@ abstract class AbstractPHPParser
             }
         }
 
-        $this->consumeToken($shortSyntax ? Tokens::T_SQUARED_BRACKET_CLOSE : Tokens::T_PARENTHESIS_CLOSE);
+        $closeToken = $shortSyntax ? Tokens::T_SQUARED_BRACKET_CLOSE : Tokens::T_PARENTHESIS_CLOSE;
+        $this->consumeToken($closeToken);
 
         return $this->setNodePositionsAndReturn($list);
     }
