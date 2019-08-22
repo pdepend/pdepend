@@ -5104,8 +5104,30 @@ abstract class AbstractPHPParser
             }
         }
 
-        // If this array is in fact a destructuring list
+        // Once we parsed the whole array, detect if it's a destructuring list or a value,
+        // then check the content is consistent
+        $this->ensureArrayIsValid($useSquaredBrackets, $openingToken, $consecutiveComma);
+
+        return $array;
+    }
+
+    /**
+     * Check if the given array/list is a value and so does not have consecutive commas in it,
+     * or if it's a destructuring list and so check the syntax is valid in the current PHP level.
+     *
+     * @param bool       $useSquaredBrackets
+     * @param Token|null $openingToken
+     * @param Token|null $consecutiveComma
+     *
+     * @throws UnexpectedTokenException
+     *
+     * @return void
+     */
+    protected function ensureArrayIsValid($useSquaredBrackets, $openingToken, $consecutiveComma)
+    {
+        // If this array is followed by =, it's in fact a destructuring list
         if ($this->tokenizer->peekNext() === Tokens::T_EQUAL) {
+            // If it uses [], check the PHP level allow it
             if ($useSquaredBrackets) {
                 $this->ensureTokenIsListUnpackingOpening(Tokens::T_SQUARED_BRACKET_OPEN, $openingToken);
             }
@@ -5113,8 +5135,6 @@ abstract class AbstractPHPParser
             // If it's not a destructuring list, it must not contain 2 consecutive commas
             throw $this->getUnexpectedTokenException($consecutiveComma);
         }
-
-        return $array;
     }
 
     /**
