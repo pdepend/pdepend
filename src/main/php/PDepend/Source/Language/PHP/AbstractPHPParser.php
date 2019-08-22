@@ -1675,26 +1675,7 @@ abstract class AbstractPHPParser
                     $this->consumeComments();
                     break;
                 default:
-                    $startToken = $this->tokenizer->currentToken();
-                    $node = $this->parseOptionalExpression();
-
-                    if ($node && !$this->isReadWriteVariable($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
-                        if (!$this->supportsKeysInList()) {
-                            throw $this->getUnexpectedTokenException($startToken);
-                        }
-
-                        $this->consumeComments();
-                        $this->consumeToken(Tokens::T_DOUBLE_ARROW);
-                        $this->consumeComments();
-                        $list->addChild(in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
-                            ? $this->parseListExpression()
-                            : $this->parseVariableOrConstantOrPrimaryPrefix());
-                        $this->consumeComments();
-
-                        break;
-                    }
-
-                    $list->addChild($node ?: $this->parseVariableOrConstantOrPrimaryPrefix());
+                    $list->addChild($this->parseListSlotExpression());
                     $this->consumeComments();
                     break;
             }
@@ -1704,6 +1685,33 @@ abstract class AbstractPHPParser
         $this->consumeToken($closeToken);
 
         return $this->setNodePositionsAndReturn($list);
+    }
+
+    /**
+     * Parse individual slot of a list() expression.
+     *
+     * @return \PDepend\Source\AST\ASTListExpression|ASTNode
+     */
+    private function parseListSlotExpression()
+    {
+        $startToken = $this->tokenizer->currentToken();
+        $node = $this->parseOptionalExpression();
+
+        if ($node && !$this->isReadWriteVariable($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+            if (!$this->supportsKeysInList()) {
+                throw $this->getUnexpectedTokenException($startToken);
+            }
+
+            $this->consumeComments();
+            $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+            $this->consumeComments();
+
+            return in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
+                ? $this->parseListExpression()
+                : $this->parseVariableOrConstantOrPrimaryPrefix();
+        }
+
+        return $node ?: $this->parseVariableOrConstantOrPrimaryPrefix();
     }
 
     /**
@@ -3569,6 +3577,36 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Get the parsed list of a foreach statement children.
+     *
+     * @return ASTNode[]
+     */
+    private function parseForeachChildren()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
+            return array($this->parseVariableOrMemberByReference());
+        }
+
+        if ($this->isListUnpacking()) {
+            return array($this->parseListExpression());
+        }
+
+        $children = array(
+            $this->parseVariableOrConstantOrPrimaryPrefix()
+        );
+
+        if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+            $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+
+            $children[] = $this->isListUnpacking()
+                ? $this->parseListExpression()
+                : $this->parseVariableOrMemberOptionalByReference();
+        }
+
+        return $children;
+    }
+
+    /**
      * This method parses a single foreach-statement node.
      *
      * @return \PDepend\Source\AST\ASTForeachStatement
@@ -3589,22 +3627,8 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_AS);
         $this->consumeComments();
 
-        if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
-            $foreach->addChild($this->parseVariableOrMemberByReference());
-        } else {
-            if ($this->isListUnpacking()) {
-                $foreach->addChild($this->parseListExpression());
-            } else {
-                $foreach->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
-
-                if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
-                    $this->consumeToken(Tokens::T_DOUBLE_ARROW);
-
-                    $foreach->addChild($this->isListUnpacking()
-                        ? $this->parseListExpression()
-                        : $this->parseVariableOrMemberOptionalByReference());
-                }
-            }
+        foreach ($this->parseForeachChildren() as $child) {
+            $foreach->addChild($child);
         }
 
         $this->consumeComments();
