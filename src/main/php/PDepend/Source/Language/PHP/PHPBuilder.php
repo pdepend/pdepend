@@ -219,6 +219,24 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new code type reference instance, either Class or ClassOrInterface.
+     *
+     * @param string $qualifiedName  The qualified name of the referenced type.
+     * @param bool   $classReference true if class reference only.
+     *
+     * @return ASTClassOrInterfaceReference
+     * @since  0.9.5
+     */
+    public function buildAstNeededReference($qualifiedName, $classReference)
+    {
+        if ($classReference === true) {
+            return $this->buildAstClassReference($qualifiedName);
+        }
+
+        return $this->buildAstClassOrInterfaceReference($qualifiedName);
+    }
+
+    /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link \PDepend\Source\AST\ASTClass}
      * instance when no matching type exists.
