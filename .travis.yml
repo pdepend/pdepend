@@ -53,7 +53,7 @@ before_script:
   - phpenv config-rm xdebug.ini || echo "XDebug is not enabled"
   - composer self-update
   - if [ "$DEPENDENCIES" = "low" ]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
-  - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --prefer-stable; fi
+  - if [ "$DEPENDENCIES" != "low" ]; then composer config minimum-stability beta && composer update --prefer-dist; fi
 
 script:
   - |
