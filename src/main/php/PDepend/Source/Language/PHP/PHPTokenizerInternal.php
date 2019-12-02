@@ -584,6 +584,38 @@ class PHPTokenizerInternal implements Tokenizer
     }
 
     /**
+     * Returns the previous token or null if there is no one yet.
+     *
+     * @return Token|null
+     */
+    public function prevToken()
+    {
+        $this->tokenize();
+
+        if ($this->index > 0 && $this->index < $this->count - 1) {
+            return $this->tokens[$this->index - 1];
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the current token or null if there is no more.
+     *
+     * @return Token|null
+     */
+    public function currentToken()
+    {
+        $this->tokenize();
+
+        if ($this->index < $this->count - 1) {
+            return $this->tokens[$this->index];
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
      * there is no next token.
      *
@@ -596,6 +628,7 @@ class PHPTokenizerInternal implements Tokenizer
         if ($this->index < $this->count) {
             return $this->tokens[$this->index++];
         }
+
         return self::T_EOF;
     }
 
@@ -627,9 +660,11 @@ class PHPTokenizerInternal implements Tokenizer
         $this->tokenize();
         
         $offset = 0;
+
         do {
             $type = $this->tokens[$this->index + ++$offset]->type;
         } while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT);
+
         return $type;
     }
 
@@ -700,13 +735,7 @@ class PHPTokenizerInternal implements Tokenizer
             $source
         );
 
-        if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tokens = PHPTokenizerHelperVersion52::tokenize($source);
-        } else {
-            $tokens = token_get_all($source);
-        }
-
-        $tokens = $this->substituteTokens($tokens);
+        $tokens = $this->substituteTokens(token_get_all($source));
 
         // Is the current token between an opening and a closing php tag?
         $inTag = false;

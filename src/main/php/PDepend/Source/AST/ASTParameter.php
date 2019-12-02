@@ -89,7 +89,7 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * The wrapped formal parameter instance.
      *
-     * @var \PDepend\Source\AST\ASTFormalParameter
+     * @var ASTFormalParameter
      */
     private $formalParameter = null;
 
@@ -103,9 +103,9 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * Constructs a new parameter instance for the given AST node.
      *
-     * @param \PDepend\Source\AST\ASTFormalParameter $formalParameter
+     * @param ASTFormalParameter $formalParameter
      */
-    public function __construct(\PDepend\Source\AST\ASTFormalParameter $formalParameter)
+    public function __construct(ASTFormalParameter $formalParameter)
     {
         $this->formalParameter    = $formalParameter;
         $this->variableDeclarator = $formalParameter->getFirstChildOfType(
@@ -327,10 +327,8 @@ class ASTParameter extends AbstractASTArtifact
     public function getDefaultValue()
     {
         $value = $this->variableDeclarator->getValue();
-        if ($value === null) {
-            return null;
-        }
-        return $value->getValue();
+
+        return $value === null ? null : $value->getValue();
     }
 
     /**

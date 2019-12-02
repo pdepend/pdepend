@@ -167,6 +167,17 @@ class PHPParserVersion54Test extends AbstractTest
     }
 
     /**
+     * Tests that ::class is not allowed PHP < 5.5.
+     *
+     * @return void
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    public function testDoubleColonClass()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * testParserThrowsExpectedExceptionForTraitAsCalledMethod
      *
      * @return void

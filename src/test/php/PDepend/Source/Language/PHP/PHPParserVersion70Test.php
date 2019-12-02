@@ -218,7 +218,7 @@ class PHPParserVersion70Test extends AbstractTest
         $this->assertFalse($type->isScalar());
         $this->assertFalse($type->isArray());
 
-        $this->assertSame('\Iterator', $type->getImage());
+        $this->assertSame('\\Iterator', $type->getImage());
     }
 
     /**
@@ -532,6 +532,27 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testParseList()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testParseListWithSquaredBrackets()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: [, line: 2, col: 26, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * Tests that the parser throws an exception when it detects an invalid
      * token in a method or property declaration.
      *
@@ -542,6 +563,66 @@ class PHPParserVersion70Test extends AbstractTest
         $this->setExpectedException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
             'Unexpected token: const, line: 4, col: 13, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Tests that the parser throws an exception when using :void on PHP < 7.1.
+     *
+     * @return void
+     */
+    public function testVoidTypeHintReturn()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: void, line: 2, col: 23, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Tests that the parser throws an exception when using [...] = ... with PHP < 7.1.
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBrackets()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: [, line: 4, col: 5, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testListExpressionWithKeys
+     *
+     * @return void
+     */
+    public function testListExpressionWithKeys()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: "a", line: 4, col: 10, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testListExpressionWithKeysAndNestedList
+     *
+     * @return void
+     */
+    public function testListExpressionWithKeysAndNestedList()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: \'a\', line: 4, col: 10, file: '
         );
 
         $this->parseCodeResourceForTest();

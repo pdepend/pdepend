@@ -42,6 +42,8 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\ASTNode;
+
 /**
  * Test case for the Reflection API compatibility ticket #67.
  *
@@ -350,7 +352,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
     public function testParserHandlesParameterDefaultValueConstant()
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame(null, $parameters[0]->getDefaultValue());
+        $this->assertSame('E_MY_ERROR', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -373,7 +375,14 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
     public function testParserHandlesParameterDefaultValueClassConstant()
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame(null, $parameters[0]->getDefaultValue());
+        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        $this->assertSame('\\PDepend\\Code', $parameters[0]->getDefaultValue()->getImage());
+        /** @var ASTNode $node */
+        $node = $parameters[0]->getDefaultValue()->getChild(0);
+        $image = implode($node->getImage(), array_map(function (ASTNode $node) {
+            return $node->getImage();
+        }, $node->getChildren()));
+        $this->assertSame('\\PDepend\\Code::CONSTANT', $image);
     }
 
     /**

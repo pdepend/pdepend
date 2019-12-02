@@ -43,10 +43,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\AST\ASTValue;
-use PDepend\Source\Parser\TokenStreamEndException;
-use PDepend\Source\Parser\UnexpectedTokenException;
-use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -139,29 +135,6 @@ class PHPParserGeneric extends PHPParserVersion71
                 return true;
         }
         return false;
-    }
-
-    /**
-     * Implements some quirks and hacks to support php here- and now-doc for
-     * PHP 5.2.x versions :/
-     *
-     * @return \PDepend\Source\AST\ASTHeredoc
-     * @since 1.0.0
-     */
-    protected function parseHeredoc()
-    {
-        $heredoc = parent::parseHeredoc();
-        if (version_compare(phpversion(), "5.3.0alpha") >= 0) {
-            return $heredoc;
-        }
-
-        // Consume dangling semicolon
-        $this->tokenizer->next();
-
-        $token = $this->tokenizer->next();
-        preg_match('(/\*(\'|")\*/)', $token->image, $match);
-
-        return $heredoc;
     }
 
     /**

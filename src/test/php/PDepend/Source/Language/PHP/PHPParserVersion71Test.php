@@ -102,7 +102,7 @@ class PHPParserVersion71Test extends AbstractTest
      */
     public function testCatchMultipleExceptionClasses()
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());        
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
     
     /**
@@ -151,7 +151,7 @@ class PHPParserVersion71Test extends AbstractTest
     public function testVoidTypeHintReturn()
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
-        
+
         $this->assertTrue($type->isScalar());
         $this->assertFalse($type->isArray());
         $this->assertSame('void', $type->getImage());

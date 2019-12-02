@@ -59,7 +59,7 @@ class Workarounds
      */
     public function hasSerializeReferenceIssue()
     {
-        return (version_compare(phpversion(), "5.4.0") > 0 && version_compare("5.4.5", phpversion()) > 0);
+        return version_compare(phpversion(), '5.4.0', '>') && version_compare(phpversion(), '5.4.5', '<=');
     }
 
     /**

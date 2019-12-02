@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
@@ -55,8 +56,6 @@ use PDepend\Source\Tokenizer\Tokens;
  * TODO:
  * - void
  *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.void-functions
- * - Symmetric array destructuring
- *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.symmetric-array-destructuring
  * - Class constant visibility
  *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.class-constant-visibility
  * - Multi catch exception handling
@@ -70,17 +69,42 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion71 extends PHPParserVersion70
 {
+    private function consumeQuestionMark()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
+            $this->consumeToken(Tokens::T_QUESTION_MARK);
+        }
+    }
+
+    /**
+     * Return true if current PHP level supports keys in lists.
+     *
+     * @return bool
+     */
+    protected function supportsKeysInList()
+    {
+        return true;
+    }
+
+    /**
+     * This methods return true if the token matches a list opening in the current PHP version level.
+     *
+     * @param int $tokenType
+     * @return bool
+     * @since 2.6.0
+     */
+    protected function isListUnpacking($tokenType = null)
+    {
+        return in_array($tokenType ?: $this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN));
+    }
+
     /**
      * @return \PDepend\Source\AST\ASTType
      */
     protected function parseReturnTypeHint()
     {
         $this->consumeComments();
-
-        $tokenType = $this->tokenizer->peek();
-        if (Tokens::T_QUESTION_MARK === $tokenType) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
+        $this->consumeQuestionMark();
 
         return parent::parseReturnTypeHint();
     }
@@ -107,10 +131,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     protected function parseFormalParameterOrTypeHintOrByReference()
     {
         $this->consumeComments();
-        $tokenType = $this->tokenizer->peek();
-        if ($tokenType === Tokens::T_QUESTION_MARK) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
+        $this->consumeQuestionMark();
 
         return parent::parseFormalParameterOrTypeHintOrByReference();
     }
@@ -122,10 +143,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      */
     protected function parseTypeHint()
     {
-        $tokenType = $this->tokenizer->peek();
-        if (Tokens::T_QUESTION_MARK === $tokenType) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
+        $this->consumeQuestionMark();
 
         return parent::parseTypeHint();
     }
@@ -158,8 +176,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
                 $this->tokenizer->next()->startLine,
                 (string) $this->compilationUnit,
                 sprintf(
-                   'Constant can\'t be declared private or protected in ' .
-                    'interface "%s".',
+                    'Constant can\'t be declared private or protected in interface "%s".',
                     $this->classOrInterface->getName()
                 )
             );
@@ -203,7 +220,8 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseScalarOrCallableTypeHint($image);
     }
 
-    protected function parseCatchExceptionClass(\PDepend\Source\AST\ASTCatchStatement $stmt) {
+    protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
+    {
         do {
             $repeat = false;
             parent::parseCatchExceptionClass($stmt);

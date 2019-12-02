@@ -50,6 +50,7 @@ use PDepend\Source\Parser\TokenException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @deprecated 3.0.0 This helper class will disappear from PDepend
  */
 final class PHPTokenizerHelperVersion52
 {
