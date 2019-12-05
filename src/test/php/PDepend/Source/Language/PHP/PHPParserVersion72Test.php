@@ -41,6 +41,10 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTParameter;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion71} class.
@@ -74,5 +78,25 @@ class PHPParserVersion72Test extends AbstractTest
         $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
         $this->assertFalse($type->isArray());
         $this->assertSame('object', $type->getImage());
+    }
+
+    public function testAbstractMethodOverriding()
+    {
+        /** @var ASTArtifactList $classes */
+        $classes = $this->parseCodeResourceForTest()->current()->getClasses();
+        /** @var ASTClass $class */
+        $class = $classes[1];
+        /** @var ASTArtifactList $classes */
+        $methods = $class->getMethods();
+        /** @var ASTMethod $method */
+        $method = $methods[0];
+        /** @var ASTArtifactList $parameters */
+        $parameters = $method->getParameters();
+        /** @var ASTParameter $parameter */
+        $parameter = $parameters[0];
+
+        $this->assertTrue($method->isAbstract());
+        $this->assertSame('int', $method->getReturnType()->getImage());
+        $this->assertNull($parameter->getClass());
     }
 }
