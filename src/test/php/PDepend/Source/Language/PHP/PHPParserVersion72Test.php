@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,22 +36,43 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.3
  */
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\AbstractTest;
+
 /**
- * Concrete parser implementation that supports features up to PHP version 7.2.
- *
- * TODO: Check or implement features support for:
- * - Abstract method overriding
- *   https://www.php.net/manual/en/migration72.new-features.php#migration72.new-features.abstract-method-overriding
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion71} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.4
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
+ * @group unittest
  */
-abstract class PHPParserVersion72 extends PHPParserVersion71
+class PHPParserVersion72Test extends AbstractTest
 {
+    /**
+     * @return void
+     */
+    public function testObjectTypeHintReturn()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        $this->assertFalse($type->isArray());
+        $this->assertSame('object', $type->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testObjectTypeHintParameter()
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        $this->assertFalse($type->isArray());
+        $this->assertSame('object', $type->getImage());
+    }
 }
