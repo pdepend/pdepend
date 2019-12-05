@@ -210,4 +210,20 @@ class PHPParserVersion56Test extends AbstractTest
             array($tokenizer, $builder, $cache)
         );
     }
+
+    /**
+     * Tests that the parser throws an exception when it detects a reserved keyword
+     * in constant class names.
+     *
+     * @return void
+     */
+    public function testReservedKeyword()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: NEW, line: 5, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
 }
