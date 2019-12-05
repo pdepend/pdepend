@@ -44,6 +44,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Builder\Builder;
@@ -645,5 +646,90 @@ class PHPParserVersion70Test extends AbstractTest
     public function testParenthesisAroundCallableParsesArguments()
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testKeywordsAsMethodNames()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+
+        $classes = $namespaces[0]->getClasses();
+        $methods = $classes[0]->getMethods();
+
+        $this->assertSame('trait', $methods[0]->getName());
+        $this->assertSame('callable', $methods[1]->getName());
+        $this->assertSame('insteadof', $methods[2]->getName());
+    }
+
+    public function testKeywordsAsConstants()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+
+        $classes = $namespaces[0]->getClasses();
+        /** @var ASTConstantDeclarator[] $constants */
+        $constants = $classes[0]->findChildrenOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+
+        $this->assertSame('trait', $constants[0]->getImage());
+        $this->assertSame('callable', $constants[1]->getImage());
+        $this->assertSame('insteadof', $constants[2]->getImage());
+    }
+
+    public function testCallableKeywordAsClassName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: callable, line: 3, col: 7, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testTraitKeywordAsClassName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: trait, line: 3, col: 7, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testInsteadofKeywordAsClassName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: insteadof, line: 3, col: 7, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testCallableKeywordAsInterfaceName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: callable, line: 3, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testTraitKeywordAsInterfaceName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: trait, line: 3, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testInsteadofKeywordAsInterfaceName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: insteadof, line: 3, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
     }
 }
