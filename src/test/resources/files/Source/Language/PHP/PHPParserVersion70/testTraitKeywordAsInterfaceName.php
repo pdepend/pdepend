@@ -1,5 +1,5 @@
 <?php
 
-class trait
+interface trait
 {
 }
