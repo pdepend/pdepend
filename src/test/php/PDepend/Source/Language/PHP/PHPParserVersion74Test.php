@@ -40,10 +40,10 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use OutOfBoundsException;
 use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
@@ -74,6 +74,8 @@ class PHPParserVersion74Test extends AbstractTest
         $stringChildren = $stringDeclaration->getChildren();
         /** @var ASTVariableDeclarator $intVariable */
         $stringVariable = $stringChildren[1];
+        /** @var ASTFieldDeclaration $mixedDeclaration */
+        $mixedDeclaration = $children[2];
 
         $this->assertTrue($intDeclaration->hasType());
 
@@ -94,5 +96,27 @@ class PHPParserVersion74Test extends AbstractTest
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $stringDeclaration);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $stringVariable);
         $this->assertSame('$name', $stringVariable->getImage());
+
+        $this->assertFalse($mixedDeclaration->hasType());
+
+        $message = null;
+
+        try {
+            $mixedDeclaration->getType();
+        } catch (OutOfBoundsException $exception) {
+            $message = $exception->getMessage();
+        }
+
+        $this->assertSame('The parameter does not has a type specification.', $message);
+    }
+
+    public function testTypedPropertiesSyntaxError()
+    {
+        $this->setExpectedException(
+            'PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: string, line: 4, col: 16, file:'
+        );
+
+        $this->parseCodeResourceForTest();
     }
 }
