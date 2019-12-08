@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,26 +36,44 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.3
  */
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTHeredoc;
+use PDepend\Source\AST\ASTLiteral;
+
 /**
- * Concrete parser implementation that supports features up to PHP version 7.3.
- *
- * TODO: Check or implement features support for:
- * - Array Destructuring supports Reference Assignments
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.destruct-reference
- * - Instanceof Operator accepts Literals
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.instanceof-literals
- * - Trailing Commas are allowed in Calls
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.trailing-commas
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion73} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.4
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion73
+ * @group unittest
  */
-abstract class PHPParserVersion73 extends PHPParserVersion72
+class PHPParserVersion73Test extends AbstractTest
 {
+    /**
+     * @return void
+     */
+    public function testHereDocAndNowDoc()
+    {
+        /** @var ASTHeredoc $heredoc */
+        $heredoc = $this->getFirstNodeOfTypeInFunction('','PDepend\\Source\\AST\\ASTArray');
+        $arrayElements = $heredoc->getChildren();
+        $children = $arrayElements[0]->getChildren();
+        $children = $children[0]->getChildren();
+        /** @var ASTLiteral $literal */
+        $literal = $children[0];
+
+        $this->assertSame('foobar!', $literal->getImage());
+
+        $children = $arrayElements[1]->getChildren();
+        $children = $children[0]->getChildren();
+        /** @var ASTLiteral $literal */
+        $literal = $children[0];
+
+        $this->assertSame('second,', $literal->getImage());
+    }
 }
