@@ -43,12 +43,12 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\Tokenizer\Tokens;
+
 /**
  * Concrete parser implementation that supports features up to PHP version 7.4.
  *
  * TODO: Check or implement features support for:
- * - Typed properties
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.typed-properties
  * - Arrow functions
  *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.arrow-functions
  * - Limited return type covariance and argument type contravariance
@@ -66,4 +66,16 @@ namespace PDepend\Source\Language\PHP;
  */
 abstract class PHPParserVersion74 extends PHPParserVersion73
 {
+    protected function parseUnknownDeclaration($tokenType, $modifiers)
+    {
+        /**
+         * Typed properties
+         * https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.typed-properties
+         */
+        if ($tokenType == Tokens::T_STRING) {
+            return $this->parseTypeHint();
+        }
+
+        return parent::parseUnknownDeclaration($tokenType, $modifiers);
+    }
 }
