@@ -198,6 +198,17 @@ class PHPParserVersion56Test extends AbstractTest
     }
 
     /**
+     * Tests issue with constant array concatenation.
+     * https://github.com/pdepend/pdepend/issues/299
+     *
+     * @return void
+     */
+    public function testConstantArrayConcatenation()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
