@@ -42,6 +42,7 @@ namespace PDepend\Source\Language\PHP;
 
 use OutOfBoundsException;
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTVariableDeclarator;
@@ -118,5 +119,48 @@ class PHPParserVersion74Test extends AbstractTest
         );
 
         $this->parseCodeResourceForTest();
+    }
+
+    public function testArrowFunctions()
+    {
+        // @TODO Arrow functions need to be implemented for PHP 7.4 support
+        $this->markTestIncomplete('Arrow functions need to be implemented for PHP 7.4 support');
+
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testTypeCovarianceAndArgumentTypeContravariance()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testNullCoalescingAssignmentOperator()
+    {
+        // @TODO Null coalescing assignment operator need to be implemented for PHP 7.4 support
+        $this->markTestIncomplete('Null coalescing assignment operator need to be implemented for PHP 7.4 support');
+
+        /** @var ASTAssignmentExpression $assignment */
+        $assignment = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTAssignmentExpression'
+        );
+
+        $this->assertSame('??=', $assignment->getImage());
+    }
+
+    public function testUnpackingInsideArrays()
+    {
+        // @TODO Unpacking inside arrays need to be implemented for PHP 7.4 support
+        $this->markTestIncomplete('Unpacking inside arrays need to be implemented for PHP 7.4 support');
+
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testNumericLiteralSeparator()
+    {
+        // @TODO Numeric literal separator need to be implemented for PHP 7.4 support
+        $this->markTestIncomplete('Numeric literal separator need to be implemented for PHP 7.4 support');
+
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 }
