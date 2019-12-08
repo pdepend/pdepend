@@ -64,26 +64,31 @@ class PHPParserVersion74Test extends AbstractTest
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
-        /** @var ASTScalarType $intType */
-        $intType = $children[0];
         /** @var ASTFieldDeclaration $intDeclaration */
-        $intDeclaration = $children[1];
+        $intDeclaration = $children[0];
         $intChildren = $intDeclaration->getChildren();
         /** @var ASTVariableDeclarator $intVariable */
-        $intVariable = $intChildren[0];
-        /** @var ASTScalarType $stringType */
-        $stringType = $children[2];
+        $intVariable = $intChildren[1];
         /** @var ASTFieldDeclaration $stringDeclaration */
-        $stringDeclaration = $children[3];
+        $stringDeclaration = $children[1];
         $stringChildren = $stringDeclaration->getChildren();
         /** @var ASTVariableDeclarator $intVariable */
-        $stringVariable = $stringChildren[0];
+        $stringVariable = $stringChildren[1];
+
+        $this->assertTrue($intDeclaration->hasType());
+
+        $intType = $intDeclaration->getType();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $intType);
         $this->assertSame('int', $intType->getImage());
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $intDeclaration);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $intVariable);
         $this->assertSame('$id', $intVariable->getImage());
+
+        $this->assertTrue($stringDeclaration->hasType());
+
+        $stringType = $stringDeclaration->getType();
+
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $stringType);
         $this->assertSame('string', $stringType->getImage());;
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $stringDeclaration);

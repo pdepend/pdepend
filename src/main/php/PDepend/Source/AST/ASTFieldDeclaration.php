@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use OutOfBoundsException;
+
 /**
  * This class represents a field or property declaration of a class.
  *
@@ -66,6 +68,30 @@ namespace PDepend\Source\AST;
  */
 class ASTFieldDeclaration extends AbstractASTNode
 {
+    /**
+     * Checks if this parameter has a type.
+     *
+     * @return boolean
+     */
+    public function hasType()
+    {
+        return (reset($this->nodes) instanceof ASTType);
+    }
+
+    /**
+     * Returns the type of this parameter.
+     *
+     * @return \PDepend\Source\AST\ASTType
+     */
+    public function getType()
+    {
+        if ($this->hasType()) {
+            return $this->getChild(0);
+        }
+
+        throw new OutOfBoundsException('The parameter does not has a type specification.');
+    }
+
     /**
      * This method returns a OR combined integer of the declared modifiers for
      * this property.

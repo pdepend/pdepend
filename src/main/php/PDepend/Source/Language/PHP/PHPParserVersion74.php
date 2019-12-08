@@ -43,6 +43,11 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTType;
+use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Parser\UnexpectedTokenException;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -77,5 +82,24 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
         }
 
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
+    }
+
+    protected function parseMethodOrFieldDeclaration($modifiers = 0)
+    {
+        $field = parent::parseMethodOrFieldDeclaration($modifiers);
+
+        if ($field instanceof ASTType) {
+            $type = $field;
+
+            $field = parent::parseMethodOrFieldDeclaration($modifiers);
+
+            if (!($field instanceof ASTFieldDeclaration)) {
+                throw new UnexpectedTokenException($this->tokenizer->prevToken(), $this->tokenizer->getSourceFile());
+            }
+
+            $field->prependChild($type);
+        }
+
+        return $field;
     }
 }
