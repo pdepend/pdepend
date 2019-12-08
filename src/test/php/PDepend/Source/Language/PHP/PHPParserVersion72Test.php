@@ -43,7 +43,7 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\AbstractTest;
 
 /**
- * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion71} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion72} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
