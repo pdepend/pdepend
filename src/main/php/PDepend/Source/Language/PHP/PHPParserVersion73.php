@@ -47,8 +47,6 @@ namespace PDepend\Source\Language\PHP;
  * Concrete parser implementation that supports features up to PHP version 7.3.
  *
  * TODO: Check or implement features support for:
- * - Instanceof Operator accepts Literals
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.instanceof-literals
  * - Trailing Commas are allowed in Calls
  *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.trailing-commas
  *

@@ -42,7 +42,9 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTHeredoc;
+use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTVariable;
 
@@ -119,5 +121,28 @@ class PHPParserVersion73Test extends AbstractTest
 
         $this->assertTrue($cElement->isByReference());
         $this->assertSame('$c', $cVariable->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstanceOfLiterals()
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        $expressions = $statements[0]->getChildren();
+        $expression = $expressions[0]->getChildren();
+        /** @var ASTLiteral $instanceOf */
+        $literal = $expression[0];
+        /** @var ASTInstanceOfExpression $instanceOf */
+        $instanceOf = $expression[1];
+        /** @var ASTClassOrInterfaceReference[] $variables */
+        $variables = $instanceOf->getChildren();
+
+        $this->assertCount(2, $expression);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literal);
+        $this->assertSame('false', $literal->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $variables[0]);
+        $this->assertSame('DateTimeInterface', $variables[0]->getImage());
     }
 }
