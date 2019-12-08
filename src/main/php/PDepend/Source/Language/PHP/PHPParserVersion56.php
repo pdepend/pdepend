@@ -351,4 +351,12 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
 
         return $arguments;
     }
+
+    protected function parseConstantDeclaratorValue()
+    {
+        $value = new ASTValue();
+        $value->setValue($this->parseOptionalExpression());
+
+        return $value;
+    }
 }
