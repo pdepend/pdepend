@@ -41,8 +41,10 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTHeredoc;
 use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion73} class.
@@ -75,5 +77,47 @@ class PHPParserVersion73Test extends AbstractTest
         $literal = $children[0];
 
         $this->assertSame('second,', $literal->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDestructuringArrayReference()
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        $assignments = $statements[1]->getChildren();
+        $listElements = $assignments[0]->getChildren();
+        $children = $listElements[0]->getChildren();
+        /** @var ASTArrayElement $aElement */
+        $aElement = $children[0];
+        $arrayElement = $children[1];
+        $children = $arrayElement->getChildren();
+        $subElements = $children[0]->getChildren();
+        /** @var ASTArrayElement $bElement */
+        $bElement = $subElements[0];
+        /** @var ASTArrayElement $cElement */
+        $cElement = $subElements[1];
+
+        $aElements = $aElement->getChildren();
+        /** @var ASTVariable $aVariable */
+        $aVariable = $aElements[0];
+
+        $bElements = $bElement->getChildren();
+        /** @var ASTVariable $bVariable */
+        $bVariable = $bElements[0];
+
+        $cElements = $cElement->getChildren();
+        /** @var ASTVariable $cVariable */
+        $cVariable = $cElements[0];
+
+        $this->assertTrue($aElement->isByReference());
+        $this->assertSame('$a', $aVariable->getImage());
+
+        $this->assertFalse($bElement->isByReference());
+        $this->assertSame('$b', $bVariable->getImage());
+
+        $this->assertTrue($cElement->isByReference());
+        $this->assertSame('$c', $cVariable->getImage());
     }
 }
