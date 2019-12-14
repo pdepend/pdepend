@@ -1,4 +1,4 @@
-pdepend-2.6.0 (2019/12/04)
+pdepend-2.6.0 (2019/12/16)
 ==========================
 
 - Added #383 Support of PHP 7.1 syntax
