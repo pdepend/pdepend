@@ -5,9 +5,9 @@
     "type": "library",
     "require": {
         "php": ">=5.3.7",
-        "symfony/dependency-injection": "^2.3.0|^3|^4",
-        "symfony/filesystem": "^2.3.0|^3|^4",
-        "symfony/config": "^2.3.0|^3|^4"
+        "symfony/dependency-injection": "^2.3.0|^3|^4|^5",
+        "symfony/filesystem": "^2.3.0|^3|^4|^5",
+        "symfony/config": "^2.3.0|^3|^4|^5"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.35|^5.7",

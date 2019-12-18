@@ -53,16 +53,6 @@ use PDepend\Source\Tokenizer\Tokens;
 /**
  * Concrete parser implementation that supports features up to PHP version 7.1.
  *
- * TODO:
- * - void
- *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.void-functions
- * - Class constant visibility
- *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.class-constant-visibility
- * - Multi catch exception handling
- *   http://php.net/manual/en/migration71.new-features.php#migration71.new-features.mulit-catch-exception-handling
- * - see full list
- *   http://php.net/manual/en/migration71.php
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4

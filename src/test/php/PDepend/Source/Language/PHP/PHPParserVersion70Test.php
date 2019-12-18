@@ -732,4 +732,15 @@ class PHPParserVersion70Test extends AbstractTest
 
         $this->parseCodeResourceForTest();
     }
+
+    /**
+     * Tests that the parser does not throw an exception when it detects a reserved
+     * keyword in constant class names.
+     *
+     * @return void
+     */
+    public function testReservedKeyword()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
 }
