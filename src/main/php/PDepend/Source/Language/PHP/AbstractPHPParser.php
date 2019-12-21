@@ -359,6 +359,7 @@ abstract class AbstractPHPParser
         Log::debug('Processing file ' . $this->compilationUnit);
 
         $tokenType = $this->tokenizer->peek();
+
         while ($tokenType !== Tokenizer::T_EOF) {
             switch ($tokenType) {
                 case Tokens::T_COMMENT:
@@ -1115,12 +1116,9 @@ abstract class AbstractPHPParser
      * @return boolean
      * @since 0.9.8
      */
-    private function parseOptionalByReference()
+    protected function parseOptionalByReference()
     {
-        if ($this->isNextTokenByReference()) {
-            return $this->parseByReference();
-        }
-        return false;
+        return $this->isNextTokenByReference() && $this->parseByReference();
     }
 
     /**
@@ -2789,6 +2787,9 @@ abstract class AbstractPHPParser
                 case Tokens::T_FUNCTION:
                     $expressions[] = $this->parseClosureDeclaration();
                     break;
+                case Tokens::T_FN:
+                    $expressions[] = $this->parseLambdaFunctionDeclaration();
+                    break;
                 case Tokens::T_PARENTHESIS_OPEN:
                     $expressions[] = $this->parseParenthesisExpressionOrPrimaryPrefix();
                     break;
@@ -3758,6 +3759,23 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * This method builds a return statement from a given token.
+     *
+     * @return \PDepend\Source\AST\ASTReturnStatement
+     * @since 2.7.0
+     */
+    protected function buildReturnStatement(Token $token)
+    {
+        $stmt = $this->builder->buildAstReturnStatement($token->image);
+
+        if (($expr = $this->parseOptionalExpression()) != null) {
+            $stmt->addChild($expr);
+        }
+
+        return $stmt;
+    }
+
+    /**
      * This method parses a single return-statement node.
      *
      * @return \PDepend\Source\AST\ASTReturnStatement
@@ -3766,12 +3784,11 @@ abstract class AbstractPHPParser
     private function parseReturnStatement()
     {
         $this->tokenStack->push();
-        $token = $this->consumeToken(Tokens::T_RETURN);
 
-        $stmt = $this->builder->buildAstReturnStatement($token->image);
-        if (($expr = $this->parseOptionalExpression()) != null) {
-            $stmt->addChild($expr);
-        }
+        $stmt = $this->buildReturnStatement(
+            $this->consumeToken(Tokens::T_RETURN)
+        );
+
         $this->parseStatementTermination();
 
         return $this->setNodePositionsAndReturn($stmt);
@@ -5395,7 +5412,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTFormalParameters
      * @since 0.9.5
      */
-    private function parseFormalParameters()
+    protected function parseFormalParameters()
     {
         $this->consumeComments();
 
@@ -5411,6 +5428,7 @@ abstract class AbstractPHPParser
         // Check for function without parameters
         if ($tokenType === Tokens::T_PARENTHESIS_CLOSE) {
             $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+
             return $this->setNodePositionsAndReturn($formalParameters);
         }
 
@@ -5426,8 +5444,10 @@ abstract class AbstractPHPParser
             if ($tokenType !== Tokens::T_COMMA) {
                 break;
             }
+
             $this->consumeToken(Tokens::T_COMMA);
         }
+
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn($formalParameters);
@@ -5818,6 +5838,8 @@ abstract class AbstractPHPParser
                 break;
             case Tokens::T_CONST:
                 return $this->parseConstantDefinition();
+            case Tokens::T_FN:
+                return $this->parseLambdaFunctionDeclaration();
             case Tokens::T_FUNCTION:
                 return $this->parseFunctionOrClosureDeclaration();
             case Tokens::T_COMMENT:
@@ -5884,6 +5906,7 @@ abstract class AbstractPHPParser
         if (($expr = $this->parseOptionalExpression()) != null) {
             $stmt->addChild($expr);
         }
+
         $this->parseStatementTermination();
 
         return $this->setNodePositionsAndReturn($stmt);
@@ -5955,13 +5978,15 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTClosure
      * @since 1.0.0
      */
-    private function parseOptionalBoundVariables(
+    protected function parseOptionalBoundVariables(
         \PDepend\Source\AST\ASTClosure $closure
     ) {
         $this->consumeComments();
+
         if (Tokens::T_USE === $this->tokenizer->peek()) {
             return $this->parseBoundVariables($closure);
         }
+
         return $closure;
     }
 
@@ -5993,8 +6018,10 @@ abstract class AbstractPHPParser
 
             if ($this->tokenizer->peek() === Tokens::T_COMMA) {
                 $this->consumeToken(Tokens::T_COMMA);
+
                 continue;
             }
+
             break;
         }
 
@@ -6023,12 +6050,15 @@ abstract class AbstractPHPParser
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
             return join('', $fragments);
-        } elseif ($this->isScalarOrCallableTypeHint($fragments[0])) {
+        }
+
+        if ($this->isScalarOrCallableTypeHint($fragments[0])) {
             return $fragments[0];
         }
 
         // Search for an use alias
         $mapsTo = $this->useSymbolTable->lookup($fragments[0]);
+
         if ($mapsTo !== null) {
             // Remove alias and add real namespace
             array_shift($fragments);
@@ -6039,6 +6069,7 @@ abstract class AbstractPHPParser
             // Prepend current namespace
             array_unshift($fragments, $this->namespaceName, '\\');
         }
+
         return join('', $fragments);
     }
 
@@ -6267,6 +6298,7 @@ abstract class AbstractPHPParser
         } else {
             $image = end($fragments);
         }
+
         return $image;
     }
 
@@ -6303,6 +6335,7 @@ abstract class AbstractPHPParser
             if ($tokenType === Tokens::T_SEMICOLON) {
                 break;
             }
+
             $this->consumeToken(Tokens::T_COMMA);
         } while ($tokenType !== Tokenizer::T_EOF);
 
@@ -6355,6 +6388,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         $tokenType = $this->tokenizer->peek();
+
         if (false === $this->isConstantName($tokenType)) {
             throw $this->getUnexpectedTokenException();
         }
@@ -6448,6 +6482,11 @@ abstract class AbstractPHPParser
             $closure->setStatic(true);
 
             return $this->setNodePositionsAndReturn($closure);
+        } elseif ($tokenType === Tokens::T_FN) {
+            $closure = $this->parseLambdaFunctionDeclaration();
+            $closure->setStatic(true);
+
+            return $this->setNodePositionsAndReturn($closure);
         }
 
         return $this->setNodePositionsAndReturn(
@@ -6495,9 +6534,11 @@ abstract class AbstractPHPParser
 
             // Semicolon terminates static declaration
             $tokenType = $this->tokenizer->peek();
+
             if ($tokenType === Tokens::T_SEMICOLON) {
                 break;
             }
+
             // We are here, so there must be a next declarator
             $this->consumeToken(Tokens::T_COMMA);
         }
@@ -6696,6 +6737,17 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
+    {
+        throw $this->getUnexpectedTokenException();
+    }
+
+    /**
+     * Parses fn operator of lambda function for syntax fn() => available since PHP 7.4.
+     *
+     * @return \PDepend\Source\AST\ASTValue
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    protected function parseLambdaFunctionDeclaration()
     {
         throw $this->getUnexpectedTokenException();
     }
@@ -7039,6 +7091,7 @@ abstract class AbstractPHPParser
             case Tokenizer::T_EOF:
                 throw new TokenStreamEndException($this->tokenizer);
         }
+
         throw $this->getUnexpectedTokenException();
     }
 

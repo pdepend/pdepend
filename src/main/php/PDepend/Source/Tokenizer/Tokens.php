@@ -873,6 +873,11 @@ interface Tokens
     const T_POW = 164;
 
     /**
+     * Token that represents the 'fn' keyword of arrow functions.
+     */
+    const T_FN = 165;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

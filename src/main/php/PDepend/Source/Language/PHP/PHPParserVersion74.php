@@ -100,4 +100,25 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
 
         return $field;
     }
+
+    protected function parseLambdaFunctionDeclaration()
+    {
+        $this->tokenStack->push();
+
+        if (Tokens::T_FN === $this->tokenizer->peek()) {
+            $this->consumeToken(Tokens::T_FN);
+        }
+
+        $closure = $this->builder->buildAstClosure();
+        $closure->setReturnsByReference($this->parseOptionalByReference());
+        $closure->addChild($this->parseFormalParameters());
+
+        $closure->addChild(
+            $this->buildReturnStatement(
+                $this->consumeToken(Tokens::T_DOUBLE_ARROW)
+            )
+        );
+
+        return $this->setNodePositionsAndReturn($closure);
+    }
 }
