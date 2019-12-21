@@ -2,6 +2,7 @@ pdepend-2.6.1 (2019/12/19)
 ==========================
 
 - Added #398 Support for Symfony 5
+- Fixed #299 Array concatenation in constant declaration
 
 pdepend-2.6.0 (2019/12/16)
 ==========================
