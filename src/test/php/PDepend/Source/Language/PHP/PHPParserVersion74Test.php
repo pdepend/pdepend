@@ -129,6 +129,10 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testArrowFunctions()
     {
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
+
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
