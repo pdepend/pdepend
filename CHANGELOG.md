@@ -1,4 +1,4 @@
-pdepend-2.6.1 (2019/12/19)
+pdepend-2.6.1 (2019/12/21)
 ==========================
 
 - Added #398 Support for Symfony 5
