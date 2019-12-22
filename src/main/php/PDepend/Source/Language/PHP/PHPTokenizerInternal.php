@@ -170,7 +170,7 @@ if (!defined('T_POW')) {
  * Define PHP 7.4's fn arrow function keyword
  */
 if (!defined('T_FN')) {
-    define('T_FN', T_BREAK === 343 ? -343 : 343);
+    define('T_FN', 42016);
 }
 
 /**
