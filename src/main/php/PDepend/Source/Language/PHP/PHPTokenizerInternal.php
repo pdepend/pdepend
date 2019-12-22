@@ -174,6 +174,13 @@ if (!defined('T_FN')) {
 }
 
 /**
+ * Define PHP 7.4's ??= operator
+ */
+if (!defined('T_COALESCE_EQUAL')) {
+    define('T_COALESCE_EQUAL', 42017);
+}
+
+/**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
  *
@@ -318,6 +325,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_YIELD                     => Tokens::T_YIELD,
         T_FINALLY                   => Tokens::T_FINALLY,
         T_COALESCE                  => Tokens::T_COALESCE,
+        T_COALESCE_EQUAL            => Tokens::T_COALESCE_EQUAL,
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN                        => Tokens::T_FN,
     );

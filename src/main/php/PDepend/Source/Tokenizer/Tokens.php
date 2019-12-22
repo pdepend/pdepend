@@ -878,6 +878,11 @@ interface Tokens
     const T_FN = 165;
 
     /**
+     * Token that represents the '??=' null coalescing assignment operator
+     */
+    const T_COALESCE_EQUAL = 166;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

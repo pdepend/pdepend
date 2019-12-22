@@ -180,8 +180,9 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNullCoalescingAssignmentOperator()
     {
-        // @TODO Null coalescing assignment operator need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Null coalescing assignment operator need to be implemented for PHP 7.4 support');
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
 
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
@@ -194,17 +195,11 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testUnpackingInsideArrays()
     {
-        // @TODO Unpacking inside arrays need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Unpacking inside arrays need to be implemented for PHP 7.4 support');
-
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
     public function testNumericLiteralSeparator()
     {
-        // @TODO Numeric literal separator need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Numeric literal separator need to be implemented for PHP 7.4 support');
-
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 }

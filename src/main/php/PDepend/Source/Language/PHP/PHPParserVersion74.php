@@ -52,10 +52,6 @@ use PDepend\Source\Tokenizer\Tokens;
  * Concrete parser implementation that supports features up to PHP version 7.4.
  *
  * TODO: Check or implement features support for:
- * - Limited return type covariance and argument type contravariance
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.type-variance
- * - Null coalescing assignment operator
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment-operator
  * - Unpacking inside arrays
  *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.unpack-inside-array
  * - Numeric literal separator
