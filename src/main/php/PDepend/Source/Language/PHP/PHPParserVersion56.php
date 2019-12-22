@@ -154,6 +154,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 case Tokens::T_ANGLE_BRACKET_CLOSE:
                 case Tokens::T_EMPTY:
                 case Tokens::T_CONCAT:
+                case Tokens::T_ELLIPSIS:
                     $token = $this->consumeToken($tokenType);
 
                     $expr = $this->builder->buildAstExpression($token->image);

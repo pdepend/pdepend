@@ -195,7 +195,40 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testUnpackingInsideArrays()
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
+
+        $expression = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTArray'
+        );
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+        ), array_map('get_class', $expression->getChildren()));
+        /** @var ASTNode[] $elements */
+        $elements = array_map(function ($node) {
+            return $node->getChild(0);
+        }, $expression->getChildren());
+        $this->assertSame(array(
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTExpression',
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTLiteral',
+        ), array_map('get_class', $elements));
+        /** @var ASTExpression $expression */
+        $expression = $elements[2];
+        $this->assertSame(array(
+            '...',
+            '$numbers',
+        ), array_map(function (ASTNode $node) {
+            return $node->getImage();
+        }, $expression->getChildren()));
     }
 
     public function testNumericLiteralSeparator()

@@ -2903,6 +2903,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_BITWISE_AND:
                 case Tokens::T_BITWISE_NOT:
                 case Tokens::T_BITWISE_XOR:
+                case Tokens::T_ELLIPSIS:
                     $token = $this->consumeToken($tokenType);
 
                     $expr = $this->builder->buildAstExpression($token->image);
@@ -6667,6 +6668,9 @@ abstract class AbstractPHPParser
                     $this->consumeToken(Tokens::T_CLASS_FQN);
                     break;
                 case Tokens::T_PLUS:
+                    $this->consumeToken(Tokens::T_PLUS);
+                    break;
+                case Tokens::T_ELLIPSIS:
                     $this->consumeToken(Tokens::T_PLUS);
                     break;
                 case Tokens::T_MINUS:

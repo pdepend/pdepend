@@ -51,10 +51,6 @@ use PDepend\Source\Tokenizer\Tokens;
 /**
  * Concrete parser implementation that supports features up to PHP version 7.4.
  *
- * TODO: Check or implement features support for:
- * - Unpacking inside arrays
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.unpack-inside-array
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4
