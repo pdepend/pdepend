@@ -200,6 +200,27 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNumericLiteralSeparator()
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
+
+        $expression = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTExpression'
+        );
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ), array_map('get_class', $expression->getChildren()));
+
+        $this->assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
+        $this->assertSame('299_792_458', $expression->getChild(2)->getImage());
+        $this->assertSame('0xCAFE_F00D', $expression->getChild(4)->getImage());
+        $this->assertSame('0b0101_1111', $expression->getChild(6)->getImage());
     }
 }
