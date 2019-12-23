@@ -2883,6 +2883,8 @@ abstract class AbstractPHPParser
 
                     $expressions[] = $expr;
                     break;
+                case Tokens::T_ELLIPSIS:
+                    $this->checkEllipsisInExpressionSupport();
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -2903,7 +2905,6 @@ abstract class AbstractPHPParser
                 case Tokens::T_BITWISE_AND:
                 case Tokens::T_BITWISE_NOT:
                 case Tokens::T_BITWISE_XOR:
-                case Tokens::T_ELLIPSIS:
                     $token = $this->consumeToken($tokenType);
 
                     $expr = $this->builder->buildAstExpression($token->image);
@@ -6671,7 +6672,8 @@ abstract class AbstractPHPParser
                     $this->consumeToken(Tokens::T_PLUS);
                     break;
                 case Tokens::T_ELLIPSIS:
-                    $this->consumeToken(Tokens::T_PLUS);
+                    $this->checkEllipsisInExpressionSupport();
+                    $this->consumeToken(Tokens::T_ELLIPSIS);
                     break;
                 case Tokens::T_MINUS:
                     $this->consumeToken(Tokens::T_MINUS);
@@ -7145,5 +7147,10 @@ abstract class AbstractPHPParser
     protected function throwUnexpectedTokenException(Token $token = null)
     {
         throw $this->getUnexpectedTokenException($token);
+    }
+
+    protected function checkEllipsisInExpressionSupport()
+    {
+        $this->throwUnexpectedTokenException();
     }
 }

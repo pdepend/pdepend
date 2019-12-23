@@ -109,4 +109,8 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
 
         return $this->setNodePositionsAndReturn($closure);
     }
+
+    protected function checkEllipsisInExpressionSupport()
+    {
+    }
 }
