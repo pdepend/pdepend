@@ -174,7 +174,7 @@ class EngineTest extends AbstractTest
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionClasses()->count());
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::countClasses()} method
      * returns the expected number of classes.
