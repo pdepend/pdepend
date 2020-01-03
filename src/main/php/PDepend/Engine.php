@@ -42,6 +42,8 @@
 
 namespace PDepend;
 
+use ArrayIterator;
+use GlobIterator;
 use PDepend\Input\CompositeFilter;
 use PDepend\Input\Filter;
 use PDepend\Input\Iterator;
@@ -62,6 +64,7 @@ use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
+use SplFileObject;
 
 /**
  * PDepend analyzes php class files and generates metrics.
@@ -91,6 +94,13 @@ class Engine
      * @since 0.10.0
      */
     protected $configuration = null;
+
+    /**
+     * Prefix for PHP streams.
+     *
+     * @var string
+     */
+    protected $phpStreamPrefix = 'php://';
 
     /**
      * List of source directories.
@@ -230,18 +240,20 @@ class Engine
     public function addFile($file)
     {
         if ($file === '-') {
-            $file = 'php://stdin';
+            $file = $this->phpStreamPrefix . 'stdin';
         }
 
-        if (strpos($file, 'php://') === 0) {
+        if ($this->isPhpStream($file)) {
             $this->files[] = $file;
-        } else {
-            if (!is_file($file)) {
-                throw new \InvalidArgumentException(sprintf('The given file "%s" does not exist.', $file));
-            }
 
-            $this->files[] = realpath($file);
+            return;
         }
+
+        if (!is_file($file)) {
+            throw new \InvalidArgumentException(sprintf('The given file "%s" does not exist.', $file));
+        }
+
+        $this->files[] = realpath($file);
     }
 
     /**
@@ -637,11 +649,11 @@ class Engine
         $fileIterator = new \AppendIterator();
 
         foreach ($this->files as $file) {
-            if (strpos($file, 'php://') === 0) {
-                $fileIterator->append(new \ArrayIterator(array(new \SplFileObject($file))));
-            } else {
-                $fileIterator->append(new Iterator(new \GlobIterator($file), $this->fileFilter));
-            }
+            $fileIterator->append(
+                $this->isPhpStream($file)
+                    ? new ArrayIterator(array(new SplFileObject($file)))
+                    : new Iterator(new GlobIterator($file), $this->fileFilter)
+            );
         }
 
         foreach ($this->directories as $directory) {
@@ -681,7 +693,7 @@ class Engine
         ksort($files);
         // END
 
-        return new \ArrayIterator(array_values($files));
+        return new ArrayIterator(array_values($files));
     }
 
     private function createAnalyzers($options)
@@ -707,5 +719,10 @@ class Engine
         }
 
         return $analyzers;
+    }
+
+    private function isPhpStream($path)
+    {
+        return substr($path, 0, strlen($this->phpStreamPrefix)) === $this->phpStreamPrefix;
     }
 }
