@@ -44,6 +44,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Builder\Builder;
@@ -218,7 +219,7 @@ class PHPParserVersion70Test extends AbstractTest
         $this->assertFalse($type->isScalar());
         $this->assertFalse($type->isArray());
 
-        $this->assertSame('\Iterator', $type->getImage());
+        $this->assertSame('\\Iterator', $type->getImage());
     }
 
     /**
@@ -532,6 +533,27 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testParseList()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testParseListWithSquaredBrackets()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: [, line: 2, col: 26, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * Tests that the parser throws an exception when it detects an invalid
      * token in a method or property declaration.
      *
@@ -548,6 +570,66 @@ class PHPParserVersion70Test extends AbstractTest
     }
 
     /**
+     * Tests that the parser throws an exception when using :void on PHP < 7.1.
+     *
+     * @return void
+     */
+    public function testVoidTypeHintReturn()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: void, line: 2, col: 23, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Tests that the parser throws an exception when using [...] = ... with PHP < 7.1.
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBrackets()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: [, line: 4, col: 5, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testListExpressionWithKeys
+     *
+     * @return void
+     */
+    public function testListExpressionWithKeys()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: "a", line: 4, col: 10, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testListExpressionWithKeysAndNestedList
+     *
+     * @return void
+     */
+    public function testListExpressionWithKeysAndNestedList()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: \'a\', line: 4, col: 10, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
@@ -555,9 +637,110 @@ class PHPParserVersion70Test extends AbstractTest
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion70',
             array($tokenizer, $builder, $cache)
         );
+    }
+
+    public function testParenthesisAroundCallableParsesArguments()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testKeywordsAsMethodNames()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+
+        $classes = $namespaces[0]->getClasses();
+        $methods = $classes[0]->getMethods();
+
+        $this->assertSame('trait', $methods[0]->getName());
+        $this->assertSame('callable', $methods[1]->getName());
+        $this->assertSame('insteadof', $methods[2]->getName());
+    }
+
+    public function testKeywordsAsConstants()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+
+        $classes = $namespaces[0]->getClasses();
+        /** @var ASTConstantDeclarator[] $constants */
+        $constants = $classes[0]->findChildrenOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+
+        $this->assertSame('trait', $constants[0]->getImage());
+        $this->assertSame('callable', $constants[1]->getImage());
+        $this->assertSame('insteadof', $constants[2]->getImage());
+    }
+
+    public function testCallableKeywordAsClassName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: callable, line: 3, col: 7, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testTraitKeywordAsClassName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: trait, line: 3, col: 7, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testInsteadofKeywordAsClassName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: insteadof, line: 3, col: 7, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testCallableKeywordAsInterfaceName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: callable, line: 3, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testTraitKeywordAsInterfaceName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: trait, line: 3, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testInsteadofKeywordAsInterfaceName()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: insteadof, line: 3, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Tests that the parser does not throw an exception when it detects a reserved
+     * keyword in constant class names.
+     *
+     * @return void
+     */
+    public function testReservedKeyword()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
 }

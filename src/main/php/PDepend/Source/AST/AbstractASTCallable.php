@@ -66,7 +66,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var   \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @var   \PDepend\Source\AST\ASTClassOrInterfaceReference|null
      * @since 0.9.5
      */
     protected $returnClassReference = null;
@@ -163,7 +163,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @access private
      * @since  0.9.6
      */
@@ -184,7 +184,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Will find all children for the given type.
      *
      * @param string $targetType The target class or interface type.
-     * @param array  &$results   The found children.
+     * @param array  $results    The found children.
      *
      * @return \PDepend\Source\AST\ASTNode[]
      * @access private
@@ -204,7 +204,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns the tokens found in the function body.
      *
-     * @return array(mixed)
+     * @return array<mixed>
      */
     public function getTokens()
     {
@@ -272,7 +272,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * the return value of this callable. The returned value will be <b>null</b>
      * if there is no return value or the return value is scalat.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
     public function getReturnClass()
@@ -305,7 +305,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return \PDepend\Source\AST\ASTType|null
      */
     public function getReturnType()
     {

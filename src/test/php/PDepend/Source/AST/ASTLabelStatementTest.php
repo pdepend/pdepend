@@ -61,7 +61,7 @@ class ASTLabelStatementTest extends ASTNodeTest
      */
     public function testLabelStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
         $this->assertSame(4, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTLabelStatementTest extends ASTNodeTest
      */
     public function testLabelStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
         $this->assertSame(5, $stmt->getStartColumn());
     }
 
@@ -84,7 +84,7 @@ class ASTLabelStatementTest extends ASTNodeTest
      */
     public function testLabelStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
         $this->assertSame(4, $stmt->getEndLine());
     }
 
@@ -95,7 +95,7 @@ class ASTLabelStatementTest extends ASTNodeTest
      */
     public function testLabelStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
         $this->assertSame(14, $stmt->getEndColumn());
     }
 
@@ -106,7 +106,7 @@ class ASTLabelStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTLabelStatement
      */
-    private function _getFirstLabelStatementInFunction($testCase)
+    private function getFirstLabelStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,

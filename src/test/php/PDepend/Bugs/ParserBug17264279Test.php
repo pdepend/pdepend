@@ -58,7 +58,7 @@ class ParserBug17264279Test extends AbstractRegressionTest
 {
     /**
      * testParserAcceptsUseAsClassName
-     * 
+     *
      * @return void
      */
     public function testParserAcceptsUseAsClassName()

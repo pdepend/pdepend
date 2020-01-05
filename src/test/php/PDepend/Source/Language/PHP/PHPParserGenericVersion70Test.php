@@ -214,7 +214,7 @@ class PHPParserGenericVersion70Test extends AbstractTest
         $this->assertFalse($type->isScalar());
         $this->assertFalse($type->isArray());
 
-        $this->assertSame('\Iterator', $type->getImage());
+        $this->assertSame('\\Iterator', $type->getImage());
     }
 
     /**
@@ -515,6 +515,14 @@ class PHPParserGenericVersion70Test extends AbstractTest
      * @return void
      */
     public function testClassMethodNamesInvoked()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMethodsCanBeCallOnInstancesReturnedByInvokableObject()
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }

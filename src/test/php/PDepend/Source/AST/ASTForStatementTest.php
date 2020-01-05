@@ -61,7 +61,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -72,7 +72,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -83,7 +83,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
     }
 
@@ -94,7 +94,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForExpressionHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getChild(1)->getStartLine());
     }
 
@@ -116,7 +116,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForExpressionHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(27, $stmt->getChild(1)->getStartColumn());
     }
 
@@ -127,7 +127,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForExpressionHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getChild(1)->getEndLine());
     }
 
@@ -138,7 +138,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForExpressionHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(33, $stmt->getChild(1)->getEndColumn());
     }
 
@@ -149,7 +149,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testFirstChildOfForStatementIsInstanceOfForInit()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForInit', $stmt->getChild(0));
     }
 
@@ -160,7 +160,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testFirstChildOfForStatementCanBeLeftBlank()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
 
@@ -182,7 +182,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testSecondChildOfForStatementIsInstanceOfExpression()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(1));
     }
 
@@ -193,7 +193,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testSecondChildOfForStatementCanBeLeftBlank()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForUpdate', $stmt->getChild(1));
     }
 
@@ -204,7 +204,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testThirdChildOfForStatementIsInstanceOfForUpdate()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForUpdate', $stmt->getChild(2));
     }
 
@@ -215,7 +215,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testThirdChildOfForStatementCanBeLeftBlank()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
     }
 
@@ -226,7 +226,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(3));
     }
 
@@ -237,7 +237,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testFourthChildOfForStatementIsInstanceOfStatement()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStatement', $stmt->getChild(3));
     }
 
@@ -278,7 +278,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementAlternativeScopeHasExpectedStartLine()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
     }
 
@@ -289,7 +289,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementAlternativeScopeHasExpectedStartColumn()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -300,7 +300,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementAlternativeScopeHasExpectedEndLine()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(12, $stmt->getEndLine());
     }
 
@@ -311,7 +311,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementAlternativeScopeHasExpectedEndColumn()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(11, $stmt->getEndColumn());
     }
 
@@ -322,7 +322,7 @@ class ASTForStatementTest extends ASTNodeTest
      */
     public function testForStatementTerminatedByPhpCloseTag()
     {
-        $stmt = $this->_getFirstForStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstForStatementInFunction(__METHOD__);
         $this->assertEquals(9, $stmt->getEndColumn());
     }
 
@@ -378,24 +378,11 @@ class ASTForStatementTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTForStatement
      */
-    private function _getFirstForStatementInFunction($testCase)
+    private function getFirstForStatementInFunction($testCase)
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase, 'PDepend\\Source\\AST\\ASTForStatement'
-        );
-    }
-
-    /**
-     * Returns a node instance for the currently executed test case.
-     *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return \PDepend\Source\AST\ASTForStatement
-     */
-    private function _getFirstForStatementInClass($testCase)
-    {
-        return $this->getFirstNodeOfTypeInClass(
-            $testCase, 'PDepend\\Source\\AST\\ASTForStatement'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTForStatement'
         );
     }
 }

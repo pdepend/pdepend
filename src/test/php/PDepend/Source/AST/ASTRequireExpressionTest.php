@@ -74,7 +74,7 @@ class ASTRequireExpressionTest extends ASTNodeTest
      */
     public function testIsOnceReturnsTrueForRequireOnceExpression()
     {
-        $expr = $this->_getFirstRequireExpressionInFunction();
+        $expr = $this->getFirstRequireExpressionInFunction();
         $this->assertTrue($expr->isOnce());
     }
 
@@ -105,7 +105,7 @@ class ASTRequireExpressionTest extends ASTNodeTest
      */
     public function testRequireExpression()
     {
-        $expr = $this->_getFirstRequireExpressionInFunction();
+        $expr = $this->getFirstRequireExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTRequireExpression', $expr);
 
         return $expr;
@@ -171,7 +171,7 @@ class ASTRequireExpressionTest extends ASTNodeTest
      */
     public function testRequireExpressionWithParenthesis()
     {
-        $expr = $this->_getFirstRequireExpressionInFunction();
+        $expr = $this->getFirstRequireExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTRequireExpression', $expr);
 
         return $expr;
@@ -234,7 +234,7 @@ class ASTRequireExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTRequireExpression
      */
-    private function _getFirstRequireExpressionInFunction()
+    private function getFirstRequireExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

@@ -87,7 +87,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $functions = $namespaces->current()
             ->getFunctions();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $expected = array(
@@ -145,7 +145,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->current()
             ->getCompilationUnit();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($file);
@@ -172,7 +172,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -191,7 +191,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -210,7 +210,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -230,7 +230,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->current()
             ->getCompilationUnit();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($file);
@@ -256,7 +256,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($class);
@@ -283,7 +283,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->current()
             ->getCompilationUnit();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($file);
@@ -309,7 +309,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getInterfaces()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($interface);
@@ -332,7 +332,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getProjectMetrics();
@@ -361,7 +361,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getMethods()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($method);
@@ -382,7 +382,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getMethods()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($method);
@@ -401,7 +401,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -420,7 +420,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
@@ -434,7 +434,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedProjectLLocForFileWithInterfaces()
     {
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
@@ -455,12 +455,12 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->current()
             ->getCompilationUnit();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($file);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($file);
@@ -481,12 +481,12 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getClasses()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($class);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($class);
@@ -507,12 +507,12 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getInterfaces()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($interface);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($interface);
@@ -535,12 +535,12 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getMethods()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($method);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($method);
@@ -561,12 +561,12 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
             ->getFunctions()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getNodeMetrics($function);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getNodeMetrics($function);
@@ -584,12 +584,12 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics0 = $analyzer->getProjectMetrics();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics1 = $analyzer->getProjectMetrics();
@@ -604,7 +604,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForReturnStatement()
     {
-        $this->assertEquals(1, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(1, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -614,7 +614,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForIfAndElseIfStatement()
     {
-        $this->assertEquals(5, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(5, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -624,7 +624,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForForStatement()
     {
-        $this->assertEquals(3, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(3, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -634,7 +634,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForSwitchStatement()
     {
-        $this->assertEquals(7, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(7, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -644,7 +644,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForTryCatchStatement()
     {
-        $this->assertEquals(8, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(8, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -654,7 +654,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForForeachStatement()
     {
-        $this->assertEquals(2, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(2, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -664,7 +664,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForWhileStatement()
     {
-        $this->assertEquals(2, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(2, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -674,7 +674,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      */
     public function testCalculatesExpectedLLocForDoWhileStatement()
     {
-        $this->assertEquals(3, $this->_calculateFunctionMetric('lloc'));
+        $this->assertEquals(3, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -687,7 +687,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setId(42);
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->visitCompilationUnit($compilationUnit);
 
         $metrics = $analyzer->getNodeMetrics($compilationUnit);
@@ -697,20 +697,20 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
     /**
      * Calculates the metrics of the code under test that is associated with
      * the calling test case and returns the metric value for <b>$name</b>.
-     *  
+     *
      * @param string $name The name of the requested metric.
      *
      * @return mixed
      * @since 0.10.2
      */
-    private function _calculateFunctionMetric($name)
+    private function calculateFunctionMetric($name)
     {
         $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
         $function = $namespaces->current()
             ->getFunctions()
             ->current();
 
-        $analyzer = $this->_createAnalyzer();
+        $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($function);
@@ -723,7 +723,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      * @return \PDepend\Metrics\Analyzer\NodeLocAnalyzer
      * @since 1.0.0
      */
-    private function _createAnalyzer()
+    private function createAnalyzer()
     {
         $analyzer = new NodeLocAnalyzer();
         $analyzer->setCache($this->cache);

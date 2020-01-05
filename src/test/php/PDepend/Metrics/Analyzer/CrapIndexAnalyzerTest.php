@@ -88,7 +88,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied()
     {
-        $options  = array('coverage-report' => $this->_createCloverReportFile());
+        $options  = array('coverage-report' => $this->createCloverReportFile());
         $analyzer = new CrapIndexAnalyzer($options);
 
         $this->assertTrue($analyzer->isEnabled());
@@ -96,34 +96,34 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
 
     /**
      * testAnalyzerIgnoresAbstractMethods
-     * 
+     *
      * @return void
      */
     public function testAnalyzerIgnoresAbstractMethods()
     {
-        $metrics = $this->_calculateCrapIndex(__METHOD__, 42);
+        $metrics = $this->calculateCrapIndex(__METHOD__, 42);
         $this->assertSame(array(), $metrics);
     }
 
     /**
      * testAnalyzerIgnoresInterfaceMethods
-     * 
+     *
      * @return void
      */
     public function testAnalyzerIgnoresInterfaceMethods()
     {
-        $metrics = $this->_calculateCrapIndex(__METHOD__, 42);
+        $metrics = $this->calculateCrapIndex(__METHOD__, 42);
         $this->assertSame(array(), $metrics);
     }
 
     /**
      * testAnalyzerReturnsExpectedResultForMethodWithoutCoverage
-     * 
+     *
      * @return void
      */
     public function testAnalyzerReturnsExpectedResultForMethodWithoutCoverage()
     {
-        $this->_testCrapIndexCalculation(__METHOD__, 12, 156);
+        $this->doTestCrapIndexCalculation(__METHOD__, 12, 156);
     }
 
     /**
@@ -133,7 +133,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage()
     {
-        $this->_testCrapIndexCalculation(__METHOD__, 12, 12);
+        $this->doTestCrapIndexCalculation(__METHOD__, 12, 12);
     }
 
     /**
@@ -143,7 +143,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage()
     {
-        $this->_testCrapIndexCalculation(__METHOD__, 12, 30);
+        $this->doTestCrapIndexCalculation(__METHOD__, 12, 30);
     }
 
     /**
@@ -153,7 +153,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyterReturnsExpectedResultForMethodWithoutCoverageData()
     {
-        $this->_testCrapIndexCalculation(__METHOD__, 12, 156);
+        $this->doTestCrapIndexCalculation(__METHOD__, 12, 156);
     }
 
     /**
@@ -163,7 +163,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      */
     public function testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData()
     {
-        $this->_testCrapIndexCalculation(__METHOD__, 12, 156);
+        $this->doTestCrapIndexCalculation(__METHOD__, 12, 156);
     }
 
     /**
@@ -175,9 +175,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    private function _testCrapIndexCalculation($testCase, $ccn, $crapIndex)
+    private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex)
     {
-        $metrics = $this->_calculateCrapIndex($testCase, $ccn);
+        $metrics = $this->calculateCrapIndex($testCase, $ccn);
         $this->assertEquals($crapIndex, $metrics['crap'], '', 0.005);
     }
 
@@ -189,13 +189,13 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      *
      * @return array
      */
-    private function _calculateCrapIndex($testCase, $ccn)
+    private function calculateCrapIndex($testCase, $ccn)
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $options  = array('coverage-report' => $this->_createCloverReportFile());
+        $options  = array('coverage-report' => $this->createCloverReportFile());
         $analyzer = new CrapIndexAnalyzer($options);
-        $analyzer->addAnalyzer($this->_createCyclomaticComplexityAnalyzerMock($ccn));
+        $analyzer->addAnalyzer($this->createCyclomaticComplexityAnalyzerMock($ccn));
         $analyzer->analyze($namespaces);
 
         $namespaces->rewind();
@@ -221,7 +221,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      *
      * @return string
      */
-    private function _createCloverReportFile()
+    private function createCloverReportFile()
     {
         $pathName = $this->createRunResourceURI('clover.xml');
 
@@ -239,7 +239,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
      * @param integer $ccn
      * @return \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
      */
-    private function _createCyclomaticComplexityAnalyzerMock($ccn = 42)
+    private function createCyclomaticComplexityAnalyzerMock($ccn = 42)
     {
         $mock = $this->getMockBuilder('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer')
             ->getMock();

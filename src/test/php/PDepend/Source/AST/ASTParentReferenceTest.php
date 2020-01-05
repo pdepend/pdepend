@@ -148,7 +148,7 @@ class ASTParentReferenceTest extends ASTNodeTest
      */
     public function testParentReferenceHasExpectedStartLine()
     {
-        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(5, $reference->getStartLine());
     }
 
@@ -159,7 +159,7 @@ class ASTParentReferenceTest extends ASTNodeTest
      */
     public function testParentReferenceHasExpectedStartColumn()
     {
-        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(20, $reference->getStartColumn());
     }
 
@@ -170,7 +170,7 @@ class ASTParentReferenceTest extends ASTNodeTest
      */
     public function testParentReferenceHasExpectedEndLine()
     {
-        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(5, $reference->getEndLine());
     }
 
@@ -181,7 +181,7 @@ class ASTParentReferenceTest extends ASTNodeTest
      */
     public function testParentReferenceHasExpectedEndColumn()
     {
-        $reference = $this->_getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(25, $reference->getEndColumn());
     }
 
@@ -206,10 +206,11 @@ class ASTParentReferenceTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTParentReference
      */
-    private function _getFirstParentReferenceInClass($testCase)
+    private function getFirstParentReferenceInClass($testCase)
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase, 'PDepend\\Source\\AST\\ASTParentReference'
+            $testCase,
+            'PDepend\\Source\\AST\\ASTParentReference'
         );
     }
 }

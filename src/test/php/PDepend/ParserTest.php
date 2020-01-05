@@ -73,10 +73,6 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesMaxNestingLevel()
     {
-        if (version_compare(phpversion(), '5.2.10') < 0) {
-            $this->markTestSkipped();
-        }
-
         ini_set('xdebug.max_nesting_level', '100');
 
         $cache   = new MemoryCacheDriver();
@@ -1113,8 +1109,7 @@ class ParserTest extends AbstractTest
             ->getClasses()
             ->current();
 
-        $this->assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL
-        );
+        $this->assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL);
     }
 
     /**
@@ -1219,12 +1214,11 @@ class ParserTest extends AbstractTest
      */
     public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
     {
-        $parameters = $this->parseCodeResourceForTest()->current()
-            ->getFunctions()
-            ->current()
-            ->getParameters();
+        $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
 
         $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $parameters[0]->getDefaultValue());
+        $this->assertSame('parent', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**

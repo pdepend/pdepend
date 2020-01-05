@@ -62,7 +62,7 @@ class ASTArgumentsTest extends ASTNodeTest
      */
     public function testArgumentsGraphWithMagicClassConstant()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
+        $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertGraph(
             $arguments,
             array(
@@ -82,7 +82,7 @@ class ASTArgumentsTest extends ASTNodeTest
      */
     public function testArgumentsHasExpectedStartLine()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
+        $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(5, $arguments->getStartLine());
     }
 
@@ -93,7 +93,7 @@ class ASTArgumentsTest extends ASTNodeTest
      */
     public function testArgumentsHasExpectedStartColumn()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
+        $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(8, $arguments->getStartColumn());
     }
 
@@ -104,7 +104,7 @@ class ASTArgumentsTest extends ASTNodeTest
      */
     public function testArgumentsHasExpectedEndLine()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
+        $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(7, $arguments->getEndLine());
     }
 
@@ -115,7 +115,7 @@ class ASTArgumentsTest extends ASTNodeTest
      */
     public function testArgumentsHasExpectedEndColumn()
     {
-        $arguments = $this->_getFirstArgumentsOfFunction();
+        $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(21, $arguments->getEndColumn());
     }
 
@@ -124,7 +124,7 @@ class ASTArgumentsTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTArguments
      */
-    private function _getFirstArgumentsOfFunction()
+    private function getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

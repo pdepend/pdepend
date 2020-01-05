@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -97,7 +97,7 @@ class DefaultVisitorTest extends AbstractTest
 
     /**
      * testVisitorVisitsFunctionParameter
-     * 
+     *
      * @return void
      */
     public function testVisitorVisitsFunctionParameter()
@@ -373,7 +373,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testGetVisitListenersReturnsIterator()
     {
-        $visitor = $this->getMockForAbstractClass('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
         $this->assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
@@ -384,7 +384,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testGetVisitListenersContainsAddedListener()
     {
-        $visitor = $this->getMockForAbstractClass('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
 
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
             ->getMock();

@@ -51,16 +51,6 @@ use PDepend\Source\Tokenizer\Tokens;
 /**
  * Concrete parser implementation that supports features up to PHP version 7.0.
  *
- * TODO:
- * - Tokens: trait, callable, insteadof
- *   - allowed as
- *     - method
- *     - constant
- *   - not allowed as
- *     - class
- *     - interface
- *     - trait
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.3
@@ -90,12 +80,15 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case Tokens::T_ENDFOREACH:
             case Tokens::T_ENDIF:
             case Tokens::T_ENDWHILE:
+            case Tokens::T_EMPTY:
+            case Tokens::T_EVAL:
             case Tokens::T_LOGICAL_AND:
             case Tokens::T_GLOBAL:
             case Tokens::T_GOTO:
             case Tokens::T_INSTANCEOF:
             case Tokens::T_INSTEADOF:
             case Tokens::T_INTERFACE:
+            case Tokens::T_ISSET:
             case Tokens::T_NAMESPACE:
             case Tokens::T_NEW:
             case Tokens::T_LOGICAL_OR:
@@ -137,6 +130,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             //case Tokens::T_DIE:
             case Tokens::T_SELF:
             case Tokens::T_PARENT:
+            case Tokens::T_UNSET:
                 return true;
         }
         return parent::isConstantName($tokenType);
@@ -229,17 +223,43 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case Tokens::T_NAMESPACE:
                 $name = $this->parseQualifiedName();
 
-                if ($this->isScalarOrCallableTypeHint($name)) {
-                    $type = $this->parseScalarOrCallableTypeHint($name);
-                } else {
-                    $type = $this->builder->buildAstClassOrInterfaceReference($name);
-                }
+                $type = $this->isScalarOrCallableTypeHint($name)
+                    ? $this->parseScalarOrCallableTypeHint($name)
+                    : $this->builder->buildAstClassOrInterfaceReference($name);
                 break;
             default:
                 $type = parent::parseTypeHint();
                 break;
         }
         return $type;
+    }
+
+    /**
+     * Parses any expression that is surrounded by an opening and a closing
+     * parenthesis
+     *
+     * @return \PDepend\Source\AST\ASTExpression
+     */
+    protected function parseParenthesisExpression()
+    {
+        $this->tokenStack->push();
+        $this->consumeComments();
+
+        $expr = $this->builder->buildAstExpression();
+        $expr = $this->parseBraceExpression(
+            $expr,
+            $this->consumeToken(Tokens::T_PARENTHESIS_OPEN),
+            Tokens::T_PARENTHESIS_CLOSE
+        );
+        
+        while ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {
+            $function = $this->builder->buildAstFunctionPostfix($expr->getImage());
+            $function->addChild($expr);
+            $function->addChild($this->parseArguments());
+            $expr = $function;
+        }
+        
+        return $this->setNodePositionsAndReturn($expr);
     }
 
     /**
@@ -256,6 +276,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case 'float':
             case 'string':
             case 'callable':
+            case 'iterable':
+            case 'void':
                 return true;
         }
 
@@ -266,7 +288,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTType
+     * @return \PDepend\Source\AST\ASTType|false
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -278,6 +300,9 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 return $this->builder->buildAstScalarType($image);
             case 'callable':
                 return $this->builder->buildAstTypeCallable();
+            case 'void':
+            case 'iterable':
+                throw $this->getUnexpectedTokenException($this->tokenizer->prevToken());
         }
 
         return false;
@@ -292,10 +317,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      */
     protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
     {
-        if ($newAllocation = $this->parseAnonymousClassDeclaration($allocation)) {
-            return $newAllocation;
-        }
-        return parent::parseAllocationExpressionTypeReference($allocation);
+        return $this->parseAnonymousClassDeclaration($allocation)
+            ?: parent::parseAllocationExpressionTypeReference($allocation);
     }
 
     /**
@@ -369,12 +392,15 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseOptionalMemberPrimaryPrefix(ASTNode $node)
     {
         $this->consumeComments();
+
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
             return $this->parseStaticMemberPrimaryPrefix($node);
         }
+
         if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
             return $this->parseMemberPrimaryPrefix($node);
         }
+
         return $node;
     }
 
@@ -385,12 +411,16 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
     {
         $this->consumeComments();
+
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
             return $this->parseStaticMemberPrimaryPrefix($expr->getChild(0));
         }
+
         if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
-            return $this->parseMemberPrimaryPrefix($expr->getChild(0));
+            $node = count($expr->getChildren()) === 0 ? $expr : $expr->getChild(0);
+            return $this->parseMemberPrimaryPrefix($node);
         }
+
         return $expr;
     }
 
@@ -405,10 +435,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      */
     protected function parseOptionalExpressionForVersion()
     {
-        if ($expression = $this->parseExpressionVersion70()) {
-            return $expression;
-        }
-        return parent::parseOptionalExpressionForVersion();
+        return $this->parseExpressionVersion70()
+            ?: parent::parseOptionalExpressionForVersion();
     }
 
     /**
@@ -475,9 +503,12 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseUseDeclarationForVersion(array $fragments)
     {
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
-            return $this->parseUseDeclarationVersion70($fragments);
+            $this->parseUseDeclarationVersion70($fragments);
+
+            return;
         }
-        return parent::parseUseDeclarationForVersion($fragments);
+
+        parent::parseUseDeclarationForVersion($fragments);
     }
 
     /**
@@ -525,16 +556,18 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
     /**
      * @param array $previousElements
-     * @return string
+     * @return string|null
      */
     protected function parseQualifiedNameElement(array $previousElements)
     {
         if (Tokens::T_CURLY_BRACE_OPEN !== $this->tokenizer->peek()) {
             return parent::parseQualifiedNameElement($previousElements);
         }
+
         if (count($previousElements) >= 2 && '\\' === end($previousElements)) {
             return null;
         }
-        $this->throwUnexpectedTokenException($this->tokenizer->next());
+
+        throw $this->getUnexpectedTokenException($this->tokenizer->next());
     }
 }

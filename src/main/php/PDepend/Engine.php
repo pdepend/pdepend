@@ -105,14 +105,14 @@ class Engine
     /**
      * List of source directories.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $directories = array();
 
     /**
      * List of source code file names.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $files = array();
 
@@ -168,7 +168,7 @@ class Engine
     /**
      * List of analyzer options.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     private $options = array();
 
@@ -224,7 +224,7 @@ class Engine
     {
         $dir = realpath($directory);
 
-        if (!is_dir($dir)) {
+        if ($dir === false || !is_dir($dir)) {
             throw new \InvalidArgumentException("Invalid directory '{$directory}' added.");
         }
 
@@ -293,7 +293,7 @@ class Engine
     /**
      * Sets analyzer options.
      *
-     * @param  array(string=>mixed) $options The analyzer options.
+     * @param  array<string, mixed> $options The analyzer options.
      * @return void
      */
     public function setOptions(array $options = array())
@@ -378,7 +378,7 @@ class Engine
 
         $classes = 0;
         foreach ($this->namespaces as $namespace) {
-            $classes += $namespace->getTypes()->count();
+            $classes += count($namespace->getTypes());
         }
         return $classes;
     }

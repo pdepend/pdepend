@@ -109,7 +109,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * The internal used xml stack.
      *
-     * @var DOMElement[]
+     * @var \DOMElement[]
      */
     private $xmlStack = array();
 
@@ -129,7 +129,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getAcceptedAnalyzers()
     {
@@ -236,7 +236,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Returns an array with all collected project metrics.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      * @since  0.9.10
      */
     private function getProjectMetrics()

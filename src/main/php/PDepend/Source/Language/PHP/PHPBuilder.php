@@ -87,7 +87,7 @@ class PHPBuilder implements Builder
     /**
      * This property holds all packages found during the parsing phase.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[]
+     * @var   \PDepend\Source\AST\ASTNamespace[]
      * @since 0.9.12
      */
     private $preparedNamespaces = null;
@@ -216,6 +216,24 @@ class PHPBuilder implements Builder
         );
 
         return new ASTClassOrInterfaceReference($this->context, $qualifiedName);
+    }
+
+    /**
+     * Builds a new code type reference instance, either Class or ClassOrInterface.
+     *
+     * @param string $qualifiedName  The qualified name of the referenced type.
+     * @param bool   $classReference true if class reference only.
+     *
+     * @return ASTClassOrInterfaceReference
+     * @since  0.9.5
+     */
+    public function buildAstNeededReference($qualifiedName, $classReference)
+    {
+        if ($classReference === true) {
+            return $this->buildAstClassReference($qualifiedName);
+        }
+
+        return $this->buildAstClassOrInterfaceReference($qualifiedName);
     }
 
     /**
@@ -1852,8 +1870,8 @@ class PHPBuilder implements Builder
         $namespaces = $this->namespaces;
 
         // Remove default package if empty
-        if ($this->defaultPackage->getTypes()->count() === 0
-            && $this->defaultPackage->getFunctions()->count() === 0
+        if (count($this->defaultPackage->getTypes()) === 0
+            && count($this->defaultPackage->getFunctions()) === 0
         ) {
             unset($namespaces[self::DEFAULT_NAMESPACE]);
         }
@@ -1908,7 +1926,7 @@ class PHPBuilder implements Builder
      * matching instance or <b>null</b> if no match exists.
      *
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTTrait
+     * @return \PDepend\Source\AST\ASTTrait|null
      * @since  0.9.5
      */
     protected function findTrait($qualifiedName)
@@ -1980,7 +1998,7 @@ class PHPBuilder implements Builder
      * matching instance or <b>null</b> if no match exists.
      *
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return \PDepend\Source\AST\ASTInterface|null
      * @since  0.9.5
      */
     protected function findInterface($qualifiedName)
@@ -2049,7 +2067,7 @@ class PHPBuilder implements Builder
      * matching instance or <b>null</b> if no match exists.
      *
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTClass
+     * @return \PDepend\Source\AST\ASTClass|null
      * @since  0.9.5
      */
     protected function findClass($qualifiedName)
@@ -2074,7 +2092,7 @@ class PHPBuilder implements Builder
      *
      * @param  array  $instances
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\AbstractASTType
+     * @return \PDepend\Source\AST\AbstractASTType|null
      * @since  0.9.5
      */
     protected function findType(array $instances, $qualifiedName)

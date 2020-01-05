@@ -59,7 +59,7 @@ class PHPTokenizerInternalTest extends AbstractTest
 {
     /**
      * testTokenizerReturnsExpectedConstantForTraitKeyword
-     * 
+     *
      * @return void
      * @since 1.0.0
      */
@@ -83,7 +83,7 @@ class PHPTokenizerInternalTest extends AbstractTest
                 Tokens::T_CURLY_BRACE_CLOSE,
                 Tokens::T_CURLY_BRACE_CLOSE,
             ),
-            $this->_getTokenTypesForTest()
+            $this->getTokenTypesForTest()
         );
     }
 
@@ -113,7 +113,7 @@ class PHPTokenizerInternalTest extends AbstractTest
                 Tokens::T_CURLY_BRACE_CLOSE,
                 Tokens::T_CURLY_BRACE_CLOSE,
             ),
-            $this->_getTokenTypesForTest()
+            $this->getTokenTypesForTest()
         );
     }
 
@@ -161,7 +161,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -269,7 +269,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CLOSE_TAG
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -301,7 +301,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE,
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -345,7 +345,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             Tokens::T_CURLY_BRACE_CLOSE,
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -394,38 +394,6 @@ class PHPTokenizerInternalTest extends AbstractTest
             array(Tokens::T_CURLY_BRACE_OPEN, 14),
             array(Tokens::T_CURLY_BRACE_CLOSE, 16),
             array(Tokens::T_CURLY_BRACE_CLOSE, 17),
-        );
-
-        $actual = array();
-        while (is_object($token = $tokenizer->next())) {
-            $actual[] = array($token->type, $token->startLine);
-        }
-
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * Tests that the tokenizer handles a backslash within a string correct,
-     * this bug only occures for PHP versions < 5.3.0alpha3.
-     *
-     * @return void
-     */
-    public function testTokenizerHandlesBackslashInStringCorrectBug84()
-    {
-        if (version_compare(phpversion(), '5.3.0alpha3') >= 0) {
-            $this->markTestSkipped('Only relevant for php versions < 5.3.0alpha3');
-        }
-
-        $tokenizer  = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
-
-        $expected = array(
-            array(Tokens::T_OPEN_TAG, 1),
-            array(Tokens::T_VARIABLE, 2),
-            array(Tokens::T_EQUAL, 2),
-            array(Tokens::T_CONSTANT_ENCAPSED_STRING, 2),
-            array(Tokens::T_SEMICOLON, 2),
-            array(Tokens::T_CLOSE_TAG, 3),
         );
 
         $actual = array();
@@ -600,16 +568,16 @@ Manuel', 3, 5, 61, 6),
             Tokens::T_SEMICOLON,
         );
 
-        $this->assertEquals($expected, $this->_getTokenTypesForTest());
+        $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
      * Returns an array with the token types found in a file associated with
      * the currently running test.
      *
-     * @return array(integer)
+     * @return array<integer>
      */
-    private function _getTokenTypesForTest()
+    private function getTokenTypesForTest()
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());

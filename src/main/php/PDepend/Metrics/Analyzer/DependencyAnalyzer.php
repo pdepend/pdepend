@@ -87,7 +87,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 
@@ -113,7 +113,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array(string=>array)
+     * @var array<string, array|null>
      */
     private $collectedCycles = array();
 
@@ -411,7 +411,6 @@ class DependencyAnalyzer extends AbstractAnalyzer
                     $metrics[self::M_NUMBER_OF_CLASSES]
                 );
             }
-
         }
     }
 
@@ -455,7 +454,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] &$list
+     * @param  \PDepend\Source\AST\ASTNamespace[] $list
      * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return boolean If this method detects a cycle the return value is <b>true</b>
      *                 otherwise this method will return <b>false</b>.

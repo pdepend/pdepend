@@ -60,6 +60,13 @@ use PDepend\Source\AST\ASTMethod;
 class IdBuilder
 {
     /**
+     * @var array<array>
+     *
+     * @deprecated 3.0.0 This property will no longer be accessible on the public access level in next major version.
+     */
+    public $offsetInFile = array();
+
+    /**
      * Generates an identifier for the given file instance.
      *
      * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
@@ -89,7 +96,6 @@ class IdBuilder
      */
     public function forClassOrInterface(AbstractASTType $type)
     {
-
         return $this->forOffsetItem(
             $type,
             ltrim(strrchr(strtolower(get_class($type)), '_'), '_')

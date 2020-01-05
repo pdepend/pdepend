@@ -300,7 +300,7 @@ class ASTCallableTest extends AbstractTest
      */
     protected function getCallableMock()
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\AST\\AbstractASTCallable',
             array(__CLASS__)
         );

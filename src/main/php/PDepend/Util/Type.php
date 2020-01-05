@@ -126,7 +126,7 @@ final class Type
      * This property contains a mapping between a unified lower case type name
      * and the corresponding PHP extension that declares this type.
      *
-     * @var array(string=>string)
+     * @var array<string, string>
      */
     private static $typeNameToExtension = null;
 
@@ -134,7 +134,7 @@ final class Type
      * Hash with all internal namespaces/extensions. Key and value are identical
      * and contain the name of the extension.
      *
-     * @var   array(string=>string)
+     * @var   array<string, string>
      * @since 0.9.10
      */
     private static $internalNamespaces = null;
@@ -142,7 +142,7 @@ final class Type
     /**
      * List of scalar php types.
      *
-     * @var array(string)
+     * @var array<string, bool>
      */
     private static $scalarTypes = array(
         self::IMAGE_ARRAY                   =>  true,
@@ -198,7 +198,7 @@ final class Type
     /**
      * List of primitive php types.
      *
-     * @var array(string=>string)
+     * @var array<string, string>
      */
     private static $primitiveTypes = array(
         self::IMAGE_BOOL               =>  self::PHP_TYPE_BOOLEAN,
@@ -253,7 +253,7 @@ final class Type
      *
      * @param string $typeName The type name.
      *
-     * @return string
+     * @return string|null
      */
     public static function getTypePackage($typeName)
     {
@@ -270,7 +270,7 @@ final class Type
     /**
      * Returns an array with all package/extension names.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public static function getInternalNamespaces()
     {
@@ -338,7 +338,7 @@ final class Type
      *
      * @param string $image The found primitive type image.
      *
-     * @return string
+     * @return string|null
      * @since  0.9.6
      */
     public static function getPrimitiveType($image)
@@ -377,7 +377,7 @@ final class Type
      * this type belongs to an extension or is internal. All internal and extension
      * classes are collected in an internal data structure.
      *
-     * @return array(string=>string)
+     * @return array<string, string>
      */
     private static function initTypeToExtension()
     {

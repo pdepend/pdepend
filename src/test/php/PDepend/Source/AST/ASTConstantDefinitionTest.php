@@ -172,7 +172,7 @@ class ASTConstantDefinitionTest extends ASTNodeTest
      */
     public function testConstantDefinitionHasExpectedDocComment()
     {
-        $constant = $this->_getFirstConstantDefinitionInClass();
+        $constant = $this->getFirstConstantDefinitionInClass();
         $this->assertEquals(
             "/**\n" .
             "     * Foo bar baz foobar.\n" .
@@ -188,7 +188,7 @@ class ASTConstantDefinitionTest extends ASTNodeTest
      */
     public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
     {
-        $constant = $this->_getFirstConstantDefinitionInClass();
+        $constant = $this->getFirstConstantDefinitionInClass();
         $this->assertEquals(
             "/**\n" .
             "     * Foo bar baz foobar.\n" .
@@ -205,7 +205,7 @@ class ASTConstantDefinitionTest extends ASTNodeTest
      */
     public function testConstantDefinition()
     {
-        $constant = $this->_getFirstConstantDefinitionInClass();
+        $constant = $this->getFirstConstantDefinitionInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constant);
 
         return $constant;
@@ -271,7 +271,7 @@ class ASTConstantDefinitionTest extends ASTNodeTest
      */
     public function testConstantDefinitionWithDeclarators()
     {
-        $constant = $this->_getFirstConstantDefinitionInClass();
+        $constant = $this->getFirstConstantDefinitionInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constant);
 
         return $constant;
@@ -360,10 +360,10 @@ class ASTConstantDefinitionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTConstantDefinition
      */
-    private function _getFirstConstantDefinitionInClass()
+    private function getFirstConstantDefinitionInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(), 
+            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTConstantDefinition'
         );
     }

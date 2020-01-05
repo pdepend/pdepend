@@ -45,7 +45,6 @@ namespace PDepend\Bugs;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokens;
 
-
 /**
  * Test case for bug #124.
  *
@@ -68,7 +67,6 @@ class ParserBug124Test extends AbstractRegressionTest
      */
     public function testClassNameScalarKeyword()
     {
-
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceURI('bugs/124/testClassNameScalarKeyword.php'));
 
@@ -77,15 +75,14 @@ class ParserBug124Test extends AbstractRegressionTest
             $actual[] = $token->type;
         }
 
-
-         $tokenTypes = array(
-             Tokens::T_OPEN_TAG,
-             Tokens::T_VARIABLE,
-             Tokens::T_EQUAL,
-             Tokens::T_STRING,
-             Tokens::T_DOUBLE_COLON,
-             Tokens::T_CLASS_FQN,
-             Tokens::T_SEMICOLON
+        $tokenTypes = array(
+            Tokens::T_OPEN_TAG,
+            Tokens::T_VARIABLE,
+            Tokens::T_EQUAL,
+            Tokens::T_STRING,
+            Tokens::T_DOUBLE_COLON,
+            Tokens::T_CLASS_FQN,
+            Tokens::T_SEMICOLON
         );
 
         $this->assertEquals($tokenTypes, $actual);

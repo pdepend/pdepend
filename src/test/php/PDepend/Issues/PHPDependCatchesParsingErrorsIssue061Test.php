@@ -155,7 +155,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
     /**
      * Sets a command line argument vector.
      *
-     * @param array(string) $argv The temporary command line argument vector
+     * @param array<string> $argv The temporary command line argument vector
      *
      * @return void
      */

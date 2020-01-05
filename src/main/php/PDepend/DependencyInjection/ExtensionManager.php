@@ -55,7 +55,7 @@ class ExtensionManager
     /**
      * Activate an extension based on a class name.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @param  string $className
      * @return void
      */
@@ -84,7 +84,7 @@ class ExtensionManager
     /**
      * Return all activated extensions.
      *
-     * @return array(\PDepend\DependencyInjection\Extension)
+     * @return array<\PDepend\DependencyInjection\Extension>
      */
     public function getActivatedExtensions()
     {

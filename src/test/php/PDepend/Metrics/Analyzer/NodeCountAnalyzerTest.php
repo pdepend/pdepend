@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -59,7 +59,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTest
 {
     /**
      * testVisitClassIgnoresClassesThatAreNotUserDefined
-     * 
+     *
      * @return void
      */
     public function testVisitClassIgnoresClassesThatAreNotUserDefined()

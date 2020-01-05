@@ -193,7 +193,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns normalized source code with stripped whitespaces.
      *
-     * @return array(integer=>string)
+     * @return string
      */
     public function getSource()
     {
@@ -204,7 +204,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns an <b>array</b> with all tokens within this file.
      *
-     * @return array(array)
+     * @return array<array>
      */
     public function getTokens()
     {
@@ -216,7 +216,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Sets the tokens for this file.
      *
-     * @param array(array) $tokens The generated tokens.
+     * @param array<array> $tokens The generated tokens.
      *
      * @return void
      */
@@ -300,7 +300,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * before it serializes an instance of this class. This method returns an
      * array with those property names that should be serialized.
      *
-     * @return array(string)
+     * @return array<string>
      * @since  0.10.0
      */
     public function __sleep()

@@ -68,7 +68,7 @@ class ChartTest extends AbstractTest
 
     /**
      * setUp()
-     * 
+     *
      * @return void
      */
     protected function setUp()
@@ -148,7 +148,7 @@ class ChartTest extends AbstractTest
      */
     public function testGeneratesCorrectSVGImageFile()
     {
-        $nodes = new ASTArtifactList($this->_createPackages(true, true));
+        $nodes = new ASTArtifactList($this->createPackages(true, true));
 
         $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
@@ -169,7 +169,7 @@ class ChartTest extends AbstractTest
      */
     public function testGeneratedSvgImageContainsExpectedPackages()
     {
-        $nodes = new ASTArtifactList($this->_createPackages(true, true));
+        $nodes = new ASTArtifactList($this->createPackages(true, true));
 
         $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
@@ -197,7 +197,7 @@ class ChartTest extends AbstractTest
      */
     public function testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages()
     {
-        $nodes = new ASTArtifactList($this->_createPackages(true, false, true));
+        $nodes = new ASTArtifactList($this->createPackages(true, false, true));
 
         $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
@@ -224,7 +224,7 @@ class ChartTest extends AbstractTest
      */
     public function testCalculateCorrectEllipseSize()
     {
-        $nodes = $this->_createPackages(true, true);
+        $nodes = $this->createPackages(true, true);
 
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\DependencyAnalyzer')
             ->getMock();
@@ -302,7 +302,7 @@ class ChartTest extends AbstractTest
             unlink($fileName);
         }
 
-        $nodes = new ASTArtifactList($this->_createPackages(true, true));
+        $nodes = new ASTArtifactList($this->createPackages(true, true));
 
         $analyzer = new DependencyAnalyzer();
         $analyzer->analyze($nodes);
@@ -327,11 +327,11 @@ class ChartTest extends AbstractTest
     /**
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    private function _createPackages()
+    private function createPackages()
     {
         $packages = array();
         foreach (func_get_args() as $i => $userDefined) {
-            $packages[] = $this->_createPackage(
+            $packages[] = $this->createPackage(
                 $userDefined,
                 'package' . $i
             );
@@ -344,7 +344,7 @@ class ChartTest extends AbstractTest
      * @param string $packageName
      * @return \PDepend\Source\AST\ASTNamespace
      */
-    private function _createPackage($userDefined, $packageName)
+    private function createPackage($userDefined, $packageName)
     {
         $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
             ->setMethods(array('isUserDefined'))

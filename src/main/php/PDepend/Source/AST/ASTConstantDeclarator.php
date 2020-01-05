@@ -127,7 +127,7 @@ class ASTConstantDeclarator extends AbstractASTNode
      * Magic sleep method that returns an array with those property names that
      * should be cached for this node instance.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function __sleep()
     {

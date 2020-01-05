@@ -98,7 +98,7 @@ class ASTRequireExpression extends ASTExpression
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.
      *
-     * @return array(string)
+     * @return array<string>
      * @since  0.10.0
      */
     public function __sleep()

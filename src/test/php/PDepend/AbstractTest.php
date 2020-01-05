@@ -54,13 +54,13 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
-use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract test case implementation for the PDepend namespace.
@@ -68,7 +68,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends TestCase
 {
     /**
      * The current working directory.
@@ -387,7 +387,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * @param \PDepend\Source\AST\ASTNode $node   The current root node.
      * @param array                   $actual Previous filled list.
      *
-     * @return array(string)
+     * @return array<string>
      */
     protected static function collectChildNodes(ASTNode $node, array $actual = array())
     {
@@ -403,7 +403,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * object graph.
      *
      * @param \PDepend\Source\AST\ASTNode $node
-     * @param array(string) $expected
+     * @param array<string> $expected
      *
      * @return void
      */
@@ -769,7 +769,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         // Is it not installed?
         if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
-
             $path  = realpath(dirname(__FILE__) . '/../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
@@ -780,7 +779,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
-        self::_initVersionCompatibility();
+        self::initVersionCompatibility();
     }
 
     /**
@@ -807,7 +806,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    private static function _initVersionCompatibility()
+    private static function initVersionCompatibility()
     {
         $reflection = new \ReflectionClass('Iterator');
         $extension  = strtolower($reflection->getExtensionName());
@@ -921,6 +920,22 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $builder,
             $cache
         );
+    }
+
+    public function getMockBuilder($className)
+    {
+        include_once __DIR__ . '/MockBuilder.php';
+
+        return new MockBuilder($this, $className);
+    }
+
+    protected function getAbstractClassMock($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = array(), $cloneArguments = false)
+    {
+        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+            return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
+        }
+
+        return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
 }
 

@@ -10,9 +10,6 @@
 :Keywords:     Michele Lanza, Radu Marinescu,Stéphane Ducasse, metrics, report,
                Overview Pyramid, chart, visualization
 
-.. contents::
-   :depth: 2
-
 The Overview Pyramid is used to visualize a complete software system in
 a really compact manner. Therefor it collects a set of metrics from the
 categories *Inheritance*, *Coupling* and *Size* & *Complexity*, and puts

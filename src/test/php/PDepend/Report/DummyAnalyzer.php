@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -73,12 +73,11 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Constructs a new analyzer instance.
      *
-     * @param array(string=>mixed) $options Global option array, every analyzer
+     * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
     public function __construct(array $options = array())
     {
-        
     }
     
     /**
@@ -150,7 +149,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Set global options
      *
-     * @param array(string=>mixed) $options
+     * @param array<string, mixed> $options
      * @since 2.0.1
      */
     public function setOptions(array $options = array())

@@ -178,7 +178,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @var array(integer=>integer)
+     * @var array<integer, integer>
      */
     protected static $tokenMap = array(
         T_AS                        =>  Tokens::T_AS,
@@ -305,7 +305,7 @@ class PHPTokenizerInternal implements Tokenizer
         T_OPEN_TAG_WITH_ECHO        =>  Tokens::T_OPEN_TAG_WITH_ECHO,
         T_IS_GREATER_OR_EQUAL       =>  Tokens::T_IS_GREATER_OR_EQUAL,
         T_IS_SMALLER_OR_EQUAL       =>  Tokens::T_IS_SMALLER_OR_EQUAL,
-        T_PAAMAYIM_NEKUDOTAYIM      =>  Tokens::T_DOUBLE_COLON,
+        //T_PAAMAYIM_NEKUDOTAYIM      =>  Tokens::T_DOUBLE_COLON,
         T_ENCAPSED_AND_WHITESPACE   =>  Tokens::T_ENCAPSED_AND_WHITESPACE,
         T_CONSTANT_ENCAPSED_STRING  =>  Tokens::T_CONSTANT_ENCAPSED_STRING,
         T_YIELD                     =>  Tokens::T_YIELD,
@@ -322,7 +322,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
-     * @var array(string=>integer)
+     * @var array<string, integer>
      */
     protected static $literalMap = array(
         '@'              =>  Tokens::T_AT,
@@ -376,7 +376,7 @@ class PHPTokenizerInternal implements Tokenizer
 
     /**
      *
-     * @var array(mixed=>array)
+     * @var array<mixed, array>
      */
     protected static $substituteTokens = array(
         T_DOLLAR_OPEN_CURLY_BRACES  =>  array('$', '{'),
@@ -385,7 +385,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * BuilderContext sensitive alternative mappings.
      *
-     * @var array(integer=>array)
+     * @var array<integer, array>
      */
     protected static $alternativeMap = array(
         Tokens::T_USE => array(
@@ -432,13 +432,6 @@ class PHPTokenizerInternal implements Tokenizer
             Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_NAMESPACE        =>  Tokens::T_STRING,
-            Tokens::T_CONST            =>  Tokens::T_STRING,
-            Tokens::T_FUNCTION         =>  Tokens::T_STRING,
-        ),
-
-        Tokens::T_PARENT => array(
-            Tokens::T_OBJECT_OPERATOR  =>  Tokens::T_STRING,
-            Tokens::T_DOUBLE_COLON     =>  Tokens::T_STRING,
             Tokens::T_CONST            =>  Tokens::T_STRING,
             Tokens::T_FUNCTION         =>  Tokens::T_STRING,
         ),
@@ -556,7 +549,7 @@ class PHPTokenizerInternal implements Tokenizer
     /**
      * Prepared token list.
      *
-     * @var Token[]
+     * @var Token[]|null
      */
     protected $tokens = null;
 
@@ -591,6 +584,38 @@ class PHPTokenizerInternal implements Tokenizer
     }
 
     /**
+     * Returns the previous token or null if there is no one yet.
+     *
+     * @return Token|null
+     */
+    public function prevToken()
+    {
+        $this->tokenize();
+
+        if ($this->index > 0 && $this->index < $this->count - 1) {
+            return $this->tokens[$this->index - 1];
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the current token or null if there is no more.
+     *
+     * @return Token|null
+     */
+    public function currentToken()
+    {
+        $this->tokenize();
+
+        if ($this->index < $this->count - 1) {
+            return $this->tokens[$this->index];
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
      * there is no next token.
      *
@@ -603,6 +628,7 @@ class PHPTokenizerInternal implements Tokenizer
         if ($this->index < $this->count) {
             return $this->tokens[$this->index++];
         }
+
         return self::T_EOF;
     }
 
@@ -634,9 +660,11 @@ class PHPTokenizerInternal implements Tokenizer
         $this->tokenize();
         
         $offset = 0;
+
         do {
             $type = $this->tokens[$this->index + ++$offset]->type;
         } while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT);
+
         return $type;
     }
 
@@ -661,9 +689,9 @@ class PHPTokenizerInternal implements Tokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array(array) $tokens Unprepared array of php tokens.
+     * @param array<array> $tokens Unprepared array of php tokens.
      *
-     * @return array(array)
+     * @return array<array>
      */
     private function substituteTokens(array $tokens)
     {
@@ -690,7 +718,7 @@ class PHPTokenizerInternal implements Tokenizer
      */
     private function tokenize()
     {
-        if ($this->tokens) {
+        if ($this->tokens !== null) {
             return;
         }
 
@@ -707,13 +735,7 @@ class PHPTokenizerInternal implements Tokenizer
             $source
         );
 
-        if (version_compare(phpversion(), '5.3.0alpha3') < 0) {
-            $tokens = PHPTokenizerHelperVersion52::tokenize($source);
-        } else {
-            $tokens = token_get_all($source);
-        }
-
-        $tokens = $this->substituteTokens($tokens);
+        $tokens = $this->substituteTokens(token_get_all($source));
 
         // Is the current token between an opening and a closing php tag?
         $inTag = false;
@@ -782,7 +804,6 @@ class PHPTokenizerInternal implements Tokenizer
 
                         array_pop($this->tokens);
                     }
-
                 } elseif (isset($tokenMap[$token[0]])) {
                     $type = $tokenMap[$token[0]];
                     // Check for a context sensitive alternative
@@ -849,7 +870,7 @@ class PHPTokenizerInternal implements Tokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array &$tokens Reference to the current token stream.
+     * @param array $tokens Reference to the current token stream.
      *
      * @return string
      */
@@ -883,7 +904,7 @@ class PHPTokenizerInternal implements Tokenizer
      *
      * @param string $token The unknown string token.
      *
-     * @return array(integer => mixed)
+     * @return array<integer, mixed>
      */
     private function generateUnknownToken($token)
     {

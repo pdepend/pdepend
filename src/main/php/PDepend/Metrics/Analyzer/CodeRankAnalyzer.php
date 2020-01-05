@@ -80,7 +80,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * All found nodes.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodes = array();
 
@@ -109,7 +109,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * )
      * </code>
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 
@@ -169,7 +169,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * node, this method will return an empty <b>array</b>.
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -206,7 +206,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * @param string $id1 Identifier for the incoming edges.
      * @param string $id2 Identifier for the outgoing edges.
      *
-     * @return array(string=>float)
+     * @return array<string, float>
      */
     protected function computeCodeRank($id1, $id2)
     {

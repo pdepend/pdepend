@@ -71,7 +71,7 @@ class Runner
      * List of allowed file extensions. Default file extensions are <b>php</b>
      * and <p>php5</b>.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $extensions = array('php', 'php5');
 
@@ -79,21 +79,21 @@ class Runner
      * List of exclude directories. Default exclude dirs are <b>.svn</b> and
      * <b>CVS</b>.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $excludeDirectories = array('.git', '.svn', 'CVS');
 
     /**
      * List of exclude namespaces.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $excludeNamespaces = array();
 
     /**
      * List of source code directories and files.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $sourceArguments = array();
 
@@ -107,14 +107,14 @@ class Runner
     /**
      * List of log identifiers and log files.
      *
-     * @var array(string=>string)
+     * @var array<string, string>
      */
     private $loggerMap = array();
 
     /**
      * List of cli options for loggers or analyzers.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     private $options = array();
 
@@ -129,7 +129,7 @@ class Runner
     /**
      * List of error messages for all parsing errors.
      *
-     * @var array(string)
+     * @var array<string>
      */
     private $parseErrors = array();
 
@@ -154,7 +154,7 @@ class Runner
      *
      * NOTE: If you call this method, it will replace the default file extensions.
      *
-     * @param array(string) $extensions
+     * @param array<string> $extensions
      * @return void
      */
     public function setFileExtensions(array $extensions)
@@ -167,7 +167,7 @@ class Runner
      *
      * NOTE: If this method is called, it will overwrite the default settings.
      *
-     * @param array(string) $excludeDirectories
+     * @param array<string> $excludeDirectories
      * @return void
      */
     public function setExcludeDirectories(array $excludeDirectories)
@@ -178,7 +178,7 @@ class Runner
     /**
      * Sets a list of exclude packages.
      *
-     * @param array(string) $excludePackages
+     * @param array<string> $excludePackages
      * @return void
      */
     public function setExcludeNamespaces(array $excludePackages)
@@ -189,7 +189,7 @@ class Runner
     /**
      * Sets a list of source directories and files.
      *
-     * @param array(string) $sourceArguments
+     * @param array<string> $sourceArguments
      * @return void
      */
     public function setSourceArguments(array $sourceArguments)
@@ -247,7 +247,7 @@ class Runner
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
-     * @return boolean
+     * @return integer
      * @throws \RuntimeException An exception with a readable error message and
      * an exit code.
      */
@@ -338,7 +338,7 @@ class Runner
      * This method will return an <b>array</b> with error messages for all
      * failures that happened during the parsing process.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getParseErrors()
     {

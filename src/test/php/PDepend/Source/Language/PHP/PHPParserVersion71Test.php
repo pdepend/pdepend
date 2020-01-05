@@ -102,7 +102,7 @@ class PHPParserVersion71Test extends AbstractTest
      */
     public function testCatchMultipleExceptionClasses()
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());        
+        $this->assertNotNull($this->parseCodeResourceForTest());
     }
     
     /**
@@ -151,7 +151,18 @@ class PHPParserVersion71Test extends AbstractTest
     public function testVoidTypeHintReturn()
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
-        
+
+        $this->assertTrue($type->isScalar());
+        $this->assertFalse($type->isArray());
+        $this->assertSame('void', $type->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testVoidTypeHintReturnNamespaced()
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
         $this->assertTrue($type->isScalar());
         $this->assertFalse($type->isArray());
         $this->assertSame('void', $type->getImage());
@@ -165,7 +176,7 @@ class PHPParserVersion71Test extends AbstractTest
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion71',
             array($tokenizer, $builder, $cache)
         );

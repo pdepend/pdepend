@@ -58,22 +58,22 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Dummy project metrics.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     protected $projectMetrics = null;
 
     /**
      * Dummy node metrics.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     protected $nodeMetrics = null;
 
     /**
      * Constructs a new analyzer dummy instance.
      *
-     * @param array(string=>mixed) $projectMetrics Dummy project metrics.
-     * @param array(string=>array) $nodeMetrics    Dummy node metrics.
+     * @param array<string, mixed> $projectMetrics Dummy project metrics.
+     * @param array<string, array> $nodeMetrics    Dummy node metrics.
      */
     public function __construct(array $projectMetrics = array(), array $nodeMetrics = array())
     {
@@ -87,7 +87,8 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener) {
+    public function addAnalyzeListener(AnalyzerListener $listener)
+    {
     }
 
     /**
@@ -96,7 +97,8 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(AnalyzerListener $listener) {
+    public function removeAnalyzeListener(AnalyzerListener $listener)
+    {
     }
 
     /**
@@ -124,7 +126,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Returns the project metrics.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getProjectMetrics()
     {
@@ -135,7 +137,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * Returns an array with metrics for the requested node.
      *
      * @param \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -145,7 +147,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Set global options
      *
-     * @param array(string=>mixed) $options
+     * @param array<string, mixed> $options
      * @since 2.0.1
      */
     public function setOptions(array $options = array())

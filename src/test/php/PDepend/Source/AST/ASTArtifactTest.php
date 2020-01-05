@@ -68,7 +68,7 @@ class ASTArtifactTest extends AbstractTest
     
     /**
      * testSetNameOverridesPreviousItemName
-     * 
+     *
      * @since 1.0.0
      */
     public function testSetNameOverridesPreviousItemName()
@@ -76,7 +76,7 @@ class ASTArtifactTest extends AbstractTest
         $item = $this->getItemMock();
         $item->setName(__FUNCTION__);
         
-        $this->assertEquals(__FUNCTION__, $item->getName());        
+        $this->assertEquals(__FUNCTION__, $item->getName());
     }
 
     /**
@@ -160,7 +160,7 @@ class ASTArtifactTest extends AbstractTest
      */
     protected function getItemMock()
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\AST\\AbstractASTArtifact',
             array(__CLASS__)
         );

@@ -79,7 +79,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     protected $constants = null;
 
@@ -198,7 +198,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @param string $targetType Searched class or interface type.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @access private
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
      */
@@ -226,7 +226,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Will find all children for the given type.
      *
      * @param string $targetType The target class or interface type.
-     * @param array  &$results   The found children.
+     * @param array  $results    The found children.
      *
      * @return \PDepend\Source\AST\ASTNode[]
      * @access private

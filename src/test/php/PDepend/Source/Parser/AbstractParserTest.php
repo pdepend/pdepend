@@ -54,5 +54,4 @@ use PDepend\AbstractTest;
  */
 abstract class AbstractParserTest extends AbstractTest
 {
-
 }

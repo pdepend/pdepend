@@ -56,7 +56,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
 {
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     * 
+     *
      * @return void
      */
     public function testInstanceOfExpressionGraphWithStringIdentifier()
@@ -66,7 +66,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                __FUNCTION__
+            __FUNCTION__
         );
     }
 
@@ -82,7 +82,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                'foo\bar\Baz'
+            'foo\bar\Baz'
         );
     }
 
@@ -98,7 +98,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                '\foo\bar\Baz'
+            '\foo\bar\Baz'
         );
     }
 
@@ -114,7 +114,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                '\foo\bar\Baz'
+            '\foo\bar\Baz'
         );
     }
 
@@ -130,7 +130,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                'stdClass'
+            'stdClass'
         );
     }
 
@@ -146,7 +146,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                '__PHP_Incomplete_Class'
+            '__PHP_Incomplete_Class'
         );
     }
 
@@ -162,7 +162,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTest
                 ->current()
                 ->getFunctions()
                 ->current(),
-                '::'
+            '::'
         );
     }
 

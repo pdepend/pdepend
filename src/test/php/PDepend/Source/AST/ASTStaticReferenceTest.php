@@ -63,7 +63,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument()
     {
-        $target  = $this->getMockForAbstractClass(
+        $target  = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
             array(__CLASS__)
         );
@@ -81,7 +81,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
      */
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull()
     {
-        $target = $this->getMockForAbstractClass(
+        $target = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
             array(__CLASS__)
         );
@@ -168,7 +168,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
      */
     public function testStaticReference()
     {
-        $reference = $this->_getFirstStaticReferenceInClass();
+        $reference = $this->getFirstStaticReferenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticReference', $reference);
 
         return $reference;
@@ -238,7 +238,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
 
         return new \PDepend\Source\AST\ASTStaticReference(
             $context,
-            $this->getMockForAbstractClass(
+            $this->getAbstractClassMock(
                 '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
                 array(__CLASS__)
             )
@@ -251,7 +251,7 @@ class ASTStaticReferenceTest extends ASTNodeTest
      * @param string $testCase Name of the calling test case.
      * @return \PDepend\Source\AST\ASTStaticReference
      */
-    private function _getFirstStaticReferenceInClass()
+    private function getFirstStaticReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),

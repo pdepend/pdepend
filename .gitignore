@@ -8,3 +8,5 @@ PHP_Depend-*.tgz
 .pear
 vendor
 composer.phar
+composer.lock
+dist

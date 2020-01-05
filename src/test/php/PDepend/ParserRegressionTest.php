@@ -70,7 +70,7 @@ class ParserRegressionTest extends AbstractTest
     /**
      * Returns an array with test source files.
      *
-     * @return array(array)
+     * @return array<array>
      */
     public function dataProviderSourceFiles()
     {

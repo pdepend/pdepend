@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,51 +38,65 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Bugs;
+namespace PDepend\Source\Language\PHP;
+
+use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTParameter;
 
 /**
- * Test case for bug #149
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion72} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \stdClass
- * @group regressiontest
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
+ * @group unittest
  */
-class EmptyExceptionMessageInPHP52HelperBug149Test extends AbstractRegressionTest
+class PHPParserVersion72Test extends AbstractTest
 {
     /**
-     * Will skip this test for PHP versions >= 5.3
-     *
      * @return void
      */
-    protected function setUp()
+    public function testObjectTypeHintReturn()
     {
-        if (version_compare(phpversion(), '5.3.0') >= 0) {
-            $this->markTestSkipped('This test is related to php versions < 5.3.0');
-        }
-        parent::setUp();
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        $this->assertFalse($type->isArray());
+        $this->assertSame('object', $type->getImage());
     }
 
     /**
-     * testHelperThrowsExceptionForInvalidToken
-     *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenException
      */
-    public function testHelperThrowsExceptionForInvalidToken()
+    public function testObjectTypeHintParameter()
     {
-        $this->parseCodeResourceForTest();
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        $this->assertFalse($type->isArray());
+        $this->assertSame('object', $type->getImage());
     }
 
-    /**
-     * testHelperThrowsExceptionWithExpectedExceptionMessage
-     *
-     * @return void
-     * @expectedException \PDepend\Source\Parser\TokenException
-     */
-    public function testHelperThrowsExceptionWithExpectedExceptionMessage()
+    public function testAbstractMethodOverriding()
     {
-        $this->parseCodeResourceForTest();
+        /** @var ASTArtifactList $classes */
+        $classes = $this->parseCodeResourceForTest()->current()->getClasses();
+        /** @var ASTClass $class */
+        $class = $classes[1];
+        /** @var ASTArtifactList $classes */
+        $methods = $class->getMethods();
+        /** @var ASTMethod $method */
+        $method = $methods[0];
+        /** @var ASTArtifactList $parameters */
+        $parameters = $method->getParameters();
+        /** @var ASTParameter $parameter */
+        $parameter = $parameters[0];
+
+        $this->assertTrue($method->isAbstract());
+        $this->assertSame('int', $method->getReturnType()->getImage());
+        $this->assertNull($parameter->getClass());
     }
 }

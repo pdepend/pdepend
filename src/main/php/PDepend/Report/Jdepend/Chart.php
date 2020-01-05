@@ -98,7 +98,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getAcceptedAnalyzers()
     {
@@ -235,7 +235,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 $legend->nodeValue = $found[1];
                 $legendTemplate->parentNode->appendChild($legend);
             }
-
         }
 
         $bad->parentNode->removeChild($bad);

@@ -2,7 +2,7 @@
 class testGetClassForPropertyWithNamespacedArrayType
 {
     /**
-     * @var array(foo\bar\Baz)
+     * @var foo\bar\Baz[]
      */
     protected $foo = null;
 }

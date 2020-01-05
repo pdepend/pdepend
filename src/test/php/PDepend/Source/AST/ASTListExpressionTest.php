@@ -62,7 +62,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpression()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 
         return $expr;
@@ -128,7 +128,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithNestedList()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
 
         return $expr;
@@ -197,7 +197,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionSupportsManyVariables()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
         $this->assertEquals(3, count($vars));
     }
@@ -209,7 +209,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionSupportsSingleVariable()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
         $this->assertEquals(1, count($vars));
     }
@@ -221,7 +221,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionSupportsExtraCommas()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
         $this->assertEquals(3, count($vars));
     }
@@ -233,7 +233,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithComments()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
         $this->assertEquals(3, count($vars));
     }
@@ -245,7 +245,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithoutChildExpression()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
         $this->assertEquals(0, count($vars));
     }
@@ -257,10 +257,71 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithVariableVariable()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableVariable', $var);
+    }
+
+    /**
+     * testListExpressionWithSquaredBrackets
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBrackets()
+    {
+        $parameters = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFormalParameters'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+    }
+
+    /**
+     * testListExpressionWithSquaredBracketsAndEmptySlot
+     *
+     * @return void
+     */
+    public function testListExpressionWithSquaredBracketsAndEmptySlot()
+    {
+        $parameters = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFormalParameters'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+    }
+
+    /**
+     * testListExpressionWithArrayAndEmptySlot
+     *
+     * @return void
+     */
+    public function testListExpressionWithArrayAndEmptySlot()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: ,, line: 4, col: 18, file: '
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testFunctionVoidReturnType
+     *
+     * @return void
+     */
+    public function testFunctionVoidReturnType()
+    {
+        /** @var ASTScalarType $type */
+        $type = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\Source\AST\ASTScalarType'
+        );
+
+        $this->assertSame('void', $type->getImage());
     }
 
     /**
@@ -270,7 +331,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithCompoundVariable()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $var);
@@ -283,7 +344,7 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithArrayElement()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArrayIndexExpression', $var);
@@ -296,10 +357,38 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithObjectProperty()
     {
-        $expr = $this->_getFirstListExpressionInFunction();
+        $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $var);
+    }
+
+    /**
+     * testListExpressionWithKeys
+     *
+     * @return \PDepend\Source\AST\ASTListExpression
+     * @since 1.0.2
+     */
+    public function testListExpressionWithKeys()
+    {
+        $expr = $this->getFirstListExpressionInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
+
+        return $expr;
+    }
+
+    /**
+     * testListExpressionWithKeysAndNestedList
+     *
+     * @return \PDepend\Source\AST\ASTListExpression
+     * @since 1.0.2
+     */
+    public function testListExpressionWithKeysAndNestedList()
+    {
+        $expr = $this->getFirstListExpressionInFunction();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $expr);
+
+        return $expr;
     }
 
     /**
@@ -307,7 +396,7 @@ class ASTListExpressionTest extends ASTNodeTest
      *
      * @return \PDepend\Source\AST\ASTListExpression
      */
-    private function _getFirstListExpressionInFunction()
+    private function getFirstListExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),

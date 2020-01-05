@@ -2,18 +2,32 @@
     "name": "pdepend/pdepend",
     "description": "Official version of pdepend to be handled with Composer",
     "license": "BSD-3-Clause",
+    "type": "library",
     "require": {
         "php": ">=5.3.7",
-        "symfony/dependency-injection": "^2.3.0|^3|^4",
-        "symfony/filesystem": "^2.3.0|^3|^4",
-        "symfony/config": "^2.3.0|^3|^4"
+        "symfony/dependency-injection": "^2.3.0|^3|^4|^5",
+        "symfony/filesystem": "^2.3.0|^3|^4|^5",
+        "symfony/config": "^2.3.0|^3|^4|^5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.7",
-        "squizlabs/php_codesniffer": "^2.0.0"
+        "phpunit/phpunit": "^4.8.35|^5.7",
+        "squizlabs/php_codesniffer": "^2.0.0",
+        "gregwar/rst": "^1.0",
+        "easy-doc/easy-doc": "0.0.0 || ^1.2.3"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "build-website": "easy-doc build src/site/config.php --verbose"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
     }
 }

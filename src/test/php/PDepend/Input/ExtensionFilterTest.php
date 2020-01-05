@@ -85,9 +85,9 @@ class ExtensionFilterTest extends AbstractTest
      * Creates an array with those files that were acceptable for the extension
      * filter.
      *
-     * @param array(string) $includes The file extensions
+     * @param array<string> $includes The file extensions
      *
-     * @return array(string)
+     * @return array<string>
      */
     protected function createFilteredFileList(array $includes)
     {
@@ -102,7 +102,7 @@ class ExtensionFilterTest extends AbstractTest
         $actual = array();
         foreach ($files as $file) {
             if ($filter->accept($file, $file)
-                && $file->isFile() 
+                && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')
             ) {
                 $actual[] = $file->getFilename();

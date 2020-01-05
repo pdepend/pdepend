@@ -56,14 +56,14 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     /**
      * Dummy project metrics.
      *
-     * @var array(string=>mixed)
+     * @var array<string, mixed>
      */
     protected $projectMetrics = null;
 
     /**
      * Constructs a new analyzer dummy instance.
      *
-     * @param array(string=>mixed) $projectMetrics Dummy project metrics.
+     * @param array<string, mixed> $projectMetrics Dummy project metrics.
      */
     public function __construct(array $projectMetrics = array())
     {
@@ -115,7 +115,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     /**
      * Returns the project metrics.
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getProjectMetrics()
     {
@@ -125,11 +125,10 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     /**
      * Set global options
      *
-     * @param array(string=>mixed) $options
+     * @param array<string, mixed> $options
      * @since 2.0.1
      */
     public function setOptions(array $options = array())
     {
     }
-
 }

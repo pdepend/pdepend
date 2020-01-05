@@ -58,7 +58,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
 {
     /**
      * testWithParentTypeHint
-     * 
+     *
      * @return void
      */
     public function testWithParentTypeHint()
@@ -91,7 +91,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
 
     /**
      * Returns the first formal parameter found in the associated test file.
-     * 
+     *
      * @return \PDepend\Source\AST\ASTFormalParameter
      */
     private function getFirstMethodFormalParameter()

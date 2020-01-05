@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of PDepend.
- * 
+ *
  * PHP Version 5
  *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
@@ -200,7 +200,7 @@ class EngineTest extends AbstractTest
     public function testCountClassesWithoutAnalyzeFail()
     {
         $this->setExpectedException(
-            'RuntimeException', 
+            'RuntimeException',
             'countClasses() doesn\'t work before the source was analyzed.'
         );
         
@@ -255,8 +255,8 @@ class EngineTest extends AbstractTest
         $engine->analyze();
         
         $namespaces = array(
-            'package1', 
-            'package2', 
+            'package1',
+            'package2',
             'package3'
         );
         

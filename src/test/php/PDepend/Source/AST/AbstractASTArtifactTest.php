@@ -98,5 +98,5 @@ abstract class AbstractASTArtifactTest extends AbstractTest
      *
      * @return \PDepend\Source\AST\AbstractASTArtifact
      */
-    protected abstract function createItem();
+    abstract protected function createItem();
 }

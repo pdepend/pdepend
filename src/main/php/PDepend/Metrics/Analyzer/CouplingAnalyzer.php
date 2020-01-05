@@ -116,7 +116,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Temporary map that is used to hold the id combinations of dependee and
      * depender.
      *
-     * @var   array(string=>array)
+     * @var   array<string, array>
      * @since 0.10.2
      */
     private $dependencyMap = array();
@@ -125,7 +125,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This array holds a mapping between node identifiers and an array with
      * the node's metrics.
      *
-     * @var   array(string=>array)
+     * @var   array<string, array>
      * @since 0.10.2
      */
     private $nodeMetrics = array();
@@ -140,7 +140,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * )
      * </code>
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getProjectMetrics()
     {
@@ -164,7 +164,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * </code>
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -299,7 +299,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     public function visitClass(ASTClass $class)
     {
         $this->initDependencyMap($class);
-        return parent::visitClass($class);
+        parent::visitClass($class);
     }
 
     /**
@@ -313,7 +313,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     public function visitInterface(ASTInterface $interface)
     {
         $this->initDependencyMap($interface);
-        return parent::visitInterface($interface);
+        parent::visitInterface($interface);
     }
 
     /**

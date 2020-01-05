@@ -2,7 +2,7 @@
 class testGetReturnClassForMethodWithNamespacedArrayRootClass
 {
     /**
-     * @return array(\foo\Foo)
+     * @return \foo\Foo[]
      */
     public function foo() {}
 }

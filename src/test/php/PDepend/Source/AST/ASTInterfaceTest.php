@@ -235,7 +235,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeOnInheritanceHierarchy()
     {
-        $this->_testIsSubtypeOnInheritanceHierarchy(
+        $this->doTestIsSubtypeOnInheritanceHierarchy(
             array(
                 'A' => true,
                 'B' => false,
@@ -254,7 +254,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
-        $this->_testIsSubtypeOnInheritanceHierarchy(
+        $this->doTestIsSubtypeOnInheritanceHierarchy(
             array(
                 'A' => true,
                 'B' => true,
@@ -273,7 +273,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
-        $this->_testIsSubtypeOnInheritanceHierarchy(
+        $this->doTestIsSubtypeOnInheritanceHierarchy(
             array(
                 'B' => false,
                 'C' => false,
@@ -292,7 +292,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      */
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
-        $this->_testIsSubtypeOnInheritanceHierarchy(
+        $this->doTestIsSubtypeOnInheritanceHierarchy(
             array(
                 'B' => false,
                 'C' => false,
@@ -307,11 +307,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     /**
      * _testIsSubtypeOnInheritanceHierarchy
      *
-     * @param array(string=>boolean) $expected Expected result.
+     * @param array<string, boolean> $expected Expected result.
      *
      * @return void
      */
-    private function _testIsSubtypeOnInheritanceHierarchy(array $expected)
+    private function doTestIsSubtypeOnInheritanceHierarchy(array $expected)
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespace = $namespaces->current();

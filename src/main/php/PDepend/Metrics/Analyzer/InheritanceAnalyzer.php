@@ -84,9 +84,16 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * analyzed system. The array size is equal to the number of analyzed root
      * classes.
      *
-     * @var array(integer)
+     * @var array<integer>
      */
     private $rootClasses = array();
+
+    /**
+     * @var array<integer>
+     *
+     * @deprecated 3.0.0 This property will no longer be accessible on the public access level in next major version.
+     */
+    public $derivedClasses = array();
 
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
@@ -126,7 +133,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Metrics calculated for a single source node.
      *
-     * @var array(string=>array)
+     * @var array<string, array>
      */
     private $nodeMetrics = null;
 
@@ -136,7 +143,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * node, this method will return an empty <b>array</b>.
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -156,7 +163,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * )
      * </code>
      *
-     * @return array(string=>mixed)
+     * @return array<string, mixed>
      */
     public function getProjectMetrics()
     {

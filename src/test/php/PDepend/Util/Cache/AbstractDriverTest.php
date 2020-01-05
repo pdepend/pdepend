@@ -216,5 +216,5 @@ abstract class AbstractDriverTest extends AbstractTest
      *
      * @return \PDepend\Util\Cache\CacheDriver
      */
-    protected abstract function createDriver();
+    abstract protected function createDriver();
 }

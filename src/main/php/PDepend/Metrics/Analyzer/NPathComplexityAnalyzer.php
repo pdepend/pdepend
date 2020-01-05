@@ -196,7 +196,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTNode
+     * @param  \PDepend\Source\AST\ASTNode $node
      * @param  string                      $data
      * @return string
      * @since  0.9.12

@@ -286,10 +286,10 @@ class PyramidTest extends AbstractTest
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
-                    array(
-                        'ccn2'  =>  5579
-                    )
-                ));
+                array(
+                    'ccn2'  =>  5579
+                )
+            ));
 
         return $mock;
     }
@@ -301,11 +301,11 @@ class PyramidTest extends AbstractTest
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
-                    array(
-                        'andc'  =>  0.31,
-                        'ahh'   =>  0.12
-                    )
-                ));
+                array(
+                    'andc'  =>  0.31,
+                    'ahh'   =>  0.12
+                )
+            ));
 
         return $mock;
     }
@@ -317,13 +317,13 @@ class PyramidTest extends AbstractTest
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
-                    array(
-                        'nop'  =>  19,
-                        'noc'  =>  384,
-                        'nom'  =>  2018,
-                        'nof'  =>  1600
-                    )
-                ));
+                array(
+                    'nop'  =>  19,
+                    'noc'  =>  384,
+                    'nom'  =>  2018,
+                    'nof'  =>  1600
+                )
+            ));
 
         return $mock;
     }
@@ -335,10 +335,10 @@ class PyramidTest extends AbstractTest
         $mock->expects($this->any())
             ->method('getProjectMetrics')
             ->will($this->returnValue(
-                    array(
-                        'eloc'  =>  35175
-                    )
-                ));
+                array(
+                    'eloc'  =>  35175
+                )
+            ));
 
         return $mock;
     }

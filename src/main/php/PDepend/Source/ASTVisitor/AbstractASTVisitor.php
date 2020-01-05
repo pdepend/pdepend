@@ -71,7 +71,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Returns an iterator with all registered visit listeners.
      *
-     * @return Iterator
+     * @return \Iterator
      */
     public function getVisitListeners()
     {

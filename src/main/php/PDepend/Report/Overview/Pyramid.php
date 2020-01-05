@@ -110,7 +110,7 @@ class Pyramid implements FileAwareGenerator
      * Holds defined thresholds for the computed proportions. This set is based
      * on java thresholds, we should find better values for php projects.
      *
-     * @var array(string => array)
+     * @var array<string, array>
      */
     private $thresholds = array(
         'cyclo-loc'     =>  array(0.16, 0.20, 0.24),
@@ -139,7 +139,7 @@ class Pyramid implements FileAwareGenerator
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces.
      *
-     * @return array(string)
+     * @return array<string>
      */
     public function getAcceptedAnalyzers()
     {
@@ -233,7 +233,7 @@ class Pyramid implements FileAwareGenerator
      *
      * @param  string $name  The metric/field identfier.
      * @param  mixed  $value The metric/field value.
-     * @return string
+     * @return string|null
      */
     private function computeThreshold($name, $value)
     {
@@ -261,7 +261,7 @@ class Pyramid implements FileAwareGenerator
      * Computes the proportions between the given metrics.
      *
      * @param  array $metrics The aggregated project metrics.
-     * @return array(string => float)
+     * @return array<string, float>
      */
     private function computeProportions(array $metrics)
     {
@@ -291,7 +291,7 @@ class Pyramid implements FileAwareGenerator
     /**
      * Aggregates the required metrics from the registered analyzers.
      *
-     * @return array(string => mixed)
+     * @return array<string, mixed>
      * @throws \RuntimeException If one of the required analyzers isn't set.
      */
     private function collectMetrics()

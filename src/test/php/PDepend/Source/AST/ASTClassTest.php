@@ -921,7 +921,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     {
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(
-            State::IS_ABSTRACT |
+            2 |
             State::IS_FINAL
         );
     }

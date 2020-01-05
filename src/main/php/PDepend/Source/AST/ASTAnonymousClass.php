@@ -219,7 +219,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @param mixed $data
-     * @return void
+     * @return integer
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
@@ -256,7 +256,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
         }
 
         parent::__wakeup();
-
     }
 
     /**

@@ -233,7 +233,7 @@ class XmlTest extends AbstractTest
         return preg_replace(
             array('(file\s+name="[^"]+")', '(generated="[^"]*")'),
             array('file name="' . __FILE__ . '"', 'generated=""'),
-             file_get_contents($fileName)
+            file_get_contents($fileName)
         );
     }
 }
