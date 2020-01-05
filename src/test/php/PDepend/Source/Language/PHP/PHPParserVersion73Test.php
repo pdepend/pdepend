@@ -63,6 +63,10 @@ class PHPParserVersion73Test extends AbstractTest
      */
     public function testHereDocAndNowDoc()
     {
+        if (version_compare(phpversion(), '7.3.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.3');
+        }
+
         /** @var ASTHeredoc $heredoc */
         $heredoc = $this->getFirstNodeOfTypeInFunction('','PDepend\\Source\\AST\\ASTArray');
         $arrayElements = $heredoc->getChildren();

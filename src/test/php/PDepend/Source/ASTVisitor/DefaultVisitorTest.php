@@ -373,7 +373,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testGetVisitListenersReturnsIterator()
     {
-        $visitor = $this->getMockForAbstractClass('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
         $this->assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
@@ -384,7 +384,7 @@ class DefaultVisitorTest extends AbstractTest
      */
     public function testGetVisitListenersContainsAddedListener()
     {
-        $visitor = $this->getMockForAbstractClass('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
 
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
             ->getMock();
