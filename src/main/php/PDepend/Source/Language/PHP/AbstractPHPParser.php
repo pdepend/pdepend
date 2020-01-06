@@ -949,7 +949,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTMethod|\PDepend\Source\AST\ASTFieldDeclaration
      * @since 0.9.6
      */
-    private function parseMethodOrFieldDeclaration($modifiers = 0)
+    protected function parseMethodOrFieldDeclaration($modifiers = 0)
     {
         $this->tokenStack->push();
 

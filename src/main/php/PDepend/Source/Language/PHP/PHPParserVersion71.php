@@ -151,8 +151,10 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
             $definition = $this->parseConstantDefinition();
             $constantModifiers = $this->getModifiersForConstantDefinition($tokenType, $modifiers);
             $definition->setModifiers($constantModifiers);
+
             return $definition;
         }
+
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
     }
     
