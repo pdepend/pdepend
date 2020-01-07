@@ -32,6 +32,7 @@ matrix:
     #   env: DEPENDENCIES=low
     - php: 7.3
       env: COVERAGE=true
+    - php: 7.4
     # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
@@ -56,11 +57,8 @@ before_script:
   - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --prefer-stable; fi
 
 script:
-  - |
-    if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' ]]; then
-      if [ "$COVERAGE" != "true" ]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
-      if [ "$COVERAGE" = "true" ]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-clover=coverage.xml; fi
-    fi
+  - if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' && $COVERAGE != 'true' ]]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
+  - if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' && $COVERAGE = 'true' ]]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text --coverage-clover=coverage.xml; fi
   - if [[ $WEBSITE = 'true' ]]; then composer build-website; fi
   - |
     if [[ $BUILD_PHAR = 'true' ]]; then

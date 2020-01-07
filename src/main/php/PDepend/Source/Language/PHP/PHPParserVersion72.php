@@ -46,12 +46,6 @@ namespace PDepend\Source\Language\PHP;
 /**
  * Concrete parser implementation that supports features up to PHP version 7.2.
  *
- * TODO: Check or implement features support for:
- * - New object type
- *   https://www.php.net/manual/en/migration72.new-features.php#migration72.new-features.object-type
- * - Abstract method overriding
- *   https://www.php.net/manual/en/migration72.new-features.php#migration72.new-features.abstract-method-overriding
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4

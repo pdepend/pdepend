@@ -160,7 +160,7 @@ class ASTArtifactTest extends AbstractTest
      */
     protected function getItemMock()
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\AST\\AbstractASTArtifact',
             array(__CLASS__)
         );

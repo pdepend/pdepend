@@ -46,16 +46,6 @@ namespace PDepend\Source\Language\PHP;
 /**
  * Concrete parser implementation that supports features up to PHP version 7.3.
  *
- * TODO: Check or implement features support for:
- * - More Flexible Heredoc and Nowdoc Syntax
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.heredoc
- * - Array Destructuring supports Reference Assignments
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.destruct-reference
- * - Instanceof Operator accepts Literals
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.instanceof-literals
- * - Trailing Commas are allowed in Calls
- *   https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.core.trailing-commas
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4

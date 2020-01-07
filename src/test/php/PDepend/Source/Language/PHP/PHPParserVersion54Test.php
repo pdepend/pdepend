@@ -425,7 +425,7 @@ class PHPParserVersion54Test extends AbstractTest
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion54',
             array($tokenizer, $builder, $cache)
         );

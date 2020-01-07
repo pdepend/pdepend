@@ -40,53 +40,64 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend;
+namespace PDepend\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder as BaseTreeBuilder;
 
 /**
- * Test cases for the {@link \PDepend\Application} class.
- *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PDepend\Application
- * @group integration
+ * This is the class that embed the Symfony TreeBuilder and its root node.
  */
-class ApplicationTest extends AbstractTest
+class TreeBuilder
 {
-    public function testGetRunner()
-    {
-        $application = $this->createTestApplication();
-        $runner = $application->getRunner();
+    /**
+     * @var NodeDefinition|ArrayNodeDefinition
+     */
+    protected $rootNode;
 
-        $this->assertInstanceOf('PDepend\TextUI\Runner', $runner);
+    /**
+     * @var BaseTreeBuilder
+     */
+    protected $treeBuilder;
+
+    /**
+     * TreeBuilder constructor.
+     *
+     * @param string $name
+     */
+    public function __construct($name = 'pdepend')
+    {
+        if (method_exists('Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder', 'root')) {
+            // Symfony < 5
+            $this->treeBuilder = new BaseTreeBuilder();
+            $this->rootNode = $this->treeBuilder->root($name);
+
+            return;
+        }
+
+        // Symfony 5+
+        $this->treeBuilder = new BaseTreeBuilder($name);
+        $this->rootNode = $this->treeBuilder->getRootNode();
     }
 
-    public function testAnalyzerFactory()
+    /**
+     * Get the root node of the built tree.
+     *
+     * @return ArrayNodeDefinition|NodeDefinition
+     */
+    public function getRootNode()
     {
-        $application = $this->createTestApplication();
-
-        $this->assertInstanceOf('PDepend\Metrics\AnalyzerFactory', $application->getAnalyzerFactory());
+        return $this->rootNode;
     }
 
-    public function testReportGeneratorFactory()
+    /**
+     * Get the base Symfony tree builder.
+     *
+     * @return BaseTreeBuilder
+     */
+    public function getTreeBuilder()
     {
-        $application = $this->createTestApplication();
-
-        $this->assertInstanceOf('PDepend\Report\ReportGeneratorFactory', $application->getReportGeneratorFactory());
-    }
-
-    public function testBinCanReadInput()
-    {
-        $cwd = getcwd();
-        chdir(__DIR__ . '/../../../..');
-        $bin = realpath(__DIR__ . '/../../../../src/bin/pdepend.php');
-        $output = shell_exec('echo "<?php class FooBar {}" | php ' . $bin . ' --summary-xml=foo.xml -');
-        $xml = @file_get_contents('foo.xml');
-        unlink('foo.xml');
-        chdir($cwd);
-
-        $this->assertRegExp('/Parsing source files:\s*\.\s+1/', $output);
-        $this->assertRegExp('/<class\s.*name="FooBar"/', $xml);
-        $this->assertRegExp('/<file\s.*name="php:\/\/stdin"/', $xml);
+        return $this->treeBuilder;
     }
 }

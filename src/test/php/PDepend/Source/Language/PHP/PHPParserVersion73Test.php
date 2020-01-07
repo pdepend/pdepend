@@ -41,13 +41,21 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTHeredoc;
+use PDepend\Source\AST\ASTInstanceOfExpression;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion73} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion73
  * @group unittest
  */
 class PHPParserVersion73Test extends AbstractTest
@@ -63,5 +71,123 @@ class PHPParserVersion73Test extends AbstractTest
         );
 
         $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return void
+     */
+    public function testHereDocAndNowDoc()
+    {
+        if (version_compare(phpversion(), '7.3.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.3');
+        }
+
+        /** @var ASTHeredoc $heredoc */
+        $heredoc = $this->getFirstNodeOfTypeInFunction('','PDepend\\Source\\AST\\ASTArray');
+        $arrayElements = $heredoc->getChildren();
+        $children = $arrayElements[0]->getChildren();
+        $children = $children[0]->getChildren();
+        /** @var ASTLiteral $literal */
+        $literal = $children[0];
+
+        $this->assertSame('foobar!', $literal->getImage());
+
+        $children = $arrayElements[1]->getChildren();
+        $children = $children[0]->getChildren();
+        /** @var ASTLiteral $literal */
+        $literal = $children[0];
+
+        $this->assertSame('second,', $literal->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDestructuringArrayReference()
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        $assignments = $statements[1]->getChildren();
+        $listElements = $assignments[0]->getChildren();
+        $children = $listElements[0]->getChildren();
+        /** @var ASTArrayElement $aElement */
+        $aElement = $children[0];
+        $arrayElement = $children[1];
+        $children = $arrayElement->getChildren();
+        $subElements = $children[0]->getChildren();
+        /** @var ASTArrayElement $bElement */
+        $bElement = $subElements[0];
+        /** @var ASTArrayElement $cElement */
+        $cElement = $subElements[1];
+
+        $aElements = $aElement->getChildren();
+        /** @var ASTVariable $aVariable */
+        $aVariable = $aElements[0];
+
+        $bElements = $bElement->getChildren();
+        /** @var ASTVariable $bVariable */
+        $bVariable = $bElements[0];
+
+        $cElements = $cElement->getChildren();
+        /** @var ASTVariable $cVariable */
+        $cVariable = $cElements[0];
+
+        $this->assertTrue($aElement->isByReference());
+        $this->assertSame('$a', $aVariable->getImage());
+
+        $this->assertFalse($bElement->isByReference());
+        $this->assertSame('$b', $bVariable->getImage());
+
+        $this->assertTrue($cElement->isByReference());
+        $this->assertSame('$c', $cVariable->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstanceOfLiterals()
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        $expressions = $statements[0]->getChildren();
+        $expression = $expressions[0]->getChildren();
+        /** @var ASTLiteral $instanceOf */
+        $literal = $expression[0];
+        /** @var ASTInstanceOfExpression $instanceOf */
+        $instanceOf = $expression[1];
+        /** @var ASTClassOrInterfaceReference[] $variables */
+        $variables = $instanceOf->getChildren();
+
+        $this->assertCount(2, $expression);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literal);
+        $this->assertSame('false', $literal->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $variables[0]);
+        $this->assertSame('DateTimeInterface', $variables[0]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTrailingCommasInCall()
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        /** @var ASTFunctionPostfix[] $calls */
+        $calls = $statements[0]->getChildren();
+
+        $this->assertCount(1, $calls);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $calls[0]);
+
+        $children = $calls[0]->getChildren();
+        /** @var ASTArguments $arguments */
+        $arguments = $children[1];
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArguments', $arguments);
+
+        $arguments = $arguments->getChildren();
+
+        $this->assertCount(1, $arguments);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $arguments[0]);
+        $this->assertSame('$i', $arguments[0]->getImage());
     }
 }

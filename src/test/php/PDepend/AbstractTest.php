@@ -921,6 +921,22 @@ abstract class AbstractTest extends TestCase
             $cache
         );
     }
+
+    public function getMockBuilder($className)
+    {
+        include_once __DIR__ . '/MockBuilder.php';
+
+        return new MockBuilder($this, $className);
+    }
+
+    protected function getAbstractClassMock($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = array(), $cloneArguments = false)
+    {
+        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+            return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
+        }
+
+        return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
+    }
 }
 
 AbstractTest::init();

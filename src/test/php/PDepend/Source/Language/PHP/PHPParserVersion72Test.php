@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,53 +38,65 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend;
+namespace PDepend\Source\Language\PHP;
+
+use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTParameter;
 
 /**
- * Test cases for the {@link \PDepend\Application} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion72} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PDepend\Application
- * @group integration
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
+ * @group unittest
  */
-class ApplicationTest extends AbstractTest
+class PHPParserVersion72Test extends AbstractTest
 {
-    public function testGetRunner()
+    /**
+     * @return void
+     */
+    public function testObjectTypeHintReturn()
     {
-        $application = $this->createTestApplication();
-        $runner = $application->getRunner();
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
-        $this->assertInstanceOf('PDepend\TextUI\Runner', $runner);
+        $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        $this->assertFalse($type->isArray());
+        $this->assertSame('object', $type->getImage());
     }
 
-    public function testAnalyzerFactory()
+    /**
+     * @return void
+     */
+    public function testObjectTypeHintParameter()
     {
-        $application = $this->createTestApplication();
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
 
-        $this->assertInstanceOf('PDepend\Metrics\AnalyzerFactory', $application->getAnalyzerFactory());
+        $this->assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        $this->assertFalse($type->isArray());
+        $this->assertSame('object', $type->getImage());
     }
 
-    public function testReportGeneratorFactory()
+    public function testAbstractMethodOverriding()
     {
-        $application = $this->createTestApplication();
+        /** @var ASTArtifactList $classes */
+        $classes = $this->parseCodeResourceForTest()->current()->getClasses();
+        /** @var ASTClass $class */
+        $class = $classes[1];
+        /** @var ASTArtifactList $classes */
+        $methods = $class->getMethods();
+        /** @var ASTMethod $method */
+        $method = $methods[0];
+        /** @var ASTArtifactList $parameters */
+        $parameters = $method->getParameters();
+        /** @var ASTParameter $parameter */
+        $parameter = $parameters[0];
 
-        $this->assertInstanceOf('PDepend\Report\ReportGeneratorFactory', $application->getReportGeneratorFactory());
-    }
-
-    public function testBinCanReadInput()
-    {
-        $cwd = getcwd();
-        chdir(__DIR__ . '/../../../..');
-        $bin = realpath(__DIR__ . '/../../../../src/bin/pdepend.php');
-        $output = shell_exec('echo "<?php class FooBar {}" | php ' . $bin . ' --summary-xml=foo.xml -');
-        $xml = @file_get_contents('foo.xml');
-        unlink('foo.xml');
-        chdir($cwd);
-
-        $this->assertRegExp('/Parsing source files:\s*\.\s+1/', $output);
-        $this->assertRegExp('/<class\s.*name="FooBar"/', $xml);
-        $this->assertRegExp('/<file\s.*name="php:\/\/stdin"/', $xml);
+        $this->assertTrue($method->isAbstract());
+        $this->assertSame('int', $method->getReturnType()->getImage());
+        $this->assertNull($parameter->getClass());
     }
 }

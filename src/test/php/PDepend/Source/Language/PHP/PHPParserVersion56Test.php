@@ -44,6 +44,10 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTConstantDefinition;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -198,6 +202,47 @@ class PHPParserVersion56Test extends AbstractTest
     }
 
     /**
+     * Tests issue with constant array concatenation.
+     * https://github.com/pdepend/pdepend/issues/299
+     *
+     * @return void
+     */
+    public function testConstantArrayConcatenation()
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+
+        /** @var ASTConstantDefinition[] $sontants */
+        $constants = $class->getChildren();
+
+        $this->assertCount(2, $constants);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constants[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constants[1]);
+
+        /** @var ASTConstantDeclarator[] $declarators */
+        $declarators = $constants[1]->getChildren();
+
+        $this->assertCount(1, $declarators);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $declarators[0]);
+
+        /** @var ASTExpression $expression */
+        $expression = $declarators[0]->getValue()->getValue();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+
+        $nodes = $expression->getChildren();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $nodes[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $nodes[1]);
+        $this->assertSame('+', $nodes[1]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $nodes[2]);
+
+        $nodes = $nodes[0]->getChildren();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $nodes[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $nodes[1]);
+        $this->assertSame('A', $nodes[1]->getImage());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
@@ -205,9 +250,25 @@ class PHPParserVersion56Test extends AbstractTest
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        return $this->getMockForAbstractClass(
+        return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion56',
             array($tokenizer, $builder, $cache)
         );
+    }
+
+    /**
+     * Tests that the parser throws an exception when it detects a reserved keyword
+     * in constant class names.
+     *
+     * @return void
+     */
+    public function testReservedKeyword()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: NEW, line: 5, col: 11, file: '
+        );
+
+        $this->parseCodeResourceForTest();
     }
 }
