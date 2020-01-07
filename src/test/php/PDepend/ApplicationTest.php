@@ -74,4 +74,19 @@ class ApplicationTest extends AbstractTest
 
         $this->assertInstanceOf('PDepend\Report\ReportGeneratorFactory', $application->getReportGeneratorFactory());
     }
+
+    public function testBinCanReadInput()
+    {
+        $cwd = getcwd();
+        chdir(__DIR__ . '/../../../..');
+        $bin = realpath(__DIR__ . '/../../../../src/bin/pdepend.php');
+        $output = shell_exec('echo "<?php class FooBar {}" | php ' . $bin . ' --summary-xml=foo.xml -');
+        $xml = @file_get_contents('foo.xml');
+        unlink('foo.xml');
+        chdir($cwd);
+
+        $this->assertRegExp('/Parsing source files:\s*\.\s+1/', $output);
+        $this->assertRegExp('/<class\s.*name="FooBar"/', $xml);
+        $this->assertRegExp('/<file\s.*name="php:\/\/stdin"/', $xml);
+    }
 }
