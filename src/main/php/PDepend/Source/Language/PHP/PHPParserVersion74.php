@@ -52,8 +52,6 @@ use PDepend\Source\Tokenizer\Tokens;
  * Concrete parser implementation that supports features up to PHP version 7.4.
  *
  * TODO: Check or implement features support for:
- * - Arrow functions
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.arrow-functions
  * - Limited return type covariance and argument type contravariance
  *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.type-variance
  * - Null coalescing assignment operator
@@ -99,5 +97,26 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
         }
 
         return $field;
+    }
+
+    protected function parseLambdaFunctionDeclaration()
+    {
+        $this->tokenStack->push();
+
+        if (Tokens::T_FN === $this->tokenizer->peek()) {
+            $this->consumeToken(Tokens::T_FN);
+        }
+
+        $closure = $this->builder->buildAstClosure();
+        $closure->setReturnsByReference($this->parseOptionalByReference());
+        $closure->addChild($this->parseFormalParameters());
+
+        $closure->addChild(
+            $this->buildReturnStatement(
+                $this->consumeToken(Tokens::T_DOUBLE_ARROW)
+            )
+        );
+
+        return $this->setNodePositionsAndReturn($closure);
     }
 }

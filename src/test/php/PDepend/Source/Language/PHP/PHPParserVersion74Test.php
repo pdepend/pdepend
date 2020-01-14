@@ -44,7 +44,13 @@ use OutOfBoundsException;
 use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClosure;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
@@ -123,10 +129,48 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testArrowFunctions()
     {
-        // @TODO Arrow functions need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Arrow functions need to be implemented for PHP 7.4 support');
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
 
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        /** @var ASTClosure $closure */
+        $closure = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFunctionPostfix'
+        )->getChild(1)->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClosure', $closure);
+        /** @var ASTFormalParameters $parameters */
+        $parameters = $closure->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+        $this->assertCount(1, $parameters->getChildren());
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $parameters->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $parameter);
+        /** @var ASTVariableDeclarator $parameter */
+        $variableDeclarator = $parameter->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
+        $this->assertSame('$number', $variableDeclarator->getImage());
+        /** @var ASTReturnStatement $parameters */
+        $return = $closure->getChild(1);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
+        $this->assertSame('=>', $return->getImage());
+        $this->assertCount(1, $return->getChildren());
+        /** @var ASTExpression $expression */
+        $expression = $return->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ), array_map('get_class', $expression->getChildren()));
+        $this->assertSame(array(
+            '$number',
+            '*',
+            '2',
+        ), array_map(function (ASTNode $node) {
+            return $node->getImage();
+        }, $expression->getChildren()));
     }
 
     public function testTypeCovarianceAndArgumentTypeContravariance()
