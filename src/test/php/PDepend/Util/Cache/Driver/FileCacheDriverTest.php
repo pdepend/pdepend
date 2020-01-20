@@ -114,4 +114,36 @@ class FileCacheDriverTest extends AbstractDriverTest
 
         $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));
     }
+
+    public function testFileDriverHandlingOfCorruptCache()
+    {
+        $cacheKey = 'foo';
+        $cacheType = 'bar';
+        $storedKey = 'baz';
+        $hash = md5(__METHOD__);
+
+        // Save something
+        $cache = new FileCacheDriver($this->cacheDir, $cacheKey);
+        $cache->type($cacheType)->store($storedKey, __METHOD__, $hash);
+
+        // Simulate a corrupt cache file by writing invalid data into the file
+        $file = $this->getCacheFilePath($cacheKey, $cacheType, $storedKey);
+        $corruptCacheContent = 'this is not a valid serialized value';
+        $written = file_put_contents($file, $corruptCacheContent);
+        if ($written !== strlen($corruptCacheContent)) {
+            throw new \RuntimeException('Could not write to cache file during test. Path: ' . $file);
+        }
+
+        // Try to retrieve the cached value
+        $cachedValue = $cache->type($cacheType)->restore($storedKey, $hash);
+        $this->assertNull($cachedValue);
+    }
+
+    private function getCacheFilePath($cacheKey, $cacheType, $storedKey)
+    {
+        $key = md5($storedKey . $cacheKey);
+        $dir = substr($key, 0, 2);
+        $version = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
+        return $this->cacheDir . '/' . $dir . '/' . $key . '.' . $version . '.' . $cacheType;
+    }
 }
