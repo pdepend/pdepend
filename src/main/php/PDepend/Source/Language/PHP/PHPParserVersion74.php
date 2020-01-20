@@ -110,7 +110,12 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
         return $this->setNodePositionsAndReturn($closure);
     }
 
+    /**
+     * Override PHP 7.3 checkEllipsisInExpressionSupport to stop throwing the
+     * parsing exception.
+     */
     protected function checkEllipsisInExpressionSupport()
     {
+        // Do not throw the exception from parent PHP 7.3
     }
 }
