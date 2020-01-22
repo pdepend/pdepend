@@ -200,7 +200,7 @@ class FileCacheDriver implements CacheDriver
     {
         // unserialize() throws E_NOTICE when data is corrupt
         $data = @unserialize($this->read($file));
-        if (isset($data['hash']) && $data['hash'] === $hash) {
+        if ($data !== false && $data['hash'] === $hash) {
             return $data['data'];
         }
         return null;
