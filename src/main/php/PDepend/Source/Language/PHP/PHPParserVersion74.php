@@ -51,16 +51,6 @@ use PDepend\Source\Tokenizer\Tokens;
 /**
  * Concrete parser implementation that supports features up to PHP version 7.4.
  *
- * TODO: Check or implement features support for:
- * - Limited return type covariance and argument type contravariance
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.type-variance
- * - Null coalescing assignment operator
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment-operator
- * - Unpacking inside arrays
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.unpack-inside-array
- * - Numeric literal separator
- *   https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.numeric-literal-separator
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4
@@ -118,5 +108,14 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
         );
 
         return $this->setNodePositionsAndReturn($closure);
+    }
+
+    /**
+     * Override PHP 7.3 checkEllipsisInExpressionSupport to stop throwing the
+     * parsing exception.
+     */
+    protected function checkEllipsisInExpressionSupport()
+    {
+        // Do not throw the exception from parent PHP 7.3
     }
 }

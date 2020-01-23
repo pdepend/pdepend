@@ -133,6 +133,8 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 case Tokens::T_SR:
                     $expressions[] = $this->parseShiftRightExpression();
                     break;
+                case Tokens::T_ELLIPSIS:
+                    $this->checkEllipsisInExpressionSupport();
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -178,6 +180,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 case Tokens::T_PLUS_EQUAL:
                 case Tokens::T_MINUS_EQUAL:
                 case Tokens::T_CONCAT_EQUAL:
+                case Tokens::T_COALESCE_EQUAL:
                     $expressions[] = $this->parseAssignmentExpression(
                         array_pop($expressions)
                     );

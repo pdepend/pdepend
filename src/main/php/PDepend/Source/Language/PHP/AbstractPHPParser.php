@@ -2860,6 +2860,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_PLUS_EQUAL:
                 case Tokens::T_MINUS_EQUAL:
                 case Tokens::T_CONCAT_EQUAL:
+                case Tokens::T_COALESCE_EQUAL:
                     $expressions[] = $this->parseAssignmentExpression(
                         array_pop($expressions)
                     );
@@ -2882,6 +2883,8 @@ abstract class AbstractPHPParser
 
                     $expressions[] = $expr;
                     break;
+                case Tokens::T_ELLIPSIS:
+                    $this->checkEllipsisInExpressionSupport();
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -6668,6 +6671,10 @@ abstract class AbstractPHPParser
                 case Tokens::T_PLUS:
                     $this->consumeToken(Tokens::T_PLUS);
                     break;
+                case Tokens::T_ELLIPSIS:
+                    $this->checkEllipsisInExpressionSupport();
+                    $this->consumeToken(Tokens::T_ELLIPSIS);
+                    break;
                 case Tokens::T_MINUS:
                     $this->consumeToken(Tokens::T_MINUS);
                     $signed *= -1;
@@ -7140,5 +7147,10 @@ abstract class AbstractPHPParser
     protected function throwUnexpectedTokenException(Token $token = null)
     {
         throw $this->getUnexpectedTokenException($token);
+    }
+
+    protected function checkEllipsisInExpressionSupport()
+    {
+        $this->throwUnexpectedTokenException();
     }
 }

@@ -180,8 +180,9 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNullCoalescingAssignmentOperator()
     {
-        // @TODO Null coalescing assignment operator need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Null coalescing assignment operator need to be implemented for PHP 7.4 support');
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
 
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
@@ -194,17 +195,65 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testUnpackingInsideArrays()
     {
-        // @TODO Unpacking inside arrays need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Unpacking inside arrays need to be implemented for PHP 7.4 support');
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
 
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        $expression = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTArray'
+        );
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+        ), array_map('get_class', $expression->getChildren()));
+        /** @var ASTNode[] $elements */
+        $elements = array_map(function ($node) {
+            return $node->getChild(0);
+        }, $expression->getChildren());
+        $this->assertSame(array(
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTExpression',
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTLiteral',
+        ), array_map('get_class', $elements));
+        /** @var ASTExpression $expression */
+        $expression = $elements[2];
+        $this->assertSame(array(
+            '...',
+            '$numbers',
+        ), array_map(function (ASTNode $node) {
+            return $node->getImage();
+        }, $expression->getChildren()));
     }
 
     public function testNumericLiteralSeparator()
     {
-        // @TODO Numeric literal separator need to be implemented for PHP 7.4 support
-        $this->markTestIncomplete('Numeric literal separator need to be implemented for PHP 7.4 support');
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
 
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        $expression = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTExpression'
+        );
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ), array_map('get_class', $expression->getChildren()));
+
+        $this->assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
+        $this->assertSame('299_792_458', $expression->getChild(2)->getImage());
+        $this->assertSame('0xCAFE_F00D', $expression->getChild(4)->getImage());
+        $this->assertSame('0b0101_1111', $expression->getChild(6)->getImage());
     }
 }
