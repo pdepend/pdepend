@@ -1,3 +1,9 @@
+pdepend-2.7.0 (2020/01/24)
+
+- Added [\#362](https://github.com/pdepend/pdepend/pull/362) Support for php:// stream wrappers.
+- Added [\#427](https://github.com/pdepend/pdepend/pull/427) PHP 7.4 features support 
+
+
 pdepend-2.6.1 (2019/12/21)
 ==========================
 
