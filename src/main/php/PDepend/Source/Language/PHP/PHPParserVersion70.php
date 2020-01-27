@@ -226,7 +226,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 $type = $this->parseSelfType();
                 break;
 
-            case Tokens::T_CALLABLE:
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
