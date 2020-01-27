@@ -198,8 +198,9 @@ class FileCacheDriver implements CacheDriver
      */
     protected function restoreFile($file, $hash)
     {
-        $data = unserialize($this->read($file));
-        if ($data['hash'] === $hash) {
+        // unserialize() throws E_NOTICE when data is corrupt
+        $data = @unserialize($this->read($file));
+        if ($data !== false && $data['hash'] === $hash) {
             return $data['data'];
         }
         return null;
