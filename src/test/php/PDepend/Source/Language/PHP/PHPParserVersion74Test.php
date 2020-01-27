@@ -71,38 +71,8 @@ class PHPParserVersion74Test extends AbstractTest
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
-        /** @var ASTFieldDeclaration $intDeclaration */
-        $intDeclaration = $children[0];
-        $intChildren = $intDeclaration->getChildren();
-        /** @var ASTVariableDeclarator $intVariable */
-        $intVariable = $intChildren[1];
-        /** @var ASTFieldDeclaration $stringDeclaration */
-        $stringDeclaration = $children[1];
-        $stringChildren = $stringDeclaration->getChildren();
-        /** @var ASTVariableDeclarator $intVariable */
-        $stringVariable = $stringChildren[1];
         /** @var ASTFieldDeclaration $mixedDeclaration */
-        $mixedDeclaration = $children[2];
-
-        $this->assertTrue($intDeclaration->hasType());
-
-        $intType = $intDeclaration->getType();
-
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $intType);
-        $this->assertSame('int', $intType->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $intDeclaration);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $intVariable);
-        $this->assertSame('$id', $intVariable->getImage());
-
-        $this->assertTrue($stringDeclaration->hasType());
-
-        $stringType = $stringDeclaration->getType();
-
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $stringType);
-        $this->assertSame('string', $stringType->getImage());;
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $stringDeclaration);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $stringVariable);
-        $this->assertSame('$name', $stringVariable->getImage());
+        $mixedDeclaration = array_shift($children);
 
         $this->assertFalse($mixedDeclaration->hasType());
 
@@ -115,6 +85,58 @@ class PHPParserVersion74Test extends AbstractTest
         }
 
         $this->assertSame('The parameter does not has a type specification.', $message);
+
+        /** @var array[] $declarations */
+        $declarations = array_map(function (ASTFieldDeclaration $child) {
+            $childChildren = $child->getChildren();
+
+            return array(
+                $child->hasType() ? $child->getType() : null,
+                $childChildren[1],
+            );
+        }, $children);
+
+        foreach (array(
+            array('int', '$id'),
+            array('float', '$money'),
+            array('bool', '$active'),
+            array('string', '$name'),
+            array('array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'),
+            array('self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'),
+            array('callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'),
+            array('\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
+            array('iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'),
+            array('object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
+            array('Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
+            array('?int', '$idN'),
+            array('?float', '$moneyN'),
+            array('?bool', '$activeN'),
+            array('?string', '$nameN'),
+            array('?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'),
+            array('?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'),
+            array('?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'),
+            array('?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
+            array('?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'),
+            array('?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
+            array('?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
+        ) as $index => $expected) {
+            list($expectedType, $expectedVariable) = $expected;
+            $expectedTypeClass = isset($expected[2]) ? $expected[2] : 'PDepend\\Source\\AST\\ASTScalarType';
+            list($type, $variable) = $declarations[$index];
+
+            $this->assertInstanceOf(
+                $expectedTypeClass,
+                $type,
+                "Wrong type for $expectedType $expectedVariable"
+            );
+            $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
+            $this->assertInstanceOf(
+                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                $variable,
+                "Wrong variable for $expectedType $expectedVariable"
+            );
+            $this->assertSame($expectedVariable, $variable->getImage());
+        }
     }
 
     public function testTypedPropertiesSyntaxError()
