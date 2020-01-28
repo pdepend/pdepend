@@ -63,7 +63,14 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
          * Typed properties
          * https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.typed-properties
          */
-        if ($tokenType == Tokens::T_STRING) {
+        if (in_array($tokenType, array(
+            Tokens::T_STRING,
+            Tokens::T_ARRAY,
+            Tokens::T_QUESTION_MARK,
+            Tokens::T_BACKSLASH,
+            Tokens::T_CALLABLE,
+            Tokens::T_SELF,
+        ))) {
             return $this->parseTypeHint();
         }
 

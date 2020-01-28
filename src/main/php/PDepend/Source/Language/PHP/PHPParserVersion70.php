@@ -218,6 +218,14 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseTypeHint()
     {
         switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+                $type = $this->parseArrayType();
+                break;
+
+            case Tokens::T_SELF:
+                $type = $this->parseSelfType();
+                break;
+
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
@@ -227,10 +235,12 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                     ? $this->parseScalarOrCallableTypeHint($name)
                     : $this->builder->buildAstClassOrInterfaceReference($name);
                 break;
+
             default:
                 $type = parent::parseTypeHint();
                 break;
         }
+
         return $type;
     }
 
