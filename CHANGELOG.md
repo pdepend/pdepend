@@ -1,3 +1,9 @@
+pdepend-2.7.1 (2020/02/12)
+==========================
+
+- Fixed [\#453](https://github.com/pdepend/pdepend/pull/453) Support for typed properties (nullable, array, FQN, scalar)
+- Fixed [\#446](https://github.com/pdepend/pdepend/pull/446) Suppress E_NOTICE thrown by unserialize() 
+
 pdepend-2.7.0 (2020/01/24)
 ==========================
 
