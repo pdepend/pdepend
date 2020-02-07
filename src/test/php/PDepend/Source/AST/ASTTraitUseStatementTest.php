@@ -121,6 +121,22 @@ class ASTTraitUseStatementTest extends ASTNodeTest
     }
 
     /**
+     * testTraitUseInsteadOfSelf
+     *
+     * @return void
+     */
+    public function testTraitUseInsteadOfSelf()
+    {
+        /** @var AbstractASTClassOrInterface $class */
+        $class = $this->getFirstClassForTestCase();
+        $getTraitMethods = new \ReflectionMethod($class, 'getTraitMethods');
+        $getTraitMethods->setAccessible(true);
+        $methods = $getTraitMethods->invoke($class);
+
+        $this->assertSame(array('test'), array_keys($methods));
+    }
+
+    /**
      * testGetAllMethodsOnClassWithParentReturnsTraitMethod
      *
      * @return void

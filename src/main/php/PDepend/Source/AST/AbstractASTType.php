@@ -350,6 +350,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
                 throw new ASTTraitMethodCollisionException($method, $this);
             }
         }
+
         return $methods;
     }
 
