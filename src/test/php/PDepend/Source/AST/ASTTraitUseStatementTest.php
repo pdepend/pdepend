@@ -43,6 +43,9 @@
 
 namespace PDepend\Source\AST;
 
+use ReflectionException;
+use ReflectionMethod;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitUseStatement} class.
  *
@@ -123,13 +126,17 @@ class ASTTraitUseStatementTest extends ASTNodeTest
     /**
      * testTraitUseInsteadOfSelf
      *
+     * @throws ReflectionException
+     *
      * @return void
+     *
+     * @group issue-154
      */
     public function testTraitUseInsteadOfSelf()
     {
         /** @var AbstractASTClassOrInterface $class */
         $class = $this->getFirstClassForTestCase();
-        $getTraitMethods = new \ReflectionMethod($class, 'getTraitMethods');
+        $getTraitMethods = new ReflectionMethod($class, 'getTraitMethods');
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
