@@ -18,4 +18,8 @@ class C {
     use B {
         test as testB;
     }
+
+    function test() {
+        echo 'c';
+    }
 }
