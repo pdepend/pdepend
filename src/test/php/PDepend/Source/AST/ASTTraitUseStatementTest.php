@@ -144,6 +144,26 @@ class ASTTraitUseStatementTest extends ASTNodeTest
     }
 
     /**
+     * testTraitMethodAlias
+     *
+     * @throws ReflectionException
+     *
+     * @return void
+     *
+     * @group issue-154
+     */
+    public function testTraitMethodAlias()
+    {
+        /** @var AbstractASTClassOrInterface $class */
+        $class = $this->getFirstClassForTestCase();
+        $getTraitMethods = new ReflectionMethod($class, 'getTraitMethods');
+        $getTraitMethods->setAccessible(true);
+        $methods = $getTraitMethods->invoke($class);
+
+        $this->assertSame(array('testa', 'testb'), array_keys($methods));
+    }
+
+    /**
      * testGetAllMethodsOnClassWithParentReturnsTraitMethod
      *
      * @return void
