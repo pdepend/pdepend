@@ -95,25 +95,21 @@ class FileCacheDriver implements CacheDriver
     private $cacheKey;
 
     /**
-     * @var \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector
-     */
-    private $garbageCollector;
-
-    /**
      * This method constructs a new file cache instance for the given root
      * directory.
      *
      * @param string $root     The cache root directory.
+     * @param int $ttl         The cache TTL.
      * @param string $cacheKey Unique key for this cache instance.
      */
-    public function __construct($root, $cacheKey = null)
+    public function __construct($root, $ttl, $cacheKey = null)
     {
         $this->directory = new FileCacheDirectory($root);
         $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
 
         $this->cacheKey = $cacheKey;
 
-        $this->garbageCollect($root);
+        $this->garbageCollect($root, $ttl);
     }
 
     /**
@@ -288,11 +284,12 @@ class FileCacheDriver implements CacheDriver
      * Cleans old cache files.
      *
      * @param string $root
+     * @param int $ttl
      * @return void
      */
-    protected function garbageCollect($root)
+    protected function garbageCollect($root, $ttl)
     {
-        $garbageCollector = new FileCacheGarbageCollector($root);
+        $garbageCollector = new FileCacheGarbageCollector($root, $ttl);
         $garbageCollector->garbageCollect();
     }
 }

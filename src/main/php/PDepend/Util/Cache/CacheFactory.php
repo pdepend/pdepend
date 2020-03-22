@@ -109,6 +109,7 @@ class CacheFactory
             case 'file':
                 return $this->createFileCache(
                     $this->configuration->cache->location,
+                    $this->configuration->cache->ttl,
                     $cacheKey
                 );
             case 'memory':
@@ -123,12 +124,13 @@ class CacheFactory
      * Creates a new file system based cache instance.
      *
      * @param  string $location Cache root directory.
+     * @param  int $ttl Cache ttl
      * @param  string $cacheKey The name/identifier for the cache instance.
      * @return \PDepend\Util\Cache\Driver\FileCacheDriver
      */
-    protected function createFileCache($location, $cacheKey)
+    protected function createFileCache($location, $ttl, $cacheKey)
     {
-        return new FileCacheDriver($location, $cacheKey);
+        return new FileCacheDriver($location, $ttl, $cacheKey);
     }
 
     /**

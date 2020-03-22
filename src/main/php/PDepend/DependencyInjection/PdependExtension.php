@@ -109,6 +109,7 @@ class PdependExtension extends SymfonyExtension
         $settings->cache           = new \stdClass();
         $settings->cache->driver = $config['cache']['driver'];
         $settings->cache->location = $config['cache']['location'];
+        $settings->cache->ttl = $config['cache']['ttl'];
 
         $settings->imageConvert             = new \stdClass();
         $settings->imageConvert->fontSize   = $config['image_convert']['font_size'];

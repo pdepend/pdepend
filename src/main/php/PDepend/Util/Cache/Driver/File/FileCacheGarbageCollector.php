@@ -60,16 +60,16 @@ class FileCacheGarbageCollector
     /**
      * @var integer
      */
-    private $minTime;
+    private $ttl;
 
     /**
      * @param string $cacheDir
-     * @param integer $maxDays
+     * @param integer $ttl
      */
-    public function __construct($cacheDir, $maxDays = 30)
+    public function __construct($cacheDir, $ttl)
     {
         $this->cacheDir = $cacheDir;
-        $this->minTime = time() - ($maxDays * 86400);
+        $this->ttl = time() - $ttl;
     }
 
     /**
@@ -117,12 +117,12 @@ class FileCacheGarbageCollector
         }
 
         $time = $file->getATime();
-        if ($time > $this->minTime) {
+        if ($time > $this->ttl) {
             return false;
         }
 
         $time = $file->getMTime();
-        if ($time > $this->minTime) {
+        if ($time > $this->ttl) {
             return false;
         }
 

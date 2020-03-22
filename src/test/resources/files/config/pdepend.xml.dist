@@ -11,6 +11,7 @@
     <cache>
         <driver>file</driver>
         <location>../../../php/PDepend/_run/cache</location>
+        <ttl>2592000</ttl>
     </cache>
 
 </configuration>

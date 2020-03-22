@@ -67,6 +67,13 @@ class BuilderParserCacheTest extends AbstractTest
     protected $cacheDir = null;
 
     /**
+     * TTL for files in cache directory
+     *
+     * @var int
+     */
+    protected $cacheTtl = null;
+
+    /**
      * The temporary cache file.
      *
      * @var string
@@ -83,6 +90,7 @@ class BuilderParserCacheTest extends AbstractTest
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cacheDir');
+        $this->cacheTtl = 300;
         $this->testFile = $this->createRunResourceURI('testFile');
     }
 
@@ -128,7 +136,7 @@ class BuilderParserCacheTest extends AbstractTest
     {
         copy($this->createCodeResourceUriForTest() . '/' . $file, $this->testFile);
 
-        $cache = new FileCacheDriver($this->cacheDir);
+        $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl);
 
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->testFile);
