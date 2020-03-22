@@ -79,7 +79,7 @@ class FileCacheDriverTest extends AbstractDriverTest
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cache');
-        $this->cacheTtl = 24*60*60*30;
+        $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
     }
 
     /**
