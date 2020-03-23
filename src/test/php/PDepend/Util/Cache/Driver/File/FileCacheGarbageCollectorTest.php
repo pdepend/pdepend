@@ -63,6 +63,13 @@ class FileCacheGarbageCollectorTest extends AbstractTest
     protected $cacheDir;
 
     /**
+     * Cache TTL
+     *
+     * @var int
+     */
+    protected $cacheTtl = null;
+
+    /**
      * Initializes a temporary working directory.
      *
      * @return void
@@ -72,6 +79,7 @@ class FileCacheGarbageCollectorTest extends AbstractTest
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cache') . '/';
+        $this->cacheTtl = FileCacheGarbageCollector::DEFAULT_TTL;
         mkdir($this->cacheDir);
     }
 
@@ -83,7 +91,7 @@ class FileCacheGarbageCollectorTest extends AbstractTest
         $this->createFile();
         $this->createFile();
 
-        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir);
+        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
         $this->assertSame(0, $garbageCollector->garbageCollect());
     }
 
@@ -97,7 +105,7 @@ class FileCacheGarbageCollectorTest extends AbstractTest
         $this->createFile($time, $time);
         $this->createFile($time, $time);
 
-        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir);
+        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
         $this->assertSame(2, $garbageCollector->garbageCollect());
     }
 
@@ -111,7 +119,7 @@ class FileCacheGarbageCollectorTest extends AbstractTest
         $this->createFile($time, $time);
         $this->createFile($time);
 
-        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir);
+        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
         $this->assertSame(1, $garbageCollector->garbageCollect());
     }
 
@@ -125,7 +133,7 @@ class FileCacheGarbageCollectorTest extends AbstractTest
         $this->createFile($time, $time);
         $this->createFile(0, $time);
 
-        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir);
+        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
         $this->assertSame(1, $garbageCollector->garbageCollect());
     }
 

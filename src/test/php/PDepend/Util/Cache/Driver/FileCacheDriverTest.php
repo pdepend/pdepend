@@ -63,6 +63,13 @@ class FileCacheDriverTest extends AbstractDriverTest
     protected $cacheDir = null;
 
     /**
+     * Cache TTL
+     *
+     * @var int
+     */
+    protected $cacheTtl = null;
+
+    /**
      * Initializes a temporary working directory.
      *
      * @return void
@@ -72,16 +79,17 @@ class FileCacheDriverTest extends AbstractDriverTest
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cache');
+        $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
     }
 
     /**
      * Creates a test fixture.
      *
-     * @return \PDepend\Util\Cache\Driver
+     * @return \PDepend\Util\Cache\CacheDriver
      */
     protected function createDriver()
     {
-        return new FileCacheDriver($this->cacheDir);
+        return new FileCacheDriver($this->cacheDir, $this->cacheTtl);
     }
 
     /**
@@ -92,7 +100,7 @@ class FileCacheDriverTest extends AbstractDriverTest
      */
     public function testFileDriverStoresFileWithCacheKeyIfPresent()
     {
-        $cache = new FileCacheDriver($this->cacheDir, 'foo');
+        $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
         $key = md5('baz' . 'foo');
@@ -109,7 +117,7 @@ class FileCacheDriverTest extends AbstractDriverTest
      */
     public function testFileDriverRestoresFileWithCacheKeyIfPresent()
     {
-        $cache = new FileCacheDriver($this->cacheDir, 'foo');
+        $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
         $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));
@@ -123,7 +131,7 @@ class FileCacheDriverTest extends AbstractDriverTest
         $hash = md5(__METHOD__);
 
         // Save something
-        $cache = new FileCacheDriver($this->cacheDir, $cacheKey);
+        $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, $cacheKey);
         $cache->type($cacheType)->store($storedKey, __METHOD__, $hash);
 
         // Simulate a corrupt cache file by writing invalid data into the file

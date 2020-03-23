@@ -56,6 +56,9 @@ use PDepend\Util\Configuration;
  */
 class CacheFactory
 {
+
+    const DEFAULT_TTL = 2592000; //30 days
+
     /**
      * The system configuration.
      *
@@ -99,16 +102,17 @@ class CacheFactory
     /**
      * Creates a cache instance based on the supplied configuration.
      *
-     * @param  string $cacheKey The name/identifier for the cache instance.
+     * @param  string|null $cacheKey The name/identifier for the cache instance.
      * @return \PDepend\Util\Cache\CacheDriver
      * @throws \InvalidArgumentException If the configured cache driver is unknown.
      */
-    protected function createCache($cacheKey)
+    protected function createCache($cacheKey = null)
     {
         switch ($this->configuration->cache->driver) {
             case 'file':
                 return $this->createFileCache(
                     $this->configuration->cache->location,
+                    $this->configuration->cache->ttl,
                     $cacheKey
                 );
             case 'memory':
@@ -123,12 +127,13 @@ class CacheFactory
      * Creates a new file system based cache instance.
      *
      * @param  string $location Cache root directory.
-     * @param  string $cacheKey The name/identifier for the cache instance.
+     * @param  int $ttl Cache ttl
+     * @param  string|null $cacheKey The name/identifier for the cache instance.
      * @return \PDepend\Util\Cache\Driver\FileCacheDriver
      */
-    protected function createFileCache($location, $cacheKey)
+    protected function createFileCache($location, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {
-        return new FileCacheDriver($location, $cacheKey);
+        return new FileCacheDriver($location, $ttl, $cacheKey);
     }
 
     /**
