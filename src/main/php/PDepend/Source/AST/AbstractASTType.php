@@ -117,7 +117,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Temporary property that only holds methods during the parsing process.
      *
-     * @var   \PDepend\Source\AST\ASTMethod[]
+     * @var   ASTMethod[]
      * @since 1.0.2
      */
     protected $methods = array();
@@ -273,7 +273,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns all {@link \PDepend\Source\AST\ASTMethod} objects in this type.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     public function getMethods()
     {
@@ -296,8 +296,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Adds the given method to this type.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
-     * @return \PDepend\Source\AST\ASTMethod
+     * @param ASTMethod $method
+     * @return ASTMethod
      */
     public function addMethod(ASTMethod $method)
     {
@@ -312,7 +312,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Returns an array with {@link \PDepend\Source\AST\ASTMethod} objects
      * that are imported through traits.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      * @since  1.0.0
      */
     protected function getTraitMethods()
@@ -324,6 +324,14 @@ abstract class AbstractASTType extends AbstractASTArtifact
         );
 
         foreach ($uses as $use) {
+            $priorMethods = array();
+            $precedences = $use->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
+
+            /** @var ASTTraitAdaptationPrecedence $precedence */
+            foreach ($precedences as $precedence) {
+                $priorMethods[strtolower($precedence->getImage())] = true;
+            }
+            /** @var ASTMethod $method */
             foreach ($use->getAllMethods() as $method) {
                 foreach ($uses as $use2) {
                     if ($use2->hasExcludeFor($method)) {
@@ -333,7 +341,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
                 $name = strtolower($method->getName());
 
-                if (false === isset($methods[$name])) {
+                if (!isset($methods[$name]) || isset($priorMethods[$name])) {
                     $methods[$name] = $method;
                     continue;
                 }
@@ -350,6 +358,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
                 throw new ASTTraitMethodCollisionException($method, $this);
             }
         }
+
         return $methods;
     }
 
@@ -450,7 +459,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns a list of all methods provided by this type or one of its parents.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     abstract public function getAllMethods();
 

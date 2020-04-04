@@ -60,6 +60,8 @@ use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTTrait;
+use PDepend\Source\AST\ASTTraitAdaptation;
+use PDepend\Source\AST\ASTTraitUseStatement;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableVariable;
@@ -1286,7 +1288,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait use statement.
      *
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @return ASTTraitUseStatement
      * @since 1.0.0
      */
     private function parseTraitUseStatement()
@@ -1298,6 +1300,7 @@ abstract class AbstractPHPParser
         $useStatement->addChild($this->parseTraitReference());
 
         $this->consumeComments();
+
         while (Tokens::T_COMMA === $this->tokenizer->peek()) {
             $this->consumeToken(Tokens::T_COMMA);
             $useStatement->addChild($this->parseTraitReference());
@@ -1330,26 +1333,26 @@ abstract class AbstractPHPParser
      * Parses the adaptation list of the given use statement or simply reads
      * the terminating semicolon, when no adaptation list exists.
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $useStatement
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @param ASTTraitUseStatement $useStatement
+     * @return ASTTraitUseStatement
      * @since 1.0.0
      */
-    private function parseOptionalTraitAdaptation(
-        \PDepend\Source\AST\ASTTraitUseStatement $useStatement
-    ) {
+    private function parseOptionalTraitAdaptation(ASTTraitUseStatement $useStatement) {
         $this->consumeComments();
+
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
             $useStatement->addChild($this->parseTraitAdaptation());
         } else {
             $this->consumeToken(Tokens::T_SEMICOLON);
         }
+
         return $useStatement;
     }
 
     /**
      * Parses the adaptation expression of a trait use statement.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptation
+     * @return ASTTraitAdaptation
      * @since 1.0.0
      */
     private function parseTraitAdaptation()
@@ -1366,11 +1369,9 @@ abstract class AbstractPHPParser
             $reference = $this->parseTraitMethodReference();
             $this->consumeComments();
 
-            if (Tokens::T_AS === $this->tokenizer->peek()) {
-                $stmt = $this->parseTraitAdaptationAliasStatement($reference);
-            } else {
-                $stmt = $this->parseTraitAdaptationPrecedenceStatement($reference);
-            }
+            $stmt = Tokens::T_AS === $this->tokenizer->peek()
+                ? $this->parseTraitAdaptationAliasStatement($reference)
+                : $this->parseTraitAdaptationPrecedenceStatement($reference);
 
             $this->consumeComments();
             $this->consumeToken(Tokens::T_SEMICOLON);
