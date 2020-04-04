@@ -60,9 +60,11 @@ final class FileUtil
     public static function getUserHomeDirOrSysTempDir()
     {
         $home = self::getUserHomeDir();
+
         if (file_exists($home) && is_writable($home)) {
             return $home;
         }
+
         return self::getSysTempDir();
     }
 
@@ -84,9 +86,13 @@ final class FileUtil
      */
     public static function getUserHomeDir()
     {
-        if ((PHP_OS === 'Darwin') || (PHP_OS === 'CYGWIN') || (false === stripos(PHP_OS, 'win'))) {
-            return getenv('HOME');
+        $userHomeDir = getenv('HOME');
+
+        if (!$userHomeDir) {
+            // The HOME environment isn't always set on Windows, then we do a fallback to the HOMEDRIVE and HOMEPATH
+            $userHomeDir = getenv('HOMEDRIVE') . getenv('HOMEPATH');
         }
-        return getenv('HOMEDRIVE') . getenv('HOMEPATH');
+
+        return $userHomeDir;
     }
 }
