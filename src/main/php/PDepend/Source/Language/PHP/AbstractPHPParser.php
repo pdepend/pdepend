@@ -883,7 +883,7 @@ abstract class AbstractPHPParser
                         $defaultModifier
                     );
 
-                    if ($methodOrProperty instanceof \PDepend\Source\AST\ASTNode) {
+                    if ($methodOrProperty instanceof ASTNode) {
                         $classOrInterface->addChild($methodOrProperty);
                     }
 
@@ -955,8 +955,8 @@ abstract class AbstractPHPParser
     protected function parseMethodOrFieldDeclaration($modifiers = 0)
     {
         $this->tokenStack->push();
-
         $tokenType = $this->tokenizer->peek();
+
         while ($tokenType !== Tokenizer::T_EOF) {
             switch ($tokenType) {
                 case Tokens::T_PRIVATE:
@@ -1037,12 +1037,13 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTFieldDeclaration
      * @since 0.9.6
      */
-    private function parseFieldDeclaration()
+    protected function parseFieldDeclaration()
     {
         $declaration = $this->builder->buildAstFieldDeclaration();
         $declaration->setComment($this->docComment);
 
         $type = $this->parseFieldDeclarationType();
+
         if ($type !== null) {
             $declaration->addChild($type);
         }
@@ -1090,12 +1091,13 @@ abstract class AbstractPHPParser
         $returnReference = $this->parseOptionalByReference();
 
         if ($this->isNextTokenFormalParameterList()) {
-            $callable = $this->parseClosureDeclaration();
-            return $this->setNodePositionsAndReturn($callable);
-        } else {
-            $callable = $this->parseFunctionDeclaration();
-            $this->compilationUnit->addChild($callable);
+            return $this->setNodePositionsAndReturn(
+                $this->parseClosureDeclaration()
+            );
         }
+
+        $callable = $this->parseFunctionDeclaration();
+        $this->compilationUnit->addChild($callable);
 
         $callable->setComment($this->docComment);
         $callable->setTokens($this->tokenStack->pop());
@@ -6853,6 +6855,7 @@ abstract class AbstractPHPParser
 
             $this->compilationUnit->setComment($comment);
         }
+
         return $package;
     }
 
@@ -6893,11 +6896,13 @@ abstract class AbstractPHPParser
     private function parseThrowsAnnotations($comment)
     {
         $throws = array();
+
         if (preg_match_all(self::REGEXP_THROWS_TYPE, $comment, $matches) > 0) {
             foreach ($matches[1] as $match) {
                 $throws[] = $this->useSymbolTable->lookup($match) ?: $match;
             }
         }
+
         return $throws;
     }
 
@@ -6924,6 +6929,7 @@ abstract class AbstractPHPParser
 
             return $image;
         }
+
         return null;
     }
 
@@ -6946,6 +6952,7 @@ abstract class AbstractPHPParser
                 array_map('trim', explode('|', end($match)))
             );
         }
+
         return array();
     }
 
