@@ -5117,6 +5117,16 @@ abstract class AbstractPHPParser
     abstract protected function parseArray(ASTArray $array, $static = false);
 
     /**
+     * Return true if [, $foo] or [$foo, , $bar] is allowed.
+     *
+     * @return bool
+     */
+    protected function canHaveCommaBetweenArrayElements()
+    {
+        return false;
+    }
+
+    /**
      * Parses all elements in an array.
      *
      * @param  \PDepend\Source\AST\ASTArray $array
@@ -5133,6 +5143,11 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         while ($endDelimiter !== $this->tokenizer->peek()) {
+            while ($this->canHaveCommaBetweenArrayElements() && Tokens::T_COMMA === $this->tokenizer->peek()) {
+                $this->consumeToken(Tokens::T_COMMA);
+                $this->consumeComments();
+            }
+
             $array->addChild($this->parseArrayElement($static));
 
             $this->consumeComments();
