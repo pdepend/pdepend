@@ -743,4 +743,19 @@ class PHPParserVersion70Test extends AbstractTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
+
+    /**
+     * testSymmetricArrayDestructuringEmptySlot
+     *
+     * @return void
+     */
+    public function testSymmetricArrayDestructuringEmptySlot()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException',
+            'The parser has reached an invalid state near line "4" in file'
+        );
+
+        $this->parseCodeResourceForTest();
+    }
 }

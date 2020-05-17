@@ -224,4 +224,9 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
             }
         } while ($repeat === true);
     }
+
+    protected function canHaveCommaBetweenArrayElements()
+    {
+        return true;
+    }
 }
