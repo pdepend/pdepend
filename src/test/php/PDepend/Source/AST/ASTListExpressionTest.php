@@ -309,6 +309,18 @@ class ASTListExpressionTest extends ASTNodeTest
     }
 
     /**
+     * testSymmetricArrayDestructuringEmptySlot
+     *
+     * @return void
+     */
+    public function testSymmetricArrayDestructuringEmptySlot()
+    {
+        $source = $this->parseCodeResourceForTest();
+        var_dump($source);
+        exit;
+    }
+
+    /**
      * testFunctionVoidReturnType
      *
      * @return void
