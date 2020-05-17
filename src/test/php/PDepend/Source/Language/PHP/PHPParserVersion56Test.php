@@ -48,6 +48,8 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTConstantDefinition;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -199,6 +201,34 @@ class PHPParserVersion56Test extends AbstractTest
         );
 
         $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Test that static array property is well linked to its self:: / static:: accesses.
+     *
+     * @return void
+     */
+    public function testStaticArrayProperty()
+    {
+        /** @var ASTReturnStatement[] $returnStatements */
+        $returnStatements = $this
+            ->getFirstMethodForTestCase()
+            ->findChildrenOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+
+        /** @var ASTMemberPrimaryPrefix $memberPrefix */
+        $memberPrefix = $returnStatements[0]->getChild(0);
+        $this->assertInstanceOf('PDepend\Source\AST\ASTMemberPrimaryPrefix', $memberPrefix);
+        $this->assertTrue($memberPrefix->isStatic());
+        $this->assertInstanceOf('PDepend\Source\AST\ASTSelfReference', $memberPrefix->getChild(0));
+        $children = $memberPrefix->getChild(1)->getChildren();
+        $this->assertCount(1, $children);
+        $this->assertInstanceOf('PDepend\Source\AST\ASTArrayIndexExpression', $children[0]);
+        $children = $children[0]->getChildren();
+        $this->assertCount(2, $children);
+        $this->assertInstanceOf('PDepend\Source\AST\ASTVariable', $children[0]);
+        $this->assertInstanceOf('PDepend\Source\AST\ASTLiteral', $children[1]);
+        $this->assertSame('$foo', $children[0]->getImage());
+        $this->assertSame("'bar'", $children[1]->getImage());
     }
 
     /**
