@@ -139,6 +139,19 @@ class PHPParserVersion74Test extends AbstractTest
         }
     }
 
+    public function testSingleTypedProperty()
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+        /** @var ASTFieldDeclaration $field */
+        $field = $class->getChild(0);
+        $this->assertTrue($field->hasType());
+        $this->assertSame('int', $field->getType()->getImage());
+        $this->assertTrue($field->isPrivate());
+        $this->assertFalse($field->isProtected());
+        $this->assertFalse($field->isPublic());
+    }
+
     public function testTypedPropertiesSyntaxError()
     {
         $this->setExpectedException(
