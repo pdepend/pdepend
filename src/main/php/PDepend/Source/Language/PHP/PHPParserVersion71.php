@@ -59,13 +59,6 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion71 extends PHPParserVersion70
 {
-    private function consumeQuestionMark()
-    {
-        if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
-            $this->consumeToken(Tokens::T_QUESTION_MARK);
-        }
-    }
-
     /**
      * Return true if current PHP level supports keys in lists.
      *
@@ -158,25 +151,6 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
     }
     
-    private function getModifiersForConstantDefinition($tokenType, $modifiers)
-    {
-        $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
-        $modifiers &= $allowed;
-      
-        if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
-            throw new InvalidStateException(
-                $this->tokenizer->next()->startLine,
-                (string) $this->compilationUnit,
-                sprintf(
-                    'Constant can\'t be declared private or protected in interface "%s".',
-                    $this->classOrInterface->getName()
-                )
-            );
-        }
-            
-        return $modifiers;
-    }
-    
     /**
      * Tests if the given image is a PHP 7 type hint.
      *
@@ -212,6 +186,11 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseScalarOrCallableTypeHint($image);
     }
 
+    /**
+     * This method parses class references in catch statement.
+     *
+     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     */
     protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
     {
         do {
@@ -225,8 +204,39 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         } while ($repeat === true);
     }
 
+    /**
+     * Return true if [, $foo] or [$foo, , $bar] is allowed.
+     *
+     * @return bool
+     */
     protected function canHaveCommaBetweenArrayElements()
     {
         return true;
+    }
+
+    private function consumeQuestionMark()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
+            $this->consumeToken(Tokens::T_QUESTION_MARK);
+        }
+    }
+
+    private function getModifiersForConstantDefinition($tokenType, $modifiers)
+    {
+        $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
+        $modifiers &= $allowed;
+
+        if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
+            throw new InvalidStateException(
+                $this->tokenizer->next()->startLine,
+                (string) $this->compilationUnit,
+                sprintf(
+                    'Constant can\'t be declared private or protected in interface "%s".',
+                    $this->classOrInterface->getName()
+                )
+            );
+        }
+
+        return $modifiers;
     }
 }
