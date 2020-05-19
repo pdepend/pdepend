@@ -309,6 +309,22 @@ class ASTListExpressionTest extends ASTNodeTest
     }
 
     /**
+     * testSymmetricArrayDestructuringEmptySlot
+     *
+     * @return void
+     */
+    public function testSymmetricArrayDestructuringEmptySlot()
+    {
+        /** @var ASTArray $expr */
+        $array = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTArray'
+        );
+        $this->assertCount(1, $array->getChildren());
+        $this->assertSame('$b', $array->getChild(0)->getChild(0)->getImage());
+    }
+
+    /**
      * testFunctionVoidReturnType
      *
      * @return void

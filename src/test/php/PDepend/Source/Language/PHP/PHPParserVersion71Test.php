@@ -41,6 +41,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -166,6 +167,22 @@ class PHPParserVersion71Test extends AbstractTest
         $this->assertTrue($type->isScalar());
         $this->assertFalse($type->isArray());
         $this->assertSame('void', $type->getImage());
+    }
+
+    /**
+     * testSymmetricArrayDestructuringEmptySlot
+     *
+     * @return void
+     */
+    public function testSymmetricArrayDestructuringEmptySlot()
+    {
+        /** @var ASTArray $expr */
+        $array = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTArray'
+        );
+        $this->assertCount(1, $array->getChildren());
+        $this->assertSame('$b', $array->getChild(0)->getChild(0)->getImage());
     }
 
     /**
