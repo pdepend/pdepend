@@ -383,7 +383,11 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function setTokens(array $tokens, Token $startToken = null)
     {
-        $this->startLine = ($startToken ?: reset($tokens))->startLine;
+        if (!$startToken) {
+            $startToken = reset($tokens);
+        }
+
+        $this->startLine = $startToken->startLine;
         $this->endLine   = end($tokens)->endLine;
 
         $this->cache
