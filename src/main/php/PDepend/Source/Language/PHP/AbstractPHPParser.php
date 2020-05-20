@@ -714,11 +714,12 @@ abstract class AbstractPHPParser
      */
     protected function parseClassDeclaration()
     {
+        $startToken = $this->tokenizer->currentToken();
         $this->tokenStack->push();
 
         $class = $this->parseClassSignature();
         $class = $this->parseTypeBody($class);
-        $class->setTokens($this->tokenStack->pop());
+        $class->setTokens($this->tokenStack->pop(), $startToken);
 
         $this->reset();
 
@@ -5883,8 +5884,6 @@ abstract class AbstractPHPParser
             case Tokens::T_ENDFOREACH:
             case Tokens::T_CURLY_BRACE_CLOSE:
                 return null;
-            case Tokens::T_DECLARE:
-                return $this->parseDeclareStatement();
             case Tokens::T_CLOSE_TAG:
                 if (($tokenType = $this->parseNonePhpCode()) === Tokenizer::T_EOF) {
                     return null;

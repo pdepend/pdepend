@@ -44,6 +44,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
@@ -380,9 +381,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @param \PDepend\Source\Tokenizer\Token[] $tokens
      * @return void
      */
-    public function setTokens(array $tokens)
+    public function setTokens(array $tokens, Token $startToken = null)
     {
-        $this->startLine = reset($tokens)->startLine;
+        $this->startLine = ($startToken ?: reset($tokens))->startLine;
         $this->endLine   = end($tokens)->endLine;
 
         $this->cache
