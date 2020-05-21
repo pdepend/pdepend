@@ -99,9 +99,4 @@ abstract class PHPParserVersion53 extends AbstractPHPParser
 
         return $array;
     }
-
-    protected function parseConstantDeclaratorValue()
-    {
-        return $this->parseStaticValue();
-    }
 }
