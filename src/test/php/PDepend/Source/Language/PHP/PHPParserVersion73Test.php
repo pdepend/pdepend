@@ -49,6 +49,9 @@ use PDepend\Source\AST\ASTHeredoc;
 use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion73} class.
@@ -193,5 +196,19 @@ class PHPParserVersion73Test extends AbstractTest
         $this->assertCount(1, $arguments);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $arguments[0]);
         $this->assertSame('$i', $arguments[0]->getImage());
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion73',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

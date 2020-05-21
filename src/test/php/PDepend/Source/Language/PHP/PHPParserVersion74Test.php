@@ -54,6 +54,9 @@ use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion74} class.
@@ -336,5 +339,19 @@ class PHPParserVersion74Test extends AbstractTest
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $nodes[0]);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $nodes[1]);
         $this->assertSame('A', $nodes[1]->getImage());
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }
