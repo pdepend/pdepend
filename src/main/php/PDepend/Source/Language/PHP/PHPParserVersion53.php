@@ -56,7 +56,6 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion53 extends AbstractPHPParser
 {
-
     /**
      * Tests if the next token is a valid array start delimiter in the supported
      * PHP version.
@@ -99,5 +98,10 @@ abstract class PHPParserVersion53 extends AbstractPHPParser
         }
 
         return $array;
+    }
+
+    protected function parseConstantDeclaratorValue()
+    {
+        return $this->parseStaticValue();
     }
 }
