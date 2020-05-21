@@ -548,9 +548,9 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * The source file instance.
      *
-     * @var \PDepend\Source\AST\ASTCompilationUnit
+     * @var \PDepend\Source\AST\ASTCompilationUnit|null
      */
-    protected $sourceFile = '';
+    protected $sourceFile = null;
 
     /**
      * Count of all tokens.
@@ -583,7 +583,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit
+     * @return \PDepend\Source\AST\ASTCompilationUnit|null
      */
     public function getSourceFile()
     {
