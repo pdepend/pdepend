@@ -70,7 +70,7 @@ abstract class Extension
     /**
      * Loads a specific configuration.
      *
-     * @param array            $config    Extension configuration hash (from behat.yml)
+     * @param array<mixed>     $config    Extension configuration hash (from behat.yml)
      * @param ContainerBuilder $container ContainerBuilder instance
      * @return void
      */

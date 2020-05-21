@@ -117,7 +117,7 @@ class Engine
     /**
      * The used code node builder.
      *
-     * @var \PDepend\Source\Builder\Builder
+     * @var \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace>|null
      */
     private $builder = null;
 
@@ -453,7 +453,7 @@ class Engine
     /**
      * Send the start parsing process event.
      *
-     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace> $builder The used node builder instance.
      * @return void
      */
     protected function fireStartParseProcess(Builder $builder)
@@ -466,7 +466,7 @@ class Engine
     /**
      * Send the end parsing process event.
      *
-     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace> $builder The used node builder instance.
      * @return void
      */
     protected function fireEndParseProcess(Builder $builder)

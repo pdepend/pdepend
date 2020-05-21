@@ -190,7 +190,7 @@ abstract class AbstractPHPParser
     /**
      * The used data structure builder.
      *
-     * @var Builder
+     * @var Builder<mixed>
      */
     protected $builder;
 
@@ -278,7 +278,7 @@ abstract class AbstractPHPParser
      * Constructs a new source parser.
      *
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      */
     public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)

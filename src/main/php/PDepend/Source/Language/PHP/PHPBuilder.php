@@ -65,6 +65,8 @@ use PDepend\Util\Type;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @implements Builder<\PDepend\Source\AST\ASTNamespace>
  */
 class PHPBuilder implements Builder
 {
@@ -1836,7 +1838,7 @@ class PHPBuilder implements Builder
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
-     * @return \PDepend\Source\AST\ASTArtifactList
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace>
      */
     public function getIterator()
     {
@@ -1847,7 +1849,7 @@ class PHPBuilder implements Builder
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace>
      */
     public function getNamespaces()
     {
@@ -1861,7 +1863,7 @@ class PHPBuilder implements Builder
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
-     * @return \PDepend\Source\AST\ASTArtifactList
+     * @return \PDepend\Source\AST\ASTNamespace[]
      * @since  0.9.12
      */
     private function getPreparedNamespaces()
@@ -2150,10 +2152,12 @@ class PHPBuilder implements Builder
      * Creates a copy of the given input array, but skips all types that do not
      * contain a parent package.
      *
-     * @param array $originalTypes The original types created during the parsing
+     * @template T of \PDepend\Source\AST\AbstractASTType
+     *
+     * @param array<string, array<string, array<int, T>>> $originalTypes The original types created during the parsing
      *        process.
      *
-     * @return array
+     * @return array<string, array<string, array<int, T>>>
      */
     private function copyTypesWithPackage(array $originalTypes)
     {
