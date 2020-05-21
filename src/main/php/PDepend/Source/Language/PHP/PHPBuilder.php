@@ -110,21 +110,21 @@ class PHPBuilder implements Builder
     /**
      * All generated {@link \PDepend\Source\AST\ASTTrait} objects
      *
-     * @var \PDepend\Source\AST\ASTTrait[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTTrait>>>
      */
     private $traits = array();
 
     /**
      * All generated {@link \PDepend\Source\AST\ASTClass} objects
      *
-     * @var \PDepend\Source\AST\ASTClass[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTClass>>>
      */
     private $classes = array();
 
     /**
      * All generated {@link \PDepend\Source\AST\ASTInterface} instances.
      *
-     * @var \PDepend\Source\AST\ASTInterface[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTInterface>>>
      */
     private $interfaces = array();
 
@@ -152,21 +152,21 @@ class PHPBuilder implements Builder
     /**
      * Cache of all traits created during the regular parsing process.
      *
-     * @var \PDepend\Source\AST\ASTTrait[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTTrait>>>
      */
     private $frozenTraits = array();
 
     /**
      * Cache of all classes created during the regular parsing process.
      *
-     * @var \PDepend\Source\AST\ASTClass[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTClass>>>
      */
     private $frozenClasses = array();
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
-     * @var \PDepend\Source\AST\ASTInterface[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTInterface>>>
      */
     private $frozenInterfaces = array();
 

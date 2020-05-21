@@ -117,7 +117,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Returns the current node or <b>false</b>
      *
-     * @return \PDepend\Source\AST\ASTArtifact
+     * @return \PDepend\Source\AST\ASTArtifact|false
      */
     public function current()
     {

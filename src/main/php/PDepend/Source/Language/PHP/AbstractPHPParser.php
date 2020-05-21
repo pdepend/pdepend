@@ -267,7 +267,7 @@ abstract class AbstractPHPParser
      */
     protected $cache;
 
-    /*
+    /**
      * The used code tokenizer.
      *
      * @var \PDepend\Source\Tokenizer\Tokenizer
@@ -6784,7 +6784,7 @@ abstract class AbstractPHPParser
     /**
      * Parses fn operator of lambda function for syntax fn() => available since PHP 7.4.
      *
-     * @return \PDepend\Source\AST\ASTValue
+     * @return \PDepend\Source\AST\ASTNode
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
     protected function parseLambdaFunctionDeclaration()

@@ -332,7 +332,7 @@ class Command
     /**
      * Assign CLI arguments to current runner instance
      *
-     * @return bool
+     * @return void
      */
     protected function assignArguments()
     {

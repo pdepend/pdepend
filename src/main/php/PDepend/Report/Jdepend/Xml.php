@@ -108,14 +108,14 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * The Packages dom element.
      *
-     * @var \DOMElement
+     * @var \DOMNode
      */
     protected $packages = null;
 
     /**
      * The Cycles dom element.
      *
-     * @var \DOMElement
+     * @var \DOMNode
      */
     protected $cycles = null;
 
