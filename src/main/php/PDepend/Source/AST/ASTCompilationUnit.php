@@ -131,7 +131,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
         if ($fileName && strpos($fileName, 'php://') === 0) {
             $this->fileName = $fileName;
         } elseif ($fileName !== null) {
-            $this->fileName = realpath($fileName);
+            $this->fileName = realpath($fileName) ?: null;
         }
     }
 

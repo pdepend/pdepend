@@ -476,6 +476,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
                 return $expr;
         }
+
+        return null;
     }
 
     /**

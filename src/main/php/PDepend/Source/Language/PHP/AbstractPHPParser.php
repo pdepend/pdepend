@@ -4604,6 +4604,8 @@ abstract class AbstractPHPParser
                     $this->builder->buildAstConstant($token->image)
                 );
         }
+
+        return null;
     }
 
     /**

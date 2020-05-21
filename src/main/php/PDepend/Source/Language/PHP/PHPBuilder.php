@@ -2113,7 +2113,7 @@ class PHPBuilder implements Builder
 
         // Check for exact match and return first matching instance
         if (isset($instances[$caseInsensitiveName][$namespaceName])) {
-            return reset($instances[$caseInsensitiveName][$namespaceName]);
+            return reset($instances[$caseInsensitiveName][$namespaceName]) ?: null;
         }
 
         if (!$this->isDefault($namespaceName)) {
@@ -2121,6 +2121,10 @@ class PHPBuilder implements Builder
         }
 
         $classesOrInterfaces = reset($instances[$caseInsensitiveName]);
+        if (!$classesOrInterfaces) {
+            return null;
+        }
+
         return reset($classesOrInterfaces);
     }
 
