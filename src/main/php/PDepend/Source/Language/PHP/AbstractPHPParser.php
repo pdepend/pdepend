@@ -4581,7 +4581,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a simple PHP constant use and returns a corresponding node.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 1.0.0
      */
     protected function parseConstant()

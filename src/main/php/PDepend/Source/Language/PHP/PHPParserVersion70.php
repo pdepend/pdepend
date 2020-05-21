@@ -453,7 +453,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * In this method we implement parsing of PHP 7.0 specific expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 2.3
      */
     protected function parseExpressionVersion70()

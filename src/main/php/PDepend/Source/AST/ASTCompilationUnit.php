@@ -56,7 +56,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var   \PDepend\Util\Cache\CacheDriver
+     * @var   \PDepend\Util\Cache\CacheDriver|null
      * @since 0.10.0
      */
     protected $cache = null;
@@ -64,21 +64,21 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * The unique identifier for this function.
      *
-     * @var string
+     * @var string|null
      */
     protected $id = null;
 
     /**
      * The source file name/path.
      *
-     * @var string
+     * @var string|null
      */
     protected $fileName = null;
 
     /**
      * The comment for this type.
      *
-     * @var string
+     * @var string|null
      */
     protected $comment = null;
 
@@ -117,7 +117,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Normalized code in this file.
      *
-     * @var string
+     * @var string|null
      */
     private $source = null;
 
@@ -138,7 +138,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns the physical file name for this object.
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -148,7 +148,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns the physical file name for this object.
      *
-     * @return string
+     * @return string|null
      */
     public function getFileName()
     {
@@ -158,7 +158,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns a id for this code node.
      *
-     * @return string
+     * @return string|null
      */
     public function getId()
     {
@@ -193,7 +193,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns normalized source code with stripped whitespaces.
      *
-     * @return string
+     * @return string|null
      */
     public function getSource()
     {

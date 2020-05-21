@@ -301,7 +301,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     /**
      * In this method we implement parsing of PHP 5.6 specific expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 2.3
      */
     protected function parseExpressionVersion56()

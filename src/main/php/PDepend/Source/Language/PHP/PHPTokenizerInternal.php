@@ -916,7 +916,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @param array<array<integer, integer|string>|string> $tokens Reference to the current token stream.
      *
-     * @return string
+     * @return string|null
      */
     private function consumeNonePhpTokens(array &$tokens)
     {

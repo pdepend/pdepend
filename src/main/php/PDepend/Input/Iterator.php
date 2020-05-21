@@ -60,7 +60,7 @@ class Iterator extends \FilterIterator
     /**
      * Optional root path for the files.
      *
-     * @var   string
+     * @var   string|null
      * @since 0.10.0
      */
     protected $rootPath = null;
