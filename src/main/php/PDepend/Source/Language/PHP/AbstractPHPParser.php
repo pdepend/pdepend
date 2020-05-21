@@ -7133,6 +7133,7 @@ abstract class AbstractPHPParser
     protected function consumeComments()
     {
         $type = $this->tokenizer->peek();
+
         while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT) {
             $token = $this->consumeToken($type);
             $type  = $this->tokenizer->peek();
@@ -7142,6 +7143,7 @@ abstract class AbstractPHPParser
             }
 
             $this->docComment = $token->image;
+
             if (preg_match('(\s+@package\s+[^\s]+\s+)', $token->image)) {
                 $this->packageName = $this->parsePackageAnnotation($token->image);
             }

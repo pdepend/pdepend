@@ -46,6 +46,7 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PDepend\Source\Tokenizer\FullTokenizer;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -355,11 +356,69 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
         return $arguments;
     }
 
+    /**
+     * Parses the value of a php constant. By default this can be only static
+     * values that were allowed in the oldest supported PHP version.
+     *
+     * @return \PDepend\Source\AST\ASTValue
+     */
     protected function parseConstantDeclaratorValue()
     {
+        if ($this->isFollowedByStaticValueOrStaticArray()) {
+            return $this->parseStaticValueOrStaticArray();
+        }
+
+        // Else it would be provided as ASTLiteral or expressions object.
         $value = new ASTValue();
         $value->setValue($this->parseOptionalExpression());
 
         return $value;
+    }
+
+    /**
+     * Determines if the following expression can be stored as a static value.
+     *
+     * @return bool
+     */
+    protected function isFollowedByStaticValueOrStaticArray()
+    {
+        // If we can't anticipate, we should assume it can be a dynamic value
+        if (!($this->tokenizer instanceof FullTokenizer)) {
+            return false;
+        }
+
+        for($i = 0; $type = $this->tokenizer->peekAt($i); $i++) {
+            switch ($type) {
+                case Tokens::T_COMMENT:
+                case Tokens::T_DOC_COMMENT:
+                case Tokens::T_ARRAY:
+                case Tokens::T_SQUARED_BRACKET_OPEN:
+                case Tokens::T_SQUARED_BRACKET_CLOSE:
+                case Tokens::T_PARENTHESIS_OPEN:
+                case Tokens::T_PARENTHESIS_CLOSE:
+                case Tokens::T_COMMA:
+                case Tokens::T_DOUBLE_ARROW:
+                case Tokens::T_NULL:
+                case Tokens::T_TRUE:
+                case Tokens::T_FALSE:
+                case Tokens::T_LNUMBER:
+                case Tokens::T_DNUMBER:
+                case Tokens::T_STRING:
+                case Tokens::T_EQUAL:
+                case Tokens::T_START_HEREDOC:
+                case Tokens::T_END_HEREDOC:
+                case Tokens::T_ENCAPSED_AND_WHITESPACE:
+                    break;
+
+                case Tokens::T_SEMICOLON:
+                case Tokenizer::T_EOF:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        return false;
     }
 }
