@@ -54,7 +54,7 @@ namespace PDepend\Bugs;
  * @covers \stdClass
  * @group regressiontest
  */
-class ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test extends AbstractRegressionTest
+class ClassConstantAsArrayExpressionBug299Test extends AbstractRegressionTest
 {
     /**
      * Tests that the parser does not throw an exception.
