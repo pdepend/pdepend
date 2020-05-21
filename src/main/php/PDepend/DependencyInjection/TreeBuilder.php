@@ -65,6 +65,8 @@ class TreeBuilder
      * TreeBuilder constructor.
      *
      * @param string $name
+     *
+     * @return void
      */
     public function __construct($name = 'pdepend')
     {

@@ -508,6 +508,9 @@ class PHPTokenizerInternal implements FullTokenizer
         ),
     );
 
+    /**
+     * @var array<integer, array<integer, array<string, string|integer>>>
+     */
     protected static $reductionMap = array(
         Tokens::T_CONCAT => array(
             Tokens::T_CONCAT => array(

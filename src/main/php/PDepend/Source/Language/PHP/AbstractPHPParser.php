@@ -1617,6 +1617,7 @@ abstract class AbstractPHPParser
      *
      * @param int                             $tokenType
      * @param \PDepend\Source\Tokenizer\Token $unexpectedToken
+     * @return void
      */
     private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null)
     {
@@ -3385,6 +3386,7 @@ abstract class AbstractPHPParser
      * This method parses class references in catch statement.
      *
      * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @return void
      */
     protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
     {
@@ -5095,6 +5097,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an array structure.
      *
+     * @param boolean $static
      * @return \PDepend\Source\AST\ASTArray
      * @since 1.0.0
      */
@@ -7184,6 +7187,9 @@ abstract class AbstractPHPParser
         throw $this->getUnexpectedTokenException($token);
     }
 
+    /**
+     * @return void
+     */
     protected function checkEllipsisInExpressionSupport()
     {
         $this->throwUnexpectedTokenException();

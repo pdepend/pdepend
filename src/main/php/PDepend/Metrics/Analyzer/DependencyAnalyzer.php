@@ -92,7 +92,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     private $nodeMetrics = null;
 
     /**
-     * @var array<string, \PDepend\Source\AST\ASTNamespace>
+     * @var array<string, ASTNamespace>
      */
     protected $nodeSet = array();
 
@@ -315,7 +315,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
             ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
-        
+
         foreach ($type->getDependencies() as $dependency) {
             $this->collectDependencies(
                 $type->getNamespace(),

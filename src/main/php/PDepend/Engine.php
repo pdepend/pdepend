@@ -694,6 +694,10 @@ class Engine
         return new ArrayIterator(array_values($files));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return \PDepend\Metrics\Analyzer[]
+     */
     private function createAnalyzers($options)
     {
         $analyzers = $this->analyzerFactory->createRequiredForGenerators($this->generators);
@@ -719,6 +723,10 @@ class Engine
         return $analyzers;
     }
 
+    /**
+     * @param string $path
+     * @return bool
+     */
     private function isPhpStream($path)
     {
         return substr($path, 0, strlen($this->phpStreamPrefix)) === $this->phpStreamPrefix;

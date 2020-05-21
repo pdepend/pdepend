@@ -303,6 +303,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * @param boolean $packageAnnotation
+     * @return void
      */
     public function setPackageAnnotation($packageAnnotation)
     {

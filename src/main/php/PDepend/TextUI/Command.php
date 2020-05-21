@@ -629,6 +629,7 @@ class Command
 
     /**
      * @param integer $startTime
+     * @return void
      */
     private function printStatistics($startTime)
     {
