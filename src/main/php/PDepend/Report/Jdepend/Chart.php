@@ -163,61 +163,16 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $legendTemplate = $svg->getElementById('jdepend.legend');
         $legendTemplate->removeAttribute('xml:id');
 
-        $max = 0;
-        $min = 0;
-
-        $items = array();
-        foreach ($this->code as $namespace) {
-            if (!$namespace->isUserDefined()) {
-                continue;
-            }
-
-            $metrics = $this->analyzer->getStats($namespace);
-
-            if (count($metrics) === 0) {
-                continue;
-            }
-
-            $size = $metrics['cc'] + $metrics['ac'];
-            if ($size > $max) {
-                $max = $size;
-            } elseif ($min === 0 || $size < $min) {
-                $min = $size;
-            }
-
-            $items[] = array(
-                'size'         =>  $size,
-                'abstraction'  =>  $metrics['a'],
-                'instability'  =>  $metrics['i'],
-                'distance'     =>  $metrics['d'],
-                'name'         =>  Utf8Util::ensureEncoding($namespace->getName())
-            );
-        }
-
-        $diff = (($max - $min) / 10);
-
-        // Sort items by size
-        usort(
-            $items,
-            function ($a, $b) {
-                return ($a['size'] - $b['size']);
-            }
-        );
-
-        foreach ($items as $item) {
+        foreach ($this->getItems() as $item) {
             if ($item['distance'] < $bias) {
                 $ellipse = $good->cloneNode(true);
             } else {
                 $ellipse = $bad->cloneNode(true);
             }
-            $r = 15;
-            if ($diff !== 0) {
-                $r = 5 + (($item['size'] - $min) / $diff);
-            }
 
-            $a = $r / 15;
-            $e = (50 - $r) + ($item['abstraction'] * 320);
-            $f = (20 - $r + 190) - ($item['instability'] * 190);
+            $a = $item['ratio'] / 15;
+            $e = (50 - $item['ratio']) + ($item['abstraction'] * 320);
+            $f = (20 - $item['ratio'] + 190) - ($item['instability'] * 190);
 
             $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
 
@@ -231,8 +186,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             if ($result && count($found)) {
                 $angle = rand(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
-                $legend->setAttribute('x', $e + $r * (1 + cos($angle)));
-                $legend->setAttribute('y', $f + $r * (1 + sin($angle)));
+                $legend->setAttribute('x', $e + $item['ratio'] * (1 + cos($angle)));
+                $legend->setAttribute('y', $f + $item['ratio'] * (1 + sin($angle)));
                 $legend->nodeValue = $found[1];
                 $legendTemplate->parentNode->appendChild($legend);
             }
@@ -250,5 +205,56 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 
         // Remove temp file
         unlink($temp);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function getItems()
+    {
+        $items = array();
+        foreach ($this->code as $namespace) {
+            if (!$namespace->isUserDefined()) {
+                continue;
+            }
+
+            $metrics = $this->analyzer->getStats($namespace);
+
+            if (count($metrics) === 0) {
+                continue;
+            }
+
+            $items[] = array(
+                'size'         =>  $metrics['cc'] + $metrics['ac'],
+                'abstraction'  =>  $metrics['a'],
+                'instability'  =>  $metrics['i'],
+                'distance'     =>  $metrics['d'],
+                'name'         =>  Utf8Util::ensureEncoding($namespace->getName())
+            );
+        }
+
+        // Sort items by size
+        usort(
+            $items,
+            function ($a, $b) {
+                return ($a['size'] - $b['size']);
+            }
+        );
+
+        if ($items) {
+            $max = $items[count($items) - 1]['size'];
+            $min = $items[0]['size'];
+
+            $diff = (($max - $min) / 10);
+
+            foreach ($items as &$item) {
+                $item['ratio'] = 15;
+                if ($diff !== 0) {
+                    $item['ratio'] = 5 + (($item['size'] - $min) / $diff);
+                }
+            }
+        }
+
+        return $items;
     }
 }
