@@ -242,7 +242,7 @@ final class Type
         self::initTypeToExtension();
 
         $normalizedName = ltrim($typeName, '\\');
-        $normalizedName = strtolower($normalizedName);
+        $normalizedName = mb_strtolower($normalizedName);
 
         return isset(self::$typeNameToExtension[$normalizedName]);
     }
@@ -260,7 +260,7 @@ final class Type
         self::initTypeToExtension();
 
         $normalizedName = ltrim($typeName, '\\');
-        $normalizedName = strtolower($normalizedName);
+        $normalizedName = mb_strtolower($normalizedName);
         if (isset(self::$typeNameToExtension[$normalizedName])) {
             return self::$typeNameToExtension[$normalizedName];
         }
@@ -294,7 +294,7 @@ final class Type
     public static function isInternalPackage($packageName)
     {
         $packageNames = self::getInternalNamespaces();
-        return isset($packageNames[strtolower($packageName)]);
+        return isset($packageNames[mb_strtolower($packageName)]);
     }
 
     /**
@@ -307,7 +307,7 @@ final class Type
      */
     public static function isScalarType($image)
     {
-        $image = strtolower($image);
+        $image = mb_strtolower($image);
         if (isset(self::$scalarTypes[$image]) === true) {
             return true;
         }
@@ -343,7 +343,7 @@ final class Type
      */
     public static function getPrimitiveType($image)
     {
-        $image = strtolower($image);
+        $image = mb_strtolower($image);
         if (isset(self::$primitiveTypes[$image]) === true) {
             return self::$primitiveTypes[$image];
         }
@@ -369,7 +369,7 @@ final class Type
      */
     public static function isArrayType($image)
     {
-        return (strtolower($image) === 'array');
+        return (mb_strtolower($image) === 'array');
     }
 
     /**

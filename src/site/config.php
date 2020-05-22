@@ -115,7 +115,7 @@ return array(
                 $level = $match['level'];
                 $content = $match['content'];
                 // Use content as anchor
-                $hash = preg_replace('/[^a-z0-9]+/', '-', strtolower(trim($match['content'])));
+                $hash = preg_replace('/[^a-z0-9]+/', '-', mb_strtolower(trim($match['content'])));
 
                 return "<a id=\"$hash\"></a>\n<h$level>$content</h$level>";
             }, $content);

@@ -110,7 +110,7 @@ class StrategyFactory
         }
 
         // Prepare identifier
-        $name = ucfirst(strtolower($strategyName));
+        $name = ucfirst(mb_strtolower($strategyName));
 
         $className = "PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\{$name}Strategy";
 

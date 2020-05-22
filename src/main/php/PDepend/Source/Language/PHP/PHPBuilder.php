@@ -2100,7 +2100,7 @@ class PHPBuilder implements Builder
         $classOrInterfaceName = $this->extractTypeName($qualifiedName);
         $namespaceName = $this->extractNamespaceName($qualifiedName);
 
-        $caseInsensitiveName = strtolower($classOrInterfaceName);
+        $caseInsensitiveName = mb_strtolower($classOrInterfaceName);
 
         if (!isset($instances[$caseInsensitiveName])) {
             return null;
@@ -2239,7 +2239,7 @@ class PHPBuilder implements Builder
      */
     protected function storeTrait($traitName, $namespaceName, ASTTrait $trait)
     {
-        $traitName = strtolower($traitName);
+        $traitName = mb_strtolower($traitName);
         if (!isset($this->traits[$traitName][$namespaceName])) {
             $this->traits[$traitName][$namespaceName] = array();
         }
@@ -2260,7 +2260,7 @@ class PHPBuilder implements Builder
      */
     protected function storeClass($className, $namespaceName, ASTClass $class)
     {
-        $className = strtolower($className);
+        $className = mb_strtolower($className);
         if (!isset($this->classes[$className][$namespaceName])) {
             $this->classes[$className][$namespaceName] = array();
         }
@@ -2281,7 +2281,7 @@ class PHPBuilder implements Builder
      */
     protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface)
     {
-        $interfaceName = strtolower($interfaceName);
+        $interfaceName = mb_strtolower($interfaceName);
         if (!isset($this->interfaces[$interfaceName][$namespaceName])) {
             $this->interfaces[$interfaceName][$namespaceName] = array();
         }

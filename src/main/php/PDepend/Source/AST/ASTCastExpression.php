@@ -89,7 +89,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
      */
     public function __construct($image)
     {
-        parent::__construct(preg_replace('(\s+)', '', strtolower($image)));
+        parent::__construct(preg_replace('(\s+)', '', mb_strtolower($image)));
     }
 
     /**

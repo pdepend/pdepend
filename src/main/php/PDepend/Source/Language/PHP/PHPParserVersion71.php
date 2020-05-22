@@ -159,7 +159,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      */
     protected function isScalarOrCallableTypeHint($image)
     {
-        switch (strtolower($image)) {
+        switch (mb_strtolower($image)) {
             case 'iterable':
             case 'void':
                 return true;
@@ -176,7 +176,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
-        switch (strtolower($image)) {
+        switch (mb_strtolower($image)) {
             case 'void':
                 return $this->builder->buildAstScalarType($image);
             case 'iterable':

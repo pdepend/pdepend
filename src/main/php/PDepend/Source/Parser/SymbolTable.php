@@ -170,6 +170,6 @@ class SymbolTable
      */
     private function normalizeKey($key)
     {
-        return strtolower($key);
+        return mb_strtolower($key);
     }
 }

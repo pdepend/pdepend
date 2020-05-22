@@ -90,13 +90,13 @@ class ASTTraitUseStatement extends ASTStatement
      */
     public function hasExcludeFor(ASTMethod $method)
     {
-        $methodName   = strtolower($method->getName());
+        $methodName   = mb_strtolower($method->getName());
         $methodParent = $method->getParent();
 
         $precedences = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
 
         foreach ($precedences as $precedence) {
-            if (strtolower($precedence->getImage()) !== $methodName) {
+            if (mb_strtolower($precedence->getImage()) !== $methodName) {
                 continue;
             }
 
@@ -139,11 +139,11 @@ class ASTTraitUseStatement extends ASTStatement
      */
     private function getAliasesFor(ASTMethod $method)
     {
-        $name = strtolower($method->getName());
+        $name = mb_strtolower($method->getName());
 
         $newNames = array();
         foreach ($this->getAliases() as $alias) {
-            $name2 = strtolower($alias->getImage());
+            $name2 = mb_strtolower($alias->getImage());
             if ($name2 !== $name) {
                 continue;
             }

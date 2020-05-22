@@ -95,7 +95,7 @@ class IdBuilderTest extends AbstractTest
                 ->disableOriginalConstructor()
                 ->getMock();
         $unitStub1->method('getFileName')
-                ->willReturn(strtolower(__FILE__));
+                ->willReturn(mb_strtolower(__FILE__));
         $identifier1 = $builder->forFile($unitStub1);
 
         $this->assertNotEquals($identifier0, $identifier1);
@@ -173,7 +173,7 @@ class IdBuilderTest extends AbstractTest
         $class0 = new ASTClass(__FUNCTION__);
         $class0->setCompilationUnit($compilationUnit);
         
-        $class1 = new ASTClass(strtolower(__FUNCTION__));
+        $class1 = new ASTClass(mb_strtolower(__FUNCTION__));
         $class1->setCompilationUnit($compilationUnit);
 
         $builder0 = new IdBuilder();
@@ -198,7 +198,7 @@ class IdBuilderTest extends AbstractTest
         $interface0 = new ASTInterface(__FUNCTION__);
         $interface0->setCompilationUnit($compilationUnit);
 
-        $interface1 = new ASTInterface(strtolower(__FUNCTION__));
+        $interface1 = new ASTInterface(mb_strtolower(__FUNCTION__));
         $interface1->setCompilationUnit($compilationUnit);
 
         $builder0 = new IdBuilder();
@@ -241,7 +241,7 @@ class IdBuilderTest extends AbstractTest
         $function0 = new ASTFunction(__FUNCTION__);
         $function0->setCompilationUnit($compilationUnit);
 
-        $function1 = new ASTFunction(strtolower(__FUNCTION__));
+        $function1 = new ASTFunction(mb_strtolower(__FUNCTION__));
         $function1->setCompilationUnit($compilationUnit);
 
         $builder0 = new IdBuilder();
@@ -328,7 +328,7 @@ class IdBuilderTest extends AbstractTest
         $method0 = new ASTMethod(__FUNCTION__);
         $method0->setParent($class);
 
-        $method1 = new ASTMethod(strtolower(__FUNCTION__));
+        $method1 = new ASTMethod(mb_strtolower(__FUNCTION__));
         $method1->setParent($class);
 
         $builder0 = new IdBuilder();

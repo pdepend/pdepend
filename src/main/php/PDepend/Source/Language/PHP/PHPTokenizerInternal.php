@@ -801,7 +801,7 @@ class PHPTokenizerInternal implements Tokenizer
 
                 $startLine += $lines;
             } else {
-                $value = strtolower($token[1]);
+                $value = mb_strtolower($token[1]);
                 if (isset($literalMap[$value])) {
                     // Fetch literal type
                     $type = $literalMap[$value];

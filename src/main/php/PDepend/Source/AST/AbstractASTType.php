@@ -329,7 +329,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
             /** @var ASTTraitAdaptationPrecedence $precedence */
             foreach ($precedences as $precedence) {
-                $priorMethods[strtolower($precedence->getImage())] = true;
+                $priorMethods[mb_strtolower($precedence->getImage())] = true;
             }
             /** @var ASTMethod $method */
             foreach ($use->getAllMethods() as $method) {
@@ -339,7 +339,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
                     }
                 }
 
-                $name = strtolower($method->getName());
+                $name = mb_strtolower($method->getName());
 
                 if (!isset($methods[$name]) || isset($priorMethods[$name])) {
                     $methods[$name] = $method;

@@ -731,7 +731,7 @@ abstract class AbstractTest extends TestCase
             array_push($parts, $match[1]);
 
             // TODO: Fix this workaround for the existing lower case directories
-            array_unshift($parts, strtolower(array_shift($parts)));
+            array_unshift($parts, mb_strtolower(array_shift($parts)));
         }
 
         $fileName = substr(join(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
@@ -809,7 +809,7 @@ abstract class AbstractTest extends TestCase
     private static function initVersionCompatibility()
     {
         $reflection = new \ReflectionClass('Iterator');
-        $extension  = strtolower($reflection->getExtensionName());
+        $extension  = mb_strtolower($reflection->getExtensionName());
         $extension  = ($extension === '' ? 'standard' : $extension);
 
         if (defined('CORE_PACKAGE') === false) {
@@ -843,7 +843,7 @@ abstract class AbstractTest extends TestCase
     {
         list($class, $method) = explode('::', $testCase);
 
-        $fileName = substr(strtolower($class), 8, strrpos($class, '\\') - 8);
+        $fileName = substr(mb_strtolower($class), 8, strrpos($class, '\\') - 8);
         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $fileName) . DIRECTORY_SEPARATOR . $method;
 
         try {

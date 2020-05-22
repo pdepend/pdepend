@@ -61,8 +61,8 @@ class ImageConvert
      */
     public static function convert($input, $output)
     {
-        $inputType  = strtolower(pathinfo($input, PATHINFO_EXTENSION));
-        $outputType = strtolower(pathinfo($output, PATHINFO_EXTENSION));
+        $inputType  = mb_strtolower(pathinfo($input, PATHINFO_EXTENSION));
+        $outputType = mb_strtolower(pathinfo($output, PATHINFO_EXTENSION));
 
         // Check for output file without extension and reuse input type
         if ($outputType === '') {

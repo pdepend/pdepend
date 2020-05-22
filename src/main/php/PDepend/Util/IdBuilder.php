@@ -98,7 +98,7 @@ class IdBuilder
     {
         return $this->forOffsetItem(
             $type,
-            ltrim(strrchr(strtolower(get_class($type)), '_'), '_')
+            ltrim(strrchr(mb_strtolower(get_class($type)), '_'), '_')
         );
     }
 
@@ -112,7 +112,7 @@ class IdBuilder
     protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
     {
         $fileHash = $artifact->getCompilationUnit()->getId();
-        $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getName()));
+        $itemHash = $this->hash($prefix . ':' . mb_strtolower($artifact->getName()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);
 
@@ -130,7 +130,7 @@ class IdBuilder
         return sprintf(
             '%s-%s',
             $method->getParent()->getId(),
-            $this->hash(strtolower($method->getName()))
+            $this->hash(mb_strtolower($method->getName()))
         );
     }
 
