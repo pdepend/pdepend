@@ -420,7 +420,7 @@ abstract class AbstractPHPParser
      */
     protected function setUpEnvironment()
     {
-        ini_set('xdebug.max_nesting_level', $this->getMaxNestingLevel());
+        ini_set('xdebug.max_nesting_level', (string)$this->getMaxNestingLevel());
 
         $this->useSymbolTable->createScope();
 
