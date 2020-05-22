@@ -181,7 +181,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * Setter method for the used parser and token cache.
      *
      * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\AST\ASTCompilationUnit
+     * @return $this
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)

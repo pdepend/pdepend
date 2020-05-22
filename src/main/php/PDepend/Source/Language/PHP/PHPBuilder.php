@@ -189,7 +189,7 @@ class PHPBuilder implements Builder
      * Setter method for the currently used token cache.
      *
      * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\PHPBuilder
+     * @return $this
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)

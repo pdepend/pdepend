@@ -122,7 +122,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * instance can store the associated tokens.
      *
      * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @return $this
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)

@@ -108,7 +108,7 @@ class MemoryCacheDriver implements CacheDriver
      * <em>store()</em>.
      *
      * @param  string $type The name or object type for the next storage method call.
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return $this
      */
     public function type($type)
     {
