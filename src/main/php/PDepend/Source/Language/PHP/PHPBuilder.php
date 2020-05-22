@@ -935,7 +935,7 @@ class PHPBuilder implements Builder
      * -------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTConditionalExpression
+     * @return \PDepend\Source\AST\ASTPrintExpression
      * @since 2.3
      */
     public function buildAstPrintExpression()

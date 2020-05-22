@@ -93,8 +93,14 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     protected $nodeSet = array();
 
+    /**
+     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     */
     private $efferentNodes = array();
 
+    /**
+     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     */
     private $afferentNodes = array();
 
     /**

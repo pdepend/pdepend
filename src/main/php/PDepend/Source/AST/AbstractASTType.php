@@ -58,28 +58,28 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var \PDepend\Util\Cache\CacheDriver
+     * @var \PDepend\Util\Cache\CacheDriver|null
      */
     protected $cache = null;
 
     /**
      * The currently used builder context.
      *
-     * @var \PDepend\Source\Builder\BuilderContext
+     * @var \PDepend\Source\Builder\BuilderContext|null
      */
     protected $context = null;
 
     /**
      * The parent namespace for this class.
      *
-     * @var \PDepend\Source\AST\ASTNamespace
+     * @var \PDepend\Source\AST\ASTNamespace|null
      */
     private $namespace = null;
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array<string, mixed>
+     * @var array<string, mixed>|null
      */
     protected $constants = null;
 
@@ -103,7 +103,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Name of the parent namespace for this class or interface instance. Or
      * <b>NULL</b> when no namespace was specified.
      *
-     * @var string
+     * @var string|null
      */
     protected $namespaceName = null;
 
@@ -117,7 +117,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Temporary property that only holds methods during the parsing process.
      *
-     * @var   ASTMethod[]
+     * @var   ASTMethod[]|null
      * @since 1.0.2
      */
     protected $methods = array();
@@ -273,7 +273,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns all {@link \PDepend\Source\AST\ASTMethod} objects in this type.
      *
-     * @return ASTMethod[]
+     * @return ASTArtifactList<ASTMethod>
      */
     public function getMethods()
     {
