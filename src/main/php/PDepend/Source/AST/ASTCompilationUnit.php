@@ -124,11 +124,11 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Constructs a new source file instance.
      *
-     * @param string $fileName The source file name/path.
+     * @param string|null $fileName The source file name/path.
      */
     public function __construct($fileName)
     {
-        if (strpos($fileName, 'php://') === 0) {
+        if ($fileName && strpos($fileName, 'php://') === 0) {
             $this->fileName = $fileName;
         } elseif ($fileName !== null) {
             $this->fileName = realpath($fileName);
