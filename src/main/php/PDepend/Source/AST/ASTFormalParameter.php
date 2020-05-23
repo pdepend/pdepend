@@ -80,7 +80,7 @@ class ASTFormalParameter extends AbstractASTNode
             return $this->getChild(0);
         }
 
-        throw new OutOfBoundsException('The parameter does not has a type specification.');
+        throw new OutOfBoundsException('The parameter does not have a type specification.');
     }
 
     /**
