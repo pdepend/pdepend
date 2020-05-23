@@ -4590,7 +4590,6 @@ abstract class AbstractPHPParser
                 return $this->setNodePositionsAndReturn(
                     $this->builder->buildAstConstant($token->image)
                 );
-                break;
         }
     }
 
