@@ -5808,7 +5808,7 @@ abstract class AbstractPHPParser
         if (is_object($token = $this->tokenizer->next())) {
             throw $this->getUnexpectedTokenException($token);
         }
-        throw new TokenStreamEndException($this->compilationUnit->getFileName());
+        throw new TokenStreamEndException($this->tokenizer);
     }
 
     /**
