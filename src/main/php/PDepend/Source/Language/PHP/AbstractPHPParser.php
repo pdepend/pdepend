@@ -1079,7 +1079,7 @@ abstract class AbstractPHPParser
      * This method parses a simple function or a PHP 5.3 lambda function or
      * closure.
      *
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @return \PDepend\Source\AST\ASTCallable
      * @since 0.9.5
      */
     private function parseFunctionOrClosureDeclaration()
@@ -2523,7 +2523,7 @@ abstract class AbstractPHPParser
     /**
      * Parse a scope enclosed by curly braces.
      *
-     * @return \PDepend\Source\AST\ASTScope
+     * @return \PDepend\Source\AST\ASTScopeStatement
      * @since 0.9.12
      */
     private function parseRegularScope()
@@ -3538,7 +3538,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @return \PDepend\Source\AST\ASTExpression
+     * @return \PDepend\Source\AST\ASTExpression|null
      * @since 0.9.12
      */
     private function parseForExpression()

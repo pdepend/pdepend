@@ -224,7 +224,7 @@ class PHPBuilder implements Builder
      * @param string $qualifiedName  The qualified name of the referenced type.
      * @param bool   $classReference true if class reference only.
      *
-     * @return ASTClassOrInterfaceReference
+     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
      * @since  0.9.5
      */
     public function buildAstNeededReference($qualifiedName, $classReference)
