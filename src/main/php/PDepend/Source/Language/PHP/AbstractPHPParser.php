@@ -5813,10 +5813,10 @@ abstract class AbstractPHPParser
      */
     private function parseStatement()
     {
-        if (is_object($stmt = $this->parseOptionalStatement())) {
+        if ($stmt = $this->parseOptionalStatement()) {
             return $stmt;
         }
-        if (is_object($token = $this->tokenizer->next())) {
+        if ($token = $this->tokenizer->next()) {
             throw $this->getUnexpectedTokenException($token);
         }
         throw new TokenStreamEndException($this->tokenizer);

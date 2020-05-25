@@ -118,7 +118,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     {
         $parents = array();
         $parent  = $this;
-        while (is_object($parent = $parent->getParentClass())) {
+        while ($parent = $parent->getParentClass()) {
             if (in_array($parent, $parents, true)) {
                 throw new ASTClassOrInterfaceRecursiveInheritanceException($parent);
             }
