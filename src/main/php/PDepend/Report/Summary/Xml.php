@@ -294,8 +294,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $typeXml = $doc->createElement($typeIdentifier);
         $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
         $typeXml->setAttribute('fqname', Utf8Util::ensureEncoding($type->getNamespacedName()));
-        $typeXml->setAttribute('start', Utf8Util::ensureEncoding($type->getStartLine()));
-        $typeXml->setAttribute('end', Utf8Util::ensureEncoding($type->getEndLine()));
+        $typeXml->setAttribute('start', (string)$type->getStartLine());
+        $typeXml->setAttribute('end', (string)$type->getEndLine());
 
         $this->writeNodeMetrics($typeXml, $type);
         $this->writeFileReference($typeXml, $type->getCompilationUnit());
@@ -327,8 +327,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $functionXml = $doc->createElement('function');
         $functionXml->setAttribute('name', Utf8Util::ensureEncoding($function->getName()));
-        $functionXml->setAttribute('start', Utf8Util::ensureEncoding($function->getStartLine()));
-        $functionXml->setAttribute('end', Utf8Util::ensureEncoding($function->getEndLine()));
+        $functionXml->setAttribute('start', (string)$function->getStartLine());
+        $functionXml->setAttribute('end', (string)$function->getEndLine());
 
         $this->writeNodeMetrics($functionXml, $function);
         $this->writeFileReference($functionXml, $function->getCompilationUnit());
@@ -360,8 +360,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $methodXml = $doc->createElement('method');
         $methodXml->setAttribute('name', Utf8Util::ensureEncoding($method->getName()));
-        $methodXml->setAttribute('start', Utf8Util::ensureEncoding($method->getStartLine()));
-        $methodXml->setAttribute('end', Utf8Util::ensureEncoding($method->getEndLine()));
+        $methodXml->setAttribute('start', (string)$method->getStartLine());
+        $methodXml->setAttribute('end', (string)$method->getEndLine());
 
         $this->writeNodeMetrics($methodXml, $method);
 
