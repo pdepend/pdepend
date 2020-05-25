@@ -2090,9 +2090,10 @@ class PHPBuilder implements Builder
      * given qualified name in all scopes already processed. It will return the
      * best matching instance or <b>null</b> if no match exists.
      *
-     * @param  array  $instances
+     * @template T of \PDepend\Source\AST\AbstractASTType
+     * @param  array<string, array<string, array<integer, T>>>  $instances
      * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\AbstractASTType|null
+     * @return T|null
      * @since  0.9.5
      */
     protected function findType(array $instances, $qualifiedName)
