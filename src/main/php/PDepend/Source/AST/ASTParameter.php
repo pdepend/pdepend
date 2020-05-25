@@ -172,12 +172,12 @@ class ASTParameter extends AbstractASTArtifact
      * This method will return the class where the parent method was declared.
      * The returned value will be <b>null</b> if the parent is a function.
      *
+     * @todo Review this for refactoring, maybe create a empty getParent()?
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
     public function getDeclaringClass()
     {
-        // TODO: Review this for refactoring, maybe create a empty getParent()?
         if ($this->declaringFunction instanceof ASTMethod) {
             return $this->declaringFunction->getParent();
         }
