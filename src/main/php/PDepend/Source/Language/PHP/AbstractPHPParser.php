@@ -2513,7 +2513,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 0.9.12
      */
-    private function parseStatementBody(\PDepend\Source\AST\ASTStatement $stmt)
+    private function parseStatementBody(ASTStatement $stmt)
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
