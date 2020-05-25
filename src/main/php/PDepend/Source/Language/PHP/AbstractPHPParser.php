@@ -5388,7 +5388,7 @@ abstract class AbstractPHPParser
         $tokenType = $this->tokenizer->peek();
         while ($tokenType != Tokenizer::T_EOF) {
             if ($tokenType === Tokens::T_BACKSLASH) {
-                $escape != $escape;
+                $escape = !$escape;
                 $image  .= $this->consumeToken(Tokens::T_BACKSLASH)->image;
 
                 $tokenType = $this->tokenizer->peek();
