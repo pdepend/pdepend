@@ -6,6 +6,7 @@ pdepend-2.8.0 (2020/05/25)
 - Fixed [\#467](https://github.com/pdepend/pdepend/pull/467) Use the HOME env variable also for Windows
 - Fixed [\#475](https://github.com/pdepend/pdepend/pull/475) Fixed [\#474](https://github.com/pdepend/pdepend/issues/474) typed property visibility 
 - Fixed [\#476](https://github.com/pdepend/pdepend/pull/476) Fixed [\#473](https://github.com/pdepend/pdepend/issues/473) handle skipped variable in destructuring array
+- Fixed [\#483](https://github.com/pdepend/pdepend/pull/483) Fixed bool flip in parseEscapedAstLiteralString()
 
 pdepend-2.7.1 (2020/02/12)
 ==========================
