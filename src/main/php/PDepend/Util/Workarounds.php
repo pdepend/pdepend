@@ -59,7 +59,7 @@ class Workarounds
      */
     public function hasSerializeReferenceIssue()
     {
-        return version_compare(phpversion(), '5.4.0', '>') && version_compare(phpversion(), '5.4.5', '<=');
+        return version_compare(PHP_VERSION, '5.4.0', '>') && version_compare(PHP_VERSION, '5.4.5', '<=');
     }
 
     /**
@@ -82,7 +82,7 @@ class Workarounds
     {
         $issues = array();
         if ($this->hasSerializeReferenceIssue()) {
-            $issues[] = 'File cache deactivated due to known serialize() issues in PHP ' . phpversion();
+            $issues[] = 'File cache deactivated due to known serialize() issues in PHP ' . PHP_VERSION;
         }
 
         return $issues;

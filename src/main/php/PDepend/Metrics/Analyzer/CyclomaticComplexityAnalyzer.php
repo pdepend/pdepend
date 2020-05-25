@@ -142,7 +142,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * node, this method will return an empty <b>array</b>.
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array
+     * @return array<string, integer>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {

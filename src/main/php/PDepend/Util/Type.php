@@ -275,10 +275,10 @@ final class Type
     public static function getInternalNamespaces()
     {
         if (self::$internalNamespaces === null) {
-            $extensions = array_values(self::initTypeToExtension());
-            $extensions = array_unique($extensions);
-
-            self::$internalNamespaces = array_combine($extensions, $extensions);
+            self::$internalNamespaces = array();
+            foreach (self::initTypeToExtension() as $namespace) {
+                self::$internalNamespaces[$namespace] = $namespace;
+            }
         }
         return self::$internalNamespaces;
     }

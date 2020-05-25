@@ -88,8 +88,18 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     protected $nodeSet = array();
 
+    /**
+     * Nodes in which the current analyzed class is used.
+     *
+     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     */
     private $efferentNodes = array();
 
+    /**
+     * Nodes that is used by the current analyzed class.
+     *
+     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     */
     private $afferentNodes = array();
 
     /**

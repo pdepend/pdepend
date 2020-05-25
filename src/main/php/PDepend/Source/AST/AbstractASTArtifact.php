@@ -60,7 +60,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The unique identifier for this function.
      *
-     * @var string
+     * @var string|null
      */
     protected $id = null;
 
@@ -88,7 +88,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The comment for this type.
      *
-     * @var string
+     * @var string|null
      */
     protected $comment = null;
 

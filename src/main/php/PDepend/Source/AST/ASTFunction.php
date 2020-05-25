@@ -56,7 +56,7 @@ class ASTFunction extends AbstractASTCallable
     /**
      * The parent namespace for this function.
      *
-     * @var   \PDepend\Source\AST\ASTNamespace
+     * @var   \PDepend\Source\AST\ASTNamespace|null
      * @since 0.10.0
      */
     private $namespace = null;
@@ -64,7 +64,7 @@ class ASTFunction extends AbstractASTCallable
     /**
      * The currently used builder context.
      *
-     * @var   \PDepend\Source\Builder\BuilderContext
+     * @var   \PDepend\Source\Builder\BuilderContext|null
      * @since 0.10.0
      */
     protected $context = null;
@@ -73,7 +73,7 @@ class ASTFunction extends AbstractASTCallable
      * The name of the parent namespace for this function. We use this property
      * to restore the parent namespace while we unserialize a cached object tree.
      *
-     * @var string
+     * @var string|null
      */
     protected $namespaceName = null;
 

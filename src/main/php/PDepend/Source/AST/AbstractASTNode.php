@@ -63,7 +63,7 @@ abstract class AbstractASTNode implements ASTNode
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var \PDepend\Source\AST\ASTNode
+     * @var \PDepend\Source\AST\ASTNode|null
      */
     protected $parent = null;
 
@@ -236,7 +236,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the value that was stored under the given index.
      *
      * @param integer $index
-     * @return mixed
+     * @return string
      * @since 0.10.4
      */
     protected function getMetadata($index)

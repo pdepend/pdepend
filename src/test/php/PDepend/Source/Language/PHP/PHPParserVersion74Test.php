@@ -84,7 +84,7 @@ class PHPParserVersion74Test extends AbstractTest
             $message = $exception->getMessage();
         }
 
-        $this->assertSame('The parameter does not has a type specification.', $message);
+        $this->assertSame('The parameter does not have a type specification.', $message);
 
         /** @var array[] $declarations */
         $declarations = array_map(function (ASTFieldDeclaration $child) {

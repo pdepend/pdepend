@@ -169,21 +169,21 @@ abstract class AbstractPHPParser
     /**
      * The name of the last detected namespace.
      *
-     * @var string
+     * @var string|null
      */
     private $namespaceName;
 
     /**
      * Last parsed package tag.
      *
-     * @var string
+     * @var string|null
      */
     private $packageName = Builder::DEFAULT_NAMESPACE;
 
     /**
      * The package defined in the file level comment.
      *
-     * @var string
+     * @var string|null
      */
     private $globalPackageName = Builder::DEFAULT_NAMESPACE;
 
@@ -211,7 +211,7 @@ abstract class AbstractPHPParser
     /**
      * The last parsed doc comment or <b>null</b>.
      *
-     * @var string
+     * @var string|null
      */
     private $docComment;
 
@@ -225,7 +225,7 @@ abstract class AbstractPHPParser
     /**
      * The actually parsed class or interface instance.
      *
-     * @var \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @var \PDepend\Source\AST\AbstractASTClassOrInterface|null
      */
     protected $classOrInterface;
 
@@ -420,7 +420,7 @@ abstract class AbstractPHPParser
      */
     protected function setUpEnvironment()
     {
-        ini_set('xdebug.max_nesting_level', $this->getMaxNestingLevel());
+        ini_set('xdebug.max_nesting_level', (string)$this->getMaxNestingLevel());
 
         $this->useSymbolTable->createScope();
 
@@ -1010,6 +1010,7 @@ abstract class AbstractPHPParser
      * Override this in later PHPParserVersions as necessary
      * @param integer $tokenType
      * @param integer $modifiers
+     * @return \PDepend\Source\AST\ASTConstantDefinition
      * @throws UnexpectedTokenException
      */
     protected function parseUnknownDeclaration($tokenType, $modifiers)
@@ -4589,7 +4590,6 @@ abstract class AbstractPHPParser
                 return $this->setNodePositionsAndReturn(
                     $this->builder->buildAstConstant($token->image)
                 );
-                break;
         }
     }
 
@@ -5808,7 +5808,7 @@ abstract class AbstractPHPParser
         if (is_object($token = $this->tokenizer->next())) {
             throw $this->getUnexpectedTokenException($token);
         }
-        throw new TokenStreamEndException($this->compilationUnit->getFileName());
+        throw new TokenStreamEndException($this->tokenizer);
     }
 
     /**
@@ -6843,7 +6843,7 @@ abstract class AbstractPHPParser
      * Extracts the @package information from the given comment.
      *
      * @param string $comment
-     * @return string
+     * @return string|null
      */
     private function parsePackageAnnotation($comment)
     {
@@ -6851,7 +6851,7 @@ abstract class AbstractPHPParser
             $this->packageName = null;
             $this->globalPackageName = null;
 
-            return;
+            return null;
         }
 
         $package = Builder::DEFAULT_NAMESPACE;
