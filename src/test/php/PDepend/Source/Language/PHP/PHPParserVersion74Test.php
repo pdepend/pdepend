@@ -51,6 +51,7 @@ use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
@@ -188,6 +189,56 @@ class PHPParserVersion74Test extends AbstractTest
         $this->assertSame('$number', $variableDeclarator->getImage());
         /** @var ASTReturnStatement $parameters */
         $return = $closure->getChild(1);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
+        $this->assertSame('=>', $return->getImage());
+        $this->assertCount(1, $return->getChildren());
+        /** @var ASTExpression $expression */
+        $expression = $return->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ), array_map('get_class', $expression->getChildren()));
+        $this->assertSame(array(
+            '$number',
+            '*',
+            '2',
+        ), array_map(function (ASTNode $node) {
+            return $node->getImage();
+        }, $expression->getChildren()));
+    }
+
+    public function testArrowFunctionsWithReturnType()
+    {
+        if (version_compare(phpversion(), '7.4.0', '<')) {
+            $this->markTestSkipped('This test requires PHP >= 7.4');
+        }
+
+        /** @var ASTClosure $closure */
+        $closure = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFunctionPostfix'
+        )->getChild(1)->getChild(0);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClosure', $closure);
+        /** @var ASTFormalParameters $parameters */
+        $parameters = $closure->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+        $this->assertCount(1, $parameters->getChildren());
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $parameters->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $parameter);
+        /** @var ASTVariableDeclarator $parameter */
+        $variableDeclarator = $parameter->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
+        $this->assertSame('$number', $variableDeclarator->getImage());
+        /** @var ASTScalarType $parameters */
+        $type = $closure->getChild(1);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertSame('int',$type->getImage());
+        /** @var ASTReturnStatement $parameters */
+        $return = $closure->getChild(2);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
         $this->assertSame('=>', $return->getImage());
         $this->assertCount(1, $return->getChildren());
