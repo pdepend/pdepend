@@ -186,6 +186,14 @@ class PHPParserVersion71Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testClassStartLine()
+    {
+        $this->assertSame(6, $this->getFirstClassForTestCase()->getStartLine());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
