@@ -49,7 +49,7 @@ namespace PDepend\Source\Tokenizer;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface FullTokenizer
+interface FullTokenizer extends Tokenizer
 {
     /**
      * Returns the token type at the given position relatively to the current position.

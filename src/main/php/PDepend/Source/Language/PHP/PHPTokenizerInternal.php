@@ -188,7 +188,7 @@ if (!defined('T_COALESCE_EQUAL')) {
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class PHPTokenizerInternal implements Tokenizer, FullTokenizer
+class PHPTokenizerInternal implements FullTokenizer
 {
     /**
      * Mapping between php internal tokens and php depend tokens.
