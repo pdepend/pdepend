@@ -45,6 +45,9 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion72} class.
@@ -98,5 +101,19 @@ class PHPParserVersion72Test extends AbstractTest
         $this->assertTrue($method->isAbstract());
         $this->assertSame('int', $method->getReturnType()->getImage());
         $this->assertNull($parameter->getClass());
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion72',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

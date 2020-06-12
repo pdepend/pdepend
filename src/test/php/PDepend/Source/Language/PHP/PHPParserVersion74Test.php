@@ -45,6 +45,8 @@ use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClosure;
+use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTConstantDefinition;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTFormalParameter;
@@ -53,6 +55,9 @@ use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion74} class.
@@ -341,5 +346,63 @@ class PHPParserVersion74Test extends AbstractTest
         $this->assertSame('299_792_458', $expression->getChild(2)->getImage());
         $this->assertSame('0xCAFE_F00D', $expression->getChild(4)->getImage());
         $this->assertSame('0b0101_1111', $expression->getChild(6)->getImage());
+    }
+
+    /**
+     * Tests issue with constant array concatenation.
+     * https://github.com/pdepend/pdepend/issues/299
+     *
+     * Already checked in PHPParserVersion56Test, the level it belongs.
+     * Here we ensure it's still working in 7.4 parser.
+     *
+     * @return void
+     */
+    public function testConstantArrayConcatenation()
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+
+        /** @var ASTConstantDefinition[] $sontants */
+        $constants = $class->getChildren();
+
+        $this->assertCount(2, $constants);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constants[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constants[1]);
+
+        /** @var ASTConstantDeclarator[] $declarators */
+        $declarators = $constants[1]->getChildren();
+
+        $this->assertCount(1, $declarators);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $declarators[0]);
+
+        /** @var ASTExpression $expression */
+        $expression = $declarators[0]->getValue()->getValue();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+
+        $nodes = $expression->getChildren();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $nodes[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $nodes[1]);
+        $this->assertSame('+', $nodes[1]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $nodes[2]);
+
+        $nodes = $nodes[0]->getChildren();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $nodes[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $nodes[1]);
+        $this->assertSame('A', $nodes[1]->getImage());
+    }
+
+    /**
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    {
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }
