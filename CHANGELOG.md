@@ -9,6 +9,7 @@ pdepend-2.8.0 (2020/05/25)
 - Fixed [\#476](https://github.com/pdepend/pdepend/pull/476) Fixed [\#473](https://github.com/pdepend/pdepend/issues/473) handle skipped variable in destructuring array
 - Fixed [\#478](https://github.com/pdepend/pdepend/pull/478) Fixed [\#472](https://github.com/pdepend/pdepend/issues/472) Use the current token instead of the first inner one to determine the class start.
 - Fixed [\#483](https://github.com/pdepend/pdepend/pull/483) Fixed bool flip in parseEscapedAstLiteralString()
+- Fixed [\#479](https://github.com/pdepend/pdepend/pull/479) Fixed [\#299](https://github.com/pdepend/pdepend/issues/299) Class constant expression declaration.
 - Changed: Tidelift language ( [\#460](https://github.com/pdepend/pdepend/pull/460), [\#461](https://github.com/pdepend/pdepend/pull/461) and [\#462](https://github.com/pdepend/pdepend/pull/462) )
 - Changed: Interal cleanup with refactoring and adding missing PHPDoc ( [\#477](https://github.com/pdepend/pdepend/pull/477), [\#484](https://github.com/pdepend/pdepend/pull/484) and [\#485](https://github.com/pdepend/pdepend/pull/485) ) 
 
@@ -658,4 +659,3 @@ archive as distribution format.
   refactoring done. Parser moved into a version specific parser class.
 - Implemented #178: Provide configuration option for the cache 
   directory. Implemented in commit #00ed8ec.
-
