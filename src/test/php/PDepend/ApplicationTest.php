@@ -90,11 +90,13 @@ class ApplicationTest extends AbstractTest
         $this->assertRegExp('/<file\s.*name="php:\/\/stdin"/', $xml);
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessageRegExp The configuration file ".*fileThatDoesNotExists.txt" doesn't exist\.
+     */
     public function testSetConfigurationFileAndThrowInvalidArgumentException() 
     {
         $filename = __DIR__ . '/fileThatDoesNotExists.txt';
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('The configuration file "' . $filename. '" doesn\'t exist.');
 
         $application = new \PDepend\Application();
         $application->setConfigurationFile($filename);
