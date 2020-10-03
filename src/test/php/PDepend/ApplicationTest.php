@@ -92,7 +92,6 @@ class ApplicationTest extends AbstractTest
 
     /**
      * @expectedException InvalidArgumentException
-     * @expectedExceptionMessageRegExp The configuration file ".*fileThatDoesNotExists.txt" doesn't exist\.
      */
     public function testSetConfigurationFileAndThrowInvalidArgumentException() 
     {
