@@ -767,14 +767,8 @@ class PHPTokenizerInternal implements FullTokenizer
         $this->index  = 0;
         $this->count  = 0;
 
-        // Replace short open tags, short open tags will produce invalid results
-        // in all environments with disabled short open tags.
+        // No longer replacing short open tags since some want to track them.
         $source = $this->sourceFile->getSource();
-        $source = preg_replace(
-            array('(<\?=)', '(<\?(\s))'),
-            array('<?php echo ', '<?php\1'),
-            $source
-        );
 
         $tokens = $this->substituteTokens(token_get_all($source));
 
