@@ -796,7 +796,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 $token = array(null, $token);
             }
 
-            if ($token[0] === T_OPEN_TAG) {
+            if ($token[0] === T_OPEN_TAG || $token[0] === T_OPEN_TAG_WITH_ECHO) {
                 $type  = $tokenMap[$token[0]];
                 $image = $token[1];
                 $inTag = true;

@@ -300,6 +300,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
 
                 // Ignore PHP open & close tags and non-PHP content.
                 case Tokens::T_OPEN_TAG:
+                case Tokens::T_INLINE_HTML: // For short, open tag.
                 case Tokens::T_CLOSE_TAG:
                 case Tokens::T_NO_PHP:
                     break;

@@ -384,6 +384,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_NO_PHP:
                 case Tokens::T_OPEN_TAG:
                 case Tokens::T_OPEN_TAG_WITH_ECHO:
+                case Tokens::T_INLINE_HTML: // For short, open tag.
                     $this->consumeToken($tokenType);
                     $this->reset();
                     break;
@@ -5948,6 +5949,7 @@ abstract class AbstractPHPParser
             switch ($tokenType) {
                 case Tokens::T_OPEN_TAG:
                 case Tokens::T_OPEN_TAG_WITH_ECHO:
+                case Tokens::T_INLINE_HTML: // For short, open tag.
                     $this->consumeToken($tokenType);
                     $tokenType = $this->tokenizer->peek();
                     break 2;
@@ -6883,7 +6885,8 @@ abstract class AbstractPHPParser
      */
     protected function isFileComment()
     {
-        if ($this->tokenizer->prev() !== Tokens::T_OPEN_TAG) {
+        if ($this->tokenizer->prev() !== Tokens::T_OPEN_TAG ||
+                $this->tokenizer->prev() !== Tokens::T_INLINE_HTML) {
             return false;
         }
 
