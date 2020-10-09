@@ -355,6 +355,10 @@ class PHPTokenizerInternalTest extends AbstractTest
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
+        if (! ini_get('short_open_tag')) {
+            $this->markTestSkipped('Must enable short_open_tag');
+        }
+
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
@@ -410,6 +414,10 @@ class PHPTokenizerInternalTest extends AbstractTest
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
     {
+        if (! ini_get('short_open_tag')) {
+            $this->markTestSkipped('Must enable short_open_tag');
+        }
+
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
