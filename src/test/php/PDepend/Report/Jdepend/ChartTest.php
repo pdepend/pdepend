@@ -42,6 +42,7 @@
 
 namespace PDepend\Report\Jdepend;
 
+use Imagick;
 use PDepend\AbstractTest;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
@@ -295,6 +296,15 @@ class ChartTest extends AbstractTest
     {
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');
+        }
+
+        $formats = Imagick::queryFormats();
+
+        if (!in_array('PNG', $formats)) {
+            $this->markTestSkipped(
+                'Imagick PNG support is not installed.' .
+                "\nSupported formats:\n" . implode("\n", $formats)
+            );
         }
 
         $fileName = $this->createRunResourceURI('jdepend-test-out.png');

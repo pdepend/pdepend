@@ -42,6 +42,7 @@
 
 namespace PDepend\Util;
 
+use Imagick;
 use PDepend\AbstractTest;
 
 /**
@@ -78,6 +79,15 @@ class ImageConvertTest extends AbstractTest
     {
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');
+        }
+
+        $formats = Imagick::queryFormats();
+
+        if (!in_array('PNG', $formats)) {
+            $this->markTestSkipped(
+                'Imagick PNG support is not installed.' .
+                "\nSupported formats:\n" . implode("\n", $formats)
+            );
         }
 
         $input  = $this->createInputSvg();
