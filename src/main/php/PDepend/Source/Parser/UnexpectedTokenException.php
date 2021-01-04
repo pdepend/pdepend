@@ -61,11 +61,12 @@ class UnexpectedTokenException extends TokenException
     public function __construct(Token $token, $fileName)
     {
         $message = sprintf(
-            'Unexpected token: %s, line: %d, col: %d, file: %s.',
+            'Unexpected token: %s, line: %d, col: %d, file: %s.%s',
             $token->image,
             $token->startLine,
             $token->startColumn,
-            $fileName
+            $fileName,
+            "\n".(new \Exception())->getTraceAsString()
         );
 
         parent::__construct($message);

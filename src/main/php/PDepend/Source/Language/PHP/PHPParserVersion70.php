@@ -219,29 +219,23 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     {
         switch ($this->tokenizer->peek()) {
             case Tokens::T_ARRAY:
-                $type = $this->parseArrayType();
-                break;
+                return $this->parseArrayType();
 
             case Tokens::T_SELF:
-                $type = $this->parseSelfType();
-                break;
+                return $this->parseSelfType();
 
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
                 $name = $this->parseQualifiedName();
 
-                $type = $this->isScalarOrCallableTypeHint($name)
+                return $this->isScalarOrCallableTypeHint($name)
                     ? $this->parseScalarOrCallableTypeHint($name)
                     : $this->builder->buildAstClassOrInterfaceReference($name);
-                break;
 
             default:
-                $type = parent::parseTypeHint();
-                break;
+                return parent::parseTypeHint();
         }
-
-        return $type;
     }
 
     /**
@@ -261,14 +255,14 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             $this->consumeToken(Tokens::T_PARENTHESIS_OPEN),
             Tokens::T_PARENTHESIS_CLOSE
         );
-        
+
         while ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {
             $function = $this->builder->buildAstFunctionPostfix($expr->getImage());
             $function->addChild($expr);
             $function->addChild($this->parseArguments());
             $expr = $function;
         }
-        
+
         return $this->setNodePositionsAndReturn($expr);
     }
 
@@ -341,6 +335,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
     {
         $this->consumeComments();
+
         if (Tokens::T_CLASS !== $this->tokenizer->peek()) {
             return null;
         }

@@ -54,7 +54,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.20
  */
-class PHPParserGeneric extends PHPParserVersion74
+class PHPParserGeneric extends PHPParserVersion80
 {
     /**
      * Tests if the given token type is a reserved keyword in the supported PHP
@@ -69,37 +69,6 @@ class PHPParserGeneric extends PHPParserVersion74
         switch ($tokenType) {
             case Tokens::T_CLASS:
             case Tokens::T_INTERFACE:
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
-     * name part.
-     *
-     * @param integer $tokenType The type of a parsed token.
-     *
-     * @return boolean
-     * @since  0.10.6
-     */
-    protected function isClassName($tokenType)
-    {
-        switch ($tokenType) {
-            case Tokens::T_DIR:
-            case Tokens::T_USE:
-            case Tokens::T_GOTO:
-            case Tokens::T_NULL:
-            case Tokens::T_NS_C:
-            case Tokens::T_TRUE:
-            case Tokens::T_CLONE:
-            case Tokens::T_FALSE:
-            case Tokens::T_TRAIT:
-            case Tokens::T_STRING:
-            case Tokens::T_TRAIT_C:
-            case Tokens::T_CALLABLE:
-            case Tokens::T_INSTEADOF:
-            case Tokens::T_NAMESPACE:
                 return true;
         }
         return false;

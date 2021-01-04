@@ -42,6 +42,7 @@
 
 namespace PDepend;
 
+use Exception;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\Iterator;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
@@ -61,6 +62,9 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_Exception;
+use PHPUnit_Framework_TestCase;
+use ReflectionProperty;
 
 /**
  * Abstract test case implementation for the PDepend namespace.
@@ -116,6 +120,26 @@ abstract class AbstractTest extends TestCase
         }
 
         parent::tearDown();
+    }
+
+    /**
+     * Override to run the test and assert its state.
+     *
+     * @return mixed
+     *
+     * @throws Exception|PHPUnit_Framework_Exception
+     */
+    protected function runTest()
+    {
+        $inputReflector = new ReflectionProperty('PHPUnit_Framework_TestCase', 'dependencyInput');
+        $inputReflector->setAccessible(true);
+        $input = $inputReflector->getValue($this);
+
+        if (!empty($input)) {
+            $inputReflector->setValue($this, array_values($input));
+        }
+
+        return parent::runTest();
     }
 
     /**
@@ -546,7 +570,7 @@ abstract class AbstractTest extends TestCase
     {
         $cache = $this->getMockBuilder('\\PDepend\\Util\\Cache\\CacheDriver')
             ->getMock();
-        
+
         return $cache;
     }
 

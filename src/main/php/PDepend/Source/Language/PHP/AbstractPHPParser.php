@@ -5739,8 +5739,11 @@ abstract class AbstractPHPParser
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
+            // case Tokens::T_CLASS_FQN:
+
                 return true;
         }
+
         return false;
     }
 
@@ -5756,6 +5759,7 @@ abstract class AbstractPHPParser
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
+            case Tokens::T_CLASS:
                 return $this->builder->buildAstClassOrInterfaceReference(
                     $this->parseQualifiedName()
                 );
