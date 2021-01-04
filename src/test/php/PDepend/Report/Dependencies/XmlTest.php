@@ -187,7 +187,6 @@ class XmlTest extends AbstractTest
      * expected document structure for the source, with applied metrics.
      *
      * @return void
-     * @group i
      */
     public function testXmlLogWithMetrics()
     {

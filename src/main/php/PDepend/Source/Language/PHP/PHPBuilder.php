@@ -368,10 +368,15 @@ class PHPBuilder implements Builder
      */
     public function getClass($qualifiedName)
     {
-        $qualifiedName = ltrim($qualifiedName, '\\');
-
-        return $this->findClass($qualifiedName)
-            ?: $this->buildClassInternal($qualifiedName);
+        $class = $this->findClass($qualifiedName);
+        if ($class === null) {
+            $class = $this->buildClassInternal($qualifiedName);
+        }
+        return $class;
+//        $qualifiedName = ltrim($qualifiedName, '\\');
+//
+//        return $this->findClass($qualifiedName)
+//            ?: $this->buildClassInternal($qualifiedName);
     }
 
     /**
