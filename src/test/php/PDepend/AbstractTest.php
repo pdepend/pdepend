@@ -43,6 +43,7 @@
 namespace PDepend;
 
 use Exception;
+use Imagick;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\Iterator;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
