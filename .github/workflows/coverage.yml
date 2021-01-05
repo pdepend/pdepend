@@ -28,7 +28,7 @@ jobs:
         extensions: json
         tools: composer:v2
         coverage: xdebug
-        ini-values: xdebug.overload_var_dump=0
+        ini-values: xdebug.default_enable=0
 
     - name: Imagick SVG support
       run: sudo apt-get install libmagickcore-6.q16-3-extra
@@ -50,8 +50,6 @@ jobs:
       run: vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
       env:
         XDEBUG_MODE: coverage
-        xdebug:
-          default_enable:
 
     - name: Archive Code Coverage Results
       uses: actions/upload-artifact@v2
