@@ -1,0 +1,52 @@
+name: Tests
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4' ]
+        setup: [ 'lowest', 'stable' ]
+
+    name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: json, imagick
+          tools: composer:v2
+          coverage: none
+
+      - name: Imagick SVG support
+        run: sudo apt-get install libmagickcore-6.q16-3-extra
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-
+
+      - name: Upgrade PHPUnit
+        if: matrix.php >= 7.2
+        run: composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer update --prefer-dist --no-progress --no-suggest --prefer-${{ matrix.setup }} ${{ matrix.php >= 8 && '--ignore-platform-req=php' || '' }};
+
+      - name: Run test suite
+        run: vendor/bin/phpunit -v

@@ -1,0 +1,70 @@
+name: Generate phar
+
+on:
+  push:
+    tags:
+      - "*"
+    branches:
+      - "*"
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [5.3]
+        setup: [prefer-stable]
+
+    name: Release phar
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Git submodules
+        run: git submodule update --init
+
+      - name: Ant
+        run: |
+          ant package -D-phar:filename=./pdepend.phar;
+          ./pdepend.phar --version;
+
+      - name: Upload pdepend.phar
+        uses: actions/upload-artifact@v2
+        with:
+          name: pdepend.phar
+          path: pdepend.phar
+
+      - name: Release pdepend.phar
+        if: github.event_name == 'release'
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'pdepend.phar'

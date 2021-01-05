@@ -76,9 +76,7 @@ class ImageConvertTest extends AbstractTest
      */
     public function testConvertWithImageMagickExtension()
     {
-        if (extension_loaded('imagick') === false) {
-            $this->markTestSkipped('No pecl/imagick extension.');
-        }
+        $this->requireImagick();
 
         $input  = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend.out.png');
