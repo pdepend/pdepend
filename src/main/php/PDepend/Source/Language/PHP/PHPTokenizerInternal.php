@@ -185,15 +185,15 @@ if (!defined('T_COALESCE_EQUAL')) {
  * Define PHP 8.0 tokens
  */
 if (!defined('T_NAME_QUALIFIED')) {
-    define('T_NAME_QUALIFIED', 314);
+    define('T_NAME_QUALIFIED', 42314);
 }
 
 if (!defined('T_NAME_FULLY_QUALIFIED')) {
-    define('T_NAME_FULLY_QUALIFIED', 312);
+    define('T_NAME_FULLY_QUALIFIED', 42312);
 }
 
 if (!defined('T_NAME_RELATIVE')) {
-    define('T_NAME_RELATIVE', 313);
+    define('T_NAME_RELATIVE', 42313);
 }
 
 /**
@@ -765,7 +765,9 @@ class PHPTokenizerInternal implements FullTokenizer
             $temp = (array) $token;
             $temp = $temp[0];
 
-            /*if ($token[0] === T_NAME_QUALIFIED) {
+            if ($token[0] === T_NAME_QUALIFIED) {
+                var_dump($token);
+                exit;
                 foreach (explode('\\', $token[1]) as $index => $string) {
                     if ($index) {
                         $result[] = array(
@@ -782,6 +784,8 @@ class PHPTokenizerInternal implements FullTokenizer
                     );
                 }
             } elseif ($token[0] === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)) {
+                var_dump($token);
+                exit;
                 $result[] = array(
                     T_NAMESPACE,
                     'namespace',
@@ -800,7 +804,7 @@ class PHPTokenizerInternal implements FullTokenizer
                         $token[2],
                     );
                 }
-            } else*/if (isset(self::$substituteTokens[$temp])) {
+            } elseif (isset(self::$substituteTokens[$temp])) {
                 foreach (self::$substituteTokens[$temp] as $token) {
                     $result[] = $token;
                 }
