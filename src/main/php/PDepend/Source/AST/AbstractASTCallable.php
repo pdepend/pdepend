@@ -161,9 +161,10 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @param string $targetType Searched class or interface type.
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param class-string<T> $targetType Searched class or interface type.
      *
-     * @return \PDepend\Source\AST\ASTNode|null
+     * @return T|null
      * @access private
      * @since  0.9.6
      */
@@ -183,10 +184,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Will find all children for the given type.
      *
-     * @param string $targetType The target class or interface type.
-     * @param array  $results    The found children.
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param class-string<T> $targetType Searched class or interface type.
+     * @param T[]             $results    The found children.
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return T[]
      * @access private
      * @since  0.9.6
      */

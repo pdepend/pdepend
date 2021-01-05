@@ -119,7 +119,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         $parents = array();
         $parent  = $this;
 
-        while (is_object($parent = $parent->getParentClass())) {
+        while ($parent = $parent->getParentClass()) {
             if (in_array($parent, $parents, true)) {
                 throw new ASTClassOrInterfaceRecursiveInheritanceException($parent);
             }
@@ -159,7 +159,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a node iterator with all implemented interfaces.
      *
-     * @return \PDepend\Source\AST\ASTInterface[]
+     * @return ASTArtifactList<\PDepend\Source\AST\AbstractASTClassOrInterface>
      * @since  0.9.5
      */
     public function getInterfaces()
@@ -293,7 +293,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns all {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
      * objects this type depends on.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
+     * @return ASTClassOrInterfaceReferenceIterator
      */
     public function getDependencies()
     {

@@ -848,8 +848,9 @@ abstract class AbstractPHPParser
     /**
      * Parses a class/interface/trait body.
      *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $classOrInterface
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @template T of \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @param T $classOrInterface
+     * @return T
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      * @throws \PDepend\Source\Parser\TokenStreamEndException
      */
@@ -1080,7 +1081,7 @@ abstract class AbstractPHPParser
      * This method parses a simple function or a PHP 5.3 lambda function or
      * closure.
      *
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @return \PDepend\Source\AST\ASTCallable
      * @since 0.9.5
      */
     private function parseFunctionOrClosureDeclaration()
@@ -1281,8 +1282,9 @@ abstract class AbstractPHPParser
     /**
      * Extension for version specific additions.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @template T of \PDepend\Source\AST\ASTCallable
+     * @param T $callable
+     * @return T
      */
     protected function parseCallableDeclarationAddition($callable)
     {
@@ -1546,8 +1548,9 @@ abstract class AbstractPHPParser
     /**
      * Parse the type reference used in an allocation expression.
      *
-     * @param \PDepend\Source\AST\ASTAllocationExpression $allocation
-     * @return \PDepend\Source\AST\ASTNode
+     * @template T of \PDepend\Source\AST\ASTAllocationExpression
+     * @param T $allocation
+     * @return T
      * @since 2.3
      */
     protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
@@ -1775,9 +1778,10 @@ abstract class AbstractPHPParser
      * Parses a <b>require_once</b>-, <b>require</b>-, <b>include_once</b>- or
      * <b>include</b>-expression node.
      *
-     * @param  \PDepend\Source\AST\ASTExpression $expr
-     * @param  integer                           $type
-     * @return \PDepend\Source\AST\ASTExpression
+     * @template T of \PDepend\Source\AST\ASTExpression
+     * @param  T       $expr
+     * @param  integer $type
+     * @return T
      * @since 0.9.12
      */
     private function parseRequireOrIncludeExpression(ASTExpression $expr, $type)
@@ -2085,9 +2089,10 @@ abstract class AbstractPHPParser
     /**
      * This method configures the given node with its start and end positions.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
-     * @param array|null $tokens
-     * @return \PDepend\Source\AST\ASTNode
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param T $node
+     * @param array<integer, \PDepend\Source\Tokenizer\Token>|null $tokens
+     * @return T
      * @since 0.9.8
      */
     protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = null)
@@ -2241,9 +2246,10 @@ abstract class AbstractPHPParser
      * like {@link \PDepend\Source\AST\ASTInstanceOfExpression} or an object
      * allocation node like {@link \PDepend\Source\AST\ASTAllocationExpression}.
      *
-     * @param \PDepend\Source\AST\ASTNode $expr
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param T $expr
      * @param boolean $classRef
-     * @return \PDepend\Source\AST\ASTNode
+     * @return T
      */
     protected function parseExpressionTypeReference(ASTNode $expr, $classRef)
     {
@@ -2470,10 +2476,11 @@ abstract class AbstractPHPParser
      * $foo[$bar];
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTNode     $node
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param  T                               $node
      * @param  \PDepend\Source\Tokenizer\Token $start
      * @param  integer                         $closeToken
-     * @return \PDepend\Source\AST\ASTNode
+     * @return T
      * @throws \PDepend\Source\Parser\TokenStreamEndException
      * @since 0.9.6
      */
@@ -2501,12 +2508,13 @@ abstract class AbstractPHPParser
      * Parses the body of the given statement instance and adds all parsed nodes
      * to that statement.
      *
-     * @param \PDepend\Source\AST\ASTStatement $stmt The owning statement.
+     * @template T of \PDepend\Source\AST\ASTStatement
+     * @param T $stmt The owning statement.
      *
-     * @return \PDepend\Source\AST\ASTStatement
+     * @return T
      * @since 0.9.12
      */
-    private function parseStatementBody(\PDepend\Source\AST\ASTStatement $stmt)
+    private function parseStatementBody(ASTStatement $stmt)
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -2524,7 +2532,7 @@ abstract class AbstractPHPParser
     /**
      * Parse a scope enclosed by curly braces.
      *
-     * @return \PDepend\Source\AST\ASTScope
+     * @return \PDepend\Source\AST\ASTScopeStatement
      * @since 0.9.12
      */
     private function parseRegularScope()
@@ -2641,8 +2649,9 @@ abstract class AbstractPHPParser
      * This method parses multiple expressions and adds them as children to the
      * given <b>$exprList</b> node.
      *
-     * @param \PDepend\Source\AST\ASTNode $exprList
-     * @return \PDepend\Source\AST\ASTNode
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param T $exprList
+     * @return T
      * @since 1.0.0
      */
     private function parseExpressionList(ASTNode $exprList)
@@ -3539,7 +3548,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @return \PDepend\Source\AST\ASTExpression
+     * @return \PDepend\Source\AST\ASTExpression|null
      * @since 0.9.12
      */
     private function parseForExpression()
@@ -4392,8 +4401,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTArguments $arguments
-     * @return \PDepend\Source\AST\ASTArguments
+     * @template T of \PDepend\Source\AST\ASTArguments
+     * @param T $arguments
+     * @return T
      */
     protected function parseArgumentList(ASTArguments $arguments)
     {
@@ -4781,9 +4791,10 @@ abstract class AbstractPHPParser
      * This method parses a comma separated list of valid php variables and/or
      * properties and adds them to the given node instance.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The context parent node.
+     * @template T of \PDepend\Source\AST\ASTNode
+     * @param T $node The context parent node.
      *
-     * @return \PDepend\Source\AST\ASTNode The prepared entire node.
+     * @return T The prepared entire node.
      * @since 0.9.12
      */
     private function parseVariableList(ASTNode $node)
@@ -5807,10 +5818,10 @@ abstract class AbstractPHPParser
      */
     private function parseStatement()
     {
-        if (is_object($stmt = $this->parseOptionalStatement())) {
+        if ($stmt = $this->parseOptionalStatement()) {
             return $stmt;
         }
-        if (is_object($token = $this->tokenizer->next())) {
+        if ($token = $this->tokenizer->next()) {
             throw $this->getUnexpectedTokenException($token);
         }
         throw new TokenStreamEndException($this->tokenizer);
@@ -5997,9 +6008,10 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional set of bound closure variables.
      *
-     * @param \PDepend\Source\AST\ASTClosure $closure The context closure instance.
+     * @template T of \PDepend\Source\AST\ASTClosure
+     * @param T $closure The context closure instance.
      *
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return T
      * @since 1.0.0
      */
     protected function parseOptionalBoundVariables(
@@ -6017,9 +6029,10 @@ abstract class AbstractPHPParser
     /**
      * Parses a list of bound closure variables.
      *
-     * @param \PDepend\Source\AST\ASTClosure $closure The parent closure instance.
+     * @template T of \PDepend\Source\AST\ASTClosure
+     * @param T $closure The parent closure instance.
      *
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return T
      * @since 0.9.5
      */
     private function parseBoundVariables(\PDepend\Source\AST\ASTClosure $closure)
