@@ -242,7 +242,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         }
         // Check for initial file
         $id = $compilationUnit->getId();
-        if (isset($this->metrics[$id])) {
+        if (!$id || isset($this->metrics[$id])) {
             return;
         }
 
