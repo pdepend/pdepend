@@ -29,6 +29,9 @@ jobs:
         tools: composer:v2
         coverage: xdebug
 
+    - name: Imagick SVG support
+      run: sudo apt-get install libmagickcore-6.q16-3-extra
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
@@ -44,6 +47,8 @@ jobs:
 
     - name: Coverage
       run: vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
+      env:
+        XDEBUG_MODE: coverage
 
     - name: Archive Code Coverage Results
       uses: actions/upload-artifact@v2
