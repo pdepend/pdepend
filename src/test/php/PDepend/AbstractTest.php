@@ -972,10 +972,7 @@ abstract class AbstractTest extends TestCase
         $formats = Imagick::queryFormats();
 
         if (count(array_intersect($requiredFormats, $formats)) < count($requiredFormats)) {
-            $this->markTestSkipped(
-                'Imagick PNG and SVG support are not both installed.' .
-                "\nSupported formats:\n" . implode("\n", $formats)
-            );
+            $this->markTestSkipped('Imagick PNG and SVG support are not both installed.');
         }
     }
 }
