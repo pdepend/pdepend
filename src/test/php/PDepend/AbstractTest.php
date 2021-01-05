@@ -961,6 +961,22 @@ abstract class AbstractTest extends TestCase
 
         return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
+
+    protected function requireImagick(array $requiredFormats = array('PNG', 'SVG'))
+    {
+        if (extension_loaded('imagick') === false) {
+            $this->markTestSkipped('No pecl/imagick extension.');
+        }
+
+        $formats = Imagick::queryFormats();
+
+        if (count(array_intersect($requiredFormats, $formats)) < count($requiredFormats)) {
+            $this->markTestSkipped(
+                'Imagick PNG and SVG support are not both installed.' .
+                "\nSupported formats:\n" . implode("\n", $formats)
+            );
+        }
+    }
 }
 
 AbstractTest::init();

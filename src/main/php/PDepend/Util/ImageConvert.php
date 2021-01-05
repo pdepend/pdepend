@@ -42,6 +42,8 @@
 
 namespace PDepend\Util;
 
+use Imagick;
+
 /**
  * Simple utility class that is used to create different image formats. This
  * class can use the ImageMagick cli tool <b>convert</b> and the pecl extension
@@ -77,7 +79,12 @@ class ImageConvert
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
         } elseif (extension_loaded('imagick') === true) {
-            $imagick = new \Imagick($input);
+            try {
+                $imagick = new Imagick($input);
+            } catch (\ImagickException $e) {
+                var_dump($input, @filesize($input));
+                throw $e;
+            }
             $imagick->setImageFormat($outputType);
             $imagick->writeImage($output);
 

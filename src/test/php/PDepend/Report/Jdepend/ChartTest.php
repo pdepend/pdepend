@@ -294,18 +294,7 @@ class ChartTest extends AbstractTest
      */
     public function testGeneratesImageFile()
     {
-        if (extension_loaded('imagick') === false) {
-            $this->markTestSkipped('No pecl/imagick extension.');
-        }
-
-        $formats = Imagick::queryFormats();
-
-        if (!in_array('PNG', $formats)) {
-            $this->markTestSkipped(
-                'Imagick PNG support is not installed.' .
-                "\nSupported formats:\n" . implode("\n", $formats)
-            );
-        }
+        $this->requireImagick();
 
         $fileName = $this->createRunResourceURI('jdepend-test-out.png');
         if (file_exists($fileName)) {
