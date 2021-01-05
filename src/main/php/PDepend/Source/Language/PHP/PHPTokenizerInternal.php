@@ -290,8 +290,8 @@ class PHPTokenizerInternal implements FullTokenizer
         T_MOD_EQUAL                 => Tokens::T_MOD_EQUAL,
         T_MUL_EQUAL                 => Tokens::T_MUL_EQUAL,
         T_NAMESPACE                 => Tokens::T_NAMESPACE,
-//        T_NAME_FULLY_QUALIFIED      => Tokens::T_STRING,
-//        T_NAME_QUALIFIED            => Tokens::T_STRING,
+        T_NAME_FULLY_QUALIFIED      => Tokens::T_STRING,
+        T_NAME_QUALIFIED            => Tokens::T_STRING,
         T_XOR_EQUAL                 => Tokens::T_XOR_EQUAL,
         T_INTERFACE                 => Tokens::T_INTERFACE,
         T_BOOL_CAST                 => Tokens::T_BOOL_CAST,
@@ -765,9 +765,7 @@ class PHPTokenizerInternal implements FullTokenizer
             $temp = (array) $token;
             $temp = $temp[0];
 
-            if ($token[0] === T_NAME_QUALIFIED) {
-                var_dump($token);
-                exit;
+            if ($token[0] === T_NAME_QUALIFIED || $token[0] === T_NAME_FULLY_QUALIFIED) {
                 foreach (explode('\\', $token[1]) as $index => $string) {
                     if ($index) {
                         $result[] = array(
@@ -784,8 +782,6 @@ class PHPTokenizerInternal implements FullTokenizer
                     );
                 }
             } elseif ($token[0] === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)) {
-                var_dump($token);
-                exit;
                 $result[] = array(
                     T_NAMESPACE,
                     'namespace',
