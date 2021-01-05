@@ -42,7 +42,6 @@
 
 namespace PDepend\Report\Jdepend;
 
-use Imagick;
 use PDepend\AbstractTest;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;

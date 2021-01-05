@@ -42,7 +42,6 @@
 
 namespace PDepend\Util;
 
-use Imagick;
 use PDepend\AbstractTest;
 
 /**
