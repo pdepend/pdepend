@@ -118,6 +118,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @return void
+     * @group i
      */
     public function testCalculateIMPLMetric()
     {
@@ -487,6 +488,14 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
     private function calculateClassMetrics()
     {
         $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
+        $counts = array();
+        foreach ($namespaces[0]->getClasses() as $class) {
+            $counts[$class->getName()] = implode(', ', array_map(function ($i) {
+                return $i->getNamespacedName();
+            }, iterator_to_array($class->getInterfaces())));
+        }
+        var_dump($counts);
+        exit;
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
         $ccnAnalyzer->setCache(new MemoryCacheDriver());

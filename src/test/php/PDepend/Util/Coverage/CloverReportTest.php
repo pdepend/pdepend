@@ -59,6 +59,7 @@ class CloverReportTest extends AbstractTest
      * testReportReturnsExpected0PercentCoverage
      *
      * @return void
+     * @group j
      */
     public function testReportReturnsExpected0PercentCoverage()
     {
