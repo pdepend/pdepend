@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    
+<a id="last-release-candidate-0-10-0rc3"></a>
+<h2>Last release candidate 0.10.0RC3</h2>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Keywords:     Release announcement, PHP_Depend, 0.10.0RC3, bug, ignore
+:Description:
+  We are proud to announce the third PHP_Depend 0.10.0 release candidate.
+  It fixes a behavior change bug in the PHP_Depend's input component that<br />  was introduced in release 0.10.0RC1.</p>
+<p>Yesterday we have released the third release candidate <a href="">0.10.0RC3</a> of
+PHP_Depend, that will hopefully the last one before the final release of
+0.10.0. In this release we have closes two bugs. The first bug already exist
+for a longer time in PHP_Depend. The line numbers and columns of some abstract
+syntax tree nodes weren't set. The second bug was introduced in release<br /><a href="">0.10.0RC1</a> and it has changed the behavior of the <code>--ignore=</code> option in
+such a way, that absolute paths weren't ignored anymore.</p>
+<ul><li class="dash">Fixed <a href="">#189</a>: Invalid Start/End Line/Column for object method
+  invocation. Fixed in commit <a href="">#c6cc9dd</a>.</li>
+<li class="dash">Fixed <a href="">#191</a>: New implementation of --ignore only accepts relative paths.
+  Fixed in commit <a href="">#38e6b52</a>.</li>
+</ul>
+
+<p>As always, you can get the latest PHP_Depend version from its PEAR channel:<br /><a href="">pear.pdepend.org</a>:</p>
+
+<pre><code class="">~ $ pear channel-discover pear.pdepend.org
+~ $ pear install pdepend/PHP_Depend-beta
+</code></pre>
+<p>you can fetch the sources from the project's GitHub reposition:</p>
+
+<pre><code class="">~ $ git clone git://github.com/pdepend/pdepend.git
+</code></pre>
+<p>Or download the latest version of PHP_Depend as a Phar archive:</p>
+
+<pre><code class="">~ $ wget http://pdepend.org/download/release/latest/pdepend.phar
+</code></pre>
+<p>So please download, test this release candidate and if an issue pops up,<br />report it in PHP_Depend's <a href="/download/release/0.10.0rc3/changelog.html">issue tracker</a>.</p>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    <a id="introduction"></a>
+<h5>Introduction</h5>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This document gives a brief introduction to PHP_Depend,
+               software metrics in general and how they influence the
+               quality of a software project. Beside that this document
+               gives a brief technical introduction how PHP_Depend works
+               internally
+:Keywords:     Introduction, AST, Abstract Syntax Tree, PHP_Depend,
+               Cyclomatic Complexity, CCN, quality</p>
+<a id="introduction"></a>
+<h2>Introduction</h2>
+<p>PHP_Depend is a small program that performs static code analysis<br />on a given source base. Static code analysis means that PHP_Depend
+first takes the source code and parses it into an easily<br />processable internal data structure. This data structure is<br />normally called an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a> (<em>Abstract Syntax Tree</em>), that represents
+the different statements and elements used in the analyzed source
+base. Then it takes the generated AST and measures several values,
+the so called software metrics. Each of this values stands for a
+quality aspect in the the analyzed software, observed from a very
+high level of abstraction, because no source was reviewed manually
+until now.</p>
+<a id="what-is-a-software-metric-"></a>
+<h2>What is a software metric?</h2>
+<p>Okay, so what are these software metrics? Normally software metrics
+are really simple things. They are just the sum of some statements
+or code fragments found in the analyzed source. For example, the
+<a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">Cyclomatic Complexity</a> or <em>CCN</em> of a method is just the sum of<br />all logical statements, like <code>if</code>, <code>for</code> etc., in the analyzed
+method. This means a <em>Cyclomatic Complexity</em> value of <code>23</code> only<br />says that there are 23 statements in the analyzed method. You can
+now take this value and compare it with your own or others<br />experience, when a piece of software gets unmaintainable due to its
+complexity.</p>
+<a id="and-why-should-i-use-php-depend-"></a>
+<h2>And why should I use PHP_Depend?</h2>
+<p>That's a really good question! Why should you use a just another
+tool in your daily development process to perform such a simple
+task like building source statistics? The answer is easy. </p>
+<ul><li>PHP_Depend can be used in an automated build environment and the
+  generated reports are always objective, it just measures the quality
+  facts of a given source base. </li>
+<li>PHP_Depend scales with growing source bases, where human code
+  reviews will fail at some day.</li>
+<li>PHP_Depend allows you to identify suspect parts in a software
+  system that should be part of a code review, without looking into
+  the source.</li>
+<li>PHP_Depend also supports some fancy metrics that will become very
+  useful, when you have reached certain level of metrics knowledge.</li>
+</ul>
+
+<a id="conclusion"></a>
+<h2>Conclusion</h2>
+<p>Software metrics as they are provided by tools like PHP_Depend are
+really useful utilities to improve the productivity of development-
+and quality-assurance-teams. But metrics are only indications for
+possible problem areas. But they are just indications and no holy
+grail you should follow blind.</p>
+<p class="prev"><a href="">Handbook</a></p>
+<p class="next"><a href="/documentation/handbook.html">Installation</a></p>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

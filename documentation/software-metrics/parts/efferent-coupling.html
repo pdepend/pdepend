@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    <p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This article describes the CE - Efferent Coupling metric that
+               describes the dependencies a software artifact has onto other
+               artifacts in the same software system. The content of this
+               article is based on Uncle Bob's whitepaper &quot;OO Design Quality
+               Metrics - An Analysis of Dependencies&quot;.
+:Keywords:     CE, Efferent Coupling, Uncle Bob, Robert C. Martin, Class Coupling, Package Coupling, Maintainability, Testing, Stability</p>
+<p>The <em>Efferent Coupling</em> or <em>CE</em> counts the number of software artifacts a
+software entity depends on. Therefore it takes all artifacts the entity<br />depends on and builds a unique set for these dependencies. This means that
+if there are N dependencies from <code>A</code> to <code>B</code> and M dependencies from <code>A</code><br />to <code>C</code>, the <em>Efferent Coupling</em> of <code>A</code> is <code>2</code>. Because we like and<br />force reuse of existing code a high value for this metric isn't that bad at<br />a first glance. But what does a high <em>Efferent Coupling</em> value mean beside
+code reuse? It means that a component depends on several other implementation
+details and this makes the component itself instable, because an incompatible
+change between two versions or a switch to a different library will/may break
+the component. Therefore it is good practice to keep the <em>Efferent Coupling</em><br />for all artifacts at a minimum.</p>
+<p>A good example for such an everything breaking change is normally the switch
+from one database abstraction to another. In most applications there are so
+many dependencies between the concrete application code and different packages
+in the library code, that a switch from product <em>A</em> to product <em>B</em> will break
+several parts in the application. Therefore it is best practice to monitor the
+<em>Efferent Coupling</em> and to refactor all those artifacts where the value is
+extremely high. A good solution to high <em>Efferent Coupling</em> is the introduction
+of additional abstraction. For the given example this would mean, that you add
+an additional package which abstracts the concrete product vendor and then you
+derive concrete implementations from this abstract package.</p>
+<p>A detailed description of the <em>CE</em> metric, it's impact on the stability of a
+software system and the introduction of more abstraction can be found in<br />Uncle Bob's whitepaper &quot;OO Design Quality Metrics - An Analysis of
+Dependencies&quot; [#ubdqm]_.</p>
+<a id="thresholds"></a>
+<h3>Thresholds</h3>
+<p>It is really hard to give a threshold for the <em>Efferent Coupling</em> metric and
+the only answer can be <strong>It depends</strong>. Normally you should try to keep the<br /><em>Efferent Coupling</em> at a minimum, and the more abstract and low level a
+component is, the less the value should be.</p>
+<a id="see-also"></a>
+<h3>See also</h3>
+<ul><li class="dash"><a href="">Coupling Between Objects</a>: <em>Coupling Between Objects</em> or <em>CBO</em> is a
+  different name for the same metric, that is frequently used in the
+  literature.</li>
+<li class="dash"><a href="">Afferent Coupling</a>: The <em>Afferent Coupling</em> or <em>CA</em> is a metric that
+  calculates the reverse coupling of a class.</li>
+</ul>
+
+<a id="bibliography"></a>
+<h3>Bibliography</h3>
+<blockquote><p>Object Mentor; OO Design Quality Metrics - An Analysis of Dependencies;
+Robert C. Martin; 1994</p>
+</blockquote>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

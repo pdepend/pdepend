@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    
+<a id="php-depend-0-9-11-released"></a>
+<h2>PHP_Depend-0.9.11 released</h2>
+<p>:Abstract:
+  I have just released version 0.9.11 of PHP_Depend. It contains
+  a few bug fixes and improvements for PHP_Depend.</p>
+<p>I have just released version 0.9.11 of PHP_Depend. It contains
+a few bug fixes and improvements for PHP_Depend.</p>
+<ul><li>Fixed <a href="">#118</a>: Calculation of the Number Of Overwritten Methods is
+  wrong. Fixed in svn revision <a href="">#1112</a>.</li>
+<li>Fixed <a href="">#119</a>: Three test cases fail for all PHP versions prior to 5.3.
+  Fixed in svn revision <a href="">#1114</a>.</li>
+<li>Implemented <a href="">#121</a>: Parse arguments of the ASTForeachStatement. Implemented
+  in svn revision <a href="">#1115</a>.</li>
+<li>Critical issue in PHP_Depend's temporary data cache fixed. This bug
+  only occurred when running several instances of PHP_Depend in
+  parallel. In this setup the used cache key <a href="http://tracker.pdepend.org/pdepend/issue_tracker/issue/118">spl_object_hash()</a> has<br />  caused a corrupted cache, because different php process instances<br />  have written different data to the same cache file.</li>
+</ul>
+
+<p>As always, you can get the latest PHP_Depend version from its PEAR channel:<br /><a href="http://pear.pdepend.org">pear.pdepend.org</a>: :</p>
+<pre><code class="">mapi@arwen ~ $ pear channel-discover pear.pdepend.org
+mapi@arwen ~ $ pear install pdepend/PHP_Depend-beta
+</code></pre>
+<p>Or you can fetch the sources from the subversion reposition: :</p>
+<pre><code class="">mapi@arwen ~ $ svn co http://svn.pdepend.org/branches/0.9.0/
+</code></pre>
+<p>And additionally you can find a repository mirror on github: :</p>
+<pre><code class="">mapi@arwen ~ $ git clone git://github.com/manuelpichler/pdepend.git
+</code></pre>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    <p>You should test that PHP_Depend was correctly installed and can be used from the
+command line:</p>
+
+<pre><code class="">~ $ pdepend --version
+PHP_Depend 0.9.4 by Manuel Pichler
+</code></pre>
+<p>Now that PHP_Depend was installed correct and works, run PHP_Depend against its
+own source and generate an XML report and some charts. </p>
+
+<pre><code class="">~ $ pdepend --summary-xml=/tmp/summary.xml \
+                       --jdepend-chart=/tmp/jdepend.svg \
+                       --overview-pyramid=/tmp/pyramid.svg \
+                       /usr/local/share/pear/PDepend
+PHP_Depend 0.9.4 by Manuel Pichler
+
+Parsing source files:
+............................................................    60
+............................                                    88
+
+Executing NPathComplexity-Analyzer:
+...........................................                    869
+
+Executing Coupling-Analyzer:
+...........................................................   1193
+
+Executing NodeCount-Analyzer:
+.................................                              677
+
+Executing Dependency-Analyzer:
+...................................                            703
+
+Executing Hierarchy-Analyzer:
+...........................................                    880
+
+Executing Inheritance-Analyzer:
+.....................                                          421
+
+Executing CodeRank-Analyzer:
+......                                                         126
+
+Executing CyclomaticComplexity-Analyzer:
+...........................................                    869
+
+Executing ClassLevel-Analyzer:
+.......................................                        783
+
+Executing NodeLoc-Analyzer:
+...............................................                951
+
+Generating pdepend log files, this may take a moment.
+
+Time: 00:13; Memory: 15.00Mb
+</code></pre>
+<p>This command has produced one XML-report named <em>summary.xml</em> that contains a
+summary of all metrics collected for the analyzed php source code. :</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;metrics ahh=&quot;0.19444444444444&quot; andc=&quot;0.46268656716418&quot; calls=&quot;1406&quot; ccn=&quot;1203&quot; ccn2=&quot;1237&quot; cloc=&quot;11657&quot; clsa=&quot;7&quot; clsc=&quot;60&quot; eloc=&quot;6528&quot; fanout=&quot;571&quot; leafs=&quot;59&quot; loc=&quot;20078&quot; maxDIT=&quot;2&quot; ncloc=&quot;8421&quot; noc=&quot;67&quot; nof=&quot;0&quot; noi=&quot;21&quot; nom=&quot;578&quot; nop=&quot;11&quot; roots=&quot;5&quot;&gt;
+  &lt;files&gt;
+    &lt;file name=&quot;/usr/local/pear/PEAR/PDepend/Parser.php&quot; cloc=&quot;324&quot; eloc=&quot;534&quot; loc=&quot;997&quot; ncloc=&quot;673&quot;/&gt;
+    &lt;file name=&quot;/usr/local/pear/PEAR/PDepend/StorageRegistry.php&quot; cloc=&quot;81&quot; eloc=&quot;18&quot; loc=&quot;103&quot; ncloc=&quot;22&quot;/&gt;
+    ...
+  &lt;/files&gt;
+  &lt;package name=&quot;PHP_Depend&quot; cr=&quot;1.3005761647303&quot; noc=&quot;3&quot; nof=&quot;0&quot; noi=&quot;4&quot; nom=&quot;51&quot; rcr=&quot;0.50515422957667&quot;&gt;
+    &lt;class name=&quot;\PDepend\Source\Language\PHP\AbstractPHPParser&quot; cis=&quot;12&quot; cloc=&quot;250&quot; cr=&quot;0.15&quot; csz=&quot;113&quot; dit=&quot;0&quot; eloc=&quot;526&quot; impl=&quot;1&quot; loc=&quot;913&quot; ncloc=&quot;663&quot; nom=&quot;20&quot; rcr=&quot;0.1925&quot; vars=&quot;6&quot; varsi=&quot;6&quot; varsnp=&quot;0&quot; wmc=&quot;107&quot; wmci=&quot;107&quot; wmcnp=&quot;12&quot;&gt;
+      &lt;file name=&quot;/usr/local/pear/PEAR/PDepend/Parser.php&quot;/&gt;
+      &lt;method name=&quot;__construct&quot; ccn=&quot;1&quot; ccn2=&quot;1&quot; cloc=&quot;0&quot; eloc=&quot;4&quot; loc=&quot;6&quot; ncloc=&quot;6&quot; npath=&quot;1&quot;/&gt;
+      &lt;method name=&quot;_consumeComments&quot; ccn=&quot;3&quot; ccn2=&quot;3&quot; cloc=&quot;0&quot; eloc=&quot;10&quot; loc=&quot;12&quot; ncloc=&quot;12&quot; npath=&quot;3&quot;/&gt;
+      ...
+    &lt;/class&gt;
+    &lt;class name=&quot;PHP_Depend_StorageRegistry&quot; cis=&quot;3&quot; cloc=&quot;25&quot; cr=&quot;0.15&quot; csz=&quot;4&quot; dit=&quot;0&quot; eloc=&quot;15&quot; impl=&quot;0&quot; loc=&quot;43&quot; ncloc=&quot;18&quot; nom=&quot;2&quot; rcr=&quot;0.15&quot; vars=&quot;1&quot; varsi=&quot;1&quot; varsnp=&quot;0&quot; wmc=&quot;3&quot; wmci=&quot;3&quot; wmcnp=&quot;3&quot;&gt;
+      &lt;file name=&quot;/usr/local/pear/PEAR/PDepend/StorageRegistry.php&quot;/&gt;
+      &lt;method name=&quot;get&quot; ccn=&quot;2&quot; ccn2=&quot;2&quot; cloc=&quot;0&quot; eloc=&quot;7&quot; loc=&quot;8&quot; ncloc=&quot;8&quot; npath=&quot;2&quot;/&gt;
+      &lt;method name=&quot;set&quot; ccn=&quot;1&quot; ccn2=&quot;1&quot; cloc=&quot;0&quot; eloc=&quot;3&quot; loc=&quot;4&quot; ncloc=&quot;4&quot; npath=&quot;1&quot;/&gt;
+    &lt;/class&gt;
+    ...
+  &lt;/package&gt;
+  ...
+&lt;/metrics&gt;
+</code></pre>
+<p>And you will get two charts. The first one shows the inter package dependencies,
+similar to those charts generated by <a href="">JDepend</a> and the second one shows a
+visual summary of the analyzed project source code.</p>
+<img src="/images/jdepend.png"  width="400" alt="Package chart as described by Uncle Bob Martin" align="center" target="/documentation/handbook/reports/abstraction-instability-chart.html" />
+<img src="/images/pyramid.png"  width="400" alt="Metrics overview pyramid as described by Michele Lanza" align="center" target="/documentation/handbook/reports/overview-pyramid.html" />
+<p>You should read the <a href="http://clarkware.com/software/JDepend.html">software metrics</a> section of the documentation for further
+details on the metrics generated by PHP_Depend.</p>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

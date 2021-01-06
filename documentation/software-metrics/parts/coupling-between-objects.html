@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    <p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This article describes the CBO - Coupling Between Objects metric
+               that gives information how strong a class is coupled with its
+               surrounding software system. This metric was originally<br />               described by Chidamber &amp; Kemerer in their IEEE paper - A Metrics
+               Suite for Object Oriented Design.
+:Keywords:     CBO, Coupling Between Objects, Chidamber, Kemerer, Class Coupling, Maintainability, Testing</p>
+<p>The <em>Coupling Between Objects</em> or <em>CBO</em> metric was originally defined by
+Chidamber &amp; Kemerer in their IEEE paper &quot;A Metrics  Suite for Object Oriented
+Design&quot; [#ckoom]_. This software metric represents the number of other
+types a class or interface is coupled to. The <em>CBO</em> metric is calculated for
+classes and interfaces. It counts the unique number of reference types that
+occur through method calls, method parameters, return types, thrown exceptions
+and accessed fields. But there is an exception for types that are either a
+subtype or supertype of the given class, because these types are not included
+in the calculated <em>CBO</em> value. </p>
+<p>Excessive coupled classes prevent reuse of existing components and they are
+damaging for a modular, encapsulated software design. To improve the modularity
+of a software the inter coupling between different classes should be kept to a
+minimum. Beside reusability a high coupling has a second drawback, a class that
+is coupled to other classes is sensitive to changes in that classes and as a<br />result it becomes more difficult to maintain and gets more error-prone.
+Additionally it is harder to test a heavily coupled class in isolation and it is
+harder to understand such a class. Therefore you should keep the number of
+dependencies at a minimum.</p>
+<a id="thresholds"></a>
+<h3>Thresholds</h3>
+<p>Based on their research Sahraoui, Godin and Miceli [#sgmqa]_ suggest a maximum
+<em>CBO</em> value of <em>14</em>, because higher values have negative impacts on several
+quality aspects of a class, which includes the maintainability, stability and
+understandability.</p>
+<a id="see-also"></a>
+<h3>See also</h3>
+<ul><li class="dash"><a href="">Efferent Coupling</a>: <em>Efferent Coupling</em> or <em>CE</em> is a different name for
+  the same metric, that is frequently used in the literature.</li>
+<li class="dash"><a href="">Afferent Coupling</a>: The <em>Afferent Coupling</em> or <em>CA</em> is a metric that
+  calculates the reverse coupling of a class.</li>
+</ul>
+
+<a id="bibliography"></a>
+<h3>Bibliography</h3>
+<blockquote><p>IEEE Transactions on Software Engineering; A Metrics Suite for Object
+Oriented Design; Chidamber &amp; Kemerer, 1994</p>
+</blockquote>
+<blockquote><p>Software Maintenance, 2000. Proceedings. International Conference; Can<br />metrics help to bridge the gap between the improvement of OO design quality
+and its automation?; Sahraoui, Godin, Miceli; 2000</p>
+</blockquote>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

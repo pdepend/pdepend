@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    
+<a id="csz-class-size"></a>
+<h2>CSZ - Class Size</h2>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This article describes the CSZ - Class Size metric as it is defined
+               in the literature and how it is implemented in PHP_Depend. Later in
+               this article we describe the impact of the class size on several
+               quality-factors in a software system.
+:Keywords:     CSZ, CS, Class Size, Khaled et al., Optimal Class Size, SRP, Single Responsibility Principle, testability, responsibility, maintainability</p>
+<p>The <em>Class Size</em> or <em>CSZ</em> metric is a another measure for the complexity and
+size of a class. In many publications and books this metric is frequently
+referenced with the abbreviation <em>CS</em>. The definition and detailed description
+of this metric can be found in <em>The Optimal Class Size for Object-Oriented<br />Software</em> paper by Khaled, Benlarbi, Nishith &amp; Shesh [#ooocsz]_.</p>
+<p>There are three different definitions of the <em>Class Size</em> metric, two of them
+are only a different name for already existing metrics. The first one takes the
+number of statements, respectively the <em>Logical Lines Of Code</em> (<em>LLOC</em>), to
+measure the size of class. The second variant uses the <em>Lines Of Code</em> (<em>LOC</em>)
+as an indicator for the class size.</p>
+<p>The third variant uses two language constructs of object-oriented programming
+languages to measure the size of class and calculates the sum of both values.
+These to language constructs are methods and attributes, so that the existing
+metrics <em>Number Of Methods</em> (<em>NOM</em>) and <em>Number Of Attributes</em> (<em>VARS</em>) can<br />be reused to calculate the <em>Class Size</em>.</p>
+<blockquote><p><strong>CSZ = NOM + VARS</strong></p>
+</blockquote>
+<p>PHP_Depend implements this third variant of <em>Class Size</em> metric algorithm to
+measure the size of a class.</p>
+<p>As several researches and studies on procedural software projects have shown,
+the optimal size of a software component, lies somewhere between too small
+and too large, to be less fault-prone. This model can be visualized with an
+u-curve, where the lower arc of the U represents the optimal size of a
+component. But this model does not apply to object-oriented software systems,
+as Khaled et al. have shown in their paper [#ooocsz]_. Object-oriented systems
+tend to be more fault-prone when they get bigger and less fault-prone when
+they use small classes and follow the Single Responsibility Principle (SRP)
+[#poodsrp]_.</p>
+<p>For the <em>CSZ</em> metric this means that smaller values are always better, than
+greater ones, because a smaller size is an indicator for better testability,
+good maintainability and a well defined responsibility of the class.</p>
+<a id="thresholds"></a>
+<h3>Thresholds</h3>
+<p>Based on their research of several software systems and their reflection of
+other studies about the optimal size of a software component Khaled et al.
+suggest an upper limit 39 for a <em>Class Size</em> metric based on the number of
+a class' methods and attributes. But as always, this threshold can only be
+a clue for own limits, that fit to custom requirements.</p>
+<a id="bibliography"></a>
+<h3>Bibliography</h3>
+<blockquote><p>IEEE Transactions on Software Engineering; The Optimal Class Size for
+Object-Oriented Software; Khaled, Benlarbi, Nishith &amp; Shesh; 2002</p>
+</blockquote>
+<blockquote><p>ButUncleBob.com; The Single Responsibility Principle; Robert C. Martin</p>
+</blockquote>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

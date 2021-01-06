@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    
+<a id="cis-class-interface-size"></a>
+<h2>CIS - Class Interface Size</h2>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This article describes the CIS - Class Interface Size metric in
+               general. This metric was originally defined in the Quality Model of
+               Object-Oriented Design by Bansiya &amp; Davis. This metric is a good
+               indicator for the chosen software design and how reusable components
+               are implemented.
+:Keywords:     CIS, Class Interface Size, QMOOD, Quality Metrics of Object-Oriented Design, Bansiya &amp; Davis, reusability, functionality</p>
+<p>The <em>Class Interface Size</em> or <em>CIS</em> metric is measure of the public services<br />that a class provides. This metric was originally defined in the <em>QMOOD</em> model
+[#moodcis]_ by Bansiya &amp; Davis.</p>
+<p>The original version of the <em>CIS</em> metric was defined as the number of public
+methods that a class provides. Each of these methods can be seen as a service
+where surrounding application can send messages to or receive messages from
+a class.</p>
+<blockquote><p><strong>CIS = public(NOM)</strong></p>
+</blockquote>
+<p>A newer variant of the <em>CIS</em> metric also includes the public attributes of a
+class, because theses properties can also be used to transport messages or<br />information between a class and the surrounding application.</p>
+<blockquote><p><strong>CIS = public(NOM) + public(VARS)</strong></p>
+</blockquote>
+<p>PHP_Depend uses the second variant and counts all public methods and attributes
+declared in a class to calculate its <em>Class Interface Size</em> metric.</p>
+<p>This metric is a good indicator for the chosen software design. Several<br />classes with a high <em>CIS</em> value are a sure sign that the design of the
+analyzed software prefers composition over inheritance to share common
+functionality between different components. So in most cases a high value is
+a good a sign, because composition increases the reusability and flexibility.
+But there are also situations where wrongly used composition of functionality
+leads to a design that is harder to understand and maintain.</p>
+<a id="thresholds"></a>
+<h3>Thresholds</h3>
+<p>It is not easy to define good thresholds for this metric, because those values
+heavy depend on the chosen design, e.g. inheritance or composition. But in
+general we can say that is best practice to limit the public interface that
+can be used to alter the internal state of an object. Therefore we suggest 20
+as a reference point for the upper limit.</p>
+<a id="bibliography"></a>
+<h3>Bibliography</h3>
+<blockquote><p>IEEE Transactions on Software Engineering; <em>Hierarchical Model for Object-Oriented
+Design Quality Assessment</em>; Bansiya &amp; Davis; 2002</p>
+</blockquote>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

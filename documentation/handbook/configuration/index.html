@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    <a id="configuration"></a>
+<h5>Configuration</h5>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This document describes the configuration component of
+               PHP_Depend. The configuration system allows to customize
+               several aspects of PHP_Depend through a simple xml file.
+:Keywords:     Configuration, XML, XML-Schema, PHP_Depend, Command-Line</p>
+<p>Newer versions of PHP_Depend provide a flexible and easy to use configuration
+file. This file can be used to tune several aspects of PHP_Depend, that were
+normally hard and complicated to configure with pure command line options.</p>
+<p>The format has changed in version 2.0 and is now embedded into the Symfony
+DependencyInjection Container configuration. Besides overwriting some settings,
+you are now able to overwrite many of the internal PDepend services with your
+own implementations and extend the parsing process with generators and
+analyzers. You can find the old format in the History section below.</p>
+<a id="base-configuration-file"></a>
+<h2>Base configuration file</h2>
+<p>The minimum configuration file consists of a root element with some namespaces
+but without any child elements or attributes, because all settings are optional. :</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;symfony:container xmlns:symfony=&quot;http://symfony.com/schema/dic/services&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns=&quot;http://pdepend.org/schema/dic/pdepend&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot; /&gt;
+</code></pre>
+<p>Rhe <a href="">XML schema</a> for the configuration
+file is used in order to get automatic validation and auto-completion in your
+development environment.</p>
+<a id="elements"></a>
+<h2>Elements</h2>
+<a id="image-convert"></a>
+<h3>Image Convert</h3>
+<p>The <code>&lt;image-convert&gt;</code> element is a container for all configuration settings
+available for the image convert component. It is used by PHP_Depend to render
+the different graphical reports like the <a href="">Overview Pyramid</a> or the the
+<em>Abstraction &amp; Instability</em> chart. :</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;symfony:container xmlns:symfony=&quot;http://symfony.com/schema/dic/services&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns=&quot;http://pdepend.org/schema/dic/pdepend&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot; /&gt;
+    &lt;config&gt;
+        &lt;image-convert&gt;
+            &lt;font-family&gt;Luxi Sans&lt;/font-family&gt;
+            &lt;font-size&gt;42&lt;/font-size&gt;
+        &lt;/image-convert&gt;
+    &lt;/config&gt;
+&lt;/symfony:container&gt;
+</code></pre>
+<p>At the moment you can only customize the font-size and the font-family that
+were used in the generated graphics.</p>
+<a id="fontfamily"></a>
+<h4>fontFamily</h4>
+<p>The <code>&lt;font-family&gt;</code> element can be used to specify a custom font-family that
+should be used for all text elements rendered by PHP_Depend. This element
+accepts any valid font-family identifier, as they are used to specify a
+font-family in a css- or svg-file. :</p>
+<pre><code class="">&lt;image-convert&gt;
+    &lt;font-family&gt;Luxi Sans&lt;/font-family&gt;
+&lt;/image-convert&gt;
+</code></pre>
+<p>Or you can specify a list of font-families: :</p>
+<pre><code class="">&lt;image-convert&gt;
+    &lt;font-family&gt;Luxi Sans, Verdana, sans-serif&lt;/font-family&gt;
+&lt;/image-convert&gt;
+</code></pre>
+<a id="fontsize"></a>
+<h4>fontSize</h4>
+<p>The <code>&lt;font-size&gt;</code> element can be used to specify a new base font-size for all
+charts generated by PHP_Depend. This base font-size will be used by the image
+convert component to recalculate all font sizes used within a chart. This
+element only accepts data of type <em>int</em>. :</p>
+<pre><code class="">&lt;image-convert&gt;
+    &lt;font-size&gt;42&lt;/font-size&gt;
+&lt;/image-convert&gt;
+</code></pre>
+<a id="cache"></a>
+<h3>cache</h3>
+<p>Within the <code>&lt;cache&gt;</code> container element you can configure the cache backend
+that will be used by PHP_Depend. The used cache backend can have a great
+impact on PHP_Depend's overall performance, memory consumption and diskspace
+usage. While the file based cache promises a better performance on consecutive
+calls, it can require a large amount of diskspace. In contrast, the memory
+based cache doesn't allocate any diskspace, but it normally requires muc
+more memory and it forces the PHP_Depend to parse the whole source on every
+call. :</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;symfony:container xmlns:symfony=&quot;http://symfony.com/schema/dic/services&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns=&quot;http://pdepend.org/schema/dic/pdepend&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot; /&gt;
+    &lt;config&gt;
+        &lt;cache&gt;
+            &lt;driver&gt;file&lt;/driver&gt;
+            &lt;location&gt;/var/run/pdepend&lt;/location&gt;
+        &lt;/cache&gt;
+    &lt;/config&gt;
+&lt;/symfony:container&gt;
+</code></pre>
+<a id="driver"></a>
+<h4>driver</h4>
+<p>The <code>&lt;driver&gt;</code> element can be used to define the cache backend for
+PHP_Depend. At the moment this element only accepts two predefined values
+as content:</p>
+<ul><li class="dash"><code>file</code></li>
+<li class="dash"><code>memory</code></li>
+</ul>
+
+<p>The cache driver must be specified as cdata of the <code>&lt;driver&gt;</code> element. :</p>
+<pre><code class="">&lt;cache&gt;
+    &lt;driver&gt;file&lt;/driver&gt;
+&lt;/cache&gt;
+</code></pre>
+<p>The default driver used by PHP_Depend is <code>file</code>.</p>
+<a id="location"></a>
+<h4>location</h4>
+<p>The <code>&lt;location&gt;</code> element can be used to define a custom location for the
+cache files generated by PHP_Depend. As this statement already implies, the
+<code>&lt;location&gt;</code> element is only used by the file system based cache and will
+be ignored for the memory driver. :</p>
+<pre><code class="">&lt;cache&gt;
+    &lt;location&gt;/tmp/pdepend/cache&lt;/location&gt;
+&lt;/cache&gt;
+</code></pre>
+<p>The default cache location under linux/unix systems is <code>$HOME + &quot;/.pdepend&quot;</code>
+and under windows <code>$HOMEDRIVE + $HOMEPATH + &quot;/.pdepend&quot;</code>.</p>
+<a id="ttl"></a>
+<h4>ttl</h4>
+<p>The <code>&lt;ttl&gt;</code> element can be used to define a custom ttl in seconds for the
+cache files generated by PHP_Depend. As this statement already implies, the
+<code>&lt;ttl&gt;</code> element is only used by the file system based cache and will
+be ignored for the memory driver. :</p>
+<pre><code class="">&lt;cache&gt;
+    &lt;ttl&gt;3600&lt;/location&gt;
+&lt;/cache&gt;
+</code></pre>
+<p>The default cache ttl is <code>2592000</code> = 30 days.</p>
+<a id="using-the-configuration-file"></a>
+<h2>Using the configuration file</h2>
+<p>There are two ways how the PHP_Depend configuration file can be specified.
+The first style is to declare the configuration file explicit, by using the
+command line option <code>--configuration</code>.</p>
+
+<pre><code class="">~ $ pdepend --configuration=my.config.xml
+</code></pre>
+<p>The second style/concept to specify PHP_Depend's configuration file was
+adapted from <a href="">PHPUnit</a>, where you can put an xml file named after the
+tool(so <code>phpunit.xml</code> in the case of PHPUnit and <code>pdepend.xml</code> in the
+case of PHP_Depend) into the current working directory. This file will
+then be read and parsed automatically by PHP_Depend.</p>
+
+<pre><code class="">~ $ ls -l
+drwxrwxr-x  8 4096 Nov 24 11:05 build
+drwxrwxr-x  8 4096 Nov 24 11:05 src
+-rwxr--r--  1  806 Oct 19 15:07 pdepend.xml
+~ $ pdepend --jdepend-xml=build/logs/jdepend.xml src
+</code></pre>
+<p>In this case PHP_Depend parse the configuration settings defined in the
+<code>`pdepend.xml</code> file, right before it starts to parse the source.</p>
+<p>Beside this configuration file you can also put a second file named
+<code>pdepend.xml.dist</code> into the current working directory. The purpose of
+the <code>*.dist</code> is to provide a project with factory settings for PHP_Depend,
+while the <code>*.xml</code> is reserved for modifications in each checkout.</p>
+<p>PHP_Depend reads both configuration files additive. This means it first
+reads the <code>pdepend.xml.dist</code> and overwrites the default values with those
+found in the xml file. Then it reads the <code>pdepend.xml</code> file and only
+overwrites those settings that were defined in this file.</p>
+<a id="history"></a>
+<h2>History</h2>
+<p>The command line option to specify a xml configuration file already exists
+for a long time in PHP_Depend, but the configuration file wasn't really in
+use until version 0.10.0. Since this release we have started to provide an
+<a href="">XML-Schema</a> for the configuration file and we moved several command line
+options or previously hard-coded-switches into the xml configuration file.</p>
+<p>Starting with 2.0 the format was changed to allow integration in the
+Symfony Dependency Injection Container. For legacy reasons the old
+format is documented here :</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;configuration&gt;
+    &lt;imageConvert&gt;
+        &lt;fontFamily&gt;Luxi Sans&lt;/fontFamily&gt;
+        &lt;fontSize&gt;42&lt;/fontFamily&gt;
+    &lt;/imageConvert&gt;
+    &lt;cache&gt;
+        &lt;driver&gt;file&lt;/driver&gt;
+        &lt;location&gt;/tmp&lt;/location&gt;
+    &lt;/cache&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p class="prev"><a href="">Command Line</a></p>
+<p class="next"><a href="/documentation/handbook/command-line.html">Reports</a></p>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

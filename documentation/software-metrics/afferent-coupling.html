@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    
+<a id="ca-afferent-coupling"></a>
+<h2>CA - Afferent Coupling</h2>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This article describes the Object-Oriented software metric CA -
+               Afferent Coupling. It can be used to measure the responsibility
+               of a component, package, class or method within a software<br />               whitepaper &quot;OO Design Quality Metrics - An Analysis of<br />               system. The content of this article is based on Uncle Bob's
+               Dependencies&quot;, published 1994.
+:Keywords:     CA, Afferent Coupling, Uncle Bob, Robert C. Martin, Class Coupling, Package Coupling, Responsibility, Testing</p>
+<p>The <em>Afferent Coupling</em> or <em>CA</em> metric describes the number of unique<br />incoming dependencies into a software artifact. An artifact can be
+nearly everything in an Object-Oriented software system, e.g. a
+component, package, class, method or property. Therefore the <em>Afferent
+Coupling</em> is an indicator for the responsibility that the artifact has
+in the analyzed software system. The higher this value is the higher is
+the artifact's responsibility. </p>
+<p>Normally responsibility isn't a bad thing in a software system. Good<br />examples are core packages and components, like error and exception<br />handling, or the used unit testing framework. All these low level<br />components have usually a very high <em>Afferent Coupling</em>, because they
+are utilized by the several parts of the software. On the other hand
+these components will rarely be changed during the lifetime of an<br />application, but when they must be changed, it can have side effects<br />on the overall stability of application. Therefore it is important to
+have a really good test coverage for components with a high <em>Afferent<br />Coupling</em> and to monitor all changes to these components carefully.</p>
+<p>A detailed description of the <em>CA</em> metric and it's impact on the stability<br />of a software system can be found in Uncle Bob's whitepaper &quot;OO Design Quality
+Metrics - An Analysis of Dependencies&quot; [#ubdqm]_.</p>
+<a id="thresholds"></a>
+<h3>Thresholds</h3>
+<p>It is really hard to give a threshold for the <em>Afferent Coupling</em> metric and
+the only answer can be <strong>It depends</strong>. Let's take the testing framework, this
+component can have a very high <em>Afferent Coupling</em> value, because it will<br />hopefully be utilized by all other components. But a good policy for this<br />metric is, the more concrete a software artifact is, the less the <em>Afferent
+Coupling</em> value should be.</p>
+<a id="see-also"></a>
+<h3>See also</h3>
+<ul><li class="dash"><a href="">Coupling Between Objects</a>: <em>Coupling Between Objects</em> or <em>CBO</em> is the
+  opposite coupling metric for a software artifact.</li>
+<li class="dash"><a href="">Efferent Coupling</a>: The <em>Efferent Coupling</em> or <em>CE</em> is a software metric
+  that describes the reverse perspective on dependencies.</li>
+</ul>
+
+<a id="bibliography"></a>
+<h3>Bibliography</h3>
+<blockquote><p>Object Mentor; OO Design Quality Metrics - An Analysis of Dependencies;
+Robert C. Martin; 1994</p>
+</blockquote>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>

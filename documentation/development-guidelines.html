@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="description" content="PHP Depend - Software Metrics for PHP. Metrics analysis tool for software developed in PHP."/>
+    <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
+    <meta name="author" content="Manuel Pichler"/>
+    <meta name="language" content="en"/>
+    <meta name="date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="robots" content="all"/>
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
+    <meta name="DC.title" content="News"/>
+    <meta name="DC.creator" content="Manuel Pichler"/>
+    <meta name="DC.date" content="Wed, 06 Jan 2021 02:34:18 +0000"/>
+    <meta name="DC.rights" content="CC by-nc-sa"/>
+
+    <link rel="canonical" href="https://pdepend.org/news.html"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png"/>
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen"/>
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print"/>
+
+    <title>PHP Depend - Software Metrics for PHP: News</title>
+</head>
+<body>
+<h1 class="viewport">
+    <a href="/">PHP Depend - Software Metrics for PHP</a>
+</h1>
+<div class="header">
+    <div class="viewport">
+        <ul class="navigation">
+            <li>
+                <a href="/news.html" title="News">News</a>
+            </li>
+            <li>
+                <a href="/documentation/getting-started.html" title="Documentation">Documentation</a>
+            </li>
+            <li>
+                <a href="/screenshots.html" title="Screenshots">Screenshots</a>
+            </li>
+            <li>
+                <a href="/download/index.html" title="Download">Download</a>
+            </li>
+            <li>
+                <a href="/support.html" title="Support &amp; Contact">Support &amp; Contact</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="viewport content">
+    
+<a id="development-guidelines"></a>
+<h2>Development Guidelines</h2>
+<p>The following document contains the main guidelines for all persons that
+participate on PHP_Depend's development.</p>
+<a id="commit-messages"></a>
+<h2>Commit messages</h2>
+<p>We have very strict rules for commit message formatting, which provides us
+with a basis for automatic parsing and generating of reports.</p>
+<p>All messages should wrap at 79 characters per line. This means, if you are
+writing multiple lines after a message starting with a &quot;- &quot; each following
+line should be indented by exactly two spaces.</p>
+<p>Including descriptive text in your commit messages is generally important to
+offer a good overview on the commit when the issue tracker is not available
+(commit mails, history).</p>
+<p>All messages may include references to existing issues to add status updates
+to the issue, which should look like:</p>
+<pre><code class="">- Refs #&lt;number&gt;: &lt;text&gt;
+</code></pre>
+<p>Where &lt;number&gt; references the ticket and the &lt;text&gt; describes what you did.</p>
+<a id="comments"></a>
+<h3>Comments</h3>
+<p>You may always append arbitrary comments in your commit messages, where each
+line should start with a number sign (#). Text in these lines won't be
+checked.</p>
+<a id="bug-fix"></a>
+<h3>Bug fix</h3>
+<p>A bug fix commit message should follow the following scheme:</p>
+<pre><code class="">- Fixed #&lt;number&gt;: &lt;text&gt;
+</code></pre>
+<p>Where &lt;number&gt; references the closed bug and &lt;text&gt; is a description of the
+bug and the fix. Keep in mind that the texts will be used for the changelog,
+so please check the spelling before committing.</p>
+<p>The bug number is not optional, which means that there should be an open bug
+in the issue tracker for <em>each</em> bug you fix.</p>
+<p>For compatibility with other issue tracker you may also use &quot;Closed&quot; instead
+of &quot;Fixed&quot; in your message, but &quot;Fixed&quot; is highly preferred.</p>
+<a id="new-features"></a>
+<h3>New features</h3>
+<p>If you implemented a new feature, your commit message should look like:</p>
+<pre><code class="">- Implemented[ #&lt;number&gt;]: &lt;text&gt;
+</code></pre>
+<p>Where &lt;text&gt; is a short description of the feature you implemented, and
+&lt;number&gt; may optionally reference a feature request in the bug tracker. Keep
+in mind that the texts will be used for the changelog, so please check the
+spelling before committing.</p>
+<a id="documentation"></a>
+<h3>Documentation</h3>
+<p>If you extended your documentation, your commit message should look like:</p>
+<pre><code class="">- Documented[ #&lt;number&gt;]: &lt;text&gt;
+</code></pre>
+<p>Where &lt;number&gt; optionally specifies a documentation request, and the text
+describes what you documented.</p>
+<a id="additional-tests"></a>
+<h3>Additional tests</h3>
+<p>If you added tests for some feature, your commit message should look like:</p>
+<pre><code class="">- Tested: &lt;text&gt;
+</code></pre>
+<p>Where &lt;text&gt; describes the feature(s) you are testing.</p>
+<a id="other-commits"></a>
+<h3>Other commits</h3>
+<p>If your commit does not match any of the above rules you should only include a
+comment in your commit message or extend this document with your commit
+message of desire.</p>
+<a id="general"></a>
+<h3>General</h3>
+<p>No line of your commit message should ever exceed 79 characters per line</p>
+</div>
+<div class="footer">
+    <div class="viewport">
+        <div class="license">
+            By <strong>Manuel Pichler</strong>
+            licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div style="height: 45px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/378/funder.js" async="async"></script></body>
+</html>
