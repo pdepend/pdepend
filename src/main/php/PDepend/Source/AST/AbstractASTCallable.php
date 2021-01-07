@@ -404,7 +404,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns an array with all declared static variables.
      *
-     * @return array
+     * @return array<string, mixed>
      * @since  0.9.6
      */
     public function getStaticVariables()

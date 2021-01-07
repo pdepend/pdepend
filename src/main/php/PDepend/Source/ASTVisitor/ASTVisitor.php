@@ -157,8 +157,8 @@ interface ASTVisitor
      * The return value of this method is the second input argument, modified
      * by the concrete visit method.
      *
-     * @param string $method Name of the called method.
-     * @param array  $args   Array with method argument.
+     * @param string                $method Name of the called method.
+     * @param array<integer, mixed> $args   Array with method argument.
      *
      * @return mixed
      * @since  0.9.12

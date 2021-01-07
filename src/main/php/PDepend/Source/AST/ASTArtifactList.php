@@ -49,6 +49,8 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @implements \Iterator<int|string, \PDepend\Source\AST\ASTArtifact>
+ * @implements \ArrayAccess<int|string, \PDepend\Source\AST\ASTArtifact>
  */
 class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
 {

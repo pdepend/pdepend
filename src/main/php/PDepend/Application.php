@@ -172,7 +172,7 @@ class Application
     }
 
     /**
-     * @return array<string, array>
+     * @return array<string, array<string, string>>
      */
     private function getAvailableOptionsFor($serviceTag)
     {

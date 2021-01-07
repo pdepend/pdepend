@@ -636,7 +636,7 @@ class Engine
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
      *
-     * @return \Iterator
+     * @return \Iterator<int, string>
      */
     private function createFileIterator()
     {

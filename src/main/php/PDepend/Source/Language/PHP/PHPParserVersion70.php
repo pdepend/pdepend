@@ -508,7 +508,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return void
      */
     protected function parseUseDeclarationForVersion(array $fragments)
@@ -523,7 +523,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return void
      */
     protected function parseUseDeclarationVersion70(array $fragments)
@@ -566,7 +566,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param array $previousElements
+     * @param array<string> $previousElements
      * @return string|null
      */
     protected function parseQualifiedNameElement(array $previousElements)

@@ -155,7 +155,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
-     * @return array
+     * @return array<string, integer>
      */
     public function getProjectMetrics()
     {

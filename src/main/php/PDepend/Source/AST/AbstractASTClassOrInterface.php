@@ -183,7 +183,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns an array of references onto the interfaces of this class node.
      *
-     * @return array
+     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference[]
      * @since  0.10.4
      */
     public function getInterfaceReferences()

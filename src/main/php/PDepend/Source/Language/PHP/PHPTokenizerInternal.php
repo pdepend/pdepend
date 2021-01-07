@@ -730,9 +730,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array<array> $tokens Unprepared array of php tokens.
+     * @param array<array<integer, integer|string>|string> $tokens Unprepared array of php tokens.
      *
-     * @return array<array>
+     * @return array<array<integer, integer|string>|string>
      */
     private function substituteTokens(array $tokens)
     {
@@ -911,7 +911,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array $tokens Reference to the current token stream.
+     * @param array<array<integer, integer|string>|string> $tokens Reference to the current token stream.
      *
      * @return string
      */

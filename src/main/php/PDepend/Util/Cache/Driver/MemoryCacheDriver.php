@@ -66,7 +66,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * The in memory cache.
      *
-     * @var array<string, array>
+     * @var array<string, array<integer, mixed>>
      */
     protected $cache = array();
 
@@ -87,7 +87,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Global stack, mainly used during testing.
      *
-     * @var array<mixed>
+     * @var array<string, array<integer, mixed>>
      */
     protected static $staticCache = array();
 

@@ -1404,7 +1404,7 @@ abstract class AbstractPHPParser
      * {@link \PDepend\Source\AST\ASTTraitReference} class that represents the
      * declaring trait.
      *
-     * @return array
+     * @return array<integer, mixed>
      * @since 1.0.0
      */
     private function parseTraitMethodReference()
@@ -1434,7 +1434,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait adaptation alias statement.
      *
-     * @param array $reference Parsed method reference array.
+     * @param array<integer, mixed> $reference Parsed method reference array.
      *
      * @return \PDepend\Source\AST\ASTTraitAdaptationAlias
      * @since 1.0.0
@@ -1477,7 +1477,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait adaptation precedence statement.
      *
-     * @param  array $reference Parsed method reference array.
+     * @param  array<integer, mixed> $reference Parsed method reference array.
      * @return \PDepend\Source\AST\ASTTraitAdaptationPrecedence
      * @throws \PDepend\Source\Parser\InvalidStateException
      * @since 1.0.0
@@ -1828,7 +1828,7 @@ abstract class AbstractPHPParser
      * node this can be a {@link \PDepend\Source\AST\ASTPostIncrementExpression} or
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
-     * @param  array $expressions List of previous parsed expression nodes.
+     * @param  array<\PDepend\Source\AST\ASTNode> $expressions List of previous parsed expression nodes.
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
      */
@@ -1890,7 +1890,7 @@ abstract class AbstractPHPParser
      * node this can be a {@link \PDepend\Source\AST\ASTPostDecrementExpression} or
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
-     * @param array $expressions List of previous parsed expression nodes.
+     * @param array<\PDepend\Source\AST\ASTNode> $expressions List of previous parsed expression nodes.
      *
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
@@ -6180,7 +6180,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param array $previousElements
+     * @param array<string> $previousElements
      * @return string
      */
     protected function parseQualifiedNameElement(array $previousElements)
@@ -6305,7 +6305,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return void
      */
     protected function parseUseDeclarationForVersion(array $fragments)
@@ -6317,7 +6317,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return string
      */
     protected function parseNamespaceImage(array $fragments)
@@ -6918,7 +6918,7 @@ abstract class AbstractPHPParser
      *
      * @param string $comment The context doc comment block.
      *
-     * @return array
+     * @return array<integer, string>
      */
     private function parseThrowsAnnotations($comment)
     {

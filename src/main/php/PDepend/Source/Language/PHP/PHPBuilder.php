@@ -2091,7 +2091,7 @@ class PHPBuilder implements Builder
      * best matching instance or <b>null</b> if no match exists.
      *
      * @template T of \PDepend\Source\AST\AbstractASTType
-     * @param  array<string, array<string, array<integer, T>>>  $instances
+     * @param  array<string, array<string, array<string, T>>>  $instances
      * @param  string $qualifiedName
      * @return T|null
      * @since  0.9.5
