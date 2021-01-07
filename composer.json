@@ -10,10 +10,10 @@
         "symfony/config": "^2.3.0|^3|^4|^5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.35|^5.7",
+        "phpunit/phpunit": "^4.8.36|^5.7.27",
         "squizlabs/php_codesniffer": "^2.0.0",
         "gregwar/rst": "^1.0",
-        "easy-doc/easy-doc": "0.0.0 || ^1.2.3"
+        "easy-doc/easy-doc": "0.0.0|^1.2.3"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {

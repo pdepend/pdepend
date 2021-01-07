@@ -136,7 +136,7 @@ class XmlTest extends AbstractTest
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
             ->getMock();
-        
+
         $logger = new Xml();
         $actual = $logger->log($analyzer);
 
@@ -152,7 +152,7 @@ class XmlTest extends AbstractTest
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer')
             ->getMock();
-        
+
         $logger = new Xml();
         $actual = $logger->log($analyzer);
 
