@@ -185,15 +185,15 @@ if (!defined('T_COALESCE_EQUAL')) {
  * Define PHP 8.0 tokens
  */
 if (!defined('T_NAME_QUALIFIED')) {
-    define('T_NAME_QUALIFIED', 314);
+    define('T_NAME_QUALIFIED', 42314);
 }
 
 if (!defined('T_NAME_FULLY_QUALIFIED')) {
-    define('T_NAME_FULLY_QUALIFIED', 312);
+    define('T_NAME_FULLY_QUALIFIED', 42312);
 }
 
 if (!defined('T_NAME_RELATIVE')) {
-    define('T_NAME_RELATIVE', 313);
+    define('T_NAME_RELATIVE', 42313);
 }
 
 /**
@@ -290,8 +290,8 @@ class PHPTokenizerInternal implements FullTokenizer
         T_MOD_EQUAL                 => Tokens::T_MOD_EQUAL,
         T_MUL_EQUAL                 => Tokens::T_MUL_EQUAL,
         T_NAMESPACE                 => Tokens::T_NAMESPACE,
-//        T_NAME_FULLY_QUALIFIED      => Tokens::T_STRING,
-//        T_NAME_QUALIFIED            => Tokens::T_STRING,
+        T_NAME_FULLY_QUALIFIED      => Tokens::T_STRING,
+        T_NAME_QUALIFIED            => Tokens::T_STRING,
         T_XOR_EQUAL                 => Tokens::T_XOR_EQUAL,
         T_INTERFACE                 => Tokens::T_INTERFACE,
         T_BOOL_CAST                 => Tokens::T_BOOL_CAST,
@@ -765,7 +765,7 @@ class PHPTokenizerInternal implements FullTokenizer
             $temp = (array) $token;
             $temp = $temp[0];
 
-            /*if ($token[0] === T_NAME_QUALIFIED) {
+            if ($token[0] === T_NAME_QUALIFIED || $token[0] === T_NAME_FULLY_QUALIFIED) {
                 foreach (explode('\\', $token[1]) as $index => $string) {
                     if ($index) {
                         $result[] = array(
@@ -800,7 +800,7 @@ class PHPTokenizerInternal implements FullTokenizer
                         $token[2],
                     );
                 }
-            } else*/if (isset(self::$substituteTokens[$temp])) {
+            } elseif (isset(self::$substituteTokens[$temp])) {
                 foreach (self::$substituteTokens[$temp] as $token) {
                     $result[] = $token;
                 }
