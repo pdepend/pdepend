@@ -204,7 +204,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns an <b>array</b> with all tokens within this file.
      *
-     * @return array<array>
+     * @return array<\PDepend\Source\Tokenizer\Token>
      */
     public function getTokens()
     {
@@ -216,7 +216,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Sets the tokens for this file.
      *
-     * @param array<array> $tokens The generated tokens.
+     * @param array<\PDepend\Source\Tokenizer\Token> $tokens The generated tokens.
      *
      * @return void
      */

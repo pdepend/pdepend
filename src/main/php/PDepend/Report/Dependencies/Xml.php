@@ -220,6 +220,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $xml = end($this->xmlStack);
+        if (!$xml) {
+            return;
+        }
+
         $doc = $xml->ownerDocument;
 
         $typeXml = $doc->createElement($typeIdentifier);
@@ -263,6 +267,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     public function visitNamespace(ASTNamespace $namespace)
     {
         $xml = end($this->xmlStack);
+        if (!$xml) {
+            return;
+        }
+
         $doc = $xml->ownerDocument;
 
         $packageXml = $doc->createElement('package');

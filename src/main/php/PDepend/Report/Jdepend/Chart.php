@@ -108,7 +108,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Sets the context code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTArtifactList $artifacts
+     * @param  \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\AbstractASTArtifact> $artifacts
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)

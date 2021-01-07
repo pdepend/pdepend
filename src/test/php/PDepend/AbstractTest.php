@@ -64,7 +64,6 @@ use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_Exception;
-use PHPUnit_Framework_TestCase;
 use ReflectionProperty;
 
 /**

@@ -91,19 +91,22 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     private $nodeMetrics = null;
 
+    /**
+     * @var array<string, \PDepend\Source\AST\ASTNamespace>
+     */
     protected $nodeSet = array();
 
     /**
      * Nodes in which the current analyzed dependency is used.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, array<integer, \PDepend\Source\AST\ASTNamespace>>
      */
     private $efferentNodes = array();
 
     /**
      * Nodes that is used by the current analyzed node.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, array<integer, \PDepend\Source\AST\ASTNamespace>>
      */
     private $afferentNodes = array();
 
@@ -123,7 +126,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array<string, array|null>
+     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>|null>
      */
     private $collectedCycles = array();
 
@@ -190,7 +193,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Returns an array of all efferent nodes.
      *
      * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return \PDepend\Source\AST\AbstractASTArtifact[]
+     * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function getEfferents(AbstractASTArtifact $node)
     {
@@ -207,7 +210,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Returns an array of nodes that build a cycle for the requested node or it
      * returns <b>null</b> if no cycle exists .
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\ASTNamespace $node
      * @return \PDepend\Source\AST\AbstractASTArtifact[]
      */
     public function getCycle(AbstractASTArtifact $node)
