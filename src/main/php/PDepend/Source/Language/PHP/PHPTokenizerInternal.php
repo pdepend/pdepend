@@ -843,13 +843,6 @@ class PHPTokenizerInternal implements FullTokenizer
         );
 
         $tokens = $this->substituteTokens(token_get_all($source));
-        file_put_contents('php' . PHP_VERSION . '.php', '<?php ' . var_export(array_map(function ($token) {
-            if (is_array($token)) {
-                $token[0] = token_name($token[0]);
-            }
-
-            return $token;
-        }, $tokens), true) . ';');
 
         // Is the current token between an opening and a closing php tag?
         $inTag = false;
