@@ -384,7 +384,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @param Token|null $startToken
      * @return void
      */
-    public function setTokens(array $tokens, $startToken = null)
+    public function setTokens(array $tokens, Token $startToken = null)
     {
         if (!$startToken) {
             $startToken = reset($tokens);
