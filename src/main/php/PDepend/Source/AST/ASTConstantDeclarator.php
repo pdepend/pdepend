@@ -104,7 +104,7 @@ class ASTConstantDeclarator extends AbstractASTNode
      * @param  \PDepend\Source\AST\ASTValue|null $value
      * @return void
      */
-    public function setValue($value)
+    public function setValue(ASTValue $value = null)
     {
         $this->value = $value;
     }
