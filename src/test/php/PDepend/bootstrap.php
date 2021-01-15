@@ -68,12 +68,25 @@ $replacements = array(
 foreach ($replacements as $file => $replacement) {
     list($from, $to) = $replacement;
 
+    echo "$file: ";
+
+    if (!file_exists($file)) {
+        echo "File not found.\n";
+
+        continue;
+    }
+
     $contents = @file_get_contents($file) ?: '';
     $newContents = str_replace($from, $to, $contents);
 
     if ($newContents !== $contents) {
         file_put_contents($file, $newContents);
+        echo "Content changed.\n";
+
+        continue;
     }
+
+    echo "Replace pattern not found.\n";
 }
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
