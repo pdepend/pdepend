@@ -43,15 +43,37 @@
 namespace PDepend;
 
 spl_autoload_register(function ($class) {
-    if (0 === strpos($class, __NAMESPACE__)) {
-        $file = __DIR__ . strtr(str_replace(__NAMESPACE__, '', $class), '\\', '/') . '.php';
-    } else {
+    if (substr($class, 0, strlen(__NAMESPACE__)) !== __NAMESPACE__) {
         return;
     }
+
+    $file = __DIR__ . strtr(str_replace(__NAMESPACE__, '', $class), '\\', '/') . '.php';
 
     if (file_exists($file)) {
         include_once $file;
     }
 });
+
+$replacements = array(
+    __DIR__ . '/../../../../vendor/phpunit/phpunit-mock-objects/src/Generator.php' => array(
+        "if (version_compare(PHP_VERSION, '7.1', '>=') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
+        "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
+        'final private function',
+        'private function',
+    ),
+);
+
+foreach ($replacements as $file => $replacement) {
+    list($from, $to) = $replacement;
+
+    $contents = @file_get_contents($file) ?: '';
+    $newContents = str_replace($from, $to, $contents);
+
+    if ($newContents !== $contents) {
+        file_put_contents($file, $newContents);
+    }
+}
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
