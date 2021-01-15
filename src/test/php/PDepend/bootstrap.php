@@ -55,19 +55,21 @@ spl_autoload_register(function ($class) {
 });
 
 $replacements = array(
-    __DIR__ . '/../../../../vendor/phpunit/phpunit-mock-objects/src/Generator.php' => array(
-        "if (version_compare(PHP_VERSION, '7.1', '>=') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
-        "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
-    ),
     __DIR__ . '/../../../../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
-        'final private function',
-        'private function',
+        array(
+            "if (version_compare(PHP_VERSION, '7.1', '>=') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
+            "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/Configuration.php' => array(
+        array(
+            'final private function',
+            'private function',
+        ),
     ),
 );
 
-foreach ($replacements as $file => $replacement) {
-    list($from, $to) = $replacement;
-
+foreach ($replacements as $file => $patterns) {
     echo "$file: ";
 
     if (!file_exists($file)) {
@@ -76,17 +78,21 @@ foreach ($replacements as $file => $replacement) {
         continue;
     }
 
-    $contents = @file_get_contents($file) ?: '';
-    $newContents = str_replace($from, $to, $contents);
+    foreach ($patterns as $replacement) {
+        list($from, $to) = $replacement;
 
-    if ($newContents !== $contents) {
-        file_put_contents($file, $newContents);
-        echo "Content changed.\n";
+        $contents = @file_get_contents($file) ?: '';
+        $newContents = str_replace($from, $to, $contents);
 
-        continue;
+        if ($newContents !== $contents) {
+            file_put_contents($file, $newContents);
+            echo "Content changed.\n";
+
+            continue;
+        }
+
+        echo "Replace pattern not found.\n";
     }
-
-    echo "Replace pattern not found.\n";
 }
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
