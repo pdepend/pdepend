@@ -85,7 +85,7 @@ class ASTUnionType extends ASTType
      */
     public function getImage()
     {
-        return implode('|', array_map(static function ($type) {
+        return implode('|', array_map(function ($type) {
             return $type->getImage();
         }, $this->getChildren()));
     }
