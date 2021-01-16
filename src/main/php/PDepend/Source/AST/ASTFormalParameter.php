@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use BadMethodCallException;
+use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
@@ -60,6 +62,13 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTFormalParameter extends AbstractASTNode
 {
     /**
+     * Defined modifiers for this property node.
+     *
+     * @var integer
+     */
+    protected $modifiers = 0;
+
+    /**
      * Checks if this parameter has a type.
      *
      * @return boolean
@@ -72,7 +81,7 @@ class ASTFormalParameter extends AbstractASTNode
     /**
      * Returns the type of this parameter.
      *
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     public function getType()
     {
@@ -131,8 +140,8 @@ class ASTFormalParameter extends AbstractASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param  mixed                                 $data
+     * @param  ASTVisitor $visitor The calling visitor instance.
+     * @param  mixed      $data
      * @return mixed
      * @since  0.9.12
      */
@@ -151,5 +160,100 @@ class ASTFormalParameter extends AbstractASTNode
     protected function getMetadataSize()
     {
         return 7;
+    }
+
+    /**
+     * Returns the declared modifiers for this type.
+     *
+     * @return integer
+     * @since  0.9.4
+     */
+    public function getModifiers()
+    {
+        return $this->modifiers;
+    }
+
+    /**
+     * This method sets a OR combined integer of the declared modifiers for this
+     * node.
+     *
+     * This method will throw an exception when the value of given <b>$modifiers</b>
+     * contains an invalid/unexpected modifier
+     *
+     * @param  integer $modifiers
+     * @return void
+     * @throws BadMethodCallException
+     * @throws InvalidArgumentException
+     * @since  0.9.4
+     */
+    public function setModifiers($modifiers)
+    {
+        if ($this->modifiers !== 0) {
+            throw new BadMethodCallException(
+                'Cannot overwrite previously set constructor property modifiers.'
+            );
+        }
+
+        $expected = ~State::IS_PUBLIC
+            & ~State::IS_PROTECTED
+            & ~State::IS_PRIVATE;
+
+        if (($expected & $modifiers) !== 0) {
+            throw new InvalidArgumentException('Invalid constructor property modifier given.');
+        }
+
+        $this->modifiers = $modifiers;
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as public, protected or private, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * Can happen only on constructor promotion property.
+     *
+     * @return boolean
+     */
+    public function isPromoted()
+    {
+        return ($this->getModifiers() & (State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE)) !== 0;
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as public, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * Can happen only on constructor promotion property.
+     *
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return ($this->getModifiers() & State::IS_PUBLIC) === State::IS_PUBLIC;
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as protected, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * Can happen only on constructor promotion property.
+     *
+     * @return boolean
+     */
+    public function isProtected()
+    {
+        return ($this->getModifiers() & State::IS_PROTECTED) === State::IS_PROTECTED;
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as private, otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * Can happen only on constructor promotion property.
+     *
+     * @return boolean
+     */
+    public function isPrivate()
+    {
+        return ($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE;
     }
 }

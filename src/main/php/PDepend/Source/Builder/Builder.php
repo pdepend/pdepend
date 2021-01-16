@@ -47,6 +47,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Util\Cache\CacheDriver;
 
@@ -921,6 +922,20 @@ interface Builder extends \IteratorAggregate
      * @since  0.9.6
      */
     public function buildAstArguments();
+
+    /**
+     * Builds a new named argument node.
+     *
+     * <code>
+     * number_format(5623, thousands_separator: ' ')
+     * </code>
+     *
+     * @param string $name
+     * @param ASTNode $value
+     * @return \PDepend\Source\AST\ASTNamedArgument
+     * @since  2.9.0
+     */
+    public function buildAstNamedArgument($name, ASTNode $value);
 
     /**
      * Builds a new array type node.
