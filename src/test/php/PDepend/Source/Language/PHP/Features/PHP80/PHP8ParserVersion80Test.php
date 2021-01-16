@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,83 +36,31 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.3
  */
 
-namespace PDepend\Source\Language\PHP;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\Source\Tokenizer\Tokens;
+use PDepend\AbstractTest;
 
 /**
- * Concrete parser implementation that supports features up to PHP version 8.0.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.4
+ * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @group unittest
  */
-abstract class PHPParserVersion80 extends PHPParserVersion74
+abstract class PHP8ParserVersion80Test extends AbstractTest
 {
-    /**
-     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
-     * name part.
-     *
-     * @param integer $tokenType The type of a parsed token.
-     *
-     * @return boolean
-     * @since  0.10.6
-     */
-    protected function isClassName($tokenType)
+    protected static function needsPHP80()
     {
-        switch ($tokenType) {
-            case Tokens::T_DIR:
-            case Tokens::T_USE:
-            case Tokens::T_GOTO:
-            case Tokens::T_NULL:
-            case Tokens::T_NS_C:
-            case Tokens::T_TRUE:
-            case Tokens::T_CLONE:
-            case Tokens::T_FALSE:
-            case Tokens::T_TRAIT:
-            case Tokens::T_STRING:
-            case Tokens::T_TRAIT_C:
-            case Tokens::T_CALLABLE:
-            case Tokens::T_INSTEADOF:
-            case Tokens::T_NAMESPACE:
-                return true;
+        if (version_compare(PHP_VERSION, '8.0.0-dev', '<')) {
+            self::markTestSkipped('Requires at least PHP 8.0');
         }
-
-        return false;
     }
 
-    /**
-     * This method will be called when the base parser cannot handle an expression
-     * in the base version. In this method you can implement version specific
-     * expressions.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
-     * @since 2.3
-     */
-    protected function parseOptionalExpressionForVersion()
+    protected function setUp()
     {
-        return $this->parseExpressionVersion80()
-            ?: parent::parseOptionalExpressionForVersion();
-    }
+        // static::needsPHP80();
 
-    /**
-     * In this method we implement parsing of PHP 8.0 specific expressions.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     * @since 2.3
-     */
-    protected function parseExpressionVersion80()
-    {
-        $this->consumeComments();
-        $nextTokenType = $this->tokenizer->peek();
-
-        switch ($nextTokenType) {
-        }
-
-        return null;
+        parent::setUp();
     }
 }

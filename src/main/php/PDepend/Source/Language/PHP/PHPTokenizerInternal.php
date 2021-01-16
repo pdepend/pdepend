@@ -765,7 +765,7 @@ class PHPTokenizerInternal implements FullTokenizer
             $temp = (array) $token;
             $temp = $temp[0];
 
-            if ($token[0] === T_NAME_QUALIFIED || $token[0] === T_NAME_FULLY_QUALIFIED) {
+            if ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED) {
                 foreach (explode('\\', $token[1]) as $index => $string) {
                     if ($index) {
                         $result[] = array(
@@ -783,7 +783,7 @@ class PHPTokenizerInternal implements FullTokenizer
                         );
                     }
                 }
-            } elseif ($token[0] === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)) {
+            } elseif ($temp === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)) {
                 $result[] = array(
                     T_NAMESPACE,
                     'namespace',
