@@ -50,7 +50,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.4
+ * @since 2.9
  */
 abstract class PHPParserVersion80 extends PHPParserVersion74
 {
@@ -61,7 +61,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * @param integer $tokenType The type of a parsed token.
      *
      * @return boolean
-     * @since  0.10.6
      */
     protected function isClassName($tokenType)
     {
@@ -93,7 +92,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      *
      * @return \PDepend\Source\AST\ASTNode
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
-     * @since 2.3
      */
     protected function parseOptionalExpressionForVersion()
     {
@@ -105,7 +103,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * In this method we implement parsing of PHP 8.0 specific expressions.
      *
      * @return \PDepend\Source\AST\ASTNode
-     * @since 2.3
      */
     protected function parseExpressionVersion80()
     {
