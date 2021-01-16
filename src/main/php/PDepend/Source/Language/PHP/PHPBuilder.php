@@ -51,7 +51,9 @@ use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParentReference;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
@@ -1447,6 +1449,25 @@ class PHPBuilder implements Builder
     public function buildAstArguments()
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTArguments');
+    }
+
+    /**
+     * Builds a new named argument node.
+     *
+     * <code>
+     * number_format(5623, thousands_separator: ' ')
+     * </code>
+     *
+     * @param string $name
+     * @param ASTNode $name
+     * @return \PDepend\Source\AST\ASTNamedArgument
+     * @since  2.9.0
+     */
+    public function buildAstNamedArgument($name, ASTNode $value)
+    {
+        Log::debug("Creating: \\PDepend\\Source\\AST\\ASTNamedArgument($name)");
+
+        return new ASTNamedArgument($name, $value);
     }
 
     /**
