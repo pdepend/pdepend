@@ -196,6 +196,10 @@ if (!defined('T_NAME_RELATIVE')) {
     define('T_NAME_RELATIVE', 42313);
 }
 
+if (!defined('T_NULLSAFE_OBJECT_OPERATOR')) {
+    define('T_NULLSAFE_OBJECT_OPERATOR', 42387);
+}
+
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
@@ -346,6 +350,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_COALESCE_EQUAL            => Tokens::T_COALESCE_EQUAL,
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN                        => Tokens::T_FN,
+        T_NULLSAFE_OBJECT_OPERATOR  => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
     );
 
     /**
@@ -761,7 +766,7 @@ class PHPTokenizerInternal implements FullTokenizer
     {
         $result = array();
 
-        foreach ($tokens as $token) {
+        foreach ($tokens as $index => $token) {
             $temp = (array) $token;
             $temp = $temp[0];
 
@@ -809,6 +814,14 @@ class PHPTokenizerInternal implements FullTokenizer
                 foreach (self::$substituteTokens[$temp] as $token) {
                     $result[] = $token;
                 }
+            } elseif ($temp === '?' && isset($tokens[$index + 1][0]) && $tokens[$index + 1][0] === T_OBJECT_OPERATOR) {
+                $tokens[$index + 1] = array(
+                    T_NULLSAFE_OBJECT_OPERATOR,
+                    '?->',
+                    1,
+                );
+
+                continue;
             } else {
                 $result[] = $token;
             }
