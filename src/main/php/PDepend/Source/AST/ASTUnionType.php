@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This class represents primitive types like integer, float, boolean, string
  * etc.
@@ -68,12 +70,12 @@ class ASTUnionType extends ASTType
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
+     * @param ASTVisitor $visitor
+     * @param mixed      $data
      * @return mixed
      * @since  2.9.0
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitUnionType($this, $data);
     }
