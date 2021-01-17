@@ -196,6 +196,10 @@ if (!defined('T_NAME_RELATIVE')) {
     define('T_NAME_RELATIVE', 42313);
 }
 
+if (!defined('T_MATCH')) {
+    define('T_MATCH', 42341);
+}
+
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
@@ -346,6 +350,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_COALESCE_EQUAL            => Tokens::T_COALESCE_EQUAL,
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN                        => Tokens::T_FN,
+        T_MATCH                     => Tokens::T_STRING,
     );
 
     /**
