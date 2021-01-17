@@ -923,6 +923,18 @@ interface Builder extends \IteratorAggregate
     public function buildAstArguments();
 
     /**
+     * Builds a new argument match expression single-item slot.
+     *
+     * <code>
+     * match($x)
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTMatchArgument
+     * @since  0.9.6
+     */
+    public function buildAstMatchArgument();
+
+    /**
      * Builds a new array type node.
      *
      * @return \PDepend\Source\AST\ASTTypeArray

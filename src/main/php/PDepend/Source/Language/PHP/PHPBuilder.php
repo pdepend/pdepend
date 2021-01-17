@@ -1450,6 +1450,21 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new argument match expression single-item slot.
+     *
+     * <code>
+     * match($x)
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTMatchArgument
+     * @since  0.9.6
+     */
+    public function buildAstMatchArgument()
+    {
+        return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTMatchArgument');
+    }
+
+    /**
      * Builds a new array type node.
      *
      * @return \PDepend\Source\AST\ASTTypeArray

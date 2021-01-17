@@ -333,23 +333,13 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     {
         while (true) {
             $this->consumeComments();
+
             if (Tokens::T_ELLIPSIS === $this->tokenizer->peek()) {
                 $this->consumeToken(Tokens::T_ELLIPSIS);
             }
 
-            $this->consumeComments();
-            if (null === ($expr = $this->parseOptionalExpression())) {
+            if (!(($expr = $this->parseOptionalExpression()) && $this->addChildToList($arguments, $expr))) {
                 break;
-            }
-
-            $arguments->addChild($expr);
-
-            $this->consumeComments();
-            if (Tokens::T_COMMA === $this->tokenizer->peek()) {
-                $this->consumeToken(Tokens::T_COMMA);
-                $this->consumeComments();
-
-                continue;
             }
         }
 
