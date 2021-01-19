@@ -55,12 +55,18 @@ spl_autoload_register(function ($class) {
 });
 
 $replacements = array(
+    /**
+     * Patch phpunit/phpunit-mock-objects Generator.php file to not create double nullable tokens: `??`
+     */
     __DIR__ . '/../../../../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
         array(
             "if (version_compare(PHP_VERSION, '7.1', '>=') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
             "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
         ),
     ),
+    /**
+     * Fix phpunit/phpunit to not trigger warning on `final private function`
+     */
     __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/Configuration.php' => array(
         array(
             'final private function',
