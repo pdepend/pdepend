@@ -749,6 +749,75 @@ class PHPTokenizerInternal implements FullTokenizer
     }
 
     /**
+     * Split PHP 8 T_NAME(_FULLY)_QUALIFIED token into PHP 7 compatible tokens.
+     *
+     * @param array<int|string> $token
+     *
+     * @return array<array>
+     */
+    private function splitQualifiedNameToken($token)
+    {
+        $result = array();
+
+        foreach (explode('\\', $token[1]) as $index => $string) {
+            if ($index) {
+                $result[] = array(
+                    T_NS_SEPARATOR,
+                    '\\',
+                    $token[2],
+                );
+            }
+
+            if ($string !== '') {
+                $result[] = array(
+                    T_STRING,
+                    $string,
+                    $token[2],
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Split PHP 8 T_NAME_RELATIVE token into PHP 7 compatible tokens.
+     *
+     * @param array<int|string> $token
+     * @param string $namespace
+     *
+     * @return array<array>
+     */
+    private function splitRelativeNameToken($token, $namespace)
+    {
+        $result = array(
+            array(
+                T_NAMESPACE,
+                'namespace',
+                $token[2],
+            ),
+        );
+
+        foreach (explode('\\', $namespace) as $string) {
+            $result[] = array(
+                T_NS_SEPARATOR,
+                '\\',
+                $token[2],
+            );
+
+            if ($string !== '') {
+                $result[] = array(
+                    T_STRING,
+                    $string,
+                    $token[2],
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * This method takes an array of tokens returned by <b>token_get_all()</b>
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
@@ -766,44 +835,12 @@ class PHPTokenizerInternal implements FullTokenizer
             $temp = $temp[0];
 
             if ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED) {
-                foreach (explode('\\', $token[1]) as $index => $string) {
-                    if ($index) {
-                        $result[] = array(
-                            T_NS_SEPARATOR,
-                            '\\',
-                            $token[2],
-                        );
-                    }
-
-                    if ($string !== '') {
-                        $result[] = array(
-                            T_STRING,
-                            $string,
-                            $token[2],
-                        );
-                    }
+                foreach ($this->splitQualifiedNameToken($token) as $subToken) {
+                    $result[] = $subToken;
                 }
             } elseif ($temp === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)) {
-                $result[] = array(
-                    T_NAMESPACE,
-                    'namespace',
-                    $token[2],
-                );
-
-                foreach (explode('\\', $match[1]) as $string) {
-                    $result[] = array(
-                        T_NS_SEPARATOR,
-                        '\\',
-                        $token[2],
-                    );
-
-                    if ($string !== '') {
-                        $result[] = array(
-                            T_STRING,
-                            $string,
-                            $token[2],
-                        );
-                    }
+                foreach ($this->splitRelativeNameToken($token, $match[1]) as $subToken) {
+                    $result[] = $subToken;
                 }
             } elseif (isset(self::$substituteTokens[$temp])) {
                 foreach (self::$substituteTokens[$temp] as $token) {
