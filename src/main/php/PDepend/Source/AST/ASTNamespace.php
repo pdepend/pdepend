@@ -94,13 +94,6 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function __construct($name)
     {
-        $name = explode('\\\\', $name);
-        $name = end($name);
-
-        if (substr($name, -1) === '\\') {
-            $name = '';
-        }
-
         parent::__construct($name);
         $this->id = spl_object_hash($this);
     }
