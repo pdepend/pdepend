@@ -196,6 +196,10 @@ if (!defined('T_NAME_RELATIVE')) {
     define('T_NAME_RELATIVE', 42313);
 }
 
+if (!defined('T_ATTRIBUTE')) {
+    define('T_ATTRIBUTE', 42383);
+}
+
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
@@ -829,12 +833,26 @@ class PHPTokenizerInternal implements FullTokenizer
     private function substituteTokens(array $tokens)
     {
         $result = array();
+        $attributeComment = null;
+        $attributeCommentLine = null;
 
         foreach ($tokens as $token) {
             $temp = (array) $token;
             $temp = $temp[0];
 
-            if ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED) {
+            if ($attributeComment) {
+                if ($temp === ']') {
+                    $result[] = array(T_COMMENT, "$attributeComment */", $attributeCommentLine);
+                    $attributeComment = null;
+
+                    continue;
+                }
+
+                $attributeComment .= is_array($token) ? $token[1] : $token;
+            } elseif ($temp === T_ATTRIBUTE) {
+                $attributeComment = '/* @';
+                $attributeCommentLine = $token[2];
+            } elseif ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED) {
                 foreach ($this->splitQualifiedNameToken($token) as $subToken) {
                     $result[] = $subToken;
                 }
