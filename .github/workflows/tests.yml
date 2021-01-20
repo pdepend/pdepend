@@ -44,9 +44,17 @@ jobs:
         if: matrix.php >= 7.2
         run: composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
 
+      - name: Require PHPStan
+        if: matrix.php == 7.4 && matrix.setup == 'stable'
+        run: composer require phpstan/phpstan:^0.12.68 --no-interaction --dev
+
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --prefer-dist --no-progress --no-suggest --prefer-${{ matrix.setup }}
+
+      - name: Run PHPStan
+        if: matrix.php == 7.4 && matrix.setup == 'stable'
+        run: vendor/bin/phpstan analyze
 
       - name: Run test suite
         run: vendor/bin/phpunit -v
