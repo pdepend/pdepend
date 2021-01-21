@@ -2238,7 +2238,7 @@ class PHPBuilder implements Builder
      * @param  string                       $namespaceName
      * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
-     * @@since 1.0.0
+     * @since 1.0.0
      */
     protected function storeTrait($traitName, $namespaceName, ASTTrait $trait)
     {
@@ -2259,7 +2259,7 @@ class PHPBuilder implements Builder
      * @param  string                       $namespaceName
      * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
-     * @@since 0.9.5
+     * @since 0.9.5
      */
     protected function storeClass($className, $namespaceName, ASTClass $class)
     {
@@ -2280,7 +2280,7 @@ class PHPBuilder implements Builder
      * @param  string                           $namespaceName
      * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
-     * @@since 0.9.5
+     * @since 0.9.5
      */
     protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface)
     {
