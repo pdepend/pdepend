@@ -326,6 +326,9 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
         }
     }
 
+    /**
+     * @return ASTConstant
+     */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
         return $constant;
