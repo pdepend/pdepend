@@ -117,6 +117,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return null;
     }
 
+    /**
+     * @return ASTConstant
+     */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
         if ($this->tokenizer->peek() === Tokens::T_COLON) {
