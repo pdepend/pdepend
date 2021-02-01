@@ -64,6 +64,9 @@ class ASTNamedArgument extends AbstractASTNode
      */
     protected $value;
 
+    /**
+      * @param string $name
+      */
     public function __construct($name, ASTNode $value)
     {
         parent::__construct();
