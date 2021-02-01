@@ -71,6 +71,7 @@ class TreeBuilder
     public function __construct($name = 'pdepend')
     {
         $this->treeBuilder = new BaseTreeBuilder($name);
+
         if (!method_exists('Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder', 'getRootNode')) {
             // Symfony < 4.2
             $this->rootNode = $this->treeBuilder->root($name);
