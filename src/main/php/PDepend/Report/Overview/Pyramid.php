@@ -260,7 +260,7 @@ class Pyramid implements FileAwareGenerator
     /**
      * Computes the proportions between the given metrics.
      *
-     * @param  array $metrics The aggregated project metrics.
+     * @param  array<string, float> $metrics The aggregated project metrics.
      * @return array<string, float>
      */
     private function computeProportions(array $metrics)

@@ -9,7 +9,7 @@ class PDepend_CodeRank_ClassA
     /**
      * Method comment.
      *
-     * @return PDepend_CodeRank_ClassA
+     * @return $this
      */
     public function methodA()
     {

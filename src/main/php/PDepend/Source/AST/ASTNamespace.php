@@ -146,7 +146,7 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns an array with all {@link \PDepend\Source\AST\ASTTrait}
      * instances declared in this namespace.
      *
-     * @return \PDepend\Source\AST\ASTArtifactList
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTTrait>
      * @since  1.0.0
      */
     public function getTraits()
@@ -158,7 +158,7 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns an iterator with all {@link \PDepend\Source\AST\ASTClass}
      * instances within this namespace.
      *
-     * @return \PDepend\Source\AST\ASTClass[]
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTClass>
      */
     public function getClasses()
     {
@@ -169,7 +169,7 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns an iterator with all {@link \PDepend\Source\AST\ASTInterface}
      * instances within this namespace.
      *
-     * @return \PDepend\Source\AST\ASTInterface[]
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTInterface>
      */
     public function getInterfaces()
     {
@@ -180,8 +180,9 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns an iterator with all types of the given <b>$className</b> in this
      * namespace.
      *
-     * @param  string $className The class/type we are looking for.
-     * @return \PDepend\Source\AST\ASTArtifactList
+     * @template T of \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @param  class-string<T> $className The class/type we are looking for.
+     * @return \PDepend\Source\AST\ASTArtifactList<T>
      * @since  1.0.0
      */
     private function getTypesOfType($className)
@@ -196,10 +197,10 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Returns all {@link \PDepend\Source\AST\AbstractASTType} objects in
+     * Returns all {@link \PDepend\Source\AST\AbstractASTClassOrInterface} objects in
      * this namespace.
      *
-     * @return \PDepend\Source\AST\AbstractASTType[]
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\AbstractASTClassOrInterface>
      */
     public function getTypes()
     {
@@ -209,8 +210,8 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Adds the given type to this namespace and returns the input type instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $type
-     * @return \PDepend\Source\AST\AbstractASTType
+     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
      */
     public function addType(AbstractASTType $type)
     {
@@ -234,7 +235,7 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Removes the given type instance from this namespace.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $type
+     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
     public function removeType(AbstractASTType $type)
@@ -251,7 +252,7 @@ class ASTNamespace extends AbstractASTArtifact
      * Returns all {@link \PDepend\Source\AST\ASTFunction} objects in this
      * namespace.
      *
-     * @return \PDepend\Source\AST\ASTFunction[]
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTFunction>
      */
     public function getFunctions()
     {
@@ -303,6 +304,7 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * @param boolean $packageAnnotation
+     * @return void
      */
     public function setPackageAnnotation($packageAnnotation)
     {

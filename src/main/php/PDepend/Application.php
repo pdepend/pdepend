@@ -55,6 +55,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  */
 class Application
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface|null
+     **/
     private $container;
 
     /**
@@ -64,6 +67,7 @@ class Application
 
     /**
      * @param string $configurationFile
+     * @return void
      */
     public function setConfigurationFile($configurationFile)
     {
@@ -116,6 +120,9 @@ class Application
         return $this->getContainer()->get('pdepend.analyzer_factory');
     }
 
+    /**
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
     private function getContainer()
     {
         if ($this->container === null) {
@@ -172,7 +179,8 @@ class Application
     }
 
     /**
-     * @return array<string, array>
+     * @param string $serviceTag
+     * @return array<string, array<string, string>>
      */
     private function getAvailableOptionsFor($serviceTag)
     {

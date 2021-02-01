@@ -61,6 +61,9 @@ class Configuration implements ConfigurationInterface
      */
     private $extensions = array();
 
+    /**
+     * @param array<Extension> $extensions
+     */
     public function __construct(array $extensions)
     {
         $this->extensions = $extensions;
