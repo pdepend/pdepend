@@ -2658,10 +2658,9 @@ abstract class AbstractPHPParser
     {
         $this->consumeComments();
 
-        while (
-            ($expr = $this->parseOptionalExpression()) &&
-            $this->addChildToList($exprList, $expr)
-        );
+        do {
+            $expr = $this->parseOptionalExpression();
+        } while ($expr && $this->addChildToList($exprList, $expr));
 
         return $exprList;
     }
