@@ -88,6 +88,9 @@ class ASTNamedArgument extends AbstractASTNode
         return $this->value;
     }
 
+    /**
+     * @return string
+     */
     public function getImage()
     {
         return sprintf('%s: %s', $this->name, $this->value->getImage());
