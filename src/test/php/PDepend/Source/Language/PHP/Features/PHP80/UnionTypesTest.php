@@ -62,7 +62,7 @@ class UnionTypesTest extends PHP8ParserVersion80Test
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
-        $parameter =$method->getFirstChildOfType(
+        $parameter = $method->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
         $children = $parameter->getChildren();
