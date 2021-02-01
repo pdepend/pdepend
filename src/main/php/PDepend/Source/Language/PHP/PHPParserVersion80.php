@@ -147,9 +147,11 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
             }
         }
 
-        /** @var ASTFormalParameter $parameter */
         $parameter = parent::parseFormalParameterOrPrefix($callable);
-        $parameter->setModifiers($modifier);
+
+        if ($modifier && $parameter instanceof ASTFormalParameter) {
+            $parameter->setModifiers($modifier);
+        }
 
         return $parameter;
     }

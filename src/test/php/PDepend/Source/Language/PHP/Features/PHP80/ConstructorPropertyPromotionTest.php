@@ -60,7 +60,6 @@ class ConstructorPropertyPromotionTest extends PHP8ParserVersion80Test
      */
     public function testConstructorPropertyPromotion()
     {
-        /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
