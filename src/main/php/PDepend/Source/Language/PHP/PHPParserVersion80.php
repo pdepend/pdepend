@@ -38,47 +38,80 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.5
+ * @since 2.3
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\Tokenizer\Tokens;
 
 /**
- * This is a classes only version of the class or interface reference .
+ * Concrete parser implementation that supports features up to PHP version 8.0.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.5
+ * @since 2.9
  */
-class ASTClassReference extends ASTClassOrInterfaceReference
+abstract class PHPParserVersion80 extends PHPParserVersion74
 {
     /**
-     * Returns the concrete type instance associated with with this placeholder.
+     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
+     * name part.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @param integer $tokenType The type of a parsed token.
+     *
+     * @return boolean
      */
-    public function getType()
+    protected function isClassName($tokenType)
     {
-        if ($this->typeInstance === null) {
-            $this->typeInstance = $this->context->getClass($this->getImage());
+        switch ($tokenType) {
+            case Tokens::T_DIR:
+            case Tokens::T_USE:
+            case Tokens::T_GOTO:
+            case Tokens::T_NULL:
+            case Tokens::T_NS_C:
+            case Tokens::T_TRUE:
+            case Tokens::T_CLONE:
+            case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
+            case Tokens::T_STRING:
+            case Tokens::T_TRAIT_C:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_NAMESPACE:
+                return true;
         }
 
-        return $this->typeInstance;
+        return false;
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
+     * This method will be called when the base parser cannot handle an expression
+     * in the base version. In this method you can implement version specific
+     * expressions.
      *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param  mixed                                 $data
-     * @return mixed
-     * @since  0.9.12
+     * @return \PDepend\Source\AST\ASTNode
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    protected function parseOptionalExpressionForVersion()
     {
-        return $visitor->visitClassReference($this, $data);
+        return $this->parseExpressionVersion80()
+            ?: parent::parseOptionalExpressionForVersion();
+    }
+
+    /**
+     * In this method we implement parsing of PHP 8.0 specific expressions.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parseExpressionVersion80()
+    {
+        $this->consumeComments();
+        $nextTokenType = $this->tokenizer->peek();
+
+        switch ($nextTokenType) {
+        }
+
+        return null;
     }
 }

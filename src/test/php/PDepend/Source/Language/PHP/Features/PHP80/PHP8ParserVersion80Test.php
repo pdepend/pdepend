@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,47 +36,24 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.5
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\AbstractTest;
 
 /**
- * This is a classes only version of the class or interface reference .
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.5
+ * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @group unittest
  */
-class ASTClassReference extends ASTClassOrInterfaceReference
+abstract class PHP8ParserVersion80Test extends AbstractTest
 {
-    /**
-     * Returns the concrete type instance associated with with this placeholder.
-     *
-     * @return \PDepend\Source\AST\ASTClass
-     */
-    public function getType()
+    protected static function needsPHP80()
     {
-        if ($this->typeInstance === null) {
-            $this->typeInstance = $this->context->getClass($this->getImage());
+        if (version_compare(PHP_VERSION, '8.0.0-dev', '<')) {
+            self::markTestSkipped('Requires at least PHP 8.0');
         }
-
-        return $this->typeInstance;
-    }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param  mixed                                 $data
-     * @return mixed
-     * @since  0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitClassReference($this, $data);
     }
 }

@@ -381,6 +381,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Sets the tokens for this type.
      *
      * @param \PDepend\Source\Tokenizer\Token[] $tokens
+     * @param Token|null $startToken
      * @return void
      */
     public function setTokens(array $tokens, Token $startToken = null)
