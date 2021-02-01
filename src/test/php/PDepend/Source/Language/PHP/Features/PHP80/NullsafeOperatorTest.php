@@ -60,7 +60,7 @@ class NullsafeOperatorTest extends PHP8ParserVersion80Test
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTVariableDeclarator $variable */
-        $variable =$method->getFirstChildOfType(
+        $variable = $method->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTVariableDeclarator'
         );
 
