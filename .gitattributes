@@ -11,6 +11,7 @@
 .scrutinizer.yml export-ignore
 build.xml export-ignore
 phpunit.xml.dist export-ignore
+phpstan.neon export-ignore
 pdepend.xml.dist export-ignore
 composer.lock export-ignore
 Vagrantfile export-ignore
