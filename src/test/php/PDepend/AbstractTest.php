@@ -962,6 +962,10 @@ abstract class AbstractTest extends TestCase
         return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
 
+    /**
+     * @param array<int, string> $requiredFormats
+     * @return void
+     */
     protected function requireImagick(array $requiredFormats = array('PNG', 'SVG'))
     {
         if (extension_loaded('imagick') === false) {
