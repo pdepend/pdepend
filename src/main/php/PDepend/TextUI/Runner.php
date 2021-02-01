@@ -223,7 +223,7 @@ class Runner
      * Adds a logger or analyzer option.
      *
      * @param string $identifier
-     * @param string|array $value
+     * @param string|array<string> $value
      * @return void
      */
     public function addOption($identifier, $value)

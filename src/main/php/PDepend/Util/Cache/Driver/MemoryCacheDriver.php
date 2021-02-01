@@ -66,7 +66,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * The in memory cache.
      *
-     * @var array<string, array>
+     * @var array<string, array<integer, mixed>>
      */
     protected $cache = array();
 
@@ -87,7 +87,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Global stack, mainly used during testing.
      *
-     * @var array<mixed>
+     * @var array<string, array<integer, mixed>>
      */
     protected static $staticCache = array();
 
@@ -96,7 +96,7 @@ class MemoryCacheDriver implements CacheDriver
      */
     public function __construct()
     {
-        $this->staticId = sha1(uniqid(rand(0, PHP_INT_MAX)));
+        $this->staticId = sha1(uniqid((string)rand(0, PHP_INT_MAX)));
     }
 
     /**
@@ -108,7 +108,7 @@ class MemoryCacheDriver implements CacheDriver
      * <em>store()</em>.
      *
      * @param  string $type The name or object type for the next storage method call.
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return $this
      */
     public function type($type)
     {

@@ -65,6 +65,8 @@ class TreeBuilder
      * TreeBuilder constructor.
      *
      * @param string $name
+     *
+     * @return void
      */
     public function __construct($name = 'pdepend')
     {
@@ -77,8 +79,6 @@ class TreeBuilder
             return;
         }
 
-        // Symfony 5+
-        $this->treeBuilder = new BaseTreeBuilder($name);
         $this->rootNode = $this->treeBuilder->getRootNode();
     }
 

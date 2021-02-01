@@ -49,6 +49,10 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @template T of \PDepend\Source\AST\ASTArtifact
+ * @implements \Iterator<int|string, T>
+ * @implements \ArrayAccess<int|string, T>
  */
 class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
 {
@@ -56,7 +60,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * List of {@link \PDepend\Source\AST\ASTArtifact} objects in
      * this iterator.
      *
-     * @var \PDepend\Source\AST\ASTArtifact[]
+     * @var T[]
      */
     private $artifacts = array();
 
@@ -78,7 +82,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * Constructs a new node iterator from the given {@link \PDepend\Source\AST\ASTArtifact}
      * node array.
      *
-     * @param \PDepend\Source\AST\ASTArtifact[] $artifacts
+     * @param T[] $artifacts
      */
     public function __construct(array $artifacts)
     {
@@ -115,7 +119,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Returns the current node or <b>false</b>
      *
-     * @return \PDepend\Source\AST\ASTArtifact
+     * @return T|false
      */
     public function current()
     {
@@ -184,7 +188,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * Offset to retrieve
      *
      * @param  mixed $offset
-     * @return \PDepend\Source\AST\ASTArtifact Can return all value types.
+     * @return T Can return all value types.
      * @throws \OutOfBoundsException
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetget.php

@@ -129,7 +129,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * interface instance can store the associated tokens.
      *
      * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\AST\AbstractASTType
+     * @return $this
      */
     public function setCache(CacheDriver $cache)
     {
@@ -141,7 +141,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Sets the currently active builder context.
      *
      * @param  \PDepend\Source\Builder\BuilderContext $context
-     * @return \PDepend\Source\AST\AbstractASTType
+     * @return $this
      */
     public function setContext(BuilderContext $context)
     {

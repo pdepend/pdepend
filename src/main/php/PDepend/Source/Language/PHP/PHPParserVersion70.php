@@ -453,7 +453,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * In this method we implement parsing of PHP 7.0 specific expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 2.3
      */
     protected function parseExpressionVersion70()
@@ -476,6 +476,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
                 return $expr;
         }
+
+        return null;
     }
 
     /**
@@ -508,7 +510,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return void
      */
     protected function parseUseDeclarationForVersion(array $fragments)
@@ -523,7 +525,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return void
      */
     protected function parseUseDeclarationVersion70(array $fragments)
@@ -566,7 +568,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param array $previousElements
+     * @param array<string> $previousElements
      * @return string|null
      */
     protected function parseQualifiedNameElement(array $previousElements)

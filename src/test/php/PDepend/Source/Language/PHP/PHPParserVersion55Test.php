@@ -149,7 +149,7 @@ class PHPParserVersion55Test extends AbstractTest
 
     /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */

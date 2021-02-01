@@ -508,6 +508,9 @@ class PHPTokenizerInternal implements FullTokenizer
         ),
     );
 
+    /**
+     * @var array<integer, array<integer, array<string, string|integer>>>
+     */
     protected static $reductionMap = array(
         Tokens::T_CONCAT => array(
             Tokens::T_CONCAT => array(
@@ -545,9 +548,9 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * The source file instance.
      *
-     * @var \PDepend\Source\AST\ASTCompilationUnit
+     * @var \PDepend\Source\AST\ASTCompilationUnit|null
      */
-    protected $sourceFile = '';
+    protected $sourceFile = null;
 
     /**
      * Count of all tokens.
@@ -580,7 +583,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit
+     * @return \PDepend\Source\AST\ASTCompilationUnit|null
      */
     public function getSourceFile()
     {
@@ -730,9 +733,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array<array> $tokens Unprepared array of php tokens.
+     * @param array<array<integer, integer|string>|string> $tokens Unprepared array of php tokens.
      *
-     * @return array<array>
+     * @return array<array<integer, integer|string>|string>
      */
     private function substituteTokens(array $tokens)
     {
@@ -767,14 +770,8 @@ class PHPTokenizerInternal implements FullTokenizer
         $this->index  = 0;
         $this->count  = 0;
 
-        // Replace short open tags, short open tags will produce invalid results
-        // in all environments with disabled short open tags.
+        // No longer replacing short open tags since some want to track them.
         $source = $this->sourceFile->getSource();
-        $source = preg_replace(
-            array('(<\?=)', '(<\?(\s))'),
-            array('<?php echo ', '<?php\1'),
-            $source
-        );
 
         $tokens = $this->substituteTokens(token_get_all($source));
 
@@ -802,7 +799,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 $token = array(null, $token);
             }
 
-            if ($token[0] === T_OPEN_TAG) {
+            if ($token[0] === T_OPEN_TAG || $token[0] === T_OPEN_TAG_WITH_ECHO) {
                 $type  = $tokenMap[$token[0]];
                 $image = $token[1];
                 $inTag = true;
@@ -911,9 +908,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array $tokens Reference to the current token stream.
+     * @param array<array<integer, integer|string>|string> $tokens Reference to the current token stream.
      *
-     * @return string
+     * @return string|null
      */
     private function consumeNonePhpTokens(array &$tokens)
     {

@@ -137,7 +137,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * </code>
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array
+     * @return array<string, integer>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -159,7 +159,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @return array
+     * @return array<string, integer>
      */
     public function getProjectMetrics()
     {
@@ -414,9 +414,9 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @param  array   $tokens The raw token stream.
-     * @param  boolean $search Optional boolean flag, search start.
-     * @return array
+     * @param  array<integer, \PDepend\Source\Tokenizer\Token> $tokens The raw token stream.
+     * @param  boolean                                         $search Optional boolean flag, search start.
+     * @return array<integer, integer>
      */
     private function linesOfCode(array $tokens, $search = false)
     {

@@ -77,7 +77,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
@@ -104,7 +104,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * the requested node, this method will return an empty <b>array</b>.
      *
      * @param \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array
+     * @return array<string, integer>
      */
     public function getNodeBasisMetrics(ASTArtifact $artifact)
     {
@@ -121,7 +121,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * node, this method will return an empty <b>array</b>.
      *
      * @param \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array
+     * @return array<string, float>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -377,8 +377,8 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * @see http://www.verifysoft.com/en_halstead_metrics.html
      * @see http://www.grammatech.com/codesonar/workflow-features/halstead
      *
-     * @param array $basis [n1, n2, N1, N2]
-     * @return array
+     * @param array<string, int> $basis [n1, n2, N1, N2]
+     * @return array<string, float>
      */
     public function calculateHalsteadMeasures(array $basis)
     {
