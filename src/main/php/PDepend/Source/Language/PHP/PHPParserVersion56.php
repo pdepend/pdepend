@@ -338,7 +338,9 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 $this->consumeToken(Tokens::T_ELLIPSIS);
             }
 
-            if (!(($expr = $this->parseOptionalExpression()) && $this->addChildToList($arguments, $expr))) {
+            $expr = $this->parseOptionalExpression();
+
+            if (!$expr || !$this->addChildToList($arguments, $expr)) {
                 break;
             }
         }
