@@ -62,7 +62,7 @@ class MatchExpressionTest extends PHP8ParserVersion80Test
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTExpression $expression */
-        $expression = $method->findChildrenOfType('PDepend\\Source\\AST\\ASTExpression');
+        $expression = $method->findChildrenOfType('\\PDepend\\Source\\AST\\ASTExpression');
     }
 
     /**
