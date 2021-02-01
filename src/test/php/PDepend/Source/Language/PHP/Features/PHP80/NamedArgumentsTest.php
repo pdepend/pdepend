@@ -61,7 +61,7 @@ class NamedArgumentsTest extends PHP8ParserVersion80Test
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTArguments $arguments */
-        $arguments =$method->getFirstChildOfType(
+        $arguments = $method->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTArguments'
         );
         $children = $arguments->getChildren();
