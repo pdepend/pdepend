@@ -110,6 +110,18 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $nextTokenType = $this->tokenizer->peek();
 
         switch ($nextTokenType) {
+            case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
+                $token = $this->consumeToken($nextTokenType);
+
+                $expr = $this->builder->buildAstExpression($token->image);
+                $expr->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
+
+                return $expr;
         }
 
         return null;
