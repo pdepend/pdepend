@@ -65,9 +65,9 @@ class EngineTest extends AbstractTest
     {
         $dir = dirname(__FILE__) . '/foobar';
         $msg = "Invalid directory '{$dir}' added.";
-        
+
         $this->setExpectedException('InvalidArgumentException', $msg);
-        
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory($dir);
     }
@@ -96,7 +96,7 @@ class EngineTest extends AbstractTest
 
         $this->assertInstanceOf('Iterator', $engine->analyze());
     }
-    
+
     /**
      * Tests the {@link \PDepend\Engine::analyze()} method and the return
      * value.
@@ -108,22 +108,22 @@ class EngineTest extends AbstractTest
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
-        
+
         $metrics = $engine->analyze();
-        
+
         $expected = array(
             'package1'  =>  true,
             'package2'  =>  true,
             'package3'  =>  true
         );
-        
+
         foreach ($metrics as $metric) {
             unset($expected[$metric->getName()]);
         }
-        
+
         $this->assertEquals(0, count($expected));
     }
-    
+
     /**
      * Tests that {@link \PDepend\Engine::analyze()} throws an exception
      * if no source directory was set.
@@ -136,7 +136,7 @@ class EngineTest extends AbstractTest
         $this->setExpectedException('RuntimeException', 'No source directory and file set.');
         $engine->analyze();
     }
-    
+
     /**
      * testAnalyzeReturnsEmptyIteratorWhenNoPackageExists
      *
@@ -147,10 +147,10 @@ class EngineTest extends AbstractTest
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array(__METHOD__)));
-       
+
         $this->assertEquals(0, count($engine->analyze()));
     }
-    
+
     /**
      * Tests that {@link \PDepend\Engine::analyze()} configures the
      * ignore annotations option correct.
@@ -164,12 +164,12 @@ class EngineTest extends AbstractTest
         $engine->addFileFilter(new Input\ExtensionFilter(array('inc')));
         $engine->setWithoutAnnotations();
         $namespaces = $engine->analyze();
-        
+
         $this->assertEquals(2, $namespaces->count());
         $this->assertEquals('pdepend.test', $namespaces->current()->getName());
-        
+
         $function = $namespaces->current()->getFunctions()->current();
-        
+
         $this->assertNotNull($function);
         $this->assertEquals('foo', $function->getName());
         $this->assertEquals(0, $function->getExceptionClasses()->count());
@@ -187,10 +187,10 @@ class EngineTest extends AbstractTest
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
         $engine->analyze();
-        
+
         $this->assertEquals(10, $engine->countClasses());
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::countClasses()} method fails
      * with an exception if the code was not analyzed before.
@@ -203,12 +203,12 @@ class EngineTest extends AbstractTest
             'RuntimeException',
             'countClasses() doesn\'t work before the source was analyzed.'
         );
-        
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->countClasses();
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::countNamespaces()} method
      * returns the expected number of namespaces.
@@ -220,10 +220,10 @@ class EngineTest extends AbstractTest
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
-        
+
         $this->assertEquals(4, $engine->countNamespaces());
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::countNamespaces()} method
      * fails with an exception if the code was not analyzed before.
@@ -236,12 +236,12 @@ class EngineTest extends AbstractTest
             'RuntimeException',
             'countNamespaces() doesn\'t work before the source was analyzed.'
         );
-        
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->countNamespaces();
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::getNamespace()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects.
@@ -253,20 +253,20 @@ class EngineTest extends AbstractTest
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
-        
+
         $namespaces = array(
             'package1',
             'package2',
             'package3'
         );
-        
+
         $className = '\\PDepend\\Source\\AST\\ASTNamespace';
-        
+
         foreach ($namespaces as $namespace) {
             $this->assertInstanceOf($className, $engine->getNamespace($namespace));
         }
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if the code was not analyzed before.
@@ -279,12 +279,12 @@ class EngineTest extends AbstractTest
             'RuntimeException',
             'getNamespace() doesn\'t work before the source was analyzed.'
         );
-        
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->getNamespace('package1');
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if you request an invalid package.
@@ -297,13 +297,13 @@ class EngineTest extends AbstractTest
             'OutOfBoundsException',
             'Unknown namespace "nspace".'
         );
-        
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
         $engine->getNamespace('nspace');
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects
@@ -315,15 +315,15 @@ class EngineTest extends AbstractTest
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
-        
+
         $namespace1 = $engine->analyze();
         $namespace2 = $engine->getNamespaces();
-        
+
         $this->assertNotNull($namespace1);
-        
+
         $this->assertSame($namespace1, $namespace2);
     }
-    
+
     /**
      * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * fails with an exception if the code was not analyzed before.
@@ -336,7 +336,7 @@ class EngineTest extends AbstractTest
             'RuntimeException',
             'getNamespaces() doesn\'t work before the source was analyzed.'
         );
-        
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->getNamespaces();
@@ -362,7 +362,7 @@ class EngineTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
-     * @depends PDepend\EngineTest::testSupportForSingleFileIssue90
+     * @depends testSupportForSingleFileIssue90
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace)
     {
@@ -372,7 +372,7 @@ class EngineTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
-     * @depends PDepend\EngineTest::testSupportForSingleFileIssue90
+     * @depends testSupportForSingleFileIssue90
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace)
     {

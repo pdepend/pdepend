@@ -117,7 +117,7 @@ class Engine
     /**
      * The used code node builder.
      *
-     * @var \PDepend\Source\Builder\Builder
+     * @var \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace>|null
      */
     private $builder = null;
 
@@ -453,7 +453,7 @@ class Engine
     /**
      * Send the start parsing process event.
      *
-     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace> $builder The used node builder instance.
      * @return void
      */
     protected function fireStartParseProcess(Builder $builder)
@@ -466,7 +466,7 @@ class Engine
     /**
      * Send the end parsing process event.
      *
-     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace> $builder The used node builder instance.
      * @return void
      */
     protected function fireEndParseProcess(Builder $builder)
@@ -636,7 +636,7 @@ class Engine
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
      *
-     * @return \Iterator
+     * @return \Iterator<int, string>
      */
     private function createFileIterator()
     {
@@ -694,6 +694,10 @@ class Engine
         return new ArrayIterator(array_values($files));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return \PDepend\Metrics\Analyzer[]
+     */
     private function createAnalyzers($options)
     {
         $analyzers = $this->analyzerFactory->createRequiredForGenerators($this->generators);
@@ -719,6 +723,10 @@ class Engine
         return $analyzers;
     }
 
+    /**
+     * @param string $path
+     * @return bool
+     */
     private function isPhpStream($path)
     {
         return substr($path, 0, strlen($this->phpStreamPrefix)) === $this->phpStreamPrefix;

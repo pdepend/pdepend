@@ -883,6 +883,11 @@ interface Tokens
     const T_COALESCE_EQUAL = 166;
 
     /**
+     * Token that represents the '?->' nullsafe object operator
+     */
+    const T_NULLSAFE_OBJECT_OPERATOR = 387;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;

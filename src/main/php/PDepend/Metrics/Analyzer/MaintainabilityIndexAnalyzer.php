@@ -75,7 +75,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      * halstead volume & lines of code, all of which we already have analyzers
      * for.
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $options = array())
     {
@@ -89,7 +89,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
@@ -122,7 +122,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      * node, this method will return an empty <b>array</b>.
      *
      * @param \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array
+     * @return array<string, float>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {

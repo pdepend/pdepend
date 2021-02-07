@@ -64,6 +64,7 @@ class ASTClassReference extends ASTClassOrInterfaceReference
         if ($this->typeInstance === null) {
             $this->typeInstance = $this->context->getClass($this->getImage());
         }
+
         return $this->typeInstance;
     }
 

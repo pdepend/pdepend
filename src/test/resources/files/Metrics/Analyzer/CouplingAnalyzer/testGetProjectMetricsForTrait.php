@@ -17,7 +17,7 @@ trait ProvidesEvents
      * Set the event manager instance used by this context
      *
      * @param  EventCollection $events
-     * @return mixed
+     * @return $this
      */
     public function setEventManager(EventCollection $events)
     {

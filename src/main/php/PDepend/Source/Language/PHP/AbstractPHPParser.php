@@ -190,7 +190,7 @@ abstract class AbstractPHPParser
     /**
      * The used data structure builder.
      *
-     * @var Builder
+     * @var Builder<mixed>
      */
     protected $builder;
 
@@ -267,7 +267,7 @@ abstract class AbstractPHPParser
      */
     protected $cache;
 
-    /*
+    /**
      * The used code tokenizer.
      *
      * @var \PDepend\Source\Tokenizer\Tokenizer
@@ -278,7 +278,7 @@ abstract class AbstractPHPParser
      * Constructs a new source parser.
      *
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      */
     public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
@@ -1404,7 +1404,7 @@ abstract class AbstractPHPParser
      * {@link \PDepend\Source\AST\ASTTraitReference} class that represents the
      * declaring trait.
      *
-     * @return array
+     * @return array<integer, mixed>
      * @since 1.0.0
      */
     private function parseTraitMethodReference()
@@ -1434,7 +1434,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait adaptation alias statement.
      *
-     * @param array $reference Parsed method reference array.
+     * @param array<integer, mixed> $reference Parsed method reference array.
      *
      * @return \PDepend\Source\AST\ASTTraitAdaptationAlias
      * @since 1.0.0
@@ -1477,7 +1477,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait adaptation precedence statement.
      *
-     * @param  array $reference Parsed method reference array.
+     * @param  array<integer, mixed> $reference Parsed method reference array.
      * @return \PDepend\Source\AST\ASTTraitAdaptationPrecedence
      * @throws \PDepend\Source\Parser\InvalidStateException
      * @since 1.0.0
@@ -1617,6 +1617,7 @@ abstract class AbstractPHPParser
      *
      * @param int                             $tokenType
      * @param \PDepend\Source\Tokenizer\Token $unexpectedToken
+     * @return void
      */
     private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null)
     {
@@ -1828,7 +1829,7 @@ abstract class AbstractPHPParser
      * node this can be a {@link \PDepend\Source\AST\ASTPostIncrementExpression} or
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
-     * @param  array $expressions List of previous parsed expression nodes.
+     * @param  array<\PDepend\Source\AST\ASTNode> $expressions List of previous parsed expression nodes.
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
      */
@@ -1890,7 +1891,7 @@ abstract class AbstractPHPParser
      * node this can be a {@link \PDepend\Source\AST\ASTPostDecrementExpression} or
      * {@link \PDepend\Source\AST\ASTPostfixExpression}.
      *
-     * @param array $expressions List of previous parsed expression nodes.
+     * @param array<\PDepend\Source\AST\ASTNode> $expressions List of previous parsed expression nodes.
      *
      * @return \PDepend\Source\AST\ASTExpression
      * @since 0.10.0
@@ -3385,6 +3386,7 @@ abstract class AbstractPHPParser
      * This method parses class references in catch statement.
      *
      * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @return void
      */
     protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
     {
@@ -4579,7 +4581,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a simple PHP constant use and returns a corresponding node.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTNode|null
      * @since 1.0.0
      */
     protected function parseConstant()
@@ -4602,6 +4604,8 @@ abstract class AbstractPHPParser
                     $this->builder->buildAstConstant($token->image)
                 );
         }
+
+        return null;
     }
 
     /**
@@ -5095,6 +5099,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an array structure.
      *
+     * @param boolean $static
      * @return \PDepend\Source\AST\ASTArray
      * @since 1.0.0
      */
@@ -5752,6 +5757,7 @@ abstract class AbstractPHPParser
             case Tokens::T_NAMESPACE:
                 return true;
         }
+
         return false;
     }
 
@@ -5767,6 +5773,7 @@ abstract class AbstractPHPParser
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
+            case Tokens::T_CLASS:
                 return $this->builder->buildAstClassOrInterfaceReference(
                     $this->parseQualifiedName()
                 );
@@ -6180,7 +6187,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param array $previousElements
+     * @param array<string> $previousElements
      * @return string
      */
     protected function parseQualifiedNameElement(array $previousElements)
@@ -6305,7 +6312,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return void
      */
     protected function parseUseDeclarationForVersion(array $fragments)
@@ -6317,7 +6324,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param array $fragments
+     * @param array<string> $fragments
      * @return string
      */
     protected function parseNamespaceImage(array $fragments)
@@ -6781,7 +6788,7 @@ abstract class AbstractPHPParser
     /**
      * Parses fn operator of lambda function for syntax fn() => available since PHP 7.4.
      *
-     * @return \PDepend\Source\AST\ASTValue
+     * @return \PDepend\Source\AST\ASTNode
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
     protected function parseLambdaFunctionDeclaration()
@@ -6918,7 +6925,7 @@ abstract class AbstractPHPParser
      *
      * @param string $comment The context doc comment block.
      *
-     * @return array
+     * @return array<integer, string>
      */
     private function parseThrowsAnnotations($comment)
     {
@@ -7184,6 +7191,9 @@ abstract class AbstractPHPParser
         throw $this->getUnexpectedTokenException($token);
     }
 
+    /**
+     * @return void
+     */
     protected function checkEllipsisInExpressionSupport()
     {
         $this->throwUnexpectedTokenException();

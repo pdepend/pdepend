@@ -541,7 +541,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTFunction[] $functions
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsCorrectFunctionReturnType
+     * @depends testParserSetsCorrectFunctionReturnType
      */
     public function testParserSetsFunctionReturnTypeToNull($functions)
     {
@@ -560,7 +560,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTFunction[] $functions
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsCorrectFunctionReturnType
+     * @depends testParserSetsCorrectFunctionReturnType
      */
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions)
     {
@@ -579,7 +579,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTFunction[] $functions
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsCorrectFunctionReturnType
+     * @depends testParserSetsCorrectFunctionReturnType
      */
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions)
     {
@@ -994,7 +994,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces)
     {
@@ -1005,7 +1005,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces)
     {
@@ -1016,7 +1016,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace($namespaces)
     {
@@ -1028,7 +1028,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace($namespaces)
     {
@@ -1040,7 +1040,7 @@ class ParserTest extends AbstractTest
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
-     * @depends PDepend\ParserTest::testParserSetsFileLevelFunctionPackage
+     * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace($namespaces)
     {

@@ -42,6 +42,8 @@
 
 namespace PDepend;
 
+use Exception;
+use Imagick;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\Iterator;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
@@ -61,6 +63,8 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_Exception;
+use ReflectionProperty;
 
 /**
  * Abstract test case implementation for the PDepend namespace.
@@ -116,6 +120,26 @@ abstract class AbstractTest extends TestCase
         }
 
         parent::tearDown();
+    }
+
+    /**
+     * Override to run the test and assert its state.
+     *
+     * @return mixed
+     *
+     * @throws Exception|PHPUnit_Framework_Exception
+     */
+    protected function runTest()
+    {
+        $inputReflector = new ReflectionProperty('PHPUnit_Framework_TestCase', 'dependencyInput');
+        $inputReflector->setAccessible(true);
+        $input = $inputReflector->getValue($this);
+
+        if (!empty($input)) {
+            $inputReflector->setValue($this, array_values($input));
+        }
+
+        return parent::runTest();
     }
 
     /**
@@ -546,7 +570,7 @@ abstract class AbstractTest extends TestCase
     {
         $cache = $this->getMockBuilder('\\PDepend\\Util\\Cache\\CacheDriver')
             ->getMock();
-        
+
         return $cache;
     }
 
@@ -909,7 +933,7 @@ abstract class AbstractTest extends TestCase
 
     /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
@@ -936,6 +960,23 @@ abstract class AbstractTest extends TestCase
         }
 
         return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
+    }
+
+    /**
+     * @param array<int, string> $requiredFormats
+     * @return void
+     */
+    protected function requireImagick(array $requiredFormats = array('PNG', 'SVG'))
+    {
+        if (extension_loaded('imagick') === false) {
+            $this->markTestSkipped('No pecl/imagick extension.');
+        }
+
+        $formats = Imagick::queryFormats();
+
+        if (count(array_intersect($requiredFormats, $formats)) < count($requiredFormats)) {
+            $this->markTestSkipped('Imagick PNG and SVG support are not both installed.');
+        }
     }
 }
 

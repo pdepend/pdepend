@@ -70,7 +70,7 @@ class ExcludePathFilter implements Filter
      * Constructs a new exclude path filter instance and accepts an array of
      * exclude pattern as argument.
      *
-     * @param array $patterns List of exclude file path patterns.
+     * @param array<string> $patterns List of exclude file path patterns.
      */
     public function __construct(array $patterns)
     {

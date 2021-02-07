@@ -59,7 +59,7 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder<mixed> $builder The used node builder instance.
      * @return void
      */
     public function startParseProcess(Builder $builder);
@@ -67,7 +67,7 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param  \PDepend\Source\Builder\Builder $builder The used node builder instance.
+     * @param  \PDepend\Source\Builder\Builder<mixed> $builder The used node builder instance.
      * @return void
      */
     public function endParseProcess(Builder $builder);

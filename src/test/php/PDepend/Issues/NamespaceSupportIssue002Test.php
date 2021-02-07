@@ -330,7 +330,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->current()
             ->getDependencies()
             ->current();
-        
+
         $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 

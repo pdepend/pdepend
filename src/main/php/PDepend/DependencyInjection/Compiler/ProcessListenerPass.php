@@ -56,6 +56,9 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ProcessListenerPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
         $engineDefinition = $container->findDefinition('pdepend.engine');

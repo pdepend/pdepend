@@ -81,7 +81,7 @@ class ASTFunction extends AbstractASTCallable
      * Sets the currently active builder context.
      *
      * @param  \PDepend\Source\Builder\BuilderContext $context Current builder context.
-     * @return \PDepend\Source\AST\ASTFunction
+     * @return $this
      * @since  0.10.0
      */
     public function setContext(BuilderContext $context)

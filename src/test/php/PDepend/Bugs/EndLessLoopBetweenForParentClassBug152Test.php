@@ -117,7 +117,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3()
     {
-        $interfaces = $this->parseCodeResourceForTest()
+        $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()

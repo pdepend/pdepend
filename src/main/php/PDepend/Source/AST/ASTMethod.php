@@ -184,7 +184,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Sets the parent type object.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $parent
+     * @param  \PDepend\Source\AST\AbstractASTType|null $parent
      * @return void
      */
     public function setParent(AbstractASTType $parent = null)

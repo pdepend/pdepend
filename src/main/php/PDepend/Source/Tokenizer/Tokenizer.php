@@ -63,7 +63,7 @@ interface Tokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return string
+     * @return \PDepend\Source\AST\ASTCompilationUnit|null
      */
     public function getSourceFile();
 
