@@ -60,7 +60,7 @@ class Iterator extends \FilterIterator
     /**
      * Optional root path for the files.
      *
-     * @var   string
+     * @var   string|null
      * @since 0.10.0
      */
     protected $rootPath = null;
@@ -68,9 +68,9 @@ class Iterator extends \FilterIterator
     /**
      * Constructs a new file filter iterator.
      *
-     * @param \Iterator             $iterator The inner iterator.
-     * @param \PDepend\Input\Filter $filter   The filter object.
-     * @param string                $rootPath Optional root path for the files.
+     * @param \Iterator<\SplFileInfo> $iterator The inner iterator.
+     * @param \PDepend\Input\Filter   $filter   The filter object.
+     * @param string                  $rootPath Optional root path for the files.
      */
     public function __construct(\Iterator $iterator, Filter $filter, $rootPath = null)
     {

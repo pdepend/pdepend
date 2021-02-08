@@ -133,7 +133,7 @@ class SymbolTable
      *
      * @throws NoActiveScopeException
      *
-     * @return mixed
+     * @return string|null
      */
     public function lookup($key)
     {

@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,52 +38,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
+
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
- * This is a special implementation of the node iterator that will translate
- * a list of given {@link \PDepend\Source\AST\ASTClassOrInterfaceReference} holders
- * into a list of unique {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
- * instances.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @extends ASTArtifactList<\PDepend\Source\AST\AbstractASTClassOrInterface>
+ * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @group unittest
+ * @group php8
  */
-class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
+class NullsafeOperatorTest extends PHP8ParserVersion80Test
 {
     /**
-     * Constructs a new reference iterator instance.
-     *
-     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references List of
-     *        references to concrete type instances.
+     * @return void
      */
-    public function __construct(array $references)
+    public function testNullsafeOperator()
     {
-        parent::__construct($this->createClassesAndInterfaces($references));
-    }
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTVariableDeclarator $variable */
+        $variable = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTVariableDeclarator'
+        );
 
-    /**
-     * This method creates a set of {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
-     * objects from the given reference array.
-     *
-     * @param  \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
-     */
-    protected function createClassesAndInterfaces(array $references)
-    {
-        $classesAndInterfaces = array();
-
-        foreach ($references as $reference) {
-            $classOrInterface = $reference->getType();
-
-            if (isset($classesAndInterfaces[$classOrInterface->getId()])) {
-                continue;
-            }
-            $classesAndInterfaces[$classOrInterface->getId()] = $classOrInterface;
-        }
-
-        return $classesAndInterfaces;
+        $this->assertSame('$obj', $variable->getImage());
     }
 }

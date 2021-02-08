@@ -65,6 +65,8 @@ use PDepend\Util\Type;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @implements Builder<\PDepend\Source\AST\ASTNamespace>
  */
 class PHPBuilder implements Builder
 {
@@ -110,21 +112,21 @@ class PHPBuilder implements Builder
     /**
      * All generated {@link \PDepend\Source\AST\ASTTrait} objects
      *
-     * @var \PDepend\Source\AST\ASTTrait[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTTrait>>>
      */
     private $traits = array();
 
     /**
      * All generated {@link \PDepend\Source\AST\ASTClass} objects
      *
-     * @var \PDepend\Source\AST\ASTClass[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTClass>>>
      */
     private $classes = array();
 
     /**
      * All generated {@link \PDepend\Source\AST\ASTInterface} instances.
      *
-     * @var \PDepend\Source\AST\ASTInterface[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTInterface>>>
      */
     private $interfaces = array();
 
@@ -152,21 +154,21 @@ class PHPBuilder implements Builder
     /**
      * Cache of all traits created during the regular parsing process.
      *
-     * @var \PDepend\Source\AST\ASTTrait[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTTrait>>>
      */
     private $frozenTraits = array();
 
     /**
      * Cache of all classes created during the regular parsing process.
      *
-     * @var \PDepend\Source\AST\ASTClass[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTClass>>>
      */
     private $frozenClasses = array();
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
-     * @var \PDepend\Source\AST\ASTInterface[]
+     * @var array<string, array<string, array<int, \PDepend\Source\AST\ASTInterface>>>
      */
     private $frozenInterfaces = array();
 
@@ -187,7 +189,7 @@ class PHPBuilder implements Builder
      * Setter method for the currently used token cache.
      *
      * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\PHPBuilder
+     * @return $this
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)
@@ -1833,7 +1835,7 @@ class PHPBuilder implements Builder
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
-     * @return \PDepend\Source\AST\ASTArtifactList
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace>
      */
     public function getIterator()
     {
@@ -1844,7 +1846,7 @@ class PHPBuilder implements Builder
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace>
      */
     public function getNamespaces()
     {
@@ -1858,7 +1860,7 @@ class PHPBuilder implements Builder
      * Returns an iterator with all generated {@link \PDepend\Source\AST\ASTNamespace}
      * objects.
      *
-     * @return \PDepend\Source\AST\ASTArtifactList
+     * @return \PDepend\Source\AST\ASTNamespace[]
      * @since  0.9.12
      */
     private function getPreparedNamespaces()
@@ -2088,7 +2090,7 @@ class PHPBuilder implements Builder
      * best matching instance or <b>null</b> if no match exists.
      *
      * @template T of \PDepend\Source\AST\AbstractASTType
-     * @param  array<string, array<string, array<integer, T>>>  $instances
+     * @param  array<string, array<string, array<string, T>>>  $instances
      * @param  string $qualifiedName
      * @return T|null
      * @since  0.9.5
@@ -2108,7 +2110,7 @@ class PHPBuilder implements Builder
 
         // Check for exact match and return first matching instance
         if (isset($instances[$caseInsensitiveName][$namespaceName])) {
-            return reset($instances[$caseInsensitiveName][$namespaceName]);
+            return reset($instances[$caseInsensitiveName][$namespaceName]) ?: null;
         }
 
         if (!$this->isDefault($namespaceName)) {
@@ -2116,6 +2118,10 @@ class PHPBuilder implements Builder
         }
 
         $classesOrInterfaces = reset($instances[$caseInsensitiveName]);
+        if (!$classesOrInterfaces) {
+            return null;
+        }
+
         return reset($classesOrInterfaces);
     }
 
@@ -2147,10 +2153,12 @@ class PHPBuilder implements Builder
      * Creates a copy of the given input array, but skips all types that do not
      * contain a parent package.
      *
-     * @param array $originalTypes The original types created during the parsing
+     * @template T of \PDepend\Source\AST\AbstractASTType
+     *
+     * @param array<string, array<string, array<int, T>>> $originalTypes The original types created during the parsing
      *        process.
      *
-     * @return array
+     * @return array<string, array<string, array<int, T>>>
      */
     private function copyTypesWithPackage(array $originalTypes)
     {
@@ -2235,7 +2243,7 @@ class PHPBuilder implements Builder
      * @param  string                       $namespaceName
      * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
-     * @@since 1.0.0
+     * @since 1.0.0
      */
     protected function storeTrait($traitName, $namespaceName, ASTTrait $trait)
     {
@@ -2256,7 +2264,7 @@ class PHPBuilder implements Builder
      * @param  string                       $namespaceName
      * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
-     * @@since 0.9.5
+     * @since 0.9.5
      */
     protected function storeClass($className, $namespaceName, ASTClass $class)
     {
@@ -2277,7 +2285,7 @@ class PHPBuilder implements Builder
      * @param  string                           $namespaceName
      * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
-     * @@since 0.9.5
+     * @since 0.9.5
      */
     protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface)
     {

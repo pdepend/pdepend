@@ -90,6 +90,7 @@ interface Analyzer
      * Set global options
      *
      * @param array<string, mixed> $options
+     * @return void
      * @since 2.0.1
      */
     public function setOptions(array $options = array());

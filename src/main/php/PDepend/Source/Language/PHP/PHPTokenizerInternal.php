@@ -200,6 +200,10 @@ if (!defined('T_ATTRIBUTE')) {
     define('T_ATTRIBUTE', 42383);
 }
 
+if (!defined('T_NULLSAFE_OBJECT_OPERATOR')) {
+    define('T_NULLSAFE_OBJECT_OPERATOR', 42387);
+}
+
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
@@ -350,6 +354,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_COALESCE_EQUAL            => Tokens::T_COALESCE_EQUAL,
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN                        => Tokens::T_FN,
+        T_NULLSAFE_OBJECT_OPERATOR  => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
     );
 
     /**
@@ -529,6 +534,9 @@ class PHPTokenizerInternal implements FullTokenizer
         ),
     );
 
+    /**
+     * @var array<integer, array<integer, array<string, string|integer>>>
+     */
     protected static $reductionMap = array(
         Tokens::T_CONCAT => array(
             Tokens::T_CONCAT => array(
@@ -566,9 +574,9 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * The source file instance.
      *
-     * @var \PDepend\Source\AST\ASTCompilationUnit
+     * @var \PDepend\Source\AST\ASTCompilationUnit|null
      */
-    protected $sourceFile = '';
+    protected $sourceFile = null;
 
     /**
      * Count of all tokens.
@@ -601,7 +609,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit
+     * @return \PDepend\Source\AST\ASTCompilationUnit|null
      */
     public function getSourceFile()
     {
@@ -826,9 +834,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array<array> $tokens Unprepared array of php tokens.
+     * @param array<array<integer, integer|string>|string> $tokens Unprepared array of php tokens.
      *
-     * @return array<array>
+     * @return array<array<integer, integer|string>|string>
      */
     private function substituteTokens(array $tokens)
     {
@@ -836,7 +844,7 @@ class PHPTokenizerInternal implements FullTokenizer
         $attributeComment = null;
         $attributeCommentLine = null;
 
-        foreach ($tokens as $token) {
+        foreach ($tokens as $index => $token) {
             $temp = (array) $token;
             $temp = $temp[0];
 
@@ -864,6 +872,14 @@ class PHPTokenizerInternal implements FullTokenizer
                 foreach (self::$substituteTokens[$temp] as $token) {
                     $result[] = $token;
                 }
+            } elseif ($temp === '?' && isset($tokens[$index + 1][0]) && $tokens[$index + 1][0] === T_OBJECT_OPERATOR) {
+                $tokens[$index + 1] = array(
+                    T_NULLSAFE_OBJECT_OPERATOR,
+                    '?->',
+                    1,
+                );
+
+                continue;
             } else {
                 $result[] = $token;
             }
@@ -888,14 +904,8 @@ class PHPTokenizerInternal implements FullTokenizer
         $this->index  = 0;
         $this->count  = 0;
 
-        // Replace short open tags, short open tags will produce invalid results
-        // in all environments with disabled short open tags.
+        // No longer replacing short open tags since some want to track them.
         $source = $this->sourceFile->getSource();
-        $source = preg_replace(
-            array('(<\?=)', '(<\?(\s))'),
-            array('<?php echo ', '<?php\1'),
-            $source
-        );
 
         $tokens = $this->substituteTokens(token_get_all($source));
 
@@ -923,7 +933,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 $token = array(null, $token);
             }
 
-            if ($token[0] === T_OPEN_TAG) {
+            if ($token[0] === T_OPEN_TAG || $token[0] === T_OPEN_TAG_WITH_ECHO) {
                 $type  = $tokenMap[$token[0]];
                 $image = $token[1];
                 $inTag = true;
@@ -1032,9 +1042,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array $tokens Reference to the current token stream.
+     * @param array<array<integer, integer|string>|string> $tokens Reference to the current token stream.
      *
-     * @return string
+     * @return string|null
      */
     private function consumeNonePhpTokens(array &$tokens)
     {

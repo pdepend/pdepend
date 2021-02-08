@@ -84,7 +84,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace $namespaces
+     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
      * @return void
      */
     public function analyze($namespaces)
@@ -155,7 +155,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
-     * @return array
+     * @return array<string, integer>
      */
     public function getProjectMetrics()
     {
