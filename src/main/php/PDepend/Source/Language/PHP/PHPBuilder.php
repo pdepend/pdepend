@@ -1513,6 +1513,17 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new node for the union type.
+     *
+     * @return \PDepend\Source\AST\ASTUnionType
+     * @since  1.0.0
+     */
+    public function buildAstUnionType()
+    {
+        return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTUnionType');
+    }
+
+    /**
      * Builds a new literal node.
      *
      * @param string $image The source image for the literal node.

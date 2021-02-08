@@ -46,56 +46,49 @@ namespace PDepend\Source\AST;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * Abstract base class for a type node.
+ * This class represents primitive types like integer, float, boolean, string
+ * etc.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.6
  */
-class ASTType extends AbstractASTNode
+class ASTUnionType extends ASTType
 {
     /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     *
-     * @return boolean
-     */
-    public function isArray()
-    {
-        return false;
-    }
-
-    /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
-     *
-     * @return boolean
-     */
-    public function isScalar()
-    {
-        return false;
-    }
-
-    /**
      * This method will return <b>true</b> when this type use union pipe tos specify multiple types.
+     * For this concrete implementation the return value will be always true.
      *
      * @return boolean
      */
     public function isUnion()
     {
-        return false;
+        return true;
     }
 
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
+     * @param ASTVisitor $visitor
+     * @param mixed      $data
      * @return mixed
-     * @since 0.9.12
+     * @since  2.9.0
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
-        return $visitor->visitType($this, $data);
+        return $visitor->visitUnionType($this, $data);
+    }
+
+    /**
+     * Return concatenated allowed types string representation.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return implode('|', array_map(function ($type) {
+            return $type->getImage();
+        }, $this->getChildren()));
     }
 }

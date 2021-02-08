@@ -169,4 +169,31 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
         return parent::parseFunctionPostfix($node);
     }
+
+    /**
+     * Parses a type hint that is valid in the supported PHP version.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parseTypeHint()
+    {
+        $types = array(parent::parseTypeHint());
+
+        while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            $this->tokenizer->next();
+            $types[] = parent::parseTypeHint();
+        }
+
+        if (count($types) === 1) {
+            return $types[0];
+        }
+
+        $unionType = $this->builder->buildAstUnionType();
+
+        foreach ($types as $type) {
+            $unionType->addChild($type);
+        }
+
+        return $unionType;
+    }
 }

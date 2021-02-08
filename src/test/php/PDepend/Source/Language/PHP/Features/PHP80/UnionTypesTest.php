@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,64 +36,45 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTUnionType;
+use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
- * Abstract base class for a type node.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @group unittest
+ * @group php8
  */
-class ASTType extends AbstractASTNode
+class UnionTypesTest extends PHP8ParserVersion80Test
 {
     /**
-     * This method will return <b>true</b> when the underlying type is an array.
-     *
-     * @return boolean
+     * @return void
      */
-    public function isArray()
+    public function testUnionTypes()
     {
-        return false;
-    }
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTFormalParameter'
+        );
+        $children = $parameter->getChildren();
 
-    /**
-     * This method will return <b>true</b> when the underlying data type is a
-     * php primitive.
-     *
-     * @return boolean
-     */
-    public function isScalar()
-    {
-        return false;
-    }
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[0]);
+        /** @var ASTUnionType $unionType */
+        $unionType = $children[0];
+        $this->assertSame('int|float', $unionType->getImage());
 
-    /**
-     * This method will return <b>true</b> when this type use union pipe tos specify multiple types.
-     *
-     * @return boolean
-     */
-    public function isUnion()
-    {
-        return false;
-    }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
-     * @since 0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitType($this, $data);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
+        /** @var ASTVariableDeclarator $variable */
+        $variable = $children[1];
+        $this->assertSame('$number', $variable->getImage());
     }
 }
