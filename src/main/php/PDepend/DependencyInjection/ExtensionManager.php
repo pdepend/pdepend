@@ -50,13 +50,16 @@ namespace PDepend\DependencyInjection;
  */
 class ExtensionManager
 {
+    /**
+     * @var array<\PDepend\DependencyInjection\Extension>
+     */
     private $extensions = array();
 
     /**
      * Activate an extension based on a class name.
      *
      * @throws \RuntimeException
-     * @param  string $className
+     * @param  class-string<\PDepend\DependencyInjection\Extension> $className
      * @return void
      */
     public function activateExtension($className)

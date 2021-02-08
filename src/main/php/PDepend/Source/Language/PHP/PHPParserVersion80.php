@@ -117,6 +117,18 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $nextTokenType = $this->tokenizer->peek();
 
         switch ($nextTokenType) {
+            case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
+                $token = $this->consumeToken($nextTokenType);
+
+                $expr = $this->builder->buildAstExpression($token->image);
+                $expr->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
+
+                return $expr;
         }
 
         return null;
@@ -154,5 +166,32 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
 
         return $parameter;
+    }
+
+    /**
+     * Parses a type hint that is valid in the supported PHP version.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    protected function parseTypeHint()
+    {
+        $types = array(parent::parseTypeHint());
+
+        while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            $this->tokenizer->next();
+            $types[] = parent::parseTypeHint();
+        }
+
+        if (count($types) === 1) {
+            return $types[0];
+        }
+
+        $unionType = $this->builder->buildAstUnionType();
+
+        foreach ($types as $type) {
+            $unionType->addChild($type);
+        }
+
+        return $unionType;
     }
 }

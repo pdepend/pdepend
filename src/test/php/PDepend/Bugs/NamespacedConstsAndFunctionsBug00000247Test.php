@@ -110,7 +110,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
 
     /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PHPUnit_Framework_MockObject_MockObject
      */

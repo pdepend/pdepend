@@ -76,6 +76,16 @@ class ASTType extends AbstractASTNode
     }
 
     /**
+     * This method will return <b>true</b> when this type use union pipe tos specify multiple types.
+     *
+     * @return boolean
+     */
+    public function isUnion()
+    {
+        return false;
+    }
+
+    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

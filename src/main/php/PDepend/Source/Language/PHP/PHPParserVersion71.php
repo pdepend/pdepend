@@ -190,6 +190,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      * This method parses class references in catch statement.
      *
      * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @return void
      */
     protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
     {
@@ -214,6 +215,9 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return true;
     }
 
+    /**
+     * @return void
+     */
     private function consumeQuestionMark()
     {
         if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
@@ -221,6 +225,11 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         }
     }
 
+    /**
+     * @param integer $tokenType
+     * @param integer $modifiers
+     * @return integer
+     */
     private function getModifiersForConstantDefinition($tokenType, $modifiers)
     {
         $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;

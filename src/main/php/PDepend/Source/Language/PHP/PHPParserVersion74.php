@@ -126,6 +126,7 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
     /**
      * Override PHP 7.3 checkEllipsisInExpressionSupport to stop throwing the
      * parsing exception.
+     * @return void
      */
     protected function checkEllipsisInExpressionSupport()
     {

@@ -38,54 +38,57 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.9.6
  */
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
- * This is a special implementation of the node iterator that will translate
- * a list of given {@link \PDepend\Source\AST\ASTClassOrInterfaceReference} holders
- * into a list of unique {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
- * instances.
+ * This class represents primitive types like integer, float, boolean, string
+ * etc.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @extends ASTArtifactList<\PDepend\Source\AST\AbstractASTClassOrInterface>
+ * @since 0.9.6
  */
-class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
+class ASTUnionType extends ASTType
 {
     /**
-     * Constructs a new reference iterator instance.
+     * This method will return <b>true</b> when this type use union pipe tos specify multiple types.
+     * For this concrete implementation the return value will be always true.
      *
-     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references List of
-     *        references to concrete type instances.
+     * @return boolean
      */
-    public function __construct(array $references)
+    public function isUnion()
     {
-        parent::__construct($this->createClassesAndInterfaces($references));
+        return true;
     }
 
     /**
-     * This method creates a set of {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
-     * objects from the given reference array.
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
      *
-     * @param  \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
+     * @param ASTVisitor $visitor
+     * @param mixed      $data
+     * @return mixed
+     * @since  2.9.0
      */
-    protected function createClassesAndInterfaces(array $references)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
-        $classesAndInterfaces = array();
+        return $visitor->visitUnionType($this, $data);
+    }
 
-        foreach ($references as $reference) {
-            $classOrInterface = $reference->getType();
-
-            if (isset($classesAndInterfaces[$classOrInterface->getId()])) {
-                continue;
-            }
-            $classesAndInterfaces[$classOrInterface->getId()] = $classOrInterface;
-        }
-
-        return $classesAndInterfaces;
+    /**
+     * Return concatenated allowed types string representation.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return implode('|', array_map(function ($type) {
+            return $type->getImage();
+        }, $this->getChildren()));
     }
 }

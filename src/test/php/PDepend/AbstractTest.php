@@ -933,7 +933,7 @@ abstract class AbstractTest extends TestCase
 
     /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
@@ -962,6 +962,10 @@ abstract class AbstractTest extends TestCase
         return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
 
+    /**
+     * @param array<int, string> $requiredFormats
+     * @return void
+     */
     protected function requireImagick(array $requiredFormats = array('PNG', 'SVG'))
     {
         if (extension_loaded('imagick') === false) {
