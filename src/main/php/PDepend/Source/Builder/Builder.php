@@ -959,6 +959,14 @@ interface Builder extends \IteratorAggregate
     public function buildAstScalarType($image);
 
     /**
+     * Builds a new node for the union type.
+     *
+     * @return \PDepend\Source\AST\ASTUnionType
+     * @since  2.9.0
+     */
+    public function buildAstUnionType();
+
+    /**
      * Builds a new literal node.
      *
      * @param string $image The source image for the literal node.
