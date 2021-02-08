@@ -332,7 +332,7 @@ class Command
     /**
      * Assign CLI arguments to current runner instance
      *
-     * @return bool
+     * @return void
      */
     protected function assignArguments()
     {
@@ -629,6 +629,7 @@ class Command
 
     /**
      * @param integer $startTime
+     * @return void
      */
     private function printStatistics($startTime)
     {

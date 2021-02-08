@@ -56,11 +56,4 @@ abstract class PHP8ParserVersion80Test extends AbstractTest
             self::markTestSkipped('Requires at least PHP 8.0');
         }
     }
-
-    protected function setUp()
-    {
-        // static::needsPHP80();
-
-        parent::setUp();
-    }
 }

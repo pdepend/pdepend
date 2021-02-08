@@ -82,6 +82,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      *
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
+     * @return void
      */
     public function setOptions(array $options = array())
     {

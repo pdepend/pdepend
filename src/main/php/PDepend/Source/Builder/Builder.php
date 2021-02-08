@@ -56,6 +56,9 @@ use PDepend\Util\Cache\CacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @template T of mixed
+ * @extends \IteratorAggregate<T>
  */
 interface Builder extends \IteratorAggregate
 {
@@ -68,7 +71,7 @@ interface Builder extends \IteratorAggregate
      * Setter method for the currently used token cache.
      *
      * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Builder\Builder
+     * @return \PDepend\Source\Builder\Builder<mixed>
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache);
@@ -969,6 +972,14 @@ interface Builder extends \IteratorAggregate
      * @since  0.9.6
      */
     public function buildAstScalarType($image);
+
+    /**
+     * Builds a new node for the union type.
+     *
+     * @return \PDepend\Source\AST\ASTUnionType
+     * @since  2.9.0
+     */
+    public function buildAstUnionType();
 
     /**
      * Builds a new literal node.

@@ -65,14 +65,14 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * The currently used ast builder.
      *
-     * @var \PDepend\Source\Builder\Builder
+     * @var \PDepend\Source\Builder\Builder<mixed>
      */
     protected static $builder = null;
 
     /**
      * Constructs a new builder context instance.
      *
-     * @param \PDepend\Source\Builder\Builder $builder The currently used ast builder.
+     * @param \PDepend\Source\Builder\Builder<mixed> $builder The currently used ast builder.
      */
     public function __construct(Builder $builder)
     {
@@ -165,7 +165,7 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns the currently used builder instance.
      *
-     * @return \PDepend\Source\Builder\Builder
+     * @return \PDepend\Source\Builder\Builder<mixed>
      */
     protected function getBuilder()
     {

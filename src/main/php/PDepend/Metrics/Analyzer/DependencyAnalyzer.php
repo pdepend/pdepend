@@ -87,12 +87,12 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array<string, array>
+     * @var array<string, array<string, mixed>>
      */
     private $nodeMetrics = null;
 
     /**
-     * @var array<string, \PDepend\Source\AST\ASTNamespace>
+     * @var array<string, ASTNamespace>
      */
     protected $nodeSet = array();
 
@@ -161,7 +161,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Returns the statistics for the requested node.
      *
      * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return array
+     * @return array<string, mixed>
      */
     public function getStats(AbstractASTArtifact $node)
     {
@@ -315,7 +315,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
             ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
-        
+
         foreach ($type->getDependencies() as $dependency) {
             $this->collectDependencies(
                 $type->getNamespace(),

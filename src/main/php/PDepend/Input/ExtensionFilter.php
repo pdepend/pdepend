@@ -61,7 +61,7 @@ class ExtensionFilter implements Filter
      * Constructs a new file extension filter instance with the given list of
      *  allowed file <b>$extensions</b>.
      *
-     * @param array $extensions List of allowed extension.
+     * @param array<string> $extensions List of allowed extension.
      */
     public function __construct(array $extensions)
     {

@@ -355,6 +355,10 @@ class PHPTokenizerInternalTest extends AbstractTest
      */
     public function testTokenizerWithInlineHtmlBug24()
     {
+        if (! ini_get('short_open_tag')) {
+            $this->markTestSkipped('Must enable short_open_tag');
+        }
+
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
@@ -370,8 +374,7 @@ class PHPTokenizerInternalTest extends AbstractTest
             array(Tokens::T_CURLY_BRACE_OPEN, 5),
             array(Tokens::T_CLOSE_TAG, 6),
             array(Tokens::T_NO_PHP, 7),
-            array(Tokens::T_OPEN_TAG, 7),
-            array(Tokens::T_ECHO, 7),
+            array(Tokens::T_OPEN_TAG_WITH_ECHO, 7),
             array(Tokens::T_STRING, 7),
             array(Tokens::T_SEMICOLON, 7),
             array(Tokens::T_CLOSE_TAG,  7),
@@ -411,28 +414,26 @@ class PHPTokenizerInternalTest extends AbstractTest
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
     {
+        if (! ini_get('short_open_tag')) {
+            $this->markTestSkipped('Must enable short_open_tag');
+        }
+
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = array(
-            array(Tokens::T_NO_PHP, '<html>
-    <head>
-        <title>', 1, 3, 1, 15),
-            array(Tokens::T_OPEN_TAG, '<?php', 3, 3, 16, 20),
-            array(Tokens::T_ECHO, 'echo', 3, 3, 22, 25),
-            array(Tokens::T_VARIABLE, '$foo', 3, 3, 27, 30),
-            array(Tokens::T_SEMICOLON, ';', 3, 3, 31, 31),
-            array(Tokens::T_CLOSE_TAG, '?>', 3, 3, 32, 33),
-            array(Tokens::T_NO_PHP, '</title>
-    </head>
-    <body>', 3, 5, 34, 10),
-            array(Tokens::T_OPEN_TAG, '<?php', 6, 6, 9, 13),
-            array(Tokens::T_ECHO, 'echo', 6, 6, 15, 18),
-            array(Tokens::T_VARIABLE, '$bar', 6, 6, 20, 23),
-            array(Tokens::T_SEMICOLON, ';', 6, 6, 24, 24),
-            array(Tokens::T_CLOSE_TAG, '?>', 6, 6, 26, 27),
-            array(Tokens::T_NO_PHP, '    </body>
-</html>', 7, 8, 1, 7),
+            array(Tokens::T_NO_PHP, "<html>\n    <head>\n        <title>", 1, 3, 1, 15),
+            array(Tokens::T_OPEN_TAG_WITH_ECHO, '<?=', 3, 3, 16, 18),
+            array(Tokens::T_VARIABLE, '$foo', 3, 3, 19, 22),
+            array(Tokens::T_SEMICOLON, ';', 3, 3, 23, 23),
+            array(Tokens::T_CLOSE_TAG, '?>', 3, 3, 24, 25),
+            array(Tokens::T_NO_PHP, "</title>\n    </head>\n    <body>", 3, 5, 26, 10),
+            array(Tokens::T_OPEN_TAG, '<?', 6, 6, 9, 10),
+            array(Tokens::T_ECHO, 'echo', 6, 6, 12, 15),
+            array(Tokens::T_VARIABLE, '$bar', 6, 6, 17, 20),
+            array(Tokens::T_SEMICOLON, ';', 6, 6, 21, 21),
+            array(Tokens::T_CLOSE_TAG, '?>', 6, 6, 23, 24),
+            array(Tokens::T_NO_PHP, "    </body>\n</html>", 7, 8, 1, 7),
         );
 
         $actual = array();
@@ -467,16 +468,13 @@ class PHPTokenizerInternalTest extends AbstractTest
             array(Tokens::T_VARIABLE, '$user', 1, 1, 18, 22),
             array(Tokens::T_SEMICOLON, ';', 1, 1, 23, 23),
             array(Tokens::T_CLOSE_TAG, '?>', 1, 1, 25, 26),
-            array(Tokens::T_NO_PHP, '
-this is a simple letter to users of', 2, 3, 1, 35),
+            array(Tokens::T_NO_PHP, "\nthis is a simple letter to users of", 2, 3, 1, 35),
             array(Tokens::T_OPEN_TAG, '<?php', 3, 3, 37, 41),
             array(Tokens::T_PRINT, 'print', 3, 3, 43, 47),
             array(Tokens::T_VARIABLE, '$service', 3, 3, 49, 56),
             array(Tokens::T_SEMICOLON, ';', 3, 3, 57, 57),
             array(Tokens::T_CLOSE_TAG, '?>', 3, 3, 59, 60),
-            array(Tokens::T_NO_PHP, '.
-
-Manuel', 3, 5, 61, 6),
+            array(Tokens::T_NO_PHP, ".\n\nManuel", 3, 5, 61, 6),
         );
 
         $actual = array();
