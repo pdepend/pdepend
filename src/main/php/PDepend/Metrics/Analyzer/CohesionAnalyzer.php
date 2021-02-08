@@ -64,7 +64,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * Collected cohesion metrics for classes.
      *
-     * @var array
+     * @var array<string, array<string, integer>>
      */
     private $nodeMetrics = array();
 
@@ -82,7 +82,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * </code>
      *
      * @param  \PDepend\Source\AST\ASTArtifact $artifact
-     * @return array<string, mixed>
+     * @return array<string, integer>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {

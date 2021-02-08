@@ -59,14 +59,14 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Collected node metrics
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $metrics = null;
 
     /**
      * Metrics restored from the cache. This property is only used temporary.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     private $metricsCached = array();
 

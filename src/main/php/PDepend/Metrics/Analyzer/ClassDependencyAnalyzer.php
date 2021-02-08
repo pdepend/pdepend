@@ -86,6 +86,9 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      */
     private $nodeMetrics = null;
 
+    /**
+     * @var array<string, ASTNamespace>
+     */
     protected $nodeSet = array();
 
     /**
