@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Parser\ParserException;
@@ -129,6 +131,23 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
 
         return null;
+    }
+
+    /**
+     * @return ASTConstant
+     */
+    protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_COLON) {
+            $this->tokenizer->next();
+
+            return $this->builder->buildAstNamedArgument(
+                $constant->getImage(),
+                $this->parseOptionalExpression()
+            );
+        }
+
+        return $constant;
     }
 
     /**

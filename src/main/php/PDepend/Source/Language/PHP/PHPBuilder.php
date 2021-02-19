@@ -51,7 +51,9 @@ use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParentReference;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
@@ -349,7 +351,7 @@ class PHPBuilder implements Builder
     public function buildClass($name)
     {
         $this->checkBuilderState();
-        
+
         $class = new ASTClass($this->extractTypeName($name));
         $class->setCache($this->cache)
             ->setContext($this->context)
@@ -442,7 +444,7 @@ class PHPBuilder implements Builder
     public function buildInterface($name)
     {
         $this->checkBuilderState();
-        
+
         $interface = new ASTInterface($this->extractTypeName($name));
         $interface->setCache($this->cache)
             ->setContext($this->context)
@@ -526,7 +528,7 @@ class PHPBuilder implements Builder
         $function->setCache($this->cache)
             ->setContext($this->context)
             ->setCompilationUnit($this->defaultCompilationUnit);
- 
+
         return $function;
     }
 
@@ -1467,6 +1469,25 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new named argument node.
+     *
+     * <code>
+     * number_format(5623, thousands_separator: ' ')
+     * </code>
+     *
+     * @param string $name
+     * @param ASTNode $name
+     * @return \PDepend\Source\AST\ASTNamedArgument
+     * @since  2.9.0
+     */
+    public function buildAstNamedArgument($name, ASTNode $value)
+    {
+        Log::debug("Creating: \\PDepend\\Source\\AST\\ASTNamedArgument($name)");
+
+        return new ASTNamedArgument($name, $value);
+    }
+
+    /**
      * Builds a new array type node.
      *
      * @return \PDepend\Source\AST\ASTTypeArray
@@ -1487,7 +1508,7 @@ class PHPBuilder implements Builder
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTTypeCallable');
     }
-    
+
     /**
      * Builds a new node for the iterable type.
      *
@@ -1498,7 +1519,7 @@ class PHPBuilder implements Builder
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTTypeIterable');
     }
-    
+
     /**
      * Builds a new primitive type node.
      *

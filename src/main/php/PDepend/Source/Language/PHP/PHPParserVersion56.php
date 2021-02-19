@@ -44,6 +44,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\FullTokenizer;
@@ -328,6 +329,14 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
+     * @return ASTConstant
+     */
+    protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
+    {
+        return $constant;
+    }
+
+    /**
      * @param \PDepend\Source\AST\ASTArguments $arguments
      * @return \PDepend\Source\AST\ASTArguments
      */
@@ -341,6 +350,10 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
             }
 
             $expr = $this->parseOptionalExpression();
+
+            if ($expr instanceof ASTConstant) {
+                $expr = $this->parseConstantArgument($expr, $arguments);
+            }
 
             if (!$expr || !$this->addChildToList($arguments, $expr)) {
                 break;
