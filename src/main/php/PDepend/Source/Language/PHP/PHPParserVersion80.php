@@ -169,6 +169,23 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     }
 
     /**
+     * @return ASTConstant
+     */
+    protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_COLON) {
+            $this->tokenizer->next();
+
+            return $this->builder->buildAstNamedArgument(
+                $constant->getImage(),
+                $this->parseOptionalExpression()
+            );
+        }
+
+        return $constant;
+    }
+
+    /**
      * Parses a type hint that is valid in the supported PHP version.
      *
      * @return \PDepend\Source\AST\ASTNode

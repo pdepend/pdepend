@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,78 +36,45 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.8
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamedArgument;
 
 /**
- * This node class encapsultes any expression.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.9.0
+ * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @group unittest
+ * @group php8
  */
-class ASTNamedArgument extends AbstractASTNode
+class NamedArgumentsTest extends PHP8ParserVersion80Test
 {
     /**
-     * @var string
+     * @return void
      */
-    protected $name;
-
-    /**
-     * @var ASTNode
-     */
-    protected $value;
-
-    /**
-     * @param string $name
-     */
-    public function __construct($name, ASTNode $value)
+    public function testNamedArguments()
     {
-        parent::__construct();
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTArguments $arguments */
+        $arguments = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTArguments'
+        );
+        $children = $arguments->getChildren();
 
-        $this->name = $name;
-        $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return ASTNode
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImage()
-    {
-        return sprintf('%s: %s', $this->name, $this->value->getImage());
-    }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     * @param mixed      $data
-     *
-     * @return mixed
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitNamedArgument($this, $data);
+        $this->assertCount(2, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertSame('5623', $children[0]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[1]);
+        /** @var ASTNamedArgument $argument */
+        $argument = $children[1];
+        $this->assertSame('thousands_separator', $argument->getName());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $argument->getValue());
+        $this->assertSame("' '", $argument->getValue()->getImage());
+        $this->assertSame("thousands_separator: ' '", $argument->getImage());
     }
 }
