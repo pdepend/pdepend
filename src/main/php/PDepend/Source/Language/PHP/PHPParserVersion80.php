@@ -44,9 +44,13 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTCallable;
 use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTIdentifier;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
@@ -131,6 +135,40 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
 
         return null;
+    }
+
+    /**
+     * This method parse a formal parameter and all the stuff that may be allowed
+     * before it according to the PHP level (type hint, passing by reference, property promotion).
+     *
+     * @return ASTFormalParameter|ASTNode
+     */
+    protected function parseFormalParameterOrPrefix(ASTCallable $callable)
+    {
+        static $states = array(
+            Tokens::T_PUBLIC    => State::IS_PUBLIC,
+            Tokens::T_PROTECTED => State::IS_PROTECTED,
+            Tokens::T_PRIVATE   => State::IS_PRIVATE,
+        );
+
+        $modifier = 0;
+
+        if ($callable instanceof ASTMethod && $callable->getName() === '__construct') {
+            $scope = $this->tokenizer->peek();
+
+            if (isset($states[$scope])) {
+                $this->tokenizer->next();
+                $modifier = $states[$scope];
+            }
+        }
+
+        $parameter = parent::parseFormalParameterOrPrefix($callable);
+
+        if ($modifier && $parameter instanceof ASTFormalParameter) {
+            $parameter->setModifiers($modifier);
+        }
+
+        return $parameter;
     }
 
     /**
