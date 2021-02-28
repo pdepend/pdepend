@@ -205,26 +205,25 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseFunctionPostfix(ASTNode $node)
     {
-        if ($node instanceof ASTIdentifier && $node->getImage() === 'match') {
-            $image = $this->extractPostfixImage($node);
-
-            $function = $this->builder->buildAstFunctionPostfix($image);
-            $function->addChild($node);
-
-            $this->consumeComments();
-
-            $this->tokenStack->push();
-
-            $function->addChild(
-                $this->parseArgumentsParenthesesContent(
-                    $this->builder->buildAstMatchArgument()
-                )
-            );
-
-            return $function;
+        if (!($node instanceof ASTIdentifier) || $node->getImage() !== 'match') {
+            return parent::parseFunctionPostfix($node);
         }
+        $image = $this->extractPostfixImage($node);
 
-        return parent::parseFunctionPostfix($node);
+        $function = $this->builder->buildAstFunctionPostfix($image);
+        $function->addChild($node);
+
+        $this->consumeComments();
+
+        $this->tokenStack->push();
+
+        $function->addChild(
+            $this->parseArgumentsParenthesesContent(
+                $this->builder->buildAstMatchArgument()
+            )
+        );
+
+        return $function;
     }
 
     /**
