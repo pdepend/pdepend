@@ -46,10 +46,13 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTCallable;
 use PDepend\Source\AST\ASTConstant;
+use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\State;
+use PDepend\Source\Parser\ParserException;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -97,8 +100,8 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @return ASTNode
+     * @throws UnexpectedTokenException
      */
     protected function parseOptionalExpressionForVersion()
     {
@@ -109,7 +112,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     /**
      * In this method we implement parsing of PHP 8.0 specific expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function parseExpressionVersion80()
     {
@@ -183,6 +186,44 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
 
         return $constant;
+    }
+
+    /**
+     * This method parses a function postfix expression. An object of type
+     * {@link ASTFunctionPostfix} represents any valid php
+     * function call.
+     *
+     * This method will delegate the call to another method that returns a
+     * member primary prefix object when the function postfix expression is
+     * followed by an object operator.
+     *
+     * @param  ASTNode $node This node represents the function
+     *        identifier. An identifier can be a static string, a variable, a
+     *        compound variable or any other valid php function identifier.
+     * @return ASTNode
+     * @throws ParserException
+     */
+    protected function parseFunctionPostfix(ASTNode $node)
+    {
+        if (!($node instanceof ASTIdentifier) || $node->getImage() !== 'match') {
+            return parent::parseFunctionPostfix($node);
+        }
+        $image = $this->extractPostfixImage($node);
+
+        $function = $this->builder->buildAstFunctionPostfix($image);
+        $function->addChild($node);
+
+        $this->consumeComments();
+
+        $this->tokenStack->push();
+
+        $function->addChild(
+            $this->parseArgumentsParenthesesContent(
+                $this->builder->buildAstMatchArgument()
+            )
+        );
+
+        return $function;
     }
 
     /**

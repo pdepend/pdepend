@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,70 +36,42 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTMethod;
 
 /**
- * This class represents arguments as they are supplied to functions or
- * constructors invocations.
- *
- * <code>
- * //      ------------
- * Foo::bar($x, $y, $z);
- * //      ------------
- *
- * //       ------------
- * $foo->bar($x, $y, $z);
- * //       ------------
- * </code>
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @group unittest
+ * @group php8
  */
-class ASTArguments extends AbstractASTNode
+class MatchExpressionTest extends PHP8ParserVersion80Test
 {
     /**
-     * Rather the given arguments list can still take one more argument.
-     *
-     * @return bool
-     */
-    public function acceptsMoreArguments()
-    {
-        return true;
-    }
-
-    /**
-     * This method adds a new child node to this node instance.
-     *
-     * @param ASTNode $node
      * @return void
      */
-    public function addChild(ASTNode $node)
+    public function testMatchExpression()
     {
-        if (!$this->acceptsMoreArguments()) {
-            throw new InvalidArgumentException('No more arguments allowed.');
-        }
+        $this->markTestIncomplete('Implement and test match expression block parsing');
 
-        parent::addChild($node);
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTExpression $expression */
+        $expression = $method->findChildrenOfType('\\PDepend\\Source\\AST\\ASTExpression');
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
-     * @since 0.9.12
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ,, line: 5, col: 25
+     * @return void
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    public function testMatchExpressionWithTooManyArguments()
     {
-        return $visitor->visitArguments($this, $data);
+        $this->parseCodeResourceForTest();
     }
 }

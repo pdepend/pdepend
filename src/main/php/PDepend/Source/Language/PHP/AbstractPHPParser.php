@@ -2660,19 +2660,39 @@ abstract class AbstractPHPParser
     private function parseExpressionList(ASTNode $exprList)
     {
         $this->consumeComments();
-        while ($expr = $this->parseOptionalExpression()) {
-            $exprList->addChild($expr);
 
-            $this->consumeComments();
-            if (Tokens::T_COMMA === $this->tokenizer->peek()) {
-                $this->consumeToken(Tokens::T_COMMA);
-                $this->consumeComments();
-            } else {
-                break;
-            }
-        }
+        do {
+            $expr = $this->parseOptionalExpression();
+        } while ($expr && $this->addChildToList($exprList, $expr));
 
         return $exprList;
+    }
+
+    /**
+     * Return true if children remain to be added, false else.
+     *
+     * @param ASTNode $exprList
+     * @param ASTNode $expr
+     * @return bool
+     */
+    protected function addChildToList(ASTNode $exprList, ASTNode $expr)
+    {
+        $exprList->addChild($expr);
+
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() !== Tokens::T_COMMA) {
+            return false;
+        }
+
+        if ($exprList instanceof ASTArguments && !$exprList->acceptsMoreArguments()) {
+            $this->throwUnexpectedTokenException();
+        }
+
+        $this->consumeToken(Tokens::T_COMMA);
+        $this->consumeComments();
+
+        return true;
     }
 
     /**
@@ -4037,7 +4057,7 @@ abstract class AbstractPHPParser
      * @throws \PDepend\Source\Parser\ParserException
      * @since 0.9.6
      */
-    private function parseFunctionPostfix(ASTNode $node)
+    protected function parseFunctionPostfix(ASTNode $node)
     {
         $image = $this->extractPostfixImage($node);
 
@@ -4342,7 +4362,7 @@ abstract class AbstractPHPParser
      * @return string
      * @since 1.0.0
      */
-    private function extractPostfixImage(ASTNode $node)
+    protected function extractPostfixImage(ASTNode $node)
     {
         while ($node instanceof ASTIndexExpression) {
             $node = $node->getChild(0);
@@ -4391,14 +4411,27 @@ abstract class AbstractPHPParser
 
         $this->tokenStack->push();
 
-        $arguments = $this->builder->buildAstArguments();
+        return $this->parseArgumentsParenthesesContent(
+            $this->builder->buildAstArguments()
+        );
+    }
 
+    /**
+     * This method parses the tokens after arguments passed to a function- or method-call.
+     *
+     * @return \PDepend\Source\AST\ASTArguments
+     * @throws \PDepend\Source\Parser\ParserException
+     * @since 0.9.6
+     */
+    protected function parseArgumentsParenthesesContent(ASTArguments $arguments)
+    {
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
         $this->consumeComments();
 
         if (Tokens::T_PARENTHESIS_CLOSE !== $this->tokenizer->peek()) {
             $arguments = $this->parseArgumentList($arguments);
         }
+
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn($arguments);

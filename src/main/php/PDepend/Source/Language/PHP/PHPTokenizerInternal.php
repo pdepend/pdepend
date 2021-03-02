@@ -196,6 +196,10 @@ if (!defined('T_NAME_RELATIVE')) {
     define('T_NAME_RELATIVE', 42313);
 }
 
+if (!defined('T_MATCH')) {
+    define('T_MATCH', 42341);
+}
+
 if (!defined('T_ATTRIBUTE')) {
     define('T_ATTRIBUTE', 42383);
 }
@@ -354,6 +358,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_COALESCE_EQUAL            => Tokens::T_COALESCE_EQUAL,
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN                        => Tokens::T_FN,
+        T_MATCH                     => Tokens::T_STRING,
         T_NULLSAFE_OBJECT_OPERATOR  => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
     );
 

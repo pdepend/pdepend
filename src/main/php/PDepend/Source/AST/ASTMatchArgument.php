@@ -43,28 +43,20 @@
 
 namespace PDepend\Source\AST;
 
-use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
- * This class represents arguments as they are supplied to functions or
- * constructors invocations.
+ * This class represents match expression argument container.
  *
  * <code>
- * //      ------------
- * Foo::bar($x, $y, $z);
- * //      ------------
- *
- * //       ------------
- * $foo->bar($x, $y, $z);
- * //       ------------
+ * match ($x)
  * </code>
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
+ * @since 2.9.0
  */
-class ASTArguments extends AbstractASTNode
+class ASTMatchArgument extends ASTArguments
 {
     /**
      * Rather the given arguments list can still take one more argument.
@@ -73,35 +65,20 @@ class ASTArguments extends AbstractASTNode
      */
     public function acceptsMoreArguments()
     {
-        return true;
-    }
-
-    /**
-     * This method adds a new child node to this node instance.
-     *
-     * @param ASTNode $node
-     * @return void
-     */
-    public function addChild(ASTNode $node)
-    {
-        if (!$this->acceptsMoreArguments()) {
-            throw new InvalidArgumentException('No more arguments allowed.');
-        }
-
-        parent::addChild($node);
+        return count($this->getChildren()) < 1;
     }
 
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
+     * @param ASTVisitor $visitor
      * @param mixed $data
      * @return mixed
      * @since 0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
-        return $visitor->visitArguments($this, $data);
+        return $visitor->visitMatchArgument($this, $data);
     }
 }

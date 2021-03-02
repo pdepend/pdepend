@@ -351,7 +351,7 @@ class PHPBuilder implements Builder
     public function buildClass($name)
     {
         $this->checkBuilderState();
-        
+
         $class = new ASTClass($this->extractTypeName($name));
         $class->setCache($this->cache)
             ->setContext($this->context)
@@ -444,7 +444,7 @@ class PHPBuilder implements Builder
     public function buildInterface($name)
     {
         $this->checkBuilderState();
-        
+
         $interface = new ASTInterface($this->extractTypeName($name));
         $interface->setCache($this->cache)
             ->setContext($this->context)
@@ -528,7 +528,7 @@ class PHPBuilder implements Builder
         $function->setCache($this->cache)
             ->setContext($this->context)
             ->setCompilationUnit($this->defaultCompilationUnit);
- 
+
         return $function;
     }
 
@@ -1454,6 +1454,21 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Builds a new argument match expression single-item slot.
+     *
+     * <code>
+     * match($x)
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTMatchArgument
+     * @since  0.9.6
+     */
+    public function buildAstMatchArgument()
+    {
+        return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTMatchArgument');
+    }
+
+    /**
      * Builds a new named argument node.
      *
      * <code>
@@ -1493,7 +1508,7 @@ class PHPBuilder implements Builder
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTTypeCallable');
     }
-    
+
     /**
      * Builds a new node for the iterable type.
      *
@@ -1504,7 +1519,7 @@ class PHPBuilder implements Builder
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTTypeIterable');
     }
-    
+
     /**
      * Builds a new primitive type node.
      *
