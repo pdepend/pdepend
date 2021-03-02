@@ -47,11 +47,13 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTCallable;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTIndexExpression;
 use PDepend\Source\AST\ASTInterface;
@@ -1252,7 +1254,7 @@ abstract class AbstractPHPParser
 
         $closure = $this->builder->buildAstClosure();
         $closure->setReturnsByReference($this->parseOptionalByReference());
-        $closure->addChild($this->parseFormalParameters());
+        $closure->addChild($this->parseFormalParameters($closure));
         $closure = $this->parseOptionalBoundVariables($closure);
         $closure = $this->parseCallableDeclarationAddition($closure);
         $closure->addChild($this->parseScope());
@@ -1268,7 +1270,7 @@ abstract class AbstractPHPParser
      */
     private function parseCallableDeclaration(AbstractASTCallable $callable)
     {
-        $callable->addChild($this->parseFormalParameters());
+        $callable->addChild($this->parseFormalParameters($callable));
         $callable = $this->parseCallableDeclarationAddition($callable);
 
         $this->consumeComments();
@@ -5552,12 +5554,27 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * This method parse a formal parameter and all the stuff that may be allowed
+     * before it according to the PHP level (type hint, passing by reference, property promotion).
+     *
+     * @param ASTCallable $callable the callable object (closure, function or method)
+     *                              requiring the given parameters list.
+     * @return ASTFormalParameter|ASTNode
+     */
+    protected function parseFormalParameterOrPrefix(ASTCallable $callable)
+    {
+        return $this->parseFormalParameterOrTypeHintOrByReference();
+    }
+
+    /**
      * Extracts all dependencies from a callable signature.
      *
+     * @param ASTCallable $callable the callable object (closure, function or method)
+     *                              requiring the given parameters list.
      * @return \PDepend\Source\AST\ASTFormalParameters
      * @since 0.9.5
      */
-    protected function parseFormalParameters()
+    protected function parseFormalParameters(ASTCallable $callable)
     {
         $this->consumeComments();
 
@@ -5579,7 +5596,7 @@ abstract class AbstractPHPParser
 
         while ($tokenType !== Tokenizer::T_EOF) {
             $formalParameters->addChild(
-                $this->parseFormalParameterOrTypeHintOrByReference()
+                $this->parseFormalParameterOrPrefix($callable)
             );
 
             $this->consumeComments();

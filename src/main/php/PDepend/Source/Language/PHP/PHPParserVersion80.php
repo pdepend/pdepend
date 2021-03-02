@@ -44,9 +44,13 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTCallable;
 use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTIdentifier;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
@@ -134,6 +138,40 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     }
 
     /**
+     * This method parse a formal parameter and all the stuff that may be allowed
+     * before it according to the PHP level (type hint, passing by reference, property promotion).
+     *
+     * @return ASTFormalParameter|ASTNode
+     */
+    protected function parseFormalParameterOrPrefix(ASTCallable $callable)
+    {
+        static $states = array(
+            Tokens::T_PUBLIC    => State::IS_PUBLIC,
+            Tokens::T_PROTECTED => State::IS_PROTECTED,
+            Tokens::T_PRIVATE   => State::IS_PRIVATE,
+        );
+
+        $modifier = 0;
+
+        if ($callable instanceof ASTMethod && $callable->getName() === '__construct') {
+            $scope = $this->tokenizer->peek();
+
+            if (isset($states[$scope])) {
+                $this->tokenizer->next();
+                $modifier = $states[$scope];
+            }
+        }
+
+        $parameter = parent::parseFormalParameterOrPrefix($callable);
+
+        if ($modifier && $parameter instanceof ASTFormalParameter) {
+            $parameter->setModifiers($modifier);
+        }
+
+        return $parameter;
+    }
+
+    /**
      * @return ASTConstant
      */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
@@ -167,46 +205,46 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseFunctionPostfix(ASTNode $node)
     {
-        if ($node instanceof ASTIdentifier && $node->getImage() === 'match') {
-            $image = $this->extractPostfixImage($node);
-
-            $function = $this->builder->buildAstFunctionPostfix($image);
-            $function->addChild($node);
-
-            $this->consumeComments();
-
-            $this->tokenStack->push();
-
-            $function->addChild(
-                $this->parseArgumentsParenthesesContent(
-                    $this->builder->buildAstMatchArgument()
-                )
-            );
-
-            $this->consumeComments();
-            $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
-
-            $matchBlock = $this->builder->buildAstMatchBlock();
-
-            while ($this->tokenizer->peek() !== Tokens::T_CURLY_BRACE_CLOSE) {
-                $matchBlock->addChild($this->parseMatchEntry());
-
-                $this->consumeComments();
-
-                if ($this->tokenizer->peek() === Tokens::T_COMMA) {
-                    $this->consumeToken(Tokens::T_COMMA);
-                    $this->consumeComments();
-                }
-            }
-
-            $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
-
-            $function->addChild($matchBlock);
-
-            return $function;
+        if (!($node instanceof ASTIdentifier) || $node->getImage() !== 'match') {
+            return parent::parseFunctionPostfix($node);
         }
 
-        return parent::parseFunctionPostfix($node);
+        $image = $this->extractPostfixImage($node);
+
+        $function = $this->builder->buildAstFunctionPostfix($image);
+        $function->addChild($node);
+
+        $this->consumeComments();
+
+        $this->tokenStack->push();
+
+        $function->addChild(
+            $this->parseArgumentsParenthesesContent(
+                $this->builder->buildAstMatchArgument()
+            )
+        );
+
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+
+        $matchBlock = $this->builder->buildAstMatchBlock();
+
+        while ($this->tokenizer->peek() !== Tokens::T_CURLY_BRACE_CLOSE) {
+            $matchBlock->addChild($this->parseMatchEntry());
+
+            $this->consumeComments();
+
+            if ($this->tokenizer->peek() === Tokens::T_COMMA) {
+                $this->consumeToken(Tokens::T_COMMA);
+                $this->consumeComments();
+            }
+        }
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+
+        $function->addChild($matchBlock);
+
+        return $function;
     }
 
     /**
