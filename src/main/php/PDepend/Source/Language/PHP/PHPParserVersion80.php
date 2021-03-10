@@ -208,6 +208,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         if (!($node instanceof ASTIdentifier) || $node->getImage() !== 'match') {
             return parent::parseFunctionPostfix($node);
         }
+
         $image = $this->extractPostfixImage($node);
 
         $function = $this->builder->buildAstFunctionPostfix($image);
@@ -222,6 +223,26 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
                 $this->builder->buildAstMatchArgument()
             )
         );
+
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+
+        $matchBlock = $this->builder->buildAstMatchBlock();
+
+        while ($this->tokenizer->peek() !== Tokens::T_CURLY_BRACE_CLOSE) {
+            $matchBlock->addChild($this->parseMatchEntry());
+
+            $this->consumeComments();
+
+            if ($this->tokenizer->peek() === Tokens::T_COMMA) {
+                $this->consumeToken(Tokens::T_COMMA);
+                $this->consumeComments();
+            }
+        }
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+
+        $function->addChild($matchBlock);
 
         return $function;
     }

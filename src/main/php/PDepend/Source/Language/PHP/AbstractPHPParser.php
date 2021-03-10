@@ -2686,7 +2686,7 @@ abstract class AbstractPHPParser
         }
 
         if ($exprList instanceof ASTArguments && !$exprList->acceptsMoreArguments()) {
-            $this->throwUnexpectedTokenException();
+            throw $this->getUnexpectedTokenException();
         }
 
         $this->consumeToken(Tokens::T_COMMA);
@@ -3225,12 +3225,18 @@ abstract class AbstractPHPParser
      * Parses the termination token for a statement. This termination token can
      * be a semicolon or a closing php tag.
      *
+     * @param int[] $allowedTerminationTokens list of extra token types that can terminate the statement
      * @return void
      * @since 0.9.12
      */
-    private function parseStatementTermination()
+    private function parseStatementTermination(array $allowedTerminationTokens = array())
     {
         $this->consumeComments();
+
+        if (in_array($this->tokenizer->peek(), $allowedTerminationTokens, true)) {
+            return;
+        }
+
         if ($this->tokenizer->peek() === Tokens::T_SEMICOLON) {
             $this->consumeToken(Tokens::T_SEMICOLON);
         } else {
@@ -3274,10 +3280,11 @@ abstract class AbstractPHPParser
     /**
      * This method parses a throw-statement.
      *
+     * @param int[] $allowedTerminationTokens list of extra token types that can terminate the statement
      * @return \PDepend\Source\AST\ASTThrowStatement
      * @since 0.9.12
      */
-    private function parseThrowStatement()
+    private function parseThrowStatement(array $allowedTerminationTokens = array())
     {
         $this->tokenStack->push();
         $token = $this->consumeToken(Tokens::T_THROW);
@@ -3285,7 +3292,7 @@ abstract class AbstractPHPParser
         $stmt = $this->builder->buildAstThrowStatement($token->image);
         $stmt->addChild($this->parseExpression());
 
-        $this->parseStatementTermination();
+        $this->parseStatementTermination($allowedTerminationTokens);
 
         return $this->setNodePositionsAndReturn($stmt);
     }
@@ -5254,6 +5261,73 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Parses a single match key.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 2.9.0
+     */
+    protected function parseMatchEntryKey()
+    {
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() === Tokens::T_DEFAULT) {
+            $this->consumeToken(Tokens::T_DEFAULT);
+            $label = $this->builder->buildAstSwitchLabel('default');
+            $label->setDefault();
+
+            return $label;
+        }
+
+        if ($this->isKeyword($this->tokenizer->peek())) {
+            throw $this->getUnexpectedTokenException();
+        }
+
+        return $this->parseExpression();
+    }
+
+    /**
+     * Parses a single match value expression.
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     * @since 2.9.0
+     */
+    protected function parseMatchEntryValue()
+    {
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() === Tokens::T_THROW) {
+            return $this->parseThrowStatement(array(Tokens::T_COMMA));
+        }
+
+        return $this->parseExpression();
+    }
+
+    /**
+     * Parses a single match entry key-expression pair.
+     *
+     * @return \PDepend\Source\AST\ASTMatchEntry
+     * @since 2.9.0
+     */
+    protected function parseMatchEntry()
+    {
+        $this->consumeComments();
+
+        $this->tokenStack->push();
+
+        $matchEntry = $this->builder->buildAstMatchEntry();
+
+        $matchEntry->addChild($this->parseMatchEntryKey());
+
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_DOUBLE_ARROW);
+        $this->consumeComments();
+
+        $matchEntry->addChild($this->parseMatchEntryValue());
+
+        return $this->setNodePositionsAndReturn($matchEntry);
+    }
+
+    /**
      * Parses a single array element.
      *
      * An array element can have a simple value, a key/value pair, a value by
@@ -7218,6 +7292,7 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @param Token|null $token
      * @return UnexpectedTokenException
      */
     protected function getUnexpectedTokenException(Token $token = null)
@@ -7231,10 +7306,11 @@ abstract class AbstractPHPParser
     /**
      * Throws an UnexpectedTokenException
      *
-     * @param \PDepend\Source\Tokenizer\Token $token
+     * @param \PDepend\Source\Tokenizer\Token|null $token
      * @return void
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      * @since 2.2.5
+     * @deprecated 3.0.0 Use throw $this->getUnexpectedTokenException($token) instead
      */
     protected function throwUnexpectedTokenException(Token $token = null)
     {
@@ -7246,6 +7322,6 @@ abstract class AbstractPHPParser
      */
     protected function checkEllipsisInExpressionSupport()
     {
-        $this->throwUnexpectedTokenException();
+        throw $this->getUnexpectedTokenException();
     }
 }

@@ -66,22 +66,22 @@ interface Tokens
     const T_ABSTRACT = 3;
 
     /**
-     * Marks a curly brace open.
+     * Marks a curly brace open '{'.
      */
     const T_CURLY_BRACE_OPEN = 4;
 
     /**
-     * Marks a curly brace close.
+     * Marks a curly brace close '}'.
      */
     const T_CURLY_BRACE_CLOSE = 5;
 
     /**
-     * Marks a parenthesis open.
+     * Marks a parenthesis open '('.
      */
     const T_PARENTHESIS_OPEN = 6;
 
     /**
-     * Marks a parenthesis close.
+     * Marks a parenthesis close ')'.
      */
     const T_PARENTHESIS_CLOSE = 7;
 
@@ -96,7 +96,7 @@ interface Tokens
     const T_FUNCTION = 9;
 
     /**
-     * Marks a double colon.
+     * Marks a double colon ':'.
      */
     const T_DOUBLE_COLON = 10;
 
@@ -111,7 +111,7 @@ interface Tokens
     const T_DOC_COMMENT = 12;
 
     /**
-     * Marks a semicolon.
+     * Marks a semicolon ';'.
      */
     const T_SEMICOLON = 13;
 

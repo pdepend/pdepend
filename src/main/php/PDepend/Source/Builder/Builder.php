@@ -939,6 +939,32 @@ interface Builder extends \IteratorAggregate
     public function buildAstMatchArgument();
 
     /**
+     * Builds a new argument match expression single-item slot.
+     *
+     * <code>
+     * match($x) {
+     *   "foo" => "bar",
+     * }
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTMatchBlock
+     * @since  2.9.0
+     */
+    public function buildAstMatchBlock();
+
+    /**
+     * Builds a new argument match expression single-item slot.
+     *
+     * <code>
+     * "foo" => "bar",
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTMatchEntry
+     * @since  2.9.0
+     */
+    public function buildAstMatchEntry();
+
+    /**
      * Builds a new named argument node.
      *
      * <code>
