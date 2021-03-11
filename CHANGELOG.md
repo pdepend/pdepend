@@ -1,3 +1,20 @@
+pdepend-2.9.0 (2021/03/11)
+==========================
+
+- Added [\#496](https://github.com/pdepend/pdepend/issues/496) Support PHP 8 Match expression
+- Added [\#494](https://github.com/pdepend/pdepend/issues/494) Support PHP 8 Constructor property promotion
+- Added [\#492](https://github.com/pdepend/pdepend/issues/492) Support PHP 8 Named arguments
+- Added [\#493](https://github.com/pdepend/pdepend/issues/493) Support PHP 8 Attributes
+- Added [\#495](https://github.com/pdepend/pdepend/issues/495) Support PHP 8 Union types
+- Added [\#497](https://github.com/pdepend/pdepend/issues/497) Support PHP 8 Nullsafe operator
+- Added [\#491](https://github.com/pdepend/pdepend/issues/491) Support PHP 8 tokens changes
+- Fixed [\#490](https://github.com/pdepend/pdepend/pull/490) Preserve short open tags
+- Fixed [\#480](https://github.com/pdepend/pdepend/pull/480), [\#486](https://github.com/pdepend/pdepend/pull/486) and [\#513](https://github.com/pdepend/pdepend/pull/513) PHPDoc blocks
+- Changed [\#500](https://github.com/pdepend/pdepend/issues/500) Switch to GitHub Actions
+- Changed [\#511](https://github.com/pdepend/pdepend/pull/511) Run PHPStan in GitHub actions
+- Changed [\#489](https://github.com/pdepend/pdepend/pull/489) Add unit tests for Application class
+- Removed [\#488](https://github.com/pdepend/pdepend/pull/488) Removed changes.xml legacy file
+
 pdepend-2.8.0 (2020/05/25)
 ==========================
 
