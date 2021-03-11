@@ -8,7 +8,7 @@ pdepend-2.9.0 (2021/03/11)
 - Added [\#495](https://github.com/pdepend/pdepend/issues/495) Support PHP 8 Union types
 - Added [\#497](https://github.com/pdepend/pdepend/issues/497) Support PHP 8 Nullsafe operator
 - Added [\#491](https://github.com/pdepend/pdepend/issues/491) Support PHP 8 tokens changes
-- Fixed [\#771](https://github.com/pdepend/pdepend/issues/771) Preserve short open tags
+- Fixed [\#490](https://github.com/pdepend/pdepend/pull/490) Preserve short open tags
 - Fixed [\#480](https://github.com/pdepend/pdepend/pull/480), [\#486](https://github.com/pdepend/pdepend/pull/486) and [\#513](https://github.com/pdepend/pdepend/pull/513) PHPDoc blocks
 - Changed [\#500](https://github.com/pdepend/pdepend/issues/500) Switch to GitHub Actions
 - Changed [\#511](https://github.com/pdepend/pdepend/pull/511) Run PHPStan in GitHub actions
