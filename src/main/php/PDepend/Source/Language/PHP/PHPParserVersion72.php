@@ -88,7 +88,7 @@ abstract class PHPParserVersion72 extends PHPParserVersion71
                     $this->consumeToken($nextToken);
             }
 
-            if (Tokens::T_CURLY_BRACE_CLOSE == $this->tokenizer->peek()) {
+            if (Tokens::T_CURLY_BRACE_CLOSE === $this->tokenizer->peek()) {
                 break;
             }
 
