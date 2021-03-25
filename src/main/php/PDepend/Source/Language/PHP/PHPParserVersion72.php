@@ -108,7 +108,9 @@ abstract class PHPParserVersion72 extends PHPParserVersion71
             $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
         } while (true);
 
-        $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+        if (isset($image, $subFragments)) {
+            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+        }
 
         $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
         $this->consumeComments();
