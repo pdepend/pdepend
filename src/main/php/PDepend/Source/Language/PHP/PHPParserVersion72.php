@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\Tokenizer\Tokens;
+
 /**
  * Concrete parser implementation that supports features up to PHP version 7.2.
  *
@@ -52,4 +54,65 @@ namespace PDepend\Source\Language\PHP;
  */
 abstract class PHPParserVersion72 extends PHPParserVersion71
 {
+    /**
+     * @param array<string> $fragments
+     * @return void
+     */
+    protected function parseUseDeclarationForVersion(array $fragments)
+    {
+        if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
+            $this->parseUseDeclarationVersion72($fragments);
+
+            return;
+        }
+
+        parent::parseUseDeclarationForVersion($fragments);
+    }
+
+    /**
+     * @param array<string> $fragments
+     * @return void
+     */
+    protected function parseUseDeclarationVersion72(array $fragments)
+    {
+        $namespacePrefixReplaced = $this->namespacePrefixReplaced;
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+        $this->consumeComments();
+
+        do {
+            $nextToken = $this->tokenizer->peek();
+            switch ($nextToken) {
+                case Tokens::T_CONST:
+                case Tokens::T_FUNCTION:
+                    $this->consumeToken($nextToken);
+            }
+
+            if (Tokens::T_CURLY_BRACE_CLOSE == $this->tokenizer->peek()) {
+                break;
+            }
+
+            $subFragments = $this->parseQualifiedNameRaw();
+            $this->consumeComments();
+
+            $image = $this->parseNamespaceImage($subFragments);
+
+            if (Tokens::T_COMMA != $this->tokenizer->peek()) {
+                break;
+            }
+
+            $this->consumeToken(Tokens::T_COMMA);
+            $this->consumeComments();
+
+            // Add mapping between image and qualified name to symbol table
+            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+        } while (true);
+
+        $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+        $this->consumeComments();
+
+        $this->namespacePrefixReplaced = $namespacePrefixReplaced;
+    }
 }
