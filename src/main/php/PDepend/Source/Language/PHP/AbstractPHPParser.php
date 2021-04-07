@@ -5800,6 +5800,14 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @return \PDepend\Source\AST\ASTStaticReference
+     */
+    protected function parseStaticType()
+    {
+        return $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
+    }
+
+    /**
      * This method will parse a formal parameter that can optionally be passed
      * by reference.
      *
