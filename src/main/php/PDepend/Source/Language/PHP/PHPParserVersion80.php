@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -245,6 +246,19 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $function->addChild($matchBlock);
 
         return $function;
+    }
+
+    /**
+     * @return ASTType
+     */
+    protected function parseEndReturnTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_STATIC:
+                return $this->parseStaticType();
+            default:
+                return parent::parseEndReturnTypeHint();
+        }
     }
 
     /**

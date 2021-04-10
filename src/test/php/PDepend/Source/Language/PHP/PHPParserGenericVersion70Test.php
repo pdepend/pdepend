@@ -136,6 +136,32 @@ class PHPParserGenericVersion70Test extends AbstractTest
     }
 
     /**
+     * testFunctionReturnTypeHintSelf
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintSelf()
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertSame('self', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintParent
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintParent()
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertSame('parent', $type->getImage());
+    }
+
+    /**
      * testFunctionReturnTypeHintFloat
      *
      * @return void
