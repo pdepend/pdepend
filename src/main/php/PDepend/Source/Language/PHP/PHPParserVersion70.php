@@ -189,25 +189,28 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * @return \PDepend\Source\AST\ASTType
      */
+    protected function parseEndReturnTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+                return $this->parseArrayType();
+            case Tokens::T_SELF:
+                return $this->parseSelfType();
+            case Tokens::T_PARENT:
+                return $this->parseParentType();
+            default:
+                return $this->parseTypeHint();
+        }
+    }
+
+    /**
+     * @return \PDepend\Source\AST\ASTType
+     */
     protected function parseReturnTypeHint()
     {
         $this->consumeComments();
 
-        switch ($tokenType = $this->tokenizer->peek()) {
-            case Tokens::T_ARRAY:
-                $type = $this->parseArrayType();
-                break;
-            case Tokens::T_SELF:
-                $type = $this->parseSelfType();
-                break;
-            case Tokens::T_PARENT:
-                $type = $this->parseParentType();
-                break;
-            default:
-                $type = $this->parseTypeHint();
-                break;
-        }
-        return $type;
+        return $this->parseEndReturnTypeHint();
     }
 
     /**
