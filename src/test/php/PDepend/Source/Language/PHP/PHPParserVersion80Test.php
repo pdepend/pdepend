@@ -69,6 +69,32 @@ class PHPParserVersion80Test extends AbstractTest
     }
 
     /**
+     * testFunctionReturnTypeHintNullableStatic
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintNullableStatic()
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertSame('static', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintStaticWithComments
+     *
+     * @return void
+     */
+    public function testFunctionReturnTypeHintStaticWithComments()
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        $this->assertFalse($type->isScalar());
+        $this->assertSame('static', $type->getImage());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
