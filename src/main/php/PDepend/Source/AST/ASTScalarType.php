@@ -65,6 +65,26 @@ class ASTScalarType extends ASTType
     }
 
     /**
+     * This method will return <b>true</b> when this type is exactly null.
+     *
+     * @return boolean
+     */
+    public function isNull()
+    {
+        return $this->getImage() === 'null';
+    }
+
+    /**
+     * This method will return <b>true</b> when this type is exactly false.
+     *
+     * @return boolean
+     */
+    public function isFalse()
+    {
+        return $this->getImage() === 'false';
+    }
+
+    /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *

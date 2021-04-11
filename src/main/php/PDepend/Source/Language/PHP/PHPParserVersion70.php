@@ -136,6 +136,16 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return parent::isConstantName($tokenType);
     }
 
+    protected function isTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_PARENT:
+                return true;
+            default:
+                return parent::isTypeHint($tokenType);
+        }
+    }
+
     /**
      * @param integer $tokenType
      * @return bool
