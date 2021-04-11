@@ -587,6 +587,10 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         throw $this->getUnexpectedTokenException($this->tokenizer->next());
     }
 
+    /**
+     * use Foo\Bar\{TestA, TestB} is allowed since PHP 7.0
+     * use Foo\Bar\{TestA, TestB,} but trailing comma isn't
+     */
     protected function allowUseGroupDeclarationTrailingComma()
     {
         return false;
