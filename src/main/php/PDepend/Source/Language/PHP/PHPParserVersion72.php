@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\Tokenizer\Tokens;
-
 /**
  * Concrete parser implementation that supports features up to PHP version 7.2.
  *
