@@ -50,7 +50,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8
  */
-class NullsafeOperatorTest extends PHP8ParserVersion80Test
+class NullsafeOperatorTest extends PHPParserVersion80Test
 {
     /**
      * @return void

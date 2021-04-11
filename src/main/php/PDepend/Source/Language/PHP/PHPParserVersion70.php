@@ -538,12 +538,18 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                     $this->consumeToken($nextToken);
             }
 
+            if ($this->allowUseGroupDeclarationTrailingComma() &&
+                Tokens::T_CURLY_BRACE_CLOSE === $this->tokenizer->peek()
+            ) {
+                break;
+            }
+
             $subFragments = $this->parseQualifiedNameRaw();
             $this->consumeComments();
 
             $image = $this->parseNamespaceImage($subFragments);
 
-            if (Tokens::T_COMMA != $this->tokenizer->peek()) {
+            if (Tokens::T_COMMA !== $this->tokenizer->peek()) {
                 break;
             }
 
@@ -554,7 +560,9 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
         } while (true);
 
-        $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+        if (isset($image, $subFragments)) {
+            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+        }
 
         $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
         $this->consumeComments();
@@ -577,5 +585,10 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         }
 
         throw $this->getUnexpectedTokenException($this->tokenizer->next());
+    }
+
+    protected function allowUseGroupDeclarationTrailingComma()
+    {
+        return false;
     }
 }
