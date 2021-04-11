@@ -52,4 +52,11 @@ namespace PDepend\Source\Language\PHP;
  */
 abstract class PHPParserVersion72 extends PHPParserVersion71
 {
+    /**
+     * use Foo\Bar\{TestA, TestB,} trailing comma is supported since PHP 7.2
+     */
+    protected function allowUseGroupDeclarationTrailingComma()
+    {
+        return true;
+    }
 }

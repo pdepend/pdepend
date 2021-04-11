@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTNamedArgument;
  * @group unittest
  * @group php8
  */
-class NamedArgumentsTest extends PHP8ParserVersion80Test
+class NamedArgumentsTest extends PHPParserVersion80Test
 {
     /**
      * @return void

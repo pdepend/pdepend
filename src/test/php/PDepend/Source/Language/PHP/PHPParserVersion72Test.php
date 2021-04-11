@@ -104,6 +104,16 @@ class PHPParserVersion72Test extends AbstractTest
     }
 
     /**
+     * @return \PDepend\Source\AST\ASTNamespace
+     */
+    public function testGroupUseStatementTrailingComma()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+        $this->assertGreaterThan(0, count($namespaces));
+        $this->assertContainsOnlyInstancesOf('PDepend\\Source\\AST\\ASTNamespace', $namespaces);
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

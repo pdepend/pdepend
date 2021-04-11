@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8
  */
-class UnionTypesTest extends PHP8ParserVersion80Test
+class UnionTypesTest extends PHPParserVersion80Test
 {
     /**
      * @return void
