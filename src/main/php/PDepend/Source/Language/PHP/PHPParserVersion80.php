@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
@@ -94,6 +95,18 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
 
         return false;
+    }
+
+    protected function isTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_NULL:
+            case Tokens::T_FALSE:
+            case Tokens::T_STATIC:
+                return true;
+            default:
+                return parent::isTypeHint($tokenType);
+        }
     }
 
     /**
@@ -261,6 +274,41 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
     }
 
+    protected function parseSingleTypeHint()
+    {
+        $this->consumeComments();
+
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_NULL:
+                $type = new ASTScalarType('null');
+                $this->tokenizer->next();
+                break;
+            case Tokens::T_FALSE:
+                $type = new ASTScalarType('false');
+                $this->tokenizer->next();
+                break;
+            default:
+                $type = parent::parseTypeHint();
+                break;
+        }
+
+        $this->consumeComments();
+
+        return $type;
+    }
+
+    protected function parseUnionTypeHint()
+    {
+        $types = array($this->parseSingleTypeHint());
+
+        while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            $this->tokenizer->next();
+            $types[] = $this->parseSingleTypeHint();
+        }
+
+        return $types;
+    }
+
     /**
      * Parses a type hint that is valid in the supported PHP version.
      *
@@ -268,14 +316,20 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseTypeHint()
     {
-        $types = array(parent::parseTypeHint());
+        $this->consumeComments();
+        $token = $this->tokenizer->currentToken();
 
-        while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
-            $this->tokenizer->next();
-            $types[] = parent::parseTypeHint();
-        }
+        $types = $this->parseUnionTypeHint();
 
         if (count($types) === 1) {
+            if ($types[0] instanceof ASTScalarType && ($types[0]->isFalse() || $types[0]->isNull())) {
+                throw new ParserException(
+                    $types[0]->getImage() . ' can not be used as a standalone type',
+                    0,
+                    $this->getUnexpectedTokenException($token)
+                );
+            }
+
             return $types[0];
         }
 

@@ -42,13 +42,14 @@ namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHP8ParserVersion80
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
  * @group unittest
  * @group php8
  */
@@ -70,11 +71,36 @@ class UnionTypesTest extends PHPParserVersion80Test
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[0]);
         /** @var ASTUnionType $unionType */
         $unionType = $children[0];
-        $this->assertSame('int|float', $unionType->getImage());
+        $this->assertSame('int|float|Bar\Biz|null', $unionType->getImage());
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
         /** @var ASTVariableDeclarator $variable */
         $variable = $children[1];
         $this->assertSame('$number', $variable->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnionTypesAsReturn()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTType $return */
+        $return = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTType'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $return);
+        $this->assertSame('int|float|Bar\Biz|null', $return->getImage());
+    }
+
+    /**
+     * @expectedException \PDepend\Source\Parser\ParserException
+     * @expectedExceptionMessage null can not be used as a standalone type
+     */
+    public function testUnionTypesStandaloneNull()
+    {
+        $this->getFirstMethodForTestCase();
     }
 }
