@@ -14,6 +14,12 @@ class A
         // ...
     }
 
+    #[Bar([']][[]]'])]
+    public function bar()
+    {
+        // ...
+    }
+
     public function b(#[Foo()] $bar)
     {
 
