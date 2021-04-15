@@ -1,3 +1,11 @@
+#pdepend-2.9.0 (2021/04/15)
+
+- Added [\#519](https://github.com/pdepend/pdepend/issues/519): Support PHP 7.2 trailing commas in grouped use declarations
+- Added [\#518](https://github.com/pdepend/pdepend/issues/518): Support PHP 8 `static` type hint
+- Added [\#522](https://github.com/pdepend/pdepend/issues/522): Support PHP 8 `null` and `false` type hint
+- Added [\#516](https://github.com/pdepend/pdepend/issues/516): Support PHP 8 catch without variable
+- Fixed [\#527](https://github.com/pdepend/pdepend/issues/527): Allow nested arrays in PHP 8 attributes
+
 pdepend-2.9.0 (2021/03/11)
 ==========================
 
