@@ -3401,14 +3401,26 @@ abstract class AbstractPHPParser
         $this->parseCatchExceptionClass($catch);
 
         $this->consumeComments();
-        $catch->addChild($this->parseVariable());
+        $this->parseCatchVariable($catch);
 
-        $this->consumeComments();
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         $catch->addChild($this->parseRegularScope());
 
         return $this->setNodePositionsAndReturn($catch);
+    }
+
+    /**
+     * This method parses assigned variable in catch statement.
+     *
+     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @return void
+     */
+    protected function parseCatchVariable(ASTCatchStatement $stmt)
+    {
+        $stmt->addChild($this->parseVariable());
+
+        $this->consumeComments();
     }
 
     /**

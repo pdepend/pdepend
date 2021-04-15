@@ -56,6 +56,20 @@ use PDepend\Util\Cache\CacheDriver;
 class PHPParserVersion80Test extends AbstractTest
 {
     /**
+     * testCatchWithoutVariable
+     *
+     * @return void
+     */
+    public function testCatchWithoutVariable()
+    {
+        $catchStatement = $this->getFirstMethodForTestCase()->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTCatchStatement'
+        );
+
+        $this->assertCount(2, $catchStatement->getChildren());
+    }
+
+    /**
      * testFunctionReturnTypeHintStatic
      *
      * @return void

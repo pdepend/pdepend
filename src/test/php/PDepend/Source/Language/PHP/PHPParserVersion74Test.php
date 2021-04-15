@@ -393,6 +393,15 @@ class PHPParserVersion74Test extends AbstractTest
     }
 
     /**
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ), line: 8, col: 27
+     */
+    public function testCatchWithoutVariable()
+    {
+        $this->getFirstClassForTestCase();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

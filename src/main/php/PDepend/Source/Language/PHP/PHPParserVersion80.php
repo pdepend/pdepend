@@ -45,6 +45,7 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTCallable;
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTFormalParameter;
@@ -340,5 +341,18 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
 
         return $unionType;
+    }
+
+    /**
+     * This method parses assigned variable in catch statement.
+     *
+     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @return void
+     */
+    protected function parseCatchVariable(ASTCatchStatement $stmt)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_VARIABLE) {
+            parent::parseCatchVariable($stmt);
+        }
     }
 }
