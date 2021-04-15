@@ -733,7 +733,7 @@ class PHPTokenizerInternal implements FullTokenizer
     public function peekNext()
     {
         $this->tokenize();
-        
+
         $offset = 0;
 
         do {
@@ -848,13 +848,22 @@ class PHPTokenizerInternal implements FullTokenizer
         $result = array();
         $attributeComment = null;
         $attributeCommentLine = null;
+        $brackets = 0;
 
         foreach ($tokens as $index => $token) {
             $temp = (array) $token;
             $temp = $temp[0];
 
             if ($attributeComment) {
+                if ($temp === '[') {
+                    $brackets++;
+                }
+
                 if ($temp === ']') {
+                    $brackets--;
+                }
+
+                if ($brackets <= 0) {
                     $result[] = array(T_COMMENT, "$attributeComment */", $attributeCommentLine);
                     $attributeComment = null;
 
@@ -865,6 +874,7 @@ class PHPTokenizerInternal implements FullTokenizer
             } elseif ($temp === T_ATTRIBUTE) {
                 $attributeComment = '/* @';
                 $attributeCommentLine = $token[2];
+                $brackets = 1;
             } elseif ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED) {
                 foreach ($this->splitQualifiedNameToken($token) as $subToken) {
                     $result[] = $subToken;
@@ -1029,7 +1039,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 }
 
                 $startLine += $lines;
-                
+
                 // Store current type
                 if ($type !== Tokens::T_COMMENT && $type !== Tokens::T_DOC_COMMENT) {
                     $previousType = $type;
