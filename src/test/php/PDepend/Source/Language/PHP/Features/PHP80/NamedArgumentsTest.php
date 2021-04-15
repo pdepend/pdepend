@@ -77,4 +77,46 @@ class NamedArgumentsTest extends PHPParserVersion80Test
         $this->assertSame("' '", $argument->getValue()->getImage());
         $this->assertSame("thousands_separator: ' '", $argument->getImage());
     }
+
+    public function testNamedArgumentsWithArrays()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTArguments $arguments */
+        $arguments = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTArguments'
+        );
+        $children = $arguments->getChildren();
+
+        $this->assertCount(4, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertSame("'/thing/{id}'", $children[0]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[3]);
+        /** @var ASTNamedArgument $argument */
+        $argument = $children[3];
+
+        $this->assertSame('methods', $argument->getName());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
+    }
+
+    public function testNamedArgumentsInInstances()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTArguments $arguments */
+        $arguments = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTArguments'
+        );
+        $children = $arguments->getChildren();
+
+        $this->assertCount(4, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertSame("'/thing/{id}'", $children[0]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[3]);
+        /** @var ASTNamedArgument $argument */
+        $argument = $children[3];
+
+        $this->assertSame('methods', $argument->getName());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
+    }
 }
