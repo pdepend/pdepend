@@ -402,6 +402,15 @@ class PHPParserVersion74Test extends AbstractTest
     }
 
     /**
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ), line: 5, col: 32
+     */
+    public function testTrailingCommaInClosureUseListError()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
