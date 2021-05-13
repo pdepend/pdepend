@@ -355,4 +355,13 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
             parent::parseCatchVariable($stmt);
         }
     }
+
+    /**
+     * Trailing commas is allowed in closure use list from PHP 8.0
+     * @return false
+     */
+    protected function allowTrailingCommaInClosureUseList()
+    {
+        return true;
+    }
 }

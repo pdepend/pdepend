@@ -109,6 +109,14 @@ class PHPParserVersion80Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testTrailingCommaInClosureUseList()
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache

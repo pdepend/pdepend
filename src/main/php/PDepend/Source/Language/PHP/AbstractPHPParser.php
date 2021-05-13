@@ -6192,6 +6192,11 @@ abstract class AbstractPHPParser
         while ($this->tokenizer->peek() !== Tokenizer::T_EOF) {
             $this->consumeComments();
 
+            if ($this->allowTrailingCommaInClosureUseList() &&
+                $this->tokenizer->peek() === Tokens::T_PARENTHESIS_CLOSE) {
+                break;
+            }
+
             if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
                 $this->consumeToken(Tokens::T_BITWISE_AND);
                 $this->consumeComments();
@@ -6213,6 +6218,15 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $closure;
+    }
+
+    /**
+     * Trailing commas is allowed in closure use list from PHP 8.0
+     * @return false
+     */
+    protected function allowTrailingCommaInClosureUseList()
+    {
+        return false;
     }
 
     /**
