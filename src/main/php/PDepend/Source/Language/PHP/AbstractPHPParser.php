@@ -5607,6 +5607,14 @@ abstract class AbstractPHPParser
         }
 
         while ($tokenType !== Tokenizer::T_EOF) {
+            // check for trailing comma in parameter list
+            $this->consumeComments();
+            $tokenType = $this->tokenizer->peek();
+
+            if ($this->allowTrailingCommaInFormalParametersList() && $tokenType === Tokens::T_PARENTHESIS_CLOSE) {
+                break;
+            }
+
             $formalParameters->addChild(
                 $this->parseFormalParameterOrPrefix($callable)
             );
@@ -5625,6 +5633,15 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn($formalParameters);
+    }
+
+    /**
+     * use of trailing comma in formal parameters list is allowed since PHP 8.0
+     * example function foo(string $bar, int $baz,)
+     */
+    protected function allowTrailingCommaInFormalParametersList()
+    {
+        return false;
     }
 
     /**
