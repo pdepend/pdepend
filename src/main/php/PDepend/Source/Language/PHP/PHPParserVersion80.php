@@ -364,4 +364,13 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     {
         return true;
     }
+
+    /**
+     * use of trailing comma in formal parameters list is allowed since PHP 8.0
+     * example function foo(string $bar, int $baz,)
+     */
+    protected function allowTrailingCommaInFormalParametersList()
+    {
+        return true;
+    }
 }

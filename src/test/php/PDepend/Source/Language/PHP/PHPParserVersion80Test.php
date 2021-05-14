@@ -117,6 +117,18 @@ class PHPParserVersion80Test extends AbstractTest
     }
 
     /**
+     * testTrailingCommaInParameterList
+     *
+     * @return void
+     */
+    public function testTrailingCommaInParameterList()
+    {
+        $method = $this->getFirstMethodForTestCase();
+
+        $this->assertCount(2, $method->getParameters());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
