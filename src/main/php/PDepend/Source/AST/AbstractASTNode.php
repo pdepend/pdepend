@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use function array_pop;
+
 /**
  * This is an abstract base implementation of the ast node interface.
  *
@@ -115,6 +117,18 @@ abstract class AbstractASTNode implements ASTNode
     public function getImage()
     {
         return $this->getMetadata(4);
+    }
+
+    /**
+     * Returns the source image of this ast node without the namespace prefix.
+     *
+     * @return string
+     */
+    public function getImageWithoutNamespace()
+    {
+        $imagePath = explode('\\', $this->getMetadata(4));
+
+        return array_pop($imagePath);
     }
 
     /**

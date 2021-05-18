@@ -220,7 +220,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseFunctionPostfix(ASTNode $node)
     {
-        if (!($node instanceof ASTIdentifier) || $node->getImage() !== 'match') {
+        if (!($node instanceof ASTIdentifier) || $node->getImageWithoutNamespace() !== 'match') {
             return parent::parseFunctionPostfix($node);
         }
 
