@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\AST;
 
-use function array_pop;
-
 /**
  * This is an abstract base implementation of the ast node interface.
  *
