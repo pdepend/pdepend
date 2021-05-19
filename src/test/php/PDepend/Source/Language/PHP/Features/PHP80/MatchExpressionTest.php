@@ -74,7 +74,7 @@ class MatchExpressionTest extends PHPParserVersion80Test
      */
     private function checkMatchExpression(string $namespacePrefix = null)
     {
-        $matchImage = implode('\\', array_filter([$namespacePrefix, 'match']));
+        $matchImage = implode('\\', array_filter(array($namespacePrefix, 'match')));
 
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
