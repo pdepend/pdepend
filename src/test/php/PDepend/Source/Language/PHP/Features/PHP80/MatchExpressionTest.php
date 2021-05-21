@@ -58,6 +58,24 @@ class MatchExpressionTest extends PHPParserVersion80Test
      */
     public function testMatchExpression()
     {
+        $this->checkMatchExpression();
+    }
+
+    /**
+     * @return void
+     */
+    public function testMatchExpressionWithNamespace()
+    {
+        $this->checkMatchExpression('Baz');
+    }
+
+    /**
+     * @return void
+     */
+    private function checkMatchExpression($namespacePrefix = null)
+    {
+        $matchImage = implode('\\', array_filter(array($namespacePrefix, 'match')));
+
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
@@ -65,7 +83,8 @@ class MatchExpressionTest extends PHPParserVersion80Test
         $match = $returns[0]->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $match);
-        $this->assertSame('match', $match->getImage());
+        $this->assertSame($matchImage, $match->getImage());
+        $this->assertSame('match', $match->getImageWithoutNamespace());
         /**
          * @var array{
          *     \PDepend\Source\AST\ASTIdentifier,
@@ -78,7 +97,8 @@ class MatchExpressionTest extends PHPParserVersion80Test
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $children[0]);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchArgument', $children[1]);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchBlock', $children[2]);
-        $this->assertSame('match', $children[0]->getImage());
+        $this->assertSame($matchImage, $children[0]->getImage());
+        $this->assertSame('match', $children[0]->getImageWithoutNamespace());
         /** @var \PDepend\Source\AST\ASTVariable[] $arguments */
         $arguments = $children[1]->getChildren();
         $this->assertCount(1, $arguments);
