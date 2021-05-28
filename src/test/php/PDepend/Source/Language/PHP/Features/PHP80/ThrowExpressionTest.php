@@ -214,5 +214,20 @@ class ThrowExpressionTest extends PHPParserVersion80Test
 
         $exceptionMessage = $throw->findChildrenOfType('PDepend\\Source\\AST\\ASTLiteral');
         $this->assertSame('\'should not be empty\'', $exceptionMessage[0]->getImage());
+
+        $expression = $returns[2]->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+
+        $value = $expression->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $value);
+        $this->assertSame('$value', $value->getImage());
+
+        $throw = $expression->getChild(2);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $throw);
+
+        $exceptionClass = $throw->findChildrenOfType('PDepend\\Source\\AST\\ASTClassReference');
+        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+
+        $this->assertEmpty($throw->findChildrenOfType('PDepend\\Source\\AST\\ASTLiteral'));
     }
 }

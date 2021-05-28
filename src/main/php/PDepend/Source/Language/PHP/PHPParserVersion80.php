@@ -380,7 +380,8 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
             return $this->parseThrowStatement(array(
                 Tokens::T_SEMICOLON,
                 Tokens::T_COMMA,
-                Tokens::T_COLON
+                Tokens::T_COLON,
+                Tokens::T_PARENTHESIS_CLOSE
             ));
         }
 
