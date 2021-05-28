@@ -2756,11 +2756,13 @@ abstract class AbstractPHPParser
                 case Tokens::T_SEMICOLON:
                 case Tokens::T_SQUARED_BRACKET_CLOSE:
                 case Tokens::T_SWITCH:
-                case Tokens::T_THROW:
                 case Tokens::T_TRY:
                 case Tokens::T_UNSET:
                 case Tokens::T_WHILE:
                     break 2;
+                case Tokens::T_THROW:
+                    $expressions[] = $this->parseThrowExpression();
+                    break;
                 case Tokens::T_SELF:
                 case Tokens::T_STRING:
                 case Tokens::T_PARENT:
@@ -3284,7 +3286,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTThrowStatement
      * @since 0.9.12
      */
-    private function parseThrowStatement(array $allowedTerminationTokens = array())
+    protected function parseThrowStatement(array $allowedTerminationTokens = array())
     {
         $this->tokenStack->push();
         $token = $this->consumeToken(Tokens::T_THROW);
@@ -7358,7 +7360,7 @@ abstract class AbstractPHPParser
      * Throws an UnexpectedTokenException
      *
      * @param \PDepend\Source\Tokenizer\Token|null $token
-     * @return void
+     * @return never
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      * @since 2.2.5
      * @deprecated 3.0.0 Use throw $this->getUnexpectedTokenException($token) instead
@@ -7372,6 +7374,20 @@ abstract class AbstractPHPParser
      * @return void
      */
     protected function checkEllipsisInExpressionSupport()
+    {
+        throw $this->getUnexpectedTokenException();
+    }
+
+    /**
+     * Parses throw expression syntax. available since PHP 8.0. Ex.:
+     *  $callable = fn() => throw new Exception();
+     *  $value = $nullableValue ?? throw new InvalidArgumentException();
+     *  $value = $falsableValue ?: throw new InvalidArgumentException();
+     *
+     * @return \PDepend\Source\AST\ASTThrowStatement
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    protected function parseThrowExpression()
     {
         throw $this->getUnexpectedTokenException();
     }

@@ -373,4 +373,17 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     {
         return true;
     }
+
+    protected function parseThrowExpression()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_THROW) {
+            return $this->parseThrowStatement(array(
+                Tokens::T_SEMICOLON,
+                Tokens::T_COMMA,
+                Tokens::T_COLON
+            ));
+        }
+
+        $this->throwUnexpectedTokenException();
+    }
 }
