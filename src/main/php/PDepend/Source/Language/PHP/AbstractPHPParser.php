@@ -5675,8 +5675,8 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         switch ($tokenType) {
-            case ($this->isTypeHint($tokenType)):
-                $parameter = $this->parseFormalParameterAndTypeHint();
+            case $this->isTypeHint($tokenType) && ($typeHint = $this->parseOptionalTypeHint()):
+                $parameter = $this->parseFormalParameterAndTypeHint($typeHint);
                 break;
             case Tokens::T_ARRAY:
                 $parameter = $this->parseFormalParameterAndArrayTypeHint();
@@ -5741,6 +5741,19 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Parses a type hint that is valid in the supported PHP version after the next token.
+     *
+     * @return \PDepend\Source\AST\ASTNode|null
+     * @since 2.9.2
+     */
+    private function parseOptionalTypeHint()
+    {
+        $this->tokenStack->push();
+
+        return $this->parseTypeHint();
+    }
+
+    /**
      * This method parses a formal parameter that has a regular class type hint.
      *
      * <code>
@@ -5752,14 +5765,9 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTFormalParameter
      * @since 0.9.6
      */
-    private function parseFormalParameterAndTypeHint()
+    private function parseFormalParameterAndTypeHint(ASTNode $typeHint)
     {
-        $this->tokenStack->push();
-
-        $classReference = $this->setNodePositionsAndReturn(
-            $this->parseTypeHint()
-        );
-
+        $classReference = $this->setNodePositionsAndReturn($typeHint);
         $parameter = $this->parseFormalParameterOrByReference();
         $parameter->prependChild($classReference);
 
