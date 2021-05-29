@@ -4711,11 +4711,9 @@ abstract class AbstractPHPParser
             );
         }
 
-        if ($this->classOrInterface instanceof ASTTrait) {
-            $classReference = $this->builder->buildAstClassReference('__PDepend_TraitRuntimeReference');
-        } else {
-            $classReference = $this->classOrInterface->getParentClassReference();
-        }
+        $classReference = $this->classOrInterface instanceof ASTTrait
+            ? $this->builder->buildAstClassReference('__PDepend_TraitRuntimeReference')
+            : $this->classOrInterface->getParentClassReference();
 
         if ($classReference === null) {
             throw new InvalidStateException(
@@ -5674,17 +5672,20 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         switch ($tokenType) {
-            case Tokens::T_ARRAY:
-                $parameter = $this->parseFormalParameterAndArrayTypeHint();
-                break;
             case ($this->isTypeHint($tokenType)):
                 $parameter = $this->parseFormalParameterAndTypeHint();
+                break;
+            case Tokens::T_ARRAY:
+                $parameter = $this->parseFormalParameterAndArrayTypeHint();
                 break;
             case Tokens::T_SELF:
                 $parameter = $this->parseFormalParameterAndSelfTypeHint();
                 break;
             case Tokens::T_PARENT:
                 $parameter = $this->parseFormalParameterAndParentTypeHint();
+                break;
+            case Tokens::T_STATIC:
+                $parameter = $this->parseFormalParameterAndStaticTypeHint();
                 break;
             case Tokens::T_BITWISE_AND:
                 $parameter = $this->parseFormalParameterAndByReference();
@@ -5823,6 +5824,32 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * This method will parse a formal parameter that has the keyword static as
+     * parameter type hint.
+     *
+     * <code>
+     * class Foo
+     * {
+     *     //                   -------
+     *     public function test(static $o) {}
+     *     //                   -------
+     * }
+     * </code>
+     *
+     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @since 2.9.2
+     */
+    private function parseFormalParameterAndStaticTypeHint()
+    {
+        $self = $this->parseStaticType();
+
+        $parameter = $this->parseFormalParameterOrByReference();
+        $parameter->addChild($self);
+
+        return $parameter;
+    }
+
+    /**
      * @return \PDepend\Source\AST\ASTSelfReference
      */
     protected function parseSelfType()
@@ -5918,6 +5945,7 @@ abstract class AbstractPHPParser
             case Tokens::T_STRING:
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
+            case Tokens::T_ARRAY:
                 return true;
         }
 

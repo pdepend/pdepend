@@ -71,7 +71,7 @@ class UnionTypesTest extends PHPParserVersion80Test
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[0]);
         /** @var ASTUnionType $unionType */
         $unionType = $children[0];
-        $this->assertSame('int|float|Bar\Biz|null', $unionType->getImage());
+        $this->assertSame('array|int|float|Bar\Biz|null', $unionType->getImage());
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
         /** @var ASTVariableDeclarator $variable */
