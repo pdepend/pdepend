@@ -96,6 +96,22 @@ class UnionTypesTest extends PHPParserVersion80Test
     }
 
     /**
+     * @return void
+     */
+    public function testUnionTypesAsReturnWithArray()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTType $return */
+        $return = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTType'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $return);
+        $this->assertSame('array|iterable', $return->getImage());
+    }
+
+    /**
      * @expectedException \PDepend\Source\Parser\ParserException
      * @expectedExceptionMessage null can not be used as a standalone type
      */

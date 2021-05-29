@@ -267,12 +267,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseEndReturnTypeHint()
     {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_STATIC:
-                return $this->parseStaticType();
-            default:
-                return parent::parseEndReturnTypeHint();
-        }
+        return $this->parseTypeHint();
     }
 
     protected function parseSingleTypeHint()

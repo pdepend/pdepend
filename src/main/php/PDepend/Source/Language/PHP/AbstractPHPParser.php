@@ -1274,11 +1274,14 @@ abstract class AbstractPHPParser
         $callable = $this->parseCallableDeclarationAddition($callable);
 
         $this->consumeComments();
+
         if ($this->tokenizer->peek() == Tokens::T_CURLY_BRACE_OPEN) {
             $callable->addChild($this->parseScope());
-        } else {
-            $this->consumeToken(Tokens::T_SEMICOLON);
+
+            return;
         }
+
+        $this->consumeToken(Tokens::T_SEMICOLON);
     }
 
     /**
