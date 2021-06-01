@@ -133,6 +133,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case Tokens::T_UNSET:
                 return true;
         }
+
         return parent::isConstantName($tokenType);
     }
 
@@ -146,7 +147,23 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             case Tokens::T_CLASS:
                 return true;
         }
+
         return $this->isConstantName($tokenType);
+    }
+
+    /**
+     * @param integer $tokenType
+     * @return bool
+     */
+    protected function isTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_SELF:
+            case Tokens::T_PARENT:
+                return true;
+        }
+
+        return parent::isTypeHint($tokenType);
     }
 
     /**

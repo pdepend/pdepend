@@ -267,12 +267,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseEndReturnTypeHint()
     {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_STATIC:
-                return $this->parseStaticType();
-            default:
-                return parent::parseEndReturnTypeHint();
-        }
+        return $this->parseTypeHint();
     }
 
     protected function parseSingleTypeHint()
@@ -280,6 +275,18 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $this->consumeComments();
 
         switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+                $type = $this->parseArrayType();
+                break;
+            case Tokens::T_SELF:
+                $type = $this->parseSelfType();
+                break;
+            case Tokens::T_PARENT:
+                $type = $this->parseParentType();
+                break;
+            case Tokens::T_STATIC:
+                $type = $this->parseStaticType();
+                break;
             case Tokens::T_NULL:
                 $type = new ASTScalarType('null');
                 $this->tokenizer->next();
