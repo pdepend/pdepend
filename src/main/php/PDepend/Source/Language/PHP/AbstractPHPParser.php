@@ -1348,7 +1348,8 @@ abstract class AbstractPHPParser
      * @return ASTTraitUseStatement
      * @since 1.0.0
      */
-    private function parseOptionalTraitAdaptation(ASTTraitUseStatement $useStatement) {
+    private function parseOptionalTraitAdaptation(ASTTraitUseStatement $useStatement)
+    {
         $this->consumeComments();
 
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
