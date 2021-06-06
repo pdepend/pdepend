@@ -12,7 +12,7 @@ $count = preg_match_all(
 );
 
 if ($count === false) {
-    echo "Failed to find versions on CHANGELOG file !\n";
+    echo "Failed to find versions on CHANGELOG file!\n";
     exit(1);
 }
 
