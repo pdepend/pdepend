@@ -394,7 +394,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
             return false;
         }
 
-        for($i = 0; $type = $this->tokenizer->peekAt($i); $i++) {
+        for ($i = 0; $type = $this->tokenizer->peekAt($i); $i++) {
             switch ($type) {
                 case Tokens::T_COMMENT:
                 case Tokens::T_DOC_COMMENT:

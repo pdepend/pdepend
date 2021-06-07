@@ -1,4 +1,5 @@
-#pdepend-2.9.0 (2021/04/15)
+pdepend-2.9.1 (2021/04/15)
+==========================
 
 - Added [\#519](https://github.com/pdepend/pdepend/issues/519): Support PHP 7.2 trailing commas in grouped use declarations
 - Added [\#518](https://github.com/pdepend/pdepend/issues/518): Support PHP 8 `static` type hint
