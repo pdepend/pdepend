@@ -5312,7 +5312,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if ($this->tokenizer->peek() === Tokens::T_THROW) {
-            return $this->parseThrowStatement(array(Tokens::T_COMMA));
+            return $this->parseThrowStatement(array(Tokens::T_COMMA, Tokens::T_CURLY_BRACE_CLOSE));
         }
 
         return $this->parseExpression();

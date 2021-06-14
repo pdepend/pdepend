@@ -5,7 +5,7 @@ class Foo
         return match($in) {
             'a' => 'A',
             'b' => 'B',
-            default => throw new \InvalidArgumentException("Invalid code [$in]"),
+            default => throw new \InvalidArgumentException("Invalid code [$in]")
         };
     }
 }
