@@ -30,9 +30,8 @@ jobs:
           coverage: none
 
       - name: Imagick SVG support
-        run: |
-          sudo apt-get clean
-          sudo apt-get install libmagickcore-6.q16-3-extra
+        continue-on-error: true
+        run: sudo apt-get install libmagickcore-6.q16-3-extra
 
       - name: Cache Composer packages
         id: composer-cache
