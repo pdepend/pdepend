@@ -5330,6 +5330,7 @@ abstract class AbstractPHPParser
 
         do {
             $matchEntry->addChild($this->parseMatchEntryKey());
+            $this->consumeComments();
 
             if ($this->tokenizer->peek() === Tokens::T_COMMA) {
                 $this->consumeToken(Tokens::T_COMMA);
