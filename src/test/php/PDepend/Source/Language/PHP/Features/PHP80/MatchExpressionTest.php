@@ -128,6 +128,7 @@ class MatchExpressionTest extends PHPParserVersion80Test
             return array(get_class($node), $node->getImage());
         }, $new->getChild(1)->getChild(0)->getChildren()));
     }
+
     /**
      * @return void
      */
