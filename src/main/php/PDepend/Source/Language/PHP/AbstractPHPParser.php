@@ -5328,7 +5328,16 @@ abstract class AbstractPHPParser
 
         $matchEntry = $this->builder->buildAstMatchEntry();
 
-        $matchEntry->addChild($this->parseMatchEntryKey());
+        do {
+            $matchEntry->addChild($this->parseMatchEntryKey());
+
+            if ($this->tokenizer->peek() === Tokens::T_COMMA) {
+                $this->consumeToken(Tokens::T_COMMA);
+                $this->consumeComments();
+            }
+
+            $type = $this->tokenizer->peek();
+        } while ($type != Tokens::T_DOUBLE_ARROW);
 
         $this->consumeComments();
         $this->consumeToken(Tokens::T_DOUBLE_ARROW);
