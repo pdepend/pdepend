@@ -220,7 +220,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseFunctionPostfix(ASTNode $node)
     {
-        if (!($node instanceof ASTIdentifier) || $node->getImage() !== 'match') {
+        if (!($node instanceof ASTIdentifier) || $node->getImageWithoutNamespace() !== 'match') {
             return parent::parseFunctionPostfix($node);
         }
 
@@ -267,12 +267,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseEndReturnTypeHint()
     {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_STATIC:
-                return $this->parseStaticType();
-            default:
-                return parent::parseEndReturnTypeHint();
-        }
+        return $this->parseTypeHint();
     }
 
     protected function parseSingleTypeHint()
@@ -280,6 +275,18 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $this->consumeComments();
 
         switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+                $type = $this->parseArrayType();
+                break;
+            case Tokens::T_SELF:
+                $type = $this->parseSelfType();
+                break;
+            case Tokens::T_PARENT:
+                $type = $this->parseParentType();
+                break;
+            case Tokens::T_STATIC:
+                $type = $this->parseStaticType();
+                break;
             case Tokens::T_NULL:
                 $type = new ASTScalarType('null');
                 $this->tokenizer->next();
@@ -372,5 +379,19 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     protected function allowTrailingCommaInFormalParametersList()
     {
         return true;
+    }
+
+    protected function parseThrowExpression()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_THROW) {
+            return $this->parseThrowStatement(array(
+                Tokens::T_SEMICOLON,
+                Tokens::T_COMMA,
+                Tokens::T_COLON,
+                Tokens::T_PARENTHESIS_CLOSE
+            ));
+        }
+
+        $this->throwUnexpectedTokenException();
     }
 }

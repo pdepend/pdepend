@@ -71,7 +71,7 @@ class UnionTypesTest extends PHPParserVersion80Test
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[0]);
         /** @var ASTUnionType $unionType */
         $unionType = $children[0];
-        $this->assertSame('int|float|Bar\Biz|null', $unionType->getImage());
+        $this->assertSame('array|int|float|Bar\Biz|null', $unionType->getImage());
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
         /** @var ASTVariableDeclarator $variable */
@@ -93,6 +93,22 @@ class UnionTypesTest extends PHPParserVersion80Test
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $return);
         $this->assertSame('int|float|Bar\Biz|null', $return->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnionTypesAsReturnWithArray()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTType $return */
+        $return = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTType'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $return);
+        $this->assertSame('array|iterable', $return->getImage());
     }
 
     /**

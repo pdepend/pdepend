@@ -41,8 +41,10 @@
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamedArgument;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -118,5 +120,59 @@ class NamedArgumentsTest extends PHPParserVersion80Test
 
         $this->assertSame('methods', $argument->getName());
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
+    }
+
+    public function testNamedArgumentsFindVariable()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTNamedArgument $namedArgument */
+        $namedArgument = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTNamedArgument'
+        );
+        /** @var ASTVariable[] $variables */
+        $variables = $method->findChildrenOfType(
+            'PDepend\\Source\\AST\\ASTVariable'
+        );
+        $this->assertCount(2, $variables);
+
+        $foundVariable = $namedArgument->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
+        $this->assertSame($variables[1], $foundVariable);
+        $this->assertSame('$foo', $foundVariable->getImage());
+        /** @var ASTExpression $expression */
+        $expression = $variables[1]->getParent();
+        /** @var ASTNamedArgument $expression */
+        $expressionParent = $expression->getParent();
+        $this->assertSame($namedArgument, $expressionParent);
+        $this->assertSame(
+            array($variables[1]),
+            $namedArgument->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable')
+        );
+    }
+
+    public function testNamedArgumentsFindDirectVariable()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTNamedArgument $namedArgument */
+        $namedArgument = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTNamedArgument'
+        );
+        /** @var ASTVariable[] $variables */
+        $variables = $method->findChildrenOfType(
+            'PDepend\\Source\\AST\\ASTVariable'
+        );
+        $this->assertCount(2, $variables);
+
+        $foundVariable = $namedArgument->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
+        $this->assertSame($variables[1], $foundVariable);
+        $this->assertSame('$foo', $foundVariable->getImage());
+        /** @var ASTNamedArgument $variableParent */
+        $variableParent = $variables[1]->getParent();
+        $this->assertSame($namedArgument, $variableParent);
+        $this->assertSame(
+            array($variables[1]),
+            $namedArgument->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable')
+        );
     }
 }

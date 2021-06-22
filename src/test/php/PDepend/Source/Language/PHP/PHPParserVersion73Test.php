@@ -90,7 +90,7 @@ class PHPParserVersion73Test extends AbstractTest
         }
 
         /** @var ASTHeredoc $heredoc */
-        $heredoc = $this->getFirstNodeOfTypeInFunction('','PDepend\\Source\\AST\\ASTArray');
+        $heredoc = $this->getFirstNodeOfTypeInFunction('', 'PDepend\\Source\\AST\\ASTArray');
         $arrayElements = $heredoc->getChildren();
         $children = $arrayElements[0]->getChildren();
         $children = $children[0]->getChildren();

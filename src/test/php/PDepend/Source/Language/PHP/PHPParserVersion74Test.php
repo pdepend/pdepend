@@ -241,7 +241,7 @@ class PHPParserVersion74Test extends AbstractTest
         /** @var ASTScalarType $parameters */
         $type = $closure->getChild(1);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
-        $this->assertSame('int',$type->getImage());
+        $this->assertSame('int', $type->getImage());
         /** @var ASTReturnStatement $parameters */
         $return = $closure->getChild(2);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);

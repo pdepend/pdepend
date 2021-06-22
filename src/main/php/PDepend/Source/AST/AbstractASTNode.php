@@ -118,6 +118,18 @@ abstract class AbstractASTNode implements ASTNode
     }
 
     /**
+     * Returns the source image of this ast node without the namespace prefix.
+     *
+     * @return string
+     */
+    public function getImageWithoutNamespace()
+    {
+        $imagePath = explode('\\', $this->getMetadata(4));
+
+        return array_pop($imagePath);
+    }
+
+    /**
      * Returns the start line for this ast node.
      *
      * @return integer
