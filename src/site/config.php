@@ -56,7 +56,7 @@ class ClassDirective extends Directive
     }
 }
 
-class PhpMdEnvironment extends Environment
+class PHPDependEnvironment extends Environment
 {
     public static $letters = array('=', '-', '`', '~', '*', '^', '"');
 
@@ -94,7 +94,7 @@ class PhpMdEnvironment extends Environment
     }
 }
 
-$env = new PhpMdEnvironment;
+$env = new PHPDependEnvironment;
 $parser = new Parser($env);
 $parser->registerDirective(new ClassDirective());
 
@@ -106,6 +106,7 @@ return array(
     'sourceDirectory'  => __DIR__.'/rst',
     'assetsDirectory'  => __DIR__.'/resources/web',
     'layout'           => __DIR__.'/resources/layout.php',
+    'publishPhar' => 'pdepend/pdepend',
     'extensions'       => array(
         'rst' => function ($file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));
@@ -120,8 +121,8 @@ return array(
                 return "<a id=\"$hash\"></a>\n<h$level>$content</h$level>";
             }, $content);
             $content = preg_replace(
-                '/phpmd-(\d+\.\S+)/',
-                '<a href="https://github.com/phpmd/phpmd/releases/tag/$1" title="$0 release">$0</a>',
+                '/pdepend-(\d+\.\S+)/',
+                '<a href="https://github.com/pdepend/pdepend/releases/tag/$1" title="$0 release">$0</a>',
                 $content
             );
 
