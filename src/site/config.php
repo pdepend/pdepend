@@ -106,7 +106,7 @@ return array(
     'sourceDirectory'  => __DIR__.'/rst',
     'assetsDirectory'  => __DIR__.'/resources/web',
     'layout'           => __DIR__.'/resources/layout.php',
-    'publishPhar' => 'pdepend/pdepend',
+    'publishPhar'      => 'pdepend/pdepend',
     'extensions'       => array(
         'rst' => function ($file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));
