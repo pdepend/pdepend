@@ -769,6 +769,17 @@ class PHPParserGenericTest extends AbstractTest
     }
 
     /**
+     * testOptionalSemiColon
+     *
+     * @return void
+     */
+    public function testOptionalSemiColon()
+    {
+        $template = $this->parseCodeResourceForTest();
+        $this->assertNotNull($template);
+    }
+
+    /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
