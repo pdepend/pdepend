@@ -500,6 +500,11 @@ class PHPParserGenericTest extends AbstractTestCase
         static::assertEmpty($this->parseCodeResourceForTest());
     }
 
+    public function testNestedAlternativeWithElse(): void
+    {
+        static::assertEmpty($this->parseCodeResourceForTest());
+    }
+
     /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
