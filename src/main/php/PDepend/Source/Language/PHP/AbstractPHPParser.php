@@ -7225,7 +7225,7 @@ abstract class AbstractPHPParser
      * @return \PDepend\Source\AST\ASTType|null
      * @since 0.9.6
      */
-    protected function parseFieldDeclarationType()
+    private function parseFieldDeclarationType()
     {
         // Skip, if ignore annotations is set
         if ($this->ignoreAnnotations === true) {
