@@ -2494,10 +2494,23 @@ abstract class AbstractPHPParser
     protected function parseBraceExpression(
         ASTNode $node,
         Token $start,
-        $closeToken
+        $closeToken,
+        $separatorToken = null
     ) {
         if (is_object($expr = $this->parseOptionalExpression())) {
             $node->addChild($expr);
+        }
+
+        $this->consumeComments();
+
+        while ($separatorToken && $this->tokenizer->peek() === $separatorToken) {
+            $this->consumeToken($separatorToken);
+
+            if (is_object($expr = $this->parseOptionalExpression())) {
+                $node->addChild($expr);
+            }
+
+            $this->consumeComments();
         }
 
         $end = $this->consumeToken($closeToken);
