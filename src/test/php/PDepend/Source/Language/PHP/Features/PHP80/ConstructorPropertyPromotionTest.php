@@ -94,7 +94,6 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80Test
     }
 
     /**
-     * @group i
      * @return void
      */
     public function testConstructorPropertyPromotionWithComments()
