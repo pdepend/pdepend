@@ -67,6 +67,17 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion80 extends PHPParserVersion74
 {
+    protected $possiblePropertyTypes = array(
+        Tokens::T_STRING,
+        Tokens::T_ARRAY,
+        Tokens::T_QUESTION_MARK,
+        Tokens::T_BACKSLASH,
+        Tokens::T_CALLABLE,
+        Tokens::T_SELF,
+        Tokens::T_NULL,
+        Tokens::T_FALSE,
+    );
+
     /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
      * name part.

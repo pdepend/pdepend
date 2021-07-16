@@ -41,6 +41,8 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -126,6 +128,45 @@ class PHPParserVersion80Test extends AbstractTest
         $method = $this->getFirstMethodForTestCase();
 
         $this->assertCount(2, $method->getParameters());
+    }
+
+    public function testNullableTypedProperties()
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+        $children = $class->getChildren();
+
+        $this->assertTrue($children[0]->hasType());
+
+        /** @var array[] $declarations */
+        $declarations = array_map(function (ASTFieldDeclaration $child) {
+            $childChildren = $child->getChildren();
+
+            return array(
+                $child->hasType() ? $child->getType() : null,
+                $childChildren[1],
+            );
+        }, $children);
+
+        foreach (array(
+            array('null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'),
+        ) as $index => $expected) {
+            list($expectedType, $expectedVariable, $expectedTypeClass) = $expected;
+            list($type, $variable) = $declarations[$index];
+
+            $this->assertInstanceOf(
+                $expectedTypeClass,
+                $type,
+                "Wrong type for $expectedType $expectedVariable"
+            );
+            $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
+            $this->assertInstanceOf(
+                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                $variable,
+                "Wrong variable for $expectedType $expectedVariable"
+            );
+            $this->assertSame($expectedVariable, $variable->getImage());
+        }
     }
 
     /**

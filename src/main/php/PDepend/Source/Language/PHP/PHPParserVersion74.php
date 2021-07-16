@@ -57,20 +57,22 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion74 extends PHPParserVersion73
 {
+    protected $possiblePropertyTypes = array(
+        Tokens::T_STRING,
+        Tokens::T_ARRAY,
+        Tokens::T_QUESTION_MARK,
+        Tokens::T_BACKSLASH,
+        Tokens::T_CALLABLE,
+        Tokens::T_SELF,
+    );
+
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
         /**
          * Typed properties
          * https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.typed-properties
          */
-        if (in_array($tokenType, array(
-            Tokens::T_STRING,
-            Tokens::T_ARRAY,
-            Tokens::T_QUESTION_MARK,
-            Tokens::T_BACKSLASH,
-            Tokens::T_CALLABLE,
-            Tokens::T_SELF,
-        ))) {
+        if (in_array($tokenType, $this->possiblePropertyTypes, true)) {
             $type = $this->parseTypeHint();
             $declaration = $this->parseFieldDeclaration();
             $declaration->prependChild($type);
