@@ -40,6 +40,7 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
+use PDepend\Source\AST\ASTEchoStatement;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
@@ -75,11 +76,21 @@ class NullsafeOperatorTest extends PHPParserVersion80Test
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
-        /** @var ASTVariableDeclarator $variable */
-        $variable = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTVariableDeclarator'
-        );
+        /** @var ASTEchoStatement $variable */
+        $echo = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTEchoStatement');
+        $chain = array();
+        $node = $echo;
 
-        $this->assertSame('$obj', $variable->getImage());
+        while ($node = $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix')) {
+            if ($variable = $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable')) {
+                $chain[] = $variable->getImage();
+            } elseif ($property = $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTPropertyPostfix')) {
+                $chain[] = $property->getImage();
+            }
+
+            $chain[] = $node->getImage();
+        }
+
+        $this->assertSame(array('$this', '->', 'a', '?->', 'b', '->'), $chain);
     }
 }

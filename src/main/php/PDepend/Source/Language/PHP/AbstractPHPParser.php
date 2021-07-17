@@ -3945,10 +3945,30 @@ abstract class AbstractPHPParser
     protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
     {
         $this->consumeComments();
-        if (Tokens::T_OBJECT_OPERATOR === $this->tokenizer->peek()) {
+
+        if ($this->isNextTokenObjectOperator()) {
             return $this->parseMemberPrimaryPrefix($expr->getChild(0));
         }
+
         return $expr;
+    }
+
+    /**
+     * @eturn bool
+     */
+    protected function isNextTokenObjectOperator()
+    {
+        return $this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR;
+    }
+
+    /**
+     * @return \PDepend\Source\Tokenizer\Token
+     * @throws \PDepend\Source\Parser\TokenStreamEndException
+     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     */
+    protected function consumeObjectOperatorToken()
+    {
+        return $this->consumeToken(Tokens::T_OBJECT_OPERATOR);
     }
 
     /**
@@ -4132,9 +4152,10 @@ abstract class AbstractPHPParser
     {
         $this->consumeComments();
 
-        if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
+        if ($this->isNextTokenObjectOperator()) {
             return $this->parseMemberPrimaryPrefix($node);
         }
+
         return $node;
     }
 
@@ -4161,7 +4182,7 @@ abstract class AbstractPHPParser
     protected function parseMemberPrimaryPrefix(ASTNode $node)
     {
         // Consume double colon and optional comments
-        $token = $this->consumeToken(Tokens::T_OBJECT_OPERATOR);
+        $token = $this->consumeObjectOperatorToken();
 
         $prefix = $this->builder->buildAstMemberPrimaryPrefix($token->image);
         $prefix->addChild($node);
@@ -4529,6 +4550,7 @@ abstract class AbstractPHPParser
             case Tokens::T_DOUBLE_COLON:
                 $result = $this->parseStaticMemberPrimaryPrefix($variable);
                 break;
+            case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
             case Tokens::T_OBJECT_OPERATOR:
                 $result = $this->parseMemberPrimaryPrefix($variable);
                 break;

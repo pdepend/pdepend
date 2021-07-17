@@ -381,6 +381,22 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return true;
     }
 
+    protected function isNextTokenObjectOperator()
+    {
+        return in_array($this->tokenizer->peek(), array(
+            Tokens::T_OBJECT_OPERATOR,
+            Tokens::T_NULLSAFE_OBJECT_OPERATOR,
+        ), true);
+    }
+
+    protected function consumeObjectOperatorToken()
+    {
+        return $this->consumeToken($this->tokenizer->peek() === Tokens::T_NULLSAFE_OBJECT_OPERATOR
+            ? Tokens::T_NULLSAFE_OBJECT_OPERATOR
+            : Tokens::T_OBJECT_OPERATOR
+        );
+    }
+
     protected function parseThrowExpression()
     {
         if ($this->tokenizer->peek() === Tokens::T_THROW) {
