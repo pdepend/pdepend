@@ -52,8 +52,13 @@ abstract class PHPParserVersion80Test extends AbstractTest
 {
     protected static function needsPHP80()
     {
-        if (version_compare(PHP_VERSION, '8.0.0-dev', '<')) {
+        if (static::isLowerThanPHP80()) {
             self::markTestSkipped('Requires at least PHP 8.0');
         }
+    }
+
+    protected static function isLowerThanPHP80()
+    {
+        return version_compare(PHP_VERSION, '8.0.0-dev', '<');
     }
 }
