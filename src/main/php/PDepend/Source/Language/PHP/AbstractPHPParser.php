@@ -2922,11 +2922,22 @@ abstract class AbstractPHPParser
     {
         $this->consumeToken($tokenType);
         $this->consumeComments();
+        $this->parseStatementEnd();
+    }
 
-        if ($this->tokenizer->peek() === Tokens::T_SEMICOLON) {
-            $this->consumeToken(Tokens::T_SEMICOLON);
-        } else {
-            $this->parseNonePhpCode();
+    private function parseStatementEnd()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_CLOSE_TAG:
+                return;
+
+            case Tokens::T_SEMICOLON:
+                $this->consumeToken(Tokens::T_SEMICOLON);
+
+                return;
+
+            default:
+                $this->parseNonePhpCode();
         }
     }
 
@@ -3539,11 +3550,7 @@ abstract class AbstractPHPParser
             return;
         }
 
-        if ($this->tokenizer->peek() === Tokens::T_SEMICOLON) {
-            $this->consumeToken(Tokens::T_SEMICOLON);
-        } else {
-            $this->parseNonePhpCode();
-        }
+        $this->parseStatementEnd();
     }
 
     /**
