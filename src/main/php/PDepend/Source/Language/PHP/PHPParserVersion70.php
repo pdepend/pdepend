@@ -423,7 +423,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             return $this->parseStaticMemberPrimaryPrefix($node);
         }
 
-        if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
+        if ($this->isNextTokenObjectOperator()) {
             return $this->parseMemberPrimaryPrefix($node);
         }
 
@@ -442,7 +442,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             return $this->parseStaticMemberPrimaryPrefix($expr->getChild(0));
         }
 
-        if ($this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR) {
+        if ($this->isNextTokenObjectOperator()) {
             $node = count($expr->getChildren()) === 0 ? $expr : $expr->getChild(0);
             return $this->parseMemberPrimaryPrefix($node);
         }

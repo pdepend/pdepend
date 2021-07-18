@@ -283,6 +283,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                  * Class::method or $object->method both only count as 1
                  * identifier, even though they consist of 3 tokens.
                  */
+                case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
                 case Tokens::T_OBJECT_OPERATOR:
                 case Tokens::T_DOUBLE_COLON:
                     // Glue ->/:: and before & after parts together.
