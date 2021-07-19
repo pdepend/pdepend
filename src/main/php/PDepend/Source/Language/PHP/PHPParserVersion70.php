@@ -274,7 +274,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         $expr = $this->parseBraceExpression(
             $expr,
             $this->consumeToken(Tokens::T_PARENTHESIS_OPEN),
-            Tokens::T_PARENTHESIS_CLOSE
+            Tokens::T_PARENTHESIS_CLOSE,
+            Tokens::T_COMMA
         );
 
         while ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {

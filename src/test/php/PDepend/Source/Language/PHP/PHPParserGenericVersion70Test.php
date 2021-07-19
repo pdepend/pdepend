@@ -552,4 +552,12 @@ class PHPParserGenericVersion70Test extends AbstractTest
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
+
+    /**
+     * @return void
+     */
+    public function testMultipleArgumentsInInvocation()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
 }
