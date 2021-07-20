@@ -4,7 +4,7 @@ pdepend-2.10.0 (2021/07/20)
 - Added [\#534](https://github.com/pdepend/pdepend/pull/534): Support trailing comma in parameters list.
 - Added [\#535](https://github.com/pdepend/pdepend/pull/535): Support trailing comma in closure list.
 - Added [\#538](https://github.com/pdepend/pdepend/pull/538): Add named argument value as child to make it discoverable.
-- Added [\#540](https://github.com/pdepend/pdepend/pull/540](https://github.com/pdepend/pdepend/pull/540)): Support throw expression.
+- Added [\#540](https://github.com/pdepend/pdepend/pull/540): Support throw expression.
 - Added [\#543](https://github.com/pdepend/pdepend/pull/543): Support multiple expressions as match key.
 - Fixed [\#530](https://github.com/pdepend/pdepend/pull/530): Automate release generation for the website.
 - Fixed [\#537](https://github.com/pdepend/pdepend/pull/537): Match expression does not have namespace
