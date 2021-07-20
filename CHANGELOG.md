@@ -15,7 +15,6 @@ pdepend-2.10.0 (2021/07/20)
 - Fixed [\#551](https://github.com/pdepend/pdepend/pull/551): Allow null and false in union type for typed properties
 - Fixed [\#552](https://github.com/pdepend/pdepend/pull/552): Allow null-safe operator anywhere object operator is allowed
 
-
 pdepend-2.9.1 (2021/04/15)
 ==========================
 
