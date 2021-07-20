@@ -1,3 +1,20 @@
+pdepend-2.10.0 (2021/07/20)
+==========================
+
+- Added [\#534](https://github.com/pdepend/pdepend/pull/534): Support trailing comma in parameters list.
+- Added [\#535](https://github.com/pdepend/pdepend/pull/535): Support trailing comma in closure list.
+- Added [\#538](https://github.com/pdepend/pdepend/pull/538): Add named argument value as child to make it discoverable.
+- Added [\#540](https://github.com/pdepend/pdepend/pull/540): Support throw expression.
+- Added [\#543](https://github.com/pdepend/pdepend/pull/543): Support multiple expressions as match key.
+- Fixed [\#530](https://github.com/pdepend/pdepend/pull/530): Automate release generation for the website.
+- Fixed [\#537](https://github.com/pdepend/pdepend/pull/537): Match expression does not have namespace
+- Fixed [\#541](https://github.com/pdepend/pdepend/pull/541): Fix support for union types
+- Fixed [\#544](https://github.com/pdepend/pdepend/pull/544): Math throw entry may end on curly braces
+- Fixed [\#547](https://github.com/pdepend/pdepend/pull/547): Add the phar to the website. The new URL is: https://pdepend.org/static/latest/pdepend.phar
+- Fixed [\#550](https://github.com/pdepend/pdepend/pull/550): Allow multiple arguments in invocation
+- Fixed [\#551](https://github.com/pdepend/pdepend/pull/551): Allow null and false in union type for typed properties
+- Fixed [\#552](https://github.com/pdepend/pdepend/pull/552): Allow null-safe operator anywhere object operator is allowed
+
 pdepend-2.9.1 (2021/04/15)
 ==========================
 
