@@ -249,6 +249,7 @@ class ASTFormalParameterTest extends ASTNodeTest
         $param = $this->createNodeInstance();
         $this->assertEquals(
             array(
+                'modifiers',
                 'comment',
                 'metadata',
                 'nodes'

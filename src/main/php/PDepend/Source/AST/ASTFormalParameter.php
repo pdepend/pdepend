@@ -256,4 +256,9 @@ class ASTFormalParameter extends AbstractASTNode
     {
         return ($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE;
     }
+
+    public function __sleep()
+    {
+        return array_merge(array('modifiers'), parent::__sleep());
+    }
 }
