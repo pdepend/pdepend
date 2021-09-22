@@ -41,10 +41,8 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
-use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
-use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\Builder\Builder;
