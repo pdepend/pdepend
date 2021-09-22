@@ -349,7 +349,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                 $this->consumeToken(Tokens::T_ELLIPSIS);
             }
 
-            $expr = $this->parseOptionalExpression();
+            $expr = $this->parseArgumentExpression();
 
             if ($expr instanceof ASTConstant) {
                 $expr = $this->parseConstantArgument($expr, $arguments);
@@ -361,6 +361,11 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
         }
 
         return $arguments;
+    }
+
+    protected function parseArgumentExpression()
+    {
+        return $this->parseOptionalExpression();
     }
 
     /**
