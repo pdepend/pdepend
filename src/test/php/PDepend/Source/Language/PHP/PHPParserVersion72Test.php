@@ -41,8 +41,10 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\Builder\Builder;
@@ -125,5 +127,14 @@ class PHPParserVersion72Test extends AbstractTest
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion72',
             array($tokenizer, $builder, $cache)
         );
+    }
+
+    /**
+     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
+     * @expectedExceptionMessage Unexpected token: ), line: 4, col: 14
+     */
+    public function testTrailingCommasInUnsetCall()
+    {
+        $this->parseCodeResourceForTest();
     }
 }
