@@ -101,6 +101,21 @@ class NamedArgumentsTest extends PHPParserVersion80Test
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
     }
 
+    public function testNamedArgumentsWithDefaultName()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTArguments $arguments */
+        $arguments = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTArguments'
+        );
+        $children = $arguments->getChildren();
+
+        $this->assertCount(1, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[0]);
+        $this->assertSame("default: 'bar'", $children[0]->getImage());
+    }
+
     public function testNamedArgumentsInInstances()
     {
         /** @var ASTMethod $method */

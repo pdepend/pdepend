@@ -197,6 +197,23 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $parameter;
     }
 
+    protected function parseArgumentExpression()
+    {
+        if ($this->tokenizer->peekNext() === Tokens::T_COLON) {
+            $token = $this->tokenizer->currentToken();
+            $image = $token->image;
+
+            // Variable RegExp from https://www.php.net/manual/en/language.variables.basics.php
+            if (preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $image)) {
+                $this->consumeToken($token->type);
+
+                return $this->builder->buildAstConstant($image);
+            }
+        }
+
+        return parent::parseArgumentExpression();
+    }
+
     /**
      * @return ASTConstant
      */
