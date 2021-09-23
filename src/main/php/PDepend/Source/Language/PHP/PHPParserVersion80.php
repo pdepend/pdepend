@@ -214,7 +214,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return parent::parseArgumentExpression();
     }
 
-
     /**
      * @return ASTConstant
      */
