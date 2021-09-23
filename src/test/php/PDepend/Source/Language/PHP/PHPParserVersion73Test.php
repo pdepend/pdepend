@@ -199,6 +199,20 @@ class PHPParserVersion73Test extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testTrailingCommasInUnsetCall()
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        /** @var ASTFunctionPostfix[] $calls */
+        $calls = $statements[0]->getChildren();
+
+        $this->assertCount(1, $calls);
+        $this->assertSame('$i', $calls[0]->getImage());
+    }
+
+    /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
