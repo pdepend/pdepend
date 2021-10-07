@@ -1,3 +1,11 @@
+pdepend-2.10.1 (2021/10/11)
+==========================
+
+- Added [\#563](https://github.com/pdepend/pdepend/pull/563): Support PHP 8.1 `never` return type.
+- Added [\#561](https://github.com/pdepend/pdepend/pull/561): Support trailing comma in `isset()` and `unset()` lists.
+- Fixed [\#562](https://github.com/pdepend/pdepend/pull/562): Allow any keyword as the name of an argument.
+- Fixed [\#555](https://github.com/pdepend/pdepend/pull/555): Restore modifier after serialization.
+
 pdepend-2.10.0 (2021/07/20)
 ==========================
 
