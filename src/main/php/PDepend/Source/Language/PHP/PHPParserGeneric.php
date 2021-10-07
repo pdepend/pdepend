@@ -54,7 +54,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.20
  */
-class PHPParserGeneric extends PHPParserVersion80
+class PHPParserGeneric extends PHPParserVersion81
 {
     /**
      * Tests if the given token type is a reserved keyword in the supported PHP
