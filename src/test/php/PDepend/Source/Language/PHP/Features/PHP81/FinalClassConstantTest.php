@@ -50,39 +50,21 @@ use PDepend\Source\AST\State;
  * @group unittest
  * @group php8.1
  */
-class ReadonlyPropertiesTest extends AbstractTest
+class FinalClassConstantTest extends AbstractTest
 {
     /**
      * @return void
      */
-    public function testReadonlyProperty()
+    public function testFinalClassConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        $property = $class->getChild(0);
+        $constants = $class->getConstants();
 
-        $this->assertSame('string', $property->getChild(0)->getImage());
-        $this->assertSame('$bar', $property->getChild(1)->getImage());
+        $constant = $constants['BAR'];
+        $this->assertSame('BAR', $constant->getImage());
 
-        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
-        $this->assertSame(0, ($expectedModifiers & $property->getModifiers()));
-    }
-
-    /**
-     * @return void
-     */
-    public function testReadonlyPropertyInConstructor()
-    {
-        $class = $this->getFirstClassForTestCase();
-        $constructor = $class->getMethods()->offsetGet(0);
-        $this->assertSame('__construct', $constructor->getName());
-
-        $parameters = $constructor->getParameters();
-        $parameter = $parameters[0];
-
-        $this->assertSame('string', $parameter->getFormalParameter()->getChild(0)->getImage());
-        $this->assertSame('$bar', $parameter->getFormalParameter()->getChild(1)->getImage());
-
-        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
-        $this->assertSame(0, ($expectedModifiers & $parameter->getFormalParameter()->getModifiers()));
+        $constantDefinition = $constant->getParent();
+        $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
+        $this->assertSame(0, ($expectedModifiers & $constantDefinition->getModifiers()));
     }
 }

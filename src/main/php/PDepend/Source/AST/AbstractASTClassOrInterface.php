@@ -348,7 +348,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
                 $image = $declarator->getImage();
                 $value = $declarator->getValue()->getValue();
 
-                $this->constants[$image] = $value;
+                $this->constants[$image] = $declarator;
             }
         }
     }

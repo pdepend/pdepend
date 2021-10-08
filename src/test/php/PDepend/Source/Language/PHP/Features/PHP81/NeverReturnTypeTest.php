@@ -41,15 +41,13 @@
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\AbstractTest;
-use PDepend\Source\AST\ASTClass;
-use PDepend\Source\AST\ASTMethod;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
  * @group unittest
- * @group php8
+ * @group php8.1
  */
 class NeverReturnTypeTest extends AbstractTest
 {
@@ -63,6 +61,7 @@ class NeverReturnTypeTest extends AbstractTest
         $this->assertTrue($type->isScalar());
         $this->assertSame('never', $type->getImage());
     }
+
     /**
      * @return void
      */
@@ -75,8 +74,6 @@ class NeverReturnTypeTest extends AbstractTest
     }
 
     /**
-     * testClosureReturnTypeHintString
-     *
      * @return void
      */
     public function testClosureReturnType()

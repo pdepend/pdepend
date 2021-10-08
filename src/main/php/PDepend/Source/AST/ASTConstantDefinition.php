@@ -89,7 +89,8 @@ class ASTConstantDefinition extends AbstractASTNode
     {
         $expected = ~State::IS_PUBLIC
             & ~State::IS_PROTECTED
-            & ~State::IS_PRIVATE;
+            & ~State::IS_PRIVATE
+            & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
             throw new \InvalidArgumentException(

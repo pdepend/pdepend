@@ -1000,6 +1000,11 @@ abstract class AbstractPHPParser
                     $declaration->setModifiers($modifiers);
 
                     return $declaration;
+                case Tokens::T_CONST:
+                    $declaration = $this->parseConstantDefinition();
+                    $declaration->setModifiers($modifiers);
+
+                    return $declaration;
                 default:
                     return $this->parseUnknownDeclaration($tokenType, $modifiers);
             }
