@@ -57,7 +57,7 @@ class ReadonlyPropertiesTest extends AbstractTest
     /**
      * @return void
      */
-    public function testReadonlyProperties()
+    public function testReadonlyProperty()
     {
         $class = $this->getFirstClassForTestCase();
         $property = $class->getChild(0);
@@ -67,5 +67,24 @@ class ReadonlyPropertiesTest extends AbstractTest
 
         $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
         $this->assertSame(0, ($expectedModifiers & $property->getModifiers()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testReadonlyPropertyInConstructor()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $constructor = $class->getMethods()->offsetGet(0);
+        $this->assertSame('__construct', $constructor->getName());
+
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[0];
+
+        $this->assertSame('string', $parameter->getFormalParameter()->getChild(0)->getImage());
+        $this->assertSame('$bar', $parameter->getFormalParameter()->getChild(1)->getImage());
+
+        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
+        $this->assertSame(0, ($expectedModifiers & $parameter->getFormalParameter()->getModifiers()));
     }
 }
