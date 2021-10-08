@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,59 +38,34 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
+
+use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\State;
 
 /**
- * Holds constants with internal state constants
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ * @group unittest
+ * @group php8
  */
-interface State
+class ReadonlyPropertiesTest extends AbstractTest
 {
     /**
-     * Marks a class or interface as implicit abstract.
+     * @return void
      */
-    const IS_IMPLICIT_ABSTRACT = \ReflectionClass::IS_IMPLICIT_ABSTRACT;
+    public function testReadonlyProperties()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $property = $class->getChild(0);
 
-    /**
-     * Marks a class or interface as explicit abstract.
-     */
-    const IS_EXPLICIT_ABSTRACT = \ReflectionClass::IS_EXPLICIT_ABSTRACT;
+        $this->assertSame('string', $property->getChild(0)->getImage());
+        $this->assertSame('$bar', $property->getChild(1)->getImage());
 
-    /**
-     * Marks a node as public.
-     */
-    const IS_PUBLIC = \ReflectionMethod::IS_PUBLIC;
-
-    /**
-     * Marks a node as protected.
-     */
-    const IS_PROTECTED = \ReflectionMethod::IS_PROTECTED;
-
-    /**
-     * Marks a node as private.
-     */
-    const IS_PRIVATE = \ReflectionMethod::IS_PRIVATE;
-
-    /**
-     * Marks a node as abstract.
-     */
-    const IS_ABSTRACT = \ReflectionMethod::IS_ABSTRACT;
-
-    /**
-     * Marks a node as final.
-     */
-    const IS_FINAL = \ReflectionMethod::IS_FINAL;
-
-    /**
-     * Marks a node as static.
-     */
-    const IS_STATIC = \ReflectionMethod::IS_STATIC;
-
-    /**
-     * Marks a node as readonly.
-     * TODO: use PHP's constant
-     */
-    const IS_READONLY = 128;
+        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
+        $this->assertSame(0, ($expectedModifiers & $property->getModifiers()));
+    }
 }

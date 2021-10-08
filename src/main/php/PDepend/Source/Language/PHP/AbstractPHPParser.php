@@ -984,6 +984,9 @@ abstract class AbstractPHPParser
                 case Tokens::T_FINAL:
                     $modifiers |= State::IS_FINAL;
                     break;
+                case Tokens::T_READONLY:
+                    $modifiers |= State::IS_READONLY;
+                    break;
                 case Tokens::T_FUNCTION:
                     $method = $this->parseMethodDeclaration();
                     $method->setModifiers($modifiers);

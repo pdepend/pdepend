@@ -209,6 +209,13 @@ if (!defined('T_NULLSAFE_OBJECT_OPERATOR')) {
 }
 
 /**
+ * Define PHP 8.1 tokens
+ */
+if (!defined('T_READONLY')) {
+    define('T_READONLY', 42401);
+}
+
+/**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
  *
@@ -360,6 +367,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_FN                        => Tokens::T_FN,
         T_MATCH                     => Tokens::T_STRING,
         T_NULLSAFE_OBJECT_OPERATOR  => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
+        T_READONLY                  => Tokens::T_READONLY,
     );
 
     /**
@@ -420,6 +428,7 @@ class PHPTokenizerInternal implements FullTokenizer
         '__dir__'        =>  Tokens::T_DIR,
         '__trait__'      =>  Tokens::T_TRAIT_C,
         '__namespace__'  =>  Tokens::T_NS_C,
+        'readonly'       =>  Tokens::T_READONLY,
     );
 
     /**
