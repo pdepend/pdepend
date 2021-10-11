@@ -92,7 +92,10 @@ interface State
 
     /**
      * Marks a node as readonly.
-     * TODO: use PHP's constant
+     *
+     * TODO: use \ReflectionProperty::IS_READONLY
+     * Once min PHP version supported >= 5.6,
+     * switch to `defined('ReflectionProperty::IS_READONLY') ? \ReflectionProperty::IS_READONLY : 128`
      */
     const IS_READONLY = 128;
 }
