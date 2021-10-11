@@ -120,7 +120,8 @@ class ASTFieldDeclaration extends AbstractASTNode
         $expected = ~State::IS_PUBLIC
                   & ~State::IS_PROTECTED
                   & ~State::IS_PRIVATE
-                  & ~State::IS_STATIC;
+                  & ~State::IS_STATIC
+                  & ~State::IS_READONLY;
 
         if (($expected & $modifiers) !== 0) {
             throw new \InvalidArgumentException(

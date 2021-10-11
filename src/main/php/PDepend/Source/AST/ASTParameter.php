@@ -343,6 +343,16 @@ class ASTParameter extends AbstractASTArtifact
     }
 
     /**
+     * Returns the wrapped formal parameter instance.
+     *
+     * @return ASTFormalParameter
+     */
+    public function getFormalParameter()
+    {
+        return $this->formalParameter;
+    }
+
+    /**
      * This method returns a string representation of this parameter.
      *
      * @return string

@@ -96,4 +96,19 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
         return parent::parseScalarOrCallableTypeHint($image);
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function parseConstructFormalParameterModifiers()
+    {
+        $modifier = parent::parseConstructFormalParameterModifiers();
+
+        if ($this->tokenizer->peek() === Tokens::T_READONLY) {
+            $modifier |= State::IS_READONLY;
+            $this->tokenizer->next();
+        }
+
+        return $modifier;
+    }
 }

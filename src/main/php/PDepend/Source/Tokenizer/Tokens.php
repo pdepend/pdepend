@@ -883,6 +883,11 @@ interface Tokens
     const T_COALESCE_EQUAL = 166;
 
     /**
+     * Token that represents the 'readonly' constant modifier
+     */
+    const T_READONLY = 167;
+
+    /**
      * Token that represents the '?->' nullsafe object operator
      */
     const T_NULLSAFE_OBJECT_OPERATOR = 387;

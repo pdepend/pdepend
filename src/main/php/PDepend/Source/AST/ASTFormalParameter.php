@@ -196,7 +196,8 @@ class ASTFormalParameter extends AbstractASTNode
 
         $expected = ~State::IS_PUBLIC
             & ~State::IS_PROTECTED
-            & ~State::IS_PRIVATE;
+            & ~State::IS_PRIVATE
+            & ~State::IS_READONLY;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException('Invalid constructor property modifier given.');

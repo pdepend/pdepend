@@ -10,3 +10,4 @@ vendor
 composer.phar
 composer.lock
 dist
+/clover.xml
