@@ -87,4 +87,14 @@ class ReadonlyPropertiesTest extends AbstractTest
         $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
         $this->assertSame(0, ($expectedModifiers & $parameter->getFormalParameter()->getModifiers()));
     }
+
+    /**
+     * @return void
+     */
+    public function testReadonlyNameUsedElsewhere()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $constructor = $class->getMethods()->offsetGet(0);
+        $this->assertSame('__construct', $constructor->getName());
+    }
 }
