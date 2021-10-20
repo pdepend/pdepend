@@ -87,4 +87,42 @@ class ReadonlyPropertiesTest extends AbstractTest
         $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
         $this->assertSame(0, ($expectedModifiers & $parameter->getFormalParameter()->getModifiers()));
     }
+
+    /**
+     * @return void
+     */
+    public function testReadonlyNameUsedElsewhere()
+    {
+        $class = $this->getFirstClassForTestCase();
+
+        $constant = $class->getChild(0);
+        $this->assertSame('readonly', $constant->getChild(0)->getImage());
+
+        $propertyPostfix = $class->getChild(1);
+        $this->assertSame('$readonly', $propertyPostfix->getChild(1)->getImage());
+
+        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
+        $this->assertSame(0, ($expectedModifiers & $propertyPostfix->getModifiers()));
+
+        /** @var ASTMethod $constructor */
+        $constructor = $class->getMethods()->offsetGet(0);
+        $this->assertSame('__construct', $constructor->getName());
+        $constructorNodes = $constructor->getChildren();
+        $assignment = $constructorNodes[1]->getChild(0)->getChild(0);
+
+        $propertyPostfix = $assignment->getChild(0)->getChild(1);
+        self::assertInstanceOf('PDepend\\Source\\AST\\ASTPropertyPostfix', $propertyPostfix);
+        $this->assertSame('readonly', $propertyPostfix->getImage());
+
+        $methodPostfix = $assignment->getChild(1)->getChild(1);
+        self::assertInstanceOf('PDepend\\Source\\AST\\ASTMethodPostfix', $methodPostfix);
+        $this->assertSame('readonly', $methodPostfix->getImage());
+
+        $method = $class->getMethods()->offsetGet(1);
+        $this->assertSame('readonly', $method->getName());
+
+        $methodNodes = $method->getChildren();
+        $constantCall = $methodNodes[1]->getChild(0)->getChild(0);
+        $this->assertSame('readonly', $constantCall->getChild(1)->getImage());
+    }
 }

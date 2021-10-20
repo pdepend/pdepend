@@ -442,6 +442,8 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * BuilderContext sensitive alternative mappings.
      *
+     * Re-map based on the previous token
+     *
      * @var array<integer, array>
      */
     protected static $alternativeMap = array(
@@ -545,6 +547,13 @@ class PHPTokenizerInternal implements FullTokenizer
 
         Tokens::T_CLASS => array(
             Tokens::T_DOUBLE_COLON     => Tokens::T_CLASS_FQN,
+        ),
+
+        Tokens::T_READONLY => array(
+            Tokens::T_OBJECT_OPERATOR  => Tokens::T_STRING,
+            Tokens::T_FUNCTION         => Tokens::T_STRING,
+            Tokens::T_CONST            => Tokens::T_STRING,
+            Tokens::T_DOUBLE_COLON     => Tokens::T_STRING,
         ),
     );
 
