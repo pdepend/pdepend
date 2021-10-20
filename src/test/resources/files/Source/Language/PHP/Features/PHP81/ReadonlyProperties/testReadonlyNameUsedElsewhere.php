@@ -1,15 +1,17 @@
 <?php
 class Foo
 {
-    public string $readonly;
+    const readonly = 'baz';
+
+    public readonly string $readonly;
 
     public function __construct()
     {
-        $this->readonly = 'foo';
+        $this->readonly = $this->readonly();
     }
 
-    public function readonly($readonly)
+    public function readonly()
     {
-
+        return self::readonly;
     }
 }
