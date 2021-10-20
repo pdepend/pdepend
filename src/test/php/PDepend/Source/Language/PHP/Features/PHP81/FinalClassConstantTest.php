@@ -58,12 +58,12 @@ class FinalClassConstantTest extends AbstractTest
     public function testFinalClassConstant()
     {
         $class = $this->getFirstClassForTestCase();
-        $constants = $class->getConstants();
+        $constantDeclarators = $class->getConstantDeclarators();
 
-        $constant = $constants['BAR'];
-        $this->assertSame('BAR', $constant->getImage());
+        $constantDeclarator = $constantDeclarators['BAR'];
+        $this->assertSame('BAR', $constantDeclarator->getImage());
 
-        $constantDefinition = $constant->getParent();
+        $constantDefinition = $constantDeclarator->getParent();
         $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
         $this->assertSame(0, ($expectedModifiers & $constantDefinition->getModifiers()));
     }
