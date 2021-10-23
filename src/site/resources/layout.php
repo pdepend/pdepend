@@ -66,6 +66,11 @@
 </div>
 <div class="footer">
     <div class="viewport">
+        <span class="follow">
+            <a href="https://twitter.com/pdepend" title="Follow on Twitter" class="twitter-follow" target="_blank">
+                <i></i> Follow @pdepend
+            </a>
+        </span>
         <div class="license">
             By <strong>Manuel Pichler</strong>
             licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD-3-Clause">BSD-3-Clause</a>
