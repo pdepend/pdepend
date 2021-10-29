@@ -86,7 +86,7 @@ class ASTConstantDefinitionTest extends ASTNodeTest
         $this->setExpectedException(
             'InvalidArgumentException',
             'Invalid field modifiers given, allowed modifiers are ' .
-            'IS_PUBLIC, IS_PROTECTED and IS_PRIVATE.'
+            'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_FINAL.'
         );
 
         $definition->setModifiers($modifiers);
@@ -391,7 +391,6 @@ class ASTConstantDefinitionTest extends ASTNodeTest
     {
         return array(
             array(State::IS_ABSTRACT),
-            array(State::IS_FINAL),
             array(State::IS_STATIC),
             array(
                 State::IS_PRIVATE |
@@ -400,10 +399,6 @@ class ASTConstantDefinitionTest extends ASTNodeTest
             array(
                 State::IS_PROTECTED |
                 State::IS_ABSTRACT
-            ),
-            array(
-                State::IS_PUBLIC |
-                State::IS_FINAL
             ),
             array(
                 State::IS_PUBLIC |
