@@ -75,6 +75,13 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     protected $constants = null;
 
     /**
+     * An <b>array</b> with all constant declarators defined in this class or interface.
+     *
+     * @var array<string, mixed>
+     */
+    protected $constantDeclarators = null;
+
+    /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
      * @return \PDepend\Source\AST\ASTClass|null
@@ -159,7 +166,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a node iterator with all implemented interfaces.
      *
-     * @return ASTArtifactList<\PDepend\Source\AST\AbstractASTClassOrInterface>
+     * @return ASTArtifactList<\PDepend\Source\AST\AbstractASTClassOrInterface>|\PDepend\Source\AST\AbstractASTClassOrInterface[]
      * @since  0.9.5
      */
     public function getInterfaces()
@@ -221,6 +228,19 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
             $this->initConstants();
         }
         return $this->constants;
+    }
+
+    /**
+     * Returns an <b>array</b> with all constant declarators defined in this class or interface.
+     *
+     * @return array<string, mixed>
+     */
+    public function getConstantDeclarators()
+    {
+        if ($this->constantDeclarators === null) {
+            $this->initConstantDeclarators();
+        }
+        return $this->constantDeclarators;
     }
 
     /**
@@ -328,14 +348,33 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     private function initConstants()
     {
         $this->constants = array();
+        $declarators = $this->getConstantDeclarators();
+
+        foreach ($declarators as $declarator) {
+            $image = $declarator->getImage();
+            $value = $declarator->getValue()->getValue();
+
+            $this->constants[$image] = $value;
+        }
+    }
+
+    /**
+     * This method initializes the constants defined in this class or interface.
+     *
+     * @return void
+     * @since  0.9.6
+     */
+    private function initConstantDeclarators()
+    {
+        $this->constantDeclarators = array();
         if (($parentClass = $this->getParentClass()) !== null) {
-            $this->constants = $parentClass->getConstants();
+            $this->constantDeclarators = $parentClass->getConstantDeclarators();
         }
 
         foreach ($this->getInterfaces() as $interface) {
-            $this->constants = array_merge(
-                $this->constants,
-                $interface->getConstants()
+            $this->constantDeclarators = array_merge(
+                $this->constantDeclarators,
+                $interface->getConstantDeclarators()
             );
         }
 
@@ -346,9 +385,8 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
 
             foreach ($declarators as $declarator) {
                 $image = $declarator->getImage();
-                $value = $declarator->getValue()->getValue();
 
-                $this->constants[$image] = $value;
+                $this->constantDeclarators[$image] = $declarator;
             }
         }
     }

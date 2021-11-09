@@ -41,6 +41,7 @@
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\State;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -49,38 +50,21 @@ use PDepend\AbstractTest;
  * @group unittest
  * @group php8.1
  */
-class NeverReturnTypeTest extends AbstractTest
+class FinalClassConstantTest extends AbstractTest
 {
     /**
      * @return void
      */
-    public function testFunctionReturnType()
+    public function testFinalClassConstant()
     {
-        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+        $class = $this->getFirstClassForTestCase();
+        $constantDeclarators = $class->getConstantDeclarators();
 
-        $this->assertTrue($type->isScalar());
-        $this->assertSame('never', $type->getImage());
-    }
+        $constantDeclarator = $constantDeclarators['BAR'];
+        $this->assertSame('BAR', $constantDeclarator->getImage());
 
-    /**
-     * @return void
-     */
-    public function testMethodReturnType()
-    {
-        $type = $this->getFirstMethodForTestCase()->getReturnType();
-
-        $this->assertTrue($type->isScalar());
-        $this->assertSame('never', $type->getImage());
-    }
-
-    /**
-     * @return void
-     */
-    public function testClosureReturnType()
-    {
-        $type = $this->getFirstClosureForTestCase()->getReturnType();
-
-        $this->assertTrue($type->isScalar());
-        $this->assertSame('never', $type->getImage());
+        $constantDefinition = $constantDeclarator->getParent();
+        $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
+        $this->assertSame(0, ($expectedModifiers & $constantDefinition->getModifiers()));
     }
 }
