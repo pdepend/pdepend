@@ -392,6 +392,11 @@ class PHPParserVersion74Test extends AbstractTest
         $this->assertSame('A', $nodes[1]->getImage());
     }
 
+    public function testReadOnlyNamedImport()
+    {
+        $this->assertFalse($this->parseCodeResourceForTest()->current());
+    }
+
     /**
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      * @expectedExceptionMessage Unexpected token: ), line: 8, col: 27

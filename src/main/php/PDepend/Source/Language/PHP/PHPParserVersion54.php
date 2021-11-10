@@ -76,8 +76,10 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
             case Tokens::T_TRUE:
             case Tokens::T_FALSE:
             case Tokens::T_STRING:
+            case Tokens::T_READONLY:
                 return true;
         }
+
         return false;
     }
 

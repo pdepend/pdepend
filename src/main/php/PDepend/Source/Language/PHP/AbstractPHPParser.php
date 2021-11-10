@@ -509,8 +509,10 @@ abstract class AbstractPHPParser
             case Tokens::T_TRAIT_C:
             case Tokens::T_CALLABLE:
             case Tokens::T_INSTEADOF:
+            case Tokens::T_READONLY:
                 return true;
         }
+
         return false;
     }
 
