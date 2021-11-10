@@ -103,6 +103,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
             case Tokens::T_CALLABLE:
             case Tokens::T_INSTEADOF:
             case Tokens::T_NAMESPACE:
+            case Tokens::T_READONLY:
                 return true;
         }
 
