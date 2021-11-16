@@ -52,25 +52,24 @@
 
 
 <div class="viewport content">
-    <p>The newest distribution channel that you can use to retrieve PHP_Depend is
-composer. Just add the following lines to your <code>composer.json</code> file:</p>
+    
+<a id="version-2-10-2-released"></a>
+<h2>Version 2.10.2 released</h2>
+<p>We are proud to announce version <a href="https://github.com/pdepend/pdepend/releases/tag/2.10.2">2.10.2</a> of PDepend. For more
+details visit the version release <a href="https://github.com/pdepend/pdepend/releases/tag/2.10.2">site</a>.</p>
+<p>Use <a href="http://getcomposer.org">composer</a> to install PHP_Depend:</p>
 
-<pre><code class="">{
-    &quot;require&quot;: {
-
-        &quot;pdepend/pdepend&quot; : &quot;@stable&quot;
-    }
-}
+<pre><code class="">curl -s http://getcomposer.org/installer | php
+php composer.phar require &quot;pdepend/pdepend:2.10.2&quot;
 </code></pre>
-<p>Then install Composer in your project (or <a href="">download the composer.phar</a>
-directly):</p>
+<p>Or if you already have composer installed globally:</p>
 
-<pre><code class="">~ $ curl -s http://getcomposer.org/installer | php
+<pre><code class="">composer require &quot;pdepend/pdepend:2.10.2&quot;
 </code></pre>
-<p>And finally let Composer install the project dependencies:</p>
-
-<pre><code class="">~ $ php composer.phar install
-</code></pre>
+<a id="download"></a>
+<h3>Download</h3>
+<p>Future releases will also be released as PHAR files on
+<a href="https://github.com/pdepend/pdepend/releases">GitHub</a></p>
 </div>
 <div class="footer">
     <div class="viewport">
