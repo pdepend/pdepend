@@ -1,3 +1,10 @@
+pdepend-2.10.2 (2021/11/16)
+==========================
+
+- Added [\#568](https://github.com/pdepend/pdepend/pull/568): Support PHP 8.1 final constants.
+- Fixed [\#572](https://github.com/pdepend/pdepend/pull/572): Allow "readonly" as part of a class name.
+- Fixed [\#567](https://github.com/pdepend/pdepend/pull/567): Allow const, field, method named readonly.
+
 pdepend-2.10.1 (2021/10/11)
 ==========================
 
