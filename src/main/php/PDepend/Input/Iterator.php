@@ -85,6 +85,7 @@ class Iterator extends \FilterIterator
      *
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function accept()
     {
         if ($this->getInnerIterator()->current()->isDir()) {
