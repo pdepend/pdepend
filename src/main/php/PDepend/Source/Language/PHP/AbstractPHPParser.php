@@ -7260,7 +7260,7 @@ abstract class AbstractPHPParser
      */
     private function parseVarAnnotation($comment)
     {
-        if (preg_match(self::REGEXP_VAR_TYPE, $comment, $match) > 0) {
+        if (preg_match(self::REGEXP_VAR_TYPE, (string) $comment, $match) > 0) {
             $useSymbolTable = $this->useSymbolTable;
 
             return array_map(
