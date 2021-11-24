@@ -1916,6 +1916,7 @@ class PHPBuilder implements Builder
      *
      * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getNamespaces();
