@@ -111,6 +111,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return integer
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->artifacts);
@@ -121,6 +122,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return T|false
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         if ($this->offset >= $this->count) {
@@ -134,6 +136,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return string
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->artifacts[$this->offset]->getName();
@@ -144,6 +147,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->offset;
@@ -154,6 +158,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -164,6 +169,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return ($this->offset < $this->count);
@@ -179,6 +185,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->artifacts[$offset]);
@@ -193,6 +200,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetget.php
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (isset($this->artifacts[$offset])) {
@@ -211,6 +219,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new \BadMethodCallException('Not supported operation.');
@@ -225,6 +234,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetunset.php
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new \BadMethodCallException('Not supported operation.');
