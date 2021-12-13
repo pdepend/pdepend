@@ -189,7 +189,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
      *
-     * @return string
+     * @return string|null
      */
     public function getComment()
     {
