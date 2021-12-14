@@ -7385,7 +7385,9 @@ abstract class AbstractPHPParser
         }
 
         // Get all @throws Types
-        $throws = $callable->getComment() === null ? array() : $this->parseThrowsAnnotations($callable->getComment());
+        $comment = $callable->getComment();
+        $throws = $comment === null ? array() : $this->parseThrowsAnnotations($comment);
+
         foreach ($throws as $qualifiedName) {
             $callable->addExceptionClassReference(
                 $this->builder->buildAstClassOrInterfaceReference($qualifiedName)
@@ -7398,7 +7400,8 @@ abstract class AbstractPHPParser
         }
 
         // Get return annotation
-        $qualifiedName = $callable->getComment() === null ? null : $this->parseReturnAnnotation($callable->getComment());
+        $qualifiedName = $comment === null ? null : $this->parseReturnAnnotation($comment);
+
         if ($qualifiedName !== null) {
             $callable->setReturnClassReference(
                 $this->builder->buildAstClassOrInterfaceReference($qualifiedName)
