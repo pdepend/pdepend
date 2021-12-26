@@ -334,6 +334,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             foreach ($precedences as $precedence) {
                 $priorMethods[strtolower($precedence->getImage())] = true;
             }
+
             /** @var ASTMethod $method */
             foreach ($use->getAllMethods() as $method) {
                 foreach ($uses as $use2) {
@@ -343,6 +344,15 @@ abstract class AbstractASTType extends AbstractASTArtifact
                 }
 
                 $name = strtolower($method->getName());
+
+                if (isset($methods[$name]) &&
+                    $methods[$name]->getName() === $method->getName() &&
+                    $methods[$name]->getParent() &&
+                    $method->getParent() &&
+                    $methods[$name]->getParent()->getNamespacedName() === $method->getParent()->getNamespacedName()
+                ) {
+                    continue;
+                }
 
                 if (!isset($methods[$name]) || isset($priorMethods[$name])) {
                     $methods[$name] = $method;

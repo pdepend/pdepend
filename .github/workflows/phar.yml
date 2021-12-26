@@ -6,6 +6,9 @@ on:
       - "*"
     branches:
       - "*"
+  create:
+    tags:
+      - "*"
   release:
     types:
       - created
