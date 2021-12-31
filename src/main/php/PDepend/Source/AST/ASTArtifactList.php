@@ -118,15 +118,16 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * Returns the current node or <b>false</b>
+     * Returns the current node
      *
-     * @return T|false
+     * @throws \OutOfBoundsException
+     * @return T
      */
     #[\ReturnTypeWillChange]
     public function current()
     {
         if ($this->offset >= $this->count) {
-            return false;
+            throw new \OutOfBoundsException("The offset does not exist.");
         }
         return $this->artifacts[$this->offset];
     }
