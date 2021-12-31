@@ -2953,6 +2953,7 @@ abstract class AbstractPHPParser
                     break;
                 case Tokens::T_ELLIPSIS:
                     $this->checkEllipsisInExpressionSupport();
+                    // no break
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:

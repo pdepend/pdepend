@@ -60,7 +60,6 @@ use PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector;
  */
 class FileCacheDriver implements CacheDriver
 {
-
     const DEFAULT_TTL = 2592000; //30 days
 
     /**
