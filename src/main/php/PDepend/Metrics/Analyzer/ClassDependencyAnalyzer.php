@@ -132,7 +132,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Returns an array of all afferent nodes.
      *
      * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return \PDepend\Source\AST\AbstractASTArtifact[]
+     * @return \PDepend\Source\AST\AbstractASTType[]
      */
     public function getAfferents(AbstractASTArtifact $node)
     {
@@ -147,7 +147,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Returns an array of all efferent nodes.
      *
      * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return \PDepend\Source\AST\AbstractASTArtifact[]
+     * @return \PDepend\Source\AST\AbstractASTType[]
      */
     public function getEfferents(AbstractASTArtifact $node)
     {

@@ -66,9 +66,19 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     const M_MAINTAINABILITY_INDEX = 'mi';
 
     /**
-     * @var AbstractCachingAnalyzer[]
+     * @var CyclomaticComplexityAnalyzer
      */
-    private $analyzers = array();
+    private $analyzersCCN;
+
+    /**
+     * @var HalsteadAnalyzer
+     */
+    private $analyzersHalstead;
+
+    /**
+     * @var NodeLocAnalyzer
+     */
+    private $analyzersLOC;
 
     /**
      * Maintainability index is a combination of cyclomatic complexity,
@@ -81,9 +91,9 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     {
         parent::__construct($options);
 
-        $this->analyzers['ccn'] = new CyclomaticComplexityAnalyzer();
-        $this->analyzers['halstead'] = new HalsteadAnalyzer();
-        $this->analyzers['loc'] = new NodeLocAnalyzer();
+        $this->analyzersCCN = new CyclomaticComplexityAnalyzer();
+        $this->analyzersHalstead = new HalsteadAnalyzer();
+        $this->analyzersLOC = new NodeLocAnalyzer();
     }
 
     /**
@@ -94,11 +104,14 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function analyze($namespaces)
     {
-        // Run CCN, Halstead & LOC analyzers first
-        foreach ($this->analyzers as $analyzer) {
-            $analyzer->setCache($this->getCache());
-            $analyzer->analyze($namespaces);
-        }
+        $this->analyzersCCN->setCache($this->getCache());
+        $this->analyzersCCN->analyze($namespaces);
+
+        $this->analyzersHalstead->setCache($this->getCache());
+        $this->analyzersHalstead->analyze($namespaces);
+
+        $this->analyzersLOC->setCache($this->getCache());
+        $this->analyzersLOC->analyze($namespaces);
 
         if ($this->metrics === null) {
             $this->loadCache();
@@ -186,12 +199,12 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function calculateMaintainabilityIndex(AbstractASTCallable $callable)
     {
-        $cyclomaticComplexity = $this->analyzers['ccn']->getCcn2($callable);
+        $cyclomaticComplexity = $this->analyzersCCN->getCcn2($callable);
 
-        $halstead = $this->analyzers['halstead']->getNodeMetrics($callable);
+        $halstead = $this->analyzersHalstead->getNodeMetrics($callable);
         $halsteadVolume = $halstead[HalsteadAnalyzer::M_HALSTEAD_VOLUME];
 
-        $loc = $this->analyzers['loc']->getNodeMetrics($callable);
+        $loc = $this->analyzersLOC->getNodeMetrics($callable);
         $eloc = $loc[NodeLocAnalyzer::M_EXECUTABLE_LINES_OF_CODE];
 
         $maintainabilityIndex = 171 - 5.2 * log($halsteadVolume) - 0.23 * $cyclomaticComplexity - 16.2 * log($eloc);

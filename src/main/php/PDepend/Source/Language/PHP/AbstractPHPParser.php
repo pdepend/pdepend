@@ -192,7 +192,7 @@ abstract class AbstractPHPParser
     /**
      * The used data structure builder.
      *
-     * @var Builder<mixed>
+     * @var PHPBuilder<mixed>
      */
     protected $builder;
 
@@ -280,7 +280,7 @@ abstract class AbstractPHPParser
      * Constructs a new source parser.
      *
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder
+     * @param PHPBuilder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
      */
     public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
@@ -2229,7 +2229,7 @@ abstract class AbstractPHPParser
 
     /**
      * @param boolean $classRef
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference|ASTNode|\PDepend\Source\AST\ASTSelfReference|\PDepend\Source\AST\ASTStaticReference
+     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
      */
     private function parseStandAloneExpressionTypeReference($classRef)
     {
@@ -3470,7 +3470,7 @@ abstract class AbstractPHPParser
             )
         );
     }
-    
+
     /**
      * This method parses a finally-statement.
      *
@@ -7072,7 +7072,7 @@ abstract class AbstractPHPParser
     /**
      * Parses fn operator of lambda function for syntax fn() => available since PHP 7.4.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return \PDepend\Source\AST\ASTClosure
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
      */
     protected function parseLambdaFunctionDeclaration()

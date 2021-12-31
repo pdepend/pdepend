@@ -281,8 +281,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a switch label.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param \PDepend\Source\AST\ASTSwitchLabel $node The currently visited node.
+     * @param array<string, integer>             $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      * @since  0.9.8

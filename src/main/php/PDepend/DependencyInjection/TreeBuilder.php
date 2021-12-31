@@ -65,21 +65,23 @@ class TreeBuilder
      * TreeBuilder constructor.
      *
      * @param string $name
-     *
-     * @return void
      */
     public function __construct($name = 'pdepend')
     {
         $this->treeBuilder = new BaseTreeBuilder($name);
 
-        if (!method_exists('Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder', 'getRootNode')) {
+        if (method_exists($this->treeBuilder, 'getRootNode')) {
+            $this->rootNode = $this->treeBuilder->getRootNode();
+
+            return;
+        }
+
+        if (method_exists($this->treeBuilder, 'root')) {
             // Symfony < 4.2
             $this->rootNode = $this->treeBuilder->root($name);
 
             return;
         }
-
-        $this->rootNode = $this->treeBuilder->getRootNode();
     }
 
     /**
