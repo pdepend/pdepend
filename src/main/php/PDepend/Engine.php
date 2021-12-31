@@ -117,7 +117,7 @@ class Engine
     /**
      * The used code node builder.
      *
-     * @var \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace>|null
+     * @var PHPBuilder<\PDepend\Source\AST\ASTNamespace>|null
      */
     private $builder = null;
 

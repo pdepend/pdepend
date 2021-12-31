@@ -103,6 +103,9 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
         return $field;
     }
 
+    /**
+     * @return \PDepend\Source\AST\ASTClosure
+     */
     protected function parseLambdaFunctionDeclaration()
     {
         $this->tokenStack->push();

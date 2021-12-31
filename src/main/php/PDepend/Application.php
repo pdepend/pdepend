@@ -56,7 +56,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 class Application
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface|null
+     * @var \Symfony\Component\DependencyInjection\TaggedContainerInterface|null
      **/
     private $container;
 
@@ -121,7 +121,7 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return \Symfony\Component\DependencyInjection\TaggedContainerInterface
      */
     private function getContainer()
     {
@@ -133,7 +133,7 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return \Symfony\Component\DependencyInjection\TaggedContainerInterface
      */
     private function createContainer()
     {

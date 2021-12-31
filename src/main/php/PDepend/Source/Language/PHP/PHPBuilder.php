@@ -1508,7 +1508,7 @@ class PHPBuilder implements Builder
      * </code>
      *
      * @param string $name
-     * @param ASTNode $name
+     * @param ASTNode $value
      * @return \PDepend\Source\AST\ASTNamedArgument
      * @since  2.9.0
      */

@@ -208,7 +208,7 @@ class FileCacheDirectory
      * Flushes the cache record for the given file info instance, independent if
      * it is a file, directory or symlink.
      *
-     * @param  \SplFileInfo $file
+     * @param  \DirectoryIterator $file
      * @return void
      */
     protected function flushEntry(\SplFileInfo $file)

@@ -103,7 +103,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
+     * @param  \PDepend\Source\AST\ASTFunction|\PDepend\Source\AST\ASTMethod|\PDepend\Source\AST\ASTInterface|\PDepend\Source\AST\ASTClass|\PDepend\Source\AST\ASTCompilationUnit $node
      * @return boolean
      */
     protected function restoreFromCache(AbstractASTArtifact $node)

@@ -206,7 +206,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         // Calculate the complexity of the condition
         $parent = $node->getParent()->getChild(0);
         $npath = $this->sumComplexity($parent);
-        
+
         // New PHP 5.3 ifsetor-operator $x ?: $y
         if (count($node->getChildren()) === 1) {
             $npath = MathUtil::mul($npath, '2');
@@ -220,7 +220,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         // Add 2 for the branching per the NPath spec
         $npath = MathUtil::add($npath, '2');
-        
+
         return MathUtil::mul($npath, $data);
     }
 
@@ -275,8 +275,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param \PDepend\Source\AST\ASTElseIfStatement $node The currently visited node.
+     * @param string                                 $data The previously calculated npath value.
      *
      * @return string
      * @since  0.9.12
@@ -386,8 +386,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param \PDepend\Source\AST\ASTIfStatement $node The currently visited node.
+     * @param string                             $data The previously calculated npath value.
      *
      * @return string
      * @since  0.9.12

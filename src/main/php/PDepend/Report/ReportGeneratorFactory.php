@@ -61,7 +61,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ReportGeneratorFactory
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Symfony\Component\DependencyInjection\TaggedContainerInterface
      */
     private $container;
 

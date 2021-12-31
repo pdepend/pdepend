@@ -47,7 +47,7 @@ use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
-use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PDepend\Util\Utf8Util;
@@ -72,7 +72,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * The context source code.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList<AbstractASTArtifact>
+     * @var \PDepend\Source\AST\ASTArtifactList<ASTNamespace>
      */
     private $code = null;
 
@@ -109,7 +109,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Sets the context code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTArtifactList<AbstractASTArtifact> $artifacts
+     * @param  \PDepend\Source\AST\ASTArtifactList<ASTNamespace> $artifacts
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)

@@ -184,7 +184,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @template T of \PDepend\Source\AST\ASTCallable
+     * @template T of \PDepend\Source\AST\AbstractASTCallable
      * @param T $callable
      * @return T
      */

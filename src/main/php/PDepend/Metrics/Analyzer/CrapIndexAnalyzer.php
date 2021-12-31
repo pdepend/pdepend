@@ -88,8 +88,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     private $report = null;
 
     /**
-     *
-     * @var \PDepend\Metrics\Analyzer
+     * @var \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
      */
     private $ccnAnalyzer = null;
 
@@ -132,7 +131,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Adds an analyzer that this analyzer depends on.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer
+     * @param  \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer $analyzer
      * @return void
      */
     public function addAnalyzer(Analyzer $analyzer)
@@ -162,7 +161,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     private function doAnalyze($namespaces)
     {
         $this->metrics = array();
-        
+
         $this->ccnAnalyzer->analyze($namespaces);
 
         $this->fireStartAnalyzer();
