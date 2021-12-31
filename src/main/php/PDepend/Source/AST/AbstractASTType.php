@@ -45,6 +45,7 @@
 namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
+use PDepend\Source\AST\ASTTraitUseStatement;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
@@ -330,6 +331,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     {
         $methods = array();
 
+        /** @var ASTTraitUseStatement[] */
         $uses = $this->findChildrenOfType(
             'PDepend\\Source\\AST\\ASTTraitUseStatement'
         );
@@ -338,11 +340,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
             $priorMethods = array();
             $precedences = $use->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
 
-            /** @var ASTTraitAdaptationPrecedence $precedence */
             foreach ($precedences as $precedence) {
                 $priorMethods[strtolower($precedence->getImage())] = true;
             }
-            /** @var ASTMethod $method */
             foreach ($use->getAllMethods() as $method) {
                 foreach ($uses as $use2) {
                     if ($use2->hasExcludeFor($method)) {
