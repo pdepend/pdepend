@@ -1,7 +1,7 @@
 parameters:
     paths:
         - src/main
-    excludes_analyse:
+    excludePaths:
         - src/main/php/PDepend/DbusUI/ResultPrinter.php
         - src/main/php/PDepend/Util/ImageConvert.php
     universalObjectCratesClasses:
