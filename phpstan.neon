@@ -8,5 +8,4 @@ parameters:
         - PDepend\Util\Configuration
     ignoreErrors:
         - '#Call to an undefined method PDepend\\.*::visit.*\(\)\.#'
-        - '#Variable \$typeHint might not be defined\.#'
     level: 1
