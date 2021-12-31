@@ -68,6 +68,7 @@ class AnalyzerIterator extends \FilterIterator
      *
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function accept()
     {
         return $this->getInnerIterator()->current()->isEnabled();
