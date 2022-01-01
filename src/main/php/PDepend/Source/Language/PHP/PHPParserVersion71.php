@@ -119,11 +119,6 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseFormalParameterOrTypeHintOrByReference();
     }
 
-    /**
-     * Parses a type hint that is valid in the supported PHP version.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     */
     protected function parseTypeHint()
     {
         $this->consumeQuestionMark();
@@ -131,13 +126,6 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         return parent::parseTypeHint();
     }
 
-    /**
-     * Override this in later PHPParserVersions as necessary
-     * @param integer $tokenType
-     * @param integer $modifiers
-     * @return \PDepend\Source\AST\ASTConstantDefinition;
-     * @throws UnexpectedTokenException
-     */
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
         if ($tokenType == Tokens::T_CONST) {

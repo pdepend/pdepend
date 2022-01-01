@@ -183,11 +183,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return $this->parseOptionalIndexExpression($node);
     }
 
-    /**
-     * @template T of \PDepend\Source\AST\AbstractASTCallable
-     * @param T $callable
-     * @return T
-     */
     protected function parseCallableDeclarationAddition($callable)
     {
         $this->consumeComments();
@@ -230,12 +225,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return $this->parseEndReturnTypeHint();
     }
 
-    /**
-     * Parses a type hint that is valid in the supported PHP version.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     * @since 2.3
-     */
     protected function parseTypeHint()
     {
         switch ($this->tokenizer->peek()) {
@@ -350,9 +339,10 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * Attempts to the next sequence of tokens as an anonymous class and adds it to the allocation expression
      *
-     * @param \PDepend\Source\AST\ASTAllocationExpression $allocation
+     * @template T of \PDepend\Source\AST\ASTAllocationExpression
+     * @param T $allocation
      *
-     * @return null|\PDepend\Source\AST\ASTAnonymousClass
+     * @return null|T
      */
     protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
     {
@@ -412,10 +402,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return $allocation;
     }
 
-    /**
-     * @param \PDepend\Source\AST\ASTNode $node
-     * @return \PDepend\Source\AST\ASTNode
-     */
     protected function parseOptionalMemberPrimaryPrefix(ASTNode $node)
     {
         $this->consumeComments();
@@ -431,10 +417,6 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
         return $node;
     }
 
-    /**
-     * @param \PDepend\Source\AST\ASTExpression $expr
-     * @return \PDepend\Source\AST\ASTExpression
-     */
     protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
     {
         $this->consumeComments();

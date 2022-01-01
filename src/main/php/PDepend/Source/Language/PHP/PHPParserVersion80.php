@@ -139,7 +139,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     /**
      * In this method we implement parsing of PHP 8.0 specific expressions.
      *
-     * @return ASTNode
+     * @return ?ASTNode
      */
     protected function parseExpressionVersion80()
     {
@@ -228,9 +228,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return parent::parseArgumentExpression();
     }
 
-    /**
-     * @return ASTConstant
-     */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
         if ($this->tokenizer->peek() === Tokens::T_COLON) {
@@ -245,21 +242,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $constant;
     }
 
-    /**
-     * This method parses a function postfix expression. An object of type
-     * {@link ASTFunctionPostfix} represents any valid php
-     * function call.
-     *
-     * This method will delegate the call to another method that returns a
-     * member primary prefix object when the function postfix expression is
-     * followed by an object operator.
-     *
-     * @param  ASTNode $node This node represents the function
-     *        identifier. An identifier can be a static string, a variable, a
-     *        compound variable or any other valid php function identifier.
-     * @return ASTNode
-     * @throws ParserException
-     */
     protected function parseFunctionPostfix(ASTNode $node)
     {
         if (!($node instanceof ASTIdentifier) || $node->getImageWithoutNamespace() !== 'match') {
@@ -304,9 +286,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $function;
     }
 
-    /**
-     * @return ASTType
-     */
     protected function parseEndReturnTypeHint()
     {
         return $this->parseTypeHint();
@@ -359,11 +338,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $types;
     }
 
-    /**
-     * Parses a type hint that is valid in the supported PHP version.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     */
     protected function parseTypeHint()
     {
         $this->consumeComments();
@@ -405,10 +379,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         }
     }
 
-    /**
-     * Trailing commas is allowed in closure use list from PHP 8.0
-     * @return false
-     */
     protected function allowTrailingCommaInClosureUseList()
     {
         return true;
