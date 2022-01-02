@@ -38,24 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.11
  */
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\AST\ASTArguments;
-use PDepend\Source\AST\ASTCallable;
-use PDepend\Source\AST\ASTCatchStatement;
-use PDepend\Source\AST\ASTConstant;
-use PDepend\Source\AST\ASTIdentifier;
-use PDepend\Source\AST\ASTFormalParameter;
-use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTNode;
-use PDepend\Source\AST\ASTScalarType;
-use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
-use PDepend\Source\Parser\ParserException;
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -63,6 +52,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.11
  */
 abstract class PHPParserVersion81 extends PHPParserVersion80
@@ -71,7 +61,8 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      * Tests if the given image is a PHP 8.1 type hint.
      *
      * @param string $image
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isScalarOrCallableTypeHint($image)
     {
@@ -86,6 +77,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
+     *
      * @return \PDepend\Source\AST\ASTType
      */
     protected function parseScalarOrCallableTypeHint($image)

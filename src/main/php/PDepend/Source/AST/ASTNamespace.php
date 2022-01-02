@@ -78,12 +78,12 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Does this namespace contain user defined functions, classes or interfaces?
      *
-     * @var boolean
+     * @var bool
      */
     private $userDefined = null;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $packageAnnotation = false;
 
@@ -113,7 +113,8 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>class/method</b> is user defined. Otherwise this method will return
      * <b>false</b>.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since  0.9.10
      */
     public function isUserDefined()
@@ -129,7 +130,8 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>class/method</b> is user defined. Otherwise this method will return
      * <b>false</b>.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since  0.9.10
      */
     private function checkUserDefined()
@@ -147,6 +149,7 @@ class ASTNamespace extends AbstractASTArtifact
      * instances declared in this namespace.
      *
      * @return \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTTrait>
+     *
      * @since  1.0.0
      */
     public function getTraits()
@@ -181,8 +184,11 @@ class ASTNamespace extends AbstractASTArtifact
      * namespace.
      *
      * @template T of \PDepend\Source\AST\AbstractASTClassOrInterface
-     * @param  class-string<T> $className The class/type we are looking for.
+     *
+     * @param class-string<T> $className The class/type we are looking for.
+     *
      * @return \PDepend\Source\AST\ASTArtifactList<T>
+     *
      * @since  1.0.0
      */
     private function getTypesOfType($className)
@@ -210,7 +216,8 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Adds the given type to this namespace and returns the input type instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     *
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface
      */
     public function addType(AbstractASTType $type)
@@ -235,7 +242,8 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Removes the given type instance from this namespace.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
+     *
      * @return void
      */
     public function removeType(AbstractASTType $type)
@@ -262,7 +270,8 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Adds the given function to this namespace and returns the input instance.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
+     * @param \PDepend\Source\AST\ASTFunction $function
+     *
      * @return \PDepend\Source\AST\ASTFunction
      */
     public function addFunction(ASTFunction $function)
@@ -281,7 +290,8 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * Removes the given function from this namespace.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
+     * @param \PDepend\Source\AST\ASTFunction $function
+     *
      * @return void
      */
     public function removeFunction(ASTFunction $function)
@@ -295,7 +305,7 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPackageAnnotation()
     {
@@ -303,7 +313,8 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * @param boolean $packageAnnotation
+     * @param bool $packageAnnotation
+     *
      * @return void
      */
     public function setPackageAnnotation($packageAnnotation)
@@ -314,7 +325,6 @@ class ASTNamespace extends AbstractASTArtifact
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor)

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -52,6 +53,7 @@ use PDepend\Util\Cache\CacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 interface AnalyzerCacheAware extends Analyzer
@@ -59,7 +61,6 @@ interface AnalyzerCacheAware extends Analyzer
     /**
      * Setter method for the system wide used cache.
      *
-     * @param  \PDepend\Util\Cache\CacheDriver $cache
      * @return void
      */
     public function setCache(CacheDriver $cache);

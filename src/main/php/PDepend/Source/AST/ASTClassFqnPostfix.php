@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.0.0
  */
 
@@ -60,6 +61,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.0.0
  */
 class ASTClassFqnPostfix extends AbstractASTNode
@@ -69,9 +71,7 @@ class ASTClassFqnPostfix extends AbstractASTNode
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
      *
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)

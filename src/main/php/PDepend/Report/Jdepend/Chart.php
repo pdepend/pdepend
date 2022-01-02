@@ -42,17 +42,18 @@
 
 namespace PDepend\Report\Jdepend;
 
+use DOMDocument;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
-use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
-use PDepend\Util\Utf8Util;
 use PDepend\Util\FileUtil;
 use PDepend\Util\ImageConvert;
+use PDepend\Util\Utf8Util;
 
 /**
  * Generates a chart with the aggregated metrics.
@@ -109,7 +110,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Sets the context code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTArtifactList<ASTNamespace> $artifacts
+     * @param \PDepend\Source\AST\ASTArtifactList<ASTNamespace> $artifacts
+     *
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)
@@ -121,8 +123,9 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return boolean
+     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     *
+     * @return bool
      */
     public function log(Analyzer $analyzer)
     {
@@ -137,8 +140,9 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Closes the logger process and writes the output file.
      *
-     * @return void
      * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
+     *
+     * @return void
      */
     public function close()
     {
@@ -149,7 +153,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 
         $bias = 0.1;
 
-        $svg = new \DOMDocument('1.0', 'UTF-8');
+        $svg = new DOMDocument('1.0', 'UTF-8');
         $svg->loadXML(file_get_contents(dirname(__FILE__) . '/chart.svg'));
 
         $layer = $svg->getElementById('jdepend.layer');

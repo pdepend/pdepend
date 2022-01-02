@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
@@ -57,6 +58,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 abstract class PHPParserVersion54 extends PHPParserVersion53
@@ -65,8 +67,10 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
      * name part.
      *
-     * @param  integer $tokenType The type of a parsed token.
-     * @return boolean
+     * @param int $tokenType The type of a parsed token.
+     *
+     * @return bool
+     *
      * @since  0.10.6
      */
     protected function isClassName($tokenType)
@@ -84,8 +88,9 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     }
 
     /**
-     * @param integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
      */
     protected function isConstantName($tokenType)
     {
@@ -93,7 +98,8 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     }
 
     /**
-     * @param integer $tokenType
+     * @param int $tokenType
+     *
      * @return bool
      */
     protected function isMethodName($tokenType)
@@ -105,8 +111,10 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      * Tests if the give token is a valid function name in the supported PHP
      * version.
      *
-     * @param integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
+     *
      * @since 2.3
      */
     protected function isFunctionName($tokenType)
@@ -127,8 +135,9 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      * Tests if the given token type is a reserved keyword in the supported PHP
      * version.
      *
-     * @param integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
      */
     protected function isKeyword($tokenType)
     {
@@ -147,8 +156,10 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      * Tests if the given token type is a valid type hint in the supported
      * PHP version.
      *
-     * @param integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
+     *
      * @since 1.0.0
      */
     protected function isTypeHint($tokenType)
@@ -179,7 +190,8 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      * Tests if the next token is a valid array start delimiter in the supported
      * PHP version.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since 1.0.0
      */
     protected function isArrayStartDelimiter()
@@ -196,9 +208,10 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     /**
      * Parses a php array declaration.
      *
-     * @param \PDepend\Source\AST\ASTArray $array
-     * @param boolean $static
+     * @param bool $static
+     *
      * @return \PDepend\Source\AST\ASTArray
+     *
      * @since 1.0.0
      */
     protected function parseArray(ASTArray $array, $static = false)
@@ -220,8 +233,9 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     /**
      * Parses an integer value.
      *
-     * @return \PDepend\Source\AST\ASTLiteral
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     *
+     * @return \PDepend\Source\AST\ASTLiteral
      */
     protected function parseIntegerNumber()
     {
@@ -264,6 +278,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      * Parses the class expr syntax supported since PHP 5.4.
      *
      * @return \PDepend\Source\AST\ASTNode
+     *
      * @since 2.3
      */
     protected function parsePostfixIdentifier()

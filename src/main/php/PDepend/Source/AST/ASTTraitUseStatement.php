@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -50,12 +51,13 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 class ASTTraitUseStatement extends ASTStatement
 {
     /**
-     * @var \PDepend\Source\AST\ASTMethod[]|null
+     * @var null|\PDepend\Source\AST\ASTMethod[]
      */
     private $allMethods;
 
@@ -85,8 +87,9 @@ class ASTTraitUseStatement extends ASTStatement
      * if the given <b>$method</b> is excluded, otherwise the return value of
      * this method will be <b>false</b>.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
-     * @return boolean
+     * @param \PDepend\Source\AST\ASTMethod $method
+     *
+     * @return bool
      */
     public function hasExcludeFor(ASTMethod $method)
     {
@@ -134,7 +137,8 @@ class ASTTraitUseStatement extends ASTStatement
      * alias exists for the given method, this method will simply return the
      * an <b>array</b> with the original method.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
+     * @param \PDepend\Source\AST\ASTMethod $method
+     *
      * @return \PDepend\Source\AST\ASTMethod[]
      */
     private function getAliasesFor(ASTMethod $method)
@@ -203,10 +207,6 @@ class ASTTraitUseStatement extends ASTStatement
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
-     *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param  mixed                                 $data
-     * @return mixed
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {

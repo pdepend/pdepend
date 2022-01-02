@@ -59,8 +59,6 @@ class AnalyzerFactory
 
     /**
      * Create a new Analyzer Factory
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -70,7 +68,8 @@ class AnalyzerFactory
     /**
      * Create and configure all analyzers required for given set of loggers.
      *
-     * @param  \PDepend\Report\ReportGenerator[] $generators
+     * @param \PDepend\Report\ReportGenerator[] $generators
+     *
      * @return \PDepend\Metrics\Analyzer[]
      */
     public function createRequiredForGenerators(array $generators)

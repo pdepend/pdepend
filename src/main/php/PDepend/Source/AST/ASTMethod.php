@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
@@ -62,7 +63,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Defined modifiers for this property node.
      *
-     * @var integer
+     * @var int
      */
     protected $modifiers = 0;
 
@@ -70,7 +71,8 @@ class ASTMethod extends AbstractASTCallable
      * This method returns a OR combined integer of the declared modifiers for
      * this method.
      *
-     * @return integer
+     * @return int
+     *
      * @since  1.0.0
      */
     public function getModifiers()
@@ -85,9 +87,12 @@ class ASTMethod extends AbstractASTCallable
      * This method will throw an exception when the value of given <b>$modifiers</b>
      * contains an invalid/unexpected modifier
      *
-     * @param  integer $modifiers
+     * @param int $modifiers
+     *
+     * @throws InvalidArgumentException If the given modifier contains unexpected values.
+     *
      * @return void
-     * @throws \InvalidArgumentException If the given modifier contains unexpected values.
+     *
      * @since  0.9.4
      */
     public function setModifiers($modifiers)
@@ -100,7 +105,7 @@ class ASTMethod extends AbstractASTCallable
                   & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
-            throw new \InvalidArgumentException('Invalid method modifier given.');
+            throw new InvalidArgumentException('Invalid method modifier given.');
         }
 
         $this->modifiers = $modifiers;
@@ -109,7 +114,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns <b>true</b> if this is an abstract method.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAbstract()
     {
@@ -120,7 +125,7 @@ class ASTMethod extends AbstractASTCallable
      * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPublic()
     {
@@ -131,7 +136,7 @@ class ASTMethod extends AbstractASTCallable
      * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isProtected()
     {
@@ -142,7 +147,7 @@ class ASTMethod extends AbstractASTCallable
      * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPrivate()
     {
@@ -153,7 +158,7 @@ class ASTMethod extends AbstractASTCallable
      * Returns <b>true</b> when this node is declared as static, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isStatic()
     {
@@ -164,7 +169,7 @@ class ASTMethod extends AbstractASTCallable
      * Returns <b>true</b> when this node is declared as final, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFinal()
     {
@@ -174,7 +179,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return \PDepend\Source\AST\AbstractASTType|null
+     * @return null|\PDepend\Source\AST\AbstractASTType
      */
     public function getParent()
     {
@@ -184,7 +189,8 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Sets the parent type object.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType|null $parent
+     * @param null|\PDepend\Source\AST\AbstractASTType $parent
+     *
      * @return void
      */
     public function setParent(AbstractASTType $parent = null)
@@ -195,8 +201,10 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the source file where this method was declared.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit
      * @throws \PDepend\Source\AST\ASTCompilationUnitNotFoundException When no parent was set.
+     *
+     * @return \PDepend\Source\AST\ASTCompilationUnit
+     *
      * @since  0.10.0
      */
     public function getCompilationUnit()
@@ -211,7 +219,6 @@ class ASTMethod extends AbstractASTCallable
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor)
@@ -225,6 +232,7 @@ class ASTMethod extends AbstractASTCallable
      * cached for method instances.
      *
      * @return array<string>
+     *
      * @since  0.10.0
      */
     public function __sleep()

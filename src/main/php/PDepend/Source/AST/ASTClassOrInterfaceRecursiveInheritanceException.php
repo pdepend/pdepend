@@ -38,10 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
+
+use RuntimeException;
 
 /**
  * This type of exception will be thrown when an inheritance hierarchy is
@@ -49,9 +52,10 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
-class ASTClassOrInterfaceRecursiveInheritanceException extends \RuntimeException
+class ASTClassOrInterfaceRecursiveInheritanceException extends RuntimeException
 {
     /**
      * Constructs a new exception instance.

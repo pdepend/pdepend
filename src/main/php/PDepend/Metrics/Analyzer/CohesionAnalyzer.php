@@ -45,7 +45,6 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * This analyzer implements several metrics that describe cohesion of classes
@@ -81,7 +80,6 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * )
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, integer>
      */
     public function getNodeMetrics(ASTArtifact $artifact)

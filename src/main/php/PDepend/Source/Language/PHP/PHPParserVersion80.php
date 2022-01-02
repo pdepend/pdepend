@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
@@ -47,12 +48,11 @@ use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTCallable;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTConstant;
-use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTScalarType;
-use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -63,6 +63,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.9
  */
 abstract class PHPParserVersion80 extends PHPParserVersion74
@@ -82,9 +83,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
      * name part.
      *
-     * @param integer $tokenType The type of a parsed token.
+     * @param int $tokenType The type of a parsed token.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isClassName($tokenType)
     {
@@ -127,8 +128,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @return ASTNode
      * @throws UnexpectedTokenException
+     *
+     * @return ASTNode
      */
     protected function parseOptionalExpressionForVersion()
     {
@@ -370,6 +372,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * This method parses assigned variable in catch statement.
      *
      * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     *
      * @return void
      */
     protected function parseCatchVariable(ASTCatchStatement $stmt)

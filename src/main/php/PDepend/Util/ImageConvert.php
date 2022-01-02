@@ -42,6 +42,8 @@
 
 namespace PDepend\Util;
 
+use Imagick;
+
 /**
  * Simple utility class that is used to create different image formats. This
  * class can use the ImageMagick cli tool <b>convert</b> and the pecl extension
@@ -55,8 +57,9 @@ class ImageConvert
     /**
      * Tries to converts the <b>$input</b> image into the <b>$output</b> format.
      *
-     * @param  string $input  The input file.
-     * @param  string $output The output file.
+     * @param string $input  The input file.
+     * @param string $output The output file.
+     *
      * @return void
      */
     public static function convert($input, $output)
@@ -77,7 +80,7 @@ class ImageConvert
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
         } elseif (extension_loaded('imagick') === true) {
-            $imagick = new \Imagick($input);
+            $imagick = new Imagick($input);
             $imagick->setImageFormat($outputType);
             $imagick->writeImage($output);
 
@@ -104,7 +107,7 @@ class ImageConvert
     /**
      * Tests that the ImageMagick CLI tool <b>convert</b> exists.
      *
-     * @return boolean
+     * @return bool
      */
     protected static function hasImagickConvert()
     {
@@ -133,7 +136,8 @@ class ImageConvert
      * imageConvert options exists, this method will prepare the input image
      * file.
      *
-     * @param  string $input The input svg file.
+     * @param string $input The input svg file.
+     *
      * @return void
      */
     protected static function prepareSvg($input)

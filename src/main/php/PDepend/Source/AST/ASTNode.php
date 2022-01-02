@@ -38,16 +38,20 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 
 namespace PDepend\Source\AST;
+
+use OutOfBoundsException;
 
 /**
  * This is an abstract base implementation of the ast node interface.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 interface ASTNode
@@ -62,37 +66,39 @@ interface ASTNode
     /**
      * Returns the start line for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getStartLine();
 
     /**
      * Returns the start column for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getStartColumn();
 
     /**
      * Returns the end line for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine();
 
     /**
      * Returns the end column for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getEndColumn();
 
     /**
      * Returns the node instance for the given index or throws an exception.
      *
-     * @param integer $index
-     * @return \PDepend\Source\AST\ASTNode
-     * @throws \OutOfBoundsException When no node exists at the given index.
+     * @param int $index
+     *
+     * @throws OutOfBoundsException When no node exists at the given index.
+     *
+     * @return \PDepend\Source\AST\AbstractASTNode
      */
     public function getChild($index);
 
@@ -109,8 +115,10 @@ interface ASTNode
      * <b>null</b> if no child exists for that.
      *
      * @template T of \PDepend\Source\AST\ASTNode
+     *
      * @param class-string<T> $targetType
-     * @return T|null
+     *
+     * @return null|T
      */
     public function getFirstChildOfType($targetType);
 
@@ -120,9 +128,11 @@ interface ASTNode
      * an empty <b>array</b> if no child exists for that.
      *
      * @template T of \PDepend\Source\AST\ASTNode
+     *
      * @param class-string<T> $targetType Searched class or interface type.
-     * @param T[]             $results Already found node instances. This parameter
-     *        is only for internal usage.
+     * @param T[]             $results    Already found node instances. This parameter
+     *                                    is only for internal usage.
+     *
      * @return T[]
      */
     public function findChildrenOfType($targetType, array &$results = array());
@@ -139,6 +149,7 @@ interface ASTNode
      * Sets the parent node of this node.
      *
      * @param \PDepend\Source\AST\ASTNode $node
+     *
      * @return void
      */
     public function setParent(ASTNode $node);
@@ -148,6 +159,7 @@ interface ASTNode
      * of <b>$parentType</b>.
      *
      * @param string $parentType
+     *
      * @return \PDepend\Source\AST\ASTNode[]
      */
     public function getParentsOfType($parentType);
@@ -173,11 +185,13 @@ interface ASTNode
      * For better performance we have moved the single setter methods for the
      * node columns and lines into this configure method.
      *
-     * @param integer $startLine
-     * @param integer $endLine
-     * @param integer $startColumn
-     * @param integer $endColumn
+     * @param int $startLine
+     * @param int $endLine
+     * @param int $startColumn
+     * @param int $endColumn
+     *
      * @return void
+     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn);

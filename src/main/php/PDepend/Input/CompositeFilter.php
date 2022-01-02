@@ -61,7 +61,8 @@ class CompositeFilter implements Filter
     /**
      * Adds a file filter to this composite.
      *
-     * @param  \PDepend\Input\Filter $filter The new filter object.
+     * @param \PDepend\Input\Filter $filter The new filter object.
+     *
      * @return void
      */
     public function append(Filter $filter)
@@ -73,9 +74,10 @@ class CompositeFilter implements Filter
      * Delegates the given <b>$localPath</b> object to all aggregated filters.
      * Returns <b>true</b> if this filter accepts the given path.
      *
-     * @param  string $relative The relative path to the specified root.
-     * @param  string $absolute The absolute path to a source file.
-     * @return boolean
+     * @param string $relative The relative path to the specified root.
+     * @param string $absolute The absolute path to a source file.
+     *
+     * @return bool
      */
     public function accept($relative, $absolute)
     {

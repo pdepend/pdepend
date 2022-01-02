@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -48,6 +49,7 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 class ASTTraitAdaptationAlias extends ASTStatement
@@ -62,14 +64,14 @@ class ASTTraitAdaptationAlias extends ASTStatement
     /**
      * The new method modifier for the imported method.
      *
-     * @var integer
+     * @var int
      */
     protected $newModifier = -1;
 
     /**
      * Sets the new method modifier.
      *
-     * @param integer $newModifier The new method modifier.
+     * @param int $newModifier The new method modifier.
      *
      * @return void
      */
@@ -82,7 +84,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      * Returns the new method modifier or <b>-1</b> when this alias does not
      * specify a new method modifier.
      *
-     * @return integer
+     * @return int
      */
     public function getNewModifier()
     {
@@ -129,9 +131,6 @@ class ASTTraitAdaptationAlias extends ASTStatement
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
-     * @return mixed
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
     {

@@ -42,6 +42,9 @@
 
 namespace PDepend\Report\Jdepend;
 
+use DOMDocument;
+use DOMElement;
+use DOMNode;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
@@ -108,28 +111,28 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * The Packages dom element.
      *
-     * @var \DOMNode
+     * @var DOMNode
      */
     protected $packages = null;
 
     /**
      * The Cycles dom element.
      *
-     * @var \DOMNode
+     * @var DOMNode
      */
     protected $cycles = null;
 
     /**
      * The concrete classes element for the current package.
      *
-     * @var \DOMElement
+     * @var DOMElement
      */
     protected $concreteClasses = null;
 
     /**
      * The abstract classes element for the current package.
      *
-     * @var \DOMElement
+     * @var DOMElement
      */
     protected $abstractClasses = null;
 
@@ -159,7 +162,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Sets the context code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace> $artifacts
+     * @param \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace> $artifacts
+     *
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)
@@ -171,8 +175,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return boolean
+     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     *
+     * @return bool
      */
     public function log(Analyzer $analyzer)
     {
@@ -187,8 +192,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Closes the logger process and writes the output file.
      *
-     * @return void
      * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
+     *
+     * @return void
      */
     public function close()
     {
@@ -197,7 +203,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             throw new NoLogOutputException($this);
         }
 
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
 
         $dom->formatOutput = true;
 
@@ -218,7 +224,6 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Visits a class node.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -247,7 +252,6 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Visits a code interface object.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -272,7 +276,6 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Visits a package node.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)

@@ -55,6 +55,7 @@ final class FileUtil
      * this method will return the system temp directory.
      *
      * @return string
+     *
      * @since  0.10.0
      */
     public static function getUserHomeDirOrSysTempDir()
@@ -82,6 +83,7 @@ final class FileUtil
      * Returns the home directory of the current user.
      *
      * @return string
+     *
      * @since  0.10.0
      */
     public static function getUserHomeDir()

@@ -38,11 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
 namespace PDepend\Util\Cache;
 
+use InvalidArgumentException;
 use PDepend\Util\Cache\Driver\FileCacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PDepend\Util\Configuration;
@@ -52,6 +54,7 @@ use PDepend\Util\Configuration;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 class CacheFactory
@@ -101,9 +104,11 @@ class CacheFactory
     /**
      * Creates a cache instance based on the supplied configuration.
      *
-     * @param  string|null $cacheKey The name/identifier for the cache instance.
+     * @param null|string $cacheKey The name/identifier for the cache instance.
+     *
+     * @throws InvalidArgumentException If the configured cache driver is unknown.
+     *
      * @return \PDepend\Util\Cache\CacheDriver
-     * @throws \InvalidArgumentException If the configured cache driver is unknown.
      */
     protected function createCache($cacheKey = null)
     {
@@ -117,7 +122,7 @@ class CacheFactory
             case 'memory':
                 return $this->createMemoryCache();
         }
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             "Unknown cache driver '{$this->configuration->cache->driver}' given."
         );
     }
@@ -125,9 +130,10 @@ class CacheFactory
     /**
      * Creates a new file system based cache instance.
      *
-     * @param  string $location Cache root directory.
-     * @param  int $ttl Cache ttl
-     * @param  string|null $cacheKey The name/identifier for the cache instance.
+     * @param string      $location Cache root directory.
+     * @param int         $ttl      Cache ttl
+     * @param null|string $cacheKey The name/identifier for the cache instance.
+     *
      * @return \PDepend\Util\Cache\Driver\FileCacheDriver
      */
     protected function createFileCache($location, $ttl = self::DEFAULT_TTL, $cacheKey = null)

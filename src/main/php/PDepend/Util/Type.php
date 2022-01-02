@@ -42,6 +42,8 @@
 
 namespace PDepend\Util;
 
+use ReflectionExtension;
+
 /**
  * Utility class that can be used to detect simpl scalars or internal types.
  *
@@ -134,7 +136,8 @@ final class Type
      * Hash with all internal namespaces/extensions. Key and value are identical
      * and contain the name of the extension.
      *
-     * @var   array<string, string>
+     * @var array<string, string>
+     *
      * @since 0.9.10
      */
     private static $internalNamespaces = null;
@@ -235,7 +238,7 @@ final class Type
      *
      * @param string $typeName The type name.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isInternalType($typeName)
     {
@@ -253,7 +256,7 @@ final class Type
      *
      * @param string $typeName The type name.
      *
-     * @return string|null
+     * @return null|string
      */
     public static function getTypePackage($typeName)
     {
@@ -289,7 +292,7 @@ final class Type
      *
      * @param string $packageName Name of a package.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isInternalPackage($packageName)
     {
@@ -303,7 +306,7 @@ final class Type
      *
      * @param string $image The type identifier.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isScalarType($image)
     {
@@ -324,7 +327,8 @@ final class Type
      *
      * @param string $image The type image.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since  0.9.6
      */
     public static function isPrimitiveType($image)
@@ -338,7 +342,8 @@ final class Type
      *
      * @param string $image The found primitive type image.
      *
-     * @return string|null
+     * @return null|string
+     *
      * @since  0.9.6
      */
     public static function getPrimitiveType($image)
@@ -364,7 +369,8 @@ final class Type
      *
      * @param string $image The found type image.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since  0.9.6
      */
     public static function isArrayType($image)
@@ -392,7 +398,7 @@ final class Type
         $extensionNames = array_map('strtolower', $extensionNames);
 
         foreach ($extensionNames as $extensionName) {
-            $extension = new \ReflectionExtension($extensionName);
+            $extension = new ReflectionExtension($extensionName);
 
             $classNames = $extension->getClassNames();
             $classNames = array_map('strtolower', $classNames);

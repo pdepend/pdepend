@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.5.1
  */
 
@@ -48,6 +49,7 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.5.1
  */
 class ASTTypeIterable extends ASTType
@@ -70,7 +72,7 @@ class ASTTypeIterable extends ASTType
      * For this concrete type implementation the returned value will be always
      * <b>true</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isArray()
     {
@@ -82,9 +84,7 @@ class ASTTypeIterable extends ASTType
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
      *
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)

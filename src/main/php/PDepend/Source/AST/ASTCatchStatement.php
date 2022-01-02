@@ -55,9 +55,7 @@ class ASTCatchStatement extends ASTStatement
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
      *
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)

@@ -42,7 +42,13 @@
 
 namespace PDepend\Source\AST;
 
+use ArrayAccess;
+use BadMethodCallException;
+use Countable;
+use Iterator;
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
+use ReturnTypeWillChange;
 
 /**
  * Iterator for code nodes.
@@ -54,7 +60,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  * @implements \Iterator<int|string, T>
  * @implements \ArrayAccess<int|string, T>
  */
-class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
+class ASTArtifactList implements ArrayAccess, Iterator, Countable
 {
     /**
      * List of {@link \PDepend\Source\AST\ASTArtifact} objects in
@@ -67,14 +73,14 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Total number of available nodes.
      *
-     * @var integer
+     * @var int
      */
     private $count = 0;
 
     /**
      * Current internal offset.
      *
-     * @var integer
+     * @var int
      */
     private $offset = 0;
 
@@ -109,9 +115,9 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      * Returns the number of {@link \PDepend\Source\AST\ASTArtifact}
      * objects in this iterator.
      *
-     * @return integer
+     * @return int
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->artifacts);
@@ -120,9 +126,9 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Returns the current node or <b>false</b>
      *
-     * @return T|false
+     * @return false|T
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function current()
     {
         if ($this->offset >= $this->count) {
@@ -136,7 +142,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return string
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->artifacts[$this->offset]->getName();
@@ -147,7 +153,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return void
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function next()
     {
         ++$this->offset;
@@ -158,7 +164,7 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @return void
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -167,9 +173,9 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Returns <b>true</b> while there is a next {@link \PDepend\Source\AST\ASTArtifact}.
      *
-     * @return boolean
+     * @return bool
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return ($this->offset < $this->count);
@@ -180,12 +186,13 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
      *
      * @param mixed $offset An offset to check for.
      *
-     * @return boolean Returns true on success or false on failure. The return
-     *                 value will be casted to boolean if non-boolean was returned.
+     * @return bool Returns true on success or false on failure. The return
+     *              value will be casted to boolean if non-boolean was returned.
+     *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->artifacts[$offset]);
@@ -194,49 +201,58 @@ class ASTArtifactList implements \ArrayAccess, \Iterator, \Countable
     /**
      * Offset to retrieve
      *
-     * @param  mixed $offset
+     * @param mixed $offset
+     *
+     * @throws OutOfBoundsException
+     *
      * @return T Can return all value types.
-     * @throws \OutOfBoundsException
+     *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetget.php
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (isset($this->artifacts[$offset])) {
             return $this->artifacts[$offset];
         }
-        throw new \OutOfBoundsException("The offset {$offset} does not exist.");
+        throw new OutOfBoundsException("The offset {$offset} does not exist.");
     }
 
     /**
      * Offset to set
      *
-     * @param  mixed $offset
-     * @param  mixed $value
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @throws BadMethodCallException
+     *
      * @return void
-     * @throws \BadMethodCallException
+     *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
-        throw new \BadMethodCallException('Not supported operation.');
+        throw new BadMethodCallException('Not supported operation.');
     }
 
     /**
      * Offset to unset
      *
-     * @param  mixed $offset
+     * @param mixed $offset
+     *
+     * @throws BadMethodCallException
+     *
      * @return void
-     * @throws \BadMethodCallException
+     *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetunset.php
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
-        throw new \BadMethodCallException('Not supported operation.');
+        throw new BadMethodCallException('Not supported operation.');
     }
 }

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
@@ -48,12 +49,13 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 class ASTClosure extends AbstractASTNode implements ASTCallable
 {
     /**
-     * @return \PDepend\Source\AST\ASTType|null
+     * @return null|\PDepend\Source\AST\ASTType
      */
     public function getReturnType()
     {
@@ -69,7 +71,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * This method will return <b>true</b> when this closure returns by
      * reference.
      *
-     * @return boolean
+     * @return bool
      */
     public function returnsByReference()
     {
@@ -79,7 +81,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
     /**
      * This method can be used to flag this closure as returns by reference.
      *
-     * @param boolean $returnsReference Does this closure return by reference?
+     * @param bool $returnsReference Does this closure return by reference?
      *
      * @return void
      */
@@ -108,7 +110,8 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * }
      * </code>
      *
-     * @return boolean
+     * @return bool
+     *
      * @since  1.0.0
      */
     public function isStatic()
@@ -119,9 +122,10 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
     /**
      * This method can be used to flag this closure instance as static.
      *
-     * @param boolean $static Whether this closure is static or not.
+     * @param bool $static Whether this closure is static or not.
      *
      * @return void
+     *
      * @since  1.0.0
      */
     public function setStatic($static)
@@ -134,9 +138,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
      *
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
@@ -147,7 +149,8 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
     /**
      * Returns the total number of the used property bag.
      *
-     * @return integer
+     * @return int
+     *
      * @since  1.0.0
      * @see    \PDepend\Source\AST\ASTNode#getMetadataSize()
      */

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 
@@ -51,6 +52,7 @@ use PDepend\Source\Tokenizer\Token;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 class TokenStack
@@ -72,7 +74,7 @@ class TokenStack
     /**
      * The current stack offset.
      *
-     * @var integer
+     * @var int
      */
     private $offset = 0;
 
@@ -110,7 +112,8 @@ class TokenStack
     /**
      * This method will add a new token to the currently active token scope.
      *
-     * @param  \PDepend\Source\Tokenizer\Token $token The token to add.
+     * @param \PDepend\Source\Tokenizer\Token $token The token to add.
+     *
      * @return \PDepend\Source\Tokenizer\Token
      */
     public function add(Token $token)

@@ -77,7 +77,8 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     *
      * @return void
      */
     public function analyze($namespaces)
@@ -103,7 +104,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * for the given <b>$node</b> (n1, n2, N1, N2). If there are no metrics for
      * the requested node, this method will return an empty <b>array</b>.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, integer>
      */
     public function getNodeBasisMetrics(ASTArtifact $artifact)
@@ -120,7 +120,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, float>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -136,7 +135,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * Visits a function node.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -153,7 +151,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * Visits a code interface object.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -164,7 +161,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * Visits a method node.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -181,7 +177,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * @see http://www.scribd.com/doc/99533/Halstead-s-Operators-and-Operands-in-C-C-JAVA-by-Indranil-Nandy
      *
-     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
     public function calculateHalsteadBasis(AbstractASTCallable $callable)
@@ -379,6 +374,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * @see http://www.grammatech.com/codesonar/workflow-features/halstead
      *
      * @param array<string, int> $basis [n1, n2, N1, N2]
+     *
      * @return array<string, float>
      */
     public function calculateHalsteadMeasures(array $basis)

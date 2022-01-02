@@ -42,18 +42,19 @@
 
 namespace PDepend\Metrics\Analyzer;
 
+use InvalidArgumentException;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AggregateAnalyzer;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
+use RuntimeException;
 
 /**
  * Generates some class level based metrics. This analyzer is based on the
@@ -112,7 +113,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     *
      * @return void
      */
     public function analyze($namespaces)
@@ -120,7 +122,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         if ($this->nodeMetrics === null) {
             // First check for the require cc analyzer
             if ($this->cyclomaticAnalyzer === null) {
-                throw new \RuntimeException('Missing required CC analyzer.');
+                throw new RuntimeException('Missing required CC analyzer.');
             }
 
             $this->fireStartAnalyzer();
@@ -153,7 +155,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Adds a required sub analyzer.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer The sub analyzer instance.
+     * @param \PDepend\Metrics\Analyzer $analyzer The sub analyzer instance.
+     *
      * @return void
      */
     public function addAnalyzer(\PDepend\Metrics\Analyzer $analyzer)
@@ -161,7 +164,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         if ($analyzer instanceof \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer) {
             $this->cyclomaticAnalyzer = $analyzer;
         } else {
-            throw new \InvalidArgumentException('CC Analyzer required.');
+            throw new InvalidArgumentException('CC Analyzer required.');
         }
     }
 
@@ -170,7 +173,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -185,7 +187,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Visits a class node.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -222,7 +223,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Visits a code interface object.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -233,8 +233,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Visits a trait node.
      *
-     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
+     *
      * @since  1.0.0
      */
     public function visitTrait(ASTTrait $trait)
@@ -269,7 +269,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Visits a method node.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -300,7 +299,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Visits a property node.
      *
-     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     public function visitProperty(ASTProperty $property)
@@ -329,8 +327,9 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Variables Inheritance of a class metric, this method only
      * counts protected and public properties of parent classes.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class The context class instance.
-     * @return integer
+     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
+     *
+     * @return int
      */
     private function calculateVarsi(ASTClass $class)
     {
@@ -355,8 +354,9 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Weight Method Per Class metric, this method only counts
      * protected and public methods of parent classes.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class The context class instance.
-     * @return integer
+     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
+     *
+     * @return int
      */
     private function calculateWmciForClass(ASTClass $class)
     {
@@ -380,8 +380,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Calculates the Weight Method Per Class metric for a trait.
      *
-     * @param  \PDepend\Source\AST\ASTTrait $trait
-     * @return integer
+     * @return int
+     *
      * @since  1.0.6
      */
     private function calculateWmciForTrait(ASTTrait $trait)
@@ -392,8 +392,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Calculates the Weight Method Per Class metric.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $type
-     * @return integer[]
+     * @return int[]
+     *
      * @since  1.0.6
      */
     private function calculateWmci(AbstractASTType $type)

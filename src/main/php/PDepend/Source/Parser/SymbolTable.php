@@ -60,7 +60,7 @@ class SymbolTable
     /**
      * The currently active scope.
      *
-     * @var array<string, string>|null
+     * @var null|array<string, string>
      */
     private $scope = array();
 
@@ -98,8 +98,8 @@ class SymbolTable
     /**
      * Adds a new value to the top most scope.
      *
-     * @param  string $key   The key of this scope value.
-     * @param  mixed  $value A new scope value.
+     * @param string $key   The key of this scope value.
+     * @param mixed  $value A new scope value.
      *
      * @throws NoActiveScopeException
      *
@@ -133,7 +133,7 @@ class SymbolTable
      *
      * @throws NoActiveScopeException
      *
-     * @return string|null
+     * @return null|string
      */
     public function lookup($key)
     {

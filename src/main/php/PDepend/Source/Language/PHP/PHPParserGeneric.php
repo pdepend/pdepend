@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.20
  */
 
@@ -52,6 +53,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.20
  */
 class PHPParserGeneric extends PHPParserVersion81
@@ -60,8 +62,10 @@ class PHPParserGeneric extends PHPParserVersion81
      * Tests if the given token type is a reserved keyword in the supported PHP
      * version.
      *
-     * @param  integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
+     *
      * @since  1.1.1
      */
     protected function isKeyword($tokenType)
@@ -78,8 +82,10 @@ class PHPParserGeneric extends PHPParserVersion81
      * Tests if the give token is a valid function name in the supported PHP
      * version.
      *
-     * @param integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
+     *
      * @since 2.3
      */
     protected function isFunctionName($tokenType)
@@ -110,8 +116,11 @@ class PHPParserGeneric extends PHPParserVersion81
      * Parses additional static values that are valid in the supported php version.
      *
      * @param \PDepend\Source\AST\ASTValue $value
-     * @return \PDepend\Source\AST\ASTValue
+     *
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     *
+     * @return \PDepend\Source\AST\ASTValue
+     *
      * @todo Handle shift left/right expressions in ASTValue
      */ /*
     protected function parseStaticValueVersionSpecific(ASTValue $value)

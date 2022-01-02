@@ -42,6 +42,7 @@
 
 namespace PDepend;
 
+use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -56,7 +57,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 class Application
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\TaggedContainerInterface|null
+     * @var null|\Symfony\Component\DependencyInjection\TaggedContainerInterface
      **/
     private $container;
 
@@ -67,12 +68,13 @@ class Application
 
     /**
      * @param string $configurationFile
+     *
      * @return void
      */
     public function setConfigurationFile($configurationFile)
     {
         if (!file_exists($configurationFile)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('The configuration file "%s" doesn\'t exist.', $configurationFile)
             );
         }
@@ -180,6 +182,7 @@ class Application
 
     /**
      * @param string $serviceTag
+     *
      * @return array<string, array<string, string>>
      */
     private function getAvailableOptionsFor($serviceTag)

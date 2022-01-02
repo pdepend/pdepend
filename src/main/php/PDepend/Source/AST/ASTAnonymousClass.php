@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
@@ -50,6 +51,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 class ASTAnonymousClass extends ASTClass implements ASTNode
@@ -58,7 +60,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var \PDepend\Source\AST\ASTNode|null
+     * @var null|\PDepend\Source\AST\ASTNode
      */
     protected $parent = null;
 
@@ -68,12 +70,14 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * image in a colon separated string.
      *
      * @var string
+     *
      * @since 0.10.4
      */
     protected $metadata = ':::';
 
     /**
      * @param string $image
+     *
      * @return void
      */
     public function setImage($image)
@@ -94,7 +98,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns the start line for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getStartLine()
     {
@@ -104,7 +108,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns the start column for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getStartColumn()
     {
@@ -114,7 +118,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns the end line for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine()
     {
@@ -124,7 +128,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns the end column for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getEndColumn()
     {
@@ -135,11 +139,13 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * For better performance we have moved the single setter methods for the
      * node columns and lines into this configure method.
      *
-     * @param integer $startLine
-     * @param integer $endLine
-     * @param integer $startColumn
-     * @param integer $endColumn
+     * @param int $startLine
+     * @param int $endLine
+     * @param int $startColumn
+     * @param int $endColumn
+     *
      * @return void
+     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn)
@@ -165,6 +171,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Sets the parent node of this node.
      *
      * @param \PDepend\Source\AST\ASTNode $node
+     *
      * @return void
      */
     public function setParent(ASTNode $node)
@@ -177,6 +184,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * of <b>$parentType</b>.
      *
      * @param string $parentType
+     *
      * @return \PDepend\Source\AST\ASTNode[]
      */
     public function getParentsOfType($parentType)
@@ -197,6 +205,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * This method adds a new child node at the first position of the children.
      *
      * @param \PDepend\Source\AST\ASTNode $node
+     *
      * @return void
      */
     public function prependChild(ASTNode $node)
@@ -209,7 +218,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Will return <b>true</b> if this class was declared anonymous in an
      * allocation expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnonymous()
     {
@@ -217,9 +226,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     }
 
     /**
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return integer
+     * @return int
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
@@ -232,6 +239,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * array with those property names that should be serialized for this class.
      *
      * @return array
+     *
      * @since 0.10.0
      */
     public function __sleep()
@@ -261,8 +269,10 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns an integer value that was stored under the given index.
      *
-     * @param integer $index
-     * @return integer
+     * @param int $index
+     *
+     * @return int
+     *
      * @since 0.10.4
      */
     protected function getMetadataInteger($index)
@@ -274,9 +284,11 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Stores an integer value under the given index in the internally used data
      * string.
      *
-     * @param integer $index
-     * @param integer $value
+     * @param int $index
+     * @param int $value
+     *
      * @return void
+     *
      * @since 0.10.4
      */
     protected function setMetadataInteger($index, $value)
@@ -287,8 +299,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns the value that was stored under the given index.
      *
-     * @param integer $index
-     * @return mixed
+     * @param int $index
+     *
      * @since 0.10.4
      */
     protected function getMetadata($index)
@@ -301,9 +313,10 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param integer $index
-     * @param mixed $value
+     * @param int $index
+     *
      * @return void
+     *
      * @since 0.10.4
      */
     protected function setMetadata($index, $value)
@@ -317,7 +330,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return integer
+     * @return int
+     *
      * @since 0.10.4
      */
     protected function getMetadataSize()

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -58,6 +59,7 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
@@ -66,7 +68,7 @@ class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
      * This method will return <b>true</b> when the element value is passed by
      * reference.
      *
-     * @return boolean
+     * @return bool
      */
     public function isByReference()
     {
@@ -86,7 +88,8 @@ class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
     /**
      * Returns the total number of the used property bag.
      *
-     * @return integer
+     * @return int
+     *
      * @since  0.10.4
      * @see    \PDepend\Source\AST\ASTNode#getMetadataSize()
      */
@@ -100,9 +103,7 @@ class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
      *
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)

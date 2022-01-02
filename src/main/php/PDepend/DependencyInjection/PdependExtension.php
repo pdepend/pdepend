@@ -42,6 +42,7 @@
 
 namespace PDepend\DependencyInjection;
 
+use stdClass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as SymfonyExtension;
@@ -58,6 +59,7 @@ class PdependExtension extends SymfonyExtension
 {
     /**
      * @param array<array<array<array<string>>>> $configs
+     *
      * @return void
      * {@inheritDoc}
      */
@@ -106,22 +108,23 @@ class PdependExtension extends SymfonyExtension
 
     /**
      * @param array<string, array<string, string>> $config
-     * @return \stdClass
+     *
+     * @return stdClass
      */
     private function createSettings($config)
     {
-        $settings = new \stdClass();
+        $settings = new stdClass();
 
-        $settings->cache           = new \stdClass();
+        $settings->cache           = new stdClass();
         $settings->cache->driver = $config['cache']['driver'];
         $settings->cache->location = $config['cache']['location'];
         $settings->cache->ttl = $config['cache']['ttl'];
 
-        $settings->imageConvert             = new \stdClass();
+        $settings->imageConvert             = new stdClass();
         $settings->imageConvert->fontSize   = $config['image_convert']['font_size'];
         $settings->imageConvert->fontFamily = $config['image_convert']['font_family'];
 
-        $settings->parser          = new \stdClass();
+        $settings->parser          = new stdClass();
         $settings->parser->nesting = $config['parser']['nesting'];
 
         return $settings;

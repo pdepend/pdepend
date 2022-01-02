@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 
@@ -49,6 +50,7 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 class ASTScalarType extends ASTType
@@ -57,7 +59,7 @@ class ASTScalarType extends ASTType
      * This method will return <b>true</b> when this type is a php primitive.
      * For this concrete implementation the return value will be always true.
      *
-     * @return boolean
+     * @return bool
      */
     public function isScalar()
     {
@@ -67,7 +69,7 @@ class ASTScalarType extends ASTType
     /**
      * This method will return <b>true</b> when this type is exactly null.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNull()
     {
@@ -77,7 +79,7 @@ class ASTScalarType extends ASTType
     /**
      * This method will return <b>true</b> when this type is exactly false.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFalse()
     {
@@ -88,9 +90,6 @@ class ASTScalarType extends ASTType
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)

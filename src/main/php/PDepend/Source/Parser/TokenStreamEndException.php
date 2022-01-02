@@ -55,8 +55,6 @@ class TokenStreamEndException extends TokenException
 {
     /**
      * Constructs a new end of token stream exception.
-     *
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      */
     public function __construct(Tokenizer $tokenizer)
     {

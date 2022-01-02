@@ -59,7 +59,7 @@ class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
      * Constructs a new reference iterator instance.
      *
      * @param \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references List of
-     *        references to concrete type instances.
+     *                                                                       references to concrete type instances.
      */
     public function __construct(array $references)
     {
@@ -70,7 +70,8 @@ class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
      * This method creates a set of {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
      * objects from the given reference array.
      *
-     * @param  \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references
+     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference[] $references
+     *
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
      */
     protected function createClassesAndInterfaces(array $references)

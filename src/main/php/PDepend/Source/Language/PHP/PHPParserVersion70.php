@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
@@ -53,13 +54,15 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 abstract class PHPParserVersion70 extends PHPParserVersion56
 {
     /**
-     * @param integer $tokenType
-     * @return boolean
+     * @param int $tokenType
+     *
+     * @return bool
      */
     protected function isConstantName($tokenType)
     {
@@ -138,7 +141,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param integer $tokenType
+     * @param int $tokenType
+     *
      * @return bool
      */
     protected function isMethodName($tokenType)
@@ -152,7 +156,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @param integer $tokenType
+     * @param int $tokenType
+     *
      * @return bool
      */
     protected function isTypeHint($tokenType)
@@ -281,7 +286,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Tests if the given image is a PHP 7 type hint.
      *
      * @param string $image
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isScalarOrCallableTypeHint($image)
     {
@@ -303,7 +309,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTType|false
+     *
+     * @return false|\PDepend\Source\AST\ASTType
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -326,8 +333,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * Parse the type reference used in an allocation expression.
      *
-     * @param \PDepend\Source\AST\ASTAllocationExpression $allocation
      * @return \PDepend\Source\AST\ASTNode
+     *
      * @since 2.3
      */
     protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
@@ -340,6 +347,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Attempts to the next sequence of tokens as an anonymous class and adds it to the allocation expression
      *
      * @template T of \PDepend\Source\AST\ASTAllocationExpression
+     *
      * @param T $allocation
      *
      * @return null|T
@@ -438,8 +446,10 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
      * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     *
      * @since 2.3
      */
     protected function parseOptionalExpressionForVersion()
@@ -451,7 +461,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * In this method we implement parsing of PHP 7.0 specific expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode|null
+     * @return null|\PDepend\Source\AST\ASTNode
+     *
      * @since 2.3
      */
     protected function parseExpressionVersion70()
@@ -489,6 +500,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * </code>
      *
      * @return \PDepend\Source\AST\ASTFormalParameter
+     *
      * @since 2.0.7
      */
     protected function parseFormalParameter()
@@ -509,6 +521,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
     /**
      * @param array<string> $fragments
+     *
      * @return void
      */
     protected function parseUseDeclarationForVersion(array $fragments)
@@ -524,6 +537,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
     /**
      * @param array<string> $fragments
+     *
      * @return void
      */
     protected function parseUseDeclarationVersion70(array $fragments)
@@ -575,7 +589,8 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
 
     /**
      * @param array<string> $previousElements
-     * @return string|null
+     *
+     * @return null|string
      */
     protected function parseQualifiedNameElement(array $previousElements)
     {

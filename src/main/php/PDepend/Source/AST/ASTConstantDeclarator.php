@@ -84,14 +84,14 @@ class ASTConstantDeclarator extends AbstractASTNode
     /**
      * The initial declaration value for this node or <b>null</b>.
      *
-     * @var \PDepend\Source\AST\ASTValue|null
+     * @var null|\PDepend\Source\AST\ASTValue
      */
     protected $value = null;
 
     /**
      * Returns the initial declaration value for this node.
      *
-     * @return \PDepend\Source\AST\ASTValue|null
+     * @return null|\PDepend\Source\AST\ASTValue
      */
     public function getValue()
     {
@@ -101,7 +101,8 @@ class ASTConstantDeclarator extends AbstractASTNode
     /**
      * Sets the declared default value for this constant node.
      *
-     * @param  \PDepend\Source\AST\ASTValue|null $value
+     * @param null|\PDepend\Source\AST\ASTValue $value
+     *
      * @return void
      */
     public function setValue(ASTValue $value = null)
@@ -113,9 +114,6 @@ class ASTConstantDeclarator extends AbstractASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)

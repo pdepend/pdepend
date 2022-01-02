@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.8
  */
 
@@ -48,6 +49,7 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.8
  */
 class ASTSwitchLabel extends AbstractASTNode
@@ -55,14 +57,14 @@ class ASTSwitchLabel extends AbstractASTNode
     /**
      * Is this switch label the default label?
      *
-     * @var boolean
+     * @var bool
      */
     protected $default = false;
 
     /**
      * Returns <b>true</b> when this node is the default label.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDefault()
     {
@@ -84,9 +86,7 @@ class ASTSwitchLabel extends AbstractASTNode
      * by a visitor during tree traversal.
      *
      * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
      *
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
@@ -100,6 +100,7 @@ class ASTSwitchLabel extends AbstractASTNode
      * array with those property names that should be serialized for this class.
      *
      * @return array<string>
+     *
      * @since  0.10.0
      */
     public function __sleep()

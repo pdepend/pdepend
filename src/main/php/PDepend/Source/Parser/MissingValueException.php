@@ -56,8 +56,6 @@ class MissingValueException extends ParserException
 {
     /**
      * Constructs a new missing value exception.
-     *
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      */
     public function __construct(Tokenizer $tokenizer)
     {

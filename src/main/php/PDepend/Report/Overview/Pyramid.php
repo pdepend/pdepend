@@ -42,6 +42,7 @@
 
 namespace PDepend\Report\Overview;
 
+use DOMDocument;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\Analyzer\CouplingAnalyzer;
 use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
@@ -52,6 +53,7 @@ use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Util\FileUtil;
 use PDepend\Util\ImageConvert;
+use RuntimeException;
 
 /**
  * This logger generates a system overview pyramid, as described in the book
@@ -156,8 +158,9 @@ class Pyramid implements FileAwareGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return boolean
+     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     *
+     * @return bool
      */
     public function log(Analyzer $analyzer)
     {
@@ -180,8 +183,9 @@ class Pyramid implements FileAwareGenerator
     /**
      * Closes the logger process and writes the output file.
      *
-     * @return void
      * @throws \PDepend\Report\NoLogOutputException
+     *
+     * @return void
      */
     public function close()
     {
@@ -193,7 +197,7 @@ class Pyramid implements FileAwareGenerator
         $metrics     = $this->collectMetrics();
         $proportions = $this->computeProportions($metrics);
 
-        $svg = new \DOMDocument('1.0', 'UTF-8');
+        $svg = new DOMDocument('1.0', 'UTF-8');
         $svg->loadXML(file_get_contents(dirname(__FILE__) . '/pyramid.svg'));
 
         $items = array_merge($metrics, $proportions);
@@ -231,9 +235,10 @@ class Pyramid implements FileAwareGenerator
      * If no threshold is defined for the given name, this method will return
      * <b>null</b>.
      *
-     * @param  string $name  The metric/field identfier.
-     * @param  mixed  $value The metric/field value.
-     * @return string|null
+     * @param string $name  The metric/field identfier.
+     * @param mixed  $value The metric/field value.
+     *
+     * @return null|string
      */
     private function computeThreshold($name, $value)
     {
@@ -260,7 +265,8 @@ class Pyramid implements FileAwareGenerator
     /**
      * Computes the proportions between the given metrics.
      *
-     * @param  array<string, float> $metrics The aggregated project metrics.
+     * @param array<string, float> $metrics The aggregated project metrics.
+     *
      * @return array<string, float>
      */
     private function computeProportions(array $metrics)
@@ -291,25 +297,26 @@ class Pyramid implements FileAwareGenerator
     /**
      * Aggregates the required metrics from the registered analyzers.
      *
+     * @throws RuntimeException If one of the required analyzers isn't set.
+     *
      * @return array<string, mixed>
-     * @throws \RuntimeException If one of the required analyzers isn't set.
      */
     private function collectMetrics()
     {
         if ($this->coupling === null) {
-            throw new \RuntimeException('Missing Coupling analyzer.');
+            throw new RuntimeException('Missing Coupling analyzer.');
         }
         if ($this->cyclomaticComplexity === null) {
-            throw new \RuntimeException('Missing Cyclomatic Complexity analyzer.');
+            throw new RuntimeException('Missing Cyclomatic Complexity analyzer.');
         }
         if ($this->inheritance === null) {
-            throw new \RuntimeException('Missing Inheritance analyzer.');
+            throw new RuntimeException('Missing Inheritance analyzer.');
         }
         if ($this->nodeCount === null) {
-            throw new \RuntimeException('Missing Node Count analyzer.');
+            throw new RuntimeException('Missing Node Count analyzer.');
         }
         if ($this->nodeLoc === null) {
-            throw new \RuntimeException('Missing Node LOC analyzer.');
+            throw new RuntimeException('Missing Node LOC analyzer.');
         }
 
         $coupling    = $this->coupling->getProjectMetrics();
