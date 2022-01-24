@@ -161,12 +161,6 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
         }
     }
 
-    /**
-     * Parses a type hint that is valid in the supported PHP version.
-     *
-     * @return \PDepend\Source\AST\ASTNode
-     * @since 1.0.0
-     */
     protected function parseTypeHint()
     {
         switch ($this->tokenizer->peek()) {

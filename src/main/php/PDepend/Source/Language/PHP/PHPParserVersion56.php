@@ -329,7 +329,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
-     * @return ASTConstant
+     * @return ASTConstant|\PDepend\Source\AST\ASTNamedArgument
      */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
