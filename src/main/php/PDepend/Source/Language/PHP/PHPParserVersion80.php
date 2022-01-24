@@ -403,9 +403,10 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
     protected function consumeObjectOperatorToken()
     {
-        return $this->consumeToken($this->tokenizer->peek() === Tokens::T_NULLSAFE_OBJECT_OPERATOR
-            ? Tokens::T_NULLSAFE_OBJECT_OPERATOR
-            : Tokens::T_OBJECT_OPERATOR
+        return $this->consumeToken(
+            $this->tokenizer->peek() === Tokens::T_NULLSAFE_OBJECT_OPERATOR
+                ? Tokens::T_NULLSAFE_OBJECT_OPERATOR
+                : Tokens::T_OBJECT_OPERATOR
         );
     }
 

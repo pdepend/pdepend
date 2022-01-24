@@ -76,7 +76,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     protected function isScalarOrCallableTypeHint($image)
     {
         if (strtolower($image) === 'never') {
-           return true;
+            return true;
         }
 
         return parent::isScalarOrCallableTypeHint($image);
