@@ -5740,30 +5740,38 @@ abstract class AbstractPHPParser
 
         $this->tokenStack->push();
 
-        switch ($tokenType) {
-            case $this->isTypeHint($tokenType) && ($typeHint = $this->parseOptionalTypeHint()):
-                $parameter = $this->parseFormalParameterAndTypeHint($typeHint);
-                break;
-            case Tokens::T_ARRAY:
-                $parameter = $this->parseFormalParameterAndArrayTypeHint();
-                break;
-            case Tokens::T_SELF:
-                $parameter = $this->parseFormalParameterAndSelfTypeHint();
-                break;
-            case Tokens::T_PARENT:
-                $parameter = $this->parseFormalParameterAndParentTypeHint();
-                break;
-            case Tokens::T_STATIC:
-                $parameter = $this->parseFormalParameterAndStaticTypeHint();
-                break;
-            case Tokens::T_BITWISE_AND:
-                $parameter = $this->parseFormalParameterAndByReference();
-                break;
-            default:
-                $parameter = $this->parseFormalParameter();
-                break;
+        return $this->setNodePositionsAndReturn(
+            $this->parseFormalParameterFromType($tokenType)
+        );
+    }
+
+    /**
+     * @param int $tokenType
+     * @return \PDepend\Source\AST\ASTFormalParameter
+     */
+    private function parseFormalParameterFromType($tokenType)
+    {
+        if ($this->isTypeHint($tokenType)) {
+            $typeHint = $this->parseOptionalTypeHint();
+            if ($typeHint) {
+                return $this->parseFormalParameterAndTypeHint($typeHint);
+            }
         }
-        return $this->setNodePositionsAndReturn($parameter);
+
+        switch ($tokenType) {
+            case Tokens::T_ARRAY:
+                return $this->parseFormalParameterAndArrayTypeHint();
+            case Tokens::T_SELF:
+                return $this->parseFormalParameterAndSelfTypeHint();
+            case Tokens::T_PARENT:
+                return $this->parseFormalParameterAndParentTypeHint();
+            case Tokens::T_STATIC:
+                return $this->parseFormalParameterAndStaticTypeHint();
+            case Tokens::T_BITWISE_AND:
+                return $this->parseFormalParameterAndByReference();
+            default:
+                return $this->parseFormalParameter();
+        }
     }
 
     /**
