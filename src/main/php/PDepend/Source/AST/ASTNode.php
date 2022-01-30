@@ -98,14 +98,14 @@ interface ASTNode
      *
      * @throws OutOfBoundsException When no node exists at the given index.
      *
-     * @return \PDepend\Source\AST\AbstractASTNode
+     * @return AbstractASTNode
      */
     public function getChild($index);
 
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getChildren();
 
@@ -114,7 +114,7 @@ interface ASTNode
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType
      *
@@ -127,7 +127,7 @@ interface ASTNode
      * instance of the given <b>$targetType</b>. The returned value will be
      * an empty <b>array</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType Searched class or interface type.
      * @param T[]             $results    Already found node instances. This parameter
@@ -141,14 +141,12 @@ interface ASTNode
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function getParent();
 
     /**
      * Sets the parent node of this node.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
      *
      * @return void
      */
@@ -160,7 +158,7 @@ interface ASTNode
      *
      * @param string $parentType
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getParentsOfType($parentType);
 

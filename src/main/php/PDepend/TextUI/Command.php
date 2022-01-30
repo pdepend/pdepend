@@ -44,6 +44,7 @@ namespace PDepend\TextUI;
 
 use Exception;
 use PDepend\Application;
+use PDepend\DbusUI\ResultPrinter as DbusResultPrinter;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PDepend\Util\Workarounds;
@@ -77,19 +78,19 @@ class Command
     /**
      * The directories/files to be analyzed
      *
-     * @var array<integer, string>
+     * @var array<int, string>
      */
     private $source = array();
 
     /**
      * The used text ui runner.
      *
-     * @var \PDepend\TextUI\Runner
+     * @var Runner
      */
     private $runner = null;
 
     /**
-     * @var \PDepend\Application
+     * @var Application
      */
     private $application;
 
@@ -217,12 +218,12 @@ class Command
             unset($options['--quiet']);
         } else {
             $runSilent = false;
-            $this->runner->addProcessListener(new \PDepend\TextUI\ResultPrinter());
+            $this->runner->addProcessListener(new ResultPrinter());
         }
 
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
-                new \PDepend\DbusUI\ResultPrinter()
+                new DbusResultPrinter()
             );
             unset($options['--notify-me']);
         }

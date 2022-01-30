@@ -57,7 +57,7 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * List of associated properties.
      *
-     * @var \PDepend\Source\AST\ASTProperty[]
+     * @var ASTProperty[]
      */
     private $properties = null;
 
@@ -95,7 +95,7 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * Returns all properties for this class.
      *
-     * @return \PDepend\Source\AST\ASTProperty[]
+     * @return ASTProperty[]
      */
     public function getProperties()
     {
@@ -121,8 +121,6 @@ class ASTClass extends AbstractASTClassOrInterface
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTType $type
      *
      * @return bool
      */

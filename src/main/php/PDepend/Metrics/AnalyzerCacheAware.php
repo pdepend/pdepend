@@ -49,7 +49,7 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * Simple marker interface that is used to mark an analyzer as cache aware. This
  * means that the loading infrastructure code will inject an instance of
- * {@link \PDepend\Util\Cache\CacheDriver} into this analyzer.
+ * {@link CacheDriver} into this analyzer.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License

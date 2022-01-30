@@ -57,7 +57,7 @@ class Iterator extends FilterIterator
     /**
      * The associated filter object.
      *
-     * @var \PDepend\Input\Filter
+     * @var Filter
      */
     protected $filter = null;
 
@@ -74,7 +74,7 @@ class Iterator extends FilterIterator
      * Constructs a new file filter iterator.
      *
      * @param \Iterator<SplFileInfo> $iterator The inner iterator.
-     * @param \PDepend\Input\Filter  $filter   The filter object.
+     * @param Filter                 $filter   The filter object.
      * @param string                 $rootPath Optional root path for the files.
      */
     public function __construct(\Iterator $iterator, Filter $filter, $rootPath = null)

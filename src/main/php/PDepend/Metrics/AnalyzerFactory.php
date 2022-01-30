@@ -42,6 +42,7 @@
 
 namespace PDepend\Metrics;
 
+use PDepend\Report\ReportGenerator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -53,7 +54,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AnalyzerFactory
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     private $container;
 
@@ -68,9 +69,9 @@ class AnalyzerFactory
     /**
      * Create and configure all analyzers required for given set of loggers.
      *
-     * @param \PDepend\Report\ReportGenerator[] $generators
+     * @param ReportGenerator[] $generators
      *
-     * @return \PDepend\Metrics\Analyzer[]
+     * @return Analyzer[]
      */
     public function createRequiredForGenerators(array $generators)
     {

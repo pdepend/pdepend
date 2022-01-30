@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -75,9 +76,9 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
           M_HALSTEAD_CONTENT = 'hi'; // I = (V / D)
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */

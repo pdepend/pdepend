@@ -56,14 +56,14 @@ use ReturnTypeWillChange;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @template T of \PDepend\Source\AST\ASTArtifact
+ * @template T of ASTArtifact
  * @implements \Iterator<int|string, T>
  * @implements \ArrayAccess<int|string, T>
  */
 class ASTArtifactList implements ArrayAccess, Iterator, Countable
 {
     /**
-     * List of {@link \PDepend\Source\AST\ASTArtifact} objects in
+     * List of {@link ASTArtifact} objects in
      * this iterator.
      *
      * @var T[]
@@ -85,7 +85,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     private $offset = 0;
 
     /**
-     * Constructs a new node iterator from the given {@link \PDepend\Source\AST\ASTArtifact}
+     * Constructs a new node iterator from the given {@link ASTArtifact}
      * node array.
      *
      * @param T[] $artifacts
@@ -112,7 +112,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     }
 
     /**
-     * Returns the number of {@link \PDepend\Source\AST\ASTArtifact}
+     * Returns the number of {@link ASTArtifact}
      * objects in this iterator.
      *
      * @return int
@@ -138,7 +138,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     }
 
     /**
-     * Returns the name of the current {@link \PDepend\Source\AST\ASTArtifact}.
+     * Returns the name of the current {@link ASTArtifact}.
      *
      * @return string
      */
@@ -149,7 +149,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     }
 
     /**
-     * Moves the internal pointer to the next {@link \PDepend\Source\AST\ASTArtifact}.
+     * Moves the internal pointer to the next {@link ASTArtifact}.
      *
      * @return void
      */
@@ -171,7 +171,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     }
 
     /**
-     * Returns <b>true</b> while there is a next {@link \PDepend\Source\AST\ASTArtifact}.
+     * Returns <b>true</b> while there is a next {@link ASTArtifact}.
      *
      * @return bool
      */

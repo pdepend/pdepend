@@ -49,7 +49,7 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * A memory based cache implementation.
  *
- * This class implements the {@link \PDepend\Util\Cache\CacheDriver} interface based
+ * This class implements the {@link CacheDriver} interface based
  * on an in memory data structure. This means that all cached entries will get
  * lost when the php process exits.
  *
@@ -68,7 +68,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * The in memory cache.
      *
-     * @var array<string, array<integer, mixed>>
+     * @var array<string, array<int, mixed>>
      */
     protected $cache = array();
 
@@ -89,7 +89,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Global stack, mainly used during testing.
      *
-     * @var array<string, array<integer, mixed>>
+     * @var array<string, array<int, mixed>>
      */
     protected static $staticCache = array();
 

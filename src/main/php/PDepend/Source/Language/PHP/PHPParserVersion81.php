@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -78,7 +79,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      *
      * @param string $image
      *
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     protected function parseScalarOrCallableTypeHint($image)
     {

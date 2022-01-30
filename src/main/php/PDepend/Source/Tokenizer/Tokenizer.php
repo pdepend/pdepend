@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\Tokenizer;
 
+use PDepend\Source\AST\ASTCompilationUnit;
+
 /**
  * Base interface for all php code tokenizers.
  *
@@ -63,7 +65,7 @@ interface Tokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return null|\PDepend\Source\AST\ASTCompilationUnit
+     * @return null|ASTCompilationUnit
      */
     public function getSourceFile();
 
@@ -77,17 +79,17 @@ interface Tokenizer
     public function setSourceFile($sourceFile);
 
     /**
-     * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
+     * Returns the next token or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
-     * @return int|\PDepend\Source\Tokenizer\Token
+     * @return int|Token
      */
     public function next();
 
     /**
      * Returns the previous token or null if there is no one yet.
      *
-     * @return null|\PDepend\Source\Tokenizer\Token
+     * @return null|Token
      *
      * @since  2.6.0
      */
@@ -96,14 +98,14 @@ interface Tokenizer
     /**
      * Returns the current token or null if there is no more.
      *
-     * @return null|\PDepend\Source\Tokenizer\Token
+     * @return null|Token
      *
      * @since  2.6.0
      */
     public function currentToken();
 
     /**
-     * Returns the next token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
+     * Returns the next token type or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
      * @return int
@@ -121,7 +123,7 @@ interface Tokenizer
     public function peekNext();
 
     /**
-     * Returns the previous token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_BOF}
+     * Returns the previous token type or {@link Tokenizer::T_BOF}
      * if there is no previous token.
      *
      * @return int

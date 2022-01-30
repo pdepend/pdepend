@@ -53,14 +53,14 @@ use RuntimeException;
 class ExtensionManager
 {
     /**
-     * @var array<\PDepend\DependencyInjection\Extension>
+     * @var array<Extension>
      */
     private $extensions = array();
 
     /**
      * Activate an extension based on a class name.
      *
-     * @param class-string<\PDepend\DependencyInjection\Extension> $className
+     * @param class-string<Extension> $className
      *
      * @throws RuntimeException
      *
@@ -91,7 +91,7 @@ class ExtensionManager
     /**
      * Return all activated extensions.
      *
-     * @return array<\PDepend\DependencyInjection\Extension>
+     * @return array<Extension>
      */
     public function getActivatedExtensions()
     {

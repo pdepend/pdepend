@@ -66,7 +66,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     /**
      * The currently used builder context.
      *
-     * @var \PDepend\Source\Builder\BuilderContext
+     * @var BuilderContext
      *
      * @since 0.10.0
      */
@@ -85,8 +85,6 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
 
     /**
      * Constructs a new type holder instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $target
      */
     public function __construct(BuilderContext $context, AbstractASTClassOrInterface $target)
     {
@@ -109,7 +107,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     /**
      * Returns the class or interface instance that this node instance represents.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      *
      * @since  0.10.0
      */

@@ -51,7 +51,7 @@ namespace PDepend\Source\AST;
 interface ASTCallable
 {
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     public function getReturnType();
 }

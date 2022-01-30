@@ -76,35 +76,35 @@ class Pyramid implements FileAwareGenerator
     /**
      * The used coupling analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\CouplingAnalyzer
+     * @var CouplingAnalyzer
      */
     private $coupling = null;
 
     /**
      * The used cyclomatic complexity analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+     * @var CyclomaticComplexityAnalyzer
      */
     private $cyclomaticComplexity = null;
 
     /**
      * The used inheritance analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\InheritanceAnalyzer
+     * @var InheritanceAnalyzer
      */
     private $inheritance = null;
 
     /**
      * The used node count analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\NodeCountAnalyzer
+     * @var NodeCountAnalyzer
      */
     private $nodeCount = null;
 
     /**
      * The used node loc analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\NodeLocAnalyzer
+     * @var NodeLocAnalyzer
      */
     private $nodeLoc = null;
 
@@ -158,7 +158,7 @@ class Pyramid implements FileAwareGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param Analyzer $analyzer The analyzer to log.
      *
      * @return bool
      */
@@ -183,7 +183,7 @@ class Pyramid implements FileAwareGenerator
     /**
      * Closes the logger process and writes the output file.
      *
-     * @throws \PDepend\Report\NoLogOutputException
+     * @throws NoLogOutputException
      *
      * @return void
      */

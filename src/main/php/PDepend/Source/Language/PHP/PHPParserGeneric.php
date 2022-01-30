@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -115,14 +116,15 @@ class PHPParserGeneric extends PHPParserVersion81
     /**
      * Parses additional static values that are valid in the supported php version.
      *
-     * @param \PDepend\Source\AST\ASTValue $value
+     * @param ASTValue $value
      *
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
      *
-     * @return \PDepend\Source\AST\ASTValue
+     * @return ASTValue
      *
      * @todo Handle shift left/right expressions in ASTValue
-     */ /*
+     */
+    /*
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
         switch ($this->tokenizer->peek()) {

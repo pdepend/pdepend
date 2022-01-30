@@ -371,7 +371,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     /**
      * This method parses assigned variable in catch statement.
      *
-     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @param ASTCatchStatement $stmt The owning catch statement.
      *
      * @return void
      */

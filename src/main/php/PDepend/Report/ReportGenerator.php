@@ -56,7 +56,7 @@ interface ReportGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param Analyzer $analyzer The analyzer to log.
      *
      * @return bool
      */
@@ -65,7 +65,7 @@ interface ReportGenerator
     /**
      * Closes the logger process and writes the output file.
      *
-     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
+     * @throws NoLogOutputException If the no log target exists.
      *
      * @return void
      */

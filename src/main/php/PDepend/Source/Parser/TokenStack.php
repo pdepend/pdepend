@@ -47,7 +47,7 @@ namespace PDepend\Source\Parser;
 use PDepend\Source\Tokenizer\Token;
 
 /**
- * This class provides a scoped collection for {@link \PDepend\Source\Tokenizer\Token}
+ * This class provides a scoped collection for {@link Token}
  * objects.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -60,14 +60,14 @@ class TokenStack
     /**
      * The actual token scope.
      *
-     * @var \PDepend\Source\Tokenizer\Token[]
+     * @var Token[]
      */
     private $tokens = array();
 
     /**
      * Stack with token scopes.
      *
-     * @var \PDepend\Source\Tokenizer\Token[][]
+     * @var Token[][]
      */
     private $stack = array();
 
@@ -94,7 +94,7 @@ class TokenStack
      * array with all collected tokens. Additionally this method will add all
      * tokens of the removed scope onto the next token scope.
      *
-     * @return \PDepend\Source\Tokenizer\Token[]
+     * @return Token[]
      */
     public function pop()
     {
@@ -112,9 +112,9 @@ class TokenStack
     /**
      * This method will add a new token to the currently active token scope.
      *
-     * @param \PDepend\Source\Tokenizer\Token $token The token to add.
+     * @param Token $token The token to add.
      *
-     * @return \PDepend\Source\Tokenizer\Token
+     * @return Token
      */
     public function add(Token $token)
     {

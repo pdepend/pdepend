@@ -28,9 +28,6 @@ class ASTTraitMethodCollisionException extends RuntimeException
 {
     /**
      * Constructs a new exception instance.
-     *
-     * @param \PDepend\Source\AST\ASTMethod       $method
-     * @param \PDepend\Source\AST\AbstractASTType $type
      */
     public function __construct(ASTMethod $method, AbstractASTType $type)
     {

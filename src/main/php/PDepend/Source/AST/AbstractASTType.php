@@ -62,21 +62,21 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var null|\PDepend\Util\Cache\CacheDriver
+     * @var null|CacheDriver
      */
     protected $cache = null;
 
     /**
      * The currently used builder context.
      *
-     * @var null|\PDepend\Source\Builder\BuilderContext
+     * @var null|BuilderContext
      */
     protected $context = null;
 
     /**
      * The parent namespace for this class.
      *
-     * @var null|\PDepend\Source\AST\ASTNamespace
+     * @var null|ASTNamespace
      */
     private $namespace = null;
 
@@ -99,7 +99,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * List of all parsed child nodes.
      *
-     * @var \PDepend\Source\AST\ASTNode[]
+     * @var ASTNode[]
      */
     protected $nodes = array();
 
@@ -154,8 +154,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Adds a parsed child node to this node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
-     *
      * @return void
      * @access private
      */
@@ -171,7 +169,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @throws OutOfBoundsException
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function getChild($index)
     {
@@ -190,7 +188,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns all child nodes of this class.
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getChildren()
     {
@@ -202,7 +200,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType Searched class or interface type.
      *
@@ -234,7 +232,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Will find all children for the given type.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType The target class or interface type.
      * @param T[]             $results    The found children.
@@ -283,7 +281,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
-     * Returns all {@link \PDepend\Source\AST\ASTMethod} objects in this type.
+     * Returns all {@link ASTMethod} objects in this type.
      *
      * @return ASTArtifactList<ASTMethod>
      */
@@ -320,7 +318,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
-     * Returns an array with {@link \PDepend\Source\AST\ASTMethod} objects
+     * Returns an array with {@link ASTMethod} objects
      * that are imported through traits.
      *
      * @return ASTMethod[]
@@ -377,7 +375,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
-     * @return \PDepend\Source\Tokenizer\Token[]
+     * @return Token[]
      */
     public function getTokens()
     {
@@ -389,7 +387,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Sets the tokens for this type.
      *
-     * @param \PDepend\Source\Tokenizer\Token[] $tokens
+     * @param Token[] $tokens
      *
      * @return void
      */
@@ -431,7 +429,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns the parent namespace for this class.
      *
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      */
     public function getNamespace()
     {
@@ -440,8 +438,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * Sets the parent namespace for this type.
-     *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
      *
      * @return void
      */
@@ -484,8 +480,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Checks that this user type is a subtype of the given <b>$type</b>
      * instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTType $type
      *
      * @return bool
      *

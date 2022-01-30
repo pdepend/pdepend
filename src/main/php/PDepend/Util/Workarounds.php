@@ -77,7 +77,7 @@ class Workarounds
     /**
      * Returns an array with error messages related to the required workarounds.
      *
-     * @return array<integer, string>
+     * @return array<int, string>
      */
     public function getRequiredWorkarounds()
     {

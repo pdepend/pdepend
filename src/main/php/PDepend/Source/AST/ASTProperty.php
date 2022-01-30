@@ -62,7 +62,7 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * The wrapped field declaration instance.
      *
-     * @var \PDepend\Source\AST\ASTFieldDeclaration
+     * @var ASTFieldDeclaration
      *
      * @since 0.9.6
      */
@@ -71,7 +71,7 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * The wrapped variable declarator instance.
      *
-     * @var \PDepend\Source\AST\ASTVariableDeclarator
+     * @var ASTVariableDeclarator
      *
      * @since 0.9.6
      */
@@ -81,10 +81,8 @@ class ASTProperty extends AbstractASTArtifact
      * Constructs a new item for the given field declaration and variable
      * declarator.
      *
-     * @param \PDepend\Source\AST\ASTFieldDeclaration   $fieldDeclaration   The context
-     *                                                                      field declaration where this property was declared in the source.
-     * @param \PDepend\Source\AST\ASTVariableDeclarator $variableDeclarator The context
-     *                                                                      variable declarator for this property instance.
+     * @param ASTFieldDeclaration   $fieldDeclaration   The context field declaration where this property was declared in the source.
+     * @param ASTVariableDeclarator $variableDeclarator The context variable declarator for this property instance.
      */
     public function __construct(
         ASTFieldDeclaration $fieldDeclaration,
@@ -205,7 +203,7 @@ class ASTProperty extends AbstractASTArtifact
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
-     * @return null|\PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return null|AbstractASTClassOrInterface
      *
      * @since  0.9.5
      */
@@ -281,7 +279,7 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * This method will return the class where this property was declared.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      *
      * @since  0.9.6
      */
@@ -292,8 +290,6 @@ class ASTProperty extends AbstractASTArtifact
 
     /**
      * Sets the declaring class object.
-     *
-     * @param \PDepend\Source\AST\ASTClass $declaringClass
      *
      * @return void
      *

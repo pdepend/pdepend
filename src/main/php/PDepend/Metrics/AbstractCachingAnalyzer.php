@@ -45,6 +45,11 @@
 namespace PDepend\Metrics;
 
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
@@ -75,7 +80,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Injected cache driver.
      *
-     * @var \PDepend\Util\Cache\CacheDriver
+     * @var CacheDriver
      */
     private $cache;
 
@@ -92,7 +97,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Getter method for the system wide used cache.
      *
-     * @return \PDepend\Util\Cache\CacheDriver $cache
+     * @return CacheDriver $cache
      */
     public function getCache()
     {
@@ -104,7 +109,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.
      *
-     * @param \PDepend\Source\AST\ASTClass|\PDepend\Source\AST\ASTCompilationUnit|\PDepend\Source\AST\ASTFunction|\PDepend\Source\AST\ASTInterface|\PDepend\Source\AST\ASTMethod $node
+     * @param ASTClass|ASTCompilationUnit|ASTFunction|ASTInterface|ASTMethod $node
      *
      * @return bool
      */

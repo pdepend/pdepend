@@ -44,6 +44,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * A static identifier as it can be used to access a function, method, constant
  * or property.
@@ -59,11 +61,11 @@ class ASTIdentifier extends ASTExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param ASTVisitor $visitor The calling visitor instance.
      *
      * @since  0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitIdentifier($this, $data);
     }

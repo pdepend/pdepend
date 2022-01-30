@@ -53,14 +53,14 @@ class ConfigurationInstance
     /**
      * The unique configuration instance.
      *
-     * @var null|\PDepend\Util\Configuration
+     * @var null|Configuration
      */
     private static $configuration = null;
 
     /**
      * Returns a configured config instance or <b>null</b>.
      *
-     * @return null|\PDepend\Util\Configuration
+     * @return null|Configuration
      */
     public static function get()
     {
@@ -70,7 +70,7 @@ class ConfigurationInstance
     /**
      * Sets the configuration instance.
      *
-     * @param \PDepend\Util\Configuration $configuration The config instance.
+     * @param Configuration $configuration The config instance.
      *
      * @return void
      */

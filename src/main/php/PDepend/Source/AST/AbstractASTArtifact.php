@@ -81,7 +81,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The source file for this item.
      *
-     * @var null|\PDepend\Source\AST\ASTCompilationUnit
+     * @var null|ASTCompilationUnit
      */
     protected $compilationUnit = null;
 
@@ -168,7 +168,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns the source file for this item.
      *
-     * @return null|\PDepend\Source\AST\ASTCompilationUnit
+     * @return null|ASTCompilationUnit
      */
     public function getCompilationUnit()
     {
@@ -177,8 +177,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Sets the source file for this item.
-     *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      *
      * @return void
      */

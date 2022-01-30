@@ -72,7 +72,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder
+     * @param Builder<mixed> $builder
      *
      * @return void
      */
@@ -86,7 +86,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder
+     * @param Builder<mixed> $builder
      *
      * @return void
      */

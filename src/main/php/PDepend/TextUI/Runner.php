@@ -124,7 +124,7 @@ class Runner
      * This of process listeners that will be hooked into PDepend's analyzing
      * process.
      *
-     * @var \PDepend\ProcessListener[]
+     * @var ProcessListener[]
      */
     private $processListeners = array();
 
@@ -136,12 +136,12 @@ class Runner
     private $parseErrors = array();
 
     /**
-     * @var \PDepend\Report\ReportGeneratorFactory
+     * @var ReportGeneratorFactory
      */
     private $reportGeneratorFactory;
 
     /**
-     * @var \PDepend\Engine
+     * @var Engine
      */
     private $engine;
 

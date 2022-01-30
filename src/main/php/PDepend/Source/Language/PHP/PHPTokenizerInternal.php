@@ -227,7 +227,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @var array<integer, integer>
+     * @var array<int, integer>
      */
     protected static $tokenMap = array(
         T_AS                        => Tokens::T_AS,
@@ -443,7 +443,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * Re-map based on the previous token
      *
-     * @var array<integer, array>
+     * @var array<int, array>
      */
     protected static $alternativeMap = array(
         Tokens::T_USE => array(
@@ -557,7 +557,7 @@ class PHPTokenizerInternal implements FullTokenizer
     );
 
     /**
-     * @var array<integer, array<integer, array<string, integer|string>>>
+     * @var array<int, array<int, array<string, integer|string>>>
      */
     protected static $reductionMap = array(
         Tokens::T_CONCAT => array(
@@ -596,7 +596,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * The source file instance.
      *
-     * @var null|\PDepend\Source\AST\ASTCompilationUnit
+     * @var null|ASTCompilationUnit
      */
     protected $sourceFile = null;
 
@@ -631,7 +631,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return null|\PDepend\Source\AST\ASTCompilationUnit
+     * @return null|ASTCompilationUnit
      */
     public function getSourceFile()
     {
@@ -684,7 +684,7 @@ class PHPTokenizerInternal implements FullTokenizer
     }
 
     /**
-     * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
+     * Returns the next token or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
      * @return int|Token
@@ -701,7 +701,7 @@ class PHPTokenizerInternal implements FullTokenizer
     }
 
     /**
-     * Returns the next token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
+     * Returns the next token type or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
      * @return int
@@ -769,7 +769,7 @@ class PHPTokenizerInternal implements FullTokenizer
     }
 
     /**
-     * Returns the previous token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_BOF}
+     * Returns the previous token type or {@link Tokenizer::T_BOF}
      * if there is no previous token.
      *
      * @return int
@@ -858,9 +858,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array<array<integer, integer|string>|string> $tokens Unprepared array of php tokens.
+     * @param array<array<int, integer|string>|string> $tokens Unprepared array of php tokens.
      *
-     * @return array<array<integer, integer|string>|string>
+     * @return array<array<int, integer|string>|string>
      */
     private function substituteTokens(array $tokens)
     {
@@ -1076,7 +1076,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array<array<integer, integer|string>|string> $tokens Reference to the current token stream.
+     * @param array<array<int, integer|string>|string> $tokens Reference to the current token stream.
      *
      * @return null|string
      */
@@ -1110,7 +1110,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @param string $token The unknown string token.
      *
-     * @return array<integer, mixed>
+     * @return array<int, mixed>
      */
     private function generateUnknownToken($token)
     {

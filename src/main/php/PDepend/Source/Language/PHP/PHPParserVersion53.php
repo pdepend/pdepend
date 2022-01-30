@@ -81,7 +81,7 @@ abstract class PHPParserVersion53 extends AbstractPHPParser
      *
      * @param bool $static
      *
-     * @return \PDepend\Source\AST\ASTArray
+     * @return ASTArray
      *
      * @since 1.0.0
      */

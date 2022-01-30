@@ -64,21 +64,21 @@ class CacheFactory
     /**
      * The system configuration.
      *
-     * @var \PDepend\Util\Configuration
+     * @var Configuration
      */
     protected $configuration = null;
 
     /**
      * Singleton property that holds existing cache instances.
      *
-     * @var \PDepend\Util\Cache\CacheDriver[]
+     * @var CacheDriver[]
      */
     protected $caches = array();
 
     /**
      * Constructs a new cache factory instance for the given configuration.
      *
-     * @param \PDepend\Util\Configuration $configuration The system configuration.
+     * @param Configuration $configuration The system configuration.
      */
     public function __construct(Configuration $configuration)
     {
@@ -91,7 +91,7 @@ class CacheFactory
      *
      * @param string $cacheKey The name/identifier for the cache instance.
      *
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return CacheDriver
      */
     public function create($cacheKey = null)
     {
@@ -108,7 +108,7 @@ class CacheFactory
      *
      * @throws InvalidArgumentException If the configured cache driver is unknown.
      *
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return CacheDriver
      */
     protected function createCache($cacheKey = null)
     {
@@ -134,7 +134,7 @@ class CacheFactory
      * @param int         $ttl      Cache ttl
      * @param null|string $cacheKey The name/identifier for the cache instance.
      *
-     * @return \PDepend\Util\Cache\Driver\FileCacheDriver
+     * @return FileCacheDriver
      */
     protected function createFileCache($location, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {
@@ -144,7 +144,7 @@ class CacheFactory
     /**
      * Creates an in memory cache instance.
      *
-     * @return \PDepend\Util\Cache\Driver\MemoryCacheDriver
+     * @return MemoryCacheDriver
      */
     protected function createMemoryCache()
     {

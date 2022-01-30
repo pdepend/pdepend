@@ -44,6 +44,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This class represents a single array element expression.
  *
@@ -62,7 +64,7 @@ namespace PDepend\Source\AST;
  *
  * @since 1.0.0
  */
-class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
+class ASTArrayElement extends ASTExpression
 {
     /**
      * This method will return <b>true</b> when the element value is passed by
@@ -91,7 +93,7 @@ class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
      * @return int
      *
      * @since  0.10.4
-     * @see    \PDepend\Source\AST\ASTNode#getMetadataSize()
+     * @see    ASTNode#getMetadataSize()
      */
     protected function getMetadataSize()
     {
@@ -102,11 +104,11 @@ class ASTArrayElement extends \PDepend\Source\AST\ASTExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param ASTVisitor $visitor The calling visitor instance.
      *
      * @since  0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitArrayElement($this, $data);
     }

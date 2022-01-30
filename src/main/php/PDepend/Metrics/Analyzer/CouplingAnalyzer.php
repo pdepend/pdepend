@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
 
 /**
@@ -176,9 +177,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -194,7 +195,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This method traverses all namespaces in the given iterator and calculates
      * the coupling metrics for them.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      *
@@ -369,7 +370,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Calculates the coupling between the given types.
      *
-     * @param \PDepend\Source\AST\AbstractASTType $coupledType
+     * @param AbstractASTType $coupledType
      *
      * @return void
      *

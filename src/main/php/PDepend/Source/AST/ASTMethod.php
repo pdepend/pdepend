@@ -56,7 +56,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * The parent type object.
      *
-     * @var \PDepend\Source\AST\AbstractASTType
+     * @var AbstractASTType
      */
     protected $parent = null;
 
@@ -179,7 +179,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return null|\PDepend\Source\AST\AbstractASTType
+     * @return null|AbstractASTType
      */
     public function getParent()
     {
@@ -188,8 +188,6 @@ class ASTMethod extends AbstractASTCallable
 
     /**
      * Sets the parent type object.
-     *
-     * @param null|\PDepend\Source\AST\AbstractASTType $parent
      *
      * @return void
      */
@@ -201,9 +199,9 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the source file where this method was declared.
      *
-     * @throws \PDepend\Source\AST\ASTCompilationUnitNotFoundException When no parent was set.
+     * @throws ASTCompilationUnitNotFoundException When no parent was set.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit
+     * @return ASTCompilationUnit
      *
      * @since  0.10.0
      */

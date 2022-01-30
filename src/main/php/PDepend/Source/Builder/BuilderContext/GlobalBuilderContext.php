@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Builder\BuilderContext;
 
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -67,14 +68,14 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * The currently used ast builder.
      *
-     * @var \PDepend\Source\Builder\Builder<mixed>
+     * @var Builder<mixed>
      */
     protected static $builder = null;
 
     /**
      * Constructs a new builder context instance.
      *
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder The currently used ast builder.
+     * @param Builder<mixed> $builder The currently used ast builder.
      */
     public function __construct(Builder $builder)
     {
@@ -109,7 +110,7 @@ class GlobalBuilderContext implements BuilderContext
      * This method can be used to register an existing class in the current
      * class context.
      *
-     * @param \PDepend\Source\AST\ASTClass $class The class instance.
+     * @param ASTClass $class The class instance.
      *
      * @return void
      */
@@ -134,7 +135,7 @@ class GlobalBuilderContext implements BuilderContext
      *
      * @param string $qualifiedName
      *
-     * @return \PDepend\Source\AST\ASTTrait
+     * @return ASTTrait
      *
      * @since  1.0.0
      */
@@ -148,7 +149,7 @@ class GlobalBuilderContext implements BuilderContext
      *
      * @param string $qualifiedName
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return ASTClass
      */
     public function getClass($qualifiedName)
     {
@@ -160,7 +161,7 @@ class GlobalBuilderContext implements BuilderContext
      *
      * @param string $qualifiedName
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      */
     public function getClassOrInterface($qualifiedName)
     {
@@ -170,7 +171,7 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns the currently used builder instance.
      *
-     * @return \PDepend\Source\Builder\Builder<mixed>
+     * @return Builder<mixed>
      */
     protected function getBuilder()
     {

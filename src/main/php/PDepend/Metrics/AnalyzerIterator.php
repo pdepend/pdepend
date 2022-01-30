@@ -49,7 +49,7 @@ use FilterIterator;
 use ReturnTypeWillChange;
 
 /**
- * Filter iterator that only returns enabled {@link \PDepend\Metrics\Analyzer}
+ * Filter iterator that only returns enabled {@link Analyzer}
  * instances.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -62,7 +62,7 @@ class AnalyzerIterator extends FilterIterator
     /**
      * Constructs a new iterator instance.
      *
-     * @param \PDepend\Metrics\Analyzer[] $analyzers
+     * @param Analyzer[] $analyzers
      */
     public function __construct(array $analyzers)
     {

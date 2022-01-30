@@ -44,6 +44,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This node type represents a variable declarator. A variable declarator always
  * contains a variable name and it can optionally provide a variable default
@@ -59,7 +61,7 @@ class ASTVariableDeclarator extends ASTExpression
     /**
      * The initial declaration value for this node or <b>null</b>.
      *
-     * @var null|\PDepend\Source\AST\ASTValue
+     * @var null|ASTValue
      */
     protected $value = null;
 
@@ -67,7 +69,7 @@ class ASTVariableDeclarator extends ASTExpression
      * Returns the initial declaration value for this node or <b>null</b> when
      * no default value exists.
      *
-     * @return null|\PDepend\Source\AST\ASTValue
+     * @return null|ASTValue
      */
     public function getValue()
     {
@@ -76,8 +78,6 @@ class ASTVariableDeclarator extends ASTExpression
 
     /**
      * Sets the declared default value for this variable node.
-     *
-     * @param \PDepend\Source\AST\ASTValue $value
      *
      * @return void
      */
@@ -90,11 +90,11 @@ class ASTVariableDeclarator extends ASTExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param ASTVisitor $visitor The calling visitor instance.
      *
      * @since  0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitVariableDeclarator($this, $data);
     }

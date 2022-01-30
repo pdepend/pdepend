@@ -69,7 +69,7 @@ interface CacheDriver
      *
      * @param string $type
      *
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return CacheDriver
      */
     public function type($type);
 

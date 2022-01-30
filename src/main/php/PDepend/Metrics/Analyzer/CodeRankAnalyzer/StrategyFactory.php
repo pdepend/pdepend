@@ -88,7 +88,7 @@ class StrategyFactory
     /**
      * Creates the default code rank strategy.
      *
-     * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
+     * @return CodeRankStrategyI
      */
     public function createDefaultStrategy()
     {
@@ -103,7 +103,7 @@ class StrategyFactory
      * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
      *
-     * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
+     * @return CodeRankStrategyI
      */
     public function createStrategy($strategyName)
     {

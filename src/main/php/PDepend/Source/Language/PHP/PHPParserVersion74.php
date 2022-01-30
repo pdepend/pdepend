@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -106,7 +107,7 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return ASTClosure
      */
     protected function parseLambdaFunctionDeclaration()
     {

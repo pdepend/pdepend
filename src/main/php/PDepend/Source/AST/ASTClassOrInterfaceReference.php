@@ -61,14 +61,14 @@ class ASTClassOrInterfaceReference extends ASTType
     /**
      * The global AST builder context.
      *
-     * @var \PDepend\Source\Builder\BuilderContext
+     * @var BuilderContext
      */
     protected $context = null;
 
     /**
      * An already loaded type instance.
      *
-     * @var null|\PDepend\Source\AST\AbstractASTClassOrInterface
+     * @var null|AbstractASTClassOrInterface
      */
     protected $typeInstance = null;
 
@@ -87,7 +87,7 @@ class ASTClassOrInterfaceReference extends ASTType
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      */
     public function getType()
     {

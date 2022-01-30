@@ -59,7 +59,7 @@ class ASTTraitReference extends ASTClassOrInterfaceReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return \PDepend\Source\AST\AbstractASTType
+     * @return AbstractASTType
      */
     public function getType()
     {

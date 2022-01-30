@@ -80,7 +80,7 @@ class ReportGeneratorFactory
      *
      * @throws RuntimeException
      *
-     * @return \PDepend\Report\ReportGenerator
+     * @return ReportGenerator
      */
     public function createGenerator($identifier, $fileName)
     {
@@ -115,7 +115,7 @@ class ReportGeneratorFactory
     /**
      * Set of created logger instances.
      *
-     * @var \PDepend\Report\ReportGenerator[]
+     * @var ReportGenerator[]
      */
     protected $instances = array();
 }

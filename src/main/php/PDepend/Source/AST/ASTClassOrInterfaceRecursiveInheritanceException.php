@@ -59,8 +59,6 @@ class ASTClassOrInterfaceRecursiveInheritanceException extends RuntimeException
 {
     /**
      * Constructs a new exception instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
      */
     public function __construct(AbstractASTClassOrInterface $type)
     {

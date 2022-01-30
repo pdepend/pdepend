@@ -58,14 +58,14 @@ final class CollectionArtifactFilter implements ArtifactFilter
     /**
      * Singleton instance of this filter.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
+     * @var CollectionArtifactFilter
      */
     private static $instance = null;
 
     /**
      * Singleton method for this filter class.
      *
-     * @return \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
+     * @return CollectionArtifactFilter
      */
     public static function getInstance()
     {
@@ -87,14 +87,14 @@ final class CollectionArtifactFilter implements ArtifactFilter
     /**
      * An optional configured filter instance.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList\ArtifactFilter
+     * @var ArtifactFilter
      */
     private $filter = null;
 
     /**
      * Sets the used filter instance.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList\ArtifactFilter $filter
+     * @param ArtifactFilter $filter
      *
      * @return void
      *

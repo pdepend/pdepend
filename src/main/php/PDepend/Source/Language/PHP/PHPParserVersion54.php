@@ -45,6 +45,8 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -210,7 +212,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
      *
      * @param bool $static
      *
-     * @return \PDepend\Source\AST\ASTArray
+     * @return ASTArray
      *
      * @since 1.0.0
      */
@@ -233,9 +235,9 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     /**
      * Parses an integer value.
      *
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
      *
-     * @return \PDepend\Source\AST\ASTLiteral
+     * @return ASTLiteral
      */
     protected function parseIntegerNumber()
     {
@@ -277,7 +279,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     /**
      * Parses the class expr syntax supported since PHP 5.4.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      *
      * @since 2.3
      */
@@ -295,7 +297,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function parseOptionalExpressionForVersion()
     {

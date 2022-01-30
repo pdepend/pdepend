@@ -44,13 +44,15 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This class represents PHP strings that can embed various other expressions.
  *
  * <code>
  * $string = "Manuel $Pichler <{$email}>";
  *
- * // \PDepend\Source\AST\ASTString
+ * // ASTString
  * // |-- ASTLiteral             -  "Manuel ")
  * // |-- ASTVariable            -  $Pichler
  * // |-- ASTLiteral             -  " <"
@@ -70,11 +72,11 @@ class ASTString extends AbstractASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param ASTVisitor $visitor The calling visitor instance.
      *
      * @since  0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitString($this, $data);
     }

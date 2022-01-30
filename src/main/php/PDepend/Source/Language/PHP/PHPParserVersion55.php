@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -61,7 +62,7 @@ abstract class PHPParserVersion55 extends PHPParserVersion54
      *
      * parseFullQualifiedClassNamePostfix() exists since 2.0.0 and have been customized for PHP 5.5 since 2.6.0.
      *
-     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @return ASTClassFqnPostfix
      *
      * @since 2.0.0
      */

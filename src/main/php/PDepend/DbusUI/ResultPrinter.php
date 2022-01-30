@@ -79,7 +79,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder The used node builder instance.
+     * @param Builder<mixed> $builder The used node builder instance.
      *
      * @return void
      */
@@ -91,7 +91,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder The used node builder instance.
+     * @param Builder<mixed> $builder The used node builder instance.
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts a new analyzer.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
+     * @param Analyzer $analyzer The context analyzer instance.
      *
      * @return void
      */
@@ -192,7 +192,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished one analyzing process.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The context analyzer instance.
+     * @param Analyzer $analyzer The context analyzer instance.
      *
      * @return void
      */

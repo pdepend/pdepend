@@ -43,6 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
@@ -56,7 +57,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var null|\PDepend\Util\Cache\CacheDriver
+     * @var null|CacheDriver
      *
      * @since 0.10.0
      */
@@ -104,7 +105,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * List of classes, interfaces and functions that parsed from this file.
      *
-     * @var \PDepend\Source\AST\AbstractASTArtifact[]
+     * @var AbstractASTArtifact[]
      *
      * @since 0.10.0
      */
@@ -211,7 +212,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns an <b>array</b> with all tokens within this file.
      *
-     * @return array<\PDepend\Source\Tokenizer\Token>
+     * @return array<Token>
      */
     public function getTokens()
     {
@@ -223,7 +224,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Sets the tokens for this file.
      *
-     * @param array<\PDepend\Source\Tokenizer\Token> $tokens The generated tokens.
+     * @param array<Token> $tokens The generated tokens.
      *
      * @return void
      */
@@ -236,8 +237,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
 
     /**
      * Adds a source item that was parsed from this source file.
-     *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $artifact
      *
      * @return void
      *
@@ -337,7 +336,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * @return void
      *
      * @since  0.10.0
-     * @see    \PDepend\Source\AST\ASTCompilationUnit::$childNodes
+     * @see    ASTCompilationUnit::$childNodes
      */
     public function __wakeup()
     {

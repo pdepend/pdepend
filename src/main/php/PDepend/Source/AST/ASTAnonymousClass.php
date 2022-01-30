@@ -60,7 +60,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var null|\PDepend\Source\AST\ASTNode
+     * @var null|ASTNode
      */
     protected $parent = null;
 
@@ -160,7 +160,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function getParent()
     {
@@ -169,8 +169,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * Sets the parent node of this node.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
      *
      * @return void
      */
@@ -185,7 +183,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      *
      * @param string $parentType
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getParentsOfType($parentType)
     {
@@ -203,8 +201,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * This method adds a new child node at the first position of the children.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
      *
      * @return void
      */

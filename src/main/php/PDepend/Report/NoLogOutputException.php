@@ -55,8 +55,6 @@ class NoLogOutputException extends LogicException
 {
     /**
      * Creates a new log target exception for the given log instance.
-     *
-     * @param \PDepend\Report\ReportGenerator $logger
      */
     public function __construct(ReportGenerator $logger)
     {

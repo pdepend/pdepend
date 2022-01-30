@@ -164,9 +164,9 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */

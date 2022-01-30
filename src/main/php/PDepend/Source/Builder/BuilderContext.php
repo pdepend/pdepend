@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Builder;
 
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -98,7 +99,7 @@ interface BuilderContext
      *
      * @param string $qualifiedName Full qualified trait name.
      *
-     * @return \PDepend\Source\AST\ASTTrait
+     * @return ASTTrait
      *
      * @since  1.0.0
      */
@@ -109,7 +110,7 @@ interface BuilderContext
      *
      * @param string $qualifiedName
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return ASTClass
      */
     public function getClass($qualifiedName);
 
@@ -118,7 +119,7 @@ interface BuilderContext
      *
      * @param string $qualifiedName
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      */
     public function getClassOrInterface($qualifiedName);
 }

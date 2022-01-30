@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
@@ -57,7 +58,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * The internal used cache instance.
      *
-     * @var null|\PDepend\Util\Cache\CacheDriver
+     * @var null|CacheDriver
      *
      * @since 0.10.0
      */
@@ -67,7 +68,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var null|\PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @var null|ASTClassOrInterfaceReference
      *
      * @since 0.9.5
      */
@@ -76,7 +77,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * List of all exceptions classes referenced by this callable.
      *
-     * @var \PDepend\Source\AST\ASTClassOrInterfaceReference[]
+     * @var ASTClassOrInterfaceReference[]
      *
      * @since 0.9.5
      */
@@ -92,7 +93,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * List of all parsed child nodes.
      *
-     * @var \PDepend\Source\AST\ASTNode[]
+     * @var ASTNode[]
      *
      * @since 0.9.6
      */
@@ -119,7 +120,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * List of method/function parameters.
      *
-     * @var null|\PDepend\Source\AST\ASTParameter[]
+     * @var null|ASTParameter[]
      */
     private $parameters = null;
 
@@ -140,7 +141,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Adds a parsed child node to this node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node A parsed child node instance.
+     * @param ASTNode $node A parsed child node instance.
      *
      * @return void
      * @access private
@@ -155,7 +156,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns all child nodes of this method.
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      *
      * @since  0.9.8
      */
@@ -169,7 +170,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType Searched class or interface type.
      *
@@ -194,7 +195,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Will find all children for the given type.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType Searched class or interface type.
      * @param T[]             $results    The found children.
@@ -230,7 +231,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Sets the tokens found in the function body.
      *
-     * @param \PDepend\Source\Tokenizer\Token[] $tokens The body tokens.
+     * @param Token[] $tokens The body tokens.
      *
      * @return void
      */
@@ -269,7 +270,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
-     * Returns all {@link \PDepend\Source\AST\AbstractASTClassOrInterface}
+     * Returns all {@link AbstractASTClassOrInterface}
      * objects this function depends on.
      *
      * @return ASTClassOrInterfaceReferenceIterator
@@ -288,7 +289,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * the return value of this callable. The returned value will be <b>null</b>
      * if there is no return value or the return value is scalat.
      *
-     * @return null|\PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return null|AbstractASTClassOrInterface
      *
      * @since  0.9.5
      */
@@ -323,7 +324,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
-     * @return null|\PDepend\Source\AST\ASTType
+     * @return null|ASTType
      */
     public function getReturnType()
     {
@@ -339,8 +340,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * This method can be used to set a reference instance for the declared
      * function return type.
      *
-     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference Holder
-     *                                                                         instance for the declared function return type.
+     * @param ASTClassOrInterfaceReference $classReference Holder instance for the declared function return type.
      *
      * @return void
      *
@@ -355,8 +355,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Adds a reference holder for a thrown exception class or interface to
      * this callable.
      *
-     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference A
-     *                                                                         reference instance for a thrown exception.
+     * @param ASTClassOrInterfaceReference $classReference A reference instance for a thrown exception.
      *
      * @return void
      *
@@ -370,7 +369,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
 
     /**
      * Returns an iterator with thrown exception
-     * {@link \PDepend\Source\AST\AbstractASTClassOrInterface} instances.
+     * {@link AbstractASTClassOrInterface} instances.
      *
      * @return ASTClassOrInterfaceReferenceIterator
      */
@@ -384,7 +383,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns an array with all method/function parameters.
      *
-     * @return null|\PDepend\Source\AST\ASTParameter[]
+     * @return null|ASTParameter[]
      */
     public function getParameters()
     {

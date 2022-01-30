@@ -59,7 +59,7 @@ class ASTTrait extends ASTClass
     /**
      * Returns all properties for this class.
      *
-     * @return \PDepend\Source\AST\ASTProperty[]
+     * @return ASTProperty[]
      *
      * @since  1.0.6
      *
@@ -71,10 +71,10 @@ class ASTTrait extends ASTClass
     }
 
     /**
-     * Returns an array with {@link \PDepend\Source\AST\ASTMethod} objects
+     * Returns an array with {@link ASTMethod} objects
      * that are implemented or imported by this trait.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     public function getAllMethods()
     {
@@ -89,8 +89,6 @@ class ASTTrait extends ASTClass
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTType $type
      *
      * @return bool
      *

@@ -63,7 +63,7 @@ interface ASTVisitListener
     /**
      * Is called when the visitor starts a new class instance.
      *
-     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
+     * @param ASTClass $class The context class instance.
      *
      * @return void
      */
@@ -72,7 +72,7 @@ interface ASTVisitListener
     /**
      * Is called when the visitor ends with a class instance.
      *
-     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
+     * @param ASTClass $class The context class instance.
      *
      * @return void
      */
@@ -99,7 +99,7 @@ interface ASTVisitListener
     /**
      * Is called when the visitor starts a new file instance.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
+     * @param ASTCompilationUnit $compilationUnit The context file instance.
      *
      * @return void
      */
@@ -108,7 +108,7 @@ interface ASTVisitListener
     /**
      * Is called when the visitor ends with a file instance.
      *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The context file instance.
+     * @param ASTCompilationUnit $compilationUnit The context file instance.
      *
      * @return void
      */

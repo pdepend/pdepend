@@ -46,7 +46,10 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTType;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -172,7 +175,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function parsePostfixIdentifier()
     {
@@ -204,7 +207,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     protected function parseEndReturnTypeHint()
     {
@@ -221,7 +224,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     protected function parseReturnTypeHint()
     {
@@ -257,7 +260,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * Parses any expression that is surrounded by an opening and a closing
      * parenthesis
      *
-     * @return \PDepend\Source\AST\ASTExpression
+     * @return ASTExpression
      */
     protected function parseParenthesisExpression()
     {
@@ -310,7 +313,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      *
      * @param string $image
      *
-     * @return false|\PDepend\Source\AST\ASTType
+     * @return ASTType|false
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -333,7 +336,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * Parse the type reference used in an allocation expression.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      *
      * @since 2.3
      */
@@ -346,7 +349,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * Attempts to the next sequence of tokens as an anonymous class and adds it to the allocation expression
      *
-     * @template T of \PDepend\Source\AST\ASTAllocationExpression
+     * @template T of ASTAllocationExpression
      *
      * @param T $allocation
      *
@@ -446,9 +449,9 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      *
      * @since 2.3
      */
@@ -461,7 +464,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * In this method we implement parsing of PHP 7.0 specific expressions.
      *
-     * @return null|\PDepend\Source\AST\ASTNode
+     * @return null|ASTNode
      *
      * @since 2.3
      */
@@ -499,7 +502,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      * //               --  -------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
      *
      * @since 2.0.7
      */

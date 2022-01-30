@@ -45,7 +45,9 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Tokenizer\Tokens;
@@ -85,7 +87,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     protected function parseReturnTypeHint()
     {
@@ -112,7 +114,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      * //                ---
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
      */
     protected function parseFormalParameterOrTypeHintOrByReference()
     {
@@ -165,7 +167,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      *
      * @param string $image
      *
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -182,7 +184,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     /**
      * This method parses class references in catch statement.
      *
-     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @param ASTCatchStatement $stmt The owning catch statement.
      *
      * @return void
      */

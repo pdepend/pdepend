@@ -65,15 +65,14 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     /**
      * The wrapped reference node.
      *
-     * @var \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @var ASTClassOrInterfaceReference
      */
     protected $reference = null;
 
     /**
      * Constructs a new type holder instance.
      *
-     * @param \PDepend\Source\AST\ASTClassOrInterfaceReference $reference The type
-     *                                                                    instance that reference the concrete target of self.
+     * @param ASTClassOrInterfaceReference $reference The type instance that reference the concrete target of self.
      *
      * @todo Call parent constructor, otherwise this could cause bad side effects.
      */
@@ -97,7 +96,7 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      */
     public function getType()
     {

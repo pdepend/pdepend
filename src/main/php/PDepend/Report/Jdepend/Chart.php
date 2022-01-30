@@ -73,14 +73,14 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * The context source code.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList<ASTNamespace>
+     * @var ASTArtifactList<ASTNamespace>
      */
     private $code = null;
 
     /**
      * The context analyzer instance.
      *
-     * @var \PDepend\Metrics\Analyzer\DependencyAnalyzer
+     * @var Analyzer\DependencyAnalyzer
      */
     private $analyzer = null;
 
@@ -110,7 +110,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Sets the context code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList<ASTNamespace> $artifacts
+     * @param ASTArtifactList<ASTNamespace> $artifacts
      *
      * @return void
      */
@@ -123,7 +123,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param Analyzer $analyzer The analyzer to log.
      *
      * @return bool
      */
@@ -140,7 +140,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * Closes the logger process and writes the output file.
      *
-     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
+     * @throws NoLogOutputException If the no log target exists.
      *
      * @return void
      */

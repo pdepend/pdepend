@@ -56,7 +56,7 @@ class ASTFunction extends AbstractASTCallable
     /**
      * The parent namespace for this function.
      *
-     * @var null|\PDepend\Source\AST\ASTNamespace
+     * @var null|ASTNamespace
      *
      * @since 0.10.0
      */
@@ -65,7 +65,7 @@ class ASTFunction extends AbstractASTCallable
     /**
      * The currently used builder context.
      *
-     * @var null|\PDepend\Source\Builder\BuilderContext
+     * @var null|BuilderContext
      *
      * @since 0.10.0
      */
@@ -82,7 +82,7 @@ class ASTFunction extends AbstractASTCallable
     /**
      * Sets the currently active builder context.
      *
-     * @param \PDepend\Source\Builder\BuilderContext $context Current builder context.
+     * @param BuilderContext $context Current builder context.
      *
      * @return $this
      *
@@ -97,7 +97,7 @@ class ASTFunction extends AbstractASTCallable
     /**
      * Returns the parent namespace for this function.
      *
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      */
     public function getNamespace()
     {
@@ -106,8 +106,6 @@ class ASTFunction extends AbstractASTCallable
 
     /**
      * Sets the parent namespace for this function.
-     *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
      *
      * @return void
      */

@@ -86,8 +86,8 @@ class PackageArtifactFilter implements ArtifactFilter
     {
         $namespace = null;
         // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       \PDepend\Source\AST\ASTMethod and \PDepend\Source\AST\ASTProperty,
-        //       but when PDepend supports more node types, this could produce errors.
+        //       ASTMethod and ASTProperty, but when PDepend supports more node
+        //       types, this could produce errors.
         if ($node instanceof AbstractASTClassOrInterface) {
             $namespace = $node->getNamespace()->getName();
         } elseif ($node instanceof ASTFunction) {

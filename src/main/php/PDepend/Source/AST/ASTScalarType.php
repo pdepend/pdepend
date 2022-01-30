@@ -44,6 +44,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * This class represents primitive types like integer, float, boolean, string
  * etc.
@@ -92,7 +94,7 @@ class ASTScalarType extends ASTType
      *
      * @since  0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitScalarType($this, $data);
     }

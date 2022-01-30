@@ -62,7 +62,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
     /**
      * List or registered listeners.
      *
-     * @var \PDepend\Metrics\AnalyzerListener[]
+     * @var AnalyzerListener[]
      */
     private $listeners = array();
 
@@ -93,7 +93,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
     /**
      * Adds a listener to this analyzer.
      *
-     * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
+     * @param AnalyzerListener $listener The listener instance.
      *
      * @return void
      */

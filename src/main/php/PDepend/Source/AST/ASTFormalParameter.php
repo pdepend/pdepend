@@ -158,7 +158,7 @@ class ASTFormalParameter extends AbstractASTNode
      * @return int
      *
      * @since  0.10.4
-     * @see    \PDepend\Source\AST\ASTNode#getMetadataSize()
+     * @see    ASTNode#getMetadataSize()
      */
     protected function getMetadataSize()
     {

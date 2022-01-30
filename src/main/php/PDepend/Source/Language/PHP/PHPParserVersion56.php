@@ -46,6 +46,8 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTConstant;
+use PDepend\Source\AST\ASTNamedArgument;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\FullTokenizer;
@@ -65,9 +67,9 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     /**
      * Parses additional static values that are valid in the supported php version.
      *
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
      *
-     * @return null|\PDepend\Source\AST\ASTValue
+     * @return null|ASTValue
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
@@ -290,9 +292,9 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      *
      * @since 2.2
      */
@@ -307,7 +309,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     /**
      * In this method we implement parsing of PHP 5.6 specific expressions.
      *
-     * @return null|\PDepend\Source\AST\ASTNode
+     * @return null|ASTNode
      *
      * @since 2.3
      */
@@ -335,7 +337,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
-     * @return ASTConstant|\PDepend\Source\AST\ASTNamedArgument
+     * @return ASTConstant|ASTNamedArgument
      */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
@@ -343,7 +345,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTArguments
+     * @return ASTArguments
      */
     protected function parseArgumentList(ASTArguments $arguments)
     {
@@ -377,7 +379,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
      * Parses the value of a php constant. By default this can be only static
      * values that were allowed in the oldest supported PHP version.
      *
-     * @return \PDepend\Source\AST\ASTValue
+     * @return ASTValue
      */
     protected function parseConstantDeclaratorValue()
     {

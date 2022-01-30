@@ -52,16 +52,16 @@ namespace PDepend\Input;
 class CompositeFilter implements Filter
 {
     /**
-     * List of aggregated {@link \PDepend\Input\Filter} objects.
+     * List of aggregated {@link Filter} objects.
      *
-     * @var \PDepend\Input\Filter[]
+     * @var Filter[]
      */
     protected $filters = array();
 
     /**
      * Adds a file filter to this composite.
      *
-     * @param \PDepend\Input\Filter $filter The new filter object.
+     * @param Filter $filter The new filter object.
      *
      * @return void
      */

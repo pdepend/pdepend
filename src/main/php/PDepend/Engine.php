@@ -50,18 +50,22 @@ use OutOfBoundsException;
 use PDepend\Input\CompositeFilter;
 use PDepend\Input\Filter;
 use PDepend\Input\Iterator;
+use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerCacheAware;
 use PDepend\Metrics\AnalyzerFactory;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Report\CodeAwareGenerator;
+use PDepend\Report\ReportGenerator;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\NullArtifactFilter;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
@@ -94,7 +98,7 @@ class Engine
     /**
      * The system configuration.
      *
-     * @var \PDepend\Util\Configuration
+     * @var Configuration
      *
      * @since 0.10.0
      */
@@ -124,35 +128,35 @@ class Engine
     /**
      * The used code node builder.
      *
-     * @var null|PHPBuilder<\PDepend\Source\AST\ASTNamespace>
+     * @var null|PHPBuilder<ASTNamespace>
      */
     private $builder = null;
 
     /**
-     * Generated {@link \PDepend\Source\AST\ASTNamespace} objects.
+     * Generated {@link ASTNamespace} objects.
      *
-     * @var \PDepend\Source\AST\ASTNamespace[]
+     * @var ASTNamespace[]
      */
     private $namespaces = null;
 
     /**
-     * List of all registered {@link \PDepend\Report\ReportGenerator} instances.
+     * List of all registered {@link ReportGenerator} instances.
      *
-     * @var \PDepend\Report\ReportGenerator[]
+     * @var ReportGenerator[]
      */
     private $generators = array();
 
     /**
      * A composite filter for input files.
      *
-     * @var \PDepend\Input\CompositeFilter
+     * @var CompositeFilter
      */
     private $fileFilter = null;
 
     /**
      * A filter for namespace.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList\ArtifactFilter
+     * @var ArtifactFilter
      */
     private $codeFilter = null;
 
@@ -166,7 +170,7 @@ class Engine
     /**
      * List or registered listeners.
      *
-     * @var \PDepend\ProcessListener[]
+     * @var ProcessListener[]
      */
     private $listeners = array();
 
@@ -178,31 +182,31 @@ class Engine
     private $options = array();
 
     /**
-     * List of all {@link \PDepend\Source\Parser\ParserException} that were caught during
+     * List of all {@link ParserException} that were caught during
      * the parsing process.
      *
-     * @var \PDepend\Source\Parser\ParserException[]
+     * @var ParserException[]
      */
     private $parseExceptions = array();
 
     /**
      * The configured cache factory.
      *
-     * @var \PDepend\Util\Cache\CacheFactory
+     * @var CacheFactory
      *
      * @since 1.0.0
      */
     private $cacheFactory;
 
     /**
-     * @var \PDepend\Metrics\AnalyzerFactory
+     * @var AnalyzerFactory
      */
     private $analyzerFactory;
 
     /**
      * Constructs a new php depend facade.
      *
-     * @param \PDepend\Util\Configuration $configuration The system configuration.
+     * @param Configuration $configuration The system configuration.
      */
     public function __construct(
         Configuration $configuration,
@@ -265,7 +269,7 @@ class Engine
     /**
      * Adds a logger to the output list.
      *
-     * @param \PDepend\Report\ReportGenerator $generator The logger instance.
+     * @param ReportGenerator $generator The logger instance.
      *
      * @return void
      */
@@ -277,7 +281,7 @@ class Engine
     /**
      * Adds a new input/file filter.
      *
-     * @param \PDepend\Input\Filter $filter New input/file filter instance.
+     * @param Filter $filter New input/file filter instance.
      *
      * @return void
      */
@@ -322,7 +326,7 @@ class Engine
     /**
      * Adds a process listener.
      *
-     * @param \PDepend\ProcessListener $listener The listener instance.
+     * @param ProcessListener $listener The listener instance.
      *
      * @return void
      */
@@ -337,7 +341,7 @@ class Engine
      * Analyzes the registered directories and returns the collection of
      * analyzed namespace.
      *
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function analyze()
     {
@@ -393,10 +397,10 @@ class Engine
     }
 
     /**
-     * Returns an <b>array</b> with all {@link \PDepend\Source\Parser\ParserException}
+     * Returns an <b>array</b> with all {@link ParserException}
      * that were caught during the parsing process.
      *
-     * @return \PDepend\Source\Parser\ParserException[]
+     * @return ParserException[]
      */
     public function getExceptions()
     {
@@ -432,7 +436,7 @@ class Engine
      * @throws OutOfBoundsException
      * @throws RuntimeException
      *
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      */
     public function getNamespace($name)
     {
@@ -453,7 +457,7 @@ class Engine
      *
      * @throws RuntimeException
      *
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function getNamespaces()
     {
@@ -467,7 +471,7 @@ class Engine
     /**
      * Send the start parsing process event.
      *
-     * @param \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace> $builder The used node builder instance.
+     * @param Builder<ASTNamespace> $builder The used node builder instance.
      *
      * @return void
      */
@@ -481,7 +485,7 @@ class Engine
     /**
      * Send the end parsing process event.
      *
-     * @param \PDepend\Source\Builder\Builder<\PDepend\Source\AST\ASTNamespace> $builder The used node builder instance.
+     * @param Builder<ASTNamespace> $builder The used node builder instance.
      *
      * @return void
      */
@@ -599,7 +603,7 @@ class Engine
 
             try {
                 $parser->parse();
-            } catch (\PDepend\Source\Parser\ParserException $e) {
+            } catch (ParserException $e) {
                 $this->parseExceptions[] = $e;
             }
             $this->fireEndFileParsing($tokenizer);
@@ -650,7 +654,7 @@ class Engine
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
      *
-     * @return \Iterator<int, string>
+     * @return Iterator<int, string>
      */
     private function createFileIterator()
     {
@@ -711,7 +715,7 @@ class Engine
     /**
      * @param array<string, mixed> $options
      *
-     * @return \PDepend\Metrics\Analyzer[]
+     * @return Analyzer[]
      */
     private function createAnalyzers($options)
     {

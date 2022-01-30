@@ -79,32 +79,32 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     private $logFile = null;
 
     /**
-     * The raw {@link \PDepend\Source\AST\ASTNamespace} instances.
+     * The raw {@link ASTNamespace} instances.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace>
+     * @var ASTArtifactList<ASTNamespace>
      */
     protected $code = null;
 
     /**
      * Set of all analyzed files.
      *
-     * @var \PDepend\Source\AST\ASTCompilationUnit[]
+     * @var ASTCompilationUnit[]
      */
     protected $fileSet = array();
 
     /**
      * List of all analyzers that implement the node aware interface
-     * {@link \PDepend\Metrics\AnalyzerNodeAware}.
+     * {@link AnalyzerNodeAware}.
      *
-     * @var \PDepend\Metrics\AnalyzerNodeAware[]
+     * @var AnalyzerNodeAware[]
      */
     private $nodeAwareAnalyzers = array();
 
     /**
      * List of all analyzers that implement the node aware interface
-     * {@link \PDepend\Metrics\AnalyzerProjectAware}.
+     * {@link AnalyzerProjectAware}.
      *
-     * @var \PDepend\Metrics\AnalyzerProjectAware[]
+     * @var AnalyzerProjectAware[]
      */
     private $projectAwareAnalyzers = array();
 
@@ -155,7 +155,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Sets the context code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace> $artifacts
+     * @param ASTArtifactList<ASTNamespace> $artifacts
      *
      * @return void
      */
@@ -168,7 +168,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param Analyzer $analyzer The analyzer to log.
      *
      * @return bool
      */
@@ -191,7 +191,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Closes the logger process and writes the output file.
      *
-     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
+     * @throws NoLogOutputException If the no log target exists.
      *
      * @return void
      */
@@ -445,8 +445,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *   </class>
      * </code>
      *
-     * @param DOMElement                             $xml             The parent xml element.
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit The code file instance.
+     * @param DOMElement         $xml             The parent xml element.
+     * @param ASTCompilationUnit $compilationUnit The code file instance.
      *
      * @return void
      */

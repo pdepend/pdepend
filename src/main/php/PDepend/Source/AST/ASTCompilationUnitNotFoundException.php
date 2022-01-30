@@ -59,8 +59,6 @@ class ASTCompilationUnitNotFoundException extends RuntimeException
 {
     /**
      * Constructs a new exception instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTArtifact $owner
      */
     public function __construct(AbstractASTArtifact $owner)
     {

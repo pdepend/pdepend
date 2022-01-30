@@ -45,7 +45,7 @@ namespace PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTArtifact;
 
 /**
- * Base interface for {@link \PDepend\Source\AST\ASTArtifactList} filters.
+ * Base interface for {@link ASTArtifactList} filters.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License

@@ -45,6 +45,7 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -94,21 +95,21 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Nodes in which the current analyzed class is used.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTArtifact>>
      */
     private $efferentNodes = array();
 
     /**
      * Nodes that is used by the current analyzed class.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTArtifact>>
      */
     private $afferentNodes = array();
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -132,7 +133,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @return \PDepend\Source\AST\AbstractASTType[]
+     * @return AbstractASTType[]
      */
     public function getAfferents(AbstractASTArtifact $node)
     {
@@ -146,7 +147,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @return \PDepend\Source\AST\AbstractASTType[]
+     * @return AbstractASTType[]
      */
     public function getEfferents(AbstractASTArtifact $node)
     {
@@ -308,7 +309,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param \PDepend\Source\AST\AbstractASTArtifact[] $list
+     * @param AbstractASTArtifact[] $list
      *
      * @return bool If this method detects a cycle the return value is <b>true</b>
      *              otherwise this method will return <b>false</b>.

@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * This class calculates the Halstead Complexity Measures for the project,
@@ -97,9 +98,9 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */

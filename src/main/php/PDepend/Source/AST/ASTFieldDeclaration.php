@@ -46,6 +46,7 @@ namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a field or property declaration of a class.
@@ -84,7 +85,7 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns the type of this parameter.
      *
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     public function getType()
     {
@@ -185,11 +186,11 @@ class ASTFieldDeclaration extends AbstractASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
+     * @param ASTVisitor $visitor The calling visitor instance.
      *
      * @since  0.9.12
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitFieldDeclaration($this, $data);
     }
@@ -200,7 +201,7 @@ class ASTFieldDeclaration extends AbstractASTNode
      * @return int
      *
      * @since  0.10.4
-     * @see    \PDepend\Source\AST\ASTNode#getMetadataSize()
+     * @see    ASTNode#getMetadataSize()
      */
     protected function getMetadataSize()
     {

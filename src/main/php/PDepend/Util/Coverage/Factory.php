@@ -63,7 +63,7 @@ class Factory
      * @throws RuntimeException When the given path name does not point to a
      *                          valid coverage file or onto an unsupported coverage format.
      *
-     * @return \PDepend\Util\Coverage\CloverReport
+     * @return CloverReport
      */
     public function create($pathName)
     {

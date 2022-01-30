@@ -52,7 +52,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * <?php
  * class Builder
  * {
- *     public function buildNode($name, $line, \PDepend\Source\AST\ASTCompilationUnit $unit) {
+ *     public function buildNode($name, $line, ASTCompilationUnit $unit) {
  *     }
  * }
  *
@@ -68,7 +68,7 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * The parent function or method instance.
      *
-     * @var \PDepend\Source\AST\AbstractASTCallable
+     * @var AbstractASTCallable
      */
     private $declaringFunction = null;
 
@@ -96,7 +96,7 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * The wrapped variable declarator instance.
      *
-     * @var \PDepend\Source\AST\ASTVariableDeclarator
+     * @var ASTVariableDeclarator
      */
     private $variableDeclarator = null;
 
@@ -146,7 +146,7 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @return AbstractASTCallable
      *
      * @since  0.9.5
      */
@@ -157,8 +157,6 @@ class ASTParameter extends AbstractASTArtifact
 
     /**
      * Sets the parent function or method object.
-     *
-     * @param \PDepend\Source\AST\AbstractASTCallable $function
      *
      * @return void
      *
@@ -175,7 +173,7 @@ class ASTParameter extends AbstractASTArtifact
      *
      * @todo Review this for refactoring, maybe create a empty getParent()?
      *
-     * @return null|\PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return null|AbstractASTClassOrInterface
      *
      * @since  0.9.5
      */
@@ -213,7 +211,7 @@ class ASTParameter extends AbstractASTArtifact
      * Returns the class type of this parameter. This method will return
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
-     * @return null|\PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return null|AbstractASTClassOrInterface
      *
      * @since  0.9.5
      */
@@ -252,7 +250,7 @@ class ASTParameter extends AbstractASTArtifact
     public function isArray()
     {
         $node = $this->formalParameter->getChild(0);
-        return ($node instanceof \PDepend\Source\AST\ASTTypeArray);
+        return ($node instanceof ASTTypeArray);
     }
 
     /**
@@ -328,7 +326,7 @@ class ASTParameter extends AbstractASTArtifact
      * This method will return the declared default value for this parameter.
      * Please note that this method will return <b>null</b> when no default
      * value was declared, therefore you should combine calls to this method and
-     * {@link \PDepend\Source\AST\ASTParameter::isDefaultValueAvailable()} to
+     * {@link ASTParameter::isDefaultValueAvailable()} to
      * detect a NULL-value.
      *
      * @since  0.9.5

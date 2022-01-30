@@ -59,7 +59,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Parsed child nodes of this node.
      *
-     * @var \PDepend\Source\AST\ASTNode[]
+     * @var ASTNode[]
      */
     protected $nodes = array();
 
@@ -67,7 +67,7 @@ abstract class AbstractASTNode implements ASTNode
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var null|\PDepend\Source\AST\ASTNode
+     * @var null|ASTNode
      */
     protected $parent = null;
 
@@ -312,7 +312,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @throws OutOfBoundsException When no node exists at the given index.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function getChild($index)
     {
@@ -331,7 +331,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getChildren()
     {
@@ -343,7 +343,7 @@ abstract class AbstractASTNode implements ASTNode
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType
      *
@@ -367,7 +367,7 @@ abstract class AbstractASTNode implements ASTNode
      * instance of the given <b>$targetType</b>. The returned value will be
      * an empty <b>array</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
      *
      * @param class-string<T> $targetType Searched class or interface type.
      * @param T[]             $results    Already found node instances. This parameter
@@ -389,8 +389,6 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method adds a new child node at the first position of the children.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
-     *
      * @return void
      */
     public function prependChild(ASTNode $node)
@@ -401,8 +399,6 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * This method adds a new child node to this node instance.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
      *
      * @return void
      */
@@ -416,7 +412,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function getParent()
     {
@@ -429,7 +425,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @param string $parentType
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getParentsOfType($parentType)
     {
@@ -447,8 +443,6 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * Sets the parent node of this node.
-     *
-     * @param \PDepend\Source\AST\ASTNode $node
      *
      * @return void
      */

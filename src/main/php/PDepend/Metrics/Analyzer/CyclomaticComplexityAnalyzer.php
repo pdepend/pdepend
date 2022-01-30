@@ -50,6 +50,9 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTSwitchLabel;
 
 /**
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
@@ -81,9 +84,9 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     private $ccn2 = 0;
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -246,8 +249,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a boolean AND-expression.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -262,8 +265,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a boolean OR-expression.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -278,8 +281,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a switch label.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $node The currently visited node.
-     * @param array<string, integer>             $data The previously calculated ccn values.
+     * @param ASTSwitchLabel         $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -297,8 +300,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a catch statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -315,8 +318,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits an elseif statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -333,8 +336,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a for statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -351,8 +354,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a foreach statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -369,8 +372,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits an if statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -387,8 +390,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a logical AND expression.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -403,8 +406,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a logical OR expression.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -419,8 +422,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a ternary operator.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -437,8 +440,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a while-statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
@@ -455,8 +458,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a do/while-statement.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param array<string, integer>      $data The previously calculated ccn values.
+     * @param ASTNode                $node The currently visited node.
+     * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *

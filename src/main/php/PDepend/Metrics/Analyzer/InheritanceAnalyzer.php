@@ -48,6 +48,7 @@ use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * This analyzer provides two project related inheritance metrics.
@@ -173,9 +174,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -194,7 +195,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * Calculates several inheritance related metrics for the given source
      * namespaces.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      *

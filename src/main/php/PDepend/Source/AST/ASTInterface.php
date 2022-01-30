@@ -74,8 +74,6 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * Sets a reference onto the parent class of this class node.
      *
-     * @param \PDepend\Source\AST\ASTClassReference $classReference
-     *
      * @throws BadMethodCallException
      *
      * @return void
@@ -91,8 +89,6 @@ class ASTInterface extends AbstractASTClassOrInterface
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @param \PDepend\Source\AST\AbstractASTType $type
      *
      * @return bool
      */

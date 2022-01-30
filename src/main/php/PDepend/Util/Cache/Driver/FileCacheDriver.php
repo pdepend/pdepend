@@ -51,7 +51,7 @@ use PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector;
 /**
  * A file system based cache implementation.
  *
- * This class implements the {@link \PDepend\Util\Cache\CacheDriver} interface
+ * This class implements the {@link CacheDriver} interface
  * based on the local file system. It creates a special directory structure and
  * stores all cache entries in files under this directory structure.
  *

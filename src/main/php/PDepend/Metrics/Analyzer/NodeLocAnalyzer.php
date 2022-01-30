@@ -52,6 +52,8 @@ use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -167,9 +169,9 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -411,10 +413,10 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @param array<integer, \PDepend\Source\Tokenizer\Token> $tokens The raw token stream.
-     * @param bool                                            $search Optional boolean flag, search start.
+     * @param array<int, Token> $tokens The raw token stream.
+     * @param bool              $search Optional boolean flag, search start.
      *
-     * @return array<integer, integer>
+     * @return array<int, integer>
      */
     private function linesOfCode(array $tokens, $search = false)
     {
@@ -448,8 +450,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
             switch ($token->type) {
                 // These statement are terminated by a semicolon
-                //case \PDepend\Source\Tokenizer\Tokens::T_RETURN:
-                //case \PDepend\Source\Tokenizer\Tokens::T_THROW:
+                //case Tokens::T_RETURN:
+                //case Tokens::T_THROW:
                 case Tokens::T_IF:
                 case Tokens::T_TRY:
                 case Tokens::T_CASE:

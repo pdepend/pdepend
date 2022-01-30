@@ -45,6 +45,7 @@ namespace PDepend\Metrics\Analyzer;
 use InvalidArgumentException;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AggregateAnalyzer;
+use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\AbstractASTType;
@@ -52,6 +53,7 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
 use RuntimeException;
@@ -106,14 +108,14 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * The internal used cyclomatic complexity analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+     * @var CyclomaticComplexityAnalyzer
      */
     private $cyclomaticAnalyzer = null;
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -155,13 +157,13 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Adds a required sub analyzer.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The sub analyzer instance.
+     * @param Analyzer $analyzer The sub analyzer instance.
      *
      * @return void
      */
-    public function addAnalyzer(\PDepend\Metrics\Analyzer $analyzer)
+    public function addAnalyzer(Analyzer $analyzer)
     {
-        if ($analyzer instanceof \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer) {
+        if ($analyzer instanceof CyclomaticComplexityAnalyzer) {
             $this->cyclomaticAnalyzer = $analyzer;
         } else {
             throw new InvalidArgumentException('CC Analyzer required.');
@@ -327,7 +329,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Variables Inheritance of a class metric, this method only
      * counts protected and public properties of parent classes.
      *
-     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
+     * @param ASTClass $class The context class instance.
      *
      * @return int
      */
@@ -354,7 +356,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Weight Method Per Class metric, this method only counts
      * protected and public methods of parent classes.
      *
-     * @param \PDepend\Source\AST\ASTClass $class The context class instance.
+     * @param ASTClass $class The context class instance.
      *
      * @return int
      */

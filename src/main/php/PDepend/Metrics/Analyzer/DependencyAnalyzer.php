@@ -99,14 +99,14 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Nodes in which the current analyzed dependency is used.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\ASTNamespace>>
+     * @var array<string, array<int, ASTNamespace>>
      */
     private $efferentNodes = array();
 
     /**
      * Nodes that is used by the current analyzed node.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\ASTNamespace>>
+     * @var array<string, array<int, ASTNamespace>>
      */
     private $afferentNodes = array();
 
@@ -116,24 +116,24 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * <code>
      * array(
      *     <namespace-id> => array(
-     *         \PDepend\Source\AST\ASTNamespace {},
-     *         \PDepend\Source\AST\ASTNamespace {},
+     *         ASTNamespace {},
+     *         ASTNamespace {},
      *     ),
      *     <namespace-id> => array(
-     *         \PDepend\Source\AST\ASTNamespace {},
-     *         \PDepend\Source\AST\ASTNamespace {},
+     *         ASTNamespace {},
+     *         ASTNamespace {},
      *     ),
      * )
      * </code>
      *
-     * @var array<string, null|array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, null|array<int, AbstractASTArtifact>>
      */
     private $collectedCycles = array();
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -175,7 +175,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact[]
+     * @return AbstractASTArtifact[]
      */
     public function getAfferents(AbstractASTArtifact $node)
     {
@@ -191,7 +191,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function getEfferents(AbstractASTArtifact $node)
     {
@@ -208,9 +208,9 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Returns an array of nodes that build a cycle for the requested node or it
      * returns <b>null</b> if no cycle exists .
      *
-     * @param \PDepend\Source\AST\ASTNamespace $node
+     * @param ASTNamespace $node
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact[]
+     * @return AbstractASTArtifact[]
      */
     public function getCycle(AbstractASTArtifact $node)
     {
@@ -457,7 +457,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $list
+     * @param ASTNamespace[] $list
      *
      * @return bool If this method detects a cycle the return value is <b>true</b>
      *              otherwise this method will return <b>false</b>.
