@@ -118,7 +118,7 @@ interface ASTNode
      *
      * @param class-string<T> $targetType
      *
-     * @return null|T
+     * @return T|null
      */
     public function getFirstChildOfType($targetType);
 

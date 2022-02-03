@@ -60,7 +60,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The unique identifier for this function.
      *
-     * @var null|string
+     * @var string|null
      */
     protected $id = null;
 
@@ -81,14 +81,14 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The source file for this item.
      *
-     * @var null|ASTCompilationUnit
+     * @var ASTCompilationUnit|null
      */
     protected $compilationUnit = null;
 
     /**
      * The comment for this type.
      *
-     * @var null|string
+     * @var string|null
      */
     protected $comment = null;
 
@@ -168,7 +168,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns the source file for this item.
      *
-     * @return null|ASTCompilationUnit
+     * @return ASTCompilationUnit|null
      */
     public function getCompilationUnit()
     {
@@ -191,7 +191,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getComment()
     {

@@ -60,7 +60,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var null|ASTNode
+     * @var ASTNode|null
      */
     protected $parent = null;
 

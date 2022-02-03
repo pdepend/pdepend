@@ -62,28 +62,28 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var null|CacheDriver
+     * @var CacheDriver|null
      */
     protected $cache = null;
 
     /**
      * The currently used builder context.
      *
-     * @var null|BuilderContext
+     * @var BuilderContext|null
      */
     protected $context = null;
 
     /**
      * The parent namespace for this class.
      *
-     * @var null|ASTNamespace
+     * @var ASTNamespace|null
      */
     private $namespace = null;
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var null|array<string, mixed>
+     * @var array<string, mixed>|null
      */
     protected $constants = null;
 
@@ -107,7 +107,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Name of the parent namespace for this class or interface instance. Or
      * <b>NULL</b> when no namespace was specified.
      *
-     * @var null|string
+     * @var string|null
      */
     protected $namespaceName = null;
 
@@ -121,7 +121,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Temporary property that only holds methods during the parsing process.
      *
-     * @var null|ASTMethod[]
+     * @var ASTMethod[]|null
      *
      * @since 1.0.2
      */
@@ -204,7 +204,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @param class-string<T> $targetType Searched class or interface type.
      *
-     * @return null|T
+     * @return T|null
      * @access private
      *
      * @todo   Refactor $_methods property to getAllMethods() when it exists.

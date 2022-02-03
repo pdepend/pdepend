@@ -63,7 +63,7 @@ use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 class Application
 {
     /**
-     * @var null|TaggedContainerInterface
+     * @var TaggedContainerInterface|null
      **/
     private $container;
 

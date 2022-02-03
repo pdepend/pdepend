@@ -179,7 +179,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return null|AbstractASTType
+     * @return AbstractASTType|null
      */
     public function getParent()
     {

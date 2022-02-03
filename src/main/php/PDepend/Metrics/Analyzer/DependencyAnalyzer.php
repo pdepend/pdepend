@@ -126,7 +126,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array<string, null|array<int, AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTArtifact>|null>
      */
     private $collectedCycles = array();
 

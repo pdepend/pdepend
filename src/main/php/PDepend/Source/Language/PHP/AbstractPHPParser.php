@@ -255,21 +255,21 @@ abstract class AbstractPHPParser
     /**
      * The name of the last detected namespace.
      *
-     * @var null|string
+     * @var string|null
      */
     private $namespaceName;
 
     /**
      * Last parsed package tag.
      *
-     * @var null|string
+     * @var string|null
      */
     private $packageName = Builder::DEFAULT_NAMESPACE;
 
     /**
      * The package defined in the file level comment.
      *
-     * @var null|string
+     * @var string|null
      */
     private $globalPackageName = Builder::DEFAULT_NAMESPACE;
 
@@ -297,7 +297,7 @@ abstract class AbstractPHPParser
     /**
      * The last parsed doc comment or <b>null</b>.
      *
-     * @var null|string
+     * @var string|null
      */
     private $docComment;
 
@@ -311,7 +311,7 @@ abstract class AbstractPHPParser
     /**
      * The actually parsed class or interface instance.
      *
-     * @var null|AbstractASTClassOrInterface
+     * @var AbstractASTClassOrInterface|null
      */
     protected $classOrInterface;
 
@@ -2263,7 +2263,7 @@ abstract class AbstractPHPParser
      * @template T of ASTNode
      *
      * @param T                      $node
-     * @param null|array<int, Token> $tokens
+     * @param array<int, Token>|null $tokens
      *
      * @return T
      *
@@ -2939,7 +2939,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return null|ASTExpression
+     * @return ASTExpression|null
      *
      * @since 0.9.6
      */
@@ -3816,7 +3816,7 @@ abstract class AbstractPHPParser
      *      ------------------------
      * </code>
      *
-     * @return null|ASTForInit
+     * @return ASTForInit|null
      *
      * @since 0.9.8
      */
@@ -3839,7 +3839,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @return null|ASTExpression
+     * @return ASTExpression|null
      *
      * @since 0.9.12
      */
@@ -3857,7 +3857,7 @@ abstract class AbstractPHPParser
      *                                        -------------------------------
      * </code>
      *
-     * @return null|ASTForUpdate
+     * @return ASTForUpdate|null
      *
      * @since 0.9.12
      */
@@ -4962,7 +4962,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a simple PHP constant use and returns a corresponding node.
      *
-     * @return null|ASTNode
+     * @return ASTNode|null
      *
      * @since 1.0.0
      */
@@ -5614,8 +5614,8 @@ abstract class AbstractPHPParser
      * or if it's a destructuring list and so check the syntax is valid in the current PHP level.
      *
      * @param bool       $useSquaredBrackets
-     * @param null|Token $openingToken
-     * @param null|Token $consecutiveComma
+     * @param Token|null $openingToken
+     * @param Token|null $consecutiveComma
      *
      * @throws UnexpectedTokenException
      *
@@ -6139,7 +6139,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version after the next token.
      *
-     * @return null|ASTType
+     * @return ASTType|null
      *
      * @since 2.9.2
      */
@@ -6373,7 +6373,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version.
      *
-     * @return null|ASTType
+     * @return ASTType|null
      *
      * @since 1.0.0
      */
@@ -6446,7 +6446,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional statement or returns <b>null</b>.
      *
-     * @return null|AbstractASTClassOrInterface|ASTCallable|ASTNode
+     * @return AbstractASTClassOrInterface|ASTCallable|ASTNode|null
      *
      * @since 0.9.8
      */
@@ -7521,7 +7521,7 @@ abstract class AbstractPHPParser
      *
      * @param string $comment
      *
-     * @return null|string
+     * @return string|null
      */
     private function parsePackageAnnotation($comment)
     {
@@ -7605,7 +7605,7 @@ abstract class AbstractPHPParser
      *
      * @param string $comment A doc comment text.
      *
-     * @return null|string
+     * @return string|null
      */
     private function parseReturnAnnotation($comment)
     {
@@ -7655,7 +7655,7 @@ abstract class AbstractPHPParser
      * doc comment information. The returned value will be <b>null</b> when no
      * type information exists.
      *
-     * @return null|ASTType
+     * @return ASTType|null
      *
      * @since 0.9.6
      */
@@ -7693,7 +7693,7 @@ abstract class AbstractPHPParser
      * Extracts non scalar types from a field doc comment and creates a
      * matching type instance.
      *
-     * @return null|ASTClassOrInterfaceReference
+     * @return ASTClassOrInterfaceReference|null
      *
      * @since 0.9.6
      */

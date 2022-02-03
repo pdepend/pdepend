@@ -68,7 +68,7 @@ class ASTClassOrInterfaceReference extends ASTType
     /**
      * An already loaded type instance.
      *
-     * @var null|AbstractASTClassOrInterface
+     * @var AbstractASTClassOrInterface|null
      */
     protected $typeInstance = null;
 

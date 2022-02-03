@@ -61,7 +61,7 @@ class ASTVariableDeclarator extends ASTExpression
     /**
      * The initial declaration value for this node or <b>null</b>.
      *
-     * @var null|ASTValue
+     * @var ASTValue|null
      */
     protected $value = null;
 
@@ -69,7 +69,7 @@ class ASTVariableDeclarator extends ASTExpression
      * Returns the initial declaration value for this node or <b>null</b> when
      * no default value exists.
      *
-     * @return null|ASTValue
+     * @return ASTValue|null
      */
     public function getValue()
     {

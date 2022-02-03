@@ -203,7 +203,7 @@ class ASTProperty extends AbstractASTArtifact
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
-     * @return null|AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface|null
      *
      * @since  0.9.5
      */

@@ -173,7 +173,7 @@ class ASTParameter extends AbstractASTArtifact
      *
      * @todo Review this for refactoring, maybe create a empty getParent()?
      *
-     * @return null|AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface|null
      *
      * @since  0.9.5
      */
@@ -211,7 +211,7 @@ class ASTParameter extends AbstractASTArtifact
      * Returns the class type of this parameter. This method will return
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
-     * @return null|AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface|null
      *
      * @since  0.9.5
      */

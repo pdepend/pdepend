@@ -238,7 +238,7 @@ class Pyramid implements FileAwareGenerator
      * @param string $name  The metric/field identfier.
      * @param mixed  $value The metric/field value.
      *
-     * @return null|string
+     * @return string|null
      */
     private function computeThreshold($name, $value)
     {

@@ -65,7 +65,7 @@ interface Tokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return null|ASTCompilationUnit
+     * @return ASTCompilationUnit|null
      */
     public function getSourceFile();
 
@@ -89,7 +89,7 @@ interface Tokenizer
     /**
      * Returns the previous token or null if there is no one yet.
      *
-     * @return null|Token
+     * @return Token|null
      *
      * @since  2.6.0
      */
@@ -98,7 +98,7 @@ interface Tokenizer
     /**
      * Returns the current token or null if there is no more.
      *
-     * @return null|Token
+     * @return Token|null
      *
      * @since  2.6.0
      */

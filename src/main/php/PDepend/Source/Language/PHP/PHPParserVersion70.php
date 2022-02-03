@@ -353,7 +353,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
      *
      * @param T $allocation
      *
-     * @return null|T
+     * @return T|null
      */
     protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
     {
@@ -464,7 +464,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * In this method we implement parsing of PHP 7.0 specific expressions.
      *
-     * @return null|ASTNode
+     * @return ASTNode|null
      *
      * @since 2.3
      */
@@ -593,7 +593,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     /**
      * @param array<string> $previousElements
      *
-     * @return null|string
+     * @return string|null
      */
     protected function parseQualifiedNameElement(array $previousElements)
     {

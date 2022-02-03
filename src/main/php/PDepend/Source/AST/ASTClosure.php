@@ -57,7 +57,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTClosure extends AbstractASTNode implements ASTCallable
 {
     /**
-     * @return null|ASTType
+     * @return ASTType|null
      */
     public function getReturnType()
     {
