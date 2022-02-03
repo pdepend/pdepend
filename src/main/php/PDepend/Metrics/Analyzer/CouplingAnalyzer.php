@@ -48,11 +48,11 @@ use PDepend\Metrics\AnalyzerProjectAware;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
 
 /**
@@ -93,7 +93,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Has this analyzer already processed the source under test?
      *
-     * @var   boolean
+     * @var bool
+     *
      * @since 0.10.2
      */
     private $uninitialized = true;
@@ -101,14 +102,14 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * The number of method or function calls.
      *
-     * @var integer
+     * @var int
      */
     private $calls = 0;
 
     /**
      * Number of fanouts.
      *
-     * @var integer
+     * @var int
      */
     private $fanout = 0;
 
@@ -116,7 +117,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Temporary map that is used to hold the id combinations of dependee and
      * depender.
      *
-     * @var   array<string, array>
+     * @var array<string, array>
+     *
      * @since 0.10.2
      */
     private $dependencyMap = array();
@@ -125,7 +127,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This array holds a mapping between node identifiers and an array with
      * the node's metrics.
      *
-     * @var   array<string, array>
+     * @var array<string, array>
+     *
      * @since 0.10.2
      */
     private $nodeMetrics = array();
@@ -163,7 +166,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * )
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -175,9 +177,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
+     *
      * @return void
      */
     public function analyze($namespaces)
@@ -192,8 +195,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This method traverses all namespaces in the given iterator and calculates
      * the coupling metrics for them.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
+     *
      * @return void
+     *
      * @since  0.10.2
      */
     private function doAnalyze($namespaces)
@@ -214,6 +219,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * start the object tree traversal.
      *
      * @return void
+     *
      * @since  0.10.2
      */
     private function reset()
@@ -229,6 +235,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * the concrete node metrics.
      *
      * @return void
+     *
      * @since  0.10.2
      */
     private function postProcessTemporaryCouplingMap()
@@ -252,7 +259,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Visits a function node.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -292,8 +298,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Visit method for classes that will be called by PDepend during the
      * analysis phase with the current context class.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
+     *
      * @since  0.10.2
      */
     public function visitClass(ASTClass $class)
@@ -306,8 +312,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Visit method for interfaces that will be called by PDepend during the
      * analysis phase with the current context interface.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
+     *
      * @since  0.10.2
      */
     public function visitInterface(ASTInterface $interface)
@@ -319,7 +325,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Visits a method node.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -348,7 +353,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Visits a property node.
      *
-     * @param  \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
     public function visitProperty(ASTProperty $property)
@@ -366,9 +370,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Calculates the coupling between the given types.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $declaringType
-     * @param  \PDepend\Source\AST\AbstractASTType $coupledType
+     * @param AbstractASTType $coupledType
+     *
      * @return void
+     *
      * @since  0.10.2
      */
     private function calculateCoupling(
@@ -405,8 +410,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This method will initialize a temporary coupling container for the given
      * given class or interface instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTType $type
      * @return void
+     *
      * @since  0.10.2
      */
     private function initDependencyMap(AbstractASTType $type)
@@ -424,7 +429,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Counts all calls within the given <b>$callable</b>
      *
-     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
     private function countCalls(AbstractASTCallable $callable)

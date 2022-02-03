@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
@@ -45,6 +46,8 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTConstant;
+use PDepend\Source\AST\ASTNamedArgument;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\FullTokenizer;
@@ -56,6 +59,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 abstract class PHPParserVersion56 extends PHPParserVersion55
@@ -63,9 +67,9 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     /**
      * Parses additional static values that are valid in the supported php version.
      *
-     * @param  \PDepend\Source\AST\ASTValue $value
-     * @return \PDepend\Source\AST\ASTValue|null
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
+     *
+     * @return null|ASTValue
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
@@ -288,8 +292,10 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode
-     * @throws \PDepend\Source\Parser\UnexpectedTokenException
+     * @throws UnexpectedTokenException
+     *
+     * @return ASTNode
+     *
      * @since 2.2
      */
     protected function parseOptionalExpressionForVersion()
@@ -303,7 +309,8 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     /**
      * In this method we implement parsing of PHP 5.6 specific expressions.
      *
-     * @return \PDepend\Source\AST\ASTNode|null
+     * @return null|ASTNode
+     *
      * @since 2.3
      */
     protected function parseExpressionVersion56()
@@ -330,7 +337,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
-     * @return ASTConstant|\PDepend\Source\AST\ASTNamedArgument
+     * @return ASTConstant|ASTNamedArgument
      */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
@@ -338,8 +345,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTArguments $arguments
-     * @return \PDepend\Source\AST\ASTArguments
+     * @return ASTArguments
      */
     protected function parseArgumentList(ASTArguments $arguments)
     {
@@ -373,7 +379,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
      * Parses the value of a php constant. By default this can be only static
      * values that were allowed in the oldest supported PHP version.
      *
-     * @return \PDepend\Source\AST\ASTValue
+     * @return ASTValue
      */
     protected function parseConstantDeclaratorValue()
     {

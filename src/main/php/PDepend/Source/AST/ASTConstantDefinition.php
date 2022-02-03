@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
@@ -66,7 +67,7 @@ class ASTConstantDefinition extends AbstractASTNode
      * This method returns a OR combined integer of the declared modifiers for
      * this property.
      *
-     * @return integer
+     * @return int
      */
     public function getModifiers()
     {
@@ -80,10 +81,11 @@ class ASTConstantDefinition extends AbstractASTNode
      * This method will throw an exception when the value of given <b>$modifiers</b>
      * contains an invalid/unexpected modifier
      *
-     * @param integer $modifiers The declared modifiers for this node.
+     * @param int $modifiers The declared modifiers for this node.
+     *
+     * @throws InvalidArgumentException If the given modifier contains unexpected values.
      *
      * @return void
-     * @throws \InvalidArgumentException If the given modifier contains unexpected values.
      */
     public function setModifiers($modifiers)
     {
@@ -93,7 +95,7 @@ class ASTConstantDefinition extends AbstractASTNode
             & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Invalid field modifiers given, allowed modifiers are ' .
                 'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_FINAL.'
             );
@@ -106,7 +108,7 @@ class ASTConstantDefinition extends AbstractASTNode
      * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPublic()
     {
@@ -117,7 +119,7 @@ class ASTConstantDefinition extends AbstractASTNode
      * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isProtected()
     {
@@ -128,7 +130,7 @@ class ASTConstantDefinition extends AbstractASTNode
      * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPrivate()
     {
@@ -139,9 +141,6 @@ class ASTConstantDefinition extends AbstractASTNode
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
      * @since 0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)
@@ -153,9 +152,10 @@ class ASTConstantDefinition extends AbstractASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return integer
+     * @return int
+     *
      * @since  0.10.4
-     * @see    \PDepend\Source\AST\ASTNode#getMetadataSize()
+     * @see    ASTNode#getMetadataSize()
      */
     protected function getMetadataSize()
     {

@@ -38,37 +38,43 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.10
  */
 
 namespace PDepend\Metrics;
 
+use ArrayIterator;
+use FilterIterator;
+use ReturnTypeWillChange;
+
 /**
- * Filter iterator that only returns enabled {@link \PDepend\Metrics\Analyzer}
+ * Filter iterator that only returns enabled {@link Analyzer}
  * instances.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.10
  */
-class AnalyzerIterator extends \FilterIterator
+class AnalyzerIterator extends FilterIterator
 {
     /**
      * Constructs a new iterator instance.
      *
-     * @param \PDepend\Metrics\Analyzer[] $analyzers
+     * @param Analyzer[] $analyzers
      */
     public function __construct(array $analyzers)
     {
-        parent::__construct(new \ArrayIterator($analyzers));
+        parent::__construct(new ArrayIterator($analyzers));
     }
 
     /**
      * Returns <b>true</b> when the current analyzer instance is enabled.
      *
-     * @return boolean
+     * @return bool
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function accept()
     {
         return $this->getInnerIterator()->current()->isEnabled();

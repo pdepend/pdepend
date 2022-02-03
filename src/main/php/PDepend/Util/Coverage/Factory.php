@@ -42,6 +42,9 @@
 
 namespace PDepend\Util\Coverage;
 
+use RuntimeException;
+use SimpleXMLElement;
+
 /**
  * Factory used to abstract concrete coverage report formats from the pdepend
  * application.
@@ -55,10 +58,12 @@ class Factory
      * Factory method that tries to create coverage report instance for a given
      * path name.
      *
-     * @param  string $pathName Qualified path name of a coverage report file.
-     * @return \PDepend\Util\Coverage\CloverReport
-     * @throws \RuntimeException When the given path name does not point to a
-     *         valid coverage file or onto an unsupported coverage format.
+     * @param string $pathName Qualified path name of a coverage report file.
+     *
+     * @throws RuntimeException When the given path name does not point to a
+     *                          valid coverage file or onto an unsupported coverage format.
+     *
+     * @return CloverReport
      */
     public function create($pathName)
     {
@@ -66,17 +71,19 @@ class Factory
         if (isset($sxml->project)) {
             return new CloverReport($sxml);
         }
-        throw new \RuntimeException('Unsupported coverage report format.');
+        throw new RuntimeException('Unsupported coverage report format.');
     }
 
     /**
      * Creates a simple xml instance for the xml contents that are located under
      * the given path name.
      *
-     * @param  string $pathName Qualified path name of a coverage report file.
-     * @return \SimpleXMLElement
-     * @throws \RuntimeException When the given path name does not point to a
-     *         valid xml file.
+     * @param string $pathName Qualified path name of a coverage report file.
+     *
+     * @throws RuntimeException When the given path name does not point to a
+     *                          valid xml file.
+     *
+     * @return SimpleXMLElement
      */
     private function loadXml($pathName)
     {
@@ -86,7 +93,7 @@ class Factory
 
         if ($sxml === false) {
             $xmlError = libxml_get_last_error();
-            throw new \RuntimeException($xmlError ? trim($xmlError->message) : 'Unknown error');
+            throw new RuntimeException($xmlError ? trim($xmlError->message) : 'Unknown error');
         }
         return $sxml;
     }

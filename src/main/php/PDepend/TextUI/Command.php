@@ -42,10 +42,13 @@
 
 namespace PDepend\TextUI;
 
+use Exception;
 use PDepend\Application;
+use PDepend\DbusUI\ResultPrinter as DbusResultPrinter;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PDepend\Util\Workarounds;
+use RuntimeException;
 
 /**
  * Handles the command line stuff and starts the text ui runner.
@@ -75,26 +78,26 @@ class Command
     /**
      * The directories/files to be analyzed
      *
-     * @var array<integer, string>
+     * @var array<int, string>
      */
     private $source = array();
 
     /**
      * The used text ui runner.
      *
-     * @var \PDepend\TextUI\Runner
+     * @var Runner
      */
     private $runner = null;
 
     /**
-     * @var \PDepend\Application
+     * @var Application
      */
     private $application;
 
     /**
      * Performs the main cli process and returns the exit code.
      *
-     * @return integer
+     * @return int
      */
     public function run()
     {
@@ -105,7 +108,7 @@ class Command
                 $this->printHelp();
                 return self::CLI_ERROR;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
             $this->printHelp();
@@ -147,7 +150,7 @@ class Command
         if ($configurationFile) {
             try {
                 $this->application->setConfigurationFile($configurationFile);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
                 $this->printHelp();
@@ -215,12 +218,12 @@ class Command
             unset($options['--quiet']);
         } else {
             $runSilent = false;
-            $this->runner->addProcessListener(new \PDepend\TextUI\ResultPrinter());
+            $this->runner->addProcessListener(new ResultPrinter());
         }
 
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
-                new \PDepend\DbusUI\ResultPrinter()
+                new DbusResultPrinter()
             );
             unset($options['--notify-me']);
         }
@@ -262,7 +265,7 @@ class Command
             }
 
             return $result;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             echo PHP_EOL, PHP_EOL,
                  'Critical error: ', PHP_EOL,
                  '=============== ', PHP_EOL,
@@ -277,7 +280,7 @@ class Command
     /**
      * Parses the cli arguments.
      *
-     * @return boolean
+     * @return bool
      */
     protected function parseArguments()
     {
@@ -498,7 +501,7 @@ class Command
      * Prints all available log options and returns the length of the longest
      * option.
      *
-     * @return integer
+     * @return int
      */
     protected function printLogOptions()
     {
@@ -537,9 +540,9 @@ class Command
     /**
      * Prints the analyzer options.
      *
-     * @param integer $length Length of the longest option.
+     * @param int $length Length of the longest option.
      *
-     * @return integer
+     * @return int
      */
     protected function printAnalyzerOptions($length)
     {
@@ -568,9 +571,9 @@ class Command
     /**
      * Prints a single option.
      *
-     * @param string  $option  The option identifier.
-     * @param string  $message The option help message.
-     * @param integer $length  The length of the longest option.
+     * @param string $option  The option identifier.
+     * @param string $message The option help message.
+     * @param int    $length  The length of the longest option.
      *
      * @return void
      */
@@ -600,7 +603,7 @@ class Command
      * Optionally outputs the dbus option when the required extension
      * is loaded.
      *
-     * @param integer $length Padding length for the option.
+     * @param int $length Padding length for the option.
      *
      * @return void
      */
@@ -619,7 +622,7 @@ class Command
     /**
      * Main method that starts the command line runner.
      *
-     * @return integer The exit code.
+     * @return int The exit code.
      */
     public static function main()
     {
@@ -628,7 +631,8 @@ class Command
     }
 
     /**
-     * @param integer $startTime
+     * @param int $startTime
+     *
      * @return void
      */
     private function printStatistics($startTime)

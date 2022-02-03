@@ -45,7 +45,13 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTProperty;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * This analyzer implements several metrics that describe cohesion of classes
@@ -81,7 +87,6 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * )
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, integer>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -93,9 +98,9 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @return void
      */
@@ -111,7 +116,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     }
 
     /*
-    public function visitProperty(\PDepend\Source\AST\ASTProperty $property)
+    public function visitProperty(ASTProperty $property)
     {
         $this->fireStartProperty($property);
         echo ltrim($property->getName(), '$'), PHP_EOL;
@@ -127,24 +132,24 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         );
         foreach ($prefixes as $prefix) {
             $variable = $prefix->getChild(0);
-            if ($variable instanceof \PDepend\Source\AST\ASTVariable
+            if ($variable instanceof ASTVariable
                 && $variable->isThis()
             ) {
                 echo "\$this->";
-            } elseif ($variable instanceof \PDepend\Source\AST\ASTSelfReference) {
+            } elseif ($variable instanceof ASTSelfReference) {
                 echo "self::";
             } else {
                 continue;
             }
 
             $next = $prefix->getChild(1);
-            if ($next instanceof \PDepend\Source\AST\ASTMemberPrimaryPrefix) {
+            if ($next instanceof ASTMemberPrimaryPrefix) {
                 $next = $next->getChild(0);
             }
 
-            if ($next instanceof \PDepend\Source\AST\ASTPropertyPostfix) {
+            if ($next instanceof ASTPropertyPostfix) {
                 echo $next->getImage(), PHP_EOL;
-            } elseif ($next instanceof \PDepend\Source\AST\ASTMethodPostfix) {
+            } elseif ($next instanceof ASTMethodPostfix) {
                 echo $next->getImage(), '()', PHP_EOL;
             }
         }

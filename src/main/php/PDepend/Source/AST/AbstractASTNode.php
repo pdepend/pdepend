@@ -38,16 +38,20 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 
 namespace PDepend\Source\AST;
+
+use OutOfBoundsException;
 
 /**
  * This is an abstract base implementation of the ast node interface.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.6
  */
 abstract class AbstractASTNode implements ASTNode
@@ -55,7 +59,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Parsed child nodes of this node.
      *
-     * @var \PDepend\Source\AST\ASTNode[]
+     * @var ASTNode[]
      */
     protected $nodes = array();
 
@@ -63,7 +67,7 @@ abstract class AbstractASTNode implements ASTNode
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
      *
-     * @var \PDepend\Source\AST\ASTNode|null
+     * @var null|ASTNode
      */
     protected $parent = null;
 
@@ -80,6 +84,7 @@ abstract class AbstractASTNode implements ASTNode
      * image in a colon seperated string.
      *
      * @var string
+     *
      * @since 0.10.4
      */
     protected $metadata = '::::';
@@ -100,6 +105,7 @@ abstract class AbstractASTNode implements ASTNode
      * Sets the image for this ast node.
      *
      * @param string $image
+     *
      * @return void
      */
     public function setImage($image)
@@ -132,7 +138,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the start line for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getStartLine()
     {
@@ -142,7 +148,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the start column for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getStartColumn()
     {
@@ -152,7 +158,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the end line for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine()
     {
@@ -162,7 +168,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the end column for this ast node.
      *
-     * @return integer
+     * @return int
      */
     public function getEndColumn()
     {
@@ -173,11 +179,13 @@ abstract class AbstractASTNode implements ASTNode
      * For better performance we have moved the single setter methods for the
      * node columns and lines into this configure method.
      *
-     * @param integer $startLine
-     * @param integer $endLine
-     * @param integer $startColumn
-     * @param integer $endColumn
+     * @param int $startLine
+     * @param int $endLine
+     * @param int $startColumn
+     * @param int $endColumn
+     *
      * @return void
+     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns(
@@ -195,8 +203,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns an integer value that was stored under the given index.
      *
-     * @param integer $index
-     * @return integer
+     * @param int $index
+     *
+     * @return int
+     *
      * @since 0.10.4
      */
     protected function getMetadataInteger($index)
@@ -208,9 +218,11 @@ abstract class AbstractASTNode implements ASTNode
      * Stores an integer value under the given index in the internally used data
      * string.
      *
-     * @param integer $index
-     * @param integer $value
+     * @param int $index
+     * @param int $value
+     *
      * @return void
+     *
      * @since 0.10.4
      */
     protected function setMetadataInteger($index, $value)
@@ -221,8 +233,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns a boolean value that was stored under the given index.
      *
-     * @param integer $index
-     * @return boolean
+     * @param int $index
+     *
+     * @return bool
+     *
      * @since 0.10.4
      */
     protected function getMetadataBoolean($index)
@@ -234,9 +248,11 @@ abstract class AbstractASTNode implements ASTNode
      * Stores a boolean value under the given index in the internally used data
      * string.
      *
-     * @param integer $index
-     * @param boolean $value
+     * @param int  $index
+     * @param bool $value
+     *
      * @return void
+     *
      * @since 0.10.4
      */
     protected function setMetadataBoolean($index, $value)
@@ -247,8 +263,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the value that was stored under the given index.
      *
-     * @param integer $index
+     * @param int $index
+     *
      * @return string
+     *
      * @since 0.10.4
      */
     protected function getMetadata($index)
@@ -261,9 +279,10 @@ abstract class AbstractASTNode implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param integer $index
-     * @param mixed $value
+     * @param int $index
+     *
      * @return void
+     *
      * @since 0.10.4
      */
     protected function setMetadata($index, $value)
@@ -277,7 +296,8 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return integer
+     * @return int
+     *
      * @since 0.10.4
      */
     protected function getMetadataSize()
@@ -288,16 +308,18 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the node instance for the given index or throws an exception.
      *
-     * @param integer $index
-     * @return \PDepend\Source\AST\ASTNode
-     * @throws \OutOfBoundsException When no node exists at the given index.
+     * @param int $index
+     *
+     * @throws OutOfBoundsException When no node exists at the given index.
+     *
+     * @return ASTNode
      */
     public function getChild($index)
     {
         if (isset($this->nodes[$index])) {
             return $this->nodes[$index];
         }
-        throw new \OutOfBoundsException(
+        throw new OutOfBoundsException(
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
@@ -309,7 +331,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return \PDepend\Source\AST\ASTNode[]
+     * @return ASTNode[]
      */
     public function getChildren()
     {
@@ -321,9 +343,11 @@ abstract class AbstractASTNode implements ASTNode
      * instance of the given <b>$targetType</b>. The returned value will be
      * <b>null</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
+     *
      * @param class-string<T> $targetType
-     * @return T|null
+     *
+     * @return null|T
      */
     public function getFirstChildOfType($targetType)
     {
@@ -343,10 +367,12 @@ abstract class AbstractASTNode implements ASTNode
      * instance of the given <b>$targetType</b>. The returned value will be
      * an empty <b>array</b> if no child exists for that.
      *
-     * @template T of \PDepend\Source\AST\ASTNode
+     * @template T of ASTNode
+     *
      * @param class-string<T> $targetType Searched class or interface type.
      * @param T[]             $results    Already found node instances. This parameter
-     *        is only for internal usage.
+     *                                    is only for internal usage.
+     *
      * @return T[]
      */
     public function findChildrenOfType($targetType, array &$results = array())
@@ -363,7 +389,6 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method adds a new child node at the first position of the children.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
      */
     public function prependChild(ASTNode $node)
@@ -375,7 +400,6 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method adds a new child node to this node instance.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
      */
     public function addChild(ASTNode $node)
@@ -388,7 +412,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function getParent()
     {
@@ -400,7 +424,8 @@ abstract class AbstractASTNode implements ASTNode
      * of <b>$parentType</b>.
      *
      * @param string $parentType
-     * @return \PDepend\Source\AST\ASTNode[]
+     *
+     * @return ASTNode[]
      */
     public function getParentsOfType($parentType)
     {
@@ -419,7 +444,6 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Sets the parent node of this node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
      * @return void
      */
     public function setParent(ASTNode $node)
@@ -456,6 +480,7 @@ abstract class AbstractASTNode implements ASTNode
      * array with those property names that should be serialized for this class.
      *
      * @return array
+     *
      * @since 0.10.0
      */
     public function __sleep()
@@ -474,6 +499,7 @@ abstract class AbstractASTNode implements ASTNode
      * node's children.
      *
      * @return void
+     *
      * @since 0.10.0
      */
     public function __wakeup()

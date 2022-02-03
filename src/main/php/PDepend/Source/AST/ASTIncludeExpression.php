@@ -38,16 +38,20 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
 namespace PDepend\Source\AST;
+
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This node class represents a <b>include</b>- or <b>include_once</b>-expression.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 class ASTIncludeExpression extends ASTExpression
@@ -55,14 +59,14 @@ class ASTIncludeExpression extends ASTExpression
     /**
      * Does this node represent a <b>include_once</b>-expression?
      *
-     * @var boolean
+     * @var bool
      */
     protected $once = false;
 
     /**
      * Does this node represent a <b>include_once</b>-expression?
      *
-     * @return boolean
+     * @return bool
      */
     public function isOnce()
     {
@@ -83,12 +87,9 @@ class ASTIncludeExpression extends ASTExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
-     * @return mixed
+     * @param ASTVisitor $visitor The calling visitor instance.
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitIncludeExpression($this, $data);
     }
@@ -99,6 +100,7 @@ class ASTIncludeExpression extends ASTExpression
      * array with those property names that should be serialized for this class.
      *
      * @return array<string>
+     *
      * @since  0.10.0
      */
     public function __sleep()

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.5
  */
 
@@ -52,6 +53,7 @@ use PDepend\Source\Builder\BuilderContext;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.5
  */
 class ASTClassOrInterfaceReference extends ASTType
@@ -59,22 +61,21 @@ class ASTClassOrInterfaceReference extends ASTType
     /**
      * The global AST builder context.
      *
-     * @var \PDepend\Source\Builder\BuilderContext
+     * @var BuilderContext
      */
     protected $context = null;
 
     /**
      * An already loaded type instance.
      *
-     * @var \PDepend\Source\AST\AbstractASTClassOrInterface|null
+     * @var null|AbstractASTClassOrInterface
      */
     protected $typeInstance = null;
 
     /**
      * Constructs a new type holder instance.
      *
-     * @param \PDepend\Source\Builder\BuilderContext $context
-     * @param string                                 $qualifiedName
+     * @param string $qualifiedName
      */
     public function __construct(BuilderContext $context, $qualifiedName)
     {
@@ -86,7 +87,7 @@ class ASTClassOrInterfaceReference extends ASTType
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      */
     public function getType()
     {
@@ -102,9 +103,6 @@ class ASTClassOrInterfaceReference extends ASTType
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed $data
-     * @return mixed
      * @since  0.9.12
      */
     public function accept(ASTVisitor $visitor, $data = null)
@@ -117,6 +115,7 @@ class ASTClassOrInterfaceReference extends ASTType
      * be cached for this node instance.
      *
      * @return array
+     *
      * @since  0.10.0
      */
     public function __sleep()

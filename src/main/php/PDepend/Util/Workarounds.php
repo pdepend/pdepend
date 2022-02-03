@@ -54,7 +54,8 @@ class Workarounds
      * Tests if the used PHP version has the known unserialize issue with object
      * references.
      *
-     * @return boolean
+     * @return bool
+     *
      * @see    https://bugs.php.net/bug.php?id=62373
      */
     public function hasSerializeReferenceIssue()
@@ -66,7 +67,7 @@ class Workarounds
      * Tests if the current environment has no known issues and does not
      * require any workaround.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNotRequired()
     {
@@ -76,7 +77,7 @@ class Workarounds
     /**
      * Returns an array with error messages related to the required workarounds.
      *
-     * @return array<integer, string>
+     * @return array<int, string>
      */
     public function getRequiredWorkarounds()
     {

@@ -80,15 +80,14 @@ class PackageArtifactFilter implements ArtifactFilter
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
      *
-     * @param  \PDepend\Source\AST\ASTArtifact $node
-     * @return boolean
+     * @return bool
      */
     public function accept(ASTArtifact $node)
     {
         $namespace = null;
         // NOTE: This looks a little bit ugly and it seems better to exclude
-        //       \PDepend\Source\AST\ASTMethod and \PDepend\Source\AST\ASTProperty,
-        //       but when PDepend supports more node types, this could produce errors.
+        //       ASTMethod and ASTProperty, but when PDepend supports more node
+        //       types, this could produce errors.
         if ($node instanceof AbstractASTClassOrInterface) {
             $namespace = $node->getNamespace()->getName();
         } elseif ($node instanceof ASTFunction) {

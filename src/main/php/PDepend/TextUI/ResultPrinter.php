@@ -65,14 +65,15 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Number of processed items.
      *
-     * @var integer
+     * @var int
      */
     private $count = 0;
 
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param  \PDepend\Source\Builder\Builder<mixed> $builder
+     * @param Builder<mixed> $builder
+     *
      * @return void
      */
     public function startParseProcess(Builder $builder)
@@ -85,7 +86,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param  \PDepend\Source\Builder\Builder<mixed> $builder
+     * @param Builder<mixed> $builder
+     *
      * @return void
      */
     public function endParseProcess(Builder $builder)
@@ -96,7 +98,6 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts parsing of a new file.
      *
-     * @param  \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
     public function startFileParsing(Tokenizer $tokenizer)
@@ -107,7 +108,6 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished a file.
      *
-     * @param  \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @return void
      */
     public function endFileParsing(Tokenizer $tokenizer)
@@ -154,7 +154,6 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts a new analyzer.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer
      * @return void
      */
     public function startAnalyzer(Analyzer $analyzer)
@@ -172,7 +171,6 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished one analyzing process.
      *
-     * @param  \PDepend\Metrics\Analyzer $analyzer
      * @return void
      */
     public function endAnalyzer(Analyzer $analyzer)
@@ -183,7 +181,6 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Generic notification method that is called for every node start.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
     public function startVisitNode(AbstractASTArtifact $node)
@@ -194,7 +191,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Prints a single dot for the current step.
      *
-     * @param  integer $size
+     * @param int $size
+     *
      * @return void
      */
     protected function step($size = 1)
@@ -211,7 +209,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Closes the current dot line.
      *
-     * @param  integer $size
+     * @param int $size
+     *
      * @return void
      */
     protected function finish($size = 1)

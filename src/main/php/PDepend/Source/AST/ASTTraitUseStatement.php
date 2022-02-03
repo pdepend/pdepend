@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -50,19 +51,20 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 class ASTTraitUseStatement extends ASTStatement
 {
     /**
-     * @var \PDepend\Source\AST\ASTMethod[]|null
+     * @var null|ASTMethod[]
      */
     private $allMethods;
 
     /**
      * Returns an array with all aliased or directly imported methods.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     public function getAllMethods()
     {
@@ -80,13 +82,12 @@ class ASTTraitUseStatement extends ASTStatement
     }
 
     /**
-     * This method tests if the given {@link \PDepend\Source\AST\ASTMethod} is excluded
+     * This method tests if the given {@link ASTMethod} is excluded
      * by precedence statement in this use statement. It will return <b>true</b>
      * if the given <b>$method</b> is excluded, otherwise the return value of
      * this method will be <b>false</b>.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
-     * @return boolean
+     * @return bool
      */
     public function hasExcludeFor(ASTMethod $method)
     {
@@ -114,9 +115,9 @@ class ASTTraitUseStatement extends ASTStatement
 
     /**
      * Collects all directly defined methods or method aliases for the given
-     * {@link \PDepend\Source\AST\ASTTraitReference}
+     * {@link ASTTraitReference}
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference Context trait reference.
+     * @param ASTTraitReference $reference Context trait reference.
      *
      * @return void
      */
@@ -134,8 +135,7 @@ class ASTTraitUseStatement extends ASTStatement
      * alias exists for the given method, this method will simply return the
      * an <b>array</b> with the original method.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     private function getAliasesFor(ASTMethod $method)
     {
@@ -193,7 +193,7 @@ class ASTTraitUseStatement extends ASTStatement
      * Returns an <b>array</b> with all alias statements declared in this use
      * statement.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationAlias[]
+     * @return ASTTraitAdaptationAlias[]
      */
     private function getAliases()
     {
@@ -203,10 +203,6 @@ class ASTTraitUseStatement extends ASTStatement
     /**
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
-     *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param  mixed                                 $data
-     * @return mixed
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {

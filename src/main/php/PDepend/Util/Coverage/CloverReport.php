@@ -43,6 +43,7 @@
 namespace PDepend\Util\Coverage;
 
 use PDepend\Source\AST\AbstractASTArtifact;
+use SimpleXMLElement;
 
 /**
  * Coverage report implementation for clover formatted xml files.
@@ -62,9 +63,9 @@ class CloverReport implements Report
     /**
      * Constructs a new clover report instance.
      *
-     * @param \SimpleXMLElement $sxml The context simple xml element.
+     * @param SimpleXMLElement $sxml The context simple xml element.
      */
-    public function __construct(\SimpleXMLElement $sxml)
+    public function __construct(SimpleXMLElement $sxml)
     {
         $this->readProjectCoverage($sxml->project);
     }
@@ -72,10 +73,11 @@ class CloverReport implements Report
     /**
      * Reads the coverage information for a project.
      *
-     * @param  \SimpleXMLElement $sxml Element representing the clover project tag.
+     * @param SimpleXMLElement $sxml Element representing the clover project tag.
+     *
      * @return void
      */
-    private function readProjectCoverage(\SimpleXMLElement $sxml)
+    private function readProjectCoverage(SimpleXMLElement $sxml)
     {
         $this->readFileCoverage($sxml);
         foreach ($sxml->package as $package) {
@@ -87,10 +89,11 @@ class CloverReport implements Report
      * Reads the coverage information for all file elements under the given
      * parent.
      *
-     * @param  \SimpleXMLElement $sxml Element representing a file parent element.
+     * @param SimpleXMLElement $sxml Element representing a file parent element.
+     *
      * @return void
      */
-    private function readFileCoverage(\SimpleXMLElement $sxml)
+    private function readFileCoverage(SimpleXMLElement $sxml)
     {
         foreach ($sxml->file as $file) {
             $lines = array();
@@ -104,7 +107,6 @@ class CloverReport implements Report
     /**
      * Returns the percentage code coverage for the given item instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $artifact
      * @return float
      */
     public function getCoverage(AbstractASTArtifact $artifact)
@@ -138,7 +140,8 @@ class CloverReport implements Report
     /**
      * Returns the lines of the covered file.
      *
-     * @param  string $fileName The source file name.
+     * @param string $fileName The source file name.
+     *
      * @return array<boolean>
      */
     private function getLines($fileName)

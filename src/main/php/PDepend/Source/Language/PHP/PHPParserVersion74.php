@@ -38,11 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -53,6 +55,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.4
  */
 abstract class PHPParserVersion74 extends PHPParserVersion73
@@ -104,7 +107,7 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return ASTClosure
      */
     protected function parseLambdaFunctionDeclaration()
     {
@@ -131,6 +134,7 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
     /**
      * Override PHP 7.3 checkEllipsisInExpressionSupport to stop throwing the
      * parsing exception.
+     *
      * @return void
      */
     protected function checkEllipsisInExpressionSupport()

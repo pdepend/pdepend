@@ -50,13 +50,17 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTBooleanAndExpression;
 use PDepend\Source\AST\ASTBooleanOrExpression;
 use PDepend\Source\AST\ASTConditionalExpression;
+use PDepend\Source\AST\ASTElseIfStatement;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTLogicalAndExpression;
 use PDepend\Source\AST\ASTLogicalOrExpression;
 use PDepend\Source\AST\ASTLogicalXorExpression;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Util\MathUtil;
@@ -77,9 +81,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     const M_NPATH_COMPLEXITY = 'npath';
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
+     *
      * @return void
      */
     public function analyze($namespaces)
@@ -109,7 +114,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * )
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, string>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -124,7 +128,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Visits a code interface object.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -135,7 +138,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Visits a function node.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -151,8 +153,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
     /**
      * Visits a method node.
-     *
-     * @param \PDepend\Source\AST\ASTMethod $method
      *
      * @return void
      */
@@ -171,8 +171,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * This method will calculate the NPath complexity for the given callable
      * instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
+     *
      * @since  0.9.12
      */
     protected function calculateComplexity(AbstractASTCallable $callable)
@@ -196,9 +196,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param  \PDepend\Source\AST\ASTNode $node
-     * @param  string                      $data
+     * @param ASTNode $node
+     * @param string  $data
+     *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitConditionalExpression($node, $data)
@@ -237,10 +239,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(do) = NP(<do-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitDoWhileStatement($node, $data)
@@ -275,10 +278,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTElseIfStatement $node The currently visited node.
-     * @param string                                 $data The previously calculated npath value.
+     * @param ASTElseIfStatement $node The currently visited node.
+     * @param string             $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitElseIfStatement($node, $data)
@@ -310,10 +314,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(for) = NP(<for-range>) + NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 1 --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitForStatement($node, $data)
@@ -344,10 +349,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(foreach) = NP(<foreach-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitForeachStatement($node, $data)
@@ -386,10 +392,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(if) = NP(<if-range>) + NP(<expr>) + NP(<else-range> --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTIfStatement $node The currently visited node.
-     * @param string                             $data The previously calculated npath value.
+     * @param ASTIfStatement $node The currently visited node.
+     * @param string         $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitIfStatement($node, $data)
@@ -420,10 +427,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(return) = NP(<expr>) --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitReturnStatement($node, $data)
@@ -448,10 +456,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(switch) = NP(<expr>) + NP(<default-range>) +  NP(<case-range1>) ... --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitSwitchStatement($node, $data)
@@ -490,10 +499,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(try) = NP(<try-range>) + NP(<catch-range1>) + NP(<catch-range2>) ... --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitTryStatement($node, $data)
@@ -520,10 +530,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(while) = NP(<while-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
-     * @param string                      $data The previously calculated npath value.
+     * @param ASTNode $node The currently visited node.
+     * @param string  $data The previously calculated npath value.
      *
      * @return string
+     *
      * @since  0.9.12
      */
     public function visitWhileStatement($node, $data)
@@ -540,10 +551,12 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Calculates the expression sum of the given node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      *
      * @return string
+     *
      * @since  0.9.12
+     *
      * @todo   I don't like this method implementation, it should be possible to
      *       implement this method with more visitor behavior for the boolean
      *       and logical expressions.

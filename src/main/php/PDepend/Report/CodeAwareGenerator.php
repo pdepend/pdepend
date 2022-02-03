@@ -43,6 +43,7 @@
 namespace PDepend\Report;
 
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * A logger that implements this interface needs the analyzed code structure.
@@ -55,7 +56,8 @@ interface CodeAwareGenerator extends ReportGenerator
     /**
      * Sets the context code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTArtifactList<\PDepend\Source\AST\ASTNamespace> $artifacts
+     * @param ASTArtifactList<ASTNamespace> $artifacts
+     *
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts);

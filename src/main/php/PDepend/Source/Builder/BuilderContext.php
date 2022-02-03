@@ -38,11 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
 namespace PDepend\Source\Builder;
 
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -53,6 +55,7 @@ use PDepend\Source\AST\ASTTrait;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 interface BuilderContext
@@ -61,7 +64,6 @@ interface BuilderContext
      * This method can be used to register an existing function in the current
      * application context.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function registerFunction(ASTFunction $function);
@@ -70,8 +72,8 @@ interface BuilderContext
      * This method can be used to register an existing trait in the current
      * class context.
      *
-     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
+     *
      * @since  1.0.0
      */
     public function registerTrait(ASTTrait $trait);
@@ -80,7 +82,6 @@ interface BuilderContext
      * This method can be used to register an existing class in the current
      * class context.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function registerClass(ASTClass $class);
@@ -89,7 +90,6 @@ interface BuilderContext
      * This method can be used to register an existing interface in the current
      * class context.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function registerInterface(ASTInterface $interface);
@@ -97,8 +97,10 @@ interface BuilderContext
     /**
      * Returns the trait instance for the given qualified name.
      *
-     * @param  string $qualifiedName Full qualified trait name.
-     * @return \PDepend\Source\AST\ASTTrait
+     * @param string $qualifiedName Full qualified trait name.
+     *
+     * @return ASTTrait
+     *
      * @since  1.0.0
      */
     public function getTrait($qualifiedName);
@@ -106,16 +108,18 @@ interface BuilderContext
     /**
      * Returns the class instance for the given qualified name.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTClass
+     * @param string $qualifiedName
+     *
+     * @return ASTClass
      */
     public function getClass($qualifiedName);
 
     /**
      * Returns a class or an interface instance for the given qualified name.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @param string $qualifiedName
+     *
+     * @return AbstractASTClassOrInterface
      */
     public function getClassOrInterface($qualifiedName);
 }

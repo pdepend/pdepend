@@ -45,6 +45,7 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -94,21 +95,22 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Nodes in which the current analyzed class is used.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTArtifact>>
      */
     private $efferentNodes = array();
 
     /**
      * Nodes that is used by the current analyzed class.
      *
-     * @var array<string, array<integer, \PDepend\Source\AST\AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTArtifact>>
      */
     private $afferentNodes = array();
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
+     *
      * @return void
      */
     public function analyze($namespaces)
@@ -131,8 +133,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return \PDepend\Source\AST\AbstractASTType[]
+     * @return AbstractASTType[]
      */
     public function getAfferents(AbstractASTArtifact $node)
     {
@@ -146,8 +147,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return \PDepend\Source\AST\AbstractASTType[]
+     * @return AbstractASTType[]
      */
     public function getEfferents(AbstractASTArtifact $node)
     {
@@ -161,7 +161,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits a method node.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -179,7 +178,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits a namespace node.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace $namespace
      * @return void
      */
     public function visitNamespace(ASTNamespace $namespace)
@@ -198,7 +196,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits a class node.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -211,7 +208,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Visits an interface node.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -225,7 +221,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Generic visit method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
     protected function visitType(AbstractASTClassOrInterface $type)
@@ -243,9 +238,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Collects the dependencies between the two given classes.
-     *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $typeA
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $typeB
      *
      * @return void
      */
@@ -271,7 +263,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Initializes the node metric record for the given <b>$type</b>.
      *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
     protected function initTypeMetric(AbstractASTClassOrInterface $type)
@@ -318,10 +309,10 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Collects a single cycle that is reachable by this namespace. All namespaces
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact[] $list
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
-     * @return boolean If this method detects a cycle the return value is <b>true</b>
-     *                 otherwise this method will return <b>false</b>.
+     * @param AbstractASTArtifact[] $list
+     *
+     * @return bool If this method detects a cycle the return value is <b>true</b>
+     *              otherwise this method will return <b>false</b>.
      */
     protected function collectCycle(array &$list, AbstractASTArtifact $node)
     {

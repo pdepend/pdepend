@@ -76,7 +76,6 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Visits a code class object.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
      */
     public function visitClass(ASTClass $class)
@@ -89,7 +88,6 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Visits a code interface object.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -103,7 +101,6 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
     protected function visitType(AbstractASTClassOrInterface $type)
@@ -133,7 +130,6 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
      *
-     * @param  \PDepend\Source\AST\AbstractASTArtifact $node
      * @return void
      */
     protected function initNode(AbstractASTArtifact $node)

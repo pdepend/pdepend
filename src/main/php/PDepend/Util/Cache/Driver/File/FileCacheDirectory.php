@@ -38,18 +38,22 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
 namespace PDepend\Util\Cache\Driver\File;
 
+use DirectoryIterator;
 use PDepend\Util\Cache\CacheDriver;
+use SplFileInfo;
 
 /**
  * Directory helper for the file system based cache implementation.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 class FileCacheDirectory
@@ -84,7 +88,8 @@ class FileCacheDirectory
      * Creates a cache directory for the given cache entry key and returns the
      * full qualified path for that cache directory.
      *
-     * @param  string $key The cache for an entry.
+     * @param string $key The cache for an entry.
+     *
      * @return string
      */
     public function createCacheDirectory($key)
@@ -97,7 +102,8 @@ class FileCacheDirectory
      * creates a new cache directory for the given cache entry key and returns
      * the full qualified path for that cache directory.
      *
-     * @param  string $key The cache for an entry.
+     * @param string $key The cache for an entry.
+     *
      * @return string
      */
     protected function createOrReturnCacheDirectory($key)
@@ -112,7 +118,8 @@ class FileCacheDirectory
     /**
      * Ensures that the given <b>$cacheDir</b> really exists.
      *
-     * @param  string $cacheDir The cache root directory.
+     * @param string $cacheDir The cache root directory.
+     *
      * @return string
      */
     protected function ensureExists($cacheDir)
@@ -127,7 +134,7 @@ class FileCacheDirectory
      * Tests if the current software cache version is similar to the stored
      * file system cache version.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isValidVersion()
     {
@@ -137,7 +144,7 @@ class FileCacheDirectory
     /**
      * Reads the stored cache version number from the cache root directory.
      *
-     * @return string|null
+     * @return null|string
      */
     protected function readVersion()
     {
@@ -199,7 +206,7 @@ class FileCacheDirectory
      */
     protected function flushDirectory($cacheDir)
     {
-        foreach (new \DirectoryIterator($cacheDir) as $child) {
+        foreach (new DirectoryIterator($cacheDir) as $child) {
             $this->flushEntry($child);
         }
     }
@@ -208,10 +215,11 @@ class FileCacheDirectory
      * Flushes the cache record for the given file info instance, independent if
      * it is a file, directory or symlink.
      *
-     * @param  \DirectoryIterator $file
+     * @param DirectoryIterator $file
+     *
      * @return void
      */
-    protected function flushEntry(\SplFileInfo $file)
+    protected function flushEntry(SplFileInfo $file)
     {
         $path = $file->getRealPath();
         if ($file->isDot()) {

@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\Tokenizer;
 
+use PDepend\Source\AST\ASTCompilationUnit;
+
 /**
  * Base interface for all php code tokenizers.
  *
@@ -63,7 +65,7 @@ interface Tokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit|null
+     * @return null|ASTCompilationUnit
      */
     public function getSourceFile();
 
@@ -77,17 +79,18 @@ interface Tokenizer
     public function setSourceFile($sourceFile);
 
     /**
-     * Returns the next token or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
+     * Returns the next token or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
-     * @return \PDepend\Source\Tokenizer\Token|integer
+     * @return int|Token
      */
     public function next();
 
     /**
      * Returns the previous token or null if there is no one yet.
      *
-     * @return \PDepend\Source\Tokenizer\Token|null
+     * @return null|Token
+     *
      * @since  2.6.0
      */
     public function prevToken();
@@ -95,16 +98,17 @@ interface Tokenizer
     /**
      * Returns the current token or null if there is no more.
      *
-     * @return \PDepend\Source\Tokenizer\Token|null
+     * @return null|Token
+     *
      * @since  2.6.0
      */
     public function currentToken();
 
     /**
-     * Returns the next token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_EOF} if
+     * Returns the next token type or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
-     * @return integer
+     * @return int
      */
     public function peek();
     
@@ -112,16 +116,17 @@ interface Tokenizer
      * Returns the type of next token, after the current token. This method
      * ignores all comments between the current and the next token.
      *
-     * @return integer
+     * @return int
+     *
      * @since  0.9.12
      */
     public function peekNext();
 
     /**
-     * Returns the previous token type or {@link \PDepend\Source\Tokenizer\Tokenizer::T_BOF}
+     * Returns the previous token type or {@link Tokenizer::T_BOF}
      * if there is no previous token.
      *
-     * @return integer
+     * @return int
      */
     public function prev();
 }

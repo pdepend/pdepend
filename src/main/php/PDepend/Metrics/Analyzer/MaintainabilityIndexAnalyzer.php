@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * This class calculates the Halstead Complexity Measures for the project,
@@ -97,9 +98,10 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     }
 
     /**
-     * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
+     * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param  \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
+     *
      * @return void
      */
     public function analyze($namespaces)
@@ -134,7 +136,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, float>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -149,7 +150,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a function node.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
     public function visitFunction(ASTFunction $function)
@@ -166,7 +166,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a code interface object.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
     public function visitInterface(ASTInterface $interface)
@@ -177,7 +176,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a method node.
      *
-     * @param  \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
     public function visitMethod(ASTMethod $method)
@@ -194,7 +192,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * @see http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
      *
-     * @param  \PDepend\Source\AST\AbstractASTCallable $callable
      * @return void
      */
     public function calculateMaintainabilityIndex(AbstractASTCallable $callable)

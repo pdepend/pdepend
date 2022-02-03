@@ -42,6 +42,8 @@
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
+use InvalidArgumentException;
+
 /**
  * Factory for the different code rank strategies.
  *
@@ -86,7 +88,7 @@ class StrategyFactory
     /**
      * Creates the default code rank strategy.
      *
-     * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
+     * @return CodeRankStrategyI
      */
     public function createDefaultStrategy()
     {
@@ -96,15 +98,17 @@ class StrategyFactory
     /**
      * Creates a code rank strategy for the given identifier.
      *
-     * @param  string $strategyName The strategy identifier.
-     * @return \PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI
-     * @throws \InvalidArgumentException If the given <b>$id</b> is not valid or
+     * @param string $strategyName The strategy identifier.
+     *
+     * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
+     *
+     * @return CodeRankStrategyI
      */
     public function createStrategy($strategyName)
     {
         if (in_array($strategyName, $this->validStrategies) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Cannot load file for identifier "%s".', $strategyName)
             );
         }

@@ -42,13 +42,116 @@
 
 namespace PDepend\Source\Builder;
 
+use IteratorAggregate;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTAnonymousClass;
+use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTBooleanAndExpression;
+use PDepend\Source\AST\ASTBooleanOrExpression;
+use PDepend\Source\AST\ASTBreakStatement;
+use PDepend\Source\AST\ASTCastExpression;
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTClassReference;
+use PDepend\Source\AST\ASTCloneExpression;
+use PDepend\Source\AST\ASTClosure;
+use PDepend\Source\AST\ASTComment;
+use PDepend\Source\AST\ASTCompoundExpression;
+use PDepend\Source\AST\ASTCompoundVariable;
+use PDepend\Source\AST\ASTConditionalExpression;
+use PDepend\Source\AST\ASTConstant;
+use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTConstantDefinition;
+use PDepend\Source\AST\ASTConstantPostfix;
+use PDepend\Source\AST\ASTContinueStatement;
+use PDepend\Source\AST\ASTDeclareStatement;
+use PDepend\Source\AST\ASTDoWhileStatement;
+use PDepend\Source\AST\ASTEchoStatement;
+use PDepend\Source\AST\ASTElseIfStatement;
+use PDepend\Source\AST\ASTEvalExpression;
+use PDepend\Source\AST\ASTExitExpression;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTFinallyStatement;
+use PDepend\Source\AST\ASTForeachStatement;
+use PDepend\Source\AST\ASTForInit;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTForStatement;
+use PDepend\Source\AST\ASTForUpdate;
 use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTGlobalStatement;
+use PDepend\Source\AST\ASTGotoStatement;
+use PDepend\Source\AST\ASTHeredoc;
+use PDepend\Source\AST\ASTIdentifier;
+use PDepend\Source\AST\ASTIfStatement;
+use PDepend\Source\AST\ASTIncludeExpression;
+use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTIssetExpression;
+use PDepend\Source\AST\ASTLabelStatement;
+use PDepend\Source\AST\ASTListExpression;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTLogicalAndExpression;
+use PDepend\Source\AST\ASTLogicalOrExpression;
+use PDepend\Source\AST\ASTLogicalXorExpression;
+use PDepend\Source\AST\ASTMatchArgument;
+use PDepend\Source\AST\ASTMatchBlock;
+use PDepend\Source\AST\ASTMatchEntry;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTNamedArgument;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\AST\ASTPostfixExpression;
+use PDepend\Source\AST\ASTPreDecrementExpression;
+use PDepend\Source\AST\ASTPreIncrementExpression;
+use PDepend\Source\AST\ASTPrintExpression;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTRequireExpression;
+use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\AST\ASTScope;
+use PDepend\Source\AST\ASTScopeStatement;
+use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTShiftLeftExpression;
+use PDepend\Source\AST\ASTShiftRightExpression;
+use PDepend\Source\AST\ASTStatement;
+use PDepend\Source\AST\ASTStaticReference;
+use PDepend\Source\AST\ASTStaticVariableDeclaration;
+use PDepend\Source\AST\ASTString;
+use PDepend\Source\AST\ASTStringIndexExpression;
+use PDepend\Source\AST\ASTSwitchLabel;
+use PDepend\Source\AST\ASTSwitchStatement;
+use PDepend\Source\AST\ASTThrowStatement;
 use PDepend\Source\AST\ASTTrait;
+use PDepend\Source\AST\ASTTraitAdaptation;
+use PDepend\Source\AST\ASTTraitAdaptationAlias;
+use PDepend\Source\AST\ASTTraitAdaptationPrecedence;
+use PDepend\Source\AST\ASTTraitReference;
+use PDepend\Source\AST\ASTTraitUseStatement;
+use PDepend\Source\AST\ASTTryStatement;
+use PDepend\Source\AST\ASTTypeArray;
+use PDepend\Source\AST\ASTTypeCallable;
+use PDepend\Source\AST\ASTTypeIterable;
+use PDepend\Source\AST\ASTUnaryExpression;
+use PDepend\Source\AST\ASTUnionType;
+use PDepend\Source\AST\ASTUnsetStatement;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\AST\ASTVariableVariable;
+use PDepend\Source\AST\ASTWhileStatement;
+use PDepend\Source\AST\ASTYieldStatement;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
@@ -60,7 +163,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @template T of mixed
  * @extends \IteratorAggregate<T>
  */
-interface Builder extends \IteratorAggregate
+interface Builder extends IteratorAggregate
 {
     /**
      * The default package name.
@@ -70,8 +173,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Setter method for the currently used token cache.
      *
-     * @param  \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Builder\Builder<mixed>
+     * @return Builder<mixed>
+     *
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache);
@@ -79,19 +182,21 @@ interface Builder extends \IteratorAggregate
     /**
      * Restores a function within the internal type scope.
      *
-     * @param  \PDepend\Source\AST\ASTFunction $function
      * @return void
+     *
      * @since  0.10.0
      */
     public function restoreFunction(ASTFunction $function);
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link \PDepend\Source\AST\ASTClass}
+     * qualified name. It will create a new {@link ASTClass}
      * instance when no matching type exists.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @param string $qualifiedName
+     *
+     * @return AbstractASTClassOrInterface
+     *
      * @since  0.9.5
      */
     public function getClassOrInterface($qualifiedName);
@@ -101,7 +206,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $qualifiedName The qualified name of the referenced type.
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return ASTClassOrInterfaceReference
+     *
      * @since  0.9.5
      */
     public function buildAstClassOrInterfaceReference($qualifiedName);
@@ -109,8 +215,10 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new php trait instance.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTTrait
+     * @param string $qualifiedName
+     *
+     * @return ASTTrait
+     *
      * @since  1.0.0
      */
     public function buildTrait($qualifiedName);
@@ -118,19 +226,21 @@ interface Builder extends \IteratorAggregate
     /**
      * Restores an existing trait instance within the context of this builder.
      *
-     * @param  \PDepend\Source\AST\ASTTrait $trait
      * @return void
+     *
      * @since  1.0.0
      */
     public function restoreTrait(ASTTrait $trait);
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link \PDepend\Source\AST\ASTTrait}
+     * qualified name. It will create a new {@link ASTTrait}
      * instance when no matching type exists.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTTrait
+     * @param string $qualifiedName
+     *
+     * @return ASTTrait
+     *
      * @since  1.0.0
      */
     public function getTrait($qualifiedName);
@@ -138,25 +248,28 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new code class instance.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTClass
+     * @param string $qualifiedName
+     *
+     * @return ASTClass
      */
     public function buildClass($qualifiedName);
 
     /**
      * Builds an anonymous class instance.
      *
-     * @return \PDepend\Source\AST\ASTAnonymousClass
+     * @return ASTAnonymousClass
      */
     public function buildAnonymousClass();
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link \PDepend\Source\AST\ASTClass}
+     * qualified name. It will create a new {@link ASTClass}
      * instance when no matching type exists.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTClass
+     * @param string $qualifiedName
+     *
+     * @return ASTClass
+     *
      * @since  0.9.5
      */
     public function getClass($qualifiedName);
@@ -164,8 +277,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Restores an existing class instance within the context of this builder.
      *
-     * @param  \PDepend\Source\AST\ASTClass $class
      * @return void
+     *
      * @since  0.10.0
      */
     public function restoreClass(ASTClass $class);
@@ -173,8 +286,10 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new code type reference instance.
      *
-     * @param  string $qualifiedName The qualified name of the referenced type.
-     * @return \PDepend\Source\AST\ASTClassReference
+     * @param string $qualifiedName The qualified name of the referenced type.
+     *
+     * @return ASTClassReference
+     *
      * @since  0.9.5
      */
     public function buildAstClassReference($qualifiedName);
@@ -182,27 +297,30 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new new interface instance.
      *
-     * @param  string $qualifiedName
-     * @return \PDepend\Source\AST\ASTInterface
+     * @param string $qualifiedName
+     *
+     * @return ASTInterface
      */
     public function buildInterface($qualifiedName);
 
     /**
      * Restores an existing interface instance within the context of this builder.
      *
-     * @param  \PDepend\Source\AST\ASTInterface $interface
      * @return void
+     *
      * @since  0.10.0
      */
     public function restoreInterface(ASTInterface $interface);
 
     /**
      * This method will try to find an already existing instance for the given
-     * qualified name. It will create a new {@link \PDepend\Source\AST\ASTInterface}
+     * qualified name. It will create a new {@link ASTInterface}
      * instance when no matching type exists.
      *
-     * @param  string $qualifiedName The full qualified type identifier.
-     * @return \PDepend\Source\AST\ASTInterface
+     * @param string $qualifiedName The full qualified type identifier.
+     *
+     * @return ASTInterface
+     *
      * @since  0.9.5
      */
     public function getInterface($qualifiedName);
@@ -210,32 +328,35 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new namespace instance.
      *
-     * @param  string $name
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @param string $name
+     *
+     * @return ASTNamespace
      */
     public function buildNamespace($name);
 
     /**
      * Builds a new method instance.
      *
-     * @param  string $name
-     * @return \PDepend\Source\AST\ASTMethod
+     * @param string $name
+     *
+     * @return ASTMethod
      */
     public function buildMethod($name);
 
     /**
      * Builds a new function instance.
      *
-     * @param  string $name
-     * @return \PDepend\Source\AST\ASTFunction
+     * @param string $name
+     *
+     * @return ASTFunction
      */
     public function buildFunction($name);
 
     /**
      * Builds a new self reference instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $type
-     * @return \PDepend\Source\AST\ASTSelfReference
+     * @return ASTSelfReference
+     *
      * @since  0.9.6
      */
     public function buildAstSelfReference(AbstractASTClassOrInterface $type);
@@ -243,9 +364,10 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new parent reference instance.
      *
-     * @param  \PDepend\Source\AST\ASTClassOrInterfaceReference $reference The type
-     *        instance that reference the concrete target of parent.
-     * @return \PDepend\Source\AST\ASTParentReference
+     * @param ASTClassOrInterfaceReference $reference The type instance that reference the concrete target of parent.
+     *
+     * @return ASTParentReference
+     *
      * @since  0.9.6
      */
     public function buildAstParentReference(ASTClassOrInterfaceReference $reference);
@@ -253,8 +375,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new static reference instance.
      *
-     * @param  \PDepend\Source\AST\AbstractASTClassOrInterface $owner
-     * @return \PDepend\Source\AST\ASTStaticReference
+     * @return ASTStaticReference
+     *
      * @since  0.9.6
      */
     public function buildAstStaticReference(AbstractASTClassOrInterface $owner);
@@ -262,7 +384,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new field declaration node.
      *
-     * @return \PDepend\Source\AST\ASTFieldDeclaration
+     * @return ASTFieldDeclaration
+     *
      * @since  0.9.6
      */
     public function buildAstFieldDeclaration();
@@ -272,7 +395,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the variable declarator.
      *
-     * @return \PDepend\Source\AST\ASTVariableDeclarator
+     * @return ASTVariableDeclarator
+     *
      * @since  0.9.6
      */
     public function buildAstVariableDeclarator($image);
@@ -282,7 +406,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the constant.
      *
-     * @return \PDepend\Source\AST\ASTConstant
+     * @return ASTConstant
+     *
      * @since  0.9.6
      */
     public function buildAstConstant($image);
@@ -292,7 +417,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the variable.
      *
-     * @return \PDepend\Source\AST\ASTVariable
+     * @return ASTVariable
+     *
      * @since  0.9.6
      */
     public function buildAstVariable($image);
@@ -302,7 +428,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the variable variable.
      *
-     * @return \PDepend\Source\AST\ASTVariableVariable
+     * @return ASTVariableVariable
+     *
      * @since  0.9.6
      */
     public function buildAstVariableVariable($image);
@@ -312,7 +439,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the compound variable.
      *
-     * @return \PDepend\Source\AST\ASTCompoundVariable
+     * @return ASTCompoundVariable
+     *
      * @since  0.9.6
      */
     public function buildAstCompoundVariable($image);
@@ -320,7 +448,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new compound expression node.
      *
-     * @return \PDepend\Source\AST\ASTCompoundExpression
+     * @return ASTCompoundExpression
+     *
      * @since  0.9.6
      */
     public function buildAstCompoundExpression();
@@ -330,7 +459,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the static declaration.
      *
-     * @return \PDepend\Source\AST\ASTStaticVariableDeclaration
+     * @return ASTStaticVariableDeclaration
+     *
      * @since  0.9.6
      */
     public function buildAstStaticVariableDeclaration($image);
@@ -338,7 +468,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new closure node.
      *
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return ASTClosure
+     *
      * @since  0.9.12
      */
     public function buildAstClosure();
@@ -346,7 +477,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new formal parameters node.
      *
-     * @return \PDepend\Source\AST\ASTFormalParameters
+     * @return ASTFormalParameters
+     *
      * @since  0.9.6
      */
     public function buildAstFormalParameters();
@@ -354,7 +486,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new formal parameter node.
      *
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
+     *
      * @since  0.9.6
      */
     public function buildAstFormalParameter();
@@ -363,7 +496,9 @@ interface Builder extends \IteratorAggregate
      * Builds a new expression node.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTExpression
+     *
+     * @return ASTExpression
+     *
      * @since 0.9.8
      */
     public function buildAstExpression($image = null);
@@ -373,7 +508,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The assignment operator.
      *
-     * @return \PDepend\Source\AST\ASTAssignmentExpression
+     * @return ASTAssignmentExpression
+     *
      * @since  0.9.8
      */
     public function buildAstAssignmentExpression($image);
@@ -383,7 +519,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PDepend\Source\AST\ASTAllocationExpression
+     * @return ASTAllocationExpression
+     *
      * @since  0.9.6
      */
     public function buildAstAllocationExpression($image);
@@ -393,7 +530,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PDepend\Source\AST\ASTEvalExpression
+     * @return ASTEvalExpression
+     *
      * @since  0.9.12
      */
     public function buildAstEvalExpression($image);
@@ -403,7 +541,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTExitExpression
+     * @return ASTExitExpression
+     *
      * @since  0.9.12
      */
     public function buildAstExitExpression($image);
@@ -413,7 +552,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PDepend\Source\AST\ASTCloneExpression
+     * @return ASTCloneExpression
+     *
      * @since  0.9.12
      */
     public function buildAstCloneExpression($image);
@@ -423,7 +563,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PDepend\Source\AST\ASTListExpression
+     * @return ASTListExpression
+     *
      * @since  0.9.12
      */
     public function buildAstListExpression($image);
@@ -431,7 +572,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new include- or include_once-expression.
      *
-     * @return \PDepend\Source\AST\ASTIncludeExpression
+     * @return ASTIncludeExpression
+     *
      * @since  0.9.12
      */
     public function buildAstIncludeExpression();
@@ -439,7 +581,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new require- or require_once-expression.
      *
-     * @return \PDepend\Source\AST\ASTRequireExpression
+     * @return ASTRequireExpression
+     *
      * @since  0.9.12
      */
     public function buildAstRequireExpression();
@@ -447,7 +590,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new array-expression node.
      *
-     * @return \PDepend\Source\AST\ASTArrayIndexExpression
+     * @return ASTArrayIndexExpression
+     *
      * @since  0.9.12
      */
     public function buildAstArrayIndexExpression();
@@ -461,7 +605,8 @@ interface Builder extends \IteratorAggregate
      * //     --------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTStringIndexExpression
+     * @return ASTStringIndexExpression
+     *
      * @since  0.9.12
      */
     public function buildAstStringIndexExpression();
@@ -471,7 +616,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PDepend\Source\AST\ASTInstanceOfExpression
+     * @return ASTInstanceOfExpression
+     *
      * @since  0.9.6
      */
     public function buildAstInstanceOfExpression($image);
@@ -491,7 +637,8 @@ interface Builder extends \IteratorAggregate
      * }
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTIssetExpression
+     * @return ASTIssetExpression
+     *
      * @since  0.9.12
      */
     public function buildAstIssetExpression();
@@ -505,7 +652,8 @@ interface Builder extends \IteratorAggregate
      *         --------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTConditionalExpression
+     * @return ASTConditionalExpression
+     *
      * @since  0.9.8
      */
     public function buildAstConditionalExpression();
@@ -519,7 +667,8 @@ interface Builder extends \IteratorAggregate
      * -------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTPrintExpression
+     * @return ASTPrintExpression
+     *
      * @since 2.3
      */
     public function buildAstPrintExpression();
@@ -527,7 +676,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Build a new shift left expression.
      *
-     * @return \PDepend\Source\AST\ASTShiftLeftExpression
+     * @return ASTShiftLeftExpression
+     *
      * @since  1.0.1
      */
     public function buildAstShiftLeftExpression();
@@ -535,7 +685,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Build a new shift right expression.
      *
-     * @return \PDepend\Source\AST\ASTShiftRightExpression
+     * @return ASTShiftRightExpression
+     *
      * @since  1.0.1
      */
     public function buildAstShiftRightExpression();
@@ -543,7 +694,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new boolean and-expression.
      *
-     * @return \PDepend\Source\AST\ASTBooleanAndExpression
+     * @return ASTBooleanAndExpression
+     *
      * @since  0.9.8
      */
     public function buildAstBooleanAndExpression();
@@ -551,7 +703,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new boolean or-expression.
      *
-     * @return \PDepend\Source\AST\ASTBooleanOrExpression
+     * @return ASTBooleanOrExpression
+     *
      * @since  0.9.8
      */
     public function buildAstBooleanOrExpression();
@@ -559,7 +712,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new logical <b>and</b>-expression.
      *
-     * @return \PDepend\Source\AST\ASTLogicalAndExpression
+     * @return ASTLogicalAndExpression
+     *
      * @since  0.9.8
      */
     public function buildAstLogicalAndExpression();
@@ -567,7 +721,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new logical <b>or</b>-expression.
      *
-     * @return \PDepend\Source\AST\ASTLogicalOrExpression
+     * @return ASTLogicalOrExpression
+     *
      * @since  0.9.8
      */
     public function buildAstLogicalOrExpression();
@@ -575,7 +730,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
-     * @return \PDepend\Source\AST\ASTLogicalXorExpression
+     * @return ASTLogicalXorExpression
+     *
      * @since  0.9.8
      */
     public function buildAstLogicalXorExpression();
@@ -583,7 +739,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new trait use-statement node.
      *
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @return ASTTraitUseStatement
+     *
      * @since  1.0.0
      */
     public function buildAstTraitUseStatement();
@@ -591,7 +748,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new trait adaptation scope.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptation
+     * @return ASTTraitAdaptation
+     *
      * @since  1.0.0
      */
     public function buildAstTraitAdaptation();
@@ -601,7 +759,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The trait method name.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationAlias
+     * @return ASTTraitAdaptationAlias
+     *
      * @since  1.0.0
      */
     public function buildAstTraitAdaptationAlias($image);
@@ -611,7 +770,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The trait method name.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationPrecedence
+     * @return ASTTraitAdaptationPrecedence
+     *
      * @since  1.0.0
      */
     public function buildAstTraitAdaptationPrecedence($image);
@@ -621,7 +781,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $qualifiedName The full qualified trait name.
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
+     *
      * @since  1.0.0
      */
     public function buildAstTraitReference($qualifiedName);
@@ -629,7 +790,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new switch-statement-node.
      *
-     * @return \PDepend\Source\AST\ASTSwitchStatement
+     * @return ASTSwitchStatement
+     *
      * @since  0.9.8
      */
     public function buildAstSwitchStatement();
@@ -639,7 +801,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this label.
      *
-     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @return ASTSwitchLabel
+     *
      * @since  0.9.8
      */
     public function buildAstSwitchLabel($image);
@@ -649,7 +812,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTCatchStatement
+     * @return ASTCatchStatement
+     *
      * @since  0.9.8
      */
     public function buildAstCatchStatement($image);
@@ -657,7 +821,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new finally-statement node.
      *
-     * @return \PDepend\Source\AST\ASTFinallyStatement
+     * @return ASTFinallyStatement
+     *
      * @since  2.0.0
      */
     public function buildAstFinallyStatement();
@@ -667,7 +832,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTIfStatement
+     * @return ASTIfStatement
+     *
      * @since  0.9.8
      */
     public function buildAstIfStatement($image);
@@ -677,7 +843,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTElseIfStatement
+     * @return ASTElseIfStatement
+     *
      * @since  0.9.8
      */
     public function buildAstElseIfStatement($image);
@@ -687,7 +854,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTForStatement
+     * @return ASTForStatement
+     *
      * @since  0.9.8
      */
     public function buildAstForStatement($image);
@@ -701,7 +869,8 @@ interface Builder extends \IteratorAggregate
      *      ------------------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTForInit
+     * @return ASTForInit
+     *
      * @since  0.9.8
      */
     public function buildAstForInit();
@@ -715,7 +884,8 @@ interface Builder extends \IteratorAggregate
      *                                        -------------------------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTForUpdate
+     * @return ASTForUpdate
+     *
      * @since  0.9.12
      */
     public function buildAstForUpdate();
@@ -725,7 +895,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTForeachStatement
+     * @return ASTForeachStatement
+     *
      * @since  0.9.8
      */
     public function buildAstForeachStatement($image);
@@ -735,7 +906,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTWhileStatement
+     * @return ASTWhileStatement
+     *
      * @since  0.9.8
      */
     public function buildAstWhileStatement($image);
@@ -745,7 +917,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this statement.
      *
-     * @return \PDepend\Source\AST\ASTDoWhileStatement
+     * @return ASTDoWhileStatement
+     *
      * @since  0.9.12
      */
     public function buildAstDoWhileStatement($image);
@@ -771,7 +944,8 @@ interface Builder extends \IteratorAggregate
      * -----------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTDeclareStatement
+     * @return ASTDeclareStatement
+     *
      * @since  0.10.0
      */
     public function buildAstDeclareStatement();
@@ -799,7 +973,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image of this expression.
      *
-     * @return \PDepend\Source\AST\ASTMemberPrimaryPrefix
+     * @return ASTMemberPrimaryPrefix
+     *
      * @since  0.9.6
      */
     public function buildAstMemberPrimaryPrefix($image);
@@ -809,7 +984,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this identifier.
      *
-     * @return \PDepend\Source\AST\ASTIdentifier
+     * @return ASTIdentifier
+     *
      * @since  0.9.6
      */
     public function buildAstIdentifier($image);
@@ -829,7 +1005,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PDepend\Source\AST\ASTFunctionPostfix
+     * @return ASTFunctionPostfix
+     *
      * @since  0.9.6
      */
     public function buildAstFunctionPostfix($image);
@@ -849,7 +1026,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PDepend\Source\AST\ASTMethodPostfix
+     * @return ASTMethodPostfix
+     *
      * @since  0.9.6
      */
     public function buildAstMethodPostfix($image);
@@ -865,7 +1043,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PDepend\Source\AST\ASTConstantPostfix
+     * @return ASTConstantPostfix
+     *
      * @since  0.9.6
      */
     public function buildAstConstantPostfix($image);
@@ -885,7 +1064,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The image of this node.
      *
-     * @return \PDepend\Source\AST\ASTPropertyPostfix
+     * @return ASTPropertyPostfix
+     *
      * @since  0.9.6
      */
     public function buildAstPropertyPostfix($image);
@@ -903,7 +1083,8 @@ interface Builder extends \IteratorAggregate
      * //       -----
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @return ASTClassFqnPostfix
+     *
      * @since  2.0.0
      */
     public function buildAstClassFqnPostfix();
@@ -921,7 +1102,8 @@ interface Builder extends \IteratorAggregate
      * //       ------------
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTArguments
+     * @return ASTArguments
+     *
      * @since  0.9.6
      */
     public function buildAstArguments();
@@ -933,7 +1115,8 @@ interface Builder extends \IteratorAggregate
      * match($x)
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTMatchArgument
+     * @return ASTMatchArgument
+     *
      * @since  0.9.6
      */
     public function buildAstMatchArgument();
@@ -947,7 +1130,8 @@ interface Builder extends \IteratorAggregate
      * }
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTMatchBlock
+     * @return ASTMatchBlock
+     *
      * @since  2.9.0
      */
     public function buildAstMatchBlock();
@@ -959,7 +1143,8 @@ interface Builder extends \IteratorAggregate
      * "foo" => "bar",
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTMatchEntry
+     * @return ASTMatchEntry
+     *
      * @since  2.9.0
      */
     public function buildAstMatchEntry();
@@ -972,8 +1157,9 @@ interface Builder extends \IteratorAggregate
      * </code>
      *
      * @param string $name
-     * @param ASTNode $value
-     * @return \PDepend\Source\AST\ASTNamedArgument
+     *
+     * @return ASTNamedArgument
+     *
      * @since  2.9.0
      */
     public function buildAstNamedArgument($name, ASTNode $value);
@@ -981,7 +1167,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new array type node.
      *
-     * @return \PDepend\Source\AST\ASTTypeArray
+     * @return ASTTypeArray
+     *
      * @since  0.9.6
      */
     public function buildAstTypeArray();
@@ -989,7 +1176,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new node for the callable type.
      *
-     * @return \PDepend\Source\AST\ASTTypeCallable
+     * @return ASTTypeCallable
+     *
      * @since  1.0.0
      */
     public function buildAstTypeCallable();
@@ -997,7 +1185,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new node for the iterable type.
      *
-     * @return \PDepend\Source\AST\ASTTypeIterable
+     * @return ASTTypeIterable
+     *
      * @since  2.5.1
      */
     public function buildAstTypeIterable();
@@ -1006,7 +1195,9 @@ interface Builder extends \IteratorAggregate
      * Builds a new primitive type node.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTScalarType
+     *
+     * @return ASTScalarType
+     *
      * @since  0.9.6
      */
     public function buildAstScalarType($image);
@@ -1014,7 +1205,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new node for the union type.
      *
-     * @return \PDepend\Source\AST\ASTUnionType
+     * @return ASTUnionType
+     *
      * @since  2.9.0
      */
     public function buildAstUnionType();
@@ -1024,7 +1216,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source image for the literal node.
      *
-     * @return \PDepend\Source\AST\ASTLiteral
+     * @return ASTLiteral
+     *
      * @since  0.9.6
      */
     public function buildAstLiteral($image);
@@ -1035,7 +1228,7 @@ interface Builder extends \IteratorAggregate
      * <code>
      * $string = "Manuel $Pichler <{$email}>";
      *
-     * // \PDepend\Source\AST\ASTString
+     * // ASTString
      * // |-- ASTLiteral             -  "Manuel ")
      * // |-- ASTVariable            -  $Pichler
      * // |-- ASTLiteral             -  " <"
@@ -1044,7 +1237,8 @@ interface Builder extends \IteratorAggregate
      * // |-- ASTLiteral             -  ">"
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTString
+     * @return ASTString
+     *
      * @since  0.9.10
      */
     public function buildAstString();
@@ -1052,7 +1246,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new php array node.
      *
-     * @return \PDepend\Source\AST\ASTArray
+     * @return ASTArray
+     *
      * @since  1.0.0
      */
     public function buildAstArray();
@@ -1060,7 +1255,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new array element node.
      *
-     * @return \PDepend\Source\AST\ASTArrayElement
+     * @return ASTArrayElement
+     *
      * @since  1.0.0
      */
     public function buildAstArrayElement();
@@ -1068,7 +1264,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new heredoc node.
      *
-     * @return \PDepend\Source\AST\ASTHeredoc
+     * @return ASTHeredoc
+     *
      * @since  0.9.12
      */
     public function buildAstHeredoc();
@@ -1087,7 +1284,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTConstantDefinition
+     * @return ASTConstantDefinition
+     *
      * @since  0.9.6
      */
     public function buildAstConstantDefinition($image);
@@ -1125,7 +1323,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTConstantDeclarator
+     * @return ASTConstantDeclarator
+     *
      * @since  0.9.6
      */
     public function buildAstConstantDeclarator($image);
@@ -1135,7 +1334,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $cdata The comment text.
      *
-     * @return \PDepend\Source\AST\ASTComment
+     * @return ASTComment
+     *
      * @since  0.9.8
      */
     public function buildAstComment($cdata);
@@ -1145,7 +1345,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The unary expression image/character.
      *
-     * @return \PDepend\Source\AST\ASTUnaryExpression
+     * @return ASTUnaryExpression
+     *
      * @since  0.9.11
      */
     public function buildAstUnaryExpression($image);
@@ -1155,7 +1356,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The cast-expression image/character.
      *
-     * @return \PDepend\Source\AST\ASTCastExpression
+     * @return ASTCastExpression
+     *
      * @since  0.10.0
      */
     public function buildAstCastExpression($image);
@@ -1165,7 +1367,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The postfix-expression image/character.
      *
-     * @return \PDepend\Source\AST\ASTPostfixExpression
+     * @return ASTPostfixExpression
+     *
      * @since  0.10.0
      */
     public function buildAstPostfixExpression($image);
@@ -1173,7 +1376,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new pre-increment-expression node instance.
      *
-     * @return \PDepend\Source\AST\ASTPreIncrementExpression
+     * @return ASTPreIncrementExpression
+     *
      * @since  0.10.0
      */
     public function buildAstPreIncrementExpression();
@@ -1181,7 +1385,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new pre-decrement-expression node instance.
      *
-     * @return \PDepend\Source\AST\ASTPreDecrementExpression
+     * @return ASTPreDecrementExpression
+     *
      * @since  0.10.0
      */
     public function buildAstPreDecrementExpression();
@@ -1189,7 +1394,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new function/method scope instance.
      *
-     * @return \PDepend\Source\AST\ASTScope
+     * @return ASTScope
+     *
      * @since  0.9.12
      */
     public function buildAstScope();
@@ -1197,7 +1403,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new statement instance.
      *
-     * @return \PDepend\Source\AST\ASTStatement
+     * @return ASTStatement
+     *
      * @since  0.9.12
      */
     public function buildAstStatement();
@@ -1207,7 +1414,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTReturnStatement
+     * @return ASTReturnStatement
+     *
      * @since  0.9.12
      */
     public function buildAstReturnStatement($image);
@@ -1217,7 +1425,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTBreakStatement
+     * @return ASTBreakStatement
+     *
      * @since  0.9.12
      */
     public function buildAstBreakStatement($image);
@@ -1227,7 +1436,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTContinueStatement
+     * @return ASTContinueStatement
+     *
      * @since  0.9.12
      */
     public function buildAstContinueStatement($image);
@@ -1235,7 +1445,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new scope-statement instance.
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since  0.9.12
      */
     public function buildAstScopeStatement();
@@ -1245,7 +1456,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTTryStatement
+     * @return ASTTryStatement
+     *
      * @since  0.9.12
      */
     public function buildAstTryStatement($image);
@@ -1255,7 +1467,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTThrowStatement
+     * @return ASTThrowStatement
+     *
      * @since  0.9.12
      */
     public function buildAstThrowStatement($image);
@@ -1265,7 +1478,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTGotoStatement
+     * @return ASTGotoStatement
+     *
      * @since  0.9.12
      */
     public function buildAstGotoStatement($image);
@@ -1275,7 +1489,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTLabelStatement
+     * @return ASTLabelStatement
+     *
      * @since  0.9.12
      */
     public function buildAstLabelStatement($image);
@@ -1283,7 +1498,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new global-statement instance.
      *
-     * @return \PDepend\Source\AST\ASTGlobalStatement
+     * @return ASTGlobalStatement
+     *
      * @since  0.9.12
      */
     public function buildAstGlobalStatement();
@@ -1291,7 +1507,8 @@ interface Builder extends \IteratorAggregate
     /**
      * Builds a new unset-statement instance.
      *
-     * @return \PDepend\Source\AST\ASTUnsetStatement
+     * @return ASTUnsetStatement
+     *
      * @since  0.9.12
      */
     public function buildAstUnsetStatement();
@@ -1301,7 +1518,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTEchoStatement
+     * @return ASTEchoStatement
+     *
      * @since  0.9.12
      */
     public function buildAstEchoStatement($image);
@@ -1311,7 +1529,8 @@ interface Builder extends \IteratorAggregate
      *
      * @param string $image The source code image for this node.
      *
-     * @return \PDepend\Source\AST\ASTYieldStatement
+     * @return ASTYieldStatement
+     *
      * @since  $version$
      */
     public function buildAstYieldStatement($image);

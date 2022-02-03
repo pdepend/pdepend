@@ -38,10 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.15
  */
 
 namespace PDepend\Source\AST;
+
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a cast-expression node.
@@ -78,9 +81,10 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.15
  */
-class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
+class ASTCastExpression extends ASTUnaryExpression
 {
     /**
      * Constructs a new cast-expression node.
@@ -95,7 +99,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents an array cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isArray()
     {
@@ -105,7 +109,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents an object cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isObject()
     {
@@ -115,7 +119,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents a boolean cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isBoolean()
     {
@@ -125,7 +129,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents an integer cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isInteger()
     {
@@ -135,7 +139,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents a float cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFloat()
     {
@@ -148,7 +152,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents a string cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isString()
     {
@@ -158,7 +162,7 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
     /**
      * Returns <b>true</b> when this node represents an unset cast-expression.
      *
-     * @return boolean
+     * @return bool
      */
     public function isUnset()
     {
@@ -169,12 +173,9 @@ class ASTCastExpression extends \PDepend\Source\AST\ASTUnaryExpression
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
-     * @return mixed
+     * @param ASTVisitor $visitor The calling visitor instance.
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitCastExpression($this, $data);
     }

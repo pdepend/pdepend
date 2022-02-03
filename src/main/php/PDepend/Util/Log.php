@@ -65,7 +65,7 @@ final class Log
     /**
      * Are debugging messages activated?
      *
-     * @var boolean
+     * @var bool
      */
     private static $debug = false;
 
@@ -73,7 +73,7 @@ final class Log
      * Sets the log severity levels, this can be an OR combined list of valid
      * severities.
      *
-     * @param integer $severity The log severity levels.
+     * @param int $severity The log severity levels.
      *
      * @return void
      */

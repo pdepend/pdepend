@@ -42,12 +42,14 @@
 
 namespace PDepend\TextUI;
 
+use Exception;
 use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
 use PDepend\ProcessListener;
 use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
+use RuntimeException;
 
 /**
  * The command line runner starts a PDepend process.
@@ -100,7 +102,7 @@ class Runner
     /**
      * Should the parse ignore doc comment annotations?
      *
-     * @var boolean
+     * @var bool
      */
     private $withoutAnnotations = false;
 
@@ -122,7 +124,7 @@ class Runner
      * This of process listeners that will be hooked into PDepend's analyzing
      * process.
      *
-     * @var \PDepend\ProcessListener[]
+     * @var ProcessListener[]
      */
     private $processListeners = array();
 
@@ -134,12 +136,12 @@ class Runner
     private $parseErrors = array();
 
     /**
-     * @var \PDepend\Report\ReportGeneratorFactory
+     * @var ReportGeneratorFactory
      */
     private $reportGeneratorFactory;
 
     /**
-     * @var \PDepend\Engine
+     * @var Engine
      */
     private $engine;
 
@@ -155,6 +157,7 @@ class Runner
      * NOTE: If you call this method, it will replace the default file extensions.
      *
      * @param array<string> $extensions
+     *
      * @return void
      */
     public function setFileExtensions(array $extensions)
@@ -168,6 +171,7 @@ class Runner
      * NOTE: If this method is called, it will overwrite the default settings.
      *
      * @param array<string> $excludeDirectories
+     *
      * @return void
      */
     public function setExcludeDirectories(array $excludeDirectories)
@@ -179,6 +183,7 @@ class Runner
      * Sets a list of exclude packages.
      *
      * @param array<string> $excludePackages
+     *
      * @return void
      */
     public function setExcludeNamespaces(array $excludePackages)
@@ -190,6 +195,7 @@ class Runner
      * Sets a list of source directories and files.
      *
      * @param array<string> $sourceArguments
+     *
      * @return void
      */
     public function setSourceArguments(array $sourceArguments)
@@ -212,6 +218,7 @@ class Runner
      *
      * @param string $generatorId
      * @param string $reportFile
+     *
      * @return void
      */
     public function addReportGenerator($generatorId, $reportFile)
@@ -222,8 +229,9 @@ class Runner
     /**
      * Adds a logger or analyzer option.
      *
-     * @param string $identifier
-     * @param string|array<string> $value
+     * @param string               $identifier
+     * @param array<string>|string $value
+     *
      * @return void
      */
     public function addOption($identifier, $value)
@@ -235,7 +243,6 @@ class Runner
      * Adds a process listener instance that will be hooked into PDepend's
      * analyzing process.
      *
-     * @param \PDepend\ProcessListener $processListener
      * @return void
      */
     public function addProcessListener(ProcessListener $processListener)
@@ -247,9 +254,10 @@ class Runner
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
-     * @return integer
-     * @throws \RuntimeException An exception with a readable error message and
-     * an exit code.
+     * @throws RuntimeException An exception with a readable error message and
+     *                          an exit code.
+     *
+     * @return int
      */
     public function run()
     {
@@ -286,12 +294,12 @@ class Runner
                     $engine->addFile($sourceArgument);
                 }
             }
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+        } catch (Exception $e) {
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         if (count($this->loggerMap) === 0) {
-            throw new \RuntimeException('No output specified.', self::EXCEPTION_EXIT);
+            throw new RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 
         // To append all registered loggers.
@@ -302,8 +310,8 @@ class Runner
 
                 $engine->addReportGenerator($generator);
             }
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+        } catch (Exception $e) {
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         foreach ($this->processListeners as $processListener) {
@@ -316,8 +324,8 @@ class Runner
             foreach ($engine->getExceptions() as $exception) {
                 $this->parseErrors[] = $exception->getMessage();
             }
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+        } catch (Exception $e) {
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
         }
 
         return self::SUCCESS_EXIT;
@@ -327,7 +335,7 @@ class Runner
      * This method will return <b>true</b> when there were errors during the
      * parse process.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasParseErrors()
     {

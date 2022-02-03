@@ -56,6 +56,7 @@ interface ASTArtifact /* extends ASTNode */
      * Returns the artifact name.
      *
      * @return string
+     *
      * @deprecated Use getImage() inherit from ASTNode class.
      */
     public function getName();
@@ -70,7 +71,6 @@ interface ASTArtifact /* extends ASTNode */
     /**
      * ASTVisitor method for node tree traversal.
      *
-     * @param  \PDepend\Source\ASTVisitor\ASTVisitor $visitor
      * @return void
      */
     public function accept(ASTVisitor $visitor);

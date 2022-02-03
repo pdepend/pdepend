@@ -38,10 +38,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
 namespace PDepend\Source\AST;
+
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This node class represents a declare-statement.
@@ -66,21 +69,22 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
-class ASTDeclareStatement extends \PDepend\Source\AST\ASTStatement
+class ASTDeclareStatement extends ASTStatement
 {
     /**
      * The parsed declare values.
      *
-     * @var \PDepend\Source\AST\ASTValue[]
+     * @var ASTValue[]
      */
     protected $values = array();
 
     /**
      * Returns all values/parameters for this declare statement.
      *
-     * @return \PDepend\Source\AST\ASTValue[]
+     * @return ASTValue[]
      */
     public function getValues()
     {
@@ -90,8 +94,7 @@ class ASTDeclareStatement extends \PDepend\Source\AST\ASTStatement
     /**
      * Adds a parameter/value for this declare-statement.
      *
-     * @param string                       $name
-     * @param \PDepend\Source\AST\ASTValue $value
+     * @param string $name
      *
      * @return void
      */
@@ -104,13 +107,9 @@ class ASTDeclareStatement extends \PDepend\Source\AST\ASTStatement
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor
-     * @param mixed                                 $data
-     *
-     * @return mixed
      * @since  0.10.0
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitDeclareStatement($this, $data);
     }
@@ -121,6 +120,7 @@ class ASTDeclareStatement extends \PDepend\Source\AST\ASTStatement
      * array with those property names that should be serialized for this class.
      *
      * @return array<string>
+     *
      * @since  0.10.0
      */
     public function __sleep()

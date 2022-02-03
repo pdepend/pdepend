@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
@@ -48,12 +49,13 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * A memory based cache implementation.
  *
- * This class implements the {@link \PDepend\Util\Cache\CacheDriver} interface based
+ * This class implements the {@link CacheDriver} interface based
  * on an in memory data structure. This means that all cached entries will get
  * lost when the php process exits.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 class MemoryCacheDriver implements CacheDriver
@@ -66,7 +68,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * The in memory cache.
      *
-     * @var array<string, array<integer, mixed>>
+     * @var array<string, array<int, mixed>>
      */
     protected $cache = array();
 
@@ -87,7 +89,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Global stack, mainly used during testing.
      *
-     * @var array<string, array<integer, mixed>>
+     * @var array<string, array<int, mixed>>
      */
     protected static $staticCache = array();
 
@@ -107,7 +109,8 @@ class MemoryCacheDriver implements CacheDriver
      * you must invoke right before every call to <em>restore()</em> or
      * <em>store()</em>.
      *
-     * @param  string $type The name or object type for the next storage method call.
+     * @param string $type The name or object type for the next storage method call.
+     *
      * @return $this
      */
     public function type($type)
@@ -123,9 +126,10 @@ class MemoryCacheDriver implements CacheDriver
      * hash and the supplied hash are not identical, that cache entry will be
      * removed and not returned.
      *
-     * @param  string $key  The cache key for the given data.
-     * @param  mixed  $data Any data that should be cached.
-     * @param  string $hash Optional hash that will be used for verification.
+     * @param string $key  The cache key for the given data.
+     * @param mixed  $data Any data that should be cached.
+     * @param string $hash Optional hash that will be used for verification.
+     *
      * @return void
      */
     public function store($key, $data, $hash = null)
@@ -140,9 +144,8 @@ class MemoryCacheDriver implements CacheDriver
      * Then it returns the cached entry. Otherwise this method will return
      * <b>NULL</b>.
      *
-     * @param  string $key  The cache key for the given data.
-     * @param  string $hash Optional hash that will be used for verification.
-     * @return mixed
+     * @param string $key  The cache key for the given data.
+     * @param string $hash Optional hash that will be used for verification.
      */
     public function restore($key, $hash = null)
     {
@@ -159,7 +162,8 @@ class MemoryCacheDriver implements CacheDriver
      * <b>$pattern</b>. If no matching entry exists, this method simply does
      * nothing.
      *
-     * @param  string $pattern The cache key pattern.
+     * @param string $pattern The cache key pattern.
+     *
      * @return void
      */
     public function remove($pattern)
@@ -176,7 +180,8 @@ class MemoryCacheDriver implements CacheDriver
      * and the <em>$type</em> property. Note that this method resets the cache
      * type, so that it is only valid for a single call.
      *
-     * @param  string $key The concrete object key.
+     * @param string $key The concrete object key.
+     *
      * @return string
      */
     protected function getCacheKey($key)
@@ -191,6 +196,7 @@ class MemoryCacheDriver implements CacheDriver
      * PHP's magic serialize sleep method.
      *
      * @return array
+     *
      * @since  1.0.2
      */
     public function __sleep()
@@ -204,6 +210,7 @@ class MemoryCacheDriver implements CacheDriver
      * PHP's magic serialize wakeup method.
      *
      * @return void
+     *
      * @since  1.0.2
      */
     public function __wakeup()

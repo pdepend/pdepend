@@ -42,6 +42,7 @@
 
 namespace PDepend\Report;
 
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -74,10 +75,12 @@ class ReportGeneratorFactory
      * Creates a new generator or returns an existing instance for the given
      * <b>$identifier</b>.
      *
-     * @param  string $identifier The generator identifier.
-     * @param  string $fileName   The log output file name.
-     * @return \PDepend\Report\ReportGenerator
-     * @throws \RuntimeException
+     * @param string $identifier The generator identifier.
+     * @param string $fileName   The log output file name.
+     *
+     * @throws RuntimeException
+     *
+     * @return ReportGenerator
      */
     public function createGenerator($identifier, $fileName)
     {
@@ -95,7 +98,7 @@ class ReportGeneratorFactory
             }
 
             if (!$logger) {
-                throw new \RuntimeException(sprintf('Unknown generator with identifier "%s".', $identifier));
+                throw new RuntimeException(sprintf('Unknown generator with identifier "%s".', $identifier));
             }
 
             // TODO: Refactor this into an external log configurator or a similar
@@ -112,7 +115,7 @@ class ReportGeneratorFactory
     /**
      * Set of created logger instances.
      *
-     * @var \PDepend\Report\ReportGenerator[]
+     * @var ReportGenerator[]
      */
     protected $instances = array();
 }

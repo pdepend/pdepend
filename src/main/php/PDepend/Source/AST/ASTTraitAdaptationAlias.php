@@ -38,16 +38,20 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
+
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This node class represents a trait adaptation alias.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 class ASTTraitAdaptationAlias extends ASTStatement
@@ -62,14 +66,14 @@ class ASTTraitAdaptationAlias extends ASTStatement
     /**
      * The new method modifier for the imported method.
      *
-     * @var integer
+     * @var int
      */
     protected $newModifier = -1;
 
     /**
      * Sets the new method modifier.
      *
-     * @param integer $newModifier The new method modifier.
+     * @param int $newModifier The new method modifier.
      *
      * @return void
      */
@@ -82,7 +86,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      * Returns the new method modifier or <b>-1</b> when this alias does not
      * specify a new method modifier.
      *
-     * @return integer
+     * @return int
      */
     public function getNewModifier()
     {
@@ -128,12 +132,9 @@ class ASTTraitAdaptationAlias extends ASTStatement
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitor $visitor The calling visitor instance.
-     * @param mixed                                 $data
-     *
-     * @return mixed
+     * @param ASTVisitor $visitor The calling visitor instance.
      */
-    public function accept(\PDepend\Source\ASTVisitor\ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
         return $visitor->visitTraitAdaptationAlias($this, $data);
     }

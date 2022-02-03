@@ -38,16 +38,18 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.3
  */
 
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -55,6 +57,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 2.4
  */
 abstract class PHPParserVersion71 extends PHPParserVersion70
@@ -73,7 +76,9 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      * This methods return true if the token matches a list opening in the current PHP version level.
      *
      * @param int $tokenType
+     *
      * @return bool
+     *
      * @since 2.6.0
      */
     protected function isListUnpacking($tokenType = null)
@@ -82,7 +87,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTType
+     * @return ASTType
      */
     protected function parseReturnTypeHint()
     {
@@ -109,7 +114,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      * //                ---
      * </code>
      *
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
      */
     protected function parseFormalParameterOrTypeHintOrByReference()
     {
@@ -143,7 +148,8 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      * Tests if the given image is a PHP 7 type hint.
      *
      * @param string $image
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isScalarOrCallableTypeHint($image)
     {
@@ -160,7 +166,8 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     * @return \PDepend\Source\AST\ASTType
+     *
+     * @return ASTType
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -177,7 +184,8 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     /**
      * This method parses class references in catch statement.
      *
-     * @param \PDepend\Source\AST\ASTCatchStatement $stmt The owning catch statement.
+     * @param ASTCatchStatement $stmt The owning catch statement.
+     *
      * @return void
      */
     protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
@@ -214,9 +222,10 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
     }
 
     /**
-     * @param integer $tokenType
-     * @param integer $modifiers
-     * @return integer
+     * @param int $tokenType
+     * @param int $modifiers
+     *
+     * @return int
      */
     private function getModifiersForConstantDefinition($tokenType, $modifiers)
     {

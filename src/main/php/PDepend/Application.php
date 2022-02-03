@@ -42,10 +42,17 @@
 
 namespace PDepend;
 
+use InvalidArgumentException;
+use PDepend\DependencyInjection\PdependExtension;
+use PDepend\Metrics\AnalyzerFactory;
+use PDepend\Report\ReportGeneratorFactory;
+use PDepend\TextUI\Runner;
+use PDepend\Util\Configuration;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 
 /**
  * PDepend Application
@@ -56,7 +63,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 class Application
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\TaggedContainerInterface|null
+     * @var null|TaggedContainerInterface
      **/
     private $container;
 
@@ -67,12 +74,13 @@ class Application
 
     /**
      * @param string $configurationFile
+     *
      * @return void
      */
     public function setConfigurationFile($configurationFile)
     {
         if (!file_exists($configurationFile)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('The configuration file "%s" doesn\'t exist.', $configurationFile)
             );
         }
@@ -81,7 +89,7 @@ class Application
     }
 
     /**
-     * @return \PDepend\Util\Configuration
+     * @return Configuration
      */
     public function getConfiguration()
     {
@@ -89,7 +97,7 @@ class Application
     }
 
     /**
-     * @return \PDepend\Engine
+     * @return Engine
      */
     public function getEngine()
     {
@@ -97,7 +105,7 @@ class Application
     }
 
     /**
-     * @return \PDepend\TextUI\Runner
+     * @return Runner
      */
     public function getRunner()
     {
@@ -105,7 +113,7 @@ class Application
     }
 
     /**
-     * @return \PDepend\Report\ReportGeneratorFactory
+     * @return ReportGeneratorFactory
      */
     public function getReportGeneratorFactory()
     {
@@ -113,7 +121,7 @@ class Application
     }
 
     /**
-     * @return \PDepend\Metrics\AnalyzerFactory
+     * @return AnalyzerFactory
      */
     public function getAnalyzerFactory()
     {
@@ -121,7 +129,7 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\TaggedContainerInterface
+     * @return TaggedContainerInterface
      */
     private function getContainer()
     {
@@ -133,11 +141,11 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\TaggedContainerInterface
+     * @return TaggedContainerInterface
      */
     private function createContainer()
     {
-        $extensions = array(new DependencyInjection\PdependExtension());
+        $extensions = array(new PdependExtension());
 
         $container = new ContainerBuilder(new ParameterBag(array()));
         $container->prependExtensionConfig('pdepend', array());
@@ -180,6 +188,7 @@ class Application
 
     /**
      * @param string $serviceTag
+     *
      * @return array<string, array<string, string>>
      */
     private function getAvailableOptionsFor($serviceTag)

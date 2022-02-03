@@ -7,10 +7,13 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
+
+use RuntimeException;
 
 /**
  * This type of exception will be thrown when a trait related method collision
@@ -18,15 +21,13 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
-class ASTTraitMethodCollisionException extends \RuntimeException
+class ASTTraitMethodCollisionException extends RuntimeException
 {
     /**
      * Constructs a new exception instance.
-     *
-     * @param \PDepend\Source\AST\ASTMethod       $method
-     * @param \PDepend\Source\AST\AbstractASTType $type
      */
     public function __construct(ASTMethod $method, AbstractASTType $type)
     {

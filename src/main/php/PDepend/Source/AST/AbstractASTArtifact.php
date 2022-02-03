@@ -60,35 +60,35 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The unique identifier for this function.
      *
-     * @var string|null
+     * @var null|string
      */
     protected $id = null;
 
     /**
      * The line number where the item declaration starts.
      *
-     * @var integer
+     * @var int
      */
     protected $startLine = 0;
 
     /**
      * The line number where the item declaration ends.
      *
-     * @var integer
+     * @var int
      */
     protected $endLine = 0;
 
     /**
      * The source file for this item.
      *
-     * @var \PDepend\Source\AST\ASTCompilationUnit|null
+     * @var null|ASTCompilationUnit
      */
     protected $compilationUnit = null;
 
     /**
      * The comment for this type.
      *
-     * @var string|null
+     * @var null|string
      */
     protected $comment = null;
 
@@ -128,6 +128,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @param string $name The item name.
      *
      * @return void
+     *
      * @since  1.0.0
      */
     public function setName($name)
@@ -153,8 +154,10 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Sets the unique identifier for this node instance.
      *
-     * @param  string $id Identifier for this node.
+     * @param string $id Identifier for this node.
+     *
      * @return void
+     *
      * @since  0.9.12
      */
     public function setId($id)
@@ -165,7 +168,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns the source file for this item.
      *
-     * @return \PDepend\Source\AST\ASTCompilationUnit|null
+     * @return null|ASTCompilationUnit
      */
     public function getCompilationUnit()
     {
@@ -175,7 +178,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Sets the source file for this item.
      *
-     * @param  \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
     public function setCompilationUnit(ASTCompilationUnit $compilationUnit)
@@ -189,7 +191,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getComment()
     {
@@ -200,6 +202,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Sets the raw doc comment for this node.
      *
      * @param string $comment
+     *
      * @return void
      */
     public function setComment($comment)
@@ -210,7 +213,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns the line number where the class or interface declaration starts.
      *
-     * @return integer
+     * @return int
      */
     public function getStartLine()
     {
@@ -220,7 +223,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns the line number where the class or interface declaration ends.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine()
     {
@@ -233,6 +236,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Returns the doc comment for this item or <b>null</b>.
      *
      * @return string
+     *
      * @deprecated Use getComment() inherit from ASTNode instead.
      */
     public function getDocComment()
@@ -244,7 +248,9 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Sets the doc comment for this item.
      *
      * @param string $docComment
+     *
      * @return void
+     *
      * @deprecated Use setComment() inherit from ASTNode instead.
      */
     public function setDocComment($docComment)
