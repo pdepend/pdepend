@@ -45,6 +45,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Representation of a trait.
@@ -59,7 +60,7 @@ class ASTTrait extends ASTClass
     /**
      * Returns all properties for this class.
      *
-     * @return ASTProperty[]
+     * @return ASTArtifactList<ASTProperty>
      *
      * @since  1.0.6
      *
@@ -67,7 +68,7 @@ class ASTTrait extends ASTClass
      */
     public function getProperties()
     {
-        return array();
+        return new ASTArtifactList(array());
     }
 
     /**
