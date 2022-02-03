@@ -84,14 +84,14 @@ class ASTConstantDeclarator extends AbstractASTNode
     /**
      * The initial declaration value for this node or <b>null</b>.
      *
-     * @var null|ASTValue
+     * @var ASTValue|null
      */
     protected $value = null;
 
     /**
      * Returns the initial declaration value for this node.
      *
-     * @return null|ASTValue
+     * @return ASTValue|null
      */
     public function getValue()
     {

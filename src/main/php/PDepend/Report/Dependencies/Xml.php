@@ -92,7 +92,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     protected $fileSet = array();
 
     /**
-     * @var null|ClassDependencyAnalyzer
+     * @var ClassDependencyAnalyzer|null
      */
     private $dependencyAnalyzer;
 

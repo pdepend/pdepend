@@ -2226,7 +2226,7 @@ class PHPBuilder implements Builder
      *
      * @param string $qualifiedName
      *
-     * @return null|ASTTrait
+     * @return ASTTrait|null
      *
      * @since  0.9.5
      */
@@ -2302,7 +2302,7 @@ class PHPBuilder implements Builder
      *
      * @param string $qualifiedName
      *
-     * @return null|ASTInterface
+     * @return ASTInterface|null
      *
      * @since  0.9.5
      */
@@ -2375,7 +2375,7 @@ class PHPBuilder implements Builder
      *
      * @param string $qualifiedName
      *
-     * @return null|ASTClass
+     * @return ASTClass|null
      *
      * @since  0.9.5
      */
@@ -2404,7 +2404,7 @@ class PHPBuilder implements Builder
      * @param array<string, array<string, array<string, T>>> $instances
      * @param string                                         $qualifiedName
      *
-     * @return null|T
+     * @return T|null
      *
      * @since  0.9.5
      */
@@ -2693,7 +2693,7 @@ class PHPBuilder implements Builder
      *
      * @param string $qualifiedName The qualified PHP 5.3 class identifier.
      *
-     * @return null|string
+     * @return string|null
      */
     protected function extractNamespaceName($qualifiedName)
     {

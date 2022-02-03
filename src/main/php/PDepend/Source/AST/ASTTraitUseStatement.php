@@ -57,7 +57,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTTraitUseStatement extends ASTStatement
 {
     /**
-     * @var null|ASTMethod[]
+     * @var ASTMethod[]|null
      */
     private $allMethods;
 

@@ -596,7 +596,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * The source file instance.
      *
-     * @var null|ASTCompilationUnit
+     * @var ASTCompilationUnit|null
      */
     protected $sourceFile = null;
 
@@ -617,7 +617,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Prepared token list.
      *
-     * @var null|Token[]
+     * @var Token[]|null
      */
     protected $tokens = null;
 
@@ -631,7 +631,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return null|ASTCompilationUnit
+     * @return ASTCompilationUnit|null
      */
     public function getSourceFile()
     {
@@ -654,7 +654,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the previous token or null if there is no one yet.
      *
-     * @return null|Token
+     * @return Token|null
      */
     public function prevToken()
     {
@@ -670,7 +670,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the current token or null if there is no more.
      *
-     * @return null|Token
+     * @return Token|null
      */
     public function currentToken()
     {
@@ -745,7 +745,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * Returns the type of next token, after the current token. This method
      * ignores all comments between the current and the next token.
      *
-     * @return null|int
+     * @return int|null
      *
      * @since  0.9.12
      */
@@ -1078,7 +1078,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @param array<array<int, integer|string>|string> $tokens Reference to the current token stream.
      *
-     * @return null|string
+     * @return string|null
      */
     private function consumeNonePhpTokens(array &$tokens)
     {

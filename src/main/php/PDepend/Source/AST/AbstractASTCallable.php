@@ -59,7 +59,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * The internal used cache instance.
      *
-     * @var null|CacheDriver
+     * @var CacheDriver|null
      *
      * @since 0.10.0
      */
@@ -69,7 +69,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var null|ASTClassOrInterfaceReference
+     * @var ASTClassOrInterfaceReference|null
      *
      * @since 0.9.5
      */
@@ -121,7 +121,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * List of method/function parameters.
      *
-     * @var null|ASTParameter[]
+     * @var ASTParameter[]|null
      */
     private $parameters = null;
 
@@ -175,7 +175,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @param class-string<T> $targetType Searched class or interface type.
      *
-     * @return null|T
+     * @return T|null
      * @access private
      *
      * @since  0.9.6
@@ -290,7 +290,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * the return value of this callable. The returned value will be <b>null</b>
      * if there is no return value or the return value is scalat.
      *
-     * @return null|AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface|null
      *
      * @since  0.9.5
      */
@@ -325,7 +325,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
-     * @return null|ASTType
+     * @return ASTType|null
      */
     public function getReturnType()
     {
@@ -384,7 +384,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns an array with all method/function parameters.
      *
-     * @return null|ASTParameter[]
+     * @return ASTParameter[]|null
      */
     public function getParameters()
     {

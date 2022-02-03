@@ -256,7 +256,7 @@ final class Type
      *
      * @param string $typeName The type name.
      *
-     * @return null|string
+     * @return string|null
      */
     public static function getTypePackage($typeName)
     {
@@ -342,7 +342,7 @@ final class Type
      *
      * @param string $image The found primitive type image.
      *
-     * @return null|string
+     * @return string|null
      *
      * @since  0.9.6
      */

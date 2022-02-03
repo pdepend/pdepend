@@ -69,7 +69,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
      *
      * @throws UnexpectedTokenException
      *
-     * @return null|ASTValue
+     * @return ASTValue|null
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
@@ -309,7 +309,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     /**
      * In this method we implement parsing of PHP 5.6 specific expressions.
      *
-     * @return null|ASTNode
+     * @return ASTNode|null
      *
      * @since 2.3
      */

@@ -53,14 +53,14 @@ class ConfigurationInstance
     /**
      * The unique configuration instance.
      *
-     * @var null|Configuration
+     * @var Configuration|null
      */
     private static $configuration = null;
 
     /**
      * Returns a configured config instance or <b>null</b>.
      *
-     * @return null|Configuration
+     * @return Configuration|null
      */
     public static function get()
     {

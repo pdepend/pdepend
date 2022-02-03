@@ -55,7 +55,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * The parent for this class node.
      *
-     * @var null|ASTClassReference
+     * @var ASTClassReference|null
      *
      * @since 0.9.5
      */
@@ -87,7 +87,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      *
-     * @return null|ASTClass
+     * @return ASTClass|null
      */
     public function getParentClass()
     {
@@ -144,7 +144,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a reference onto the parent class of this class node or <b>null</b>.
      *
-     * @return null|ASTClassReference
+     * @return ASTClassReference|null
      *
      * @since  0.9.5
      */

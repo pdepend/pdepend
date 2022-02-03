@@ -105,7 +105,7 @@ class FileCacheDriver implements CacheDriver
      *
      * @param string      $root     The cache root directory.
      * @param int         $ttl      The cache TTL.
-     * @param null|string $cacheKey Unique key for this cache instance.
+     * @param string|null $cacheKey Unique key for this cache instance.
      */
     public function __construct($root, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {

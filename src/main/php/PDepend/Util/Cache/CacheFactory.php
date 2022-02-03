@@ -104,7 +104,7 @@ class CacheFactory
     /**
      * Creates a cache instance based on the supplied configuration.
      *
-     * @param null|string $cacheKey The name/identifier for the cache instance.
+     * @param string|null $cacheKey The name/identifier for the cache instance.
      *
      * @throws InvalidArgumentException If the configured cache driver is unknown.
      *
@@ -132,7 +132,7 @@ class CacheFactory
      *
      * @param string      $location Cache root directory.
      * @param int         $ttl      Cache ttl
-     * @param null|string $cacheKey The name/identifier for the cache instance.
+     * @param string|null $cacheKey The name/identifier for the cache instance.
      *
      * @return FileCacheDriver
      */

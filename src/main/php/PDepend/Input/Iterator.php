@@ -64,7 +64,7 @@ class Iterator extends FilterIterator
     /**
      * Optional root path for the files.
      *
-     * @var null|string
+     * @var string|null
      *
      * @since 0.10.0
      */

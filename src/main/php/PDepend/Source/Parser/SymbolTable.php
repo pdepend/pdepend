@@ -60,7 +60,7 @@ class SymbolTable
     /**
      * The currently active scope.
      *
-     * @var null|array<string, string>
+     * @var array<string, string>|null
      */
     private $scope = array();
 
@@ -133,7 +133,7 @@ class SymbolTable
      *
      * @throws NoActiveScopeException
      *
-     * @return null|string
+     * @return string|null
      */
     public function lookup($key)
     {
