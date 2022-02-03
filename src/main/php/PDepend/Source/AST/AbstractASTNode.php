@@ -44,7 +44,9 @@
 
 namespace PDepend\Source\AST;
 
+use BadMethodCallException;
 use OutOfBoundsException;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This is an abstract base implementation of the ast node interface.
@@ -88,6 +90,11 @@ abstract class AbstractASTNode implements ASTNode
      * @since 0.10.4
      */
     protected $metadata = '::::';
+
+    public function accept(ASTVisitor $visitor, $data = null)
+    {
+        throw new BadMethodCallException('Accept must be overwritten');
+    }
 
     /**
      * Constructs a new ast node instance.

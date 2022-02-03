@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 
@@ -156,7 +157,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns all child nodes of this method.
      *
-     * @return ASTNode[]
+     * @return AbstractASTNode[]
      *
      * @since  0.9.8
      */

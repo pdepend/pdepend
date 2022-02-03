@@ -2425,7 +2425,7 @@ abstract class AbstractPHPParser
      * like {@link ASTInstanceOfExpression} or an object
      * allocation node like {@link ASTAllocationExpression}.
      *
-     * @template T of ASTNode
+     * @template T of AbstractASTNode
      *
      * @param T    $expr
      * @param bool $classRef
@@ -2666,7 +2666,7 @@ abstract class AbstractPHPParser
      * $foo[$bar];
      * </code>
      *
-     * @template T of ASTNode
+     * @template T of AbstractASTNode
      *
      * @param T   $node
      * @param int $closeToken
@@ -5184,7 +5184,7 @@ abstract class AbstractPHPParser
      * This method parses a comma separated list of valid php variables and/or
      * properties and adds them to the given node instance.
      *
-     * @template T of ASTNode
+     * @template T of AbstractASTNode
      *
      * @param T $node The context parent node.
      *
@@ -5861,7 +5861,8 @@ abstract class AbstractPHPParser
      * to consume the stop token. The return value of this method is the prepared
      * input string node.
      * 
-     * @param int $stopToken
+     * @param AbstractASTNode $node
+     * @param int             $stopToken
      *
      * @return ASTNode
      *
