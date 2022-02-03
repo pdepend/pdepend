@@ -8,4 +8,4 @@ parameters:
         - PDepend\Util\Configuration
     ignoreErrors:
         - '#Call to an undefined method PDepend\\.*::visit.*\(\)\.#'
-    level: 1
+    level: 2
