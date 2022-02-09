@@ -291,6 +291,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             return new ASTArtifactList($this->methods);
         }
 
+        /** @var ASTMethod[] */
         $methods = (array) $this->cache
             ->type('methods')
             ->restore($this->getId());

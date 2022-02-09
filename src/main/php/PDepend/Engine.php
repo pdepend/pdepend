@@ -56,6 +56,7 @@ use PDepend\Metrics\AnalyzerFactory;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\ReportGenerator;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\NullArtifactFilter;
@@ -135,7 +136,7 @@ class Engine
     /**
      * Generated {@link ASTNamespace} objects.
      *
-     * @var ASTNamespace[]
+     * @var ASTArtifactList<ASTNamespace>
      */
     private $namespaces = null;
 
@@ -341,7 +342,7 @@ class Engine
      * Analyzes the registered directories and returns the collection of
      * analyzed namespace.
      *
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function analyze()
     {
@@ -457,7 +458,7 @@ class Engine
      *
      * @throws RuntimeException
      *
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function getNamespaces()
     {
@@ -654,7 +655,7 @@ class Engine
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
      *
-     * @return Iterator<int, string>
+     * @return ArrayIterator<int, string>
      */
     private function createFileIterator()
     {

@@ -43,6 +43,7 @@
 namespace PDepend\Report;
 
 use RuntimeException;
+use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -62,10 +63,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ReportGeneratorFactory
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\TaggedContainerInterface
+     * @var TaggedContainerInterface
      */
     private $container;
 
+    /**
+     * @param TaggedContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;

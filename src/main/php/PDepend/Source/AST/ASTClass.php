@@ -95,7 +95,7 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * Returns all properties for this class.
      *
-     * @return ASTProperty[]
+     * @return ASTArtifactList<ASTProperty>
      */
     public function getProperties()
     {

@@ -94,7 +94,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * List of all parsed child nodes.
      *
-     * @var ASTNode[]
+     * @var AbstractASTNode[]
      *
      * @since 0.9.6
      */
@@ -142,7 +142,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Adds a parsed child node to this node.
      *
-     * @param ASTNode $node A parsed child node instance.
+     * @param AbstractASTNode $node A parsed child node instance.
      *
      * @return void
      * @access private
@@ -436,8 +436,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'PDepend\\Source\\AST\\ASTStaticVariableDeclaration'
         );
         foreach ($declarations as $declaration) {
+            /** @var ASTVariableDeclarator[] */
+            $variables = array();
             $variables = $declaration->findChildrenOfType(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator'
+                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                $variables
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
