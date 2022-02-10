@@ -43,6 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 

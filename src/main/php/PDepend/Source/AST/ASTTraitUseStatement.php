@@ -101,10 +101,12 @@ class ASTTraitUseStatement extends ASTStatement
                 continue;
             }
 
+            /** @var ASTTraitReference[] */
             $children = $precedence->getChildren();
+            array_shift($children);
 
-            for ($i = 1, $count = count($children); $i < $count; ++$i) {
-                if ($methodParent === $children[$i]->getType()) {
+            foreach ($children as $child) {
+                if ($methodParent === $child->getType()) {
                     return true;
                 }
             }
@@ -172,7 +174,10 @@ class ASTTraitUseStatement extends ASTStatement
                 continue;
             }
 
-            if ($alias->getChild(0)->getType() !== $method->getParent()) {
+            /** @var ASTTraitReference */
+            $child = $alias->getChild(0);
+
+            if ($child->getType() !== $method->getParent()) {
                 continue;
             }
 

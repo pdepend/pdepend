@@ -43,6 +43,7 @@
 namespace PDepend\Report\Jdepend;
 
 use DOMDocument;
+use DOMElement;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
@@ -168,10 +169,10 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $legendTemplate->removeAttribute('xml:id');
 
         foreach ($this->getItems() as $item) {
-            if ($item['distance'] < $bias) {
-                $ellipse = $good->cloneNode(true);
-            } else {
-                $ellipse = $bad->cloneNode(true);
+            $element = $item['distance'] < $bias ? $good : $bad;
+            $ellipse = $element->cloneNode(true);
+            if (!$ellipse instanceof DOMElement) {
+                continue;
             }
 
             $a = $item['ratio'] / 15;
@@ -190,10 +191,12 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             if ($result && count($found)) {
                 $angle = rand(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
-                $legend->setAttribute('x', $e + $item['ratio'] * (1 + cos($angle)));
-                $legend->setAttribute('y', $f + $item['ratio'] * (1 + sin($angle)));
-                $legend->nodeValue = $found[1];
-                $legendTemplate->parentNode->appendChild($legend);
+                if ($legend instanceof DOMElement) {
+                    $legend->setAttribute('x', $e + $item['ratio'] * (1 + cos($angle)));
+                    $legend->setAttribute('y', $f + $item['ratio'] * (1 + sin($angle)));
+                    $legend->nodeValue = $found[1];
+                    $legendTemplate->parentNode->appendChild($legend);
+                }
             }
         }
 
