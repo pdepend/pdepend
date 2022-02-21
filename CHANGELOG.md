@@ -1,4 +1,6 @@
 pdepend-2.10.3 (2022/02/23)
+==========================
+
 - Added [\#574](https://github.com/pdepend/pdepend/pull/574): Support symfony 6
 - Fixed [\#583](https://github.com/pdepend/pdepend/pull/583), [\#578](https://github.com/pdepend/pdepend/pull/578), [\#577](https://github.com/pdepend/pdepend/pull/577), [\#576](https://github.com/pdepend/pdepend/pull/576) : Add declare ReturnTypeWillChange to fix deprecation warnings.
 - Fixed [\#575](https://github.com/pdepend/pdepend/pull/575): Fix deprecation warning in AbstractPHPParser::parseVarAnnotation.
