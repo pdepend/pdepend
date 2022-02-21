@@ -8,6 +8,4 @@ filter:
         - src/test/resources/files/
 
 tools:
-    external_code_coverage:
-        timeout: 600
-        runs: 2
+    external_code_coverage: false
