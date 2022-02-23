@@ -1,3 +1,12 @@
+pdepend-2.10.3 (2022/02/23)
+==========================
+
+- Added [\#574](https://github.com/pdepend/pdepend/pull/574): Support symfony 6
+- Fixed [\#583](https://github.com/pdepend/pdepend/pull/583), [\#578](https://github.com/pdepend/pdepend/pull/578), [\#577](https://github.com/pdepend/pdepend/pull/577), [\#576](https://github.com/pdepend/pdepend/pull/576) : Add declare ReturnTypeWillChange to fix deprecation warnings.
+- Fixed [\#575](https://github.com/pdepend/pdepend/pull/575): Fix deprecation warning in AbstractPHPParser::parseVarAnnotation.
+- Fixed [\#579](https://github.com/pdepend/pdepend/pull/579): Fix deprecation messages in AbstractPHPParser::prepareCallable
+- Changed [\#589](https://github.com/pdepend/pdepend/pull/589), [\#588](https://github.com/pdepend/pdepend/pull/588), [\#587](https://github.com/pdepend/pdepend/pull/587), [\#586](https://github.com/pdepend/pdepend/pull/586), [\#585](https://github.com/pdepend/pdepend/pull/585), [\#582](https://github.com/pdepend/pdepend/pull/582), [\#581](https://github.com/pdepend/pdepend/pull/581), [\#580](https://github.com/pdepend/pdepend/pull/580) : Internal code cleanup and PHPStan fixes.
+
 pdepend-2.10.2 (2021/11/16)
 ==========================
 
