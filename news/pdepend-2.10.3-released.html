@@ -53,46 +53,23 @@
 
 <div class="viewport content">
     
-<a id="php-depend-0-9-10-released"></a>
-<h2>PHP_Depend-0.9.10 released</h2>
-<p>:Abstract:
-  I have just released the bug fix version 0.9.10 of PHP_Depend. This
-  release contains several bug fixes and improvements for PHP_Depend.</p>
-<p>I have just released the bug fix version 0.9.10 of PHP_Depend. This
-release contains several bug fixes and improvements for PHP_Depend.</p>
-<ul><li>Implemented <a href="">#72</a>: Add NOAM, NOOM and NOCC metrics. Implemented in svn
-  revision <a href="">#1084</a>.</li>
-<li>Implemented <a href="">#74</a>: Make CRAP-index available. Implemented in svn revision
-  <a href="">#1063</a>.</li>
-<li>Implemented <a href="">#105</a>: Support for deep search implement. Implemented in svn
-  revision <a href="">#1078</a>.</li>
-<li>Fixed <a href="">#106</a>: Filter algorithm is broken for namespaced internal classes.
-  Fixed in svn revision <a href="">#1039</a>.</li>
-<li>Fixed <a href="">#110</a>: Duplicate &quot;coupling&quot; directory in test code. Fixed in svn
-  revision <a href="">#1032</a>. </li>
-<li>Fixed <a href="">#111</a>: Dynamic Strings are treated as literal strings. Fixed in svn
-  revision <a href="">#1037</a>. </li>
-<li>Fixed <a href="">#114</a>: Parsing error caused by complex string expressions fixed.
-  Fixed in svn revision <a href="">#1068</a>.</li>
-<li>Fixed <a href="">#115</a>: Summary and PHPUnit Report lists unknown classes. Fixed in
-  svn revision <a href="">#1101</a>.</li>
-<li>Fixed <a href="">#116</a>: Returns reference results in parsing error. Fixed in svn
-  revision <a href="">#1090</a>.</li>
-<li>Performance intensive calculation result cached.</li>
-<li>Test code restructured and improved.</li>
-<li>Concurrency issue for parallel running pdepend instances fixed.</li>
-</ul>
+<a id="version-2-10-3-released"></a>
+<h2>Version 2.10.3 released</h2>
+<p>We are proud to announce version <a href="https://github.com/pdepend/pdepend/releases/tag/2.10.3">2.10.3</a> of PDepend. For more
+details visit the version release <a href="https://github.com/pdepend/pdepend/releases/tag/2.10.3">site</a>.</p>
+<p>Use <a href="http://getcomposer.org">composer</a> to install PHP_Depend:</p>
 
-<p>As always, you can get the latest PHP_Depend version from its PEAR channel:<br /><a href="http://pear.pdepend.org">pear.pdepend.org</a>: :</p>
-<pre><code class="">mapi@arwen ~ $ pear channel-discover pear.pdepend.org
-mapi@arwen ~ $ pear install pdepend/PHP_Depend-beta
+<pre><code class="">curl -s http://getcomposer.org/installer | php
+php composer.phar require &quot;pdepend/pdepend:2.10.3&quot;
 </code></pre>
-<p>Or you can fetch the sources from the subversion reposition: :</p>
-<pre><code class="">mapi@arwen ~ $ svn co http://svn.pdepend.org/branches/0.9.0/
+<p>Or if you already have composer installed globally:</p>
+
+<pre><code class="">composer require &quot;pdepend/pdepend:2.10.3&quot;
 </code></pre>
-<p>And additionally you can find a repository mirror on github: :</p>
-<pre><code class="">mapi@arwen ~ $ git clone git://github.com/manuelpichler/pdepend.git
-</code></pre>
+<a id="download"></a>
+<h3>Download</h3>
+<p>Future releases will also be released as PHAR files on
+<a href="https://github.com/pdepend/pdepend/releases">GitHub</a></p>
 </div>
 <div class="footer">
     <div class="viewport">
