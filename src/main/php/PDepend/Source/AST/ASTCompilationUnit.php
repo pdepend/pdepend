@@ -373,7 +373,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
             $this->endLine   = substr_count($this->source, "\n") + 1;
         }
     }
-    
+
     // Deprecated methods
     // @codeCoverageIgnoreStart
 
