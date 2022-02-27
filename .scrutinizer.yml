@@ -55,9 +55,7 @@ tools:
     php_code_coverage:
         filter:
             excluded_paths: ['vendor/*', 'app/*', 'web/*', 'src/main/resources/*', 'src/test/resources/*']
-    php_cpd:
-        filter:
-            excluded_paths: ['vendor/*', 'app/*', 'web/*', 'src/main/resources/*', 'src/test/resources/*']
+    php_cpd: false
     php_loc:
         filter:
             excluded_paths: ['vendor/*', 'app/*', 'web/*', 'src/main/resources/*', 'src/test/resources/*']
