@@ -70,5 +70,11 @@ class ExplicitOctalNotationTest extends AbstractTest
             'EXPLICIT_OCTAL' => 14,
             'BINARY' => 6,
         ), $values);
+
+        $this->assertSame(
+            '0o170',
+            $this->getFirstMethodForTestCase()
+                ->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral')->getImage()
+        );
     }
 }
