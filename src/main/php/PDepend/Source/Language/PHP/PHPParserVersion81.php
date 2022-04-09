@@ -59,6 +59,21 @@ use PDepend\Source\Tokenizer\Tokens;
 abstract class PHPParserVersion81 extends PHPParserVersion80
 {
     /**
+     * Regular expression for integer numbers representation.
+     */
+    const REGEXP_INTEGER = '(
+                       0
+                       |
+                       [1-9][0-9]*(?:_[0-9]+)*
+                       |
+                       0[xX][0-9a-fA-F]+(?:_[0-9a-fA-F]+)*
+                       |
+                       0[oO]?[0-7]+(?:_[0-7]+)*
+                       |
+                       0[bB][01]+(?:_[01]+)*
+                     )x';
+
+    /**
      * Tests if the given image is a PHP 8.1 type hint.
      *
      * @param string $image
