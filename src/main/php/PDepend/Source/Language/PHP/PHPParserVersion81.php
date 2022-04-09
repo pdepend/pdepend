@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\AST\ASTDynamicValue;
-use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\State;
@@ -137,8 +135,8 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     protected function parseVariableDefaultValue()
     {
         if ($this->tokenizer->peek() === Tokens::T_NEW) {
-            $defaultValue = new ASTDynamicValue();
-            $defaultValue->setExpression($this->parseAllocationExpression());
+            $defaultValue = new ASTValue();
+            $defaultValue->setValue($this->parseAllocationExpression());
 
             return $defaultValue;
         }

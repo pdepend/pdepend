@@ -42,9 +42,9 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTAllocationExpression;
-use PDepend\Source\AST\ASTDynamicValue;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
@@ -83,15 +83,14 @@ class InInitializersTest extends AbstractTest
         $variable = $classRef->getChild(1);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variable);
 
-        /** @var ASTDynamicValue $defaultValue */
+        /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTDynamicValue', $defaultValue);
-        $this->assertFalse($defaultValue->isValueAvailable());
-        $this->assertTrue($defaultValue->isExpressionAvailable());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $defaultValue);
+        $this->assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
-        $expression = $defaultValue->getExpression();
+        $expression = $defaultValue->getValue();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAllocationExpression', $expression);
         $this->assertSame('Bar', $expression->getChild(0)->getImage());
