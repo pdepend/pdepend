@@ -218,22 +218,6 @@ class ASTLiteralTest extends ASTNodeTest
     }
 
     /**
-     * testLiteralWithBrokenBinaryIntegerThrowsExpectedException
-     *
-     * @return void
-     * @since 1.0.0
-     * @covers \PDepend\Source\Language\PHP\PHPParserVersion54
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     */
-    public function testLiteralWithBrokenBinaryIntegerThrowsExpectedException()
-    {
-        if (version_compare(phpversion(), '5.4alpha') >= 0) {
-            $this->markTestSkipped('This test only affects PHP < 5.4');
-        }
-        $this->getFirstLiteralInFunction();
-    }
-
-    /**
      * testLiteralWithCurlyBraceFollowedByCompoundExpression
      *
      * @return void
