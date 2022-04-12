@@ -7904,7 +7904,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param string $numberRepresentation
+     * @param string $numberRepresentation integer number as it appears in the code, `0xfe4`, `1_000_000`
      *
      * @return int
      */
