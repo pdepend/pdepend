@@ -7338,8 +7338,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * This method will parse a default value after a parameter/static variable/constant
-     * declaration.
+     * Parse a default value after a parameter, static variable or constant declaration.
      *
      * @return ASTValue
      *
