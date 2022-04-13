@@ -247,6 +247,9 @@ abstract class AbstractPHPParser
 
     /**
      * Regular expression for integer numbers representation.
+     * (Underscore and explicit octal notation were not allowed before PHP 7.4.)
+     *
+     * @see https://github.com/php/doc-en/blob/528e97348f45b473ca8ecea9997be1e268703562/language/types/integer.xml#L74-L86
      */
     const REGEXP_INTEGER = '/^(
                        0

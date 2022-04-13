@@ -60,6 +60,9 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 {
     /**
      * Regular expression for integer numbers representation.
+     * (PHP 7.4 added support for underscores, octal explicit notation still disallowed.)
+     *
+     * @see https://github.com/php/doc-en/blob/d494ffa4d9f83b60fe66972ec2c0cf0301513b4a/language/types/integer.xml#L77-L89
      */
     const REGEXP_INTEGER = '(
                        0
