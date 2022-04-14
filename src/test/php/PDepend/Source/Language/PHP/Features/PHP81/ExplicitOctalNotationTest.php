@@ -38,44 +38,43 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP80;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\AbstractTest;
-use PDepend\Source\Builder\Builder;
-use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Util\Cache\CacheDriver;
+use PDepend\Source\AST\ASTConstantDeclarator;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
  * @group unittest
+ * @group php8.1
  */
-abstract class PHPParserVersion80Test extends AbstractTest
+class ExplicitOctalNotationTest extends AbstractTest
 {
-    protected static function needsPHP80()
+    public function testExplicitOctalNotation()
     {
-        if (static::isLowerThanPHP80()) {
-            self::markTestSkipped('Requires at least PHP 8.0');
-        }
-    }
+        $class = $this->getFirstClassForTestCase();
 
-    protected static function isLowerThanPHP80()
-    {
-        return version_compare(PHP_VERSION, '8.0.0-dev', '<');
-    }
+        $values = array_map(
+            function (ASTConstantDeclarator $constantDeclarator) {
+                return $constantDeclarator->getValue()->getValue();
+            },
+            $class->getConstantDeclarators()
+        );
 
-    /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
-     */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
-    {
-        return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion80',
-            array($tokenizer, $builder, $cache)
+        $this->assertSame(array(
+            'THOUSAND' => 1000,
+            'HEXADECIMAL' => 15,
+            'IMPLICIT_OCTAL' => 14,
+            'EXPLICIT_OCTAL' => 14,
+            'BINARY' => 6,
+        ), $values);
+
+        $this->assertSame(
+            '0o170',
+            $this->getFirstMethodForTestCase()
+                ->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral')->getImage()
         );
     }
 }

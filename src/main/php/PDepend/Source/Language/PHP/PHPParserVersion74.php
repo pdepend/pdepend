@@ -60,6 +60,25 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion74 extends PHPParserVersion73
 {
+    /**
+     * Regular expression for integer numbers representation.
+     * (Add support for octal explicit notation.)
+     *
+     * @see https://php.net/manual/en/language.types.integer.php
+     * @see https://github.com/php/doc-en/blob/085c38d45e466691062b4444c71f4dbe4198f884/language/types/integer.xml#L79-L91
+     */
+    const REGEXP_INTEGER = '/^(
+                       0
+                       |
+                       [1-9][0-9]*(?:_[0-9]+)*
+                       |
+                       0[xX][0-9a-fA-F]+(?:_[0-9a-fA-F]+)*
+                       |
+                       0[0-7]+(?:_[0-7]+)*
+                       |
+                       0[bB][01]+(?:_[01]+)*
+                     )$/x';
+
     protected $possiblePropertyTypes = array(
         Tokens::T_STRING,
         Tokens::T_ARRAY,

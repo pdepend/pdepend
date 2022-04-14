@@ -59,6 +59,24 @@ use PDepend\Source\Tokenizer\Tokens;
 abstract class PHPParserVersion81 extends PHPParserVersion80
 {
     /**
+     * Regular expression for integer numbers representation.
+     * (PHP 7.4 added support for underscores, octal explicit notation still disallowed.)
+     *
+     * @see https://github.com/php/doc-en/blob/d494ffa4d9f83b60fe66972ec2c0cf0301513b4a/language/types/integer.xml#L77-L89
+     */
+    const REGEXP_INTEGER = '(
+                       0
+                       |
+                       [1-9][0-9]*(?:_[0-9]+)*
+                       |
+                       0[xX][0-9a-fA-F]+(?:_[0-9a-fA-F]+)*
+                       |
+                       0[oO]?[0-7]+(?:_[0-7]+)*
+                       |
+                       0[bB][01]+(?:_[01]+)*
+                     )x';
+
+    /**
      * Tests if the given image is a PHP 8.1 type hint.
      *
      * @param string $image

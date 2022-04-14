@@ -242,8 +242,13 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
     protected function parseIntegerNumber()
     {
         $token = $this->consumeToken(Tokens::T_LNUMBER);
+        $number = $token->image;
 
-        if ('0' !== substr($token->image, 0, 1)) {
+        while ($this->tokenizer->peek() === Tokens::T_STRING) {
+            $number .= $this->tokenizer->next()->image;
+        }
+
+        if ('0' !== substr($number, 0, 1)) {
             goto BUILD_LITERAL;
         }
 
@@ -252,20 +257,20 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
         }
 
         $token1 = $this->consumeToken(Tokens::T_STRING);
-        if (0 === preg_match('(^b[01]+$)', $token1->image)) {
+        if (0 === preg_match('(^b[01]+$)i', $token1->image)) {
             throw new UnexpectedTokenException(
                 $token1,
                 $this->tokenizer->getSourceFile()
             );
         }
 
-        $token->image = $token->image . $token1->image;
+        $number .= $token1->image;
         $token->endLine = $token1->endLine;
         $token->endColumn = $token1->endColumn;
 
         BUILD_LITERAL:
 
-        $literal = $this->builder->buildAstLiteral($token->image);
+        $literal = $this->builder->buildAstLiteral($number);
         $literal->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,

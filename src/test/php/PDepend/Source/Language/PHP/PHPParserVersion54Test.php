@@ -74,20 +74,6 @@ class PHPParserVersion54Test extends AbstractTest
     }
 
     /**
-     * testParserThrowsExceptionForInvalidBinaryIntegerLiteral
-     *
-     * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     */
-    public function testParserThrowsExceptionForInvalidBinaryIntegerLiteral()
-    {
-        if (version_compare(phpversion(), '5.4alpha') >= 0) {
-            $this->markTestSkipped('This test only affects PHP < 5.4');
-        }
-        $this->getFirstMethodForTestCase();
-    }
-
-    /**
      * testParserHandlesStaticMemberExpressionSyntax
      *
      * @return void

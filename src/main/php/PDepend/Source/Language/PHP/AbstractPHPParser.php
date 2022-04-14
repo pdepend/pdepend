@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use InvalidArgumentException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTNode;
@@ -243,6 +244,24 @@ abstract class AbstractPHPParser
                        |
                        (array)\(\s*\)\s+
                      )ix';
+
+    /**
+     * Regular expression for integer numbers representation.
+     * (Underscore and explicit octal notation were not allowed before PHP 7.4.)
+     *
+     * @see https://github.com/php/doc-en/blob/528e97348f45b473ca8ecea9997be1e268703562/language/types/integer.xml#L74-L86
+     */
+    const REGEXP_INTEGER = '/^(
+                       0
+                       |
+                       [1-9][0-9]*
+                       |
+                       0[xX][0-9a-fA-F]+
+                       |
+                       0[0-7]+
+                       |
+                       0[bB][01]+
+                     )$/x';
 
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
@@ -7342,7 +7361,13 @@ abstract class AbstractPHPParser
                     break;
                 case Tokens::T_LNUMBER:
                     $token = $this->consumeToken(Tokens::T_LNUMBER);
-                    $defaultValue->setValue($signed * (int) $token->image);
+                    $number = $token->image;
+
+                    while ($this->tokenizer->peek() === Tokens::T_STRING) {
+                        $number .= $this->tokenizer->next()->image;
+                    }
+
+                    $defaultValue->setValue($signed * $this->parseIntegerNumberImage($number));
                     break;
                 case Tokens::T_DNUMBER:
                     $token = $this->consumeToken(Tokens::T_DNUMBER);
@@ -7879,5 +7904,38 @@ abstract class AbstractPHPParser
     protected function parseThrowExpression()
     {
         throw $this->getUnexpectedTokenException();
+    }
+
+    /**
+     * @param string $numberRepresentation integer number as it appears in the code, `0xfe4`, `1_000_000`
+     *
+     * @return int
+     */
+    private function parseIntegerNumberImage($numberRepresentation)
+    {
+        $numberRepresentation = trim($numberRepresentation);
+
+        if (!preg_match(static::REGEXP_INTEGER, $numberRepresentation)) {
+            throw new InvalidArgumentException("Invalid number $numberRepresentation");
+        }
+
+        $numberRepresentation = str_replace('_', '', $numberRepresentation);
+
+        switch (substr($numberRepresentation, 0, 2)) {
+            case '0x':
+            case '0X':
+                return hexdec(substr($numberRepresentation, 2));
+
+            case '0b':
+            case '0B':
+                return bindec(substr($numberRepresentation, 2));
+
+            default:
+                if (substr($numberRepresentation, 0, 1) === '0') {
+                    return octdec(preg_replace('/^0+(oO)?/', '', $numberRepresentation));
+                }
+
+                return (int) $numberRepresentation;
+        }
     }
 }
