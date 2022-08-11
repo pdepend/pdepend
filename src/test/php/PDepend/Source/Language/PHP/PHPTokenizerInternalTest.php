@@ -208,7 +208,7 @@ class PHPTokenizerInternalTest extends AbstractTest
         while (is_object($token = $tokenizer->next())) {
             $actual[] = array($token->type, $token->startLine);
         }
-        
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -434,6 +434,39 @@ class PHPTokenizerInternalTest extends AbstractTest
             array(Tokens::T_SEMICOLON, ';', 6, 6, 21, 21),
             array(Tokens::T_CLOSE_TAG, '?>', 6, 6, 23, 24),
             array(Tokens::T_NO_PHP, "    </body>\n</html>", 7, 8, 1, 7),
+        );
+
+        $actual = array();
+        while (is_object($token = $tokenizer->next())) {
+            $actual[] = array(
+                $token->type,
+                $token->image,
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
+        }
+
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests the tokenizer support short-echo-tags with multiple variables separated by comas.
+     *
+     * @return void
+     */
+    public function testTokenizingShortTagsWithMultipleVariables()
+    {
+        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
+
+        $expected = array(
+            array(Tokens::T_OPEN_TAG_WITH_ECHO, '<?=', 1, 1, 1, 3),
+            array(Tokens::T_VARIABLE, '$foo', 1, 1, 4, 7),
+            array(Tokens::T_COMMA, ',', 1, 1, 8, 8),
+            array(Tokens::T_VARIABLE, '$bar', 1, 1, 9, 12),
+            array(Tokens::T_CLOSE_TAG, '?>', 1, 1, 13, 14),
         );
 
         $actual = array();

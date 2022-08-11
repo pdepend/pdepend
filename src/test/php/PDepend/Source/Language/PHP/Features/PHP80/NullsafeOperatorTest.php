@@ -70,7 +70,6 @@ class NullsafeOperatorTest extends PHPParserVersion80Test
 
     /**
      * @return void
-     * @group i
      */
     public function testNullsafeOperatorChain()
     {
