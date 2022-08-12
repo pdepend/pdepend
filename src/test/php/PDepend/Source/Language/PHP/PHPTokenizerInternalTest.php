@@ -482,6 +482,10 @@ class PHPTokenizerInternalTest extends AbstractTest
         }
 
         $this->assertSame($expected, $actual);
+
+        $list = $this->parseCodeResourceForTest();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList', $list);
     }
 
     /**
