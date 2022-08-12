@@ -382,6 +382,13 @@ abstract class AbstractPHPParser
     protected $tokenizer;
 
     /**
+     * True if current statement is echoing (such as after <?=)
+     *
+     * @var bool
+     */
+    private $echoing = false;
+
+    /**
      * Constructs a new source parser.
      *
      * @param PHPBuilder<mixed> $builder
@@ -490,7 +497,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_OPEN_TAG:
                 case Tokens::T_OPEN_TAG_WITH_ECHO:
                     $this->consumeToken($tokenType);
-                    $this->reset();
+                    $this->reset(0, $tokenType === Tokens::T_OPEN_TAG_WITH_ECHO);
                     break;
                 case Tokens::T_CLOSE_TAG:
                     $this->parseNonePhpCode();
@@ -552,15 +559,17 @@ abstract class AbstractPHPParser
     /**
      * Resets some object properties.
      *
-     * @param int $modifiers Optional default modifiers.
+     * @param int  $modifiers Optional default modifiers.
+     * @param bool $echoing   True if current statement is echoing (such as after <?=).
      *
      * @return void
      */
-    protected function reset($modifiers = 0)
+    protected function reset($modifiers = 0, $echoing = false)
     {
         $this->packageName = Builder::DEFAULT_NAMESPACE;
         $this->docComment  = null;
         $this->modifiers   = $modifiers;
+        $this->echoing     = $echoing;
     }
 
     /**
@@ -3479,6 +3488,7 @@ abstract class AbstractPHPParser
     private function parseStatementTermination(array $allowedTerminationTokens = array())
     {
         $this->consumeComments();
+        $this->echoing = false;
 
         if (in_array($this->tokenizer->peek(), $allowedTerminationTokens, true)) {
             return;
@@ -5877,7 +5887,7 @@ abstract class AbstractPHPParser
      * will not consume the given stop token, so it is up to the calling method
      * to consume the stop token. The return value of this method is the prepared
      * input string node.
-     * 
+     *
      * @param AbstractASTNode $node
      * @param int             $stopToken
      *
@@ -6577,7 +6587,12 @@ abstract class AbstractPHPParser
             $stmt->addChild($expr);
         }
 
-        $this->parseStatementTermination();
+        if ($this->echoing && $this->tokenizer->peek() === Tokens::T_COMMA) {
+            $this->consumeToken(Tokens::T_COMMA);
+            $this->parseOptionalStatement();
+        } else {
+            $this->parseStatementTermination();
+        }
 
         return $this->setNodePositionsAndReturn($stmt);
     }
