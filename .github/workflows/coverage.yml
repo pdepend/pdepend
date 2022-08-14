@@ -51,7 +51,6 @@ jobs:
         XDEBUG_MODE: coverage
 
     - name: Archive Code Coverage Results
-      uses: actions/upload-artifact@v2
+    - uses: codecov/codecov-action@v3
       with:
-        name: Coverage
-        path: coverage
+        files: ./coverage.xml
