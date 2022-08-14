@@ -125,6 +125,14 @@ class PHPParserVersion71Test extends AbstractTest
     /**
      * @return void
      */
+    public function testParseListWithVariableKey()
+    {
+        $this->assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * @return void
+     */
     public function testIterableTypeHintParameter()
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
