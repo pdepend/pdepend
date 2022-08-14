@@ -56,7 +56,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * The parent type object.
      *
-     * @var AbstractASTType
+     * @var AbstractASTClassOrInterface
      */
     protected $parent = null;
 
@@ -179,7 +179,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the parent type object or <b>null</b>
      *
-     * @return AbstractASTType|null
+     * @return AbstractASTClassOrInterface|null
      */
     public function getParent()
     {
@@ -188,6 +188,8 @@ class ASTMethod extends AbstractASTCallable
 
     /**
      * Sets the parent type object.
+     *
+     * @param AbstractASTClassOrInterface|null $parent
      *
      * @return void
      */

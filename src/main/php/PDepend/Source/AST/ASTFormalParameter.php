@@ -87,8 +87,9 @@ class ASTFormalParameter extends AbstractASTNode
      */
     public function getType()
     {
-        if ($this->hasType()) {
-            return $this->getChild(0);
+        $child = $this->getChild(0);
+        if ($child instanceof ASTType) {
+            return $child;
         }
 
         throw new OutOfBoundsException('The parameter does not have a type specification.');
