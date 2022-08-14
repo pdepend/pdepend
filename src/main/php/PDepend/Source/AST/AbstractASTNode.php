@@ -375,9 +375,10 @@ abstract class AbstractASTNode implements ASTNode
      * an empty <b>array</b> if no child exists for that.
      *
      * @template T of ASTNode
+     * @template R of T
      *
      * @param class-string<T> $targetType Searched class or interface type.
-     * @param T[]             $results    Already found node instances. This parameter
+     * @param R[]             $results    Already found node instances. This parameter
      *                                    is only for internal usage.
      *
      * @return T[]

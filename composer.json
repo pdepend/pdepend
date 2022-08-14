@@ -13,7 +13,8 @@
         "phpunit/phpunit": "^4.8.36|^5.7.27",
         "squizlabs/php_codesniffer": "^2.0.0",
         "gregwar/rst": "^1.0",
-        "easy-doc/easy-doc": "0.0.0|^1.2.3"
+        "easy-doc/easy-doc": "0.0.0|^1.2.3",
+        "phpstan/phpstan": "^0.12.68"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {

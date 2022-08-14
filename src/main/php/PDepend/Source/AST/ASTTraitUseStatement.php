@@ -202,10 +202,7 @@ class ASTTraitUseStatement extends ASTStatement
      */
     private function getAliases()
     {
-        /** @var ASTTraitAdaptationAlias[] */
-        $result = array();
-
-        return $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationAlias', $result);
+        return $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationAlias');
     }
 
     /**

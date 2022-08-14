@@ -215,6 +215,10 @@ if (!defined('T_READONLY')) {
     define('T_READONLY', 42401);
 }
 
+if (!defined('T_ENUM')) {
+    define('T_ENUM', 42372);
+}
+
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
  * generator.
@@ -261,6 +265,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_CONST                     => Tokens::T_CONST,
         T_EMPTY                     => Tokens::T_EMPTY,
         T_ENDIF                     => Tokens::T_ENDIF,
+        T_ENUM                      => Tokens::T_ENUM,
         T_FINAL                     => Tokens::T_FINAL,
         T_ISSET                     => Tokens::T_ISSET,
         T_PRINT                     => Tokens::T_PRINT,

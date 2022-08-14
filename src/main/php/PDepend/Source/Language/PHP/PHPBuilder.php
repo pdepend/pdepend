@@ -44,6 +44,7 @@ namespace PDepend\Source\Language\PHP;
 
 use BadMethodCallException;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTAnonymousClass;
@@ -78,6 +79,8 @@ use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTDoWhileStatement;
 use PDepend\Source\AST\ASTEchoStatement;
 use PDepend\Source\AST\ASTElseIfStatement;
+use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTEnumCase;
 use PDepend\Source\AST\ASTEvalExpression;
 use PDepend\Source\AST\ASTExitExpression;
 use PDepend\Source\AST\ASTExpression;
@@ -2234,6 +2237,7 @@ class PHPBuilder implements Builder
     {
         $this->freeze();
 
+        /** @var ASTTrait|null $trait */
         $trait = $this->findType(
             $this->frozenTraits,
             $qualifiedName
@@ -2310,6 +2314,7 @@ class PHPBuilder implements Builder
     {
         $this->freeze();
 
+        /** @var ASTInterface|null $interface */
         $interface = $this->findType(
             $this->frozenInterfaces,
             $qualifiedName
@@ -2383,6 +2388,7 @@ class PHPBuilder implements Builder
     {
         $this->freeze();
 
+        /** @var ASTClass|null $class */
         $class = $this->findType(
             $this->frozenClasses,
             $qualifiedName
@@ -2535,6 +2541,22 @@ class PHPBuilder implements Builder
     }
 
     /**
+     * Restores an enum within the internal type scope.
+     *
+     * @return void
+     *
+     * @since  2.11.0
+     */
+    public function restoreEnum(ASTEnum $enum)
+    {
+        $this->storeEnum(
+            $enum->getName(),
+            $enum->getNamespaceName(),
+            $enum
+        );
+    }
+
+    /**
      * Restores an interface within the internal type scope.
      *
      * @return void
@@ -2548,6 +2570,47 @@ class PHPBuilder implements Builder
             $interface->getNamespaceName(),
             $interface
         );
+    }
+
+    /**
+     * Builds an enum definition.
+     *
+     * @param string        $name The enum name.
+     * @param ASTScalarType $type The enum type ('string', 'int', or null if not backed).
+     *
+     * @return ASTEnum The created class object.
+     */
+    public function buildEnum($name, ASTScalarType $type = null)
+    {
+        $this->checkBuilderState();
+
+        $enum = new ASTEnum($name, $type);
+        $enum->setCache($this->cache)
+            ->setContext($this->context)
+            ->setCompilationUnit($this->defaultCompilationUnit);
+
+        return $enum;
+    }
+
+    /**
+     * Builds an enum definition.
+     *
+     * @param string          $name  The enum case name.
+     * @param AbstractASTNode $value The enum case value if backed.
+     *
+     * @return ASTEnumCase The created class object.
+     */
+    public function buildEnumCase($name, AbstractASTNode $value = null)
+    {
+        $this->checkBuilderState();
+
+        $enumCase = new ASTEnumCase($name);
+
+        if ($value !== null) {
+            $enumCase->addChild($value);
+        }
+
+        return $enumCase;
     }
 
     /**
@@ -2592,6 +2655,28 @@ class PHPBuilder implements Builder
 
         $namespace = $this->buildNamespace($namespaceName);
         $namespace->addType($class);
+    }
+
+    /**
+     * This method will persist a class instance for later reuse.
+     *
+     * @param string $enumName
+     * @param string $namespaceName
+     *
+     * @return void
+     *
+     * @since 2.11.0
+     */
+    protected function storeEnum($enumName, $namespaceName, ASTEnum $enum)
+    {
+        $enumName = strtolower($enumName);
+        if (!isset($this->classes[$enumName][$namespaceName])) {
+            $this->classes[$enumName][$namespaceName] = array();
+        }
+        $this->classes[$enumName][$namespaceName][$enum->getId()] = $enum;
+
+        $namespace = $this->buildNamespace($namespaceName);
+        $namespace->addType($enum);
     }
 
     /**

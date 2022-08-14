@@ -234,9 +234,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Will find all children for the given type.
      *
      * @template T of ASTNode
+     * @template R of T
      *
      * @param class-string<T> $targetType The target class or interface type.
-     * @param T[]             $results    The found children.
+     * @param R[]             $results    The found children.
      *
      * @return T[]
      * @access private

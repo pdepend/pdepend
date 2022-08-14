@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Tokenizer\Tokens;
@@ -121,5 +122,24 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         }
 
         return $modifier;
+    }
+
+    /**
+     * Parses enum declaration. available since PHP 8.1. Ex.:
+     *  enum Suit: string { case HEARTS = 'hearts'; }
+     *
+     * @return ASTEnum
+     */
+    protected function parseEnumDeclaration()
+    {
+        $this->tokenStack->push();
+
+        $enum = $this->parseEnumSignature();
+        $enum = $this->parseTypeBody($enum);
+        $enum->setTokens($this->tokenStack->pop());
+
+        $this->reset();
+
+        return $enum;
     }
 }

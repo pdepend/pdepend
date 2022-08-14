@@ -38,93 +38,80 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
 
 use PDepend\Source\ASTVisitor\ASTVisitor;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
- * Representation of a trait.
+ * Represents a php enum definition.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @since 1.0.0
  */
-class ASTTrait extends ASTClass
+class ASTEnumCase extends AbstractASTNode implements ASTArtifact
 {
     /**
-     * Returns all properties for this class.
+     * The enum definition of this case or <b>null</b>.
      *
-     * @return ASTArtifactList<ASTProperty>
-     *
-     * @since  1.0.6
-     *
-     * @todo   Return properties declared by a trait.
+     * @var ASTEnum|null
      */
-    public function getProperties()
-    {
-        /** @var ASTProperty[] $list */
-        $list = array();
+    protected $enum = null;
 
-        return new ASTArtifactList($list);
+    /**
+     * Returns the enum definition of this case or <b>null</b>.
+     *
+     * @return ASTEnum
+     */
+    public function getEnum()
+    {
+        return $this->enum;
     }
 
     /**
-     * Returns an array with {@link ASTMethod} objects
-     * that are implemented or imported by this trait.
+     * Sets the parent node of this node.
      *
-     * @return ASTMethod[]
+     * @return void
      */
-    public function getAllMethods()
+    public function setEnum(ASTEnum $enum)
     {
-        $methods = $this->getTraitMethods();
+        $this->enum = $enum;
+    }
 
-        foreach ($this->getMethods() as $method) {
-            $methods[strtolower($method->getName())] = $method;
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getEnum()->getImage() . '::' . $this->getImage();
+    }
+
+    /**
+     * @return ASTNode|null
+     */
+    public function getValue()
+    {
+        if (isset($this->nodes[0])) {
+            return $this->nodes[0];
         }
 
-        return $methods;
+        return null;
     }
 
     /**
-     * Checks that this user type is a subtype of the given <b>$type</b> instance.
+     * Accept method of the visitor design pattern. This method will be called
+     * by a visitor during tree traversal.
      *
-     * @return bool
-     *
-     * @todo   Should we handle trait subtypes?
+     * @param ASTVisitor $visitor The calling visitor instance.
      */
-    public function isSubtypeOf(AbstractASTType $type)
+    public function accept(ASTVisitor $visitor, $data = null)
     {
-        return false;
+        $visitor->visitASTEnumCase($this, $data);
     }
 
-    /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
+    public function getName()
     {
-        $visitor->visitTrait($this);
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     *
-     * @return void
-     */
-    public function __wakeup()
-    {
-        parent::__wakeup();
-
-        $this->context->registerTrait($this);
+        return $this->getImage();
     }
 }

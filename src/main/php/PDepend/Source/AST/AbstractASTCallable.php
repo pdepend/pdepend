@@ -437,11 +437,8 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'PDepend\\Source\\AST\\ASTStaticVariableDeclaration'
         );
         foreach ($declarations as $declaration) {
-            /** @var ASTVariableDeclarator[] */
-            $variables = array();
             $variables = $declaration->findChildrenOfType(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator',
-                $variables
+                'PDepend\\Source\\AST\\ASTVariableDeclarator'
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
