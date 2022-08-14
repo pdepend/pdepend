@@ -45,6 +45,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTType;
@@ -244,5 +245,18 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         }
 
         return $modifiers;
+    }
+
+    /**
+     * Return true if the current node can be used as a list key.
+     *
+     * @param ASTExpression|null $node
+     *
+     * @return bool
+     */
+    protected function canBeListKey($node)
+    {
+        // Starting with PHP 7.1, any expression can be used as list key
+        return true;
     }
 }
