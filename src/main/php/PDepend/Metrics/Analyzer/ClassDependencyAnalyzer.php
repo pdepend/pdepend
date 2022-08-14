@@ -95,14 +95,14 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Nodes in which the current analyzed class is used.
      *
-     * @var array<string, array<int, AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTType>>
      */
     private $efferentNodes = array();
 
     /**
      * Nodes that is used by the current analyzed class.
      *
-     * @var array<string, array<int, AbstractASTArtifact>>
+     * @var array<string, array<int, AbstractASTType>>
      */
     private $afferentNodes = array();
 

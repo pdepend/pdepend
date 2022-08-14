@@ -63,7 +63,7 @@ class ASTClassReference extends ASTClassOrInterfaceReference
      */
     public function getType()
     {
-        if ($this->typeInstance === null) {
+        if (!$this->typeInstance instanceof ASTClass) {
             $this->typeInstance = $this->context->getClass($this->getImage());
         }
 
