@@ -51,6 +51,6 @@ jobs:
         XDEBUG_MODE: coverage
 
     - name: Archive Code Coverage Results
-    - uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v3
       with:
         files: ./coverage.xml
