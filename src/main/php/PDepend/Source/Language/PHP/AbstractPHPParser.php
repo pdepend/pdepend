@@ -1869,6 +1869,18 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Return true if the current node can be used as a list key.
+     *
+     * @param ASTExpression|null $node
+     *
+     * @return bool
+     */
+    protected function canBeListKey($node)
+    {
+        return !$this->isReadWriteVariable($node);
+    }
+
+    /**
      * Parse individual slot of a list() expression.
      *
      * @return ASTListExpression|ASTNode
@@ -1878,7 +1890,7 @@ abstract class AbstractPHPParser
         $startToken = $this->tokenizer->currentToken();
         $node = $this->parseOptionalExpression();
 
-        if ($node && !$this->isReadWriteVariable($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
+        if ($node && $this->canBeListKey($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
             if (!$this->supportsKeysInList()) {
                 throw $this->getUnexpectedTokenException($startToken);
             }
