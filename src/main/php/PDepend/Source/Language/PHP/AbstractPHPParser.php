@@ -1695,7 +1695,7 @@ abstract class AbstractPHPParser
      *
      * @since 0.9.6
      */
-    private function parseAllocationExpression()
+    protected function parseAllocationExpression()
     {
         $this->tokenStack->push();
 
@@ -7331,10 +7331,22 @@ abstract class AbstractPHPParser
 
         if ($this->tokenizer->peek() === Tokens::T_EQUAL) {
             $this->consumeToken(Tokens::T_EQUAL);
-            $declarator->setValue($this->parseStaticValueOrStaticArray());
+            $declarator->setValue($this->parseVariableDefaultValue());
         }
 
         return $this->setNodePositionsAndReturn($declarator);
+    }
+
+    /**
+     * Parse a default value after a parameter, static variable or constant declaration.
+     *
+     * @return ASTValue
+     *
+     * @since 2.11.0
+     */
+    protected function parseVariableDefaultValue()
+    {
+        return $this->parseStaticValueOrStaticArray();
     }
 
     /**
