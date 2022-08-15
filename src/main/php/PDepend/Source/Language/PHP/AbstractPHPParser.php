@@ -2432,11 +2432,30 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param bool $classRef
+     * @param int $tokenType
      *
      * @return ASTClassOrInterfaceReference
      */
-    private function parseStandAloneExpressionTypeReference($classRef)
+    private function parseStandAloneExpressionTypeReference($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_SELF:
+                return $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
+            case Tokens::T_PARENT:
+                return $this->parseParentReference($this->consumeToken(Tokens::T_PARENT));
+            case Tokens::T_STATIC:
+                return $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
+        }
+
+        throw $this->getUnexpectedTokenException();
+    }
+
+    /**
+     * @param bool $classRef
+     *
+     * @return ASTNode
+     */
+    private function parseStandAloneExpressionType($classRef)
     {
         // Peek next token and look for a static type identifier
         $this->consumeComments();
@@ -2448,11 +2467,9 @@ abstract class AbstractPHPParser
                 // TODO: Parse variable or Member Primary Prefix + Property Postfix
                 return $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
             case Tokens::T_SELF:
-                return $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
             case Tokens::T_PARENT:
-                return $this->parseParentReference($this->consumeToken(Tokens::T_PARENT));
             case Tokens::T_STATIC:
-                return $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
+                return $this->parseStandAloneExpressionTypeReference($tokenType);
             default:
                 return $this->parseClassOrInterfaceReference($classRef);
         }
@@ -2475,7 +2492,7 @@ abstract class AbstractPHPParser
         $expr->addChild(
             $this->parseOptionalMemberPrimaryPrefix(
                 $this->parseOptionalStaticMemberPrimaryPrefix(
-                    $this->parseStandAloneExpressionTypeReference($classRef)
+                    $this->parseStandAloneExpressionType($classRef)
                 )
             )
         );
@@ -4866,7 +4883,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return ASTClassOrInterfaceReference|ASTExpression
+     * @return ASTNode
      *
      * @since 0.9.6
      */
@@ -7427,7 +7444,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_STATIC:
                 case Tokens::T_SELF:
                 case Tokens::T_PARENT:
-                    $node = $this->parseStandAloneExpressionTypeReference(true);
+                    $node = $this->parseStandAloneExpressionTypeReference($tokenType);
 
                     if ($this->tokenizer->peek() === Tokens::T_DOUBLE_COLON) {
                         $node->addChild($this->parseStaticMemberPrimaryPrefix($node));
