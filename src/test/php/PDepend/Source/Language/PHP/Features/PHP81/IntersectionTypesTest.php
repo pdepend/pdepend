@@ -95,4 +95,13 @@ class IntersectionTypesTest extends AbstractTest
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $return);
         $this->assertSame('Iterator&\Countable&\ArrayAccess', $return->getImage());
     }
+
+    /**
+     * @expectedException \PDepend\Source\Parser\ParserException
+     * @expectedExceptionMessage int can not be used in an intersection type
+     */
+    public function testIntersectionTypesCantBeScalar()
+    {
+        $this->getFirstMethodForTestCase();
+    }
 }
