@@ -46,6 +46,7 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTType;
+use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\State;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -122,6 +123,26 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         }
 
         return $modifier;
+    }
+
+    /**
+     * This method will parse a default value after a parameter/static variable/constant
+     * declaration.
+     *
+     * @return ASTValue
+     *
+     * @since 2.11.0
+     */
+    protected function parseVariableDefaultValue()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_NEW) {
+            $defaultValue = new ASTValue();
+            $defaultValue->setValue($this->parseAllocationExpression());
+
+            return $defaultValue;
+        }
+
+        return parent::parseVariableDefaultValue();
     }
 
     /**

@@ -384,7 +384,7 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
     protected function parseConstantDeclaratorValue()
     {
         if ($this->isFollowedByStaticValueOrStaticArray()) {
-            return $this->parseStaticValueOrStaticArray();
+            return $this->parseVariableDefaultValue();
         }
 
         // Else it would be provided as ASTLiteral or expressions object.
