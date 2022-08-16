@@ -41,7 +41,11 @@
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTType;
+use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -59,5 +63,36 @@ class IntersectionTypesTest extends AbstractTest
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTFormalParameter'
+        );
+        $children = $parameter->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
+        /** @var ASTIntersectionType $intersectionType */
+        $intersectionType = $children[0];
+        $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
+        /** @var ASTVariableDeclarator $variable */
+        $variable = $children[1];
+        $this->assertSame('$iterator', $variable->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIntersectionTypesAsReturn()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTType $return */
+        $return = $method->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTType'
+        );
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $return);
+        $this->assertSame('Iterator&\Countable&\ArrayAccess', $return->getImage());
     }
 }

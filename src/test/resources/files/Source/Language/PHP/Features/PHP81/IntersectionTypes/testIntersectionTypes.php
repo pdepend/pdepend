@@ -1,7 +1,7 @@
 <?php
 class Foo
 {
-    public function bar(Iterator&\Countable $iterator)
+    public function bar(Iterator&\Countable&\ArrayAccess $iterator)
     {
         return $iterator;
     }
