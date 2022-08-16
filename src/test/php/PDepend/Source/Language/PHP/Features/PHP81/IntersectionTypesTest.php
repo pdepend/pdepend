@@ -64,10 +64,8 @@ class IntersectionTypesTest extends AbstractTest
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
-        $parameter = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTFormalParameter'
-        );
-        $children = $parameter->getChildren();
+        $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+        $children  = $parameter->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
         /** @var ASTIntersectionType $intersectionType */
@@ -78,6 +76,23 @@ class IntersectionTypesTest extends AbstractTest
         /** @var ASTVariableDeclarator $variable */
         $variable = $children[1];
         $this->assertSame('$iterator', $variable->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIntersectionTypesWithByReference()
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+        $children  = $parameter->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
+        /** @var ASTIntersectionType $intersectionType */
+        $intersectionType = $children[0];
+        $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
     }
 
     /**

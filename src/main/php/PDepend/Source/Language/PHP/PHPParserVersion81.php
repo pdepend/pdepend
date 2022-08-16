@@ -178,7 +178,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         $token = $this->tokenizer->currentToken();
         $types = array($firstType);
 
-        while ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
+        while ($this->tokenizer->peek() === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
             $this->tokenizer->next();
             $types[] = $this->parseSingleTypeHint();
         }
@@ -207,11 +207,14 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     {
         $firstType = $this->parseSingleTypeHint();
 
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_BITWISE_OR:
-                return $this->parseUnionTypeHint($firstType);
-            case Tokens::T_BITWISE_AND:
-                return $this->parseIntersectionTypeHint($firstType);
+        $peek = $this->tokenizer->peek();
+        if ($peek === Tokens::T_BITWISE_OR) {
+            return $this->parseUnionTypeHint($firstType);
+        }
+
+        // sniff for &, but avoid by_reference &$variable.
+        if ($peek === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
+            return $this->parseIntersectionTypeHint($firstType);
         }
 
         return $firstType;
