@@ -6627,12 +6627,12 @@ abstract class AbstractPHPParser
             case Tokens::T_FINAL:
             case Tokens::T_ABSTRACT:
                 $package = $this->getNamespaceOrPackage();
-                $package->addType($enum = $this->parseClassDeclaration());
+                $package->addType($class = $this->parseClassDeclaration());
 
-                $this->builder->restoreClass($enum);
-                $this->compilationUnit->addChild($enum);
+                $this->builder->restoreClass($class);
+                $this->compilationUnit->addChild($class);
 
-                return $enum;
+                return $class;
             case Tokens::T_YIELD:
                 return $this->parseYield();
         }
