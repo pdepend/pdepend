@@ -8015,8 +8015,7 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_COLON);
             $type = $this->parseTypeHint();
 
-            if (!is_object($type) ||
-                !($type instanceof ASTScalarType) ||
+            if (!($type instanceof ASTScalarType) ||
                 !in_array($type->getImage(), array('int', 'string'), true)
             ) {
                 throw new TokenException(
