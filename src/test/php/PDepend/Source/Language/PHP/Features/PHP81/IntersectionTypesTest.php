@@ -98,6 +98,15 @@ class IntersectionTypesTest extends AbstractTest
 
     /**
      * @expectedException \PDepend\Source\Parser\ParserException
+     * @expectedExceptionMessage Unexpected token
+     */
+    public function testIntersectionTypesCantBeMixedWithUnionTypes()
+    {
+        $this->getFirstMethodForTestCase();
+    }
+
+    /**
+     * @expectedException \PDepend\Source\Parser\ParserException
      * @expectedExceptionMessage int can not be used in an intersection type
      */
     public function testIntersectionTypesCantBeScalar()
