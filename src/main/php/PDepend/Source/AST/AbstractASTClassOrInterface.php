@@ -333,8 +333,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns an array with all implemented interfaces.
      *
      * @return AbstractASTClassOrInterface[]
-     *
-     * @since  0.9.5
      */
     protected function getInterfacesClasses()
     {
