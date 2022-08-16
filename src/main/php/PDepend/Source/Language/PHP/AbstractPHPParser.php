@@ -75,6 +75,8 @@ use PDepend\Source\AST\ASTDeclareStatement;
 use PDepend\Source\AST\ASTDoWhileStatement;
 use PDepend\Source\AST\ASTEchoStatement;
 use PDepend\Source\AST\ASTElseIfStatement;
+use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTEnumCase;
 use PDepend\Source\AST\ASTEvalExpression;
 use PDepend\Source\AST\ASTExitExpression;
 use PDepend\Source\AST\ASTExpression;
@@ -119,6 +121,7 @@ use PDepend\Source\AST\ASTPreIncrementExpression;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTRequireExpression;
 use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTScope;
 use PDepend\Source\AST\ASTScopeStatement;
 use PDepend\Source\AST\ASTSelfReference;
@@ -155,6 +158,7 @@ use PDepend\Source\Parser\MissingValueException;
 use PDepend\Source\Parser\NoActiveScopeException;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\SymbolTable;
+use PDepend\Source\Parser\TokenException;
 use PDepend\Source\Parser\TokenStack;
 use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -1071,6 +1075,18 @@ abstract class AbstractPHPParser
                     break;
                 case Tokens::T_USE:
                     $classOrInterface->addChild($this->parseTraitUseStatement());
+                    break;
+                case Tokens::T_CASE:
+                    if (!($classOrInterface instanceof ASTEnum)) {
+                        throw new TokenException(
+                            'Enum case should be located only inside enum classes',
+                            $this->tokenizer->getSourceFile()
+                        );
+                    }
+
+                    $case = $this->parseEnumCase();
+                    $case->setEnum($classOrInterface);
+                    $classOrInterface->addChild($case);
                     break;
                 default:
                     throw $this->getUnexpectedTokenException();
@@ -2994,7 +3010,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return ASTExpression|null
+     * @return AbstractASTNode|null
      *
      * @since 0.9.6
      */
@@ -3895,7 +3911,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @return ASTExpression|null
+     * @return AbstractASTNode|null
      *
      * @since 0.9.12
      */
@@ -6509,9 +6525,7 @@ abstract class AbstractPHPParser
      */
     private function parseOptionalStatement()
     {
-        $tokenType = $this->tokenizer->peek();
-
-        switch ($tokenType) {
+        switch ($this->tokenizer->peek()) {
             case Tokens::T_ECHO:
                 return $this->parseEchoStatement();
             case Tokens::T_SWITCH:
@@ -6542,8 +6556,22 @@ abstract class AbstractPHPParser
                 return $this->parseGlobalStatement();
             case Tokens::T_UNSET:
                 return $this->parseUnsetStatement();
+            case Tokens::T_ENUM:
             case Tokens::T_STRING:
-                if ($this->tokenizer->peekNext() === Tokens::T_COLON) {
+                $token = $this->tokenizer->currentToken();
+                $nextType = $this->tokenizer->peekNext();
+
+                if ($token && $token->image === 'enum' && $nextType === Tokens::T_STRING) {
+                    $package = $this->getNamespaceOrPackage();
+                    $package->addType($enum = $this->parseEnumDeclaration());
+
+                    $this->builder->restoreEnum($enum);
+                    $this->compilationUnit->addChild($enum);
+
+                    return $enum;
+                }
+
+                if ($nextType === Tokens::T_COLON) {
                     return $this->parseLabelStatement();
                 }
                 break;
@@ -6574,7 +6602,7 @@ abstract class AbstractPHPParser
             case Tokens::T_CURLY_BRACE_CLOSE:
                 return null;
             case Tokens::T_CLOSE_TAG:
-                if (($tokenType = $this->parseNonePhpCode()) === Tokenizer::T_EOF) {
+                if ($this->parseNonePhpCode() === Tokenizer::T_EOF) {
                     return null;
                 }
 
@@ -7963,6 +7991,71 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Parses enum declaration. available since PHP 8.1. Ex.:
+     *  enum Suit: string { case HEARTS = 'hearts'; }
+     *
+     * @throws UnexpectedTokenException
+     *
+     * @return ASTEnum
+     */
+    protected function parseEnumDeclaration()
+    {
+        throw $this->getUnexpectedTokenException();
+    }
+
+    /**
+     * Parses enum declaration signature. available since PHP 8.1. Ex.:
+     *  enum Suit: string
+     *
+     * @return ASTEnum
+     */
+    protected function parseEnumSignature()
+    {
+        $this->tokenizer->next();
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() !== Tokens::T_STRING) {
+            throw $this->getUnexpectedTokenException();
+        }
+
+        $name = $this->tokenizer->currentToken()->image;
+        $this->consumeToken(Tokens::T_STRING);
+        $this->consumeComments();
+        $type = null;
+
+        if ($this->tokenizer->peek() === Tokens::T_COLON) {
+            $this->consumeToken(Tokens::T_COLON);
+            $type = $this->parseTypeHint();
+
+            if (!($type instanceof ASTScalarType) ||
+                !in_array($type->getImage(), array('int', 'string'), true)
+            ) {
+                throw new TokenException(
+                    "Enum backing type must be 'int' or 'string'",
+                    $this->tokenizer->getSourceFile()
+                );
+            }
+        }
+
+        $enum = $this->builder->buildEnum($name, $type);
+        $enum->setCompilationUnit($this->compilationUnit);
+        $enum->setModifiers($this->modifiers);
+        $enum->setComment($this->docComment);
+        $enum->setId($this->idBuilder->forClassOrInterface($enum));
+        $enum->setUserDefined();
+
+        $this->consumeComments();
+        $tokenType = $this->tokenizer->peek();
+
+        if ($tokenType === Tokens::T_IMPLEMENTS) {
+            $this->consumeToken(Tokens::T_IMPLEMENTS);
+            $this->parseInterfaceList($enum);
+        }
+
+        return $enum;
+    }
+
+    /**
      * @param string $numberRepresentation integer number as it appears in the code, `0xfe4`, `1_000_000`
      *
      * @return int
@@ -7993,5 +8086,49 @@ abstract class AbstractPHPParser
 
                 return (int) $numberRepresentation;
         }
+    }
+
+    /**
+     * @return ASTEnumCase
+     */
+    private function parseEnumCase()
+    {
+        $this->tokenizer->next();
+        $this->tokenStack->push();
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() !== Tokens::T_STRING) {
+            throw $this->getUnexpectedTokenException();
+        }
+
+        $caseName = $this->tokenizer->currentToken()->image;
+        $this->tokenizer->next();
+        $this->consumeComments();
+        $case = $this->builder->buildEnumCase($caseName, $this->parseEnumCaseValue());
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_SEMICOLON);
+
+        return $this->setNodePositionsAndReturn($case);
+    }
+
+    /**
+     * @return AbstractASTNode|null
+     */
+    private function parseEnumCaseValue()
+    {
+        if ($this->tokenizer->peek() !== Tokens::T_EQUAL) {
+            return null;
+        }
+
+        $this->consumeToken(Tokens::T_EQUAL);
+        $this->consumeComments();
+
+        $expression = $this->parseOptionalExpression();
+
+        if ($expression === null) {
+            throw new MissingValueException($this->tokenizer);
+        }
+
+        return $expression;
     }
 }

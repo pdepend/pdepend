@@ -893,6 +893,11 @@ interface Tokens
     const T_NULLSAFE_OBJECT_OPERATOR = 387;
 
     /**
+     * Marks a enum token.
+     */
+    const T_ENUM = 372;
+
+    /**
      * Marks any content not between php tags.
      */
     const T_NO_PHP = 255;
