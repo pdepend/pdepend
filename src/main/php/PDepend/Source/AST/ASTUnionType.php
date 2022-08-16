@@ -58,7 +58,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTUnionType extends ASTType
 {
     /**
-     * This method will return <b>true</b> when this type use union pipe tos specify multiple types.
+     * This method will return <b>true</b> when this type use union pipe to specify multiple types.
      * For this concrete implementation the return value will be always true.
      *
      * @return bool

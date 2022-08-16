@@ -102,6 +102,7 @@ use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTIncludeExpression;
 use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTIssetExpression;
 use PDepend\Source\AST\ASTLabelStatement;
 use PDepend\Source\AST\ASTListExpression;
@@ -1771,6 +1772,16 @@ class PHPBuilder implements Builder
     public function buildAstUnionType()
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTUnionType');
+    }
+
+    /**
+     * Builds a new node for the union type.
+     *
+     * @return ASTIntersectionType
+     */
+    public function buildAstIntersectionType()
+    {
+        return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTIntersectionType');
     }
 
     /**

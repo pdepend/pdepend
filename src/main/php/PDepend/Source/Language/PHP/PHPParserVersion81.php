@@ -45,9 +45,13 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTIntersectionType;
+use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
+use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\State;
+use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -162,5 +166,74 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         $this->reset();
 
         return $enum;
+    }
+
+    /**
+     * @param ASTType $firstType
+     *
+     * @return ASTIntersectionType
+     */
+    protected function parseIntersectionTypeHint($firstType)
+    {
+        $token = $this->tokenizer->currentToken();
+        $types = array($firstType);
+
+        while ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
+            $this->tokenizer->next();
+            $types[] = $this->parseSingleTypeHint();
+        }
+
+        $intersectionType = $this->builder->buildAstIntersectionType();
+        foreach ($types as $type) {
+            // no scalars are allowed as intersection types
+            if ($type instanceof ASTScalarType) {
+                throw new ParserException(
+                    $type->getImage() . ' can not be used in an intersection type',
+                    0,
+                    $this->getUnexpectedTokenException($token)
+                );
+            }
+
+            $intersectionType->addChild($type);
+        }
+
+        return $intersectionType;
+    }
+
+    /**
+     * @return ASTIntersectionType|ASTUnionType|ASTType
+     */
+    protected function parseIntersectionOrUnionTypeHint()
+    {
+        $firstType = $this->parseSingleTypeHint();
+
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_BITWISE_OR:
+                return $this->parseUnionTypeHint($firstType);
+            case Tokens::T_BITWISE_AND:
+                return $this->parseIntersectionTypeHint($firstType);
+        }
+
+        return $firstType;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function parseTypeHint()
+    {
+        $this->consumeComments();
+        $token = $this->tokenizer->currentToken();
+        $type  = $this->parseIntersectionOrUnionTypeHint();
+
+        if ($type instanceof ASTScalarType && ($type->isFalse() || $type->isNull())) {
+            throw new ParserException(
+                $type->getImage() . ' can not be used as a standalone type',
+                0,
+                $this->getUnexpectedTokenException($token)
+            );
+        }
+
+        return $type;
     }
 }
