@@ -258,6 +258,8 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     }
 
     /**
+     * Parse variadic placeholder after string literal or array, or standard expression.
+     *
      * @inheritDoc
      */
     protected function parseParenthesisExpressionOrPrimaryPrefix()
@@ -271,7 +273,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     }
 
     /**
-     * Try to parse the first class callable argument foo(...)
+     * Try to parse the first class callable argument `(...)`
      *
      * @return ASTVariadicPlaceHolder|null
      */
