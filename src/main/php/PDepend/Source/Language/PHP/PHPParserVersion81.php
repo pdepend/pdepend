@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTScalarType;
@@ -238,5 +239,33 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         }
 
         return $type;
+    }
+
+    /**
+     * This method parses the tokens after arguments passed to a function- or method-call.
+     *
+     * @throws ParserException
+     *
+     * @return ASTArguments
+     *
+     * @since 2.11.0
+     */
+    protected function parseArgumentsParenthesesContent(ASTArguments $arguments)
+    {
+        $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() === Tokens::T_ELLIPSIS && $this->tokenizer->peekNext() === Tokens::T_PARENTHESIS_CLOSE) {
+            // first class callable argument list
+            $image     = $this->consumeToken(Tokens::T_ELLIPSIS)->image;
+            $arguments = $this->builder->buildAstVariadicPlaceHolder($image);
+        } elseif (Tokens::T_PARENTHESIS_CLOSE !== $this->tokenizer->peek()) {
+            // non-empty argument list
+            $arguments = $this->parseArgumentList($arguments);
+        }
+
+        $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+
+        return $this->setNodePositionsAndReturn($arguments);
     }
 }
