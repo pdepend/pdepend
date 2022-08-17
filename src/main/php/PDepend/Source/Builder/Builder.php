@@ -1219,7 +1219,6 @@ interface Builder extends IteratorAggregate
      */
     public function buildAstIntersectionType();
 
-
     /**
      * Builds a new literal node.
      *
