@@ -258,6 +258,8 @@ class ASTSwitchStatementTest extends ASTNodeTest
     /**
      * testSwitchStatementTerminatedByPhpCloseTag
      *
+     * @group end-st
+     *
      * @return void
      */
     public function testSwitchStatementTerminatedByPhpCloseTag()

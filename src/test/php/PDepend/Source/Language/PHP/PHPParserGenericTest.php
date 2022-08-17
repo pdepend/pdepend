@@ -771,10 +771,14 @@ class PHPParserGenericTest extends AbstractTest
     /**
      * testOptionalSemiColon
      *
+     * @group end-st
+     * @group i
+     *
      * @return void
      */
     public function testOptionalSemiColon()
     {
+        set_time_limit(5);
         $template = $this->parseCodeResourceForTest();
         $this->assertNotNull($template);
     }

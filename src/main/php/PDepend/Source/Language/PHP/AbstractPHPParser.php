@@ -508,7 +508,7 @@ abstract class AbstractPHPParser
                     $this->reset();
                     break;
                 default:
-                    if (null === $this->parseOptionalStatement()) {
+                    if ($this->parseOptionalStatement() === null) {
                         // Consume whatever token
                         $this->consumeToken($tokenType);
                     }
@@ -2326,16 +2326,19 @@ abstract class AbstractPHPParser
     protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = null)
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
+        $count = count($tokens);
 
-        $end   = $tokens[count($tokens) - 1];
-        $start = $tokens[0];
+        if ($count >= 1) {
+            $end   = $tokens[$count - 1];
+            $start = $tokens[0];
 
-        $node->configureLinesAndColumns(
-            $start->startLine,
-            $end->endLine,
-            $start->startColumn,
-            $end->endColumn
-        );
+            $node->configureLinesAndColumns(
+                $start->startLine,
+                $end->endLine,
+                $start->startColumn,
+                $end->endColumn
+            );
+        }
 
         return $node;
     }
@@ -2787,13 +2790,14 @@ abstract class AbstractPHPParser
      *
      * @template T of ASTStatement
      *
-     * @param T $stmt The owning statement.
+     * @param integer $statementToken The token type of the statement (if, else, for, etc.)
+     * @param T       $stmt           The owning statement.
      *
      * @return T
      *
      * @since 0.9.12
      */
-    private function parseStatementBody(ASTStatement $stmt)
+    private function parseStatementBody(ASTStatement $stmt, $statementToken)
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -2801,10 +2805,11 @@ abstract class AbstractPHPParser
         if ($tokenType === Tokens::T_CURLY_BRACE_OPEN) {
             $stmt->addChild($this->parseRegularScope());
         } elseif ($tokenType === Tokens::T_COLON) {
-            $stmt->addChild($this->parseAlternativeScope());
+            $stmt->addChild($this->parseAlternativeScope($statementToken));
         } else {
             $stmt->addChild($this->parseStatement());
         }
+
         return $stmt;
     }
 
@@ -2832,18 +2837,21 @@ abstract class AbstractPHPParser
      * Parses the scope of a statement that is surrounded with PHP's alternative
      * syntax for statements.
      *
+     * @param integer $statementToken The token type of the statement (if, else, for, etc.)
+     *
      * @return ASTScopeStatement
      *
      * @since 0.10.0
      */
-    private function parseAlternativeScope()
+    private function parseAlternativeScope($statementToken)
     {
         $this->tokenStack->push();
         $this->consumeToken(Tokens::T_COLON);
 
-        $scope = $this->parseScopeStatements();
+        $scope = $this->parseScopeStatements($statementToken);
 
-        $this->parseOptionalAlternativeScopeTermination();
+        $this->parseOptionalAlternativeScopeTermination($statementToken);
+
         return $this->setNodePositionsAndReturn($scope);
     }
 
@@ -2855,14 +2863,16 @@ abstract class AbstractPHPParser
      *
      * @since 0.10.0
      */
-    private function parseScopeStatements()
+    private function parseScopeStatements($statementToken = null)
     {
         $scope = $this->builder->buildAstScopeStatement();
-        while (($child = $this->parseOptionalStatement()) != null) {
+
+        while (($child = $this->parseOptionalStatement()) !== null) {
             if ($child instanceof ASTNode) {
                 $scope->addChild($child);
             }
         }
+
         return $scope;
     }
 
@@ -2870,13 +2880,23 @@ abstract class AbstractPHPParser
      * Parses the termination of a scope statement that uses PHP's laternative
      * syntax format.
      *
+     * @param integer $statementToken The token type of the statement (if, else, for, etc.)
+     *
      * @return void
      *
      * @since 0.10.0
      */
-    private function parseOptionalAlternativeScopeTermination()
+    private function parseOptionalAlternativeScopeTermination($statementToken)
     {
         $tokenType = $this->tokenizer->peek();
+
+//        if (in_array($statementToken, array(Tokens::T_IF, Tokens::T_ELSEIF), true) &&
+//            in_array($tokenType, array(Tokens::T_ELSEIF, Tokens::T_ELSE), true)
+//        ) {
+//            $this->consumeComments();
+//            $this->parseStatementEnd();
+//        }
+
         if ($this->isAlternativeScopeTermination($tokenType)) {
             $this->parseAlternativeScopeTermination($tokenType);
         }
@@ -2905,7 +2925,8 @@ abstract class AbstractPHPParser
                 Tokens::T_ENDIF,
                 Tokens::T_ENDSWITCH,
                 Tokens::T_ENDWHILE
-            )
+            ),
+            true
         );
     }
 
@@ -2928,8 +2949,8 @@ abstract class AbstractPHPParser
     private function parseStatementEnd()
     {
         switch ($this->tokenizer->peek()) {
-            case Tokens::T_CLOSE_TAG:
-                return;
+//            case Tokens::T_CLOSE_TAG:
+//                return;
 
             case Tokens::T_SEMICOLON:
                 $this->consumeToken(Tokens::T_SEMICOLON);
@@ -3794,7 +3815,7 @@ abstract class AbstractPHPParser
         $stmt = $this->builder->buildAstIfStatement($token->image);
         $stmt->addChild($this->parseParenthesisExpression());
 
-        $this->parseStatementBody($stmt);
+        $this->parseStatementBody($stmt, Tokens::T_IF);
         $this->parseOptionalElseOrElseIfStatement($stmt);
 
         return $this->setNodePositionsAndReturn($stmt);
@@ -3815,7 +3836,7 @@ abstract class AbstractPHPParser
         $stmt = $this->builder->buildAstElseIfStatement($token->image);
         $stmt->addChild($this->parseParenthesisExpression());
 
-        $this->parseStatementBody($stmt);
+        $this->parseStatementBody($stmt, Tokens::T_ELSEIF);
         $this->parseOptionalElseOrElseIfStatement($stmt);
 
         return $this->setNodePositionsAndReturn($stmt);
@@ -3840,7 +3861,7 @@ abstract class AbstractPHPParser
                 if ($this->tokenizer->peek() === Tokens::T_IF) {
                     $stmt->addChild($this->parseIfStatement());
                 } else {
-                    $this->parseStatementBody($stmt);
+                    $this->parseStatementBody($stmt, Tokens::T_ELSE);
                 }
                 break;
             case Tokens::T_ELSEIF:
@@ -3883,7 +3904,7 @@ abstract class AbstractPHPParser
         }
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
-        return $this->setNodePositionsAndReturn($this->parseStatementBody($stmt));
+        return $this->setNodePositionsAndReturn($this->parseStatementBody($stmt, Tokens::T_FOR));
     }
 
     /**
@@ -4029,7 +4050,7 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn(
-            $this->parseStatementBody($foreach)
+            $this->parseStatementBody($foreach, Tokens::T_FOREACH)
         );
     }
 
@@ -4049,7 +4070,7 @@ abstract class AbstractPHPParser
         $stmt->addChild($this->parseParenthesisExpression());
 
         return $this->setNodePositionsAndReturn(
-            $this->parseStatementBody($stmt)
+            $this->parseStatementBody($stmt, Tokens::T_WHILE)
         );
     }
 
@@ -4066,7 +4087,7 @@ abstract class AbstractPHPParser
         $token = $this->consumeToken(Tokens::T_DO);
 
         $stmt = $this->builder->buildAstDoWhileStatement($token->image);
-        $stmt = $this->parseStatementBody($stmt);
+        $stmt = $this->parseStatementBody($stmt, Tokens::T_DO);
 
         $this->consumeComments();
         $this->consumeToken(Tokens::T_WHILE);
@@ -4110,7 +4131,7 @@ abstract class AbstractPHPParser
 
         $stmt = $this->builder->buildAstDeclareStatement();
         $stmt = $this->parseDeclareList($stmt);
-        $stmt = $this->parseStatementBody($stmt);
+        $stmt = $this->parseStatementBody($stmt, Tokens::T_DECLARE);
 
         return $this->setNodePositionsAndReturn($stmt);
     }
@@ -6647,7 +6668,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
         $stmt = $this->builder->buildAstStatement();
 
-        if (($expr = $this->parseOptionalExpression()) != null) {
+        if (($expr = $this->parseOptionalExpression()) !== null) {
             $stmt->addChild($expr);
         }
 
@@ -6671,9 +6692,12 @@ abstract class AbstractPHPParser
      */
     private function parseNonePhpCode()
     {
-        $this->consumeToken(Tokens::T_CLOSE_TAG);
+        if ($this->tokenizer->peek() !== Tokenizer::T_EOF) {
+            $this->consumeToken(Tokens::T_CLOSE_TAG);
+        }
 
         $this->tokenStack->push();
+
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
             switch ($tokenType) {
                 case Tokens::T_OPEN_TAG:
@@ -6686,6 +6710,7 @@ abstract class AbstractPHPParser
                     break;
             }
         }
+
         $this->tokenStack->pop();
 
         return $tokenType;
