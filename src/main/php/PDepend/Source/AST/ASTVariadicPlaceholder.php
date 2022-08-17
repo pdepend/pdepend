@@ -55,7 +55,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @since 2.11.0
  */
-class ASTVariadicPlaceHolder extends ASTArguments
+class ASTVariadicPlaceholder extends ASTArguments
 {
     /**
      * Can not have any more arguments

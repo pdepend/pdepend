@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
-use PDepend\Source\AST\ASTVariadicPlaceHolder;
+use PDepend\Source\AST\ASTVariadicPlaceholder;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Tokenizer\Tokens;
@@ -274,8 +274,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
     /**
      * Try to parse the first class callable argument `(...)`
-     *
-     * @return ASTVariadicPlaceHolder|null
+     * @return ASTVariadicPlaceholder|null
      */
     protected function parseVariadicPlaceholder()
     {

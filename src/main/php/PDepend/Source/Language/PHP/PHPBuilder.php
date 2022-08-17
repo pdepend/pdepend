@@ -157,7 +157,7 @@ use PDepend\Source\AST\ASTUnsetStatement;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\ASTVariableVariable;
-use PDepend\Source\AST\ASTVariadicPlaceHolder;
+use PDepend\Source\AST\ASTVariadicPlaceholder;
 use PDepend\Source\AST\ASTWhileStatement;
 use PDepend\Source\AST\ASTYieldStatement;
 use PDepend\Source\Builder\Builder;
@@ -1647,8 +1647,8 @@ class PHPBuilder implements Builder
      * Builds a new variadic placeholder for first class callable syntax
      *
      * @param string $image
-     * @return ASTVariadicPlaceHolder
      *
+     * @return ASTVariadicPlaceholder
      * @since  2.11.0
      */
     public function buildAstVariadicPlaceHolder($image)
