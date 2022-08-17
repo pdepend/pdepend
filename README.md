@@ -1,7 +1,7 @@
 PHP Depend
 =======
-[![Build Status](https://travis-ci.org/pdepend/pdepend.svg?branch=master)](https://travis-ci.org/pdepend/pdepend)
-[![Packagist](https://img.shields.io/packagist/dt/pdepend/pdepend.svg)](https://github.com/pdepend/pdepend)
+[![Tests](https://github.com/pdepend/pdepend/actions/workflows/tests.yml/badge.svg)](https://github.com/pdepend/pdepend/actions/workflows/tests.yml)
+[![Packagist](https://img.shields.io/packagist/dt/pdepend/pdepend.svg)](https://packagist.org/packages/pdepend/pdepend)
 [![codecov](https://codecov.io/gh/pdepend/pdepend/branch/master/graph/badge.svg?token=XPgUqYrz4q)](https://codecov.io/gh/pdepend/pdepend)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pdepend/pdepend/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pdepend/pdepend/?branch=master)
 [![Chat to us on Gitter](https://badges.gitter.im/pdepend/community.svg)](https://gitter.im/pdepend/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
