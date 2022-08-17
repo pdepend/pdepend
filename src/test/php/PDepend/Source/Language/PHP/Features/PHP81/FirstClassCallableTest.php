@@ -71,7 +71,7 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallableObjectMethod()
     {
-        $method = $this->getFirstMethodForTestCase();
+        $method   = $this->getFirstMethodForTestCase();
         $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
@@ -83,7 +83,7 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallableDynamicMethod()
     {
-        $method = $this->getFirstMethodForTestCase();
+        $method   = $this->getFirstMethodForTestCase();
         $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
@@ -95,7 +95,7 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallableStaticMethod()
     {
-        $method = $this->getFirstMethodForTestCase();
+        $method   = $this->getFirstMethodForTestCase();
         $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
@@ -107,8 +107,37 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallableDynamicStaticMethod()
     {
-        $method = $this->getFirstMethodForTestCase();
+        $method   = $this->getFirstMethodForTestCase();
         $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableTraditionalCallableFunction()
+    {
+        $method   = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertSame("'strlen'", $children[0]->getImage());
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableObjectCallable()
+    {
+        $method   = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $children[0]);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
         $this->assertSame('...', $children[1]->getImage());
@@ -118,13 +147,12 @@ class FirstClassCallableTest extends AbstractTest
     /**
      * @return void
      */
-    public function testFirstClassCallableTraditionalCallableFunction()
+    public function testFirstClassCallableStaticClassMethodCallable()
     {
-        $method = $this->getFirstMethodForTestCase();
+        $method   = $this->getFirstMethodForTestCase();
         $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
-        $this->assertSame("'strlen'", $children[0]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $children[0]);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
         $this->assertSame('...', $children[1]->getImage());
