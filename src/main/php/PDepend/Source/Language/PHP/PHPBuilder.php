@@ -157,6 +157,7 @@ use PDepend\Source\AST\ASTUnsetStatement;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\ASTVariableVariable;
+use PDepend\Source\AST\ASTVariadicPlaceHolder;
 use PDepend\Source\AST\ASTWhileStatement;
 use PDepend\Source\AST\ASTYieldStatement;
 use PDepend\Source\Builder\Builder;
@@ -1640,6 +1641,19 @@ class PHPBuilder implements Builder
     public function buildAstArguments()
     {
         return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTArguments');
+    }
+
+    /**
+     * Builds a new variadic placeholder for first class callable syntax
+     *
+     * @param string $image
+     * @return ASTVariadicPlaceHolder
+     *
+     * @since  2.11.0
+     */
+    public function buildAstVariadicPlaceHolder($image)
+    {
+        return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTVariadicPlaceholder', $image);
     }
 
     /**

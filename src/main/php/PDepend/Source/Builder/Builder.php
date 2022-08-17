@@ -151,6 +151,7 @@ use PDepend\Source\AST\ASTUnsetStatement;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\ASTVariableVariable;
+use PDepend\Source\AST\ASTVariadicPlaceHolder;
 use PDepend\Source\AST\ASTWhileStatement;
 use PDepend\Source\AST\ASTYieldStatement;
 use PDepend\Util\Cache\CacheDriver;
@@ -1108,6 +1109,16 @@ interface Builder extends IteratorAggregate
      * @since  0.9.6
      */
     public function buildAstArguments();
+
+    /**
+     * Builds a new variadic placeholder for first class callable syntax
+     *
+     * @param string $image
+     * @return ASTVariadicPlaceHolder
+     *
+     * @since  2.11.0
+     */
+    public function buildAstVariadicPlaceHolder($image);
 
     /**
      * Builds a new argument match expression single-item slot.
