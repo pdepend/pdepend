@@ -41,13 +41,6 @@
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\AbstractTest;
-use PDepend\Source\AST\ASTFormalParameter;
-use PDepend\Source\AST\ASTIdentifier;
-use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTUnionType;
-use PDepend\Source\AST\ASTVariableDeclarator;
-use PDepend\Source\AST\ASTVariadicPlaceHolder;
-use PDepend\Source\AST\State;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -89,6 +82,30 @@ class FirstClassCallableTest extends AbstractTest
      * @return void
      */
     public function testFirstClassCallableDynamicMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableStaticMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableDynamicStaticMethod()
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
