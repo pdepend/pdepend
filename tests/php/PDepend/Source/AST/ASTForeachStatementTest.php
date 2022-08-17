@@ -250,10 +250,14 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementTerminatedByPhpCloseTag
+     *
+     * @group end-st
      */
     public function testForeachStatementTerminatedByPhpCloseTag(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction();
+        var_dump($stmt->getImage(), $stmt->getStartColumn(), $stmt->getEndColumn());
+        exit;
         static::assertEquals(9, $stmt->getEndColumn());
     }
 

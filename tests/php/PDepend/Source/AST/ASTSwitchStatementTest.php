@@ -220,6 +220,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * testSwitchStatementTerminatedByPhpCloseTag
+     *
+     * @group end-st
      */
     public function testSwitchStatementTerminatedByPhpCloseTag(): void
     {

@@ -274,6 +274,8 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForStatementTerminatedByPhpCloseTag
+     *
+     * @group end-st
      */
     public function testForStatementTerminatedByPhpCloseTag(): void
     {

@@ -186,6 +186,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
 
     /**
      * testWhileStatementTerminatedByPhpCloseTag
+     *
+     * @group end-st
      */
     public function testWhileStatementTerminatedByPhpCloseTag(): void
     {

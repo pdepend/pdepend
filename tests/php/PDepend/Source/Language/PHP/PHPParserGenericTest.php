@@ -500,6 +500,10 @@ class PHPParserGenericTest extends AbstractTestCase
         static::assertEmpty($this->parseCodeResourceForTest());
     }
 
+    /**
+     * @group end-st
+     * @group i
+     */
     public function testOptionalSemiColon(): void
     {
         $template = $this->parseCodeResourceForTest();
