@@ -63,20 +63,37 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallable()
     {
-        /** @var ASTMethod $method */
-        $method = $this->getFirstMethodForTestCase();
-        /** @var ASTFormalParameter $parameter */
-        $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFunctionPostfix');
-        $children = $parameter->getChildren();
+        $method   = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFunctionPostfix')->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $children[0]);
-        /** @var ASTIdentifier $identifier */
-        $identifier = $children[0];
-        $this->assertSame('trim', $identifier->getImage());
+        $this->assertSame('trim', $children[0]->getImage());
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
-        /** @var ASTVariadicPlaceholder $placeholder */
-        $placeholder = $children[1];
-        $this->assertSame('...', $placeholder->getImage());
+        $this->assertSame('...', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableObjectMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableDynamicMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
     }
 }
