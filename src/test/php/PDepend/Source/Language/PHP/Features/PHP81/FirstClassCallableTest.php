@@ -113,4 +113,20 @@ class FirstClassCallableTest extends AbstractTest
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
         $this->assertSame('...', $children[1]->getImage());
     }
+
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableTraditionalCallableFunction()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')->getChildren();
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertSame("'strlen'", $children[0]->getImage());
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
+        $this->assertSame('...', $children[1]->getImage());
+    }
 }

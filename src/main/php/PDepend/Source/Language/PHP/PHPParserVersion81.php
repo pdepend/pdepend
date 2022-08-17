@@ -51,6 +51,7 @@ use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\AST\ASTVariadicPlaceHolder;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Tokenizer\Tokens;
@@ -242,30 +243,62 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     }
 
     /**
-     * This method parses the tokens after arguments passed to a function- or method-call.
+     * Parse first class callable or an argument list
      *
-     * @throws ParserException
-     *
-     * @return ASTArguments
-     *
-     * @since 2.11.0
+     * @inheritDoc
      */
     protected function parseArgumentsParenthesesContent(ASTArguments $arguments)
     {
+        $variadicPlaceholder = $this->parseVariadicPlaceholder();
+        if ($variadicPlaceholder !== null) {
+            return $this->setNodePositionsAndReturn($variadicPlaceholder);
+        }
+
+        return parent::parseArgumentsParenthesesContent($arguments);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function parseParenthesisExpressionOrPrimaryPrefix()
+    {
+        $variadicPlaceholder = $this->parseVariadicPlaceholder();
+        if ($variadicPlaceholder !== null) {
+            return $variadicPlaceholder;
+        }
+
+        return parent::parseParenthesisExpressionOrPrimaryPrefix();
+    }
+
+    /**
+     * Try to parse the first class callable argument foo(...)
+     *
+     * @return ASTVariadicPlaceHolder|null
+     */
+    protected function parseVariadicPlaceholder()
+    {
+        $this->tokenStack->push();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
         $this->consumeComments();
 
-        if ($this->tokenizer->peek() === Tokens::T_ELLIPSIS && $this->tokenizer->peekNext() === Tokens::T_PARENTHESIS_CLOSE) {
-            // first class callable argument list
-            $image     = $this->consumeToken(Tokens::T_ELLIPSIS)->image;
-            $arguments = $this->builder->buildAstVariadicPlaceHolder($image);
-        } elseif (Tokens::T_PARENTHESIS_CLOSE !== $this->tokenizer->peek()) {
-            // non-empty argument list
-            $arguments = $this->parseArgumentList($arguments);
+        if ($this->tokenizer->peek() !== Tokens::T_ELLIPSIS) {
+            $this->tokenStack->pop();
+
+            return null;
+        }
+
+        $image = $this->consumeToken(Tokens::T_ELLIPSIS)->image;
+
+        $this->consumeComments();
+        if ($this->tokenizer->peek() !== Tokens::T_PARENTHESIS_CLOSE) {
+            $this->tokenStack->pop();
+
+            return null;
         }
 
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+        $placeholder = $this->builder->buildAstVariadicPlaceHolder($image);
 
-        return $this->setNodePositionsAndReturn($arguments);
+        return $this->setNodePositionsAndReturn($placeholder);
     }
 }
