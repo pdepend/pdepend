@@ -69,7 +69,7 @@ class ASTIntersectionType extends ASTType
      * Accept method of the visitor design pattern. This method will be called
      * by a visitor during tree traversal.
      *
-     * @since  2.9.0
+     * @since  2.11.0
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
