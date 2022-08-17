@@ -53,6 +53,8 @@ use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\AST\ASTType;
+use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\UnexpectedTokenException;
@@ -328,16 +330,26 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $type;
     }
 
-    protected function parseUnionTypeHint()
+    /**
+     * @param ASTType $firstType
+     *
+     * @return ASTUnionType
+     */
+    protected function parseUnionTypeHint($firstType)
     {
-        $types = array($this->parseSingleTypeHint());
+        $types = array($firstType);
 
         while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
             $this->tokenizer->next();
             $types[] = $this->parseSingleTypeHint();
         }
 
-        return $types;
+        $unionType = $this->builder->buildAstUnionType();
+        foreach ($types as $type) {
+            $unionType->addChild($type);
+        }
+
+        return $unionType;
     }
 
     protected function parseTypeHint()
@@ -345,27 +357,20 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $this->consumeComments();
         $token = $this->tokenizer->currentToken();
 
-        $types = $this->parseUnionTypeHint();
-
-        if (count($types) === 1) {
-            if ($types[0] instanceof ASTScalarType && ($types[0]->isFalse() || $types[0]->isNull())) {
-                throw new ParserException(
-                    $types[0]->getImage() . ' can not be used as a standalone type',
-                    0,
-                    $this->getUnexpectedTokenException($token)
-                );
-            }
-
-            return $types[0];
+        $type = $this->parseSingleTypeHint();
+        if ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            $type = $this->parseUnionTypeHint($type);
         }
 
-        $unionType = $this->builder->buildAstUnionType();
-
-        foreach ($types as $type) {
-            $unionType->addChild($type);
+        if ($type instanceof ASTScalarType && ($type->isFalse() || $type->isNull())) {
+            throw new ParserException(
+                $type->getImage() . ' can not be used as a standalone type',
+                0,
+                $this->getUnexpectedTokenException($token)
+            );
         }
 
-        return $unionType;
+        return $type;
     }
 
     /**

@@ -96,6 +96,7 @@ use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTIncludeExpression;
 use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTIssetExpression;
 use PDepend\Source\AST\ASTLabelStatement;
 use PDepend\Source\AST\ASTListExpression;
@@ -1210,6 +1211,13 @@ interface Builder extends IteratorAggregate
      * @since  2.9.0
      */
     public function buildAstUnionType();
+
+    /**
+     * Builds a new node for the intersection type.
+     *
+     * @return ASTIntersectionType
+     */
+    public function buildAstIntersectionType();
 
     /**
      * Builds a new literal node.
