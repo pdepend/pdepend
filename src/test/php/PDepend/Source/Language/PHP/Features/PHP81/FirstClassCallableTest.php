@@ -92,11 +92,8 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallableStaticMethod()
     {
-        $method   = $this->getFirstMethodForTestCase();
-        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
-
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
-        $this->assertSame('...', $children[1]->getImage());
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
     }
 
     /**
@@ -104,10 +101,7 @@ class FirstClassCallableTest extends AbstractTest
      */
     public function testFirstClassCallableDynamicStaticMethod()
     {
-        $method   = $this->getFirstMethodForTestCase();
-        $children = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix')->getChildren();
-
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariadicPlaceholder', $children[1]);
-        $this->assertSame('...', $children[1]->getImage());
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
     }
 }
