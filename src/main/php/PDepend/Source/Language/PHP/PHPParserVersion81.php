@@ -278,11 +278,13 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      */
     protected function parseVariadicPlaceholder()
     {
+        $this->tokenStack->push();
         $position = $this->tokenizer->getPosition();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
         $this->consumeComments();
 
         if ($this->tokenizer->peek() !== Tokens::T_ELLIPSIS) {
+            $this->tokenStack->pop();
             $this->tokenizer->setPosition($position);
 
             return null;
@@ -292,6 +294,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
         $this->consumeComments();
         if ($this->tokenizer->peek() !== Tokens::T_PARENTHESIS_CLOSE) {
+            $this->tokenStack->pop();
             $this->tokenizer->setPosition($position);
 
             return null;
