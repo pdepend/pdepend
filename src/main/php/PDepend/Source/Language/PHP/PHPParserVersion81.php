@@ -51,7 +51,6 @@ use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
-use PDepend\Source\AST\ASTVariadicPlaceholder;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Tokenizer\Tokens;
@@ -243,66 +242,86 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     }
 
     /**
-     * Parse first class callable or an argument list
-     *
-     * @inheritDoc
+     * @return ASTArguments
      */
-    protected function parseArgumentsParenthesesContent(ASTArguments $arguments)
+    protected function parseArgumentList(ASTArguments $arguments)
     {
-        $variadicPlaceholder = $this->parseVariadicPlaceholder();
-        if ($variadicPlaceholder !== null) {
-            return $variadicPlaceholder;
-        }
-
-        return parent::parseArgumentsParenthesesContent($arguments);
-    }
-
-    /**
-     * Parse variadic placeholder after string literal or array, or standard expression.
-     *
-     * @inheritDoc
-     */
-    protected function parseParenthesisExpressionOrPrimaryPrefix()
-    {
-        $variadicPlaceholder = $this->parseVariadicPlaceholder();
-        if ($variadicPlaceholder !== null) {
-            return $variadicPlaceholder;
-        }
-
-        return parent::parseParenthesisExpressionOrPrimaryPrefix();
-    }
-
-    /**
-     * Try to parse the first class callable argument `(...)`
-     * @return ASTVariadicPlaceholder|null
-     */
-    protected function parseVariadicPlaceholder()
-    {
-        $this->tokenStack->push();
-        $position = $this->tokenizer->getPosition();
-        $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
         $this->consumeComments();
 
-        if ($this->tokenizer->peek() !== Tokens::T_ELLIPSIS) {
-            $this->tokenStack->pop();
-            $this->tokenizer->setPosition($position);
+        // peek if there's an ellipsis
+        $ellipsis  = Tokens::T_ELLIPSIS === $this->tokenizer->peek();
 
-            return null;
+        $arguments = parent::parseArgumentList($arguments);
+
+        // ellipsis and no further arguments => variadic placeholder foo(...)
+        if ($ellipsis === true && count($arguments->getChildren()) === 0) {
+            $arguments->setVariadicPlaceholder();
         }
 
-        $image = $this->consumeToken(Tokens::T_ELLIPSIS)->image;
-
-        $this->consumeComments();
-        if ($this->tokenizer->peek() !== Tokens::T_PARENTHESIS_CLOSE) {
-            $this->tokenStack->pop();
-            $this->tokenizer->setPosition($position);
-
-            return null;
-        }
-
-        $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
-        $placeholder = $this->builder->buildAstVariadicPlaceHolder($image);
-
-        return $this->setNodePositionsAndReturn($placeholder);
+        return $arguments;
     }
+
+    //
+    ///**
+    // * Parse first class callable or an argument list
+    // *
+    // * @inheritDoc
+    // */
+    //protected function parseArgumentsParenthesesContent(ASTArguments $arguments)
+    //{
+    //    //$variadicPlaceholder = $this->parseVariadicPlaceholder();
+    //    //if ($variadicPlaceholder !== null) {
+    //    //    return $variadicPlaceholder;
+    //    //}
+    //
+    //    return parent::parseArgumentsParenthesesContent($arguments);
+    //}
+    ///**
+    // * Parse variadic placeholder after string literal or array, or standard expression.
+    // *
+    // * @inheritDoc
+    // */
+    //protected function parseParenthesisExpressionOrPrimaryPrefix()
+    //{
+    //    $variadicPlaceholder = $this->parseVariadicPlaceholder();
+    //    if ($variadicPlaceholder !== null) {
+    //        return $variadicPlaceholder;
+    //    }
+    //
+    //    return parent::parseParenthesisExpressionOrPrimaryPrefix();
+    //}
+    //
+    ///**
+    // * Try to parse the first class callable argument `(...)`
+    // * @return ASTVariadicPlaceholder|null
+    // */
+    //protected function parseVariadicPlaceholder()
+    //{
+    //    //$this->tokenStack->push();
+    //    $position = $this->tokenizer->getPosition();
+    //    $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+    //    $this->consumeComments();
+    //
+    //    if ($this->tokenizer->peek() !== Tokens::T_ELLIPSIS) {
+    //        //$this->tokenStack->pop();
+    //        $this->tokenizer->setPosition($position);
+    //
+    //        return null;
+    //    }
+    //
+    //    $image = $this->consumeToken(Tokens::T_ELLIPSIS)->image;
+    //
+    //    $this->consumeComments();
+    //    if ($this->tokenizer->peek() !== Tokens::T_PARENTHESIS_CLOSE) {
+    //        $this->tokenStack->pop();
+    //        $this->tokenizer->setPosition($position);
+    //
+    //        return null;
+    //    }
+    //
+    //    $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+    //    $placeholder = $this->builder->buildAstVariadicPlaceHolder($image);
+    //
+    //    return $this->setNodePositionsAndReturn($placeholder);
+    //}
 }
