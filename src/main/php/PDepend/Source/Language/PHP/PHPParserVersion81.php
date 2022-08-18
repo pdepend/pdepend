@@ -251,7 +251,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     {
         $variadicPlaceholder = $this->parseVariadicPlaceholder();
         if ($variadicPlaceholder !== null) {
-            return $this->setNodePositionsAndReturn($variadicPlaceholder);
+            return $variadicPlaceholder;
         }
 
         return parent::parseArgumentsParenthesesContent($arguments);
@@ -278,12 +278,12 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      */
     protected function parseVariadicPlaceholder()
     {
-        $this->tokenStack->push();
+        $position = $this->tokenizer->getPosition();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
         $this->consumeComments();
 
         if ($this->tokenizer->peek() !== Tokens::T_ELLIPSIS) {
-            $this->tokenStack->pop();
+            $this->tokenizer->setPosition($position);
 
             return null;
         }
@@ -292,7 +292,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
         $this->consumeComments();
         if ($this->tokenizer->peek() !== Tokens::T_PARENTHESIS_CLOSE) {
-            $this->tokenStack->pop();
+            $this->tokenizer->setPosition($position);
 
             return null;
         }
