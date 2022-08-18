@@ -104,4 +104,13 @@ class FirstClassCallableTest extends AbstractTest
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
     }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableInvocableObject()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
+    }
 }
