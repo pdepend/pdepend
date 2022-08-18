@@ -120,6 +120,20 @@ class ASTArgumentsTest extends ASTNodeTest
     }
 
     /**
+     * Tests the accessors for variadic placeholder
+     *
+     * @return void
+     */
+    public function testArgumentsIsVariadicPlaceholder()
+    {
+        $arguments = new ASTArguments();
+        static::assertFalse($arguments->isVariadicPlaceholder());
+
+        $arguments->setVariadicPlaceholder();
+        static::assertTrue($arguments->isVariadicPlaceholder());
+    }
+
+    /**
      * Returns an arguments instance for the currently executed test case.
      *
      * @return \PDepend\Source\AST\ASTArguments

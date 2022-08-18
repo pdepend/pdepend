@@ -157,7 +157,6 @@ use PDepend\Source\AST\ASTUnsetStatement;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\ASTVariableVariable;
-use PDepend\Source\AST\ASTVariadicPlaceholder;
 use PDepend\Source\AST\ASTWhileStatement;
 use PDepend\Source\AST\ASTYieldStatement;
 use PDepend\Source\Builder\Builder;
