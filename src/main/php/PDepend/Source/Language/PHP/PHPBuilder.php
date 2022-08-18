@@ -1644,19 +1644,6 @@ class PHPBuilder implements Builder
     }
 
     /**
-     * Builds a new variadic placeholder for first class callable syntax
-     *
-     * @param string $image
-     *
-     * @return ASTVariadicPlaceholder
-     * @since  2.11.0
-     */
-    public function buildAstVariadicPlaceHolder($image)
-    {
-        return $this->buildAstNodeInstance('\\PDepend\\Source\\AST\\ASTVariadicPlaceholder', $image);
-    }
-
-    /**
      * Builds a new argument match expression single-item slot.
      *
      * <code>

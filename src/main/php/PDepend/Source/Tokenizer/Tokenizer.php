@@ -129,24 +129,4 @@ interface Tokenizer
      * @return int
      */
     public function prev();
-
-    /**
-     * Get the current cursor position
-     *
-     * @return int
-     *
-     * @since 2.11.0
-     */
-    public function getPosition();
-
-    /**
-     * Set the current cursor position to the given position
-     *
-     * @param int $position
-     *
-     * @return void
-     *
-     * @since 2.11.0
-     */
-    public function setPosition($position);
 }

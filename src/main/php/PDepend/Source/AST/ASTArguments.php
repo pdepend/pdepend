@@ -69,7 +69,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTArguments extends AbstractASTNode
 {
     /**
-     * This method will return true if the argument list as declared as foo(...)
+     * This method will return true if the argument list is declared as foo(...)
      *
      * @return bool
      *
