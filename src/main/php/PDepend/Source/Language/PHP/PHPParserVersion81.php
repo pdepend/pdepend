@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTScalarType;
@@ -238,5 +239,25 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         }
 
         return $type;
+    }
+
+    /**
+     * @return ASTArguments
+     */
+    protected function parseArgumentList(ASTArguments $arguments)
+    {
+        $this->consumeComments();
+
+        // peek if there's an ellipsis to determine variadic placeholder
+        $ellipsis  = Tokens::T_ELLIPSIS === $this->tokenizer->peek();
+
+        $arguments = parent::parseArgumentList($arguments);
+
+        // ellipsis and no further arguments => variadic placeholder foo(...)
+        if ($ellipsis === true && count($arguments->getChildren()) === 0) {
+            $arguments->setVariadicPlaceholder();
+        }
+
+        return $arguments;
     }
 }

@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,91 +36,81 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @since 0.9.6
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\AbstractTest;
 
 /**
- * This class represents arguments as they are supplied to functions or
- * constructors invocations.
- *
- * <code>
- * //      ------------
- * Foo::bar($x, $y, $z);
- * //      ------------
- *
- * //       ------------
- * $foo->bar($x, $y, $z);
- * //       ------------
- * </code>
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @since 0.9.6
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @group unittest
+ * @group php8.1
  */
-class ASTArguments extends AbstractASTNode
+class FirstClassCallableTest extends AbstractTest
 {
     /**
-     * This method will return true if the argument list is declared as foo(...)
-     *
-     * @return bool
-     *
-     * @since 2.11.0
-     */
-    public function isVariadicPlaceholder()
-    {
-        return $this->getMetadataBoolean(4);
-    }
-
-    /**
-     * This method can be used to mark the argument list as variadic placeholder
-     *
-     * @return void
-     * @since 2.11.0
-     */
-    public function setVariadicPlaceholder()
-    {
-        $this->setMetadataBoolean(4, true);
-    }
-
-    /**
-     * Rather the given arguments list can still take one more argument.
-     *
-     * @return bool
-     */
-    public function acceptsMoreArguments()
-    {
-        return true;
-    }
-
-    /**
-     * This method adds a new child node to this node instance.
-     *
      * @return void
      */
-    public function addChild(ASTNode $node)
+    public function testFirstClassCallable()
     {
-        if (!$this->acceptsMoreArguments()) {
-            throw new InvalidArgumentException('No more arguments allowed.');
-        }
-
-        parent::addChild($node);
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @since 0.9.12
+     * @return void
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    public function testFirstClassCallableWithComments()
     {
-        return $visitor->visitArguments($this, $data);
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableObjectMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableDynamicMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableStaticMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableDynamicStaticMethod()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFirstClassCallableInvocableObject()
+    {
+        $method = $this->getFirstMethodForTestCase();
+        $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
     }
 }
