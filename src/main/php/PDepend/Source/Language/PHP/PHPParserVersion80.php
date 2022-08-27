@@ -209,7 +209,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
         if (isset($states[$token])) {
             $modifier |= $states[$token];
-            $this->tokenizer->next();
+            $this->tokenStack->add($this->tokenizer->next());
         }
 
         return $modifier;
@@ -235,7 +235,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
         if ($this->tokenizer->peek() === Tokens::T_COLON) {
-            $this->tokenizer->next();
+            $this->tokenStack->add($this->tokenizer->next());
 
             return $this->builder->buildAstNamedArgument(
                 $constant->getImage(),
@@ -314,11 +314,11 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
                 break;
             case Tokens::T_NULL:
                 $type = new ASTScalarType('null');
-                $this->tokenizer->next();
+                $this->tokenStack->add($this->tokenizer->next());
                 break;
             case Tokens::T_FALSE:
                 $type = new ASTScalarType('false');
-                $this->tokenizer->next();
+                $this->tokenStack->add($this->tokenizer->next());
                 break;
             default:
                 $type = parent::parseTypeHint();
@@ -340,7 +340,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $types = array($firstType);
 
         while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
-            $this->tokenizer->next();
+            $this->tokenStack->add($this->tokenizer->next());
             $types[] = $this->parseSingleTypeHint();
         }
 
@@ -352,17 +352,34 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $unionType;
     }
 
+    protected function parseTypeHintCombination($type)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            return $this->parseUnionTypeHint($type);
+        }
+
+        return $type;
+    }
+
+    /**
+     * @param ASTNode $type
+     *
+     * @return bool
+     */
+    protected function canNotBeStandAloneType($type)
+    {
+        return $type instanceof ASTScalarType && ($type->isFalse() || $type->isNull());
+    }
+
     protected function parseTypeHint()
     {
         $this->consumeComments();
         $token = $this->tokenizer->currentToken();
-
         $type = $this->parseSingleTypeHint();
-        if ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
-            $type = $this->parseUnionTypeHint($type);
-        }
 
-        if ($type instanceof ASTScalarType && ($type->isFalse() || $type->isNull())) {
+        $type = $this->parseTypeHintCombination($type);
+
+        if ($this->canNotBeStandAloneType($type)) {
             throw new ParserException(
                 $type->getImage() . ' can not be used as a standalone type',
                 0,
