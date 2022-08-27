@@ -1,3 +1,15 @@
+pdepend-2.11.0 (2022/08/29)
+==========================
+
+- Added [\#600](https://github.com/pdepend/pdepend/pull/600): Support integer non-decimal notations
+- Added [\#598](https://github.com/pdepend/pdepend/pull/598): Support PHP 8.1 in-initializers
+- Added [\#610](https://github.com/pdepend/pdepend/pull/610): Support PHP 8.1 support pure intersection types
+- Added [\#613](https://github.com/pdepend/pdepend/pull/613): Support PHP 8.1 first class callable syntax
+- Added [\#608](https://github.com/pdepend/pdepend/pull/608): Support PHP 8.1 enums
+- Fixed [\#593](https://github.com/pdepend/pdepend/pull/593): Fix cache for STDIN usage
+- Fixed [\#603](https://github.com/pdepend/pdepend/pull/603): Allow coma-separated variables in short-tags
+- Fixed [\#604](https://github.com/pdepend/pdepend/pull/604): Support key variable in list unpacking
+
 pdepend-2.10.3 (2022/02/23)
 ==========================
 
