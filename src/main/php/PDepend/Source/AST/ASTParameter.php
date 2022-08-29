@@ -266,17 +266,22 @@ class ASTParameter extends AbstractASTArtifact
     {
         $node = $this->formalParameter->getChild(0);
 
-        return (
-            $this->isTypeAllowingNull($node)
-            || (
-                !($node instanceof ASTTypeArray)
-                && !($node instanceof ASTScalarType)
-                && $this->getClass() === null
-            ) || (
-                $this->isDefaultValueAvailable() === true
-                && $this->getDefaultValue() === null
-            )
-        );
+        if ($this->isTypeAllowingNull($node)) {
+            return true;
+        }
+
+        if (!($node instanceof ASTTypeArray)
+            && !($node instanceof ASTScalarType)
+            && $this->getClass() === null
+        ) {
+            return true;
+        }
+
+        if ($this->isDefaultValueAvailable() && $this->getDefaultValue() === null) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
