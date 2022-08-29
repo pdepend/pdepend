@@ -6822,7 +6822,7 @@ abstract class AbstractPHPParser
             return $fragments[0];
         }
 
-        // Search for an use alias
+        // Search for a use alias
         $mapsTo = $this->useSymbolTable->lookup($fragments[0]);
 
         if ($mapsTo !== null) {
@@ -7448,7 +7448,9 @@ abstract class AbstractPHPParser
                     $number = $token->image;
 
                     while ($this->tokenizer->peek() === Tokens::T_STRING) {
-                        $number .= $this->tokenizer->next()->image;
+                        $next = $this->tokenizer->next();
+                        $this->tokenStack->add($next);
+                        $number .= $next->image;
                     }
 
                     $defaultValue->setValue($signed * $this->parseIntegerNumberImage($number));
@@ -8011,7 +8013,7 @@ abstract class AbstractPHPParser
      */
     protected function parseEnumSignature()
     {
-        $this->tokenizer->next();
+        $this->tokenStack->add($this->tokenizer->next());
         $this->consumeComments();
 
         if ($this->tokenizer->peek() !== Tokens::T_STRING) {
@@ -8093,7 +8095,7 @@ abstract class AbstractPHPParser
      */
     private function parseEnumCase()
     {
-        $this->tokenizer->next();
+        $this->tokenStack->add($this->tokenizer->next());
         $this->tokenStack->push();
         $this->consumeComments();
 
@@ -8102,7 +8104,7 @@ abstract class AbstractPHPParser
         }
 
         $caseName = $this->tokenizer->currentToken()->image;
-        $this->tokenizer->next();
+        $this->tokenStack->add($this->tokenizer->next());
         $this->consumeComments();
         $case = $this->builder->buildEnumCase($caseName, $this->parseEnumCaseValue());
         $this->consumeComments();

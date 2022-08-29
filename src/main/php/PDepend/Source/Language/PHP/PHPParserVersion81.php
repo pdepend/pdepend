@@ -124,7 +124,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
         if ($this->tokenizer->peek() === Tokens::T_READONLY) {
             $modifier |= State::IS_READONLY;
-            $this->tokenizer->next();
+            $this->tokenStack->add($this->tokenizer->next());
         }
 
         return $modifier;
@@ -180,7 +180,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         $types = array($firstType);
 
         while ($this->tokenizer->peek() === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
-            $this->tokenizer->next();
+            $this->tokenStack->add($this->tokenizer->next());
             $types[] = $this->parseSingleTypeHint();
         }
 
@@ -202,40 +202,19 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     }
 
     /**
-     * @return ASTIntersectionType|ASTUnionType|ASTType
+     * @inheritDoc
      */
-    protected function parseIntersectionOrUnionTypeHint()
+    protected function parseTypeHintCombination($type)
     {
-        $firstType = $this->parseSingleTypeHint();
-
         $peek = $this->tokenizer->peek();
+
         if ($peek === Tokens::T_BITWISE_OR) {
-            return $this->parseUnionTypeHint($firstType);
+            return $this->parseUnionTypeHint($type);
         }
 
         // sniff for &, but avoid by_reference &$variable.
         if ($peek === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
-            return $this->parseIntersectionTypeHint($firstType);
-        }
-
-        return $firstType;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function parseTypeHint()
-    {
-        $this->consumeComments();
-        $token = $this->tokenizer->currentToken();
-        $type  = $this->parseIntersectionOrUnionTypeHint();
-
-        if ($type instanceof ASTScalarType && ($type->isFalse() || $type->isNull())) {
-            throw new ParserException(
-                $type->getImage() . ' can not be used as a standalone type',
-                0,
-                $this->getUnexpectedTokenException($token)
-            );
+            return $this->parseIntersectionTypeHint($type);
         }
 
         return $type;

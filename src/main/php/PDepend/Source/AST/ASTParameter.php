@@ -264,15 +264,24 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function allowsNull()
     {
-        return (
-            (
-                $this->isArray() === false
-                && $this->getClass() === null
-            ) || (
-                $this->isDefaultValueAvailable() === true
-                && $this->getDefaultValue() === null
-            )
-        );
+        $node = $this->formalParameter->getChild(0);
+
+        if ($this->isTypeAllowingNull($node)) {
+            return true;
+        }
+
+        if (!($node instanceof ASTTypeArray)
+            && !($node instanceof ASTScalarType)
+            && $this->getClass() === null
+        ) {
+            return true;
+        }
+
+        if ($this->isDefaultValueAvailable() && $this->getDefaultValue() === null) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -405,5 +414,18 @@ class ASTParameter extends AbstractASTArtifact
             $this->getName(),
             $default
         );
+    }
+
+    private function isTypeAllowingNull($node)
+    {
+        if ($node instanceof ASTUnionType) {
+            foreach ($node->getChildren() as $child) {
+                if ($this->isTypeAllowingNull($child)) {
+                    return true;
+                }
+            }
+        }
+
+        return $node instanceof ASTScalarType && $node->isNull();
     }
 }

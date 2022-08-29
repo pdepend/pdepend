@@ -57,7 +57,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @since 0.9.20
  */
-class PHPParserGeneric extends PHPParserVersion81
+class PHPParserGeneric extends PHPParserVersion82
 {
     /**
      * Tests if the given token type is a reserved keyword in the supported PHP
