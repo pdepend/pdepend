@@ -144,24 +144,6 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
 
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
     }
-    
-    /**
-     * Tests if the given image is a PHP 7 type hint.
-     *
-     * @param string $image
-     *
-     * @return bool
-     */
-    protected function isScalarOrCallableTypeHint($image)
-    {
-        switch (strtolower($image)) {
-            case 'iterable':
-            case 'void':
-                return true;
-        }
-
-        return parent::isScalarOrCallableTypeHint($image);
-    }
 
     /**
      * Parses a scalar type hint or a callable type hint.

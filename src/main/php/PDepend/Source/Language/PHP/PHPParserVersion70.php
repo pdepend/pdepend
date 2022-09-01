@@ -286,7 +286,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
     }
 
     /**
-     * Tests if the given image is a PHP 7 type hint.
+     * Tests if the given image is a PHP 7.0 type hint.
      *
      * @param string $image
      *

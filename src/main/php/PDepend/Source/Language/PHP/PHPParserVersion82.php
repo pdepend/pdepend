@@ -39,73 +39,85 @@
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @since 0.9.6
+ * @since 2.11
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\Tokenizer\Tokens;
 
 /**
- * This class represents primitive types like integer, float, boolean, string
- * etc.
+ * Concrete parser implementation that supports features up to PHP version 8.2.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @since 0.9.6
+ * @since 2.12
  */
-class ASTScalarType extends ASTType
+abstract class PHPParserVersion82 extends PHPParserVersion81
 {
+    protected $possiblePropertyTypes = array(
+        Tokens::T_STRING,
+        Tokens::T_ARRAY,
+        Tokens::T_QUESTION_MARK,
+        Tokens::T_BACKSLASH,
+        Tokens::T_CALLABLE,
+        Tokens::T_SELF,
+        Tokens::T_NULL,
+        Tokens::T_FALSE,
+        Tokens::T_TRUE,
+    );
+
     /**
-     * This method will return <b>true</b> when this type is a php primitive.
-     * For this concrete implementation the return value will be always true.
+     * Tests if the given image is a PHP 8.2 type hint.
+     *
+     * @param string $image
      *
      * @return bool
      */
-    public function isScalar()
+    protected function isScalarOrCallableTypeHint($image)
     {
-        return true;
+        if (strtolower($image) === 'true') {
+            return true;
+        }
+
+        return parent::isScalarOrCallableTypeHint($image);
+    }
+
+    protected function isTypeHint($tokenType)
+    {
+        if ($tokenType === Tokens::T_TRUE) {
+            return true;
+        }
+
+        return parent::isTypeHint($tokenType);
+    }
+
+    protected function parseSingleTypeHint()
+    {
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() == Tokens::T_TRUE) {
+            $type = new ASTScalarType('true');
+            $this->tokenStack->add($this->tokenizer->next());
+            $this->consumeComments();
+
+            return $type;
+        }
+
+
+        return parent::parseSingleTypeHint();
     }
 
     /**
-     * This method will return <b>true</b> when this type is exactly null.
+     * @param ASTNode $type
      *
      * @return bool
      */
-    public function isNull()
+    protected function canNotBeStandAloneType($type)
     {
-        return $this->getImage() === 'null';
-    }
-
-    /**
-     * This method will return <b>true</b> when this type is exactly false.
-     *
-     * @return bool
-     */
-    public function isFalse()
-    {
-        return $this->getImage() === 'false';
-    }
-
-    /**
-     * This method will return <b>true</b> when this type is exactly false.
-     *
-     * @return bool
-     */
-    public function isTrue()
-    {
-        return $this->getImage() === 'true';
-    }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @since  0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitScalarType($this, $data);
+        return false;
     }
 }

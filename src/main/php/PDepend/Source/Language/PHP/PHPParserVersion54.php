@@ -245,7 +245,9 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
         $number = $token->image;
 
         while ($this->tokenizer->peek() === Tokens::T_STRING) {
-            $number .= $this->tokenizer->next()->image;
+            $next = $this->tokenizer->next();
+            $this->tokenStack->add($next);
+            $number .= $next->image;
         }
 
         if ('0' !== substr($number, 0, 1)) {
