@@ -46,6 +46,7 @@ namespace PDepend\Source\Builder\BuilderContext;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTTrait;
@@ -117,6 +118,19 @@ class GlobalBuilderContext implements BuilderContext
     public function registerClass(ASTClass $class)
     {
         self::$builder->restoreClass($class);
+    }
+
+    /**
+     * This method can be used to register an existing enum in the current
+     * context.
+     *
+     * @param ASTEnum $class The enum instance.
+     *
+     * @return void
+     */
+    public function registerEnum(ASTEnum $class)
+    {
+        self::$builder->restoreEnum($class);
     }
 
     /**

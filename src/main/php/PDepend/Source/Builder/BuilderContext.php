@@ -46,6 +46,7 @@ namespace PDepend\Source\Builder;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTTrait;
@@ -85,6 +86,14 @@ interface BuilderContext
      * @return void
      */
     public function registerClass(ASTClass $class);
+
+    /**
+     * This method can be used to register an existing enum in the current
+     * context.
+     *
+     * @return void
+     */
+    public function registerEnum(ASTEnum $class);
 
     /**
      * This method can be used to register an existing interface in the current
