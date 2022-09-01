@@ -45,6 +45,7 @@ namespace PDepend\Source\ASTVisitor;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -80,6 +81,26 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     public function endVisitClass(ASTClass $class)
     {
         $this->endVisitNode($class);
+    }
+
+    /**
+     * Is called when the visitor starts a new enum instance.
+     *
+     * @return void
+     */
+    public function startVisitEnum(ASTEnum $enum)
+    {
+        $this->startVisitNode($enum);
+    }
+
+    /**
+     * Is called when the visitor ends with an enum instance.
+     *
+     * @return void
+     */
+    public function endVisitEnum(ASTEnum $enum)
+    {
+        $this->endVisitNode($enum);
     }
 
     /**

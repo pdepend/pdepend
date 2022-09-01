@@ -271,7 +271,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      */
     public function accept(ASTVisitor $visitor)
     {
-        $visitor->visitClass($this);
+        $visitor->visitEnum($this);
     }
 
     /**

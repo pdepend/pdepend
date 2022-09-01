@@ -44,8 +44,10 @@ namespace PDepend\Source\ASTVisitor;
 
 use ArrayIterator;
 use Iterator;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -112,6 +114,27 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndClass($class);
+    }
+
+    /**
+     * Visits a class node.
+     *
+     * @return void
+     */
+    public function visitEnum(ASTEnum $enum)
+    {
+        $this->fireStartEnum($enum);
+
+        $enum->getCompilationUnit()->accept($this);
+
+        foreach ($enum->getProperties() as $property) {
+            $property->accept($this);
+        }
+        foreach ($enum->getMethods() as $method) {
+            $method->accept($this);
+        }
+
+        $this->fireEndEnum($enum);
     }
 
     /**
@@ -301,6 +324,30 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitClass($class);
+        }
+    }
+
+    /**
+     * Sends a start enum event.
+     *
+     * @return void
+     */
+    protected function fireStartEnum(ASTEnum $enum)
+    {
+        foreach ($this->listeners as $listener) {
+            $listener->startVisitEnum($enum);
+        }
+    }
+
+    /**
+     * Sends an end enum event.
+     *
+     * @return void
+     */
+    protected function fireEndEnum(ASTEnum $enum)
+    {
+        foreach ($this->listeners as $listener) {
+            $listener->endVisitEnum($enum);
         }
     }
 
