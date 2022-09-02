@@ -44,6 +44,7 @@ namespace PDepend\Source\ASTVisitor;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -66,6 +67,13 @@ class StubASTVisitor implements ASTVisitor
      * @var \PDepend\Source\AST\ASTClass
      */
     public $class;
+
+    /**
+     * The last visited class instance.
+     *
+     * @var \PDepend\Source\AST\ASTEnum
+     */
+    public $enum;
 
     /**
      * The last visited trait instance.
@@ -136,6 +144,17 @@ class StubASTVisitor implements ASTVisitor
     public function visitClass(ASTClass $class)
     {
         $this->class = $class;
+    }
+
+    /**
+     * Visits an enum node.
+     *
+     * @param \PDepend\Source\AST\ASTEnum $enum
+     * @return void
+     */
+    public function visitEnum(ASTEnum $enum)
+    {
+        $this->enum = $enum;
     }
 
     /**

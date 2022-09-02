@@ -1,3 +1,8 @@
+pdepend-2.11.0 (2022/09/01)
+==========================
+
+- Fixed [\#622](https://github.com/pdepend/pdepend/pull/622): Fix ASTEnum serialization
+
 pdepend-2.11.0 (2022/08/29)
 ==========================
 

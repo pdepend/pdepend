@@ -893,7 +893,7 @@ interface Tokens
     const T_NULLSAFE_OBJECT_OPERATOR = 387;
 
     /**
-     * Marks a enum token.
+     * Marks an enum token.
      */
     const T_ENUM = 372;
 

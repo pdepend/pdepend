@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy;
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
@@ -77,12 +79,47 @@ class ASTEnumTest extends AbstractASTArtifactTest
         $this->assertSame('string', $deserializedEnum->getType()->getImage());
     }
 
+    public function testVisit()
+    {
+        $enum = $this->createItem();
+        $strategy = new PropertyStrategy();
+        $enum->accept($strategy);
+        $this->assertSame(array(), $strategy->getCollectedNodes());
+
+        $strategy = new MethodStrategy();
+        $enum->accept($strategy);
+
+        $nodes = array();
+
+        foreach ($strategy->getCollectedNodes() as $node) {
+            $class = $node['type'];
+
+            if (!isset($nodes[$class])) {
+                $nodes[$class] = array();
+            }
+
+            $nodes[$class][] = $node['name'];
+        }
+
+        $this->assertSame(array(
+            'PDepend\Source\AST\ASTEnum' => array('test'),
+            'PDepend\Source\AST\ASTClass' => array('test'),
+            'PDepend\Source\AST\ASTNamespace' => array('+global', '+global'),
+        ), $nodes);
+    }
+
     protected function createItem()
     {
-        $enum = new ASTEnum('test', new ASTScalarType('string'));
-        $enum->setCache(new MemoryCacheDriver());
-        $enum->setContext(new GlobalBuilderContext(new PHPBuilder()));
-        $enum->setCompilationUnit(new ASTCompilationUnit(__FILE__));
+        $builder = new PHPBuilder();
+        $builder->setCache(new MemoryCacheDriver());
+        $enum = $builder->buildEnum('test', new ASTScalarType('string'));
+        $enum->setNamespace(new ASTNamespace('+global'));
+
+        $method = new ASTMethod('foobar');
+        $method->addChild(new ASTFormalParameters());
+        $method->setReturnClassReference($builder->buildAstClassOrInterfaceReference($enum->getName()));
+
+        $enum->addMethod($method);
 
         return $enum;
     }
