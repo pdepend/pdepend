@@ -45,6 +45,8 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\Tokenizer\Tokens;
 
 /**
  * Concrete parser implementation that supports features up to PHP version 8.2.
@@ -56,6 +58,18 @@ use PDepend\Source\AST\ASTNode;
  */
 abstract class PHPParserVersion82 extends PHPParserVersion81
 {
+    protected $possiblePropertyTypes = array(
+        Tokens::T_STRING,
+        Tokens::T_ARRAY,
+        Tokens::T_QUESTION_MARK,
+        Tokens::T_BACKSLASH,
+        Tokens::T_CALLABLE,
+        Tokens::T_SELF,
+        Tokens::T_NULL,
+        Tokens::T_FALSE,
+        Tokens::T_TRUE,
+    );
+
     /**
      * Since PHP 8.2, readonly is allowed as class modifier.
      */
@@ -70,13 +84,36 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
      */
     protected function isScalarOrCallableTypeHint($image)
     {
-        switch (strtolower($image)) {
-            case 'false':
-            case 'null':
-                return true;
+        if (strtolower($image) === 'true') {
+            return true;
         }
 
         return parent::isScalarOrCallableTypeHint($image);
+    }
+
+    protected function isTypeHint($tokenType)
+    {
+        if ($tokenType === Tokens::T_TRUE) {
+            return true;
+        }
+
+        return parent::isTypeHint($tokenType);
+    }
+
+    protected function parseSingleTypeHint()
+    {
+        $this->consumeComments();
+
+        if ($this->tokenizer->peek() == Tokens::T_TRUE) {
+            $type = new ASTScalarType('true');
+            $this->tokenStack->add($this->tokenizer->next());
+            $this->consumeComments();
+
+            return $type;
+        }
+
+
+        return parent::parseSingleTypeHint();
     }
 
     /**

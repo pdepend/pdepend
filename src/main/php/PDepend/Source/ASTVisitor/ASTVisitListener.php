@@ -44,6 +44,7 @@ namespace PDepend\Source\ASTVisitor;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -77,6 +78,24 @@ interface ASTVisitListener
      * @return void
      */
     public function endVisitClass(ASTClass $class);
+
+    /**
+     * Is called when the visitor starts a new enum instance.
+     *
+     * @return void
+     *
+     * @since  2.11.1
+     */
+    public function startVisitEnum(ASTEnum $enum);
+
+    /**
+     * Is called when the visitor ends with an enum instance.
+     *
+     * @return void
+     *
+     * @since  2.11.1
+     */
+    public function endVisitEnum(ASTEnum $enum);
 
     /**
      * Is called when the visitor starts a new trait instance.

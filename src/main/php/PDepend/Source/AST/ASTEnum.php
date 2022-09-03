@@ -271,7 +271,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      */
     public function accept(ASTVisitor $visitor)
     {
-        $visitor->visitClass($this);
+        $visitor->visitEnum($this);
     }
 
     /**
@@ -288,6 +288,22 @@ class ASTEnum extends AbstractASTClassOrInterface
     {
         parent::__wakeup();
 
-        $this->context->registerClass($this);
+        $this->context->registerEnum($this);
+    }
+
+    /**
+     * The magic sleep method is called by the PHP runtime environment before an
+     * instance of this class gets serialized. It returns an array with the
+     * names of all those properties that should be cached for this class or
+     * interface instance.
+     *
+     * @return array
+     */
+    public function __sleep()
+    {
+        return array_merge(
+            array('type'),
+            parent::__sleep()
+        );
     }
 }
