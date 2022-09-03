@@ -38,32 +38,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP81;
+namespace PDepend\Source\Language\PHP\Features\PHP82;
 
-use PDepend\Source\AST\State;
+use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
  * @group unittest
- * @group php8.1
  */
-class FinalClassConstantTest extends PHPParserVersion81Test
+abstract class PHPParserVersion82Test extends AbstractTest
 {
     /**
-     * @return void
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    public function testFinalClassConstant()
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        $class = $this->getFirstClassForTestCase();
-        $constantDeclarators = $class->getConstantDeclarators();
-
-        $constantDeclarator = $constantDeclarators['BAR'];
-        $this->assertSame('BAR', $constantDeclarator->getImage());
-
-        $constantDefinition = $constantDeclarator->getParent();
-        $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
-        $this->assertSame(0, ($expectedModifiers & $constantDefinition->getModifiers()));
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion82',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

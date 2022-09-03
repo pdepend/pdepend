@@ -268,6 +268,11 @@ abstract class AbstractPHPParser
                      )$/x';
 
     /**
+     * Tell if readonly is allowed as class modifier in the current PHP level.
+     */
+    const READONLY_CLASS_ALLOWED = false;
+
+    /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
      * prefixed a qualified name with the actual namespace.
      *
@@ -924,6 +929,13 @@ abstract class AbstractPHPParser
         } elseif ($tokenType === Tokens::T_FINAL) {
             $this->consumeToken(Tokens::T_FINAL);
             $this->modifiers |= State::IS_FINAL;
+        } elseif ($tokenType === Tokens::T_READONLY) {
+            if (!static::READONLY_CLASS_ALLOWED) {
+                throw $this->getUnexpectedTokenException();
+            }
+
+            $this->consumeToken(Tokens::T_READONLY);
+            $this->modifiers |= State::IS_READONLY;
         }
 
         $this->consumeComments();
@@ -6626,6 +6638,7 @@ abstract class AbstractPHPParser
             case Tokens::T_CLASS:
             case Tokens::T_FINAL:
             case Tokens::T_ABSTRACT:
+            case Tokens::T_READONLY:
                 $package = $this->getNamespaceOrPackage();
                 $package->addType($class = $this->parseClassDeclaration());
 

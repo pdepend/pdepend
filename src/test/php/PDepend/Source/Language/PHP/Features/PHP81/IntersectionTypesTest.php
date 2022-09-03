@@ -40,7 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTMethod;
@@ -54,7 +53,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8.1
  */
-class IntersectionTypesTest extends AbstractTest
+class IntersectionTypesTest extends PHPParserVersion81Test
 {
     /**
      * @return void

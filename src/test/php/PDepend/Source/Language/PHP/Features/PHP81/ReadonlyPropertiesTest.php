@@ -40,7 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\State;
 
 /**
@@ -50,7 +49,7 @@ use PDepend\Source\AST\State;
  * @group unittest
  * @group php8.1
  */
-class ReadonlyPropertiesTest extends AbstractTest
+class ReadonlyPropertiesTest extends PHPParserVersion81Test
 {
     /**
      * @return void

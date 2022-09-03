@@ -40,7 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTFormalParameter;
@@ -55,7 +54,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8.1
  */
-class InInitializersTest extends AbstractTest
+class InInitializersTest extends PHPParserVersion81Test
 {
     /**
      * @return void

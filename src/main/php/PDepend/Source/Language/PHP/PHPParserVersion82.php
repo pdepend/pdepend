@@ -57,6 +57,11 @@ use PDepend\Source\AST\ASTNode;
 abstract class PHPParserVersion82 extends PHPParserVersion81
 {
     /**
+     * Since PHP 8.2, readonly is allowed as class modifier.
+     */
+    const READONLY_CLASS_ALLOWED = true;
+
+    /**
      * Tests if the given image is a PHP 8.2 type hint.
      *
      * @param string $image

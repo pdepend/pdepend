@@ -40,8 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\Source\AST\State;
-
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -49,21 +47,18 @@ use PDepend\Source\AST\State;
  * @group unittest
  * @group php8.1
  */
-class FinalClassConstantTest extends PHPParserVersion81Test
+class ReadonlyClassTest extends PHPParserVersion81Test
 {
     /**
      * @return void
      */
-    public function testFinalClassConstant()
+    public function testReadonlyClass()
     {
-        $class = $this->getFirstClassForTestCase();
-        $constantDeclarators = $class->getConstantDeclarators();
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: readonly, line: 2, col: 1, file: '
+        );
 
-        $constantDeclarator = $constantDeclarators['BAR'];
-        $this->assertSame('BAR', $constantDeclarator->getImage());
-
-        $constantDefinition = $constantDeclarator->getParent();
-        $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
-        $this->assertSame(0, ($expectedModifiers & $constantDefinition->getModifiers()));
+        $this->getFirstClassForTestCase();
     }
 }
