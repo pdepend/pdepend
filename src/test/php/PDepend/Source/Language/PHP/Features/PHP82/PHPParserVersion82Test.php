@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,91 +36,34 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @since 2.11
  */
 
-namespace PDepend\Source\Language\PHP;
+namespace PDepend\Source\Language\PHP\Features\PHP82;
 
-use PDepend\Source\AST\ASTNode;
-use PDepend\Source\AST\ASTScalarType;
-use PDepend\Source\Tokenizer\Tokens;
+use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Concrete parser implementation that supports features up to PHP version 8.2.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @since 2.12
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
+ * @group unittest
  */
-abstract class PHPParserVersion82 extends PHPParserVersion81
+abstract class PHPParserVersion82Test extends AbstractTest
 {
-    protected $possiblePropertyTypes = array(
-        Tokens::T_STRING,
-        Tokens::T_ARRAY,
-        Tokens::T_QUESTION_MARK,
-        Tokens::T_BACKSLASH,
-        Tokens::T_CALLABLE,
-        Tokens::T_SELF,
-        Tokens::T_NULL,
-        Tokens::T_FALSE,
-        Tokens::T_TRUE,
-    );
-
     /**
-     * Since PHP 8.2, readonly is allowed as class modifier.
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    const READONLY_CLASS_ALLOWED = true;
-
-    /**
-     * Tests if the given image is a PHP 8.2 type hint.
-     *
-     * @param string $image
-     *
-     * @return bool
-     */
-    protected function isScalarOrCallableTypeHint($image)
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        if (strtolower($image) === 'true') {
-            return true;
-        }
-
-        return parent::isScalarOrCallableTypeHint($image);
-    }
-
-    protected function isTypeHint($tokenType)
-    {
-        if ($tokenType === Tokens::T_TRUE) {
-            return true;
-        }
-
-        return parent::isTypeHint($tokenType);
-    }
-
-    protected function parseSingleTypeHint()
-    {
-        $this->consumeComments();
-
-        if ($this->tokenizer->peek() == Tokens::T_TRUE) {
-            $type = new ASTScalarType('true');
-            $this->tokenStack->add($this->tokenizer->next());
-            $this->consumeComments();
-
-            return $type;
-        }
-
-
-        return parent::parseSingleTypeHint();
-    }
-
-    /**
-     * @param ASTNode $type
-     *
-     * @return bool
-     */
-    protected function canNotBeStandAloneType($type)
-    {
-        return false;
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion82',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }

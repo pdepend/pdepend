@@ -40,7 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTEnumCase;
 use PDepend\Source\AST\ASTInterface;
@@ -54,7 +53,7 @@ use PDepend\Source\AST\ASTParameter;
  * @group unittest
  * @group php8.1
  */
-class EnumTest extends AbstractTest
+class EnumTest extends PHPParserVersion81Test
 {
     /**
      * @return void

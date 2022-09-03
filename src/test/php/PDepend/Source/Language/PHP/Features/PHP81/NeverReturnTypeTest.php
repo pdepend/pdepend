@@ -40,8 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
-
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -49,7 +47,7 @@ use PDepend\AbstractTest;
  * @group unittest
  * @group php8.1
  */
-class NeverReturnTypeTest extends AbstractTest
+class NeverReturnTypeTest extends PHPParserVersion81Test
 {
     /**
      * @return void

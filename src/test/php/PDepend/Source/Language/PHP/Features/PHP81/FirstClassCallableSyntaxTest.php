@@ -40,7 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTMethodPostfix;
 
 /**
@@ -50,7 +49,7 @@ use PDepend\Source\AST\ASTMethodPostfix;
  * @group unittest
  * @group php8.1
  */
-class FirstClassCallableSyntaxTest extends AbstractTest
+class FirstClassCallableSyntaxTest extends PHPParserVersion81Test
 {
     /**
      * @return void

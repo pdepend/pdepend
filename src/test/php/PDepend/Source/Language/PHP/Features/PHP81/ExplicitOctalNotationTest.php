@@ -40,7 +40,6 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTConstantDeclarator;
 
 /**
@@ -50,7 +49,7 @@ use PDepend\Source\AST\ASTConstantDeclarator;
  * @group unittest
  * @group php8.1
  */
-class ExplicitOctalNotationTest extends AbstractTest
+class ExplicitOctalNotationTest extends PHPParserVersion81Test
 {
     public function testExplicitOctalNotation()
     {

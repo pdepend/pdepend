@@ -40,21 +40,19 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
-use PDepend\Source\AST\State;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
  * @group unittest
  * @group php8.2
  */
-class AllowNullAndFalseAsStandAloneTypesTest extends AbstractTest
+class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82Test
 {
     /**
      * @return void
