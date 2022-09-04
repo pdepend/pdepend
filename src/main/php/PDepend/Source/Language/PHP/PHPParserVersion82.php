@@ -93,7 +93,7 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
 
     protected function isTypeHint($tokenType)
     {
-        if ($tokenType === Tokens::T_TRUE) {
+        if (in_array($tokenType, array(Tokens::T_TRUE, Tokens::T_PARENTHESIS_OPEN), true)) {
             return true;
         }
 
@@ -104,16 +104,27 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
     {
         $this->consumeComments();
 
-        if ($this->tokenizer->peek() == Tokens::T_TRUE) {
-            $type = new ASTScalarType('true');
-            $this->tokenStack->add($this->tokenizer->next());
-            $this->consumeComments();
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_PARENTHESIS_OPEN:
+                $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+                $this->consumeComments();
+                $type = $this->parseTypeHint();
+                $this->consumeComments();
+                $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+                $this->consumeComments();
 
-            return $type;
+                return $type;
+
+            case Tokens::T_TRUE:
+                $type = new ASTScalarType('true');
+                $this->tokenStack->add($this->tokenizer->next());
+                $this->consumeComments();
+
+                return $type;
+
+            default:
+                return parent::parseSingleTypeHint();
         }
-
-
-        return parent::parseSingleTypeHint();
     }
 
     /**
