@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This class represents an intersection type
  *
@@ -53,31 +51,28 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTIntersectionType extends AbstractASTCombinationType
+abstract class AbstractASTCombinationType extends ASTType
 {
     /**
-     * For this specific type it is always an intersection type.
-     *
-     * @return bool
+     * @return string
      */
-    public function isIntersection()
-    {
-        return true;
-    }
+    abstract protected function getSymbol();
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
+     * Return concatenated allowed types string representation.
      *
-     * @since  2.11.0
+     * @return string
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    public function getImage()
     {
-        return $visitor->visitUnionType($this, $data);
-    }
+        return implode($this->getSymbol(), array_map(function ($type) {
+            $image = $type->getImage();
 
-    protected function getSymbol()
-    {
-        return '&';
+            if ($type instanceof AbstractASTCombinationType) {
+                $image = "($image)";
+            }
+
+            return $image;
+        }, $this->getChildren()));
     }
 }

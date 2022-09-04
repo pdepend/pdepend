@@ -55,7 +55,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @since 0.9.6
  */
-class ASTUnionType extends ASTType
+class ASTUnionType extends AbstractASTCombinationType
 {
     /**
      * This method will return <b>true</b> when this type use union pipe to specify multiple types.
@@ -79,15 +79,8 @@ class ASTUnionType extends ASTType
         return $visitor->visitUnionType($this, $data);
     }
 
-    /**
-     * Return concatenated allowed types string representation.
-     *
-     * @return string
-     */
-    public function getImage()
+    protected function getSymbol()
     {
-        return implode('|', array_map(function ($type) {
-            return $type->getImage();
-        }, $this->getChildren()));
+        return '|';
     }
 }
