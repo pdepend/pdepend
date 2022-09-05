@@ -169,6 +169,17 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
+     * Returns an iterator with all {@link ASTEnum}
+     * instances within this namespace.
+     *
+     * @return ASTArtifactList<ASTEnum>
+     */
+    public function getEnums()
+    {
+        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTEnum');
+    }
+
+    /**
      * Returns an iterator with all {@link ASTInterface}
      * instances within this namespace.
      *
