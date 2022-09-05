@@ -100,7 +100,7 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
 
         /** @var ASTProperty $property */
         $property = $properties->current();
-        //$this->assertSame('E::Foo->name', $this->constructImage($property->getDefaultValue()));
+        $this->assertSame('E::Foo->name', $this->constructImage($property->getDefaultValue()));
 
         $g = $classes[2];
         $this->assertSame('G', $g->getName());
