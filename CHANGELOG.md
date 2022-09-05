@@ -1,4 +1,12 @@
-pdepend-2.11.0 (2022/09/01)
+pdepend-2.12.0 (2022/09/07)
+==========================
+
+- Added [\#618](https://github.com/pdepend/pdepend/pull/618): Implement support for PHP 8.2 null/false stand-alone type
+- Added [\#620](https://github.com/pdepend/pdepend/pull/620): Implement support for PHP 8.2 true type
+- Added [\#625](https://github.com/pdepend/pdepend/pull/625): Implement support for PHP 8.2 Readonly Classes
+- Added [\#626](https://github.com/pdepend/pdepend/pull/626): Implement support for PHP 8.2 Disjunctive Normal Form Types
+
+pdepend-2.11.1 (2022/09/01)
 ==========================
 
 - Fixed [\#622](https://github.com/pdepend/pdepend/pull/622): Fix ASTEnum serialization
