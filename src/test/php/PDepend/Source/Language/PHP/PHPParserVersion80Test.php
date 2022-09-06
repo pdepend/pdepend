@@ -111,6 +111,23 @@ class PHPParserVersion80Test extends AbstractTest
     }
 
     /**
+     * testFunctionParameterTypeHintByReferenceVariableArguments
+     *
+     * @return void
+     */
+    public function testFunctionParameterTypeHintByReferenceVariableArguments()
+    {
+        $parameters = $this->getFirstFunctionForTestCase()->getParameters();
+        $parameter = $parameters[0];
+        $formalParameter = $parameter->getFormalParameter();
+        $type = $formalParameter->getType();
+
+        $this->assertFalse($type->isIntersection());
+        $this->assertTrue($formalParameter->isPassedByReference());
+        $this->assertTrue($formalParameter->isVariableArgList());
+    }
+
+    /**
      * @return void
      */
     public function testTrailingCommaInClosureUseList()
