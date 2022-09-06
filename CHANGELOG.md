@@ -5,6 +5,7 @@ pdepend-2.12.0 (2022/09/07)
 - Added [\#620](https://github.com/pdepend/pdepend/pull/620): Implement support for PHP 8.2 true type
 - Added [\#625](https://github.com/pdepend/pdepend/pull/625): Implement support for PHP 8.2 Readonly Classes
 - Added [\#626](https://github.com/pdepend/pdepend/pull/626): Implement support for PHP 8.2 Disjunctive Normal Form Types
+- Fixed [\#630](https://github.com/pdepend/pdepend/pull/630): Fix parsing of by-reference vararg parameters
 
 pdepend-2.11.1 (2022/09/01)
 ==========================
