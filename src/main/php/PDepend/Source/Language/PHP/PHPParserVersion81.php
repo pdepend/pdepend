@@ -212,8 +212,9 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
             return $this->parseUnionTypeHint($type);
         }
 
-        // sniff for &, but avoid by_reference &$variable.
-        if ($peek === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
+        $peekNext = $this->tokenizer->peekNext();
+        // sniff for &, but avoid by_reference &$variable and &...$variables.
+        if ($peek === Tokens::T_BITWISE_AND && $peekNext !== Tokens::T_VARIABLE && $peekNext !== Tokens::T_ELLIPSIS) {
             return $this->parseIntersectionTypeHint($type);
         }
 
