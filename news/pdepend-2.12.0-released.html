@@ -52,19 +52,24 @@
 
 
 <div class="viewport content">
-    <p>Beside the GitHub releases and the developer checkout from GitHub, you can
-always grep the latest version of PHP_Depend from this website as a simple,
-single PHAR archive.</p>
+    
+<a id="version-2-12-0-released"></a>
+<h2>Version 2.12.0 released</h2>
+<p>We are proud to announce version <a href="https://github.com/pdepend/pdepend/releases/tag/2.12.0">2.12.0</a> of PDepend. For more
+details visit the version release <a href="https://github.com/pdepend/pdepend/releases/tag/2.12.0">site</a>.</p>
+<p>Use <a href="http://getcomposer.org">composer</a> to install PHP_Depend:</p>
 
-<pre><code class="">~ $ wget https://pdepend.org/static/latest/pdepend.phar
-..
-~ $ chmod +x pdepend.phar
+<pre><code class="">curl -s http://getcomposer.org/installer | php
+php composer.phar require &quot;pdepend/pdepend:2.12.0&quot;
 </code></pre>
-<p>That's it. Now you have a running version of PHP_Depend, that can be called
-on the command-line:</p>
+<p>Or if you already have composer installed globally:</p>
 
-<pre><code class="">~ $ ./pdepend.phar --summary-xml=/tmp/sum.xml /path/to/code
+<pre><code class="">composer require &quot;pdepend/pdepend:2.12.0&quot;
 </code></pre>
+<a id="download"></a>
+<h3>Download</h3>
+<p>Future releases will also be released as PHAR files on
+<a href="https://github.com/pdepend/pdepend/releases">GitHub</a></p>
 </div>
 <div class="footer">
     <div class="viewport">
