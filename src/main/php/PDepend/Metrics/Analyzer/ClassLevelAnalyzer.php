@@ -48,9 +48,11 @@ use PDepend\Metrics\AggregateAnalyzer;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerFilterAware;
 use PDepend\Metrics\AnalyzerNodeAware;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
@@ -194,31 +196,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     public function visitClass(ASTClass $class)
     {
         $this->fireStartClass($class);
-
-        $impl  = count($class->getInterfaces());
-        $varsi = $this->calculateVarsi($class);
-        $wmci  = $this->calculateWmciForClass($class);
-
-        $this->nodeMetrics[$class->getId()] = array(
-            self::M_IMPLEMENTED_INTERFACES       => $impl,
-            self::M_CLASS_INTERFACE_SIZE         => 0,
-            self::M_CLASS_SIZE                   => 0,
-            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
-            self::M_PROPERTIES                   => 0,
-            self::M_PROPERTIES_INHERIT           => $varsi,
-            self::M_PROPERTIES_NON_PRIVATE       => 0,
-            self::M_WEIGHTED_METHODS             => 0,
-            self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
-            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
-        );
-
-        foreach ($class->getProperties() as $property) {
-            $property->accept($this);
-        }
-        foreach ($class->getMethods() as $method) {
-            $method->accept($this);
-        }
-
+        $this->calculateAbstractASTClassOrInterfaceMetrics($class);
         $this->fireEndClass($class);
     }
 
@@ -266,6 +244,20 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         }
 
         $this->fireEndTrait($trait);
+    }
+
+    /**
+     * Visits a enum node.
+     *
+     * @return void
+     *
+     * @since  2.12.1
+     */
+    public function visitEnum(ASTEnum $enum)
+    {
+        $this->fireStartEnum($enum);
+        $this->calculateAbstractASTClassOrInterfaceMetrics($enum);
+        $this->fireEndEnum($enum);
     }
 
     /**
@@ -329,11 +321,11 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Variables Inheritance of a class metric, this method only
      * counts protected and public properties of parent classes.
      *
-     * @param ASTClass $class The context class instance.
+     * @param ASTClass|ASTEnum|ASTTrait $class The context class instance.
      *
      * @return int
      */
-    private function calculateVarsi(ASTClass $class)
+    private function calculateVarsi(AbstractASTClassOrInterface $class)
     {
         // List of properties, this method only counts not overwritten properties
         $properties = array();
@@ -356,11 +348,11 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Weight Method Per Class metric, this method only counts
      * protected and public methods of parent classes.
      *
-     * @param ASTClass $class The context class instance.
+     * @param ASTClass|ASTEnum|ASTTrait $class The context class instance.
      *
      * @return int
      */
-    private function calculateWmciForClass(ASTClass $class)
+    private function calculateWmciForClass(AbstractASTClassOrInterface $class)
     {
         $ccn = $this->calculateWmci($class);
 
@@ -407,5 +399,35 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         }
 
         return $ccn;
+    }
+
+    private function calculateAbstractASTClassOrInterfaceMetrics(AbstractASTClassOrInterface $class)
+    {
+        $impl  = count($class->getInterfaces());
+        $varsi = $this->calculateVarsi($class);
+        $wmci  = $this->calculateWmciForClass($class);
+
+        $this->nodeMetrics[$class->getId()] = array(
+            self::M_IMPLEMENTED_INTERFACES       => $impl,
+            self::M_CLASS_INTERFACE_SIZE         => 0,
+            self::M_CLASS_SIZE                   => 0,
+            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
+            self::M_PROPERTIES                   => 0,
+            self::M_PROPERTIES_INHERIT           => $varsi,
+            self::M_PROPERTIES_NON_PRIVATE       => 0,
+            self::M_WEIGHTED_METHODS             => 0,
+            self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
+            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
+        );
+
+        if ($class instanceof ASTClass) {
+            foreach ($class->getProperties() as $property) {
+                $property->accept($this);
+            }
+        }
+
+        foreach ($class->getMethods() as $method) {
+            $method->accept($this);
+        }
     }
 }

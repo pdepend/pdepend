@@ -238,6 +238,9 @@ abstract class AbstractASTVisitor implements ASTVisitor
         foreach ($namespace->getTraits() as $trait) {
             $trait->accept($this);
         }
+        foreach ($namespace->getEnums() as $enum) {
+            $enum->accept($this);
+        }
         foreach ($namespace->getFunctions() as $function) {
             $function->accept($this);
         }
