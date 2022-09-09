@@ -53,37 +53,23 @@
 
 <div class="viewport content">
     
-<a id="php-depend-development-moved-to-github"></a>
-<h2>PHP_Depend development moved to GitHub</h2>
-<p>:Description:
-  The main part of PHP_Depend's development already happens in a Git
-  repository since Februar 2009. This means that the development happens
-  locally and is then pushed to a public master repository. For backward
-  compatibility we have synced the previous Subversion repository with
-  Git checkout, but now we have decided to stop the sometimes really painful
-  Subversion support. At least now on you should switch to PHP_Depend's
-  official GitHub repository, if your development environment still
-  relies on the old Subversion repository.</p>
-<p>The main part of PHP_Depend's development already happens in a <a href="">Git</a>
-repository since Februar 2009. This means that the development happens
-locally and is then pushed to a public master repository. For backward
-compatibility we have synced the previous <a href="">Subversion</a> repository with
-Git checkout, but now we have decided to stop the sometimes really painful
-Subversion support. At least now on you should switch to PHP_Depend's<br />official <a href="https://github.com/pdepend/pdepend/releases">GitHub</a> repository, if your development environment still<br />relies on the old Subversion repository. </p>
+<a id="version-2-12-1-released"></a>
+<h2>Version 2.12.1 released</h2>
+<p>We are proud to announce version <a href="https://github.com/pdepend/pdepend/releases/tag/2.12.1">2.12.1</a> of PDepend. For more
+details visit the version release <a href="https://github.com/pdepend/pdepend/releases/tag/2.12.1">site</a>.</p>
+<p>Use <a href="http://getcomposer.org">composer</a> to install PHP_Depend:</p>
 
-<pre><code class="">~ $ git clone git://github.com/pdepend/pdepend.git
+<pre><code class="">curl -s http://getcomposer.org/installer | php
+php composer.phar require &quot;pdepend/pdepend:2.12.1&quot;
 </code></pre>
-<p>To make this hard cut in the used infrastructure as smooth as possible for
-all users of PHP_Depend we have decided to keep the old Subversion <a href="">urls</a>
-alive through GitHub's <a href="">svn support</a>. But you should keep in mind that</p>
+<p>Or if you already have composer installed globally:</p>
 
-<pre><code class="">~ $ svn co http://svn.pdepend.org/trunk
+<pre><code class="">composer require &quot;pdepend/pdepend:2.12.1&quot;
 </code></pre>
-<p>and</p>
-
-<pre><code class="">~ $ svn co http://svn.pdepend.org/tags/0.9.19
-</code></pre>
-<p>will all map to PHP_Depend's Master branch on GitHub.</p>
+<a id="download"></a>
+<h3>Download</h3>
+<p>Future releases will also be released as PHAR files on
+<a href="https://github.com/pdepend/pdepend/releases">GitHub</a></p>
 </div>
 <div class="footer">
     <div class="viewport">
