@@ -1,3 +1,8 @@
+pdepend-2.12.1 (2022/09/08)
+==========================
+
+- Fixed [\#631](https://github.com/pdepend/pdepend/pull/631): Fix enum visit
+
 pdepend-2.12.0 (2022/09/07)
 ==========================
 
