@@ -1727,10 +1727,7 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        $token = $this->consumeToken(Tokens::T_NEW);
-
-        $allocation = $this->builder->buildAstAllocationExpression($token->image);
-        $allocation = $this->parseAllocationExpressionTypeReference($allocation);
+        $allocation = $this->parseAllocationExpressionValue();
 
         if ($this->isNextTokenArguments()) {
             $allocation->addChild($this->parseArguments());
@@ -1753,6 +1750,39 @@ abstract class AbstractPHPParser
     protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
     {
         return $this->parseExpressionTypeReference($allocation, true);
+    }
+
+    /**
+     * Parse the instanciation for new keyword without arguments.
+     *
+     * @return ASTAllocationExpression
+     */
+    private function parseAllocationExpressionValue()
+    {
+        $token = $this->consumeToken(Tokens::T_NEW);
+        $this->consumeComments();
+        $inParentheses = ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN);
+
+        if ($inParentheses) {
+            $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+        }
+
+        $allocation = $this->builder->buildAstAllocationExpression($token->image);
+
+        if (!$inParentheses) {
+            return $this->parseAllocationExpressionTypeReference($allocation);
+        }
+
+        $expression = $this->parseOptionalExpression();
+
+        if (!$expression) {
+            throw $this->getUnexpectedTokenException();
+        }
+
+        $allocation->addChild($expression);
+        $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+
+        return $allocation;
     }
 
     /**
