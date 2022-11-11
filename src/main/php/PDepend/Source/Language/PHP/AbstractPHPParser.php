@@ -8142,7 +8142,12 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
         $this->consumeComments();
 
-        if ($this->tokenizer->peek() !== Tokens::T_STRING) {
+        if (in_array($this->tokenizer->peek(), array(
+                Tokens::T_NEW,
+                Tokens::T_NULL,
+                Tokens::T_STRING,
+                Tokens::T_DEFAULT
+            )) === false) {
             throw $this->getUnexpectedTokenException();
         }
 
