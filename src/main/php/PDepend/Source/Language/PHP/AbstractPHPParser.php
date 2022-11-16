@@ -8147,7 +8147,7 @@ abstract class AbstractPHPParser
                 Tokens::T_NULL,
                 Tokens::T_STRING,
                 Tokens::T_DEFAULT
-            )) === false) {
+            ), true) === false) {
             throw $this->getUnexpectedTokenException();
         }
 
