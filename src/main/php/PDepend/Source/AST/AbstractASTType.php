@@ -383,7 +383,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->id);
+            ->restore($this->getId());
     }
 
     /**
@@ -404,7 +404,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         $this->cache
             ->type('tokens')
-            ->store($this->id, $tokens);
+            ->store($this->getId(), $tokens);
     }
 
     /**
@@ -502,7 +502,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         if (is_array($this->methods)) {
             $this->cache
                 ->type('methods')
-                ->store($this->id, $this->methods);
+                ->store($this->getId(), $this->methods);
 
             $this->methods = null;
         }

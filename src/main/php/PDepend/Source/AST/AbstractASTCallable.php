@@ -227,7 +227,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->id);
+            ->restore($this->getId());
     }
 
     /**
@@ -244,7 +244,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
 
         $this->cache
             ->type('tokens')
-            ->store($this->id, $tokens);
+            ->store($this->getId(), $tokens);
     }
 
     /**
