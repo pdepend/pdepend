@@ -79,9 +79,9 @@ final class Utf8Util
             $text = mb_convert_encoding($raw, 'UTF-8', mb_list_encodings());
         }
 
-        // Then try with native PHP function, if not deprecated.
-        if ($text === '' && PHP_VERSION_ID < 80200) {
-            $text = utf8_encode($raw);
+        // Then try with native PHP function, if not removed.
+        if ($text === '' && function_exists('utf8_encode')) {
+            $text = @utf8_encode($raw);
         }
 
         // Then finally use a polyfill.
