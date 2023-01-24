@@ -1282,7 +1282,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with($this->equalTo(null), $this->equalTo($tokens));
+            ->with($this->isType('string'), $this->equalTo($tokens));
 
         $class = new ASTClass(__CLASS__);
         $class->setCache($cache)
