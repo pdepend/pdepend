@@ -64,13 +64,15 @@ class EnumTest extends PHPParserVersion81Test
             ->current()
             ->getTypes();
 
-        $this->assertCount(3, $types);
+        $this->assertCount(4, $types);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTInterface', $types[0]);
         $this->assertSame('HasColor', $types[0]->getName());
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTEnum', $types[1]);
         $this->assertSame('Suit', $types[1]->getName());
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClass', $types[2]);
         $this->assertSame('UseEnum', $types[2]->getName());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTEnum', $types[3]);
+        $this->assertSame('SpecialCases', $types[3]->getName());
 
         $methods = $types[1]->getMethods();
 

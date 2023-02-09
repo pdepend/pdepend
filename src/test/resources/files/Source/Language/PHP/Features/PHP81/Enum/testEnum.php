@@ -38,3 +38,10 @@ class UseEnum
         return Suit::DIAMONDS->getColor() === 'red';
     }
 }
+
+enum SpecialCases
+{
+    case NULL;
+    case DEFAULT;
+    case NEW;
+}
