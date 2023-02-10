@@ -316,7 +316,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with($this->equalTo(null), $this->equalTo($tokens));
+            ->with($this->isType('string'), $this->equalTo($tokens));
 
         $function = $this->createItem();
         $function->setCache($cache)
@@ -336,7 +336,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('restore')
-            ->with($this->equalTo(null))
+            ->with($this->isType('string'))
             ->will($this->returnValue(array()));
 
         $function = $this->createItem();
@@ -357,7 +357,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('restore')
-            ->with($this->equalTo(null))
+            ->with($this->isType('string'))
             ->will($this->returnValue(null));
 
         $function = $this->createItem();

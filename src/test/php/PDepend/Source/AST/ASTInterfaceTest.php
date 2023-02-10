@@ -537,7 +537,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with($this->equalTo(null), $this->equalTo($tokens));
+            ->with($this->isType('string'), $this->equalTo($tokens));
 
         $interface = $this->createItem();
         $interface->setCache($cache)
