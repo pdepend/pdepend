@@ -222,7 +222,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     }
 
     /**
-     * @return int
+     * @return array<string, mixed>
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
