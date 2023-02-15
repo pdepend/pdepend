@@ -923,19 +923,40 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
 
-        if ($tokenType === Tokens::T_ABSTRACT) {
-            $this->consumeToken(Tokens::T_ABSTRACT);
-            $this->modifiers |= State::IS_EXPLICIT_ABSTRACT;
-        } elseif ($tokenType === Tokens::T_FINAL) {
-            $this->consumeToken(Tokens::T_FINAL);
-            $this->modifiers |= State::IS_FINAL;
-        } elseif ($tokenType === Tokens::T_READONLY) {
-            if (!static::READONLY_CLASS_ALLOWED) {
-                throw $this->getUnexpectedTokenException();
+        $validModifiers = array(
+            Tokens::T_ABSTRACT,
+            Tokens::T_FINAL,
+            Tokens::T_READONLY
+        );
+
+        $finalAllowed = true;
+        $abstractAllowed = true;
+
+        while (in_array($tokenType, $validModifiers, true)) {
+            if ($tokenType === Tokens::T_ABSTRACT) {
+                if (!$abstractAllowed) {
+                    throw $this->getUnexpectedTokenException();
+                }
+                $finalAllowed = false;
+                $this->consumeToken(Tokens::T_ABSTRACT);
+                $this->modifiers |= State::IS_EXPLICIT_ABSTRACT;
+            } elseif ($tokenType === Tokens::T_FINAL) {
+                if (!$finalAllowed) {
+                    throw $this->getUnexpectedTokenException();
+                }
+                $abstractAllowed = false;
+                $this->consumeToken(Tokens::T_FINAL);
+                $this->modifiers |= State::IS_FINAL;
+            } elseif ($tokenType === Tokens::T_READONLY) {
+                if (!static::READONLY_CLASS_ALLOWED) {
+                    throw $this->getUnexpectedTokenException();
+                }
+
+                $this->consumeToken(Tokens::T_READONLY);
+                $this->modifiers |= State::IS_READONLY;
             }
 
-            $this->consumeToken(Tokens::T_READONLY);
-            $this->modifiers |= State::IS_READONLY;
+            $tokenType = $this->tokenizer->peek();
         }
 
         $this->consumeComments();
