@@ -74,15 +74,4 @@ class ASTHeredoc extends ASTExpression
     {
         $this->delimiter = $delimiter;
     }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitHeredoc($this, $data);
-    }
 }

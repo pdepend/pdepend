@@ -201,15 +201,6 @@ class ASTClass extends AbstractASTClassOrInterface
         $this->modifiers = $modifiers;
     }
 
-    /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitClass($this);
-    }
 
     /**
      * The magic wakeup method will be called by PHP's runtime environment when

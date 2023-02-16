@@ -84,19 +84,6 @@ class ASTSwitchLabel extends AbstractASTNode
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     *
-     * @since  0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitSwitchLabel($this, $data);
-    }
-
-    /**
      * The magic sleep method will be called by PHP's runtime environment right
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.

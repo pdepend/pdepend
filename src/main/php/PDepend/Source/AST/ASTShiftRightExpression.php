@@ -70,15 +70,4 @@ class ASTShiftRightExpression extends ASTExpression
     {
         return self::IMAGE;
     }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitShiftRightExpression($this, $data);
-    }
 }

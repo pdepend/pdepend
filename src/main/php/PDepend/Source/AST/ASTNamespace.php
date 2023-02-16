@@ -328,14 +328,4 @@ class ASTNamespace extends AbstractASTArtifact
     {
         $this->packageAnnotation = $packageAnnotation;
     }
-
-    /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitNamespace($this);
-    }
 }

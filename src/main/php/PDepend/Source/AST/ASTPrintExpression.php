@@ -61,13 +61,4 @@ class ASTPrintExpression extends ASTExpression
     {
         parent::__construct('print');
     }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitPrintExpression($this, $data);
-    }
 }

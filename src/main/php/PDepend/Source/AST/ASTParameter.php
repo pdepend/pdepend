@@ -348,16 +348,6 @@ class ASTParameter extends AbstractASTArtifact
     }
 
     /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitParameter($this);
-    }
-
-    /**
      * Returns the wrapped formal parameter instance.
      *
      * @return ASTFormalParameter

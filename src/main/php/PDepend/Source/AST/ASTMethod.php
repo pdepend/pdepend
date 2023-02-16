@@ -217,16 +217,6 @@ class ASTMethod extends AbstractASTCallable
     }
 
     /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitMethod($this);
-    }
-
-    /**
      * The magic sleep method will be called by the PHP engine when this class
      * gets serialized. It returns an array with those properties that should be
      * cached for method instances.

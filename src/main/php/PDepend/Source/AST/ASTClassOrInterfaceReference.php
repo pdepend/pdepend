@@ -100,17 +100,6 @@ class ASTClassOrInterfaceReference extends ASTType
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @since  0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitClassOrInterfaceReference($this, $data);
-    }
-
-    /**
      * Magic method which returns the names of all those properties that should
      * be cached for this node instance.
      *

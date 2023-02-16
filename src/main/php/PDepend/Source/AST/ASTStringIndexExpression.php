@@ -62,12 +62,4 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  */
 class ASTStringIndexExpression extends ASTIndexExpression
 {
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitStringIndexExpression($this, $data);
-    }
 }

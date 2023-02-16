@@ -119,16 +119,6 @@ class ASTInterface extends AbstractASTClassOrInterface
     }
 
     /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitInterface($this);
-    }
-
-    /**
      * The magic wakeup method will be called by PHP's runtime environment when
      * a serialized instance of this class was unserialized. This implementation
      * of the wakeup method will register this object in the the global class

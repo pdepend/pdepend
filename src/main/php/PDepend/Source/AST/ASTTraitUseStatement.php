@@ -204,13 +204,4 @@ class ASTTraitUseStatement extends ASTStatement
     {
         return $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationAlias');
     }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitTraitUseStatement($this, $data);
-    }
 }

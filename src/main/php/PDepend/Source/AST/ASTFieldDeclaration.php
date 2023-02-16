@@ -184,19 +184,6 @@ class ASTFieldDeclaration extends AbstractASTNode
     }
 
     /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     *
-     * @since  0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitFieldDeclaration($this, $data);
-    }
-
-    /**
      * Returns the total number of the used property bag.
      *
      * @return int

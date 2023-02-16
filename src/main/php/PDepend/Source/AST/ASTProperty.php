@@ -333,16 +333,6 @@ class ASTProperty extends AbstractASTArtifact
     }
 
     /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitProperty($this);
-    }
-
-    /**
      * This method returns a string representation of this parameter.
      *
      * @return string
