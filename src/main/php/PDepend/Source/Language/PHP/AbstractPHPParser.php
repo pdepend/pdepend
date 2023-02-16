@@ -2997,7 +2997,7 @@ abstract class AbstractPHPParser
      * This method parses multiple expressions and adds them as children to the
      * given <b>$exprList</b> node.
      *
-     * @template T of ASTNode
+     * @template T of AbstractASTNode
      *
      * @param T $exprList
      *

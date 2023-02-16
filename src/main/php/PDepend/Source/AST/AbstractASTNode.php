@@ -61,7 +61,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Parsed child nodes of this node.
      *
-     * @var (ASTArtifact|AbstractASTNode)[]
+     * @var ASTNode[]
      */
     protected $nodes = array();
 
@@ -347,7 +347,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return (ASTArtifact|AbstractASTNode)[]
+     * @return ASTNode[]
      */
     public function getChildren()
     {
@@ -417,7 +417,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method adds a new child node to this node instance.
      *
-     * @param ASTNode&(ASTArtifact|AbstractASTNode) $node
+     * @param ASTNode $node
      *
      * @return void
      */
