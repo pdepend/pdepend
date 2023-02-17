@@ -965,7 +965,11 @@ abstract class AbstractPHPParser
     /**
      * Parses a parent class declaration for the given <b>$class</b>.
      *
-     * @return ASTClass
+     * @template T of ASTClass
+     *
+     * @param T $class
+     *
+     * @return T
      *
      * @since 1.0.0
      */
@@ -1484,7 +1488,7 @@ abstract class AbstractPHPParser
     /**
      * Extension for version specific additions.
      *
-     * @template T of AbstractASTCallable
+     * @template T of AbstractASTCallable|ASTClosure
      *
      * @param T $callable
      *
@@ -1949,7 +1953,7 @@ abstract class AbstractPHPParser
     /**
      * Return true if the current node can be used as a list key.
      *
-     * @param ASTExpression|null $node
+     * @param ASTNode|null $node
      *
      * @return bool
      */
@@ -2996,7 +3000,7 @@ abstract class AbstractPHPParser
      * This method parses multiple expressions and adds them as children to the
      * given <b>$exprList</b> node.
      *
-     * @template T of ASTNode
+     * @template T of AbstractASTNode
      *
      * @param T $exprList
      *
@@ -3072,7 +3076,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return AbstractASTNode|null
+     * @return ASTNode|null
      *
      * @since 0.9.6
      */
@@ -3373,9 +3377,11 @@ abstract class AbstractPHPParser
     /**
      * Applies all reduce rules against the given expression list.
      *
-     * @param ASTExpression[] $expressions Unprepared input array with parsed expression nodes found in the source tree.
+     * @template T of ASTNode[]
      *
-     * @return ASTExpression[]
+     * @param T $expressions Unprepared input array with parsed expression nodes found in the source tree.
+     *
+     * @return T
      *
      * @since 0.10.0
      */
@@ -3387,9 +3393,11 @@ abstract class AbstractPHPParser
     /**
      * Reduces all unary-expressions in the given expression list.
      *
-     * @param ASTExpression[] $expressions Unprepared input array with parsed expression nodes found in the source tree.
+     * @template T of ASTNode[]
      *
-     * @return ASTExpression[]
+     * @param T $expressions Unprepared input array with parsed expression nodes found in the source tree.
+     *
+     * @return T
      *
      * @since 0.10.0
      */
@@ -3973,7 +3981,7 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @return AbstractASTNode|null
+     * @return ASTNode|null
      *
      * @since 0.9.12
      */
