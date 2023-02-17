@@ -1112,8 +1112,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_CASE:
                     if (!($classOrInterface instanceof ASTEnum)) {
                         throw new TokenException(
-                            'Enum case should be located only inside enum classes',
-                            $this->tokenizer->getSourceFile()
+                            'Enum case should be located only inside enum classes'
                         );
                     }
 
@@ -8097,8 +8096,7 @@ abstract class AbstractPHPParser
                 !in_array($type->getImage(), array('int', 'string'), true)
             ) {
                 throw new TokenException(
-                    "Enum backing type must be 'int' or 'string'",
-                    $this->tokenizer->getSourceFile()
+                    "Enum backing type must be 'int' or 'string'"
                 );
             }
         }
