@@ -65,17 +65,6 @@ class ASTIntersectionType extends AbstractASTCombinationType
         return true;
     }
 
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @since  2.11.0
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitUnionType($this, $data);
-    }
-
     protected function getSymbol()
     {
         return '&';

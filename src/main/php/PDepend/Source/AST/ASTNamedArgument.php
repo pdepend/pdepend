@@ -95,15 +95,4 @@ class ASTNamedArgument extends AbstractASTNode
     {
         return sprintf('%s: %s', $this->name, $this->getChild(0)->getImage());
     }
-
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitNamedArgument($this, $data);
-    }
 }

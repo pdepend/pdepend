@@ -347,7 +347,7 @@ class ChartTest extends AbstractTest
         $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
             ->setMethods(array('isUserDefined'))
             ->setConstructorArgs(array($packageName))
-            ->setMockClassName('package_' . md5(microtime()))
+            ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')
             ->getMock();
         $packageA->expects($this->atLeastOnce())
             ->method('isUserDefined')

@@ -52,12 +52,4 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  */
 class ASTFinallyStatement extends ASTStatement
 {
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitFinallyStatement($this, $data);
-    }
 }

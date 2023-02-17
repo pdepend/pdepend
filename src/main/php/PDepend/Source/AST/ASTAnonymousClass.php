@@ -222,14 +222,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     }
 
     /**
-     * @return int
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitAnonymousClass($this, $data);
-    }
-
-    /**
      * The magic sleep method will be called by PHP's runtime environment right
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.

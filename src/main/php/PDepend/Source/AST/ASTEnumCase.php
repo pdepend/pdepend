@@ -99,17 +99,6 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
         return null;
     }
 
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        $visitor->visitASTEnumCase($this, $data);
-    }
-
     public function getName()
     {
         return $this->getImage();

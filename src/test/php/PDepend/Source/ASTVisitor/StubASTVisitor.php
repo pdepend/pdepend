@@ -272,4 +272,8 @@ class StubASTVisitor implements ASTVisitor
     public function __call($method, $args)
     {
     }
+
+    public function visit($node, $value)
+    {
+    }
 }

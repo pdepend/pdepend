@@ -66,16 +66,4 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  */
 class ASTArray extends ASTExpression
 {
-    /**
-     * Accept method of the visitor design pattern. This method will be called
-     * by a visitor during tree traversal.
-     *
-     * @param ASTVisitor $visitor The calling visitor instance.
-     *
-     * @since  0.9.12
-     */
-    public function accept(ASTVisitor $visitor, $data = null)
-    {
-        return $visitor->visitArray($this, $data);
-    }
 }

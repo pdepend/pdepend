@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+
 /**
  * Abstract base class for code item.
  *
@@ -256,6 +258,20 @@ abstract class AbstractASTArtifact implements ASTArtifact
     public function setDocComment($docComment)
     {
         $this->setComment($docComment);
+    }
+
+    /**
+     * @template T of array<string, mixed>|string|null
+     *
+     * @param T $data
+     *
+     * @return T
+     */
+    public function accept(ASTVisitor $visitor, $data = null)
+    {
+        $methodName = 'visit' . substr(get_class($this), 22);
+
+        return call_user_func(array($visitor, $methodName), $this, $data);
     }
 
     // END@deprecated

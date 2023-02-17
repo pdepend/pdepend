@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\ASTVisitor;
 
+use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTEnum;
@@ -163,4 +165,14 @@ interface ASTVisitor
      * @since  0.9.12
      */
     public function __call($method, $args);
+
+    /**
+     * @template T of array<string, mixed>|numeric-string
+     *
+     * @param ASTArtifact|AbstractASTNode $node
+     * @param T $value
+     *
+     * @return T
+     */
+    public function visit($node, $value);
 }

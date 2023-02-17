@@ -61,7 +61,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Parsed child nodes of this node.
      *
-     * @var ASTNode[]
+     * @var (ASTArtifact|AbstractASTNode)[]
      */
     protected $nodes = array();
 
@@ -91,9 +91,18 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected $metadata = '::::';
 
+    /**
+     * @template T of array<string, mixed>|string|null
+     *
+     * @param T $data
+     *
+     * @return T
+     */
     public function accept(ASTVisitor $visitor, $data = null)
     {
-        throw new BadMethodCallException('Accept must be overwritten');
+        $methodName = 'visit' . substr(get_class($this), 22);
+
+        return call_user_func(array($visitor, $methodName), $this, $data);
     }
 
     /**
@@ -338,7 +347,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return ASTNode[]
+     * @return (ASTArtifact|AbstractASTNode)[]
      */
     public function getChildren()
     {
@@ -407,6 +416,8 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * This method adds a new child node to this node instance.
+     *
+     * @param ASTNode&(ASTArtifact|AbstractASTNode) $node
      *
      * @return void
      */

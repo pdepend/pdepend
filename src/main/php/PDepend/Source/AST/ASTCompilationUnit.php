@@ -296,16 +296,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
     }
 
     /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @return void
-     */
-    public function accept(ASTVisitor $visitor)
-    {
-        $visitor->visitCompilationUnit($this);
-    }
-
-    /**
      * The magic sleep method will be called by PHP's runtime environment right
      * before it serializes an instance of this class. This method returns an
      * array with those property names that should be serialized.
