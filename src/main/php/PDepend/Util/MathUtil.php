@@ -55,8 +55,8 @@ final class MathUtil
      * This method will multiply the two given operands with the bcmath extension
      * when available, otherwise it will use the default mathematical operations.
      *
-     * @param string $left  The left arithmetic operand.
-     * @param string $right The right arithmetic operand.
+     * @param numeric-string $left  The left arithmetic operand.
+     * @param numeric-string $right The right arithmetic operand.
      *
      * @return string
      */
