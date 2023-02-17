@@ -8194,7 +8194,7 @@ abstract class AbstractPHPParser
 
         $expression = $this->parseOptionalExpression();
 
-        if ($expression === null) {
+        if (!$expression instanceof AbstractASTNode) {
             throw new MissingValueException($this->tokenizer);
         }
 
