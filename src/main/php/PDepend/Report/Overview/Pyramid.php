@@ -112,7 +112,7 @@ class Pyramid implements FileAwareGenerator
      * Holds defined thresholds for the computed proportions. This set is based
      * on java thresholds, we should find better values for php projects.
      *
-     * @var array<string, array>
+     * @var array<string, array<int, float>>
      */
     private $thresholds = array(
         'cyclo-loc'     =>  array(0.16, 0.20, 0.24),

@@ -243,7 +243,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected function setMetadataInteger($index, $value)
     {
-        $this->setMetadata($index, $value);
+        $this->setMetadata($index, (string)$value);
     }
 
     /**
@@ -273,7 +273,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected function setMetadataBoolean($index, $value)
     {
-        $this->setMetadata($index, $value ? 1 : 0);
+        $this->setMetadata($index, $value ? '1' : '0');
     }
 
     /**
@@ -296,6 +296,7 @@ abstract class AbstractASTNode implements ASTNode
      * container.
      *
      * @param int $index
+     * @param string $value
      *
      * @return void
      *

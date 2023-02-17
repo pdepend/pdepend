@@ -256,6 +256,8 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @param string $name Name of the searched constant.
      *
+     * @return mixed
+     *
      * @since  0.9.6
      */
     public function getConstant($name)

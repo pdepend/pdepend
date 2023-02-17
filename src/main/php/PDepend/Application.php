@@ -169,7 +169,7 @@ class Application
     /**
      * Returns available logger options and documentation messages.
      *
-     * @return array<string, array>
+     * @return array<string, array<string, string>>
      */
     public function getAvailableLoggerOptions()
     {
@@ -179,7 +179,7 @@ class Application
     /**
      * Returns available analyzer options and documentation messages.
      *
-     * @return array<string, array>
+     * @return array<string, array<string, string>>
      */
     public function getAvailableAnalyzerOptions()
     {

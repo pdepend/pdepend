@@ -133,7 +133,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Metrics calculated for a single source node.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, mixed>>
      */
     private $nodeMetrics = null;
 

@@ -290,11 +290,17 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $function;
     }
 
+    /**
+     * @return ASTType
+     */
     protected function parseEndReturnTypeHint()
     {
         return $this->parseTypeHint();
     }
 
+    /**
+     * @return ASTType
+     */
     protected function parseSingleTypeHint()
     {
         $this->consumeComments();
@@ -352,6 +358,11 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $unionType;
     }
 
+    /**
+     * @param ASTType $type
+     *
+     * @return ASTType
+     */
     protected function parseTypeHintCombination($type)
     {
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
@@ -371,6 +382,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $type instanceof ASTScalarType && ($type->isFalse() || $type->isNull());
     }
 
+    /**
+     * @return ASTType
+     */
     protected function parseTypeHint()
     {
         $this->consumeComments();
@@ -412,12 +426,17 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     /**
      * use of trailing comma in formal parameters list is allowed since PHP 8.0
      * example function foo(string $bar, int $baz,)
+     *
+     * @return bool
      */
     protected function allowTrailingCommaInFormalParametersList()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     protected function isNextTokenObjectOperator()
     {
         return in_array($this->tokenizer->peek(), array(

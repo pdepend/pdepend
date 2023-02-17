@@ -55,7 +55,7 @@ interface CodeRankStrategyI extends ASTVisitor
     /**
      * Returns the collected nodes.
      *
-     * @return array<string, array>
+     * @return array<string, array<string, array<int, string>>>
      */
     public function getCollectedNodes();
 }

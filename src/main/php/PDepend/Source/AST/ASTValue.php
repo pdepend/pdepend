@@ -65,11 +65,15 @@ class ASTValue
 
     /**
      * The parsed PHP-value,
+     *
+     * @var mixed
      */
     private $value = null;
 
     /**
      * This method will return the parsed PHP value.
+     *
+     * @return mixed
      */
     public function getValue()
     {

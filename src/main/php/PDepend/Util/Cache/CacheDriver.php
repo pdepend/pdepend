@@ -97,6 +97,8 @@ interface CacheDriver
      *
      * @param string $key  The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
+     *
+     * @return mixed
      */
     public function restore($key, $hash = null);
 
