@@ -192,8 +192,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 $angle = rand(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
                 if ($legend instanceof DOMElement) {
-                    $legend->setAttribute('x', $e + $item['ratio'] * (1 + cos($angle)));
-                    $legend->setAttribute('y', $f + $item['ratio'] * (1 + sin($angle)));
+                    $legend->setAttribute('x', (string)($e + $item['ratio'] * (1 + cos($angle))));
+                    $legend->setAttribute('y', (string)($f + $item['ratio'] * (1 + sin($angle))));
                     $legend->nodeValue = $found[1];
                     $legendTemplate->parentNode->appendChild($legend);
                 }

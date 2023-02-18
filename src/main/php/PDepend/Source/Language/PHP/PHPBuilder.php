@@ -2418,7 +2418,7 @@ class PHPBuilder implements Builder
      *
      * @template T of AbstractASTType
      *
-     * @param array<string, array<string, array<string, T>>> $instances
+     * @param array<string, array<string, array<int, T>>> $instances
      * @param string                                         $qualifiedName
      *
      * @return T|null

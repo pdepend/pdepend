@@ -298,9 +298,11 @@ abstract class AbstractASTType extends AbstractASTArtifact
             ->type('methods')
             ->restore($this->getId());
 
-        foreach ($methods as $method) {
-            $method->compilationUnit = $this->compilationUnit;
-            $method->setParent($this);
+        if ($this instanceof AbstractASTClassOrInterface) {
+            foreach ($methods as $method) {
+                $method->compilationUnit = $this->compilationUnit;
+                $method->setParent($this);
+            }
         }
 
         return new ASTArtifactList($methods);
@@ -313,7 +315,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function addMethod(ASTMethod $method)
     {
-        $method->setParent($this);
+        if ($this instanceof AbstractASTClassOrInterface) {
+            $method->setParent($this);
+        }
 
         $this->methods[] = $method;
 
