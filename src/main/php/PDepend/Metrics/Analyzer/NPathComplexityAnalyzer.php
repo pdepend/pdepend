@@ -83,8 +83,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param ASTNamespace[] $namespaces
-     *
      * @return void
      */
     public function analyze($namespaces)

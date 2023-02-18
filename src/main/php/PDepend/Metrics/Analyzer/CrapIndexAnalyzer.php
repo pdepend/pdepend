@@ -48,6 +48,7 @@ use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTArtifact;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
@@ -145,8 +146,6 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Performs the crap index analysis.
      *
-     * @param ASTNamespace[] $namespaces
-     *
      * @return void
      */
     public function analyze($namespaces)
@@ -159,7 +158,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Performs the crap index analysis.
      *
-     * @param ASTNamespace[] $namespaces
+     * @param ASTArtifactList<ASTNamespace> $namespaces
      *
      * @return void
      */
