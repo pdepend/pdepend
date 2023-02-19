@@ -72,101 +72,64 @@ interface ASTVisitor
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class);
+    public function visitClass(ASTClass $class, $value);
 
     /**
      * Visits an enum node.
-     *
-     * @return void
      */
-    public function visitEnum(ASTEnum $enum);
+    public function visitEnum(ASTEnum $enum, $value);
 
     /**
      * Visits a trait node.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function visitTrait(ASTTrait $trait);
+    public function visitTrait(ASTTrait $trait, $value);
 
     /**
      * Visits a file node.
-     *
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit);
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit, $value);
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function);
+    public function visitFunction(ASTFunction $function, $value);
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface);
+    public function visitInterface(ASTInterface $interface, $value);
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method);
+    public function visitMethod(ASTMethod $method, $value);
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace);
+    public function visitNamespace(ASTNamespace $namespace, $value);
 
     /**
      * Visits a parameter node.
-     *
-     * @return void
      */
-    public function visitParameter(ASTParameter $parameter);
+    public function visitParameter(ASTParameter $parameter, $value);
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property);
+    public function visitProperty(ASTProperty $property, $value);
 
     /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * <code>
-     * $visitor->visitAllocationExpression($alloc);
-     *
-     * $visitor->visitStatement($stmt);
-     * </code>
-     *
-     * All visit methods takes two argument. The first argument is the current
-     * context ast node and the second argument is a data array or object that
-     * is used to collect data.
+     * Takes two argument. The first argument is the current context ast node
+     * and the second argument is a data array or object that is used to
+     * collect data.
      *
      * The return value of this method is the second input argument, modified
      * by the concrete visit method.
      *
-     * @param string            $method Name of the called method.
-     * @param array<int, mixed> $args   Array with method argument.
-     *
-     * @since  0.9.12
-     */
-    public function __call($method, $args);
-
-    /**
      * @template T of array<string, mixed>|numeric-string
      *
      * @param ASTNode $node

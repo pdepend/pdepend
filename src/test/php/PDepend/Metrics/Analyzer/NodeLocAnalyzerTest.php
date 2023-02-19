@@ -128,7 +128,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
 
         ksort($expected);
         ksort($actual);
-        
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -688,7 +688,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
         $compilationUnit->setId(42);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->visitCompilationUnit($compilationUnit);
+        $analyzer->visitCompilationUnit($compilationUnit, '1');
 
         $metrics = $analyzer->getNodeMetrics($compilationUnit);
         $this->assertEquals(array(), $metrics);

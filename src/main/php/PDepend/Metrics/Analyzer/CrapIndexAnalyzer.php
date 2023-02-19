@@ -178,26 +178,38 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         $this->fireEndAnalyzer();
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits the given method.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         if ($method->isAbstract() === false) {
             $this->visitCallable($method);
         }
+
+        return $value;
     }
 
     /**
      * Visits the given function.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->visitCallable($function);
+
+        return $value;
     }
 
     /**

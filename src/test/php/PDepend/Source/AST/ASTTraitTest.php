@@ -425,7 +425,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
             ->disableOriginalClone()
             ->getMock();
         $visitor->expects($this->once())
-            ->method('visitTrait')
+            ->method('visit')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
 
         $trait = new ASTTrait('MyTrait');

@@ -269,9 +269,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     public function accept(ASTVisitor $visitor, $data = null)
     {
-        $methodName = 'visit' . substr(get_class($this), 22);
-
-        return call_user_func(array($visitor, $methodName), $this, $data);
+        return $visitor->visit($this, $data);
     }
 
     // END@deprecated

@@ -256,12 +256,31 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         $this->dependencyMap = array();
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->fireStartFunction($function);
 
@@ -292,42 +311,38 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         $this->countCalls($function);
 
         $this->fireEndFunction($function);
+
+        return $value;
     }
 
     /**
      * Visit method for classes that will be called by PDepend during the
      * analysis phase with the current context class.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->initDependencyMap($class);
-        parent::visitClass($class);
+        return parent::visitClass($class, $value);
     }
 
     /**
      * Visit method for interfaces that will be called by PDepend during the
      * analysis phase with the current context interface.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->initDependencyMap($interface);
-        parent::visitInterface($interface);
+        return parent::visitInterface($interface, $value);
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -348,14 +363,14 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         $this->countCalls($method);
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->fireStartProperty($property);
 
@@ -365,6 +380,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         );
 
         $this->fireEndProperty($property);
+
+        return $value;
     }
 
     /**

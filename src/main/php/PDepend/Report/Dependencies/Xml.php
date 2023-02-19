@@ -188,24 +188,45 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         file_put_contents($this->logFile, $buffer);
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTTrait) {
+            return $this->visitTrait($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->generateTypeXml($class, 'class');
+
+        return $value;
     }
 
     /**
      * Visits a trait node.
-     *
-     * @return void
      */
-    public function visitTrait(ASTTrait $trait)
+    public function visitTrait(ASTTrait $trait, $value)
     {
         $this->generateTypeXml($trait, 'trait');
+
+        return $value;
     }
 
     /**
@@ -240,34 +261,32 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         // Do not care
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->generateTypeXml($interface, 'interface');
+
+        return $value;
     }
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $xml = end($this->xmlStack);
         if (!$xml) {
-            return;
+            return $value;
         }
 
         $doc = $xml->ownerDocument;
@@ -287,10 +306,12 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         array_pop($this->xmlStack);
 
         if ($packageXml->firstChild === null) {
-            return;
+            return $value;
         }
 
         $xml->appendChild($packageXml);
+
+        return $value;
     }
 
     /**

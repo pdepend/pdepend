@@ -158,12 +158,28 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         return $efferents;
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -173,14 +189,14 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         }
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $this->fireStartNamespace($namespace);
 
@@ -191,30 +207,32 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         }
 
         $this->fireEndNamespace($namespace);
+
+        return $value;
     }
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Visits an interface node.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
         $this->fireEndInterface($interface);
+
+        return $value;
     }
 
     /**

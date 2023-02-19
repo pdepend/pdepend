@@ -91,18 +91,9 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected $metadata = '::::';
 
-    /**
-     * @template T of array<string, mixed>|string|null
-     *
-     * @param T $data
-     *
-     * @return T
-     */
     public function accept(ASTVisitor $visitor, $data = null)
     {
-        $methodName = 'visit' . substr(get_class($this), 22);
-
-        return call_user_func(array($visitor, $methodName), $this, $data);
+        return $visitor->visit($this, $data);
     }
 
     /**

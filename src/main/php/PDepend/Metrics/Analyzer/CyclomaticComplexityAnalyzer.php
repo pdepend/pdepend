@@ -47,12 +47,24 @@ use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTArtifact;
+use PDepend\Source\AST\ASTBooleanAndExpression;
+use PDepend\Source\AST\ASTBooleanOrExpression;
+use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTConditionalExpression;
+use PDepend\Source\AST\ASTDoWhileStatement;
+use PDepend\Source\AST\ASTElseIfStatement;
+use PDepend\Source\AST\ASTForeachStatement;
+use PDepend\Source\AST\ASTForStatement;
 use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTLogicalAndExpression;
+use PDepend\Source\AST\ASTLogicalOrExpression;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTSwitchLabel;
+use PDepend\Source\AST\ASTWhileStatement;
 
 /**
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
@@ -165,12 +177,61 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         );
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTBooleanAndExpression) {
+            return $this->visitBooleanAndExpression($node, $value);
+        }
+        if ($node instanceof ASTBooleanOrExpression) {
+            return $this->visitBooleanOrExpression($node, $value);
+        }
+        if ($node instanceof ASTCatchStatement) {
+            return $this->visitCatchStatement($node, $value);
+        }
+        if ($node instanceof ASTConditionalExpression) {
+            return $this->visitConditionalExpression($node, $value);
+        }
+        if ($node instanceof ASTDoWhileStatement) {
+            return $this->visitDoWhileStatement($node, $value);
+        }
+        if ($node instanceof ASTElseIfStatement) {
+            return $this->visitElseIfStatement($node, $value);
+        }
+        if ($node instanceof ASTForeachStatement) {
+            return $this->visitForeachStatement($node, $value);
+        }
+        if ($node instanceof ASTForStatement) {
+            return $this->visitForStatement($node, $value);
+        }
+        if ($node instanceof ASTIfStatement) {
+            return $this->visitIfStatement($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTLogicalAndExpression) {
+            return $this->visitLogicalAndExpression($node, $value);
+        }
+        if ($node instanceof ASTLogicalOrExpression) {
+            return $this->visitLogicalOrExpression($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTSwitchLabel) {
+            return $this->visitSwitchLabel($node, $value);
+        }
+        if ($node instanceof ASTWhileStatement) {
+            return $this->visitWhileStatement($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->fireStartFunction($function);
 
@@ -180,24 +241,23 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         $this->updateProjectMetrics($function->getId());
 
         $this->fireEndFunction($function);
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         // Empty visit method, we don't want interface metrics
+        return $value;
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -207,6 +267,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         $this->updateProjectMetrics($method->getId());
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
@@ -249,33 +311,33 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits a boolean AND-expression.
      *
-     * @param ASTNode                $node The currently visited node.
-     * @param array<string, integer> $data The previously calculated ccn values.
+     * @param ASTBooleanAndExpression $node The currently visited node.
+     * @param array<string, integer>  $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitBooleanAndExpression($node, $data)
+    public function visitBooleanAndExpression(ASTBooleanAndExpression $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a boolean OR-expression.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTBooleanOrExpression $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitBooleanOrExpression($node, $data)
+    public function visitBooleanOrExpression(ASTBooleanOrExpression $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
@@ -288,188 +350,188 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @since  0.9.8
      */
-    public function visitSwitchLabel($node, $data)
+    public function visitSwitchLabel(ASTSwitchLabel $node, $data)
     {
         if (!$node->isDefault()) {
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a catch statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTCatchStatement      $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitCatchStatement($node, $data)
+    public function visitCatchStatement(ASTCatchStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits an elseif statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTElseIfStatement     $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitElseIfStatement($node, $data)
+    public function visitElseIfStatement(ASTElseIfStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a for statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTForStatement        $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitForStatement($node, $data)
+    public function visitForStatement(ASTForStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a foreach statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTForeachStatement    $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitForeachStatement($node, $data)
+    public function visitForeachStatement(ASTForeachStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits an if statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTIfStatement         $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitIfStatement($node, $data)
+    public function visitIfStatement(ASTIfStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a logical AND expression.
      *
-     * @param ASTNode                $node The currently visited node.
-     * @param array<string, integer> $data The previously calculated ccn values.
+     * @param ASTLogicalAndExpression $node The currently visited node.
+     * @param array<string, integer>  $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitLogicalAndExpression($node, $data)
+    public function visitLogicalAndExpression(ASTLogicalAndExpression $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a logical OR expression.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTLogicalOrExpression $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitLogicalOrExpression($node, $data)
+    public function visitLogicalOrExpression(ASTLogicalOrExpression $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a ternary operator.
      *
-     * @param ASTNode                $node The currently visited node.
-     * @param array<string, integer> $data The previously calculated ccn values.
+     * @param ASTConditionalExpression $node The currently visited node.
+     * @param array<string, integer>   $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitConditionalExpression($node, $data)
+    public function visitConditionalExpression(ASTConditionalExpression $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a while-statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTWhileStatement      $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.8
      */
-    public function visitWhileStatement($node, $data)
+    public function visitWhileStatement(ASTWhileStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 
     /**
      * Visits a do/while-statement.
      *
-     * @param ASTNode                $node The currently visited node.
+     * @param ASTDoWhileStatement    $node The currently visited node.
      * @param array<string, integer> $data The previously calculated ccn values.
      *
      * @return array<string, integer>
      *
      * @since  0.9.12
      */
-    public function visitDoWhileStatement($node, $data)
+    public function visitDoWhileStatement(ASTDoWhileStatement $node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
 
-        return $this->visit($node, $data);
+        return parent::visit($node, $data);
     }
 }

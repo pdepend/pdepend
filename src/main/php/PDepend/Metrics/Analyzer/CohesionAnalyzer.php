@@ -115,15 +115,31 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         $this->fireEndAnalyzer();
     }
 
+    public function visit($node, $value)
+    {
+        /*
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        */
+
+        return parent::visit($node, $value);
+    }
+
     /*
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->fireStartProperty($property);
         echo ltrim($property->getName(), '$'), PHP_EOL;
         $this->fireEndProperty($property);
+
+        return $value;
     }
 
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -155,6 +171,8 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         }
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
     */
 }

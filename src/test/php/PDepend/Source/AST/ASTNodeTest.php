@@ -623,13 +623,13 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testAcceptInvokesVisitOnGivenVisitor()
     {
-        $methodName = 'visit' . substr(get_class($this), 22, -4);
+        $methodName = 'PDepend\\Source\\AST\\AST' . substr(get_class($this), 22, -4);
 
         $visitor = $this->getMockBuilder('\\PDepend\\Source\ASTVisitor\\ASTVisitor')
             ->getMock();
         $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo($methodName));
+            ->method('visit')
+            ->with($this->isInstanceOf($methodName));
 
         $node = $this->createNodeInstance();
         $node->accept($visitor);
@@ -642,13 +642,13 @@ abstract class ASTNodeTest extends AbstractTest
      */
     public function testAcceptReturnsReturnValueOfVisitMethod()
     {
-        $methodName = 'visit' . substr(get_class($this), 22, -4);
+        $methodName = 'PDepend\\Source\\AST\\AST' . substr(get_class($this), 22, -4);
 
         $visitor = $this->getMockBuilder('\\PDepend\\Source\ASTVisitor\\ASTVisitor')
             ->getMock();
         $visitor->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo($methodName))
+            ->method('visit')
+            ->with($this->isInstanceOf($methodName))
             ->will($this->returnValue(42));
 
         $node = $this->createNodeInstance();

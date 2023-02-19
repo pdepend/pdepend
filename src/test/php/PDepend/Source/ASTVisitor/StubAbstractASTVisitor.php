@@ -65,94 +65,114 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public $visits = array();
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTCompilationUnit) {
+            return $this->visitCompilationUnit($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
      *
      * @param \PDepend\Source\AST\ASTClass $class
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->visits[] = $class->getName();
 
-        parent::visitClass($class);
+        return parent::visitClass($class, $value);
     }
 
     /**
      * Visits a file node.
      *
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit, $value)
     {
         $this->visits[] = get_class($compilationUnit);
 
-        parent::visitCompilationUnit($compilationUnit);
+        return parent::visitCompilationUnit($compilationUnit, $value);
     }
 
     /**
      * Visits a function node.
      *
      * @param \PDepend\Source\AST\ASTFunction $function
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->visits[] = $function->getName();
 
-        parent::visitFunction($function);
+        return parent::visitFunction($function, $value);
     }
 
     /**
      * Visits a code interface object.
      *
      * @param \PDepend\Source\AST\ASTInterface $interface
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->visits[] = $interface->getName();
 
-        parent::visitInterface($interface);
+        return parent::visitInterface($interface, $value);
     }
 
     /**
      * Visits a method node.
      *
      * @param \PDepend\Source\AST\ASTMethod $method
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->visits[] = $method->getName();
 
-        parent::visitMethod($method);
+        return parent::visitMethod($method, $value);
     }
 
     /**
      * Visits a package node.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $this->visits[] = $namespace->getName();
 
-        parent::visitNamespace($namespace);
+        return parent::visitNamespace($namespace, $value);
     }
 
     /**
      * Visits a property node.
      *
      * @param \PDepend\Source\AST\ASTProperty $property
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->visits[] = $property->getName();
 
-        parent::visitProperty($property);
+        return parent::visitProperty($property, $value);
     }
 }

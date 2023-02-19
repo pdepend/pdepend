@@ -67,12 +67,12 @@ class DefaultVisitorTest extends AbstractTest
     public function testDefaultVisitOrder()
     {
         $namespaces = $this->parseCodeResourceForTest();
-        
+
         $visitor = new StubAbstractASTVisitor();
         foreach ($namespaces as $namespace) {
             $namespace->accept($visitor);
         }
-        
+
         $expected = array(
             'pkgA',
             'classB',
@@ -91,7 +91,7 @@ class DefaultVisitorTest extends AbstractTest
             'funcD',
             'PDepend\\Source\\AST\\ASTCompilationUnit'
         );
-        
+
         $this->assertEquals($expected, $visitor->visits);
     }
 
@@ -110,7 +110,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor->expects($this->exactly(2))
             ->method('visitParameter');
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -128,7 +128,7 @@ class DefaultVisitorTest extends AbstractTest
         $visitor->expects($this->exactly(3))
             ->method('visitParameter');
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -139,7 +139,7 @@ class DefaultVisitorTest extends AbstractTest
     public function testVisitorInvokesStartVisitParameterOnListener()
     {
         $namespaces = $this->parseCodeResourceForTest();
-        
+
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
             ->getMock();
         $listener->expects($this->exactly(2))
@@ -150,7 +150,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -172,7 +172,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -194,7 +194,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -216,7 +216,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -238,7 +238,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -260,7 +260,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
     }
 
     /**
@@ -336,7 +336,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespace);
+        $visitor->visitNamespace($namespace, '1');
     }
 
     /**
@@ -363,7 +363,7 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $visitor->visitNamespace($namespace);
+        $visitor->visitNamespace($namespace, '1');
     }
 
     /**

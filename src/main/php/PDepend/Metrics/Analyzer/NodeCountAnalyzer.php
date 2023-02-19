@@ -186,15 +186,34 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         if (false === $class->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $this->fireStartClass($class);
@@ -214,14 +233,14 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->fireStartFunction($function);
 
@@ -232,17 +251,17 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         if (false === $interface->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $this->fireStartInterface($interface);
@@ -262,14 +281,14 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         $this->fireEndInterface($interface);
+
+        return $value;
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -286,14 +305,14 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $this->fireStartNamespace($namespace);
 
@@ -318,5 +337,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         $this->fireEndNamespace($namespace);
+
+        return $value;
     }
 }

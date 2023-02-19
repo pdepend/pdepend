@@ -72,12 +72,19 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         return $this->nodes;
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -95,6 +102,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         }
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**

@@ -207,15 +207,34 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         return array();
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Calculates metrics for the given <b>$class</b> instance.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         if (false === $class->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $this->fireStartClass($class);
@@ -245,26 +264,26 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Calculates metrics for the given <b>$function</b> instance.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->fireStartFunction($function);
         ++$this->fcs;
         $this->fireEndFunction($function);
+
+        return $value;
     }
 
     /**
      * Calculates metrics for the given <b>$interface</b> instance.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->fireStartInterface($interface);
 
@@ -275,26 +294,26 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         $this->fireEndInterface($interface);
+
+        return $value;
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
         ++$this->mts;
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
      * Calculates metrics for the given <b>$namespace</b> instance.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $this->fireStartNamespace($namespace);
 
@@ -307,5 +326,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         $this->fireEndNamespace($namespace);
+
+        return $value;
     }
 }

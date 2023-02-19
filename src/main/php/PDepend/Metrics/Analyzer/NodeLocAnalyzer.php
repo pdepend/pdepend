@@ -191,12 +191,31 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         }
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTCompilationUnit) {
+            return $this->visitCompilationUnit($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->fireStartClass($class);
 
@@ -211,7 +230,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($class)) {
             $this->fireEndClass($class);
-            return;
+            return $value;
         }
 
         list($cloc) = $this->linesOfCode($class->getTokens(), true);
@@ -228,23 +247,23 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         );
 
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Visits a file node.
-     *
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit, $value)
     {
         // Skip for dummy files
         if ($compilationUnit->getFileName() === null) {
-            return;
+            return $value;
         }
         // Check for initial file
         $id = $compilationUnit->getId();
         if (!$id || isset($this->metrics[$id])) {
-            return;
+            return $value;
         }
 
         $this->fireStartFile($compilationUnit);
@@ -252,7 +271,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         if ($this->restoreFromCache($compilationUnit)) {
             $this->updateProjectMetrics($id);
             $this->fireEndFile($compilationUnit);
-            return;
+            return $value;
         }
 
         list($cloc, $eloc, $lloc) = $this->linesOfCode($compilationUnit->getTokens());
@@ -271,14 +290,14 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         $this->updateProjectMetrics($id);
 
         $this->fireEndFile($compilationUnit);
+
+        return $value;
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->fireStartFunction($function);
 
@@ -286,7 +305,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($function)) {
             $this->fireEndFunction($function);
-            return;
+            return $value;
         }
 
         list($cloc, $eloc, $lloc) = $this->linesOfCode(
@@ -306,14 +325,14 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         );
 
         $this->fireEndFunction($function);
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->fireStartInterface($interface);
 
@@ -325,7 +344,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($interface)) {
             $this->fireEndInterface($interface);
-            return;
+            return $value;
         }
 
         list($cloc) = $this->linesOfCode($interface->getTokens(), true);
@@ -342,22 +361,22 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         );
 
         $this->fireEndInterface($interface);
+
+        return $value;
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
         if ($this->restoreFromCache($method)) {
             $this->fireEndMethod($method);
-            return;
+            return $value;
         }
-        
+
         if ($method->isAbstract()) {
             $cloc = 0;
             $eloc = 0;
@@ -383,6 +402,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         $this->classLogicalLines    += $lloc;
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**

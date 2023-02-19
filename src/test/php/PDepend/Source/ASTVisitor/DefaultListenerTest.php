@@ -71,7 +71,7 @@ class DefaultListenerTest extends AbstractTest
         $listener = new StubAbstractASTVisitListener();
         $visitor  = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
-        $visitor->visitNamespace($namespaces[0]);
+        $visitor->visitNamespace($namespaces[0], '1');
 
         $actual   = $listener->nodes;
         $expected = array(

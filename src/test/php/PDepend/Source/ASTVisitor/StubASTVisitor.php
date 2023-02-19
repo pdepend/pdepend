@@ -139,34 +139,37 @@ class StubASTVisitor implements ASTVisitor
      * Visits a class node.
      *
      * @param \PDepend\Source\AST\ASTClass $class
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->class = $class;
+
+        return $value;
     }
 
     /**
      * Visits an enum node.
      *
      * @param \PDepend\Source\AST\ASTEnum $enum
-     * @return void
      */
-    public function visitEnum(ASTEnum $enum)
+    public function visitEnum(ASTEnum $enum, $value)
     {
         $this->enum = $enum;
+
+        return $value;
     }
 
     /**
      * Visits a trait node.
      *
      * @param \PDepend\Source\AST\ASTTrait $trait
-     * @return void
      * @since 1.0.0
      */
-    public function visitTrait(ASTTrait $trait)
+    public function visitTrait(ASTTrait $trait, $value)
     {
         $this->trait = $trait;
+
+        return $value;
     }
 
 
@@ -174,106 +177,114 @@ class StubASTVisitor implements ASTVisitor
      * Visits a code interface object.
      *
      * @param \PDepend\Source\AST\ASTInterface $interface
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->interface = $interface;
+
+        return $value;
     }
 
     /**
      * Visits a method node.
      *
      * @param \PDepend\Source\AST\ASTMethod $method
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->method = $method;
+
+        return $value;
     }
 
     /**
      * Visits a package node.
      *
      * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $this->namespace = $namespace;
+
+        return $value;
     }
 
     /**
      * Visits a parameter node.
      *
      * @param \PDepend\Source\AST\ASTParameter $parameter
-     * @return void
      */
-    public function visitParameter(ASTParameter $parameter)
+    public function visitParameter(ASTParameter $parameter, $value)
     {
         $this->parameter = $parameter;
+
+        return $value;
     }
 
     /**
      * Visits a property node.
      *
      * @param \PDepend\Source\AST\ASTProperty $property
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->property = $property;
+
+        return $value;
     }
 
     /**
      * Visits a function node.
      *
      * @param \PDepend\Source\AST\ASTFunction $function
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->function = $function;
+
+        return $value;
     }
 
     /**
      * Visits a file node.
      *
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit, $value)
     {
-    }
-
-    /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * <code>
-     * $visitor->visitAllocationExpression($alloc);
-     *
-     * $visitor->visitStatement($stmt);
-     * </code>
-     *
-     * All visit methods takes two argument. The first argument is the current
-     * context ast node and the second argument is a data array or object that
-     * is used to collect data.
-     *
-     * The return value of this method is the second input argument, modified
-     * by the concrete visit method.
-     *
-     * @param string $method Name of the called method.
-     * @param array $args Array with method argument.
-     *
-     * @return mixed
-     * @since 0.9.12
-     */
-    public function __call($method, $args)
-    {
+        return $value;
     }
 
     public function visit($node, $value)
     {
+        if ($node instanceof ASTEnum) {
+            return $this->visitEnum($node, $value);
+        }
+        if ($node instanceof ASTTrait) {
+            return $this->visitTrait($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+        if ($node instanceof ASTParameter) {
+            return $this->visitParameter($node, $value);
+        }
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+
+        return $value;
     }
 }

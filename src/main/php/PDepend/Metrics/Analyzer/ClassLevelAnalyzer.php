@@ -188,36 +188,58 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         return $metrics;
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTTrait) {
+            return $this->visitTrait($node, $value);
+        }
+        if ($node instanceof ASTEnum) {
+            return $this->visitEnum($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->fireStartClass($class);
         $this->calculateAbstractASTClassOrInterfaceMetrics($class);
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         // Empty visit method, we don't want interface metrics
+
+        return $value;
     }
 
     /**
      * Visits a trait node.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function visitTrait(ASTTrait $trait)
+    public function visitTrait(ASTTrait $trait, $value)
     {
         $this->fireStartTrait($trait);
 
@@ -244,28 +266,28 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         }
 
         $this->fireEndTrait($trait);
+
+        return $value;
     }
 
     /**
      * Visits a enum node.
      *
-     * @return void
-     *
      * @since  2.12.1
      */
-    public function visitEnum(ASTEnum $enum)
+    public function visitEnum(ASTEnum $enum, $value)
     {
         $this->fireStartEnum($enum);
         $this->calculateAbstractASTClassOrInterfaceMetrics($enum);
         $this->fireEndEnum($enum);
+
+        return $value;
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -288,14 +310,14 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         }
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->fireStartProperty($property);
 
@@ -315,6 +337,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         }
 
         $this->fireEndProperty($property);
+
+        return $value;
     }
 
     /**

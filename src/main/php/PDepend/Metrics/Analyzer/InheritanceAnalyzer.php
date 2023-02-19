@@ -215,26 +215,35 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         }
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         if (!$class->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $this->fireStartClass($class);
 
         $this->initNodeMetricsForClass($class);
-        
+
         $this->calculateNumberOfDerivedClasses($class);
         $this->calculateNumberOfAddedAndOverwrittenMethods($class);
         $this->calculateDepthOfInheritanceTree($class);
 
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
@@ -280,7 +289,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             ++$dit;
             $root = $parent->getId();
         }
-        
+
         // Collect max dit value
         $this->maxDIT = max($this->maxDIT, $dit);
 
@@ -317,7 +326,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             if ($method->getParent() !== $class) {
                 continue;
             }
-            
+
             if (isset($parentMethodNames[$method->getName()])) {
                 if (!$parentMethodNames[$method->getName()]) {
                     ++$numberOfOverwrittenMethods;
