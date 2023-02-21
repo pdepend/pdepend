@@ -100,8 +100,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Processes all {@link ASTNamespace} code nodes.
      *
-     * @param ASTNamespace[] $namespaces
-     *
      * @return void
      */
     public function analyze($namespaces)
