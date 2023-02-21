@@ -7,4 +7,4 @@ parameters:
         - src/main/php/PDepend/Util/ImageConvert.php
     universalObjectCratesClasses:
         - PDepend\Util\Configuration
-    level: 5
+    level: 6
