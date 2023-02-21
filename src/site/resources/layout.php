@@ -70,6 +70,9 @@
             <a href="https://twitter.com/pdepend" title="Follow on Twitter" class="twitter-follow" target="_blank">
                 <i></i> Follow @pdepend
             </a>
+            <a rel="me" href="https://phpc.social/@pdepend" title="Follow on Mastodon" class="mastodon-follow" target="_blank">
+                <i></i> Follow @pdepend@phpc.social
+            </a>
         </span>
         <div class="license">
             By <strong>Manuel Pichler</strong>
