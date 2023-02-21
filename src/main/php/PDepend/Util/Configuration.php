@@ -84,6 +84,8 @@ class Configuration
      *
      * @param string $name Name of the requested configuration value.
      *
+     * @return mixed
+     *
      * @throws OutOfRangeException If no matching configuration value exists.
      *
      * @since  0.10.0

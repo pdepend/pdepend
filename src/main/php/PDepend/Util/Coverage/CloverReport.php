@@ -56,7 +56,7 @@ class CloverReport implements Report
     /**
      * Holds the line coverage for all files found in the coverage report.
      *
-     * @var array<string, array>
+     * @var array<string, array<int, bool>>
      */
     private $fileLineCoverage = array();
 

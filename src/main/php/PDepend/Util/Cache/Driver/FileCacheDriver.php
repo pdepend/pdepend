@@ -197,6 +197,8 @@ class FileCacheDriver implements CacheDriver
      *
      * @param string $file The cache file name.
      * @param string $hash The verification hash.
+     *
+     * @return mixed
      */
     protected function restoreFile($file, $hash)
     {

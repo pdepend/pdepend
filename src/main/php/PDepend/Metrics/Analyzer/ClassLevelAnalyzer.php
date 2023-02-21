@@ -103,7 +103,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * )
      * </code>
      *
-     * @var array<string, array>
+     * @var array<string, array<string, int>>
      */
     private $nodeMetrics = null;
 
@@ -399,6 +399,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
     /**
      * @param ASTClass|ASTEnum $class
+     *
+     * @return void
      */
     private function calculateAbstractASTClassOrInterfaceMetrics(AbstractASTClassOrInterface $class)
     {

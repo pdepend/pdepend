@@ -162,6 +162,8 @@ interface ASTVisitor
      * @param string            $method Name of the called method.
      * @param array<int, mixed> $args   Array with method argument.
      *
+     * @return array<string, mixed>|numeric-string
+     *
      * @since  0.9.12
      */
     public function __call($method, $args);

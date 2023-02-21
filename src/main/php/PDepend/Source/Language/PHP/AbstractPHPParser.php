@@ -2508,6 +2508,9 @@ abstract class AbstractPHPParser
         return $expr;
     }
 
+    /**
+     * @return bool
+     */
     protected function allowTrailingCommaInSpecialFunctions()
     {
         return false;
@@ -2807,6 +2810,7 @@ abstract class AbstractPHPParser
      *
      * @param T   $node
      * @param int $closeToken
+     * @param int|null $separatorToken
      *
      * @throws TokenStreamEndException
      *
@@ -3377,11 +3381,9 @@ abstract class AbstractPHPParser
     /**
      * Applies all reduce rules against the given expression list.
      *
-     * @template T of ASTNode[]
+     * @param ASTNode[] $expressions Unprepared input array with parsed expression nodes found in the source tree.
      *
-     * @param T $expressions Unprepared input array with parsed expression nodes found in the source tree.
-     *
-     * @return T
+     * @return ASTNode[]
      *
      * @since 0.10.0
      */
@@ -4356,7 +4358,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @eturn bool
+     * @return bool
      */
     protected function isNextTokenObjectOperator()
     {
@@ -5329,6 +5331,7 @@ abstract class AbstractPHPParser
      * @template T of AbstractASTNode
      *
      * @param T $node The context parent node.
+     * @param bool $inCall
      *
      * @return T The prepared entire node.
      *
@@ -6169,6 +6172,8 @@ abstract class AbstractPHPParser
     /**
      * use of trailing comma in formal parameters list is allowed since PHP 8.0
      * example function foo(string $bar, int $baz,)
+     *
+     * @return bool
      */
     protected function allowTrailingCommaInFormalParametersList()
     {

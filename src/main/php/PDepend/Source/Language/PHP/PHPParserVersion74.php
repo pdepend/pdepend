@@ -79,6 +79,7 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
                        0[bB][01]+(?:_[01]+)*
                      )$/x';
 
+    /** @var array<int, int> */
     protected $possiblePropertyTypes = array(
         Tokens::T_STRING,
         Tokens::T_ARRAY,

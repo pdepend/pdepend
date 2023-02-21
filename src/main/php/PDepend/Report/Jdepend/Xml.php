@@ -98,7 +98,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * List of all collected node metrics.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, array<int, string>>>
      */
     protected $nodeMetrics = array();
 

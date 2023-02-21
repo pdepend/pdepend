@@ -58,14 +58,14 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     /**
      * All found nodes.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, array<int, string>>>
      */
     private $nodes = array();
 
     /**
      * Returns the collected nodes.
      *
-     * @return array<string, array>
+     * @return array<string, array<string, array<int, string>>>
      */
     public function getCollectedNodes()
     {

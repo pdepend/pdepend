@@ -118,7 +118,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Temporary map that is used to hold the id combinations of dependee and
      * depender.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, array<string, bool>>>
      *
      * @since 0.10.2
      */
@@ -128,7 +128,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This array holds a mapping between node identifiers and an array with
      * the node's metrics.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, mixed>>
      *
      * @since 0.10.2
      */

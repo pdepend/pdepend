@@ -437,7 +437,7 @@ class PHPTokenizerInternal implements FullTokenizer
     );
 
     /**
-     * @var array<mixed, array>
+     * @var array<int, array<int, string>>
      */
     protected static $substituteTokens = array(
         T_DOLLAR_OPEN_CURLY_BRACES  =>  array('$', '{'),
@@ -448,7 +448,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * Re-map based on the previous token
      *
-     * @var array<int, array>
+     * @var array<int, array<int, int>>
      */
     protected static $alternativeMap = array(
         Tokens::T_USE => array(
@@ -794,7 +794,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @param array<int|string> $token
      *
-     * @return array<array>
+     * @return array<int, array<int|string>>
      */
     private function splitQualifiedNameToken($token)
     {
@@ -827,7 +827,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array<int|string> $token
      * @param string            $namespace
      *
-     * @return array<array>
+     * @return array<int, array<int, string|int>>
      */
     private function splitRelativeNameToken($token, $namespace)
     {
