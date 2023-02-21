@@ -136,7 +136,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTest
         $class = new ASTClass(null);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->visitClass($class);
+        $analyzer->visitClass($class, '1');
 
         $metrics = $analyzer->getNodeMetrics($class);
         $this->assertEquals(array(), $metrics);

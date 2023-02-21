@@ -181,7 +181,7 @@ class ASTCompilationUnitTest extends AbstractTest
         $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
             ->getMock();
         $visitor->expects($this->once())
-            ->method('visitCompilationUnit')
+            ->method('visit')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
 
         $file = new ASTCompilationUnit(null);

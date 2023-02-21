@@ -73,28 +73,40 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
         return $this->nodes;
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a code class object.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->fireStartClass($class);
         $this->visitType($class);
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
         $this->fireEndInterface($interface);
+
+        return $value;
     }
 
     /**

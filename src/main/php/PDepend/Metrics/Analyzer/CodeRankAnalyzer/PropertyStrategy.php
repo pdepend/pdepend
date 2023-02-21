@@ -71,18 +71,25 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         return $this->nodes;
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->fireStartProperty($property);
 
         if (($depClass = $property->getClass()) === null) {
             $this->fireEndProperty($property);
-            return;
+            return $value;
         }
 
         $depNamespace = $depClass->getNamespace();
@@ -107,6 +114,8 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         }
 
         $this->fireEndProperty($property);
+
+        return $value;
     }
 
     /**

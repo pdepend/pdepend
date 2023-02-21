@@ -913,7 +913,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
             ->getMock();
         $visitor->expects($this->once())
-            ->method('visitInterface')
+            ->method('visit')
             ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
 
         $interface = $this->createItem();
@@ -930,7 +930,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $interface = new ASTInterface(__CLASS__);
         $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $interface->setCache(new MemoryCacheDriver());
-        
+
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
         $interface->setContext($context);

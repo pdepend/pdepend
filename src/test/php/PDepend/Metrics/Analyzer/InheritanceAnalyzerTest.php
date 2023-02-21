@@ -213,7 +213,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $actual = array();
         foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
-            
+
             $actual[$class->getName()] = $metrics['dit'];
         }
         ksort($actual);
@@ -313,7 +313,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $class = new ASTClass(null);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->visitClass($class);
+        $analyzer->visitClass($class, '1');
 
         $metrics = $analyzer->getNodeMetrics($class);
         $this->assertEquals(array(), $metrics);

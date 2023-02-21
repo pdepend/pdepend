@@ -222,15 +222,28 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         file_put_contents($this->logFile, $buffer);
     }
 
+    public function visit($node, $value)
+    {
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+
+        return parent::visit($node, $value);
+    }
+
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         if (!$class->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $doc = $this->packages->ownerDocument;
@@ -248,17 +261,17 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         } else {
             $this->concreteClasses->appendChild($classXml);
         }
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         if (!$interface->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $doc = $this->abstractClasses->ownerDocument;
@@ -272,22 +285,22 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         );
 
         $this->abstractClasses->appendChild($classXml);
+
+        return $value;
     }
 
     /**
      * Visits a package node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         if (!$namespace->isUserDefined()) {
-            return;
+            return $value;
         }
 
         $stats = $this->analyzer->getStats($namespace);
         if (count($stats) === 0) {
-            return;
+            return $value;
         }
 
         $doc = $this->packages->ownerDocument;
@@ -369,9 +382,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         if ($this->concreteClasses->firstChild === null
             && $this->abstractClasses->firstChild === null
         ) {
-            return;
+            return $value;
         }
 
         $this->packages->appendChild($packageXml);
+
+        return $value;
     }
 }

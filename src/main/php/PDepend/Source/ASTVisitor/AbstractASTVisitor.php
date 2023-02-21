@@ -97,10 +97,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class, $value)
     {
         $this->fireStartClass($class);
 
@@ -114,14 +112,14 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndClass($class);
+
+        return $value;
     }
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitEnum(ASTEnum $enum)
+    public function visitEnum(ASTEnum $enum, $value)
     {
         $this->fireStartEnum($enum);
 
@@ -135,16 +133,16 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndEnum($enum);
+
+        return $value;
     }
 
     /**
      * Visits a trait node.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function visitTrait(ASTTrait $trait)
+    public function visitTrait(ASTTrait $trait, $value)
     {
         $this->fireStartTrait($trait);
 
@@ -155,25 +153,25 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndTrait($trait);
+
+        return $value;
     }
 
     /**
      * Visits a file node.
-     *
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit, $value)
     {
         $this->fireStartFile($compilationUnit);
         $this->fireEndFile($compilationUnit);
+
+        return $value;
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function, $value)
     {
         $this->fireStartFunction($function);
 
@@ -184,14 +182,14 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndFunction($function);
+
+        return $value;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface, $value)
     {
         $this->fireStartInterface($interface);
 
@@ -202,14 +200,14 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndInterface($interface);
+
+        return $value;
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method, $value)
     {
         $this->fireStartMethod($method);
 
@@ -218,14 +216,14 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndMethod($method);
+
+        return $value;
     }
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace, $value)
     {
         $this->fireStartNamespace($namespace);
 
@@ -246,64 +244,65 @@ abstract class AbstractASTVisitor implements ASTVisitor
         }
 
         $this->fireEndNamespace($namespace);
+
+        return $value;
     }
 
     /**
      * Visits a parameter node.
-     *
-     * @return void
      */
-    public function visitParameter(ASTParameter $parameter)
+    public function visitParameter(ASTParameter $parameter, $value)
     {
         $this->fireStartParameter($parameter);
         $this->fireEndParameter($parameter);
+
+        return $value;
     }
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property, $value)
     {
         $this->fireStartProperty($property);
         $this->fireEndProperty($property);
-    }
 
-
-    /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * <code>
-     * $visitor->visitAllocationExpression($alloc);
-     *
-     * $visitor->visitStatement($stmt);
-     * </code>
-     *
-     * All visit methods takes two argument. The first argument is the current
-     * context ast node and the second argument is a data array or object that
-     * is used to collect data.
-     *
-     * The return value of this method is the second input argument, modified
-     * by the concrete visit method.
-     *
-     * @param string            $method Name of the called method.
-     * @param array<int, mixed> $args   Array with method argument.
-     *
-     * @since  0.9.12
-     */
-    public function __call($method, $args)
-    {
-        if (!isset($args[1])) {
-            throw new RuntimeException("No node to visit provided for $method.");
-        }
-
-        return $this->visit($args[0], $args[1]);
+        return $value;
     }
 
     public function visit($node, $value)
     {
+        if ($node instanceof ASTCompilationUnit) {
+            return $this->visitCompilationUnit($node, $value);
+        }
+        if ($node instanceof ASTEnum) {
+            return $this->visitEnum($node, $value);
+        }
+        if ($node instanceof ASTFunction) {
+            return $this->visitFunction($node, $value);
+        }
+        if ($node instanceof ASTInterface) {
+            return $this->visitInterface($node, $value);
+        }
+        if ($node instanceof ASTMethod) {
+            return $this->visitMethod($node, $value);
+        }
+        if ($node instanceof ASTNamespace) {
+            return $this->visitNamespace($node, $value);
+        }
+        if ($node instanceof ASTParameter) {
+            return $this->visitParameter($node, $value);
+        }
+        if ($node instanceof ASTProperty) {
+            return $this->visitProperty($node, $value);
+        }
+        if ($node instanceof ASTTrait) {
+            return $this->visitTrait($node, $value);
+        }
+        if ($node instanceof ASTClass) {
+            return $this->visitClass($node, $value);
+        }
+
         foreach ($node->getChildren() as $child) {
             $value = $child->accept($this, $value);
         }

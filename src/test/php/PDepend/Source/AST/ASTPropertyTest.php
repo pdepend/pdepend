@@ -475,7 +475,7 @@ class ASTPropertyTest extends AbstractTest
         $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
             ->getMock();
         $visitor->expects($this->once())
-            ->method('visitProperty');
+            ->method('visit');
 
         $property = $this->getMockBuilder('PDepend\\Source\\AST\\ASTProperty')
             ->setMethods(array('__construct'))

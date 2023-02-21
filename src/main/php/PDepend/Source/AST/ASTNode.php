@@ -45,6 +45,7 @@
 namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This is an abstract base implementation of the ast node interface.
@@ -56,6 +57,15 @@ use OutOfBoundsException;
  */
 interface ASTNode
 {
+    /**
+     * @template T of array<string, mixed>|string|null
+     *
+     * @param T $data
+     *
+     * @return T
+     */
+    public function accept(ASTVisitor $visitor, $data = null);
+
     /**
      * Returns the source image of this ast node.
      *
