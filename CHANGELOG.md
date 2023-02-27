@@ -7,7 +7,7 @@ pdepend-2.13.0 (2023/02/28)
 - Fixed [\#641](https://github.com/pdepend/pdepend/pull/641): Improve UTF8 encoding process.
 - Fixed [\#637](https://github.com/pdepend/pdepend/pull/637): Prevent the use of a not set id value in the AbstractASTType and AbstractASTCallable.
 - Fixed [\#642](https://github.com/pdepend/pdepend/pull/642): Fix [\#638](https://github.com/pdepend/pdepend/issue/638) Unexpected Token with double class modifiers.
-- Changed [\#644](https://github.com/pdepend/pdepend/pull/644): Implement generic visit method.
+- Changed [\#644](https://github.com/pdepend/pdepend/pull/644): Correct collection of Enum and Intersection type information during analysis.
 - Changed [\#646](https://github.com/pdepend/pdepend/pull/646): Numeric-strings.
 - Changed [\#647](https://github.com/pdepend/pdepend/pull/647): Phpstan corrections.
 - Changed [\#648](https://github.com/pdepend/pdepend/pull/648): Correct type signatures.
