@@ -8173,17 +8173,12 @@ abstract class AbstractPHPParser
         $this->tokenStack->add($this->tokenizer->next());
         $this->tokenStack->push();
         $this->consumeComments();
+        $caseName = $this->tokenizer->currentToken()->image;
 
-        if (in_array($this->tokenizer->peek(), array(
-                Tokens::T_NEW,
-                Tokens::T_NULL,
-                Tokens::T_STRING,
-                Tokens::T_DEFAULT
-            ), true) === false) {
+        if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $caseName)) {
             throw $this->getUnexpectedTokenException();
         }
 
-        $caseName = $this->tokenizer->currentToken()->image;
         $this->tokenStack->add($this->tokenizer->next());
         $this->consumeComments();
         $case = $this->builder->buildEnumCase($caseName, $this->parseEnumCaseValue());
