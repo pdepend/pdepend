@@ -26,3 +26,21 @@ const VALUE = 'value';
 class G {
     const C = E::Foo->{VALUE};
 }
+
+enum ModeProvider: string
+{
+    case Donation = 'donation';
+    case Default = 'default';
+
+    /**
+     * @return \Ns\Stuff
+     * @throws \Exception
+     */
+    public function label(): \Ns\Stuff
+    {
+        return match($this) {
+            self::Donation => __('Donation'),
+            self::Default => __('E-Invoice'),
+        };
+    }
+}

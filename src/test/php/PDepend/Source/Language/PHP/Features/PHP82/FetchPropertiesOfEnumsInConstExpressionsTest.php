@@ -115,6 +115,12 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
 
         $this->assertSame('C', $declaration->getImage());
         $this->assertSame('E::Foo->{VALUE}', $this->constructImage($declaration->getValue()->getValue()));
+
+        $enums = $this->parseCodeResourceForTest()
+            ->current()
+            ->getEnums();
+        $this->assertSame('E', $enums[0]->getName());
+        $this->assertSame('ModeProvider', $enums[1]->getName());
     }
 
     public function constructImage(ASTNode $node)
