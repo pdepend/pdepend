@@ -4953,6 +4953,8 @@ abstract class AbstractPHPParser
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
                 return $this->parseMemberPrefixOrFunctionPostfix();
+            case Tokens::T_PARENTHESIS_OPEN:
+                return $this->parseParenthesisExpression();
         }
 
         throw $this->getUnexpectedTokenException();
