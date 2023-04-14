@@ -55,7 +55,7 @@ jobs:
           ant package -D-phar:filename=./pdepend.phar;
           ./pdepend.phar --version;
 
-      - name: Sign phat
+      - name: Sign phar
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
