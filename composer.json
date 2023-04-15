@@ -1,6 +1,12 @@
 {
     "name": "pdepend/pdepend",
     "description": "Official version of pdepend to be handled with Composer",
+    "keywords": [
+        "dev",
+        "pdepend",
+        "PHP Depend",
+        "PHP_Depend"
+    ],
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
