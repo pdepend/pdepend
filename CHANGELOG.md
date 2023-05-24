@@ -1,4 +1,4 @@
-pdepend-2.14.0 (2023/04/26)
+pdepend-2.14.0 (2023/05/26)
 
 - Added [\#663](https://github.com/pdepend/pdepend/pull/663): Added, sign the phar files.
 - Added [\#657](https://github.com/pdepend/pdepend/pull/657): Added keywords to composer.json.
