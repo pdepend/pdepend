@@ -769,6 +769,14 @@ class PHPParserGenericTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testParserHandlesExtraParenthesisForIsset()
+    {
+        $this->assertEmpty($this->parseCodeResourceForTest());
+    }
+
+    /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *

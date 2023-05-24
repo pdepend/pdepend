@@ -15,8 +15,9 @@ jobs:
       matrix:
         php: [ '7.4' ]
         setup: [ 'stable' ]
+        phpstan: [1.10.13]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
+    name: PHP ${{ matrix.php }} - ${{ matrix.setup }} - ${{ matrix.phpstan }}
 
     steps:
       - uses: actions/checkout@v2
@@ -37,14 +38,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: vendor
-          key: ${{ runner.os }}-phpstan1.8.2-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-phpstan1.8.2-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-phpstan${{ matrix.phpstan }}-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-phpstan${{ matrix.phpstan }}-${{ matrix.php }}-${{ matrix.setup }}-
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: |
           composer remove phpunit/phpunit easy-doc/easy-doc squizlabs/php_codesniffer gregwar/rst --no-interaction --dev --no-update;
-          composer require phpstan/phpstan:^1.8.2 --no-interaction --dev --no-update;
+          composer require phpstan/phpstan:${{ matrix.phpstan }} --no-interaction --dev --no-update;
           composer update --prefer-dist --no-progress --no-suggest --prefer-${{ matrix.setup }};
 
       - name: Run PHPStan

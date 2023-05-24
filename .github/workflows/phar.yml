@@ -55,11 +55,18 @@ jobs:
           ant package -D-phar:filename=./pdepend.phar;
           ./pdepend.phar --version;
 
-      - name: Upload pdepend.phar
-        uses: actions/upload-artifact@v2
+      - name: Sign phar
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        run: gpg --command-fd 0 --pinentry-mode loopback -u pgp@pdepend.org --batch --detach-sign --output pdepend.phar.asc pdepend.phar
+
+      - name: Upload pdepend.phar and pdepend.phar.asc
+        uses: actions/upload-artifact@v3
         with:
-          name: pdepend.phar
-          path: pdepend.phar
+          path: |
+            pdepend.phar
+            pdepend.phar.asc
 
       - name: Release pdepend.phar
         if: github.event_name == 'release'
@@ -67,4 +74,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: 'pdepend.phar'
+          args: |
+            pdepend.phar
+            pdepend.phar.asc
