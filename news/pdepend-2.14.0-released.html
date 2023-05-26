@@ -52,36 +52,24 @@
 
 
 <div class="viewport content">
-    <a id="reports"></a>
-<h5>Reports</h5>
-<p>:Author:       Manuel Pichler
-:Copyright:    All rights reserved
-:Description:  ...
-:Keywords:</p>
-<p>In this section we will describe the different reports that can be
-generated with PHP_Depend. These reports vary from machine readable
-XML files, that contain highly detailed information about several
-quality aspects of the analyzed project, to human readable
-visualizations, that provide a very abstract view of the project's
-code quality.</p>
-<p>The human readable reports are very useful to detect design or quality
-faults in an application, and they are a good indicator if the overall
-quality trend is getting positive or negative. They can also assist you
-to get quickly a better overview on a new, unknown software system. On
-the other site the machine readable are good candidates for a <em>continuous
-integration</em> system or other reporting tools, where custom reports can be
-generated from the detailed data or an alert is triggered when a quality
-metric exceeds a configured threshold.</p>
-<a id="charts"></a>
-<h2>Charts</h2>
-<ul><li class="dash"><a href="/documentation/handbook/reports/abstraction-instability-chart.html">Abstraction Instability Chart</a></li>
-<li class="dash"><a href="/documentation/handbook/reports.html">Overview Pyramid</a></li>
-</ul>
+    
+<a id="version-2-14-0-released"></a>
+<h2>Version 2.14.0 released</h2>
+<p>We are proud to announce version <a href="https://github.com/pdepend/pdepend/releases/tag/2.14.0">2.14.0</a> of PDepend. For more
+details visit the version release <a href="https://github.com/pdepend/pdepend/releases/tag/2.14.0">site</a>.</p>
+<p>Use <a href="http://getcomposer.org">composer</a> to install PHP_Depend:</p>
 
-<a id="xml-reports"></a>
-<h2>XML reports</h2>
-<p class="prev"><a href="">Configuration</a></p>
-<p class="next"><a href="/documentation/handbook/reports/abstraction-instability-chart.html">Abstraction Instability Chart</a></p>
+<pre><code class="">curl -s http://getcomposer.org/installer | php
+php composer.phar require &quot;pdepend/pdepend:2.14.0&quot;
+</code></pre>
+<p>Or if you already have composer installed globally:</p>
+
+<pre><code class="">composer require &quot;pdepend/pdepend:2.14.0&quot;
+</code></pre>
+<a id="download"></a>
+<h3>Download</h3>
+<p>Future releases will also be released as PHAR files on
+<a href="https://github.com/pdepend/pdepend/releases">GitHub</a></p>
 </div>
 <div class="footer">
     <div class="viewport">
