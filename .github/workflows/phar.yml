@@ -56,10 +56,12 @@ jobs:
           ./pdepend.phar --version;
 
       - name: Sign phar
+        uses: docker://phpdoc/phar-ga:latest
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: gpg --command-fd 0 --pinentry-mode loopback -u pgp@pdepend.org --batch --detach-sign --output pdepend.phar.asc pdepend.phar
+        with: 
+           args: gpg --command-fd 0 --pinentry-mode loopback -u pgp@pdepend.org --batch --detach-sign --output pdepend.phar.asc pdepend.phar
 
       - name: Upload pdepend.phar and pdepend.phar.asc
         uses: actions/upload-artifact@v3
