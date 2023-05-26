@@ -59,7 +59,10 @@ jobs:
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: gpg --command-fd 0 --pinentry-mode loopback -u pgp@pdepend.org --batch --detach-sign --output pdepend.phar.asc pdepend.phar
+        run: |
+            echo "$SECRET_KEY" > keys.asc;
+            echo "$PASSPHRASE" | gpg --batch --import keys.asc;
+            gpg --command-fd 0 --pinentry-mode loopback -u pgp@pdepend.org --batch --detach-sign --output pdepend.phar.asc pdepend.phar;
 
       - name: Upload pdepend.phar and pdepend.phar.asc
         uses: actions/upload-artifact@v3
