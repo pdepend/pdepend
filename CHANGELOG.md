@@ -1,3 +1,11 @@
+pdepend-2.14.0 (2023/05/26)
+
+- Added [\#663](https://github.com/pdepend/pdepend/pull/663): Added, sign the phar files.
+- Added [\#657](https://github.com/pdepend/pdepend/pull/657): Added keywords to composer.json.
+- Fixed [\#656](https://github.com/pdepend/pdepend/pull/656): Fix [\#635](https://github.com/pdepend/pdepend/issues/635), [\#650](https://github.com/pdepend/pdepend/issues/650) Base enum label validity on constant name rule.
+- Fixed [\#661](https://github.com/pdepend/pdepend/pull/661): Fix [\#639](https://github.com/pdepend/pdepend/issues/639) Handle extra parenthis for functions.
+
+
 pdepend-2.13.0 (2023/02/28)
 ==========================
 
