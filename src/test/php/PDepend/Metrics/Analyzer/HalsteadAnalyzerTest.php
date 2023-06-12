@@ -103,7 +103,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
 
         $actual   = array();
         $expected = array(
-            'pdepend1' => array('n1' => 6, 'n2' => 4, 'N1' => 5, 'N2' => 3),
+            'pdepend1' => array('n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4),
             'pdepend2' => array('n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2),
         );
 
@@ -133,15 +133,16 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
         $actual   = array();
         $expected = array(
             'pdepend1' => array(
-                'hnt' => 8,
-                'hnd' => 10,
-                'hv' => 26.575424759099,
-                'hd' => 3.75,
-                'hl' => 0.26666666666667,
-                'he' => 99.657842846621,
-                'ht' => 5.5365468248123,
-                'hb' => 0.0071650583833777,
-                'hi' => 7.0867799357597,
+                'hnt' => 10,
+                'hnd' => 8,
+                'hv' => 30.0,
+                'hd' => 5.0,
+                'hl' => 0.2,
+                'he' => 150.0,
+                'ht' => 8.333333333333334,
+                'hb' => 0.009410360288810284,
+                'hi' => 6.0,
+
             ),
             'pdepend2' => array(
                 'hnt' => 6,
@@ -184,7 +185,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
 
         $actual   = array();
         $expected = array(
-            'pdepend1' => array('n1' => 6, 'n2' => 4, 'N1' => 5, 'N2' => 3),
+            'pdepend1' => array('n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4),
             'pdepend2' => array('n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2),
         );
 
@@ -217,15 +218,15 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
         $actual   = array();
         $expected = array(
             'pdepend1' => array(
-                'hnt' => 8,
-                'hnd' => 10,
-                'hv' => 26.575424759099,
-                'hd' => 3.75,
-                'hl' => 0.26666666666667,
-                'he' => 99.657842846621,
-                'ht' => 5.5365468248123,
-                'hb' => 0.0071650583833777,
-                'hi' => 7.0867799357597,
+                'hnt' => 10,
+                'hnd' => 8,
+                'hv' => 30.0,
+                'hd' => 5.0,
+                'hl' => 0.2,
+                'he' => 150.0,
+                'ht' => 8.333333333333334,
+                'hb' => 0.009410360288810284,
+                'hi' => 6.0,
             ),
             'pdepend2' => array(
                 'hnt' => 6,
