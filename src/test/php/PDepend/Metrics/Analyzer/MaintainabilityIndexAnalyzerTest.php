@@ -103,7 +103,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
 
         $actual   = array();
         $expected = array(
-            'pdepend1' => array('mi' => 76.757952883513823),
+            'pdepend1' => array('mi' => 76.389359628780454),
             'pdepend2' => array('mi' => 81.120955834208331),
         );
 
@@ -135,7 +135,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
 
         $actual   = array();
         $expected = array(
-            'pdepend1' => array('mi' => 76.757952883513823),
+            'pdepend1' => array('mi' => 76.389359628780454),
             'pdepend2' => array('mi' => 81.120955834208331),
             'pdepend3' => array('mi' => 100),
         );
