@@ -68,7 +68,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Hash with all calculated node metrics.
      *
-     * @var array<string, array<string, array<string, int>>>
+     * @var array<string, array<string, array<string, string>>>
      */
     private $nodeMetrics = null;
 
