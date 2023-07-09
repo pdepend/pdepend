@@ -47,6 +47,7 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -122,7 +123,9 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
 
             case Tokens::T_TRUE:
                 $type = new ASTScalarType('true');
-                $this->tokenStack->add($this->tokenizer->next());
+                $token = $this->tokenizer->next();
+                assert($token instanceof Token);
+                $this->tokenStack->add($token);
                 $this->consumeComments();
 
                 return $type;

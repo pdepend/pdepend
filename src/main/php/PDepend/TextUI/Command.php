@@ -312,18 +312,20 @@ class Command
 
         for ($i = 0, $c = count($argv); $i < $c; ++$i) {
             // Is it an ini_set option?
-            if ($argv[$i] === '-d' && isset($argv[$i + 1])) {
-                if (strpos($argv[++$i], '=') === false) {
-                    ini_set($argv[$i], 'on');
+            $arg = (string)$argv[$i];
+            if ($arg === '-d' && isset($argv[$i + 1])) {
+                $arg = (string)$argv[++$i];
+                if (strpos($arg, '=') === false) {
+                    ini_set($arg, 'on');
                 } else {
-                    list($key, $value) = explode('=', $argv[$i]);
+                    list($key, $value) = explode('=', $arg);
 
                     ini_set($key, $value);
                 }
-            } elseif (strpos($argv[$i], '=') === false) {
-                $this->options[$argv[$i]] = true;
+            } elseif (strpos($arg, '=') === false) {
+                $this->options[$arg] = true;
             } else {
-                list($key, $value) = explode('=', $argv[$i]);
+                list($key, $value) = explode('=', $arg);
 
                 $this->options[$key] = $value;
             }
@@ -401,11 +403,12 @@ class Command
     {
         $build = __DIR__ . '/../../../../../build.properties';
 
+        $version = '@package_version@';
         if (file_exists($build)) {
             $data = @parse_ini_file($build);
-            $version = $data['project.version'];
-        } else {
-            $version = '@package_version@';
+            if (is_array($data)) {
+                $version = $data['project.version'];
+            }
         }
 
         echo 'PDepend ', $version, PHP_EOL, PHP_EOL;
@@ -524,7 +527,8 @@ class Command
 
         $last = null;
         foreach ($options as $option => $message) {
-            $current = substr($option, 0, strrpos($option, '-'));
+            $pos = strrpos($option, '-');
+            $current = substr($option, 0, $pos === false ? null : $pos);
             if ($last !== null && $last !== $current) {
                 echo PHP_EOL;
             }

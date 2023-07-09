@@ -48,6 +48,7 @@ use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -246,6 +247,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
 
         while ($this->tokenizer->peek() === Tokens::T_STRING) {
             $next = $this->tokenizer->next();
+            assert($next instanceof Token);
             $this->tokenStack->add($next);
             $number .= $next->image;
         }

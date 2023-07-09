@@ -58,6 +58,7 @@ use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -209,7 +210,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
         if (isset($states[$token])) {
             $modifier |= $states[$token];
-            $this->tokenStack->add($this->tokenizer->next());
+            $next = $this->tokenizer->next();
+            assert($next instanceof Token);
+            $this->tokenStack->add($next);
         }
 
         return $modifier;
@@ -235,7 +238,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
         if ($this->tokenizer->peek() === Tokens::T_COLON) {
-            $this->tokenStack->add($this->tokenizer->next());
+            $token = $this->tokenizer->next();
+            assert($token instanceof Token);
+            $this->tokenStack->add($token);
 
             return $this->builder->buildAstNamedArgument(
                 $constant->getImage(),
@@ -320,11 +325,15 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
                 break;
             case Tokens::T_NULL:
                 $type = new ASTScalarType('null');
-                $this->tokenStack->add($this->tokenizer->next());
+                $token = $this->tokenizer->next();
+                assert($token instanceof Token);
+                $this->tokenStack->add($token);
                 break;
             case Tokens::T_FALSE:
                 $type = new ASTScalarType('false');
-                $this->tokenStack->add($this->tokenizer->next());
+                $token = $this->tokenizer->next();
+                assert($token instanceof Token);
+                $this->tokenStack->add($token);
                 break;
             default:
                 $type = parent::parseTypeHint();
@@ -346,7 +355,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         $types = array($firstType);
 
         while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
-            $this->tokenStack->add($this->tokenizer->next());
+            $token = $this->tokenizer->next();
+            assert($token instanceof Token);
+            $this->tokenStack->add($token);
             $types[] = $this->parseSingleTypeHint();
         }
 

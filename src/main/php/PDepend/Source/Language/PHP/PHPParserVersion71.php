@@ -51,6 +51,8 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
+use PDepend\Source\Parser\TokenStreamEndException;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -216,8 +218,13 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
         $modifiers &= $allowed;
 
         if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
+            $next = $this->tokenizer->next();
+            if (!$next instanceof Token) {
+                throw new TokenStreamEndException($this->tokenizer);
+            }
+
             throw new InvalidStateException(
-                $this->tokenizer->next()->startLine,
+                $next->startLine,
                 (string) $this->compilationUnit,
                 sprintf(
                     'Constant can\'t be declared private or protected in interface "%s".',

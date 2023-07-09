@@ -45,6 +45,7 @@
 namespace PDepend\Util\Cache\Driver\File;
 
 use DirectoryIterator;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 use SplFileInfo;
 
@@ -149,7 +150,7 @@ class FileCacheDirectory
     protected function readVersion()
     {
         if (file_exists($this->getVersionFile())) {
-            return trim(file_get_contents($this->getVersionFile()));
+            return trim(file_get_contents($this->getVersionFile()) ?: '');
         }
         return null;
     }

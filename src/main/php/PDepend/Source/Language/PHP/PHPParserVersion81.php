@@ -53,6 +53,7 @@ use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -124,7 +125,9 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
         if ($this->tokenizer->peek() === Tokens::T_READONLY) {
             $modifier |= State::IS_READONLY;
-            $this->tokenStack->add($this->tokenizer->next());
+            $next = $this->tokenizer->next();
+            assert($next instanceof Token);
+            $this->tokenStack->add($next);
         }
 
         return $modifier;
@@ -180,7 +183,9 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         $types = array($firstType);
 
         while ($this->tokenizer->peek() === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
-            $this->tokenStack->add($this->tokenizer->next());
+            $next = $this->tokenizer->next();
+            assert($next instanceof Token);
+            $this->tokenStack->add($next);
             $types[] = $this->parseSingleTypeHint();
         }
 

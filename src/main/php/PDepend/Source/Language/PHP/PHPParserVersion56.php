@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\FullTokenizer;
 use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -221,10 +222,9 @@ abstract class PHPParserVersion56 extends PHPParserVersion55
                     $expressions[] = $expr;
                     break;
                 default:
-                    throw new UnexpectedTokenException(
-                        $this->tokenizer->next(),
-                        $this->tokenizer->getSourceFile()
-                    );
+                    $next = $this->tokenizer->next();
+                    assert($next instanceof Token);
+                    throw new UnexpectedTokenException($next, $this->tokenizer->getSourceFile());
             }
         }
 

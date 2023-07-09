@@ -49,7 +49,9 @@ use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTType;
+use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -605,7 +607,12 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             return null;
         }
 
-        throw $this->getUnexpectedTokenException($this->tokenizer->next());
+        $next = $this->tokenizer->next();
+        if (!$next instanceof Token) {
+            throw new TokenStreamEndException($this->tokenizer);
+        }
+
+        throw $this->getUnexpectedTokenException($next);
     }
 
     /**

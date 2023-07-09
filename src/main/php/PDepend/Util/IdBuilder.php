@@ -97,7 +97,7 @@ class IdBuilder
     {
         return $this->forOffsetItem(
             $type,
-            ltrim(strrchr(strtolower(get_class($type)), '_'), '_')
+            ltrim(strrchr(strtolower(get_class($type)), '_') ?: '', '_')
         );
     }
 
