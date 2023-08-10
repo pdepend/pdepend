@@ -110,16 +110,24 @@ class ParserTest extends AbstractTest
             unset($expected[$namespace->getName()]);
             $namespaces[$namespace->getName()] = $namespace;
         }
-        $this->assertEquals(0, count($expected));
+        $this->assertSame(0, count($expected));
 
-        $this->assertEquals(1, $namespaces['pkg1']->getFunctions()->count());
-        $this->assertEquals(1, $namespaces['pkg1']->getTypes()->count());
+        $this->assertSame(1, $namespaces['pkg1']->getFunctions()->count());
+        $this->assertSame(1, $namespaces['pkg1']->getTypes()->count());
         $this->assertFalse($namespaces['pkg1']->getTypes()->current()->isAbstract());
 
-        $this->assertEquals(1, $namespaces['pkg2']->getTypes()->count());
+        $this->assertSame(1, $namespaces['pkg2']->getTypes()->count());
         $this->assertTrue($namespaces['pkg2']->getTypes()->current()->isAbstract());
+        $this->assertSame(
+            123456781234567812345678,
+            $namespaces['pkg2']->getTypes()->current()->getConstant('BIZ')
+        );
+        $this->assertSame(
+            0x12345678123456781,
+            $namespaces['pkg2']->getTypes()->current()->getConstant('FOOBAR')
+        );
 
-        $this->assertEquals(1, $namespaces['pkg3']->getTypes()->count());
+        $this->assertSame(1, $namespaces['pkg3']->getTypes()->count());
         $this->assertTrue($namespaces['pkg3']->getTypes()->current()->isAbstract());
     }
 

@@ -7527,18 +7527,14 @@ abstract class AbstractPHPParser
                     $defaultValue->setValue(false);
                     break;
                 case Tokens::T_LNUMBER:
-                    $token = $this->consumeToken(Tokens::T_LNUMBER);
-                    $number = $token->image;
-
-                    while ($next = $this->addTokenToStackIfType(Tokens::T_STRING)) {
-                        $number .= $next->image;
-                    }
-
-                    $defaultValue->setValue($signed * $this->parseIntegerNumberImage($number));
+                    $defaultValue->setValue($signed * $this->parseIntegerNumberImage(
+                        $this->parseNumber(Tokens::T_LNUMBER)
+                    ));
                     break;
                 case Tokens::T_DNUMBER:
-                    $token = $this->consumeToken(Tokens::T_DNUMBER);
-                    $defaultValue->setValue($signed * (double) $token->image);
+                    $defaultValue->setValue($signed * (double) $this->getNumberFromImage(
+                        $this->parseNumber(Tokens::T_DNUMBER)
+                    ));
                     break;
                 case Tokens::T_CONSTANT_ENCAPSED_STRING:
                     $token = $this->consumeToken(Tokens::T_CONSTANT_ENCAPSED_STRING);
@@ -8180,23 +8176,33 @@ abstract class AbstractPHPParser
             throw new InvalidArgumentException("Invalid number $numberRepresentation");
         }
 
+        return (int) $this->getNumberFromImage($numberRepresentation);
+    }
+
+    /**
+     * @param string $numberRepresentation
+     *
+     * @return string|float|int
+     */
+    private function getNumberFromImage($numberRepresentation)
+    {
         $numberRepresentation = str_replace('_', '', $numberRepresentation);
 
         switch (substr($numberRepresentation, 0, 2)) {
             case '0x':
             case '0X':
-                return (int) hexdec(substr($numberRepresentation, 2));
+                return hexdec(substr($numberRepresentation, 2));
 
             case '0b':
             case '0B':
-                return (int) bindec(substr($numberRepresentation, 2));
+                return bindec(substr($numberRepresentation, 2));
 
             default:
                 if (substr($numberRepresentation, 0, 1) === '0') {
-                    return (int) octdec(preg_replace('/^0+(oO)?/', '', $numberRepresentation));
+                    return octdec(preg_replace('/^0+(oO)?/', '', $numberRepresentation));
                 }
 
-                return (int) $numberRepresentation;
+                return $numberRepresentation;
         }
     }
 
@@ -8250,5 +8256,23 @@ abstract class AbstractPHPParser
         }
 
         return $expression;
+    }
+
+    /**
+     * @param string $type
+     * @psalm-param Tokens::T_* $type
+     *
+     * @return string
+     */
+    private function parseNumber($type)
+    {
+        $token = $this->consumeToken($type);
+        $number = (string) $token->image;
+
+        while ($next = $this->addTokenToStackIfType(Tokens::T_STRING)) {
+            $number .= $next->image;
+        }
+
+        return $number;
     }
 }

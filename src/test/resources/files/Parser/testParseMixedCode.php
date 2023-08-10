@@ -13,7 +13,8 @@ function foo($foo = array()) {
  * @package pkg2
  */
 interface Foo {
-    const FOOBAR = 0x1742;
+    const FOOBAR = 0x12345678123456781;
+    const BIZ = 123456781234567812345678;
     function x();
 }
 
