@@ -7530,10 +7530,7 @@ abstract class AbstractPHPParser
                     $token = $this->consumeToken(Tokens::T_LNUMBER);
                     $number = $token->image;
 
-                    while ($this->tokenizer->peek() === Tokens::T_STRING) {
-                        $next = $this->tokenizer->next();
-                        assert($next instanceof Token);
-                        $this->tokenStack->add($next);
+                    while ($next = $this->addTokenToStackIfType(Tokens::T_STRING)) {
                         $number .= $next->image;
                     }
 
@@ -8147,6 +8144,27 @@ abstract class AbstractPHPParser
         }
 
         return $enum;
+    }
+
+    /**
+     * Peek the next token if it's of the given type, add it to current tokenStack, and return it if so.
+     *
+     * @param string $type
+     * @psalm-param Tokens::T_* $type
+     *
+     * @return Token|null
+     */
+    protected function addTokenToStackIfType($type)
+    {
+        if ($this->tokenizer->peek() === $type) {
+            $next = $this->tokenizer->next();
+            assert($next instanceof Token);
+            $this->tokenStack->add($next);
+
+            return $next;
+        }
+
+        return null;
     }
 
     /**

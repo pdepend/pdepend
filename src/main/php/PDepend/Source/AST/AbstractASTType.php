@@ -402,6 +402,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         if (!$tokens) {
             return;
         }
+
         if (!$startToken) {
             $startToken = reset($tokens);
         }

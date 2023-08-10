@@ -175,10 +175,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         $token = $this->tokenizer->currentToken();
         $types = array($firstType);
 
-        while ($this->tokenizer->peek() === Tokens::T_BITWISE_AND && $this->tokenizer->peekNext() !== Tokens::T_VARIABLE) {
-            $next = $this->tokenizer->next();
-            assert($next instanceof Token);
-            $this->tokenStack->add($next);
+        while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)) {
             $types[] = $this->parseSingleTypeHint();
         }
 
@@ -244,11 +241,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      */
     private function checkReadonlyToken()
     {
-        if ($this->tokenizer->peek() === Tokens::T_READONLY) {
-            $next = $this->tokenizer->next();
-            assert($next instanceof Token);
-            $this->tokenStack->add($next);
-
+        if ($this->addTokenToStackIfType(Tokens::T_READONLY)) {
             return State::IS_READONLY;
         }
 
