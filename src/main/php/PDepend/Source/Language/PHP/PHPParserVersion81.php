@@ -121,23 +121,9 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      */
     protected function parseConstructFormalParameterModifiers()
     {
-        $modifier = 0;
-
-        if ($this->tokenizer->peek() === Tokens::T_READONLY) {
-            $modifier |= State::IS_READONLY;
-            $this->tokenStack->add($this->tokenizer->next());
-        }
-
-        $modifier |= parent::parseConstructFormalParameterModifiers();
-
-        if ($this->tokenizer->peek() === Tokens::T_READONLY) {
-            $modifier |= State::IS_READONLY;
-            $next = $this->tokenizer->next();
-            assert($next instanceof Token);
-            $this->tokenStack->add($next);
-        }
-
-        return $modifier;
+        return $this->checkReadonlyToken()
+            | parent::parseConstructFormalParameterModifiers()
+            | $this->checkReadonlyToken();
     }
 
     /**
@@ -251,5 +237,21 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         }
 
         return $arguments;
+    }
+
+    /**
+     * @return int
+     */
+    private function checkReadonlyToken()
+    {
+        if ($this->tokenizer->peek() === Tokens::T_READONLY) {
+            $next = $this->tokenizer->next();
+            assert($next instanceof Token);
+            $this->tokenStack->add($next);
+
+            return State::IS_READONLY;
+        }
+
+        return 0;
     }
 }
