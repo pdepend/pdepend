@@ -5,9 +5,12 @@ class Foo
 
     public readonly string $readonly;
 
+    readonly public string $readonly2;
+
     public function __construct()
     {
         $this->readonly = $this->readonly();
+        $this->readonly2 = $this->readonly();
     }
 
     public function readonly()

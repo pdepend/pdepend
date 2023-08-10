@@ -81,8 +81,16 @@ class ReadonlyPropertiesTest extends PHPParserVersion81Test
         $this->assertSame('string', $parameter->getFormalParameter()->getChild(0)->getImage());
         $this->assertSame('$bar', $parameter->getFormalParameter()->getChild(1)->getImage());
 
-        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
-        $this->assertSame(0, ($expectedModifiers & $parameter->getFormalParameter()->getModifiers()));
+        $expectedModifiers = State::IS_PUBLIC | State::IS_READONLY;
+        $this->assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
+
+        $parameter = $parameters[1];
+
+        $this->assertSame('int|float', $parameter->getFormalParameter()->getChild(0)->getImage());
+        $this->assertSame('$foo', $parameter->getFormalParameter()->getChild(1)->getImage());
+
+        $expectedModifiers = State::IS_PUBLIC | State::IS_READONLY;
+        $this->assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
     }
 
     /**
