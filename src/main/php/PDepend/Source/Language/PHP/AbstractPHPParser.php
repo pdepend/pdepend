@@ -1055,6 +1055,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_PROTECTED:
                 case Tokens::T_STATIC:
                 case Tokens::T_FINAL:
+                case Tokens::T_READONLY:
                 case Tokens::T_FUNCTION:
                 case Tokens::T_VARIABLE:
                 case Tokens::T_VAR:

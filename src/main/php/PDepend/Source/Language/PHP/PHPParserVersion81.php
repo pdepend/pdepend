@@ -121,7 +121,14 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      */
     protected function parseConstructFormalParameterModifiers()
     {
-        $modifier = parent::parseConstructFormalParameterModifiers();
+        $modifier = 0;
+
+        if ($this->tokenizer->peek() === Tokens::T_READONLY) {
+            $modifier |= State::IS_READONLY;
+            $this->tokenStack->add($this->tokenizer->next());
+        }
+
+        $modifier |= parent::parseConstructFormalParameterModifiers();
 
         if ($this->tokenizer->peek() === Tokens::T_READONLY) {
             $modifier |= State::IS_READONLY;
