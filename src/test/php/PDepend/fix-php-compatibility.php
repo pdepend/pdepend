@@ -29,6 +29,74 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function count()",
         ),
     ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
+        array(
+            'public function count()',
+            "#[\\ReturnTypeWillChange]\npublic function count()",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestCase.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestSuite.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestResult.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/TestSuiteIterator.php' => array(
+        array(
+            'public function hasChildren(',
+            "#[\\ReturnTypeWillChange]\npublic function hasChildren(",
+        ),
+        array(
+            'public function getChildren(',
+            "#[\\ReturnTypeWillChange]\npublic function getChildren(",
+        ),
+        array(
+            'public function current(',
+            "#[\\ReturnTypeWillChange]\npublic function current(",
+        ),
+        array(
+            'public function next(',
+            "#[\\ReturnTypeWillChange]\npublic function next(",
+        ),
+        array(
+            'public function key(',
+            "#[\\ReturnTypeWillChange]\npublic function key(",
+        ),
+        array(
+            'public function valid(',
+            "#[\\ReturnTypeWillChange]\npublic function valid(",
+        ),
+        array(
+            'public function rewind(',
+            "#[\\ReturnTypeWillChange]\npublic function rewind(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => array(
+        array(
+            '$docblock = $token->getDocblock();',
+            '$docblock = $token->getDocblock() ?? \'\';',
+        ),
+    ),
     __DIR__ . '/../../../../vendor/phpunit/php-token-stream/src/Token/Stream.php' => array(
         array(
             'public function offsetExists',
