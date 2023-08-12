@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
@@ -230,6 +231,10 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function setTokens(array $tokens)
     {
+        if ($tokens === array()) {
+            throw new InvalidArgumentException('A compilation unit should contain at least one token');
+        }
+
         $this->cache
             ->type('tokens')
             ->store($this->getId(), $tokens);

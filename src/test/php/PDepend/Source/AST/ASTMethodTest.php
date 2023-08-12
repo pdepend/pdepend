@@ -806,4 +806,14 @@ class ASTMethodTest extends AbstractASTArtifactTest
 
         return $method;
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage An AST node should contain at least one token
+     */
+    public function testSetTokensWithEmptyArray()
+    {
+        $method = new ASTMethod('FooBar');
+        $method->setTokens(array());
+    }
 }

@@ -44,7 +44,6 @@ namespace PDepend\Source\AST;
 
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy;
-use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
@@ -106,6 +105,16 @@ class ASTEnumTest extends AbstractASTArtifactTest
             'PDepend\Source\AST\ASTClass' => array('test'),
             'PDepend\Source\AST\ASTNamespace' => array('+global', '+global'),
         ), $nodes);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage An AST node should contain at least one token
+     */
+    public function testSetTokensWithEmptyArray()
+    {
+        $enum = new ASTEnum('FooBar');
+        $enum->setTokens(array());
     }
 
     protected function createItem()
