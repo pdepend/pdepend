@@ -476,6 +476,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
             ));
         }
 
-        $this->throwUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 }

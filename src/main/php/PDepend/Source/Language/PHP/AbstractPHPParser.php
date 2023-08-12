@@ -612,7 +612,7 @@ abstract class AbstractPHPParser
             throw new TokenStreamEndException($this->tokenizer);
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -666,7 +666,7 @@ abstract class AbstractPHPParser
             throw new TokenStreamEndException($this->tokenizer);
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -734,7 +734,7 @@ abstract class AbstractPHPParser
             throw new TokenStreamEndException($this->tokenizer);
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -935,21 +935,21 @@ abstract class AbstractPHPParser
         while (in_array($tokenType, $validModifiers, true)) {
             if ($tokenType === Tokens::T_ABSTRACT) {
                 if (!$abstractAllowed) {
-                    throw $this->getUnexpectedTokenException();
+                    throw $this->getUnexpectedNextTokenException();
                 }
                 $finalAllowed = false;
                 $this->consumeToken(Tokens::T_ABSTRACT);
                 $this->modifiers |= State::IS_EXPLICIT_ABSTRACT;
             } elseif ($tokenType === Tokens::T_FINAL) {
                 if (!$finalAllowed) {
-                    throw $this->getUnexpectedTokenException();
+                    throw $this->getUnexpectedNextTokenException();
                 }
                 $abstractAllowed = false;
                 $this->consumeToken(Tokens::T_FINAL);
                 $this->modifiers |= State::IS_FINAL;
             } elseif ($tokenType === Tokens::T_READONLY) {
                 if (!static::READONLY_CLASS_ALLOWED) {
-                    throw $this->getUnexpectedTokenException();
+                    throw $this->getUnexpectedNextTokenException();
                 }
 
                 $this->consumeToken(Tokens::T_READONLY);
@@ -1126,7 +1126,7 @@ abstract class AbstractPHPParser
                     $classOrInterface->addChild($case);
                     break;
                 default:
-                    throw $this->getUnexpectedTokenException();
+                    throw $this->getUnexpectedNextTokenException();
             }
 
             $tokenType = $this->tokenizer->peek();
@@ -1199,7 +1199,7 @@ abstract class AbstractPHPParser
             $tokenType = $this->tokenizer->peek();
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -1214,7 +1214,7 @@ abstract class AbstractPHPParser
      */
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -1805,7 +1805,7 @@ abstract class AbstractPHPParser
         $expression = $this->parseOptionalExpression();
 
         if (!$expression) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         $allocation->addChild($expression);
@@ -2537,7 +2537,7 @@ abstract class AbstractPHPParser
                 return $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -3046,7 +3046,7 @@ abstract class AbstractPHPParser
         }
 
         if ($exprList instanceof ASTArguments && !$exprList->acceptsMoreArguments()) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         $this->consumeToken(Tokens::T_COMMA);
@@ -3380,7 +3380,7 @@ abstract class AbstractPHPParser
      */
     protected function parseOptionalExpressionForVersion()
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -3493,7 +3493,7 @@ abstract class AbstractPHPParser
             }
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -3641,7 +3641,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if (false === in_array($this->tokenizer->peek(), array(Tokens::T_CATCH, Tokens::T_FINALLY))) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         while ($this->tokenizer->peek() === Tokens::T_CATCH) {
@@ -4826,7 +4826,7 @@ abstract class AbstractPHPParser
      */
     protected function parseFullQualifiedClassNamePostfix()
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -4962,7 +4962,7 @@ abstract class AbstractPHPParser
                 return $this->parseParenthesisExpression();
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -5807,7 +5807,7 @@ abstract class AbstractPHPParser
         }
 
         if ($this->isKeyword($this->tokenizer->peek())) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         return $this->parseExpression();
@@ -5897,7 +5897,7 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
         if ($this->isKeyword($this->tokenizer->peek())) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         $element->addChild($this->parseExpression());
@@ -6591,11 +6591,8 @@ abstract class AbstractPHPParser
         if ($stmt = $this->parseOptionalStatement()) {
             return $stmt;
         }
-        $token = $this->tokenizer->next();
-        if ($token instanceof Token) {
-            throw $this->getUnexpectedTokenException($token);
-        }
-        throw new TokenStreamEndException($this->tokenizer);
+
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -7249,7 +7246,7 @@ abstract class AbstractPHPParser
         $tokenType = $this->tokenizer->peek();
 
         if (false === $this->isConstantName($tokenType)) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         $token = $this->consumeToken($tokenType);
@@ -7623,7 +7620,7 @@ abstract class AbstractPHPParser
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -7635,7 +7632,7 @@ abstract class AbstractPHPParser
      */
     protected function parseLambdaFunctionDeclaration()
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -7998,7 +7995,7 @@ abstract class AbstractPHPParser
                 throw new TokenStreamEndException($this->tokenizer);
         }
 
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -8025,15 +8022,33 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @return UnexpectedTokenException
+     * Return the appropriate exception for either UnexpectedTokenException
+     * configured with the next token, or TokenStreamEndException if there
+     * is no more token.
+     *
+     * @return TokenStreamEndException|UnexpectedTokenException
      */
-    protected function getUnexpectedTokenException(Token $token = null)
+    protected function getUnexpectedNextTokenException()
     {
-        $token = (null === $token) ? $this->tokenizer->next() : $token;
-        if (!$token instanceof Token) {
-            throw new TokenStreamEndException($this->tokenizer);
+        return $this->getUnexpectedTokenException($this->tokenizer->next());
+    }
+
+    /**
+     * Return the appropriate exception for either UnexpectedTokenException
+     * configured with the given token, or TokenStreamEndException if given
+     * null.
+     *
+     * @param Token|Tokenizer::T_*|null $token
+     *
+     * @return TokenStreamEndException|UnexpectedTokenException
+     */
+    protected function getUnexpectedTokenException($token)
+    {
+        if ($token instanceof Token) {
+            return new UnexpectedTokenException($token, $this->tokenizer->getSourceFile());
         }
-        return new UnexpectedTokenException($token, $this->tokenizer->getSourceFile());
+
+        return new TokenStreamEndException($this->tokenizer);
     }
 
     /**
@@ -8056,7 +8071,7 @@ abstract class AbstractPHPParser
      */
     protected function checkEllipsisInExpressionSupport()
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -8071,7 +8086,7 @@ abstract class AbstractPHPParser
      */
     protected function parseThrowExpression()
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -8084,7 +8099,7 @@ abstract class AbstractPHPParser
      */
     protected function parseEnumDeclaration()
     {
-        throw $this->getUnexpectedTokenException();
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -8103,7 +8118,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if ($this->tokenizer->peek() !== Tokens::T_STRING) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         $name = $this->tokenizer->currentToken()->image;
@@ -8221,7 +8236,7 @@ abstract class AbstractPHPParser
         $caseName = $this->tokenizer->currentToken()->image;
 
         if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $caseName)) {
-            throw $this->getUnexpectedTokenException();
+            throw $this->getUnexpectedNextTokenException();
         }
 
         $next = $this->tokenizer->next();

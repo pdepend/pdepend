@@ -50,9 +50,14 @@ use PDepend\Source\AST\ASTConstantDefinition;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Source\Tokenizer\Tokens;
 use PDepend\Util\Cache\CacheDriver;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use ReflectionMethod;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion56} class.
@@ -270,6 +275,36 @@ class PHPParserVersion56Test extends AbstractTest
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $nodes[0]);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $nodes[1]);
         $this->assertSame('A', $nodes[1]->getImage());
+    }
+
+    /**
+     * Tests that the parser throws an exception when trying to parse a value
+     * when given a non-value token type.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForOF()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: function, line: 1, col: 1, file:'
+        );
+
+        $cache = new MemoryCacheDriver();
+        $builder = new PHPBuilder();
+        /** @var Tokenizer $tokenizer */
+        $tokenizer = $this->getMockBuilder('PDepend\\Source\\Tokenizer\\Tokenizer')
+            ->getMock();
+        $tokenizer
+            ->method('peek')
+            ->willReturn(Tokens::T_FUNCTION);
+        $tokenizer
+            ->method('next')
+            ->willReturn(new Token(Tokens::T_FUNCTION, 'function', 1, 1, 1, 9));
+        $parser = $this->createPHPParser($tokenizer, $builder, $cache);
+        $parseArray = new ReflectionMethod($parser, 'parseStaticValueVersionSpecific');
+        $parseArray->setAccessible(true);
+        $parseArray->invoke($parser, new ASTValue());
     }
 
     /**

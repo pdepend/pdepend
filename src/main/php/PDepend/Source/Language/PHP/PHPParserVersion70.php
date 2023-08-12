@@ -607,12 +607,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             return null;
         }
 
-        $next = $this->tokenizer->next();
-        if (!$next instanceof Token) {
-            throw new TokenStreamEndException($this->tokenizer);
-        }
-
-        throw $this->getUnexpectedTokenException($next);
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**

@@ -147,7 +147,8 @@ class PHPParserVersion53Test extends AbstractTest
     }
 
     /**
-     * Tests that the parser throws an exception when trying to parse an array with end of file.
+     * Tests that the parser throws an exception when trying to parse an array
+     * when being at the end of the file.
      *
      * @return void
      */
