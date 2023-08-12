@@ -51,8 +51,6 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\InvalidStateException;
-use PDepend\Source\Parser\TokenStreamEndException;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**

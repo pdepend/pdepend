@@ -45,7 +45,6 @@
 namespace PDepend\Util\Cache\Driver\File;
 
 use DirectoryIterator;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 use SplFileInfo;
 

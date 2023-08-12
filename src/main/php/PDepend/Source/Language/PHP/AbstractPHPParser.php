@@ -5879,6 +5879,7 @@ abstract class AbstractPHPParser
         if ($this->parseOptionalByReference()) {
             if ($static) {
                 $tokens = $this->tokenStack->pop();
+
                 throw $this->getUnexpectedTokenException(end($tokens) ?: null);
             }
 

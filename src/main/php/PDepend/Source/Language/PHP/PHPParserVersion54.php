@@ -48,7 +48,6 @@ use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Parser\UnexpectedTokenException;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**

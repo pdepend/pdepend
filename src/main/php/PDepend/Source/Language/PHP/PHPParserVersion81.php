@@ -49,11 +49,9 @@ use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
-use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\State;
 use PDepend\Source\Parser\ParserException;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
