@@ -330,7 +330,7 @@ class ASTCompilationUnitTest extends AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(362, $file->getEndLine());
+        $this->assertEquals($this->getEndLineOfThisFile(), $file->getEndLine());
     }
 
     /**
@@ -367,5 +367,10 @@ class ASTCompilationUnitTest extends AbstractTest
     {
         $file = new ASTCompilationUnit(null);
         $file->setTokens(array());
+    }
+
+    private function getEndLineOfThisFile()
+    {
+        return __LINE__ + 3;
     }
 }
