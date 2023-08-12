@@ -217,7 +217,7 @@ abstract class PHPParserVersion71 extends PHPParserVersion70
 
         if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
             throw new InvalidStateException(
-                $this->tokenizer->next()->startLine,
+                $this->requireNextToken()->startLine,
                 (string) $this->compilationUnit,
                 sprintf(
                     'Constant can\'t be declared private or protected in interface "%s".',

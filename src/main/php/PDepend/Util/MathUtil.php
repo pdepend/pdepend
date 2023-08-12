@@ -58,7 +58,7 @@ final class MathUtil
      * @param numeric-string $left  The left arithmetic operand.
      * @param numeric-string $right The right arithmetic operand.
      *
-     * @return string
+     * @return numeric-string
      */
     public static function mul($left, $right)
     {
@@ -75,7 +75,7 @@ final class MathUtil
      * @param string $left  The left arithmetic operand.
      * @param string $right The right arithmetic operand.
      *
-     * @return string
+     * @return numeric-string
      */
     public static function add($left, $right)
     {

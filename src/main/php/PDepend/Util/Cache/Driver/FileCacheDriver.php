@@ -165,6 +165,9 @@ class FileCacheDriver implements CacheDriver
     protected function write($file, $data)
     {
         $handle = fopen($file, 'wb');
+        if (!$handle) {
+            return;
+        }
         flock($handle, LOCK_EX);
         fwrite($handle, $data);
         flock($handle, LOCK_UN);
@@ -220,14 +223,21 @@ class FileCacheDriver implements CacheDriver
     protected function read($file)
     {
         $handle = fopen($file, 'rb');
+        if (!$handle) {
+            return '';
+        }
         flock($handle, LOCK_EX);
+        $size = filesize($file);
+        if (!$size) {
+            return '';
+        }
 
-        $data = fread($handle, filesize($file));
+        $data = fread($handle, $size);
 
         flock($handle, LOCK_UN);
         fclose($handle);
 
-        return $data;
+        return $data ?: '';
     }
 
     /**
@@ -246,7 +256,7 @@ class FileCacheDriver implements CacheDriver
         $glob = glob("{$file}*.*");
         // avoid error if we dont find files
         if ($glob !== false) {
-            foreach (glob("{$file}*.*") as $f) {
+            foreach (glob("{$file}*.*") ?: array() as $f) {
                 @unlink($f);
             }
         }

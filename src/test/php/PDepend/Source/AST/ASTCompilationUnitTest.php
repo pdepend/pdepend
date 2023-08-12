@@ -330,7 +330,7 @@ class ASTCompilationUnitTest extends AbstractTest
     public function testGetEndLineReturnsOneWhenSourceFileExists()
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(362, $file->getEndLine());
+        $this->assertSame($this->getEndLineOfThisFile(), $file->getEndLine());
     }
 
     /**
@@ -357,5 +357,20 @@ class ASTCompilationUnitTest extends AbstractTest
         $expected = file_get_contents($this->createCodeResourceUriForTest());
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A compilation unit should contain at least one token
+     */
+    public function testSetTokensWithEmptyArray()
+    {
+        $file = new ASTCompilationUnit(null);
+        $file->setTokens(array());
+    }
+
+    private function getEndLineOfThisFile()
+    {
+        return __LINE__ + 3;
     }
 }

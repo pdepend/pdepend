@@ -44,9 +44,14 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTest;
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Source\Tokenizer\Tokens;
 use PDepend\Util\Cache\CacheDriver;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use ReflectionMethod;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion53} class.
@@ -139,6 +144,65 @@ class PHPParserVersion53Test extends AbstractTest
         );
 
         $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * Tests that the parser throws an exception when trying to parse an array
+     * when being at the end of the file.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForArrayWithEOF()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\TokenStreamEndException',
+            'Unexpected end of token stream in file:'
+        );
+
+        $cache = new MemoryCacheDriver();
+        $builder = new PHPBuilder();
+        /** @var Tokenizer $tokenizer */
+        $tokenizer = $this->getMockBuilder('PDepend\\Source\\Tokenizer\\Tokenizer')
+            ->getMock();
+        $tokenizer
+            ->method('peek')
+            ->willReturn(Tokenizer::T_EOF);
+        $tokenizer
+            ->method('next')
+            ->willReturn(null);
+        $parser = $this->createPHPParser($tokenizer, $builder, $cache);
+        $parseArray = new ReflectionMethod($parser, 'parseArray');
+        $parseArray->setAccessible(true);
+        $parseArray->invoke($parser, new ASTArray());
+    }
+
+    /**
+     * Tests that the parser throws an exception when trying to parse an array with invalid token.
+     *
+     * @return void
+     */
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenArray()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: [, line: 55, col: 10, file:'
+        );
+
+        $cache = new MemoryCacheDriver();
+        $builder = new PHPBuilder();
+        /** @var Tokenizer $tokenizer */
+        $tokenizer = $this->getMockBuilder('PDepend\\Source\\Tokenizer\\Tokenizer')
+            ->getMock();
+        $tokenizer
+            ->method('peek')
+            ->willReturn(Tokens::T_SQUARED_BRACKET_OPEN);
+        $tokenizer
+            ->method('next')
+            ->willReturn(new Token(Tokens::T_SQUARED_BRACKET_OPEN, '[', 55, 55, 10, 11));
+        $parser = $this->createPHPParser($tokenizer, $builder, $cache);
+        $parseArray = new ReflectionMethod($parser, 'parseArray');
+        $parseArray->setAccessible(true);
+        $parseArray->invoke($parser, new ASTArray());
     }
 
     /**

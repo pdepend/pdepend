@@ -244,9 +244,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
         $token = $this->consumeToken(Tokens::T_LNUMBER);
         $number = $token->image;
 
-        while ($this->tokenizer->peek() === Tokens::T_STRING) {
-            $next = $this->tokenizer->next();
-            $this->tokenStack->add($next);
+        while ($next = $this->addTokenToStackIfType(Tokens::T_STRING)) {
             $number .= $next->image;
         }
 

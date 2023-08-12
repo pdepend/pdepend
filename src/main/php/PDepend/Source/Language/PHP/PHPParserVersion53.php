@@ -45,7 +45,6 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTArray;
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -96,10 +95,7 @@ abstract class PHPParserVersion53 extends AbstractPHPParser
                 $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
                 break;
             default:
-                throw new UnexpectedTokenException(
-                    $this->tokenizer->next(),
-                    $this->tokenizer->getSourceFile()
-                );
+                throw $this->getUnexpectedNextTokenException();
         }
 
         return $array;

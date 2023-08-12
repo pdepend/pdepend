@@ -149,7 +149,7 @@ class FileCacheDirectory
     protected function readVersion()
     {
         if (file_exists($this->getVersionFile())) {
-            return trim(file_get_contents($this->getVersionFile()));
+            return trim(file_get_contents($this->getVersionFile()) ?: '');
         }
         return null;
     }

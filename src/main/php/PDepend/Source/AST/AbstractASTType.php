@@ -44,6 +44,7 @@
 
 namespace PDepend\Source\AST;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTTraitUseStatement;
 use PDepend\Source\Builder\BuilderContext;
@@ -399,6 +400,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function setTokens(array $tokens, Token $startToken = null)
     {
+        if ($tokens === array()) {
+            throw new InvalidArgumentException('An AST node should contain at least one token');
+        }
+
         if (!$startToken) {
             $startToken = reset($tokens);
         }
