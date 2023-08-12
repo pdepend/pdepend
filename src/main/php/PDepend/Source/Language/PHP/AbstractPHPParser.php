@@ -608,8 +608,6 @@ abstract class AbstractPHPParser
 
         if ($this->isClassName($type)) {
             return $this->consumeToken($type)->image;
-        } elseif ($type === Tokenizer::T_EOF) {
-            throw new TokenStreamEndException($this->tokenizer);
         }
 
         throw $this->getUnexpectedNextTokenException();
@@ -662,8 +660,6 @@ abstract class AbstractPHPParser
 
         if ($this->isFunctionName($tokenType)) {
             return $this->consumeToken($tokenType)->image;
-        } elseif ($tokenType === Tokenizer::T_EOF) {
-            throw new TokenStreamEndException($this->tokenizer);
         }
 
         throw $this->getUnexpectedNextTokenException();
@@ -730,8 +726,6 @@ abstract class AbstractPHPParser
 
         if ($this->isMethodName($tokenType)) {
             return $this->consumeToken($tokenType)->image;
-        } elseif ($tokenType === Tokenizer::T_EOF) {
-            throw new TokenStreamEndException($this->tokenizer);
         }
 
         throw $this->getUnexpectedNextTokenException();
@@ -1703,12 +1697,8 @@ abstract class AbstractPHPParser
     private function parseTraitAdaptationPrecedenceStatement(array $reference)
     {
         if (count($reference) < 2) {
-            $next = $this->tokenizer->next();
-            if (!$next instanceof Token) {
-                throw new TokenStreamEndException($this->tokenizer);
-            }
             throw new InvalidStateException(
-                $next->startLine,
+                $this->requireNextToken()->startLine,
                 $this->compilationUnit->getFileName(),
                 'Expecting full qualified trait method name.'
             );
@@ -7991,8 +7981,6 @@ abstract class AbstractPHPParser
                 $next = $this->tokenizer->next();
                 assert($next instanceof Token);
                 return $this->tokenStack->add($next);
-            case Tokenizer::T_EOF:
-                throw new TokenStreamEndException($this->tokenizer);
         }
 
         throw $this->getUnexpectedNextTokenException();
@@ -8110,11 +8098,7 @@ abstract class AbstractPHPParser
      */
     protected function parseEnumSignature()
     {
-        $next = $this->tokenizer->next();
-        if (!$next instanceof Token) {
-            throw new TokenStreamEndException($this->tokenizer);
-        }
-        $this->tokenStack->add($next);
+        $this->tokenStack->add($this->requireNextToken());
         $this->consumeComments();
 
         if ($this->tokenizer->peek() !== Tokens::T_STRING) {
@@ -8179,6 +8163,22 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Return the next token if it exists, else throw a TokenStreamEndException.
+     *
+     * @return Token
+     */
+    protected function requireNextToken()
+    {
+        $next = $this->tokenizer->next();
+
+        if ($next instanceof Token) {
+            return $next;
+        }
+
+        throw new TokenStreamEndException($this->tokenizer);
+    }
+
+    /**
      * @param string $numberRepresentation integer number as it appears in the code, `0xfe4`, `1_000_000`
      *
      * @return int
@@ -8226,11 +8226,7 @@ abstract class AbstractPHPParser
      */
     private function parseEnumCase()
     {
-        $next = $this->tokenizer->next();
-        if (!$next instanceof Token) {
-            throw new TokenStreamEndException($this->tokenizer);
-        }
-        $this->tokenStack->add($next);
+        $this->tokenStack->add($this->requireNextToken());
         $this->tokenStack->push();
         $this->consumeComments();
         $caseName = $this->tokenizer->currentToken()->image;
@@ -8239,11 +8235,7 @@ abstract class AbstractPHPParser
             throw $this->getUnexpectedNextTokenException();
         }
 
-        $next = $this->tokenizer->next();
-        if (!$next instanceof Token) {
-            throw new TokenStreamEndException($this->tokenizer);
-        }
-        $this->tokenStack->add($next);
+        $this->tokenStack->add($this->requireNextToken());
         $this->consumeComments();
         $case = $this->builder->buildEnumCase($caseName, $this->parseEnumCaseValue());
         $this->consumeComments();
