@@ -68,13 +68,11 @@ class PHPParserVersion73Test extends AbstractTest
      */
     public function testArrowFunctions()
     {
-        if (version_compare(phpversion(), '7.4.0', '>=')) {
-            $this->markTestSkipped('This test requires PHP < 7.4');
-        }
-
         $this->setExpectedException(
             'PDepend\\Source\\Parser\\UnexpectedTokenException',
-            'Unexpected token: =>, line: 4, col: 34, file:'
+            version_compare(phpversion(), '7.4.0', '>=')
+                ? 'Unexpected token: fn, line: 4, col: 22, file:'
+                : 'Unexpected token: =>, line: 4, col: 34, file:'
         );
 
         $this->parseCodeResourceForTest();
