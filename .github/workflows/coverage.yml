@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [8.2]
+        php: ['8.2']
         setup: ['stable']
 
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
@@ -27,7 +27,7 @@ jobs:
         php-version: ${{ matrix.php }}
         extensions: json
         tools: composer:v2
-        coverage: xdebug2
+        coverage: xdebug
 
     - name: Imagick SVG support
       run: sudo apt-get install libmagickcore-6.q16-3-extra
@@ -45,7 +45,7 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
         composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
-        composer update --prefer-dist --no-progress --no-suggest --prefer-${{ matrix.setup }} --ignore-platform-req=php
+        composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
 
     - name: Fix PHP compatibility
       if: steps.composer-cache.outputs.cache-hit != 'true'

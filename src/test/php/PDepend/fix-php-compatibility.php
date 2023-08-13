@@ -34,6 +34,10 @@ $replacements = array(
             'public function count()',
             "#[\\ReturnTypeWillChange]\npublic function count()",
         ),
+        array(
+            'xdebug.default_enable=0',
+            'xdebug.mode=coverage',
+        ),
     ),
     __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestCase.php' => array(
         array(
@@ -141,6 +145,12 @@ $replacements = array(
         array(
             'public function rewind',
             "#[\\ReturnTypeWillChange]\npublic function rewind",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => array(
+        array(
+            '$numTests = count($coverageData[$i]);',
+            '$numTests = count($coverageData[$i] ?? []);',
         ),
     ),
 );

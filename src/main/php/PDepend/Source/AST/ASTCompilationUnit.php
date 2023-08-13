@@ -359,7 +359,11 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     protected function readSource()
     {
-        if ($this->source === null && (file_exists($this->fileName) || strpos($this->fileName, 'php://') === 0)) {
+        if (
+            $this->source === null &&
+            $this->fileName &&
+            (strpos($this->fileName, 'php://') === 0 || file_exists($this->fileName))
+        ) {
             $source = file_get_contents($this->fileName);
 
             $this->source = str_replace(array("\r\n", "\r"), "\n", $source);
