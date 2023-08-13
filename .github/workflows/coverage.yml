@@ -52,7 +52,7 @@ jobs:
       run: php src/test/php/PDepend/fix-php-compatibility.php
 
     - name: Coverage
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
+      run: vendor/bin/phpunit -v --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
       env:
         XDEBUG_MODE: coverage
 

@@ -8049,6 +8049,7 @@ abstract class AbstractPHPParser
      *
      * @since 2.2.5
      * @deprecated 3.0.0 Use throw $this->getUnexpectedTokenException($token) instead
+     * @codeCoverageIgnore
      */
     protected function throwUnexpectedTokenException(Token $token = null)
     {
