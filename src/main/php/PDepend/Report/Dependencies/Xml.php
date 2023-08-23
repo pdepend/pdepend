@@ -306,6 +306,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $xml = end($this->xmlStack);
+        if (!$xml) {
+            return;
+        }
+
         $doc = $xml->ownerDocument;
 
         $efferentXml = $doc->createElement('efferent');

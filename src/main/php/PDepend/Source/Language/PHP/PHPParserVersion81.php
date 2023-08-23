@@ -102,8 +102,6 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     *
-     * @return ASTType
      */
     protected function parseScalarOrCallableTypeHint($image)
     {

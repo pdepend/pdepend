@@ -248,7 +248,7 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
                 $name = $this->parseQualifiedName();
 
                 return $this->isScalarOrCallableTypeHint($name)
-                    ? $this->parseScalarOrCallableTypeHint($name)
+                    ? ($this->parseScalarOrCallableTypeHint($name) ?: null)
                     : $this->builder->buildAstClassOrInterfaceReference($name);
 
             default:
