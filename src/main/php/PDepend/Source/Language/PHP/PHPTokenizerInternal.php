@@ -48,6 +48,8 @@ use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
+// @codeCoverageIgnoreStart
+
 /**
  * Define PHP 5.4 __TRAIT__ token constant.
  */
@@ -218,6 +220,8 @@ if (!defined('T_READONLY')) {
 if (!defined('T_ENUM')) {
     define('T_ENUM', 42372);
 }
+
+// @codeCoverageIgnoreEnd
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -792,9 +796,9 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Split PHP 8 T_NAME(_FULLY)_QUALIFIED token into PHP 7 compatible tokens.
      *
-     * @param array<int|string> $token
+     * @param array{int, string, int} $token
      *
-     * @return array<int, array<int|string>>
+     * @return array<int, array<int, int|string>>
      */
     private function splitQualifiedNameToken($token)
     {
@@ -863,9 +867,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * and substitutes some of the tokens with those required by PDepend's
      * parser implementation.
      *
-     * @param array<array<int, integer|string>|string> $tokens Unprepared array of php tokens.
+     * @param array<array{int, string, int}|string> $tokens Unprepared array of php tokens.
      *
-     * @return array<array<int, integer|string>|string>
+     * @return array<array<int, int|string|null>|string>
      */
     private function substituteTokens(array $tokens)
     {
@@ -899,11 +903,11 @@ class PHPTokenizerInternal implements FullTokenizer
                 $attributeComment = '/* @';
                 $attributeCommentLine = $token[2];
                 $brackets = 1;
-            } elseif ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED) {
+            } elseif (is_array($token) && ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED)) {
                 foreach ($this->splitQualifiedNameToken($token) as $subToken) {
                     $result[] = $subToken;
                 }
-            } elseif ($temp === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)) {
+            } elseif (is_array($token) && $temp === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match) && $match) {
                 foreach ($this->splitRelativeNameToken($token, $match[1]) as $subToken) {
                     $result[] = $subToken;
                 }

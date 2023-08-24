@@ -260,11 +260,12 @@ class Engine
             return;
         }
 
-        if (!is_file($file)) {
+        $realPath = realpath($file);
+        if (!$realPath || !is_file($file)) {
             throw new InvalidArgumentException(sprintf('The given file "%s" does not exist.', $file));
         }
 
-        $this->files[] = realpath($file);
+        $this->files[] = $realPath;
     }
 
     /**
