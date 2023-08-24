@@ -95,12 +95,12 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function rewind(",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => array(
+    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$docblock = $token->getDocblock();',
             '$docblock = $token->getDocblock() ?? \'\';',
         ),
-    ),
+    ) : array(),
     __DIR__ . '/../../../../vendor/phpunit/php-token-stream/src/Token/Stream.php' => array(
         array(
             'public function offsetExists',
@@ -147,12 +147,12 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function rewind",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => array(
+    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$numTests = count($coverageData[$i]);',
             '$numTests = count($coverageData[$i] ?? []);',
         ),
-    ),
+    ) : array(),
 );
 
 foreach ($replacements as $file => $patterns) {
