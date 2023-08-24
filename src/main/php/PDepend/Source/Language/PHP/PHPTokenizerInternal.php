@@ -48,6 +48,8 @@ use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
+// @codeCoverageIgnoreStart
+
 /**
  * Define PHP 5.4 __TRAIT__ token constant.
  */
@@ -218,6 +220,8 @@ if (!defined('T_READONLY')) {
 if (!defined('T_ENUM')) {
     define('T_ENUM', 42372);
 }
+
+// @codeCoverageIgnoreEnd
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
