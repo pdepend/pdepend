@@ -233,7 +233,7 @@ abstract class AbstractTest extends TestCase
     /**
      * Create a TextUi Runner
      *
-     * @return Runner
+     * @return \PDepend\TextUI\Runner
      */
     protected function createTextUiRunner()
     {
@@ -596,11 +596,28 @@ abstract class AbstractTest extends TestCase
         return new Engine($configuration, $cacheFactory, $analyzerFactory);
     }
 
+    /**
+     * @param \PDepend\TextUI\Runner $runner
+     *
+     * @return int
+     */
     protected function silentRun($runner)
     {
+        $error = null;
+
         ob_start();
-        $exitCode = $runner->run();
+
+        try {
+            $exitCode = $runner->run();
+        } catch (\Exception $exception) {
+            $error = $exception;
+        }
+
         ob_end_clean();
+
+        if ($error) {
+            throw $error;
+        }
 
         return $exitCode;
     }

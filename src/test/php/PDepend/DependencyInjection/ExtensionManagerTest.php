@@ -42,59 +42,69 @@
 
 namespace PDepend\DependencyInjection;
 
+use PDepend\AbstractTest;
 use RuntimeException;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Manage activation and registration of extensions for PDepend.
+ * Test cases for the {@link \PDepend\Application} class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @covers \PDepend\DependencyInjection\ExtensionManager
+ * @covers \PDepend\DependencyInjection\Extension
+ * @group unittest
  */
-class ExtensionManager
+class ExtensionManagerTest extends AbstractTest
 {
-    /**
-     * @var array<Extension>
-     */
-    private $extensions = array();
-
-    /**
-     * Activate an extension based on a class name.
-     *
-     * @param class-string<Extension> $className
-     *
-     * @throws RuntimeException
-     *
-     * @return void
-     */
-    public function activateExtension($className)
+    public function testExtensionManager()
     {
-        if (!class_exists($className)) {
-            throw new RuntimeException(
-                sprintf(
-                    'Cannot find extension class "%s" for PDepend. Maybe the plugin is not installed?',
-                    $className
-                )
-            );
+        $extensionManager = new ExtensionManager();
+
+        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
+
+        $message = null;
+
+        try {
+            $extensionManager->activateExtension('CannotFindIt');
+        } catch (RuntimeException $exception) {
+            $message = $exception->getMessage();
         }
 
-        $extension = new $className;
+        $this->assertSame(
+            'Cannot find extension class "CannotFindIt" for PDepend. Maybe the plugin is not installed?',
+            $message
+        );
+        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
 
-        if (!($extension instanceof Extension)) {
-            throw new RuntimeException(
-                sprintf('Class "%s" is not a valid Extension', $className)
-            );
+        $message = null;
+
+        try {
+            $extensionManager->activateExtension('PDepend\\DependencyInjection\\ExtensionManager');
+        } catch (RuntimeException $exception) {
+            $message = $exception->getMessage();
         }
 
-        $this->extensions[$extension->getName()] = $extension;
-    }
+        $this->assertSame(
+            'Class "PDepend\\DependencyInjection\\ExtensionManager" is not a valid Extension',
+            $message
+        );
+        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
 
-    /**
-     * Return all activated extensions.
-     *
-     * @return array<Extension>
-     */
-    public function getActivatedExtensions()
-    {
-        return $this->extensions;
+        $extensionManager->activateExtension('PDepend\\TestExtension');
+        $extensions = $extensionManager->getActivatedExtensions();
+
+        $this->assertSame(array('test'), array_keys($extensions));
+
+        $extension = $extensions['test'];
+
+        $this->assertInstanceOf('PDepend\\TestExtension', $extension);
+        $this->assertSame(array(), $extension->getCompilerPasses());
+
+        $container = new ContainerBuilder();
+        $extension->load(array('foo' => 'bar'), $container);
+
+        $this->assertSame(array('foo' => 'bar'), $container->getParameter('test.parameters'));
     }
 }

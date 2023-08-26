@@ -80,6 +80,8 @@ class PyramidTest extends AbstractTest
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
      *
+     * @covers \PDepend\Report\NoLogOutputException
+     *
      * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget()

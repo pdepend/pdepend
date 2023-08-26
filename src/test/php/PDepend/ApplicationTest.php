@@ -42,6 +42,8 @@
 
 namespace PDepend;
 
+use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
+
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
@@ -116,5 +118,27 @@ class ApplicationTest extends AbstractTest
         $config = $application->getEngine();
 
         $this->assertInstanceOf('PDepend\Engine', $config);
+    }
+
+    public function testGetAvailableLoggerOptions()
+    {
+        $application = $this->createTestApplication();
+        $options = $application->getAvailableLoggerOptions();
+
+        $this->assertSame(array(
+            'message' => 'Dummy logger for tests',
+            'value' => 'file',
+        ), $options['--dummy-logger']);
+    }
+
+    public function testGetAvailableAnalyzerOptions()
+    {
+        $application = $this->createTestApplication();
+        $options = $application->getAvailableAnalyzerOptions();
+
+        $this->assertSame(array(
+            'message' => "Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover option.",
+            'value' => 'file',
+        ), $options['--' . CrapIndexAnalyzer::REPORT_OPTION]);
     }
 }

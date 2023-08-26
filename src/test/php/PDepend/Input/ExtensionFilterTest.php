@@ -82,6 +82,16 @@ class ExtensionFilterTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testExtensionFilterAcceptsPhpProtocol()
+    {
+        $filter = new ExtensionFilter(array('abc'));
+
+        $this->assertTrue($filter->accept('', 'php://def'));
+    }
+
+    /**
      * Creates an array with those files that were acceptable for the extension
      * filter.
      *

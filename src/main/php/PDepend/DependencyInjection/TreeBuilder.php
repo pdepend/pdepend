@@ -76,12 +76,12 @@ class TreeBuilder
             return;
         }
 
+        // @codeCoverageIgnoreStart
         if (method_exists($this->treeBuilder, 'root')) {
             // Symfony < 4.2
             $this->rootNode = $this->treeBuilder->root($name);
-
-            return;
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**
