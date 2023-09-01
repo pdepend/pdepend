@@ -43,6 +43,11 @@
 namespace PDepend\TextUI;
 
 use PDepend\AbstractTest;
+use PDepend\Input\ExtensionFilter;
+use PDepend\Input\Filter;
+use PDepend\Report\ReportGeneratorFactory;
+use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Test case for the text ui runner.
@@ -113,7 +118,77 @@ class RunnerTest extends AbstractTest
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetExcludeDirectories()
+    {
+        /** @var Filter[] $record */
+        $record = array();
+        $engine = $this->getMockBuilder('PDepend\\Engine')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $engine->expects($this->exactly(2))
+            ->method('addFileFilter')
+            ->willReturnCallback(function (Filter $excludePathFilter) use (&$record) {
+                $record[] = $excludePathFilter;
+            });
+        $engine->expects($this->exactly(0))
+            ->method('setCodeFilter');
+        $container = new Container();
+
+        $runner = new Runner(new ReportGeneratorFactory($container), $engine);
+        $runner->setExcludeDirectories(array(dirname(__DIR__)));
+
+        try {
+            $this->silentRun($runner);
+        } catch (\Exception $exception) {
+            // noop
+        }
+
+        $this->assertCount(2, $record);
+        $this->assertInstanceOf('PDepend\\Input\\ExtensionFilter', $record[0]);
+        $this->assertInstanceOf('PDepend\\Input\\ExcludePathFilter', $record[1]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetExcludeNamespaces()
+    {
+        /** @var object[] $record */
+        $record = array();
+        $engine = $this->getMockBuilder('PDepend\\Engine')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $engine->expects($this->exactly(2))
+            ->method('addFileFilter')
+            ->willReturnCallback(function (Filter $excludePathFilter) use (&$record) {
+                $record[] = $excludePathFilter;
+            });
+        $engine->expects($this->once())
+            ->method('setCodeFilter')
+            ->willReturnCallback(function (PackageArtifactFilter $excludePathFilter) use (&$record) {
+                $record[] = $excludePathFilter;
+            });
+        $container = new Container();
+
+        $runner = new Runner(new ReportGeneratorFactory($container), $engine);
+        $runner->setExcludeNamespaces(array('PDepend'));
+
+        try {
+            $this->silentRun($runner);
+        } catch (\Exception $exception) {
+            // noop
+        }
+
+        $this->assertCount(3, $record);
+        $this->assertInstanceOf('PDepend\\Input\\ExtensionFilter', $record[0]);
+        $this->assertInstanceOf('PDepend\\Input\\ExcludePathFilter', $record[1]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList\\PackageArtifactFilter', $record[2]);
     }
 
     /**
@@ -147,7 +222,7 @@ class RunnerTest extends AbstractTest
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -185,7 +260,7 @@ class RunnerTest extends AbstractTest
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
