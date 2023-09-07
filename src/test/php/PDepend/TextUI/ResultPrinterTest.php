@@ -44,6 +44,7 @@ namespace PDepend\TextUI;
 
 use PDepend\AbstractTest;
 use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
+use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -164,5 +165,66 @@ class ResultPrinterTest extends AbstractTest
                   . "............................................................  2400\n\n";
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testStartParseProcess()
+    {
+        self::expectOutput(
+            'Parsing source files:',
+            function () {
+                $printer = new ResultPrinter();
+
+                $printer->startParseProcess(new PHPBuilder());
+            }
+        );
+    }
+
+    public function testStartLogProcess()
+    {
+        self::expectOutput(
+            'Generating pdepend log files, this may take a moment.',
+            function () {
+                $printer = new ResultPrinter();
+
+                $printer->startLogProcess();
+            }
+        );
+    }
+
+    public function testStartAnalyzer()
+    {
+        self::expectOutput(
+            'Calculating Dependency metrics:',
+            function () {
+                $printer = new ResultPrinter();
+
+                $printer->startAnalyzer(new DependencyAnalyzer());
+            }
+        );
+    }
+
+    public function testEmptyMethods()
+    {
+        self::expectOutput(
+            '',
+            function () {
+                $printer = new ResultPrinter();
+
+                $printer->endFileParsing(new PHPTokenizerInternal());
+                $printer->startAnalyzeProcess();
+                $printer->endAnalyzeProcess();
+                $printer->endLogProcess();
+            }
+        );
+    }
+
+    private static function expectOutput($expected, $action)
+    {
+        ob_start();
+        call_user_func($action);
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        self::assertSame($expected, trim($output));
     }
 }
