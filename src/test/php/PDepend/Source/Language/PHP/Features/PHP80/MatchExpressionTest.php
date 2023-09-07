@@ -54,6 +54,8 @@ use PDepend\Source\AST\ASTReturnStatement;
 class MatchExpressionTest extends PHPParserVersion80Test
 {
     /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseMatchEntryKey
+     *
      * @return void
      */
     public function testMatchExpression()

@@ -50,6 +50,8 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 class ReadonlyClassTest extends PHPParserVersion81Test
 {
     /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseClassModifiers
+     *
      * @return void
      */
     public function testReadonlyClass()

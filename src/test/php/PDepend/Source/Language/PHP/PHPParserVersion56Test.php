@@ -113,6 +113,8 @@ class PHPParserVersion56Test extends AbstractTest
     /**
      * testPowExpressionInMethodBody
      *
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::checkEllipsisInExpressionSupport
+     *
      * @return void
      */
     public function testPowExpressionInMethodBody()
@@ -137,6 +139,8 @@ class PHPParserVersion56Test extends AbstractTest
     }
 
     /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseMethodName
+     *
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      * @expectedExceptionMessageRegExp (Unexpected token: list, line: 4, col: 21, file: )
@@ -311,6 +315,7 @@ class PHPParserVersion56Test extends AbstractTest
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder<mixed> $builder
      * @param \PDepend\Util\Cache\CacheDriver $cache
+     *
      * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
@@ -324,6 +329,8 @@ class PHPParserVersion56Test extends AbstractTest
     /**
      * Tests that the parser throws an exception when it detects a reserved keyword
      * in constant class names.
+     *
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseConstantDeclarator
      *
      * @return void
      */

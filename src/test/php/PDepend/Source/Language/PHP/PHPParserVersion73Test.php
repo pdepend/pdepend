@@ -64,6 +64,9 @@ use PDepend\Util\Cache\CacheDriver;
 class PHPParserVersion73Test extends AbstractTest
 {
     /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseLambdaFunctionDeclaration
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseVariableOrConstantOrPrimaryPrefix
+     *
      * @return void
      */
     public function testArrowFunctions()

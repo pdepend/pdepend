@@ -85,6 +85,8 @@ class PHPParserVersion55Test extends AbstractTest
     /**
      * testParserThrowsExceptionForComplexExpressionInFieldDeclaration
      *
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseStaticValueVersionSpecific
+     *
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */

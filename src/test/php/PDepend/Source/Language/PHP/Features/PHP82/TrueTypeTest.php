@@ -40,13 +40,11 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTScalarType;
-use PDepend\Source\AST\State;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -55,7 +53,7 @@ use PDepend\Source\AST\State;
  * @group unittest
  * @group php8.2
  */
-class TrueTypeTest extends AbstractTest
+class TrueTypeTest extends PHPParserVersion82Test
 {
     /**
      * @return void

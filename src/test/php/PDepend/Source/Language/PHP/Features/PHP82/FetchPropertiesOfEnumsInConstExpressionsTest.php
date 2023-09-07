@@ -58,6 +58,8 @@ use PDepend\Source\AST\ASTPropertyPostfix;
 class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Test
 {
     /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseEnumCase
+     *
      * @return void
      */
     public function testEnumConst()
@@ -83,6 +85,9 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
         $this->assertSame('self::B', $this->constructImage($children[1]));
     }
 
+    /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseTypeBody
+     */
     public function testVariousUsages()
     {
         $classes = $this->parseCodeResourceForTest()

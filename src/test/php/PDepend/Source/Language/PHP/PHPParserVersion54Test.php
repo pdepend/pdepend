@@ -155,6 +155,8 @@ class PHPParserVersion54Test extends AbstractTest
     /**
      * Tests that ::class is not allowed PHP < 5.5.
      *
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::addTokenToStackIfType
+     *
      * @return void
      * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */

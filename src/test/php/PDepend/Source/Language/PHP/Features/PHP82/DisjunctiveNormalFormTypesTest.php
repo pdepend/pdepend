@@ -150,6 +150,8 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82Test
     }
 
     /**
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseFullQualifiedClassNamePostfix
+     *
      * @return void
      */
     public function testParameterNestedParentheses()
