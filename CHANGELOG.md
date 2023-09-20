@@ -1,3 +1,12 @@
+pdepend-2.15.0 (2023/06/29)
+- Fixed [\#673](https://github.com/pdepend/pdepend/pull/673): Fix [\#665](https://github.com/pdepend/pdepend/issues/665) Allow readonly before public/protected/private.
+- Changed [\#670](https://github.com/pdepend/pdepend/pull/670): Upgrade the GitHub Actions from V2 to V3.
+- Changed [\#671](https://github.com/pdepend/pdepend/pull/671): Update PHPStan to 1.10.25.
+- Changed [\#672](https://github.com/pdepend/pdepend/pull/672) and [\#676](https://github.com/pdepend/pdepend/pull/676): Resolve edge cases cought by PHPStan level 7.
+- Changed [\#675](https://github.com/pdepend/pdepend/pull/675): Run the codecoverage with PHP 8.2 and use xDebug 3.
+- Changed [\#677](https://github.com/pdepend/pdepend/pull/677) and [\#678](https://github.com/pdepend/pdepend/pull/678): Add more tests.
+
+
 pdepend-2.14.0 (2023/05/26)
 
 - Added [\#663](https://github.com/pdepend/pdepend/pull/663): Added, sign the phar files.
