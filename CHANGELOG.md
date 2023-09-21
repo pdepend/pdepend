@@ -1,4 +1,6 @@
 pdepend-2.15.0 (2023/06/29)
+==========================
+
 - Fixed [\#673](https://github.com/pdepend/pdepend/pull/673): Fix [\#665](https://github.com/pdepend/pdepend/issues/665) Allow readonly before public/protected/private.
 - Changed [\#670](https://github.com/pdepend/pdepend/pull/670): Upgrade the GitHub Actions from V2 to V3.
 - Changed [\#671](https://github.com/pdepend/pdepend/pull/671): Update PHPStan to 1.10.25.
@@ -8,6 +10,8 @@ pdepend-2.15.0 (2023/06/29)
 
 
 pdepend-2.14.0 (2023/05/26)
+==========================
+
 
 - Added [\#663](https://github.com/pdepend/pdepend/pull/663): Added, sign the phar files.
 - Added [\#657](https://github.com/pdepend/pdepend/pull/657): Added keywords to composer.json.
