@@ -231,10 +231,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function setTokens(array $tokens)
     {
-        if ($tokens === array()) {
-            throw new InvalidArgumentException('A compilation unit should contain at least one token');
-        }
-
         $this->cache
             ->type('tokens')
             ->store($this->getId(), $tokens);

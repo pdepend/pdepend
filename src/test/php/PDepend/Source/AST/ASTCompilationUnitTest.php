@@ -359,16 +359,6 @@ class ASTCompilationUnitTest extends AbstractTest
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A compilation unit should contain at least one token
-     */
-    public function testSetTokensWithEmptyArray()
-    {
-        $file = new ASTCompilationUnit(null);
-        $file->setTokens(array());
-    }
-
     private function getEndLineOfThisFile()
     {
         return __LINE__ + 3;
