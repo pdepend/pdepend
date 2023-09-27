@@ -271,7 +271,11 @@ class Command
                  '=============== ', PHP_EOL,
                   $e->getMessage(),  PHP_EOL;
 
-            Log::debug($e->getTraceAsString());
+            Log::debug('## ' . $e->getFile() .'(' . $e->getLine() . ")\n" . $e->getTraceAsString());
+
+            for ($previous = $e; $previous; $previous = $previous->getPrevious()) {
+                Log::debug("\nCaused by:\n## " . $previous->getFile() .'(' . $previous->getLine() . ")\n" . $previous->getTraceAsString());
+            }
 
             return $e->getCode();
         }
