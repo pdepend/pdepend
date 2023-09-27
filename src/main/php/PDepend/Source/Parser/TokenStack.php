@@ -99,7 +99,7 @@ class TokenStack
     public function pop()
     {
         $tokens       = $this->tokens;
-        $this->tokens = $this->stack[--$this->offset];
+        $this->tokens = isset($this->stack[--$this->offset]) ? $this->stack[$this->offset] : array();
 
         unset($this->stack[$this->offset]);
 
