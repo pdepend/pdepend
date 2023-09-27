@@ -325,7 +325,7 @@ class Runner
                 $this->parseErrors[] = $exception->getMessage();
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
         }
 
         return self::SUCCESS_EXIT;

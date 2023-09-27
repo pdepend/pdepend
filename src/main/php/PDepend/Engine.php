@@ -608,6 +608,7 @@ class Engine
             } catch (ParserException $e) {
                 $this->parseExceptions[] = $e;
             }
+
             $this->fireEndFileParsing($tokenizer);
         }
 
