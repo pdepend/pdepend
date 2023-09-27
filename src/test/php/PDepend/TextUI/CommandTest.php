@@ -43,8 +43,11 @@
 namespace PDepend\TextUI;
 
 use PDepend\AbstractTest;
+use PDepend\MockCommand;
 use PDepend\Util\ConfigurationInstance;
+use PDepend\Util\Log;
 use PHPUnit_Framework_TestCase;
+use ReflectionProperty;
 
 /**
  * Test case for the text ui command.
@@ -560,6 +563,50 @@ class CommandTest extends AbstractTest
         $this->assertEmpty('', $actual);
     }
 
+    public function testErrorDisplay()
+    {
+        ob_start();
+        $exitCode = MockCommand::main();
+        $output   = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
+        $this->assertSame(42, $exitCode);
+    }
+
+    public function testDebugErrorDisplay()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+        $streamProperty = new ReflectionProperty('PDepend\\Util\\Log', 'stream');
+        $streamProperty->setAccessible(true);
+        $streamProperty->setValue(fopen($file, 'a+'));
+
+        Log::setSeverity(Log::DEBUG);
+
+        ob_start();
+        $exitCode = MockCommand::main();
+        $output   = ob_get_contents();
+        ob_end_clean();
+
+        Log::setSeverity(0);
+        $error = file_get_contents($file);
+        unlink($file);
+        $streamProperty->setValue(STDERR);
+
+        $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
+        $this->assertSame(42, $exitCode);
+        $this->assertRegExp('/^
+                \nRuntimeException\(Bad\susage\)\n
+                ##\s.+[\/\\\\]MockCommand\.php\(20\)\n
+                #0 .+[\/\\\\]Command\.php\(\d+\):\sPDepend\MockCommand->printVersion\(\)\n
+                [\s\S]+\n\n
+                Caused\sby:\n
+                BadMethodCallException\(Cause\)\n
+                ##\s.+[\/\\\\]MockCommand\.php\(25\)\n
+                #0\s.+[\/\\\\]MockCommand\.php\(18\):\sPDepend\MockCommand->getCause\(\)\n
+            /x', str_replace("\r", '', $error));
+    }
+
     /**
      * Tests the help output with an optional prolog text.
      *
@@ -598,8 +645,7 @@ class CommandTest extends AbstractTest
         $this->prepareArgv($argv);
 
         ob_start();
-        $command = new Command();
-        $exitCode = $command->run();
+        $exitCode = Command::main();
         $output   = ob_get_contents();
         ob_end_clean();
 

@@ -174,12 +174,12 @@ class Command
 
         foreach ($options as $option => $value) {
             if (isset($logOptions[$option])) {
-                // Reduce recieved option list
+                // Reduce received option list
                 unset($options[$option]);
                 // Register logger
                 $this->runner->addReportGenerator(substr($option, 2), $value);
             } elseif (isset($analyzerOptions[$option])) {
-                // Reduce recieved option list
+                // Reduce received option list
                 unset($options[$option]);
 
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
@@ -267,14 +267,14 @@ class Command
             return $result;
         } catch (RuntimeException $e) {
             echo PHP_EOL, PHP_EOL,
-                 'Critical error: ', PHP_EOL,
-                 '=============== ', PHP_EOL,
-                  $e->getMessage(),  PHP_EOL;
+                 'Critical error:', PHP_EOL,
+                 '===============', PHP_EOL,
+                  $e->getMessage(), PHP_EOL;
 
-            Log::debug('## ' . $e->getFile() .'(' . $e->getLine() . ")\n" . $e->getTraceAsString());
+            Log::debug($this->getErrorTrace($e));
 
-            for ($previous = $e; $previous; $previous = $previous->getPrevious()) {
-                Log::debug("\nCaused by:\n## " . $previous->getFile() .'(' . $previous->getLine() . ")\n" . $previous->getTraceAsString());
+            for ($previous = $e->getPrevious(); $previous; $previous = $previous->getPrevious()) {
+                Log::debug(PHP_EOL . 'Caused by:' . PHP_EOL . $this->getErrorTrace($previous));
             }
 
             return $e->getCode();
@@ -634,7 +634,8 @@ class Command
      */
     public static function main()
     {
-        $command = new Command();
+        $command = new self();
+
         return $command->run();
     }
 
@@ -655,5 +656,17 @@ class Command
             printf('; Memory: %4.2fMb', $memory);
         }
         echo PHP_EOL;
+    }
+
+    /**
+     * @param Exception|\Throwable $exception
+     *
+     * @return string
+     */
+    private function getErrorTrace($exception)
+    {
+        return get_class($exception) . '(' . $exception->getMessage() . ')' . PHP_EOL .
+            '## ' . $exception->getFile() .'(' . $exception->getLine() . ')' . PHP_EOL .
+            $exception->getTraceAsString();
     }
 }
