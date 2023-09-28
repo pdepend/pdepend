@@ -1,4 +1,11 @@
-pdepend-2.15.0 (2023/06/29)
+pdepend-2.15.1 (2023/09/28)
+==========================
+
+- Fixed [\#684](https://github.com/pdepend/pdepend/pull/684): Fix [\#682](https://github.com/pdepend/pdepend/issues/682) Re-allow empty compilation unit
+- Changed [\#684](https://github.com/pdepend/pdepend/pull/684): Show error full stack trace when debug is on
+
+
+pdepend-2.15.0 (2023/09/23)
 ==========================
 
 - Fixed [\#669](https://github.com/pdepend/pdepend/pull/669): Fix Halstead formula.
