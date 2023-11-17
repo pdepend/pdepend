@@ -1292,10 +1292,11 @@ abstract class AbstractPHPParser
             );
         }
 
+        $docComment = $this->docComment;
         $callable = $this->parseFunctionDeclaration();
         $this->compilationUnit->addChild($callable);
 
-        $callable->setComment($this->docComment);
+        $callable->setComment($docComment);
         $callable->setTokens($this->tokenStack->pop());
         $this->prepareCallable($callable);
 
