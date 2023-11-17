@@ -65,6 +65,18 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function getIterator(",
         ),
     ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
+        array(
+            'public function accept(',
+            "#[\\ReturnTypeWillChange]\npublic function accept(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/php-file-iterator/src/Iterator.php' => array(
+        array(
+            'public function accept(',
+            "#[\\ReturnTypeWillChange]\npublic function accept(",
+        ),
+    ),
     __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/TestSuiteIterator.php' => array(
         array(
             'public function hasChildren(',
@@ -93,6 +105,12 @@ $replacements = array(
         array(
             'public function rewind(',
             "#[\\ReturnTypeWillChange]\npublic function rewind(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/Getopt.php' => array(
+        array(
+            'strlen($opt_arg)',
+            'strlen((string) $opt_arg)',
         ),
     ),
     __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
