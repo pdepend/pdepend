@@ -65,4 +65,19 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTest
             '@SuppressWarnings(PHPMD.NPathComplexity)',
         ), $lines);
     }
+
+    public function testMethodDocBlockCanBeRead()
+    {
+        /** @var ASTFunction $function */
+        $function = $this->getFirstClassMethodForTestCase();
+
+        $lines = array_map(function ($line) {
+            return trim($line, " \t\n\r\0\x0B/*");
+        }, explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")));
+
+        $this->assertSame(array(
+            '@SuppressWarnings(PHPMD.CyclomaticComplexity)',
+            '@SuppressWarnings(PHPMD.NPathComplexity)',
+        ), $lines);
+    }
 }
