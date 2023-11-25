@@ -588,7 +588,7 @@ class CommandTest extends AbstractTest
         $output   = ob_get_contents();
         ob_end_clean();
 
-        Log::setSeverity(0);
+        Log::setSeverity(2);
         $error = file_get_contents($file);
         unlink($file);
         $streamProperty->setValue(STDERR);

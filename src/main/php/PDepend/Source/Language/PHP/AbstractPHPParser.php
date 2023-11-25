@@ -8216,8 +8216,8 @@ abstract class AbstractPHPParser
                 return bindec(substr($numberRepresentation, 2));
 
             default:
-                if (substr($numberRepresentation, 0, 1) === '0') {
-                    return octdec(preg_replace('/^0+(oO)?/', '', $numberRepresentation));
+                if (preg_match('/^0+[oO]?(\d+)$/', $numberRepresentation, $match)) {
+                    return octdec($match[1]);
                 }
 
                 return $numberRepresentation;

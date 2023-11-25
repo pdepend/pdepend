@@ -218,6 +218,23 @@ class ASTLiteralTest extends ASTNodeTest
     }
 
     /**
+     * testLiteralWithZeroFloatValue
+     *
+     * @return void
+     * @since 2.16.0
+     * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+     */
+    public function testLiteralWithZeroFloatValue()
+    {
+        $class = $this->getFirstClassForTestCase();
+        $properties = $class->getProperties();
+        /** @var ASTProperty $property */
+        $property = $properties[0];
+
+        $this->assertSame(0.0, $property->getDefaultValue());
+    }
+
+    /**
      * testLiteralWithCurlyBraceFollowedByCompoundExpression
      *
      * @return void
