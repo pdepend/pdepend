@@ -42,29 +42,33 @@
 
 namespace PDepend\Util;
 
+use PDepend\AbstractTest;
+use ReflectionMethod;
+
 /**
- * This is a simply utility class that will ensure the encoding of a raw string
- * into a UTF-8 encoded string. It will try using "mbstring" extension if
- * available, or symfony polyfill if not.
+ * Test case for type utility class.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @since 2.2.x
+ * @covers \PDepend\Util\Utf8Util
+ * @group unittest
  */
-final class Utf8Util
+class Utf8UtilTest extends AbstractTest
 {
-    /**
-     * @param string $raw
-     *
-     * @return string
-     */
-    public static function ensureEncoding($raw)
+    public function testEnsureEncoding()
     {
-        if (mb_check_encoding($raw, 'UTF-8')) {
-            return $raw;
-        }
-
-        return mb_convert_encoding($raw, 'UTF-8', mb_list_encodings());
+        self::assertSame('🚀', Utf8Util::ensureEncoding('🚀'));
+        self::assertSame('', Utf8Util::ensureEncoding(''));
+        self::assertSame(
+            'Été für baño',
+            Utf8Util::ensureEncoding(base64_decode('w4l0w6kgZsO8ciBiYcOxbw==')),
+            'Éüñ UTF-8 should stay Éüñ UTF-8'
+        );
+        self::assertSame(
+            'Été für baño',
+            Utf8Util::ensureEncoding(base64_decode('yXTpIGb8ciBiYfFv')),
+            'Éüñ ISO-8859-1 should become Éüñ UTF-8'
+        );
     }
 }
