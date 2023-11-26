@@ -7186,7 +7186,6 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_COMMA);
         } while ($tokenType !== Tokenizer::T_EOF);
 
-
         $definition = $this->setNodePositionsAndReturn($definition);
 
         $this->consumeToken(Tokens::T_SEMICOLON);
@@ -7237,7 +7236,7 @@ abstract class AbstractPHPParser
 
         $tokenType = $this->tokenizer->peek();
 
-        if (false === $this->isConstantName($tokenType)) {
+        if (!$this->isConstantName($tokenType)) {
             throw $this->getUnexpectedNextTokenException();
         }
 

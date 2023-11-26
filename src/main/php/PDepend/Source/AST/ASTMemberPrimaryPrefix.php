@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * Primary prefix expression as it is used to access class or interface members
  * like methods, properties and constants.
