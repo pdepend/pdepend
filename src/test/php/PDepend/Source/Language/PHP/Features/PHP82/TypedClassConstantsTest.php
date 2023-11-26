@@ -46,7 +46,6 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  * @group php8.2
- * @group ty
  */
 class TypedClassConstantsTest extends PHPParserVersion82Test
 {

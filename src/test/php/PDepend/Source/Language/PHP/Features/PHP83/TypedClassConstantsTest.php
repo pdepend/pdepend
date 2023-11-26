@@ -40,8 +40,8 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP83;
 
-use PDepend\AbstractTest;
 use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTScalarType;
@@ -50,7 +50,8 @@ use PDepend\Source\AST\ASTValue;
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
+ * @covers \PDepend\Source\AST\ASTConstantDeclarator
  * @group unittest
  * @group php8.3
  */
@@ -84,5 +85,32 @@ class TypedClassConstantsTest extends PHPParserVersion83Test
         $this->assertSame('E', $children[0]->getImage());
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $children[1]);
         $this->assertSame('TEST', $children[1]->getImage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testEnum()
+    {
+        /** @var ASTEnum $enum */
+        $enum = $this->parseCodeResourceForTest()
+            ->current()
+            ->getEnums()
+            ->current();
+        /** @var ASTConstantDeclarator $constant */
+        $constantDeclarator = $enum->getChild(0)->getChild(0);
+        /** @var ASTScalarType $type */
+        $type = $constantDeclarator->getType();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertSame('string', $type->getImage());
+        /** @var ASTValue $value */
+        $value = $constantDeclarator->getValue();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
+
+        /** @var ASTMemberPrimaryPrefix $constant */
+        $constant = $enum->getConstant('TEST');
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $constant);
+        $this->assertSame($constant, $value->getValue());
+        $this->assertSame('"Test1"', $constant->getImage());
     }
 }

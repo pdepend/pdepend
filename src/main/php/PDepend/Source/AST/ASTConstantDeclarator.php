@@ -42,8 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This class represents a single constant declarator within a constant
  * definition.
