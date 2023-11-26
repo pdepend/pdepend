@@ -7194,6 +7194,18 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Constant cannot be typed before PHP 8.3.
+     *
+     * @return ASTConstantDeclarator
+     *
+     * @since  1.16.0
+     */
+    protected function parseTypedConstantDeclarator()
+    {
+        throw $this->getUnexpectedNextTokenException();
+    }
+
+    /**
      * Parses a single constant declarator.
      *
      * <code>
@@ -7233,6 +7245,12 @@ abstract class AbstractPHPParser
         // Remove leading comments and create a new token stack
         $this->consumeComments();
         $this->tokenStack->push();
+
+        $nextToken = $this->tokenizer->peekNext();
+
+        if ($nextToken === Tokens::T_STRING) {
+            return $this->parseTypedConstantDeclarator();
+        }
 
         $tokenType = $this->tokenizer->peek();
 

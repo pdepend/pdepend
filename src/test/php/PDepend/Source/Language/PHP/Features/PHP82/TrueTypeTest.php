@@ -55,7 +55,7 @@ use PDepend\Source\AST\State;
  * @group unittest
  * @group php8.2
  */
-class TrueTypeTest extends AbstractTest
+class TrueTypeTest extends PHPParserVersion82Test
 {
     /**
      * @return void

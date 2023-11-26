@@ -41,48 +41,29 @@
 namespace PDepend\Source\Language\PHP\Features\PHP83;
 
 use PDepend\AbstractTest;
-use PDepend\Source\AST\ASTConstantDeclarator;
-use PDepend\Source\AST\ASTInterface;
-use PDepend\Source\AST\ASTMemberPrimaryPrefix;
-use PDepend\Source\AST\ASTScalarType;
-use PDepend\Source\AST\ASTValue;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
  * @group unittest
- * @group php8.3
  */
-class TypedClassConstantsTest extends PHPParserVersion83Test
+abstract class PHPParserVersion83Test extends AbstractTest
 {
     /**
-     * @return void
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    public function testInterface()
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        /** @var ASTInterface $interface */
-        $interface = $this->getFirstInterfaceForTestCase();
-        /** @var ASTConstantDeclarator $constant */
-        $constantDeclarator = $interface->getChild(0)->getChild(0);
-        /** @var ASTScalarType $type */
-        $type = $constantDeclarator->getType();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
-        $this->assertSame('string', $type->getImage());
-        /** @var ASTValue $value */
-        $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
-
-        /** @var ASTMemberPrimaryPrefix $constant */
-        $constant = $interface->getConstant('TEST');
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $constant);
-        $this->assertSame($constant, $value->getValue());
-
-        $children = $constant->getChildren();
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[0]);
-        $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $children[1]);
-        $this->assertSame('TEST', $children[1]->getImage());
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion83',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }
