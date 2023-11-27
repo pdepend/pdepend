@@ -61,4 +61,17 @@ class TypedClassConstantsTest extends PHPParserVersion82Test
 
         $this->getFirstInterfaceForTestCase();
     }
+
+    /**
+     * @return void
+     */
+    public function testBroken()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: 7, line: 4, col: 11, file: '
+        );
+
+        $this->getFirstInterfaceForTestCase();
+    }
 }

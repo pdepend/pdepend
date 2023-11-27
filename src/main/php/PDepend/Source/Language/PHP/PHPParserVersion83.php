@@ -68,16 +68,12 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
     {
         $constantType = $this->parseTypeHint();
         $tokenType = $this->tokenizer->peek();
-
-        if (!$this->isConstantName($tokenType)) {
-            throw $this->getUnexpectedNextTokenException();
-        }
-
         $token = $this->consumeToken($tokenType);
 
         $this->consumeComments();
         $this->consumeToken(Tokens::T_EQUAL);
 
+        // $this->isConstantName($token) must be asserted by the caller
         $declarator = $this->builder->buildAstConstantDeclarator($token->image);
         $declarator->setType($constantType);
         $declarator->setValue($this->parseConstantDeclaratorValue());

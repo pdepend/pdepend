@@ -113,4 +113,17 @@ class TypedClassConstantsTest extends PHPParserVersion83Test
         $this->assertSame($constant, $value->getValue());
         $this->assertSame('"Test1"', $constant->getImage());
     }
+
+    /**
+     * @return void
+     */
+    public function testBroken()
+    {
+        $this->setExpectedException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+            'Unexpected token: 7, line: 4, col: 11, file: '
+        );
+
+        $this->getFirstInterfaceForTestCase();
+    }
 }

@@ -7248,7 +7248,7 @@ abstract class AbstractPHPParser
 
         $nextToken = $this->tokenizer->peekNext();
 
-        if ($nextToken === Tokens::T_STRING) {
+        if ($this->isConstantName($nextToken)) {
             return $this->parseTypedConstantDeclarator();
         }
 
