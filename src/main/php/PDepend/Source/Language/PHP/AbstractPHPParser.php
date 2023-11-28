@@ -7186,12 +7186,23 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_COMMA);
         } while ($tokenType !== Tokenizer::T_EOF);
 
-
         $definition = $this->setNodePositionsAndReturn($definition);
 
         $this->consumeToken(Tokens::T_SEMICOLON);
 
         return $definition;
+    }
+
+    /**
+     * Constant cannot be typed before PHP 8.3.
+     *
+     * @return ASTConstantDeclarator
+     *
+     * @since  1.16.0
+     */
+    protected function parseTypedConstantDeclarator()
+    {
+        throw $this->getUnexpectedNextTokenException();
     }
 
     /**
@@ -7235,9 +7246,15 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $this->tokenStack->push();
 
+        $nextToken = $this->tokenizer->peekNext();
+
+        if ($this->isConstantName($nextToken)) {
+            return $this->parseTypedConstantDeclarator();
+        }
+
         $tokenType = $this->tokenizer->peek();
 
-        if (false === $this->isConstantName($tokenType)) {
+        if (!$this->isConstantName($tokenType)) {
             throw $this->getUnexpectedNextTokenException();
         }
 
