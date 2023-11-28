@@ -6,6 +6,7 @@ pdepend-2.16.0 (2023/11/29)
 - Fixed [#691](https://github.com/pdepend/pdepend/pull/691) Float parsing for number starting with 0.
 - Fixed [#689](https://github.com/pdepend/pdepend/pull/689) Handle conversion to/detection of UTF-8 encoding using either mbstring PHP extension or the polyfill provided by Symfony
 - Fixed [phpmd/phpmd#914](https://github.com/pdepend/pdepend/pull/687) Parsing the correct comment for method doc-block (Allow correct SuppressWarnings annotation handling on PHPMD)
+- Fixed [phpmd/phpmd#804](https://github.com/pdepend/pdepend/pull/694) Handle yield termination depending on context
 
 
 pdepend-2.15.1 (2023/09/28)
