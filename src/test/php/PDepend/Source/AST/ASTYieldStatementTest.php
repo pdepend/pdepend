@@ -66,6 +66,26 @@ class ASTYieldStatementTest extends ASTNodeTest
     }
 
     /**
+     * testYieldAssignment
+     *
+     * @return void
+     */
+    public function testYieldAssignment()
+    {
+        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTYieldStatement', $stmt);
+        $assignment = $stmt->getParent();
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $assignment);
+        $this->assertSame('$result', $assignment->getChild(0)->getImage());
+
+        $this->assertSame(array(
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ), array_map('get_class', $stmt->getChildren()));
+        $this->assertSame('23', $stmt->getChild(0)->getImage());
+    }
+
+    /**
      * testYieldWithLiteral
      *
      * @return void

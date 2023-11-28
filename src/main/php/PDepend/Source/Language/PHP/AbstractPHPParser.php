@@ -3327,7 +3327,7 @@ abstract class AbstractPHPParser
                     $expressions[] = $expr;
                     break;
                 case Tokens::T_YIELD:
-                    $expressions[] = $this->parseYield();
+                    $expressions[] = $this->parseYield(false);
                     break;
                 default:
                     $expressions[] = $this->parseOptionalExpressionForVersion();
@@ -6706,7 +6706,7 @@ abstract class AbstractPHPParser
 
                 return $class;
             case Tokens::T_YIELD:
-                return $this->parseYield();
+                return $this->parseYield(true);
         }
 
         $this->tokenStack->push();
@@ -7908,9 +7908,12 @@ abstract class AbstractPHPParser
     /**
      * This method parses a yield-statement node.
      *
+     * @param bool $standalone Either yield is the statement (true), or nested in
+     *                         an expression (false).
+     *
      * @return ASTYieldStatement
      */
-    private function parseYield()
+    private function parseYield($standalone)
     {
         $this->tokenStack->push();
 
@@ -7932,11 +7935,9 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
 
-        if (Tokens::T_PARENTHESIS_CLOSE === $this->tokenizer->peek()) {
-            return $this->setNodePositionsAndReturn($yield);
+        if ($standalone) {
+            $this->parseStatementTermination();
         }
-
-        $this->parseStatementTermination();
 
         return $this->setNodePositionsAndReturn($yield);
     }
