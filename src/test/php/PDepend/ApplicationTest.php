@@ -74,7 +74,7 @@ class ApplicationTest extends AbstractTest
     {
         $application = $this->createTestApplication();
 
-        $this->assertInstanceOf('PDepend\Report\ReportGeneratorFactory', $application->getReportGeneratorFactory());
+        $this->assertInstanceOf('PDepend\\Report\\ReportGeneratorFactory', $application->getReportGeneratorFactory());
     }
 
     public function testBinCanReadInput()
@@ -109,7 +109,7 @@ class ApplicationTest extends AbstractTest
         $application = $this->createTestApplication();
         $config = $application->getConfiguration();
 
-        $this->assertInstanceOf('PDepend\Util\Configuration', $config);
+        $this->assertInstanceOf('PDepend\\Util\\Configuration', $config);
     }
 
     public function testGetEngine()
@@ -117,7 +117,7 @@ class ApplicationTest extends AbstractTest
         $application = $this->createTestApplication();
         $config = $application->getEngine();
 
-        $this->assertInstanceOf('PDepend\Engine', $config);
+        $this->assertInstanceOf('PDepend\\Engine', $config);
     }
 
     public function testGetAvailableLoggerOptions()
