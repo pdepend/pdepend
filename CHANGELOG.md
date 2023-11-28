@@ -1,3 +1,12 @@
+pdepend-2.16.0 (2023/11/29)
+==========================
+
+- Added [#692](https://github.com/pdepend/pdepend/pull/692) PHP 8.3 Syntax
+- Added [#686](https://github.com/pdepend/pdepend/pull/686) Allow Symfony 7
+- Fixed [#691](https://github.com/pdepend/pdepend/pull/691) Float parsing for number starting with 0.
+- Fixed [#689](https://github.com/pdepend/pdepend/pull/689) Handle conversion to/detection of UTF-8 encoding using either mbstring PHP extension or the polyfill provided by Symfony
+
+
 pdepend-2.15.1 (2023/09/28)
 ==========================
 
