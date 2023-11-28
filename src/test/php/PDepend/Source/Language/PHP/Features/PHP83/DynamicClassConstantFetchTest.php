@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,107 +38,48 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP83;
+
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTScope;
 
 /**
- * This class represents a single constant declarator within a constant
- * definition.
- *
- * <code>
- * class Foo
- * {
- *     //    --------
- *     const BAR = 42;
- *     //    --------
- * }
- * </code>
- *
- * Or in a comma separated constant defintion:
- *
- * <code>
- * class Foo
- * {
- *     //    --------
- *     const BAR = 42,
- *     //    --------
- *
- *     //    --------------
- *     const BAZ = 'Foobar',
- *     //    --------------
- *
- *     //    ----------
- *     const FOO = 3.14;
- *     //    ----------
- * }
- * </code>
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PDepend\Source\Language\PHP\PHPBuilder
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @group unittest
+ * @group php8.3
  */
-class ASTConstantDeclarator extends AbstractASTNode
+class DynamicClassConstantFetchTest extends PHPParserVersion83Test
 {
     /**
-     * The type of the constant if explicitly specified, <b>null</b> else.
-     *
-     * @var ASTType|null
-     */
-    protected $type = null;
-
-    /**
-     * The initial declaration value for this node or <b>null</b>.
-     *
-     * @var ASTValue|null
-     */
-    protected $value = null;
-
-    /**
-     * Returns the explicitly specified type of the constant.
-     *
-     * @return ASTType|null
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set the explicitly specified type of the constant.
-     *
      * @return void
      */
-    public function setType(ASTType $type = null)
+    public function testFetch()
     {
-        $this->type = $type;
-    }
+        $method = $this->getFirstClassMethodForTestCase();
+        $children = $method->getChildren();
+        /** @var ASTScope $scope */
+        $scope = $children[2];
 
-    /**
-     * Returns the initial declaration value for this node.
-     *
-     * @return ASTValue|null
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScope', $scope);
 
-    /**
-     * Sets the declared default value for this constant node.
-     *
-     * @return void
-     */
-    public function setValue(ASTValue $value = null)
-    {
-        $this->value = $value;
-    }
+        /** @var ASTMemberPrimaryPrefix $return */
+        $member = $scope->getChild(0)->getChild(0);
 
-    /**
-     * Magic sleep method that returns an array with those property names that
-     * should be cached for this node instance.
-     *
-     * @return array<string>
-     */
-    public function __sleep()
-    {
-        return array_merge(array('value'), parent::__sleep());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $member);
+        $children = $member->getChildren();
+
+        $this->assertCount(2, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $children[0]);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTPropertyPostfix', $children[1]);
+        $children = $children[1]->getChildren();
+        $this->assertCount(1, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundExpression', $children[0]);
+        $children = $children[0]->getChildren();
+        $this->assertCount(1, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
+        $this->assertSame('$bar', $children[0]->getImage());
     }
 }

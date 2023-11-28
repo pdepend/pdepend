@@ -38,109 +38,46 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 2.11
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP;
+
+use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\Tokenizer\Tokens;
 
 /**
- * This class represents a single constant declarator within a constant
- * definition.
- *
- * <code>
- * class Foo
- * {
- *     //    --------
- *     const BAR = 42;
- *     //    --------
- * }
- * </code>
- *
- * Or in a comma separated constant defintion:
- *
- * <code>
- * class Foo
- * {
- *     //    --------
- *     const BAR = 42,
- *     //    --------
- *
- *     //    --------------
- *     const BAZ = 'Foobar',
- *     //    --------------
- *
- *     //    ----------
- *     const FOO = 3.14;
- *     //    ----------
- * }
- * </code>
+ * Concrete parser implementation that supports features up to PHP version 8.2.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 2.12
  */
-class ASTConstantDeclarator extends AbstractASTNode
+abstract class PHPParserVersion83 extends PHPParserVersion82
 {
     /**
-     * The type of the constant if explicitly specified, <b>null</b> else.
+     * Parse a typed constant (PHP >= 8.3).
      *
-     * @var ASTType|null
-     */
-    protected $type = null;
-
-    /**
-     * The initial declaration value for this node or <b>null</b>.
+     * @return ASTConstantDeclarator
      *
-     * @var ASTValue|null
+     * @since  1.16.0
      */
-    protected $value = null;
-
-    /**
-     * Returns the explicitly specified type of the constant.
-     *
-     * @return ASTType|null
-     */
-    public function getType()
+    protected function parseTypedConstantDeclarator()
     {
-        return $this->type;
-    }
+        $constantType = $this->parseTypeHint();
+        $tokenType = $this->tokenizer->peek();
+        $token = $this->consumeToken($tokenType);
 
-    /**
-     * Set the explicitly specified type of the constant.
-     *
-     * @return void
-     */
-    public function setType(ASTType $type = null)
-    {
-        $this->type = $type;
-    }
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_EQUAL);
 
-    /**
-     * Returns the initial declaration value for this node.
-     *
-     * @return ASTValue|null
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+        // $this->isConstantName($token) must be asserted by the caller
+        $declarator = $this->builder->buildAstConstantDeclarator($token->image);
+        $declarator->setType($constantType);
+        $declarator->setValue($this->parseConstantDeclaratorValue());
 
-    /**
-     * Sets the declared default value for this constant node.
-     *
-     * @return void
-     */
-    public function setValue(ASTValue $value = null)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * Magic sleep method that returns an array with those property names that
-     * should be cached for this node instance.
-     *
-     * @return array<string>
-     */
-    public function __sleep()
-    {
-        return array_merge(array('value'), parent::__sleep());
+        return $this->setNodePositionsAndReturn($declarator);
     }
 }

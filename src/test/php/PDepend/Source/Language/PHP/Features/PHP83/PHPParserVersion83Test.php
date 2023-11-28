@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,107 +38,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP83;
+
+use PDepend\AbstractTest;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * This class represents a single constant declarator within a constant
- * definition.
- *
- * <code>
- * class Foo
- * {
- *     //    --------
- *     const BAR = 42;
- *     //    --------
- * }
- * </code>
- *
- * Or in a comma separated constant defintion:
- *
- * <code>
- * class Foo
- * {
- *     //    --------
- *     const BAR = 42,
- *     //    --------
- *
- *     //    --------------
- *     const BAZ = 'Foobar',
- *     //    --------------
- *
- *     //    ----------
- *     const FOO = 3.14;
- *     //    ----------
- * }
- * </code>
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
+ * @group unittest
  */
-class ASTConstantDeclarator extends AbstractASTNode
+abstract class PHPParserVersion83Test extends AbstractTest
 {
     /**
-     * The type of the constant if explicitly specified, <b>null</b> else.
-     *
-     * @var ASTType|null
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    protected $type = null;
-
-    /**
-     * The initial declaration value for this node or <b>null</b>.
-     *
-     * @var ASTValue|null
-     */
-    protected $value = null;
-
-    /**
-     * Returns the explicitly specified type of the constant.
-     *
-     * @return ASTType|null
-     */
-    public function getType()
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        return $this->type;
-    }
-
-    /**
-     * Set the explicitly specified type of the constant.
-     *
-     * @return void
-     */
-    public function setType(ASTType $type = null)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * Returns the initial declaration value for this node.
-     *
-     * @return ASTValue|null
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Sets the declared default value for this constant node.
-     *
-     * @return void
-     */
-    public function setValue(ASTValue $value = null)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * Magic sleep method that returns an array with those property names that
-     * should be cached for this node instance.
-     *
-     * @return array<string>
-     */
-    public function __sleep()
-    {
-        return array_merge(array('value'), parent::__sleep());
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion83',
+            array($tokenizer, $builder, $cache)
+        );
     }
 }
