@@ -74,7 +74,6 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
     public function getConfigTreeBuilder()
     {
         $home = FileUtil::getUserHomeDirOrSysTempDir();
