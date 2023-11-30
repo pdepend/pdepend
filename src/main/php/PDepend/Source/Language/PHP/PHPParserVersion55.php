@@ -44,7 +44,11 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClassFqnPostfix;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -55,7 +59,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @since 2.3
  */
-abstract class PHPParserVersion55 extends PHPParserVersion54
+abstract class PHPParserVersion55 extends AbstractPHPParser
 {
     /**
      * Parses a full qualified class name postfix.
@@ -75,5 +79,259 @@ abstract class PHPParserVersion55 extends PHPParserVersion54
         return $this->setNodePositionsAndReturn(
             $this->builder->buildAstClassFqnPostfix()
         );
+    }
+
+    /**
+     * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
+     * name part.
+     *
+     * @param int $tokenType The type of a parsed token.
+     *
+     * @return bool
+     *
+     * @since  0.10.6
+     */
+    protected function isClassName($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_NULL:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_STRING:
+            case Tokens::T_READONLY:
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param int $tokenType
+     *
+     * @return bool
+     */
+    protected function isConstantName($tokenType)
+    {
+        return $this->isFunctionName($tokenType);
+    }
+
+    /**
+     * @param int $tokenType
+     *
+     * @return bool
+     */
+    protected function isMethodName($tokenType)
+    {
+        return $this->isFunctionName($tokenType);
+    }
+
+    /**
+     * Tests if the give token is a valid function name in the supported PHP
+     * version.
+     *
+     * @param int $tokenType
+     *
+     * @return bool
+     *
+     * @since 2.3
+     */
+    protected function isFunctionName($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_STRING:
+            case Tokens::T_NULL:
+            case Tokens::T_SELF:
+            case Tokens::T_TRUE:
+            case Tokens::T_FALSE:
+            case Tokens::T_PARENT:
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Tests if the given token type is a reserved keyword in the supported PHP
+     * version.
+     *
+     * @param int $tokenType
+     *
+     * @return bool
+     */
+    protected function isKeyword($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_CLASS:
+            case Tokens::T_TRAIT:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_INTERFACE:
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Tests if the given token type is a valid type hint in the supported
+     * PHP version.
+     *
+     * @param int $tokenType
+     *
+     * @return bool
+     *
+     * @since 1.0.0
+     */
+    protected function isTypeHint($tokenType)
+    {
+        switch ($tokenType) {
+            case Tokens::T_CALLABLE:
+                return true;
+            default:
+                return parent::isTypeHint($tokenType);
+        }
+    }
+    protected function parseTypeHint()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_CALLABLE:
+                $this->consumeToken(Tokens::T_CALLABLE);
+                $type = $this->builder->buildAstTypeCallable();
+                break;
+            default:
+                $type = parent::parseTypeHint();
+                break;
+        }
+        return $type;
+    }
+
+    /**
+     * Tests if the next token is a valid array start delimiter in the supported
+     * PHP version.
+     *
+     * @return bool
+     *
+     * @since 1.0.0
+     */
+    protected function isArrayStartDelimiter()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+            case Tokens::T_SQUARED_BRACKET_OPEN:
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Parses a php array declaration.
+     *
+     * @param bool $static
+     *
+     * @return ASTArray
+     *
+     * @since 1.0.0
+     */
+    protected function parseArray(ASTArray $array, $static = false)
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_SQUARED_BRACKET_OPEN:
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_OPEN);
+                $this->parseArrayElements($array, Tokens::T_SQUARED_BRACKET_CLOSE, $static);
+                $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
+                break;
+            case Tokens::T_ARRAY:
+                $this->consumeToken(Tokens::T_ARRAY);
+                $this->consumeComments();
+                $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+                $this->parseArrayElements($array, Tokens::T_PARENTHESIS_CLOSE, $static);
+                $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
+                break;
+            default:
+                throw $this->getUnexpectedNextTokenException();
+        }
+
+        return $array;
+    }
+
+    /**
+     * Parses an integer value.
+     *
+     * @throws UnexpectedTokenException
+     *
+     * @return ASTLiteral
+     */
+    protected function parseIntegerNumber()
+    {
+        $token = $this->consumeToken(Tokens::T_LNUMBER);
+        $number = $token->image;
+
+        while ($next = $this->addTokenToStackIfType(Tokens::T_STRING)) {
+            $number .= $next->image;
+        }
+
+        if ('0' !== substr($number, 0, 1)) {
+            goto BUILD_LITERAL;
+        }
+
+        if (Tokens::T_STRING !== $this->tokenizer->peek()) {
+            goto BUILD_LITERAL;
+        }
+
+        $token1 = $this->consumeToken(Tokens::T_STRING);
+        if (0 === preg_match('(^b[01]+$)i', $token1->image)) {
+            throw new UnexpectedTokenException(
+                $token1,
+                $this->tokenizer->getSourceFile()
+            );
+        }
+
+        $number .= $token1->image;
+        $token->endLine = $token1->endLine;
+        $token->endColumn = $token1->endColumn;
+
+        BUILD_LITERAL:
+
+        $literal = $this->builder->buildAstLiteral($number);
+        $literal->configureLinesAndColumns(
+            $token->startLine,
+            $token->endLine,
+            $token->startColumn,
+            $token->endColumn
+        );
+
+        return $literal;
+    }
+
+    /**
+     * Parses the class expr syntax supported since PHP 5.4.
+     *
+     * @return ASTNode
+     *
+     * @since 2.3
+     */
+    protected function parsePostfixIdentifier()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_CURLY_BRACE_OPEN:
+                $node = $this->parseCompoundExpression();
+                break;
+            default:
+                $node = parent::parsePostfixIdentifier();
+                break;
+        }
+        return $this->parseOptionalIndexExpression($node);
+    }
+
+    /**
+     * @return ASTNode
+     */
+    protected function parseOptionalExpressionForVersion()
+    {
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_TRAIT_C:
+                return $this->parseConstant();
+            default:
+                return parent::parseOptionalExpressionForVersion();
+        }
     }
 }

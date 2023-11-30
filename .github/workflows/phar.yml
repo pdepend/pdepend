@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [5.4]
+        php: [5.5]
         setup: [prefer-stable]
 
     name: Release phar
