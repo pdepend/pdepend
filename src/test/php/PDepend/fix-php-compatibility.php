@@ -17,11 +17,11 @@ $replacements = array(
     $vendor . '/phpunit/phpunit/src/Util/Configuration.php' => array(
         array(
             'final private function',
-            'private function',
+            '/** @final */ private function',
         ),
         array(
             '$target = &$GLOBALS;',
-            '',
+            '// Access to $GLOBALS removed',
         ),
     ),
     $vendor . '/phpunit/phpunit/src/Framework/Constraint.php' => array(
