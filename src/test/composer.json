@@ -1,5 +1,6 @@
 {
     "name": "pdepend/pdepend-tester",
+    "description": "Test-related dependencies for pdepend/pdepend",
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
