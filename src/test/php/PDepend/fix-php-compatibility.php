@@ -39,6 +39,10 @@ $replacements = array(
             'xdebug.default_enable=0',
             'xdebug.mode=coverage',
         ),
+        array(
+            "'track_errors=1',",
+            "// 'track_errors=1',",
+        ),
     ),
     $vendor . '/phpunit/phpunit/src/Framework/TestCase.php' => array(
         array(
