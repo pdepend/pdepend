@@ -54,6 +54,7 @@ use ReflectionMethod;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\DependencyInjection\TreeBuilderFactory
+ * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
 class ConfigurationTest extends AbstractTest

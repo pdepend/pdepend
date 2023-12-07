@@ -54,6 +54,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @covers \PDepend\DependencyInjection\ExtensionManager
  * @covers \PDepend\DependencyInjection\Extension
+ * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
 class ExtensionManagerTest extends AbstractTest
