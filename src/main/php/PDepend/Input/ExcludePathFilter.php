@@ -79,7 +79,7 @@ class ExcludePathFilter implements Filter
         $quoted = array_map('preg_quote', $patterns);
 
         $this->relative = '(' . str_replace('\*', '.*', join('|', $quoted)) . ')i';
-        $this->absolute = '(^(' . str_replace('\*', '.*', join('|', $quoted)) .'))i';
+        $this->absolute = '(^(' . str_replace('\*', '.*', join('|', $quoted)) . '))i';
     }
 
     /**

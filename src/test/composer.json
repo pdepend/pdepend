@@ -1,0 +1,9 @@
+{
+    "name": "pdepend/pdepend-tester",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "require": {
+        "php": ">=5.3.7",
+        "phpunit/phpunit": "^4.8.36|^5.7.27"
+    }
+}

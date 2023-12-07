@@ -40,38 +40,30 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\DependencyInjection;
 
-use AbstractConfiguration;
-use Exception;
-use ReflectionMethod;
+use PDepend\DependencyInjection\TreeBuilderFactory;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-// @codeCoverageIgnoreStart
-$typingMode = 'weak';
-
-try {
-    $method = new ReflectionMethod(
-        'Symfony\\Component\\Config\\Definition\\ConfigurationInterface',
-        'getConfigTreeBuilder'
-    );
-
-    if (method_exists($method, 'hasReturnType') && $method->hasReturnType()) {
-        $typingMode = 'strong';
-    }
-} catch (Exception $exception) {
-    // keep "weak"
-}
-
-require $file = __DIR__ . '/../../Lazy/PDepend/DependencyInjection/Configuration.' . $typingMode . '.php';
-// @codeCoverageIgnoreEnd
-
-class Configuration extends AbstractConfiguration
+/**
+ * This is the class that validates and merges configuration
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @codeCoverageIgnore
+ */
+abstract class AbstractConfiguration implements ConfigurationInterface
 {
     /**
-     * @param array<Extension> $extensions
+     * @var TreeBuilderFactory
      */
-    public function __construct(array $extensions)
+    protected $treeBuilderFactory;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getConfigTreeBuilder()
     {
-        $this->treeBuilderFactory = new TreeBuilderFactory($extensions);
+        return $this->treeBuilderFactory->getConfigTreeBuilder();
     }
 }
