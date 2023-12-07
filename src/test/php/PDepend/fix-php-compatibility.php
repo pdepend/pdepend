@@ -113,6 +113,10 @@ $replacements = array(
             'strlen($opt_arg)',
             'strlen((string) $opt_arg)',
         ),
+        array(
+            'while (list($i, $arg) = each($args)) {',
+            'foreach ($args as $i => $arg) {',
+        ),
     ),
     $vendor . '/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
         array(
@@ -187,6 +191,13 @@ foreach ($replacements as $file => $patterns) {
         list($from, $to) = $replacement;
 
         $contents = @file_get_contents($file) ?: '';
+
+        if (strpos($contents, $to) !== false) {
+            echo "Already changed.\n";
+
+            continue;
+        }
+
         $newContents = str_replace($from, $to, $contents);
 
         if ($newContents !== $contents) {
