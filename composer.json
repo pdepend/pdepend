@@ -26,7 +26,7 @@
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
     },
     "scripts": {
-        "test": "cd src/test && composer update && cd ../.. && php src/test/php/PDepend/fix-php-compatibility.php && php src/test/vendor/bin/phpunit --no-coverage",
+        "test": "php src/test/php/PDepend/install-test-vendor.php && php src/test/vendor/bin/phpunit --no-coverage",
         "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "build-website": [
