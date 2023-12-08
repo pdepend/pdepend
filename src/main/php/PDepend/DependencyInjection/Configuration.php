@@ -42,29 +42,38 @@
 
 namespace PDepend\DependencyInjection;
 
-use AbstractConfiguration;
 use Exception;
 use ReflectionMethod;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+// <AbstractConfiguration>
 // @codeCoverageIgnoreStart
-$typingMode = 'weak';
+if (!class_exists('PDepend\\DependencyInjection\\AbstractConfiguration')) {
+    $typingMode = 'weak';
 
-try {
-    $method = new ReflectionMethod(
-        'Symfony\\Component\\Config\\Definition\\ConfigurationInterface',
-        'getConfigTreeBuilder'
-    );
+    try {
+        $method = new ReflectionMethod(
+            'Symfony\\Component\\Config\\Definition\\ConfigurationInterface',
+            'getConfigTreeBuilder'
+        );
 
-    if (method_exists($method, 'hasReturnType') && $method->hasReturnType()) {
-        $typingMode = 'strong';
+        if (method_exists($method, 'hasReturnType') && $method->hasReturnType()) {
+            $typingMode = 'strong';
+        }
+    } catch (Exception $exception) {
+        // keep "weak"
     }
-} catch (Exception $exception) {
-    // keep "weak"
+
+    require_once __DIR__ . '/../../Lazy/PDepend/DependencyInjection/Configuration.' . $typingMode . '.php';
 }
-
-require $file = __DIR__ . '/../../Lazy/PDepend/DependencyInjection/Configuration.' . $typingMode . '.php';
 // @codeCoverageIgnoreEnd
+// </AbstractConfiguration>
 
+/**
+ * @see ConfigurationInterface
+ * @see TreeBuilder
+ */
 class Configuration extends AbstractConfiguration
 {
     /**
