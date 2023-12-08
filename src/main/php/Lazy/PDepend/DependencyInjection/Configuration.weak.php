@@ -39,9 +39,12 @@
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-use PDepend\DependencyInjection\TreeBuilderFactory;
+
+namespace PDepend\DependencyInjection;
+
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+// <AbstractConfiguration>
 /**
  * This is the class that validates and merges configuration
  *
@@ -65,3 +68,4 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $this->treeBuilderFactory->getConfigTreeBuilder();
     }
 }
+// </AbstractConfiguration>
