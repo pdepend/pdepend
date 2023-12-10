@@ -1,3 +1,8 @@
+pdepend-2.16.1 (2023/12/10)
+==========================
+
+- Fixed [#699](https://github.com/pdepend/pdepend/pull/699): Fix Symfony 7 compatibility
+
 pdepend-2.16.0 (2023/11/29)
 ==========================
 
