@@ -1,8 +1,9 @@
-name: Tests
+name: Symfony
 
-# Ensure tests pass whatever is the minor PHP version currently supported (see strategy.matrix.php)
-# crossed with "lowest" setup (install the lowest possible dependency versions allowed by the range)
-# and with "stable" setup (install the highest possible dependency stable versions allowed by the range)
+# Ensure tests pass whatever is the major version of Symfony installed
+# along with the library
+# Guarantee to users that it can be installed and ran with no conflict
+# in a composer project that also include Symfony dependencies
 
 on:
   push:
@@ -17,10 +18,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
-        setup: [ 'lowest', 'stable' ]
+        php: [ 8.3 ]
+        symfony: [ 2, 3, 4, 5, 6, 7 ]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
+    name: Symfony ${{ matrix.symfony }}
 
     steps:
       - uses: actions/checkout@v3
@@ -42,24 +43,31 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-
 
       - name: Cache test packages
         id: composer-test-cache
         uses: actions/cache@v3
         with:
           path: src/test/vendor
-          key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-${{ hashFiles('src/test/composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-
 
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
+      - name: Set Symfony version
+        run: |
+          composer require  --no-update --no-interaction \
+            symfony/dependency-injection:^${{ matrix.symfony }} \
+            symfony/filesystem:^${{ matrix.symfony }} \
+            symfony/config:^${{ matrix.symfony }}
 
       - name: Upgrade PHPUnit
         if: matrix.php >= 7.2
         run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
 
       - name: Install test dependencies
         if: steps.composer-test-cache.outputs.cache-hit != 'true'

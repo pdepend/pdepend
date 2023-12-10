@@ -11,13 +11,12 @@
     "type": "library",
     "require": {
         "php": ">=5.3.7",
+        "symfony/config": "^2.3.0|^3|^4|^5|^6.0|^7.0",
         "symfony/dependency-injection": "^2.3.0|^3|^4|^5|^6.0|^7.0",
         "symfony/filesystem": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-        "symfony/config": "^2.3.0|^3|^4|^5|^6.0|^7.0",
         "symfony/polyfill-mbstring": "^1.19"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.36|^5.7.27",
         "squizlabs/php_codesniffer": "^2.0.0",
         "gregwar/rst": "^1.0",
         "easy-doc/easy-doc": "0.0.0|^1.2.3"
@@ -27,7 +26,7 @@
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "php src/test/php/PDepend/install-test-vendor.php && php src/test/vendor/bin/phpunit --no-coverage",
         "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "build-website": [
@@ -39,5 +38,8 @@
         "branch-alias": {
             "dev-master": "2.x-dev"
         }
+    },
+    "config": {
+        "process-timeout": 900
     }
 }

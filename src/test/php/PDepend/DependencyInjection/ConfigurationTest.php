@@ -42,9 +42,10 @@
 
 namespace PDepend\DependencyInjection;
 
+use Exception;
 use PDepend\AbstractTest;
-use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use PDepend\TestExtension;
+use ReflectionMethod;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
@@ -52,60 +53,79 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\DependencyInjection\ExtensionManager
- * @covers \PDepend\DependencyInjection\Extension
+ * @covers \PDepend\DependencyInjection\TreeBuilderFactory
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
-class ExtensionManagerTest extends AbstractTest
+class ConfigurationTest extends AbstractTest
 {
-    public function testExtensionManager()
+    /**
+     * @return bool
+     */
+    private function isStronglyTyped()
     {
-        $extensionManager = new ExtensionManager();
-
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
-
-        $message = null;
-
         try {
-            $extensionManager->activateExtension('CannotFindIt');
-        } catch (RuntimeException $exception) {
-            $message = $exception->getMessage();
+            $method = new ReflectionMethod(
+                'Symfony\\Component\\Config\\Definition\\ConfigurationInterface',
+                'getConfigTreeBuilder'
+            );
+
+            if (method_exists($method, 'hasReturnType') && $method->hasReturnType()) {
+                return true;
+            }
+        } catch (Exception $exception) {
+            // keep "weak"
         }
 
-        $this->assertSame(
-            'Cannot find extension class "CannotFindIt" for PDepend. Maybe the plugin is not installed?',
-            $message
-        );
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
+        return false;
+    }
 
-        $message = null;
-
-        try {
-            $extensionManager->activateExtension('PDepend\\DependencyInjection\\ExtensionManager');
-        } catch (RuntimeException $exception) {
-            $message = $exception->getMessage();
+    public function testSymfonyGte7()
+    {
+        if (!self::isStronglyTyped()) {
+            $this->markTestSkipped('This test requires Symfony >= 7');
         }
 
-        $this->assertSame(
-            'Class "PDepend\\DependencyInjection\\ExtensionManager" is not a valid Extension',
-            $message
+        $config = new Configuration(array(new TestExtension()));
+
+        $this->assertInstanceOf(
+            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            $config->getConfigTreeBuilder()
         );
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
 
-        $extensionManager->activateExtension('PDepend\\TestExtension');
-        $extensions = $extensionManager->getActivatedExtensions();
+        $method = new ReflectionMethod(
+            'PDepend\\DependencyInjection\\Configuration',
+            'getConfigTreeBuilder'
+        );
 
-        $this->assertSame(array('test'), array_keys($extensions));
+        $this->assertSame(
+            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            $method->getReturnType()->getName()
+        );
+    }
 
-        $extension = $extensions['test'];
+    public function testSymfonyLt7()
+    {
+        if (self::isStronglyTyped()) {
+            $this->markTestSkipped('This test requires Symfony < 7');
+        }
 
-        $this->assertInstanceOf('PDepend\\TestExtension', $extension);
-        $this->assertSame(array(), $extension->getCompilerPasses());
+        $config = new Configuration(array(new TestExtension()));
 
-        $container = new ContainerBuilder();
-        $extension->load(array('foo' => 'bar'), $container);
+        $this->assertInstanceOf(
+            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            $config->getConfigTreeBuilder()
+        );
 
-        $this->assertSame(array('foo' => 'bar'), $container->getParameter('test.parameters'));
+        if (PHP_VERSION < 7) {
+            return;
+        }
+
+        $method = new ReflectionMethod(
+            'PDepend\\DependencyInjection\\Configuration',
+            'getConfigTreeBuilder'
+        );
+
+        $this->assertNull($method->getReturnType());
     }
 }

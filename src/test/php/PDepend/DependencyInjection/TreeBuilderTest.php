@@ -43,8 +43,6 @@
 namespace PDepend\DependencyInjection;
 
 use PDepend\AbstractTest;
-use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
@@ -52,60 +50,23 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\DependencyInjection\ExtensionManager
- * @covers \PDepend\DependencyInjection\Extension
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
-class ExtensionManagerTest extends AbstractTest
+class TreeBuilderTest extends AbstractTest
 {
-    public function testExtensionManager()
+    public function testTreeBuilder()
     {
-        $extensionManager = new ExtensionManager();
+        $treeBuilder = new TreeBuilder();
 
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
-
-        $message = null;
-
-        try {
-            $extensionManager->activateExtension('CannotFindIt');
-        } catch (RuntimeException $exception) {
-            $message = $exception->getMessage();
-        }
-
-        $this->assertSame(
-            'Cannot find extension class "CannotFindIt" for PDepend. Maybe the plugin is not installed?',
-            $message
+        $this->assertInstanceOf(
+            'Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition',
+            $treeBuilder->getRootNode()
         );
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
 
-        $message = null;
-
-        try {
-            $extensionManager->activateExtension('PDepend\\DependencyInjection\\ExtensionManager');
-        } catch (RuntimeException $exception) {
-            $message = $exception->getMessage();
-        }
-
-        $this->assertSame(
-            'Class "PDepend\\DependencyInjection\\ExtensionManager" is not a valid Extension',
-            $message
+        $this->assertInstanceOf(
+            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            $treeBuilder->getTreeBuilder()
         );
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
-
-        $extensionManager->activateExtension('PDepend\\TestExtension');
-        $extensions = $extensionManager->getActivatedExtensions();
-
-        $this->assertSame(array('test'), array_keys($extensions));
-
-        $extension = $extensions['test'];
-
-        $this->assertInstanceOf('PDepend\\TestExtension', $extension);
-        $this->assertSame(array(), $extension->getCompilerPasses());
-
-        $container = new ContainerBuilder();
-        $extension->load(array('foo' => 'bar'), $container);
-
-        $this->assertSame(array('foo' => 'bar'), $container->getParameter('test.parameters'));
     }
 }

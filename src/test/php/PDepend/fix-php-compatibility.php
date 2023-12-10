@@ -1,10 +1,11 @@
 <?php
 
+$vendor = __DIR__ . '/../../vendor';
 $replacements = array(
     /**
      * Patch phpunit/phpunit-mock-objects Generator.php file to not create double nullable tokens: `??`
      */
-    __DIR__ . '/../../../../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
+    $vendor . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
         array(
             "if (version_compare(PHP_VERSION, '7.1', '>=') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
             "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
@@ -13,23 +14,23 @@ $replacements = array(
     /**
      * Fix phpunit/phpunit to not trigger warning on `final private function`
      */
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/Configuration.php' => array(
+    $vendor . '/phpunit/phpunit/src/Util/Configuration.php' => array(
         array(
             'final private function',
-            'private function',
+            '/** @final */ private function',
         ),
         array(
             '$target = &$GLOBALS;',
-            '',
+            '// Access to $GLOBALS removed',
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/Constraint.php' => array(
+    $vendor . '/phpunit/phpunit/src/Framework/Constraint.php' => array(
         array(
             'public function count()',
             "#[\\ReturnTypeWillChange]\npublic function count()",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
+    $vendor . '/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
         array(
             'public function count()',
             "#[\\ReturnTypeWillChange]\npublic function count()",
@@ -38,24 +39,18 @@ $replacements = array(
             'xdebug.default_enable=0',
             'xdebug.mode=coverage',
         ),
+        array(
+            "'track_errors=1',",
+            "// 'track_errors=1',",
+        ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestCase.php' => array(
+    $vendor . '/phpunit/phpunit/src/Framework/TestCase.php' => array(
         array(
             'public function count(',
             "#[\\ReturnTypeWillChange]\npublic function count(",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestSuite.php' => array(
-        array(
-            'public function count(',
-            "#[\\ReturnTypeWillChange]\npublic function count(",
-        ),
-        array(
-            'public function getIterator(',
-            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
-        ),
-    ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestResult.php' => array(
+    $vendor . '/phpunit/phpunit/src/Framework/TestSuite.php' => array(
         array(
             'public function count(',
             "#[\\ReturnTypeWillChange]\npublic function count(",
@@ -65,19 +60,29 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function getIterator(",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
+    $vendor . '/phpunit/phpunit/src/Framework/TestResult.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+        ),
+    ),
+    $vendor . '/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
         array(
             'public function accept(',
             "#[\\ReturnTypeWillChange]\npublic function accept(",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/php-file-iterator/src/Iterator.php' => array(
+    $vendor . '/phpunit/php-file-iterator/src/Iterator.php' => array(
         array(
             'public function accept(',
             "#[\\ReturnTypeWillChange]\npublic function accept(",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/TestSuiteIterator.php' => array(
+    $vendor . '/phpunit/phpunit/src/Util/TestSuiteIterator.php' => array(
         array(
             'public function hasChildren(',
             "#[\\ReturnTypeWillChange]\npublic function hasChildren(",
@@ -107,19 +112,23 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function rewind(",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Util/Getopt.php' => array(
+    $vendor . '/phpunit/phpunit/src/Util/Getopt.php' => array(
         array(
             'strlen($opt_arg)',
             'strlen((string) $opt_arg)',
         ),
+        array(
+            'while (list($i, $arg) = each($args)) {',
+            'foreach ($args as $i => $arg) {',
+        ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
+    $vendor . '/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$docblock = $token->getDocblock();',
             '$docblock = $token->getDocblock() ?? \'\';',
         ),
     ) : array(),
-    __DIR__ . '/../../../../vendor/phpunit/php-token-stream/src/Token/Stream.php' => array(
+    $vendor . '/phpunit/php-token-stream/src/Token/Stream.php' => array(
         array(
             'public function offsetExists',
             "#[\\ReturnTypeWillChange]\npublic function offsetExists",
@@ -165,7 +174,7 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function rewind",
         ),
     ),
-    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
+    $vendor . '/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$numTests = count($coverageData[$i]);',
             '$numTests = count($coverageData[$i] ?? []);',
@@ -186,6 +195,13 @@ foreach ($replacements as $file => $patterns) {
         list($from, $to) = $replacement;
 
         $contents = @file_get_contents($file) ?: '';
+
+        if (strpos($contents, $to) !== false) {
+            echo "Already changed.\n";
+
+            continue;
+        }
+
         $newContents = str_replace($from, $to, $contents);
 
         if ($newContents !== $contents) {
