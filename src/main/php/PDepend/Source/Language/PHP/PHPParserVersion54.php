@@ -63,7 +63,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @since 2.3
  */
-abstract class PHPParserVersion54 extends PHPParserVersion53
+abstract class PHPParserVersion54 extends AbstractPHPParser
 {
     /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
@@ -224,9 +224,15 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
                 $this->parseArrayElements($array, Tokens::T_SQUARED_BRACKET_CLOSE, $static);
                 $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
                 break;
-            default:
-                parent::parseArray($array, $static);
+            case Tokens::T_ARRAY:
+                $this->consumeToken(Tokens::T_ARRAY);
+                $this->consumeComments();
+                $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
+                $this->parseArrayElements($array, Tokens::T_PARENTHESIS_CLOSE, $static);
+                $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
                 break;
+            default:
+                throw $this->getUnexpectedNextTokenException();
         }
 
         return $array;
