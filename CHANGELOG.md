@@ -1,3 +1,8 @@
+pdepend-2.16.2 (2023/12/17)
+==========================
+
+- Fixed [#705](https://github.com/pdepend/pdepend/pull/705): Fix throw-expression parsing inside array access
+
 pdepend-2.16.1 (2023/12/10)
 ==========================
 
