@@ -177,7 +177,7 @@ class XmlTest extends AbstractTest
 
         $fileName = 'xml-log-without-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
     }
@@ -223,7 +223,7 @@ class XmlTest extends AbstractTest
 
         $fileName = 'xml-log-with-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
     }

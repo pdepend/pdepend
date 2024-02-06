@@ -527,7 +527,7 @@ abstract class AbstractPHPParser
         $this->cache->store(
             $this->compilationUnit->getId(),
             $this->compilationUnit,
-            $hash
+            $hash ?: null
         );
 
         $this->tearDownEnvironment();
@@ -2108,7 +2108,8 @@ abstract class AbstractPHPParser
      */
     private function parseIncrementExpression(array &$expressions)
     {
-        if ($this->isReadWriteVariable(end($expressions))) {
+        $expression = end($expressions);
+        if ($expression && $this->isReadWriteVariable($expression)) {
             return $this->parsePostIncrementExpression(array_pop($expressions));
         }
         return $this->parsePreIncrementExpression();
@@ -2173,7 +2174,8 @@ abstract class AbstractPHPParser
      */
     private function parseDecrementExpression(array &$expressions)
     {
-        if ($this->isReadWriteVariable(end($expressions))) {
+        $expression = end($expressions);
+        if ($expression && $this->isReadWriteVariable($expression)) {
             return $this->parsePostDecrementExpression(array_pop($expressions));
         }
         return $this->parsePreDecrementExpression();
@@ -7123,6 +7125,9 @@ abstract class AbstractPHPParser
     protected function parseUseDeclarationForVersion(array $fragments)
     {
         $image = $this->parseNamespaceImage($fragments);
+        if ($image === false) {
+            return;
+        }
 
         // Add mapping between image and qualified name to symbol table
         $this->useSymbolTable->add($image, join('', $fragments));
@@ -7131,7 +7136,7 @@ abstract class AbstractPHPParser
     /**
      * @param array<string> $fragments
      *
-     * @return string
+     * @return string|false
      */
     protected function parseNamespaceImage(array $fragments)
     {

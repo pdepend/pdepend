@@ -46,6 +46,7 @@ use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
+use RuntimeException;
 
 /**
  * This class provides an interface to a single source file.
@@ -361,6 +362,9 @@ class ASTCompilationUnit extends AbstractASTArtifact
             (strpos($this->fileName, 'php://') === 0 || file_exists($this->fileName))
         ) {
             $source = file_get_contents($this->fileName);
+            if (!$source) {
+                throw new RuntimeException('File not found ' . $this->fileName);
+            }
 
             $this->source = str_replace(array("\r\n", "\r"), "\n", $source);
 
