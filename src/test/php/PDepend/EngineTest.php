@@ -63,7 +63,7 @@ class EngineTest extends AbstractTest
      */
     public function testAddInvalidDirectoryFail()
     {
-        $dir = dirname(__FILE__) . '/foobar';
+        $dir = __DIR__ . '/foobar';
         $msg = "Invalid directory '{$dir}' added.";
 
         $this->setExpectedException('InvalidArgumentException', $msg);

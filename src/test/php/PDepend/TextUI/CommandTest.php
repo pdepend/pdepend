@@ -205,7 +205,7 @@ class CommandTest extends AbstractTest
         $logFile  = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
-        set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+        set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
 
         $argv = array(
             '--suffix=inc',
@@ -232,7 +232,7 @@ class CommandTest extends AbstractTest
         $logFile  = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
-        set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+        set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
 
         $argv = array(
             '--suffix=inc',
@@ -516,7 +516,7 @@ class CommandTest extends AbstractTest
     public function testTextUiCommandAcceptsExistingFileForCoverageReportOption()
     {
         $argv = array(
-            '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
+            '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
@@ -551,7 +551,7 @@ class CommandTest extends AbstractTest
     {
         $argv = array(
             '--quiet',
-            '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
+            '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,

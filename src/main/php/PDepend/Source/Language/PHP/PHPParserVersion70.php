@@ -577,10 +577,12 @@ abstract class PHPParserVersion70 extends PHPParserVersion56
             $this->consumeComments();
 
             // Add mapping between image and qualified name to symbol table
-            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+            if ($image !== false) {
+                $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+            }
         } while (true);
 
-        if (isset($image, $subFragments)) {
+        if (isset($image, $subFragments) && $image !== false) {
             $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
         }
 

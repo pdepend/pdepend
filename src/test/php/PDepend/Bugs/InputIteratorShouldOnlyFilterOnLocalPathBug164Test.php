@@ -72,7 +72,7 @@ class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegress
         $iterator = new Iterator(
             new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
             $filter,
-            dirname(__FILE__)
+            __DIR__
         );
         $iterator->accept();
     }

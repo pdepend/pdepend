@@ -809,14 +809,14 @@ abstract class AbstractTest extends TestCase
         spl_autoload_register(array(__CLASS__, 'autoload'));
 
         // Is it not installed?
-        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
-            $path  = realpath(dirname(__FILE__) . '/../../../main/php/');
+        if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
+            $path  = realpath(__DIR__ . '/../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
         }
 
         // Set test path
-        $path  = realpath(dirname(__FILE__) . '/..');
+        $path  = realpath(__DIR__ . '/..');
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
 
@@ -832,8 +832,8 @@ abstract class AbstractTest extends TestCase
     public static function autoload($className)
     {
         $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
-        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
-            $file = dirname(__FILE__) . '/../../../main/php/' . $file;
+        if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
+            $file = __DIR__ . '/../../../main/php/' . $file;
         }
         if (file_exists($file)) {
             include $file;

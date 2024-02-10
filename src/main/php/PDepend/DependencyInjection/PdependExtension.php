@@ -43,6 +43,7 @@
 namespace PDepend\DependencyInjection;
 
 use stdClass;
+use RuntimeException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as SymfonyExtension;
@@ -75,6 +76,11 @@ class PdependExtension extends SymfonyExtension
             foreach ($config['extensions'] as $config) {
                 if (!isset($config['class'])) {
                     continue;
+                }
+                if (!is_a($config['class'], 'PDepend\DependencyInjection\Extension', true)) {
+                    throw new RuntimeException(
+                        sprintf('Class "%s" is not a valid Extension', $config['class'])
+                    );
                 }
 
                 $extensionManager->activateExtension($config['class']);

@@ -179,7 +179,7 @@ class CloverReportTest extends AbstractTest
      */
     private function createCloverReport()
     {
-        $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover.xml');
+        $sxml = simplexml_load_file(__DIR__ . '/_files/clover.xml');
         return new CloverReport($sxml);
     }
 
@@ -190,7 +190,7 @@ class CloverReportTest extends AbstractTest
      */
     private function createNamespacedCloverReport()
     {
-        $sxml = simplexml_load_file(dirname(__FILE__) . '/_files/clover-namespaced.xml');
+        $sxml = simplexml_load_file(__DIR__ . '/_files/clover-namespaced.xml');
         return new CloverReport($sxml);
     }
 
