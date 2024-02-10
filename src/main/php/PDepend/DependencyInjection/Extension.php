@@ -43,6 +43,7 @@
 namespace PDepend\DependencyInjection;
 
 use ReflectionClass;
+use RuntimeException;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -134,6 +135,11 @@ abstract class Extension
     {
         $reflection = new ReflectionClass($this);
 
-        return dirname($reflection->getFileName());
+        $fileName = $reflection->getFileName();
+        if (!$fileName) {
+            throw new RuntimeException('Missing file name');
+        }
+
+        return dirname($fileName);
     }
 }

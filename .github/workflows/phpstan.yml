@@ -15,7 +15,7 @@ jobs:
       matrix:
         php: [ '7.4' ]
         setup: [ 'stable' ]
-        phpstan: [1.10.25]
+        phpstan: [1.10.57]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }} - ${{ matrix.phpstan }}
 

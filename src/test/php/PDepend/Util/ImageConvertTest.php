@@ -110,7 +110,7 @@ class ImageConvertTest extends AbstractTest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
     {
-        $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
+        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
         $this->assertEquals(25, substr_count($svg, 'font-family:Arial'));
     }
 
@@ -145,7 +145,7 @@ class ImageConvertTest extends AbstractTest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
     {
-        $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
+        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
         $this->assertEquals(25, substr_count($svg, 'font-size:11px'));
     }
 
@@ -181,7 +181,7 @@ class ImageConvertTest extends AbstractTest
     protected function createInputSvg()
     {
         $input = $this->createRunResourceURI(uniqid('input_')) . '.svg';
-        copy(dirname(__FILE__) . '/_input/pyramid.svg', $input);
+        copy(__DIR__ . '/_input/pyramid.svg', $input);
 
         return $input;
     }

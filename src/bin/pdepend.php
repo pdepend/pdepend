@@ -45,7 +45,7 @@ use PDepend\TextUI\Command;
 
 // PEAR/svn workaround
 if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path('.' . PATH_SEPARATOR . dirname(__FILE__) . '/../main/php');
+    set_include_path('.' . PATH_SEPARATOR . __DIR__ . '/../main/php');
 }
 
 require_once __DIR__ . '/../../vendor/autoload.php';

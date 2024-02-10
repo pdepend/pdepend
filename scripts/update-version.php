@@ -87,7 +87,7 @@ class CacheVersionUpdater
      */
     public function __construct()
     {
-        $this->rootDirectory = realpath(dirname(__FILE__) . '/../src/main/php/PDepend');
+        $this->rootDirectory = realpath(__DIR__ . '/../src/main/php/PDepend');
     }
 
     /**

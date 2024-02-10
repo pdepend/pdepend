@@ -101,6 +101,6 @@ class FactoryTest extends AbstractTest
     public function testCreateMethodThrowsExceptionForUnsupportedReportFormat()
     {
         $factory = new Factory();
-        $factory->create(dirname(__FILE__) . '/_files/fail.xml');
+        $factory->create(__DIR__ . '/_files/fail.xml');
     }
 }
