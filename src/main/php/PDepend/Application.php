@@ -93,7 +93,10 @@ class Application
      */
     public function getConfiguration()
     {
-        return $this->getContainer()->get('pdepend.configuration');
+        $obj = $this->getContainer()->get('pdepend.configuration');
+        assert($obj instanceof Configuration);
+
+        return $obj;
     }
 
     /**
@@ -101,7 +104,10 @@ class Application
      */
     public function getEngine()
     {
-        return $this->getContainer()->get('pdepend.engine');
+        $obj = $this->getContainer()->get('pdepend.engine');
+        assert($obj instanceof Engine);
+
+        return $obj;
     }
 
     /**
@@ -109,7 +115,10 @@ class Application
      */
     public function getRunner()
     {
-        return $this->getContainer()->get('pdepend.textui.runner'); // TODO: Use standard name? textui is detail.
+        $obj = $this->getContainer()->get('pdepend.textui.runner'); // TODO: Use standard name? textui is detail.
+        assert($obj instanceof Runner);
+
+        return $obj;
     }
 
     /**
@@ -117,7 +126,10 @@ class Application
      */
     public function getReportGeneratorFactory()
     {
-        return $this->getContainer()->get('pdepend.report_generator_factory');
+        $obj = $this->getContainer()->get('pdepend.report_generator_factory');
+        assert($obj instanceof ReportGeneratorFactory);
+
+        return $obj;
     }
 
     /**
@@ -125,7 +137,10 @@ class Application
      */
     public function getAnalyzerFactory()
     {
-        return $this->getContainer()->get('pdepend.analyzer_factory');
+        $obj = $this->getContainer()->get('pdepend.analyzer_factory');
+        assert($obj instanceof AnalyzerFactory);
+
+        return $obj;
     }
 
     /**
