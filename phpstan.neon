@@ -4,7 +4,6 @@ parameters:
     rememberPossiblyImpureFunctionValues: false
     excludePaths:
         - src/main/php/PDepend/DbusUI/ResultPrinter.php
-        - src/main/php/PDepend/Util/ImageConvert.php
     universalObjectCratesClasses:
         - PDepend\Util\Configuration
     level: 6
