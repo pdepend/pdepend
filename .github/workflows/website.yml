@@ -43,7 +43,9 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Build website
-        run: composer build-website
+        run: |
+          cp -r src/site/rst/schema src/site/resources/web/
+          composer build-website
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CNAME: pdepend.org
