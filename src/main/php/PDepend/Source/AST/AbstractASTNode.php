@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use BadMethodCallException;
 use OutOfBoundsException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
