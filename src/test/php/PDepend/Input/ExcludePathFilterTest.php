@@ -78,6 +78,19 @@ class ExcludePathFilterTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testRelativePathMatchOrNot()
+    {
+        $filter = new ExcludePathFilter(array('link-to/bar'));
+        $this->assertFalse($filter->accept('foo\\link-to\\bar', 'C:\\real-path-to\\bar'));
+        $this->assertTrue($filter->accept('real-path-to\\bar', 'C:\\real-path-to\\bar'));
+        $filter = new ExcludePathFilter(array('*/foo/bar'));
+        $this->assertFalse($filter->accept('foo\\link-to\\bar\\nested', 'C:\\biz\\foo\\bar\\nested'));
+        $this->assertTrue($filter->accept('foo\\link-to\\bar\\nested', 'C:\\biz\\baz\\bar\\nested'));
+    }
+
+    /**
      * testUnixPathAsFilterPatternNotMatchesPartial
      *
      * @return void
