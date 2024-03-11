@@ -7807,7 +7807,7 @@ abstract class AbstractPHPParser
      */
     private function parseReturnAnnotation($comment)
     {
-        if (0 === preg_match(self::REGEXP_RETURN_TYPE, $comment, $match)) {
+        if (!preg_match(self::REGEXP_RETURN_TYPE, $comment, $match)) {
             return null;
         }
 

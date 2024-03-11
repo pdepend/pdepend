@@ -257,7 +257,7 @@ abstract class PHPParserVersion54 extends PHPParserVersion53
         }
 
         $token1 = $this->consumeToken(Tokens::T_STRING);
-        if (0 === preg_match('(^b[01]+$)i', $token1->image)) {
+        if (!preg_match('(^b[01]+$)i', $token1->image)) {
             throw new UnexpectedTokenException(
                 $token1,
                 $this->tokenizer->getSourceFile()

@@ -82,7 +82,7 @@ class CompositeFilter implements Filter
     public function accept($relative, $absolute)
     {
         foreach ($this->filters as $filter) {
-            if (false === $filter->accept($relative, $absolute)) {
+            if (!$filter->accept($relative, $absolute)) {
                 return false;
             }
         }
