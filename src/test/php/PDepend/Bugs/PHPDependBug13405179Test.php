@@ -88,7 +88,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
      *
      * @return array
      */
-    public function getLoggerClassNames()
+    public static function getLoggerClassNames()
     {
         return array(
             array('PDepend\\Report\\Jdepend\\Chart', 'svg'),

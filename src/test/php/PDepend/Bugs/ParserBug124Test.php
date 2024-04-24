@@ -68,7 +68,7 @@ class ParserBug124Test extends AbstractRegressionTest
     public function testClassNameScalarKeyword()
     {
         $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile($this->createCodeResourceURI('bugs/124/testClassNameScalarKeyword.php'));
+        $tokenizer->setSourceFile(self::createCodeResourceURI('bugs/124/testClassNameScalarKeyword.php'));
 
         $actual = array();
         while (is_object($token = $tokenizer->next())) {

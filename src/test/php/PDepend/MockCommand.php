@@ -17,7 +17,6 @@ class MockCommand extends Command
 
     protected function parseArguments()
     {
-        $this->source = __FILE__;
     }
 
     protected function printVersion()

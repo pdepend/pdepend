@@ -87,7 +87,7 @@ class ASTArtifactTest extends AbstractTest
     public function testGetIdReturnsMd5HashByDefault()
     {
         $item = $this->getItemMock();
-        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getId());
+        $this->assertMatchesRegularExpression('(^[a-f0-9]{32}$)', $item->getId());
     }
 
     /**

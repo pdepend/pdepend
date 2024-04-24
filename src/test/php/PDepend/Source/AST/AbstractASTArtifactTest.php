@@ -85,9 +85,9 @@ abstract class AbstractASTArtifactTest extends AbstractTest
         $fileName = 'code/' . $fileName . '/' . $method;
 
         try {
-            $fileOrDirectory = $this->createCodeResourceURI($fileName);
+            $fileOrDirectory = self::createCodeResourceURI($fileName);
         } catch (ErrorException $e) {
-            $fileOrDirectory = $this->createCodeResourceURI($fileName . '.php');
+            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
         return $this->parseSource($fileOrDirectory, $ignoreAnnotations);

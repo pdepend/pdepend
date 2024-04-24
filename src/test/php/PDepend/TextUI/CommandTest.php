@@ -595,7 +595,7 @@ class CommandTest extends AbstractTest
 
         $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
         $this->assertSame(42, $exitCode);
-        $this->assertRegExp('/^
+        $this->assertMatchesRegularExpression('/^
                 \nRuntimeException\(Bad\susage\)\n
                 ##\s.+[\/\\\\]MockCommand\.php\(20\)\n
                 #0 .+[\/\\\\]Command\.php\(\d+\):\sPDepend\MockCommand->printVersion\(\)\n
@@ -619,17 +619,17 @@ class CommandTest extends AbstractTest
     {
         $startsWith = $prologText . $this->versionOutput . $this->usageOutput;
         $startsWith = '/^' . preg_quote($startsWith) . '/';
-        $this->assertRegExp($startsWith, $actual);
+        $this->assertMatchesRegularExpression($startsWith, $actual);
 
-        $this->assertRegExp('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
-        $this->assertRegExp('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
-        $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
-        $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
-        $this->assertRegExp('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
-        $this->assertRegExp('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
-        $this->assertRegExp('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
-        $this->assertRegExp('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
-        $this->assertRegExp('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
+        $this->assertMatchesRegularExpression('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
     }
 
     /**

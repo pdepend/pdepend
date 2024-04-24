@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="src/test/php/PDepend/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="src/test/php/PDepend/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
   <coverage includeUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">src/main/php/</directory>
-    </include>
-    <exclude>
-      <directory suffix=".php">vendor/</directory>
-      <directory suffix=".php">src/test</directory>
-      <file>src/main/php/PDepend/DbusUI/ResultPrinter.php</file>
-    </exclude>
     <report>
       <clover outputFile="clover.xml"/>
     </report>
@@ -23,4 +15,14 @@
     </testsuite>
   </testsuites>
   <logging/>
+  <source>
+    <include>
+      <directory suffix=".php">src/main/php/</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">vendor/</directory>
+      <directory suffix=".php">src/test</directory>
+      <file>src/main/php/PDepend/DbusUI/ResultPrinter.php</file>
+    </exclude>
+  </source>
 </phpunit>

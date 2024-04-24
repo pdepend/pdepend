@@ -43,6 +43,7 @@
 namespace PDepend\Metrics;
 
 use PDepend\AbstractTest;
+use PDepend\Report\DummyAnalyzer;
 
 /**
  * Test case for the {@link \PDepend\Metrics\AnalyzerIterator} class.
@@ -62,7 +63,7 @@ class AnalyzerIteratorTest extends AbstractTest
      */
     public function testIteratorReturnsEnabledAnalyzerInstances()
     {
-        $analyzer = $this->getMockBuilder('\\PDepend\\Report\\DummyAnalyzer')
+        $analyzer = $this->getMockBuilder(DummyAnalyzer::class)
             ->getMock();
         $analyzer->expects($this->exactly(2))
             ->method('isEnabled')
@@ -79,16 +80,11 @@ class AnalyzerIteratorTest extends AbstractTest
      */
     public function testIteratorDoesNotReturnDisabledAnalyzerInstances()
     {
-        $analyzer = $this->getMockBuilder('\\PDepend\\Report\\DummyAnalyzer')
-            ->getMock();
-        $analyzer->expects($this->at(0))
-            ->method('isEnabled')
-            ->will($this->returnValue(true));
-        $analyzer->expects($this->at(1))
-            ->method('isEnabled')
-            ->will($this->returnValue(false));
+        $analyzer = $this->createMock(DummyAnalyzer::class);
+        $analyzer->method('isEnabled')
+            ->willReturnOnConsecutiveCalls(true, false);
 
-        $iterator = new AnalyzerIterator(array($analyzer, $analyzer));
-        $this->assertEquals(1, iterator_count($iterator));
+        $iterator = new AnalyzerIterator([$analyzer, $analyzer]);
+        $this->assertCount(1, $iterator);
     }
 }

@@ -313,7 +313,7 @@ class XmlTest extends AbstractTest
         );
     }
 
-    public function dataProviderNodeAware()
+    public static function dataProviderNodeAware()
     {
         return array(
             array(
