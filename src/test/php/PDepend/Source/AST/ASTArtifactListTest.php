@@ -215,10 +215,11 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException OutOfBoundsException
      */
     public function testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $iterator = new ASTArtifactList(array());
         $iterator[0]->getName();
     }
@@ -228,10 +229,11 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException BadMethodCallException
      */
     public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $iterator    = new ASTArtifactList(array());
         $iterator[0] = new ASTClass('Class');
     }
@@ -241,10 +243,11 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException BadMethodCallException
      */
     public function testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $iterator = new ASTArtifactList(array());
         unset($iterator[0]);
     }

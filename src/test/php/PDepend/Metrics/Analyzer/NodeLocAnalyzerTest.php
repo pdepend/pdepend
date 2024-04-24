@@ -69,7 +69,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -128,7 +128,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
 
         ksort($expected);
         ksort($actual);
-        
+
         $this->assertEquals($expected, $actual);
     }
 

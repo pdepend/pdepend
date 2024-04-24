@@ -66,8 +66,10 @@ class StrategyFactoryTest extends AbstractTest
     {
         $factory = new StrategyFactory();
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
+        $this->expectException(
+            'InvalidArgumentException'
+        );
+        $this->expectExceptionMessage(
             'Cannot load file for identifier "foo_bar_baz".'
         );
 

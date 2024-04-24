@@ -223,10 +223,11 @@ class ASTForeachStatementTest extends ASTNodeTest
      * testForeachStatementThrowsExpectedExceptionForKeyByReference
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testForeachStatementThrowsExpectedExceptionForKeyByReference()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstForeachStatementInFunction(__METHOD__);
     }
 

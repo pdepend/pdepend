@@ -440,10 +440,11 @@ class ASTSwitchLabelTest extends ASTNodeTest
      * testParserThrowsExceptionForUnclosedSwitchLabelBody
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->getFirstSwitchLabelInFunction();
     }
 

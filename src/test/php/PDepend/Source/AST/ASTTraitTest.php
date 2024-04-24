@@ -233,7 +233,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(1, count($trait->getAllMethods()));
+        $this->assertCount(1, $trait->getAllMethods());
     }
 
     /**
@@ -241,12 +241,13 @@ class ASTTraitTest extends AbstractASTArtifactTest
      *
      * @return void
      * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
-     * @expectedException \PDepend\Source\AST\ASTTraitMethodCollisionException
      *
      * @group issue-154
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\AST\ASTTraitMethodCollisionException::class);
+
         $trait = $this->getFirstTraitForTest();
         $trait->getAllMethods();
     }
@@ -289,7 +290,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertSame(2, count($trait->getChildren()));
+        $this->assertCount(2, $trait->getChildren());
     }
 
     /**
@@ -355,7 +356,7 @@ class ASTTraitTest extends AbstractASTArtifactTest
     public function testGetMethodsReturnsExpectedNumberOfMethods()
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(3, count($trait->getMethods()));
+        $this->assertCount(3, $trait->getMethods());
     }
 
     /**

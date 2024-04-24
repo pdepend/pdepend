@@ -203,8 +203,10 @@ class TypedClassConstantsTest extends PHPParserVersion83Test
      */
     public function testBroken()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: 7, line: 4, col: 11, file: '
         );
 

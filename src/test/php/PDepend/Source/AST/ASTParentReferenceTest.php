@@ -100,10 +100,11 @@ class ASTParentReferenceTest extends ASTNodeTest
      * testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -111,10 +112,11 @@ class ASTParentReferenceTest extends ASTNodeTest
      * testParentReferenceInClassWithoutParentThrowsException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testParentReferenceInClassWithoutParentThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -122,10 +124,11 @@ class ASTParentReferenceTest extends ASTNodeTest
      * testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 

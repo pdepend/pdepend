@@ -116,10 +116,11 @@ class ASTCompoundVariableTest extends ASTNodeTest
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->parseCodeResourceForTest();
     }
     

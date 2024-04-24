@@ -279,7 +279,7 @@ class ASTPropertyTest extends AbstractTest
     public function testPropertyContainsExpectDefaultValueArray()
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertInternalType('array', $property->getDefaultValue());
+        $this->assertIsArray($property->getDefaultValue());
     }
 
     /**
@@ -290,7 +290,7 @@ class ASTPropertyTest extends AbstractTest
     public function testPropertyContainsExpectedDefaultValueFloat()
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(3.14, $property->getDefaultValue(), '', 0.001);
+        $this->assertEqualsWithDelta(3.14, $property->getDefaultValue(), 0.001);
     }
 
     /**

@@ -103,14 +103,14 @@ class ParserTest extends AbstractTest
         $tmp = $this->parseCodeResourceForTest();
         $namespaces = array();
 
-        $this->assertEquals(4, count($tmp));
+        $this->assertCount(4, $tmp);
 
         foreach ($tmp as $namespace) {
             $this->assertArrayHasKey($namespace->getName(), $expected);
             unset($expected[$namespace->getName()]);
             $namespaces[$namespace->getName()] = $namespace;
         }
-        $this->assertSame(0, count($expected));
+        $this->assertCount(0, $expected);
 
         $this->assertSame(1, $namespaces['pkg1']->getFunctions()->count());
         $this->assertSame(1, $namespaces['pkg1']->getTypes()->count());
@@ -140,8 +140,10 @@ class ParserTest extends AbstractTest
     public function testParserWithUnclosedClassFail()
     {
         $sourceFile = $this->createCodeResourceUriForTest();
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\TokenStreamEndException'
+        );
+        $this->expectExceptionMessage(
             "Unexpected end of token stream in file: {$sourceFile}."
         );
 
@@ -156,8 +158,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserWithUnclosedFunctionFail()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\TokenStreamEndException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -172,8 +176,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserWithInvalidFunction1Fail()
     {
-        $this->setExpectedException(
-            '\\RuntimeException',
+        $this->expectException(
+            '\\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: (, line: 3, col: 23, file: '
         );
 
@@ -188,8 +194,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserWithInvalidFunction2Fail()
     {
-        $this->setExpectedException(
-            '\\RuntimeException',
+        $this->expectException(
+            '\\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             "Unexpected token: Bar, line: 3, col: 18, file: "
         );
 
@@ -435,7 +443,7 @@ class ParserTest extends AbstractTest
             ->getClasses()
             ->current();
 
-        $this->assertEquals(3, count($class->getInterfaces()));
+        $this->assertCount(3, $class->getInterfaces());
     }
 
     /**
@@ -450,7 +458,7 @@ class ParserTest extends AbstractTest
             ->getInterfaces()
             ->current();
 
-        $this->assertEquals(3, count($class->getInterfaces()));
+        $this->assertCount(3, $class->getInterfaces());
     }
 
     /**
@@ -541,7 +549,7 @@ class ParserTest extends AbstractTest
         $namespaces = $this->parseCodeResourceForTest();
 
         $functions = $namespaces[0]->getFunctions();
-        $this->assertEquals(3, count($functions));
+        $this->assertCount(3, $functions);
 
         return $functions;
     }
@@ -994,7 +1002,7 @@ class ParserTest extends AbstractTest
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $this->assertEquals(2, count($namespaces));
+        $this->assertCount(2, $namespaces);
 
         return $namespaces;
     }
@@ -1007,7 +1015,7 @@ class ParserTest extends AbstractTest
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces)
     {
         $functions = $namespaces[0]->getFunctions();
-        $this->assertEquals(2, count($functions));
+        $this->assertCount(2, $functions);
     }
 
     /**
@@ -1018,7 +1026,7 @@ class ParserTest extends AbstractTest
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces)
     {
         $functions = $namespaces[1]->getFunctions();
-        $this->assertEquals(1, count($functions));
+        $this->assertCount(1, $functions);
     }
 
     /**
@@ -1158,8 +1166,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: {, line: 2, col: 29, file: '
         );
 
@@ -1174,8 +1184,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: &, line: 2, col: 27, file: '
         );
 
@@ -1190,8 +1202,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: ;, line: 4, col: 5, file: '
         );
 
@@ -1206,8 +1220,10 @@ class ParserTest extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: &, line: 4, col: 12, file: '
         );
 
@@ -1326,10 +1342,11 @@ class ParserTest extends AbstractTest
      * testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists()
     {
+        $this->expectException(\PDepend\Source\Parser\MissingValueException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -1535,10 +1552,11 @@ class ParserTest extends AbstractTest
      * testParseExpressionUntilThrowsExceptionForUnclosedStatement
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

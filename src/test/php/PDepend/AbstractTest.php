@@ -62,8 +62,8 @@ use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_Exception;
 use ReflectionProperty;
 
 /**
@@ -87,7 +87,7 @@ abstract class AbstractTest extends TestCase
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -108,7 +108,7 @@ abstract class AbstractTest extends TestCase
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         CollectionArtifactFilter::getInstance()->setFilter();
 
@@ -120,26 +120,6 @@ abstract class AbstractTest extends TestCase
         }
 
         parent::tearDown();
-    }
-
-    /**
-     * Override to run the test and assert its state.
-     *
-     * @return mixed
-     *
-     * @throws Exception|PHPUnit_Framework_Exception
-     */
-    protected function runTest()
-    {
-        $inputReflector = new ReflectionProperty('PHPUnit_Framework_TestCase', 'dependencyInput');
-        $inputReflector->setAccessible(true);
-        $input = $inputReflector->getValue($this);
-
-        if (!empty($input)) {
-            $inputReflector->setValue($this, array_values($input));
-        }
-
-        return parent::runTest();
     }
 
     /**
@@ -480,12 +460,13 @@ abstract class AbstractTest extends TestCase
      * @return void
      * @since 0.10.2
      */
-    public static function assertInstanceOf($expected, $actual, $message = '')
+    public static function assertInstanceOf($expected, $actual, $message = ''): void
     {
         if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
-            return parent::assertInstanceOf($expected, $actual, $message);
+            parent::assertInstanceOf($expected, $actual, $message);
+            return;
         }
-        return parent::assertType($expected, $actual, $message);
+        parent::assertType($expected, $actual, $message);
     }
 
     /**
@@ -498,12 +479,13 @@ abstract class AbstractTest extends TestCase
      * @return void
      * @since 0.10.2
      */
-    public static function assertInternalType($expected, $actual, $message = '')
+    public static function assertInternalType($expected, $actual, $message = ''): void
     {
         if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
-            return parent::assertInternalType($expected, $actual, $message);
+            parent::assertInternalType($expected, $actual, $message);
+            return;
         }
-        return parent::assertType($expected, $actual, $message);
+        parent::assertType($expected, $actual, $message);
     }
 
     /**
@@ -963,10 +945,8 @@ abstract class AbstractTest extends TestCase
         );
     }
 
-    public function getMockBuilder($className)
+    public function getMockBuilder($className): MockBuilder
     {
-        include_once __DIR__ . '/MockBuilder.php';
-
         return new MockBuilder($this, $className);
     }
 

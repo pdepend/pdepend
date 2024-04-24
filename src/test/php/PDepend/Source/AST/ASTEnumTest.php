@@ -108,11 +108,12 @@ class ASTEnumTest extends AbstractASTArtifactTest
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage An AST node should contain at least one token
      */
     public function testSetTokensWithEmptyArray()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('An AST node should contain at least one token');
+
         $enum = new ASTEnum('FooBar');
         $enum->setTokens(array());
     }

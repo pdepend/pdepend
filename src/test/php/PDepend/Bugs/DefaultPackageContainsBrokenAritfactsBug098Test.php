@@ -70,6 +70,6 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
             ->current()
             ->getInterfaces();
 
-        $this->assertEquals(1, count($interfaces));
+        $this->assertCount(1, $interfaces);
     }
 }

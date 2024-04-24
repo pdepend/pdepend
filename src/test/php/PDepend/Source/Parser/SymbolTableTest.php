@@ -58,8 +58,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotAddSymbolToASymbolTableWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 
@@ -73,8 +75,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotPerformLookupOnASymbolTableWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 
@@ -88,8 +92,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotResetWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 
@@ -103,8 +109,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotDestroyWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 

@@ -68,7 +68,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -118,7 +118,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
             'pdepend1' => array('ccn' => 5, 'ccn2' => 6),
             'pdepend2' => array('ccn' => 7, 'ccn2' => 10)
         );
-        
+
         foreach ($namespaces[0]->getFunctions() as $function) {
             $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
         }
@@ -144,7 +144,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests that the analyzer calculates the correct method cc numbers.
      *
@@ -165,7 +165,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
             'pdepend1' => array('ccn' => 5, 'ccn2' => 6),
             'pdepend2' => array('ccn' => 7, 'ccn2' => 10)
         );
-        
+
         foreach ($methods as $method) {
             $actual[$method->getName()] = $analyzer->getNodeMetrics($method);
         }
@@ -288,7 +288,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * Tests that the analyzer aggregates the correct project metrics.
      *
@@ -298,13 +298,13 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTest
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
-        
+
         $expected = array('ccn' => 24, 'ccn2' => 32);
         $actual   = $analyzer->getProjectMetrics();
 
         $this->assertEquals($expected, $actual);
     }
-    
+
     /**
      * testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod
      *

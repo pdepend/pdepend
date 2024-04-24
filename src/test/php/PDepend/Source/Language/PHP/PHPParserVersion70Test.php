@@ -426,10 +426,11 @@ class PHPParserVersion70Test extends AbstractTest
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testListKeywordAsFunctionNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -545,8 +546,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testParseListWithSquaredBrackets()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: [, line: 2, col: 26, file: '
         );
 
@@ -561,8 +564,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: const, line: 4, col: 13, file: '
         );
 
@@ -576,8 +581,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testVoidTypeHintReturn()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: void, line: 2, col: 23, file: '
         );
 
@@ -591,8 +598,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testListExpressionWithSquaredBrackets()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: [, line: 4, col: 5, file: '
         );
 
@@ -606,8 +615,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testListExpressionWithKeys()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: "a", line: 4, col: 10, file: '
         );
 
@@ -621,8 +632,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testListExpressionWithKeysAndNestedList()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: \'a\', line: 4, col: 10, file: '
         );
 
@@ -675,8 +688,10 @@ class PHPParserVersion70Test extends AbstractTest
 
     public function testCallableKeywordAsClassName()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: callable, line: 3, col: 7, file: '
         );
 
@@ -685,8 +700,10 @@ class PHPParserVersion70Test extends AbstractTest
 
     public function testTraitKeywordAsClassName()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: trait, line: 3, col: 7, file: '
         );
 
@@ -695,8 +712,10 @@ class PHPParserVersion70Test extends AbstractTest
 
     public function testInsteadofKeywordAsClassName()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: insteadof, line: 3, col: 7, file: '
         );
 
@@ -705,8 +724,10 @@ class PHPParserVersion70Test extends AbstractTest
 
     public function testCallableKeywordAsInterfaceName()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: callable, line: 3, col: 11, file: '
         );
 
@@ -715,8 +736,10 @@ class PHPParserVersion70Test extends AbstractTest
 
     public function testTraitKeywordAsInterfaceName()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: trait, line: 3, col: 11, file: '
         );
 
@@ -725,8 +748,10 @@ class PHPParserVersion70Test extends AbstractTest
 
     public function testInsteadofKeywordAsInterfaceName()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: insteadof, line: 3, col: 11, file: '
         );
 
@@ -751,8 +776,10 @@ class PHPParserVersion70Test extends AbstractTest
      */
     public function testSymmetricArrayDestructuringEmptySlot()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The parser has reached an invalid state near line "4" in file'
         );
 

@@ -447,10 +447,11 @@ class PHPParserGenericVersion70Test extends AbstractTest
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testListKeywordAsFunctionNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

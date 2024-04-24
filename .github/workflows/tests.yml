@@ -59,14 +59,10 @@ jobs:
 
       - name: Install test dependencies
         if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: cd src/test && composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
-
-      - name: Fix PHP compatibility
-        if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: php src/test/php/PDepend/fix-php-compatibility.php
+        run: composer update --prefer-dist --no-progress --prefer-stable
 
       - name: Check Symfony version
         run: php src/test/symfony-version.php
 
       - name: Run test suite
-        run: src/test/vendor/bin/phpunit -v
+        run: vendor/bin/phpunit -v

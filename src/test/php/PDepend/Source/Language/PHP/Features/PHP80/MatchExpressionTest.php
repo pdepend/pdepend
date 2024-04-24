@@ -228,12 +228,13 @@ class MatchExpressionTest extends PHPParserVersion80Test
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ,, line: 5, col: 25
      * @return void
      */
     public function testMatchExpressionWithTooManyArguments()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ,, line: 5, col: 25');
+
         $this->parseCodeResourceForTest();
     }
 }

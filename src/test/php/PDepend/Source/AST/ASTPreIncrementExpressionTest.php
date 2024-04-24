@@ -161,7 +161,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTest
             ->current()
             ->findChildrenOfType('PDepend\\Source\\AST\\ASTPreIncrementExpression');
 
-        $this->assertEquals(2, count($exprs));
+        $this->assertCount(2, $exprs);
     }
 
     /**

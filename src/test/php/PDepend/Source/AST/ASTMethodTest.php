@@ -297,10 +297,11 @@ class ASTMethodTest extends AbstractASTArtifactTest
      *
      * @return void
      * @covers \PDepend\Source\AST\ASTCompilationUnitNotFoundException
-     * @expectedException \PDepend\Source\AST\ASTCompilationUnitNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()
     {
+        $this->expectException(\PDepend\Source\AST\ASTCompilationUnitNotFoundException::class);
+
         $method = new ASTMethod('method');
         $method->getCompilationUnit();
     }
@@ -400,7 +401,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
      */
     public function testSetInvalidModifierFail()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
 
         $method = new ASTMethod('method');
         $method->setModifiers(-1);
@@ -808,11 +809,12 @@ class ASTMethodTest extends AbstractASTArtifactTest
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage An AST node should contain at least one token
      */
     public function testSetTokensWithEmptyArray()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('An AST node should contain at least one token');
+
         $method = new ASTMethod('FooBar');
         $method->setTokens(array());
     }

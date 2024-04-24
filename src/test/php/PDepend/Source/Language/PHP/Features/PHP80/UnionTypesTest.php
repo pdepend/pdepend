@@ -112,11 +112,12 @@ class UnionTypesTest extends PHPParserVersion80Test
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\ParserException
-     * @expectedExceptionMessage null can not be used as a standalone type
      */
     public function testUnionTypesStandaloneNull()
     {
+        $this->expectException(\PDepend\Source\Parser\ParserException::class);
+        $this->expectExceptionMessage('null can not be used as a standalone type');
+
         $this->getFirstMethodForTestCase();
     }
 }

@@ -44,13 +44,8 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
-        composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
         composer require symfony/config:^5 symfony/dependency-injection:^5 symfony/filesystem:^5 --no-update --no-interaction
-        composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
-
-    - name: Fix PHP compatibility
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: php src/test/php/PDepend/fix-php-compatibility.php
+        composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
     - name: Coverage
       run: vendor/bin/phpunit -v --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage

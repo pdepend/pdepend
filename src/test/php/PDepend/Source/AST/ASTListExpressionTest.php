@@ -199,7 +199,7 @@ class ASTListExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertEquals(3, count($vars));
+        $this->assertCount(3, $vars);
     }
 
     /**
@@ -211,7 +211,7 @@ class ASTListExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertEquals(1, count($vars));
+        $this->assertCount(1, $vars);
     }
 
     /**
@@ -223,7 +223,7 @@ class ASTListExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertEquals(3, count($vars));
+        $this->assertCount(3, $vars);
     }
 
     /**
@@ -235,7 +235,7 @@ class ASTListExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertEquals(3, count($vars));
+        $this->assertCount(3, $vars);
     }
 
     /**
@@ -247,7 +247,7 @@ class ASTListExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertEquals(0, count($vars));
+        $this->assertCount(0, $vars);
     }
 
     /**
@@ -300,8 +300,10 @@ class ASTListExpressionTest extends ASTNodeTest
      */
     public function testListExpressionWithArrayAndEmptySlot()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: ,, line: 4, col: 18, file: '
         );
 

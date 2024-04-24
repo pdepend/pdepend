@@ -171,10 +171,11 @@ class ASTSwitchStatementTest extends ASTNodeTest
      * testInvalidStatementInSwitchStatementResultsInExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstSwitchStatementInFunction();
     }
 
@@ -182,10 +183,11 @@ class ASTSwitchStatementTest extends ASTNodeTest
      * testUnclosedSwitchStatementResultsInExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testUnclosedSwitchStatementResultsInExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->getFirstSwitchStatementInFunction();
     }
 

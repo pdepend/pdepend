@@ -98,10 +98,11 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      * Tests that the parser handles a closure function with bound variables.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

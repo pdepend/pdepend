@@ -69,7 +69,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -230,7 +230,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
     {
         $this->assertEquals(63, $this->calculateFunctionMetric());
     }
-    
+
     /**
      * testNPathComplexityForConditionalsInArrayDeclaration
      *

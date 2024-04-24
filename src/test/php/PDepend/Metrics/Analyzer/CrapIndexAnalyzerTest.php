@@ -77,7 +77,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
     public function testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied()
     {
         $analyzer = new CrapIndexAnalyzer();
-        
+
         $this->assertFalse($analyzer->isEnabled());
     }
 
@@ -178,7 +178,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
     private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex)
     {
         $metrics = $this->calculateCrapIndex($testCase, $ccn);
-        $this->assertEquals($crapIndex, $metrics['crap'], '', 0.005);
+        $this->assertEqualsWithDelta($crapIndex, $metrics['crap'], 0.005);
     }
 
     /**

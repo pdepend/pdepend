@@ -203,7 +203,7 @@ class ASTClosureTest extends ASTNodeTest
     public function testClosureContainsExpectedNumberChildNodes()
     {
         $closure = $this->getFirstClosureInFunction();
-        $this->assertEquals(2, count($closure->getChildren()));
+        $this->assertCount(2, $closure->getChildren());
     }
 
     /**

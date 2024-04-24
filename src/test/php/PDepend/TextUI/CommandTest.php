@@ -46,7 +46,7 @@ use PDepend\AbstractTest;
 use PDepend\MockCommand;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
 /**
@@ -74,7 +74,7 @@ class CommandTest extends AbstractTest
      */
     private $usageOutput;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -487,7 +487,7 @@ class CommandTest extends AbstractTest
     public function testTextUiCommandOutputContainsExpectedCoverageReportOption()
     {
         list(, $actual) = $this->executeCommand(array());
-        $this->assertContains('--coverage-report=<file>', $actual);
+        $this->assertStringContainsString('--coverage-report=<file>', $actual);
     }
 
     /**
@@ -541,7 +541,7 @@ class CommandTest extends AbstractTest
         list($exitCode, $actual) = $this->executeCommand($argv);
 
         $this->assertSame(Command::CLI_ERROR, $exitCode);
-        $this->assertContains(
+        $this->assertStringContainsString(
             sprintf('The configuration file "%s" doesn\'t exist.', $configFile),
             $actual
         );
