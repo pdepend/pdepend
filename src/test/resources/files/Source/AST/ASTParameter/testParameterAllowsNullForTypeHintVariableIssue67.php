@@ -1,7 +1,7 @@
 <?php
 class Foo
 {
-    public function bar(Baz $baz = null)
+    public function bar(?Baz $baz = null)
     {
         
     }

@@ -398,7 +398,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return void
      */
-    public function setTokens(array $tokens, Token $startToken = null)
+    public function setTokens(array $tokens, ?Token $startToken = null)
     {
         if ($tokens === array()) {
             throw new InvalidArgumentException('An AST node should contain at least one token');

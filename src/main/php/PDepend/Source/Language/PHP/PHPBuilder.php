@@ -2582,12 +2582,12 @@ class PHPBuilder implements Builder
     /**
      * Builds an enum definition.
      *
-     * @param string        $name The enum name.
-     * @param ASTScalarType $type The enum type ('string', 'int', or null if not backed).
+     * @param string         $name The enum name.
+     * @param ?ASTScalarType $type The enum type ('string', 'int', or null if not backed).
      *
      * @return ASTEnum The created class object.
      */
-    public function buildEnum($name, ASTScalarType $type = null)
+    public function buildEnum($name, ?ASTScalarType $type = null)
     {
         $this->checkBuilderState();
 
@@ -2602,12 +2602,12 @@ class PHPBuilder implements Builder
     /**
      * Builds an enum definition.
      *
-     * @param string          $name  The enum case name.
-     * @param AbstractASTNode $value The enum case value if backed.
+     * @param string           $name  The enum case name.
+     * @param ?AbstractASTNode $value The enum case value if backed.
      *
      * @return ASTEnumCase The created class object.
      */
-    public function buildEnumCase($name, AbstractASTNode $value = null)
+    public function buildEnumCase($name, ?AbstractASTNode $value = null)
     {
         $this->checkBuilderState();
 

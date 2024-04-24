@@ -108,7 +108,7 @@ class ASTConstantDeclarator extends AbstractASTNode
      *
      * @return void
      */
-    public function setType(ASTType $type = null)
+    public function setType(?ASTType $type = null)
     {
         $this->type = $type;
     }
@@ -128,7 +128,7 @@ class ASTConstantDeclarator extends AbstractASTNode
      *
      * @return void
      */
-    public function setValue(ASTValue $value = null)
+    public function setValue(?ASTValue $value = null)
     {
         $this->value = $value;
     }

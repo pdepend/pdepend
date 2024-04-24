@@ -2387,7 +2387,7 @@ abstract class AbstractPHPParser
      *
      * @since 0.9.8
      */
-    protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = null)
+    protected function setNodePositionsAndReturn(ASTNode $node, ?array &$tokens = null)
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
 
@@ -8075,7 +8075,7 @@ abstract class AbstractPHPParser
      * @deprecated 3.0.0 Use throw $this->getUnexpectedTokenException($token) instead
      * @codeCoverageIgnore
      */
-    protected function throwUnexpectedTokenException(Token $token = null)
+    protected function throwUnexpectedTokenException(?Token $token = null)
     {
         throw $this->getUnexpectedTokenException($token);
     }

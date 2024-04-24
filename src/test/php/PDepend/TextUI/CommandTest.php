@@ -47,7 +47,7 @@ use PDepend\MockCommand;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
+use ReflectionClass;
 
 /**
  * Test case for the text ui command.
@@ -577,9 +577,8 @@ class CommandTest extends AbstractTestCase
     public function testDebugErrorDisplay()
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
-        $streamProperty = new ReflectionProperty('PDepend\\Util\\Log', 'stream');
-        $streamProperty->setAccessible(true);
-        $streamProperty->setValue(fopen($file, 'a+'));
+        $streamProperty = new ReflectionClass('PDepend\\Util\\Log');
+        $streamProperty->setStaticPropertyValue('stream', fopen($file, 'a+'));
 
         Log::setSeverity(Log::DEBUG);
 
@@ -591,7 +590,7 @@ class CommandTest extends AbstractTestCase
         Log::setSeverity(2);
         $error = file_get_contents($file);
         unlink($file);
-        $streamProperty->setValue(STDERR);
+        $streamProperty->setStaticPropertyValue('stream', STDERR);
 
         $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
         $this->assertSame(42, $exitCode);
@@ -636,11 +635,11 @@ class CommandTest extends AbstractTestCase
      * Executes the text ui command and returns the exit code and the output as
      * an array <b>array($exitCode, $output)</b>.
      *
-     * @param array $argv The cli parameters.
+     * @param ?array $argv The cli parameters.
      *
      * @return array<mixed>
      */
-    private function executeCommand(array $argv = null)
+    private function executeCommand(?array $argv = null)
     {
         $this->prepareArgv($argv);
 
@@ -655,11 +654,11 @@ class CommandTest extends AbstractTestCase
     /**
      * Prepares a fake <b>$argv</b>.
      *
-     * @param array $argv The cli parameters.
+     * @param ?array $argv The cli parameters.
      *
      * @return void
      */
-    private function prepareArgv(array $argv = null)
+    private function prepareArgv(?array $argv = null)
     {
         unset($_SERVER['argv']);
 
