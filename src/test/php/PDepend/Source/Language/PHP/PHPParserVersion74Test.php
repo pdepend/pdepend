@@ -172,10 +172,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testArrowFunctions()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -218,10 +214,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testArrowFunctionsWithReturnType()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -273,10 +265,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNullCoalescingAssignmentOperator()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -288,10 +276,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testUnpackingInsideArrays()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArray'
@@ -326,10 +310,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNumericLiteralSeparator()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTExpression'

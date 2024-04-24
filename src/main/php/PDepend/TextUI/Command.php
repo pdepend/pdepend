@@ -47,7 +47,6 @@ use PDepend\Application;
 use PDepend\DbusUI\ResultPrinter as DbusResultPrinter;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
-use PDepend\Util\Workarounds;
 use RuntimeException;
 
 /**
@@ -238,7 +237,6 @@ class Command
             // Output current pdepend version and author
             if ($runSilent === false) {
                 $this->printVersion();
-                $this->printWorkarounds();
             }
 
             $startTime = time();
@@ -416,27 +414,6 @@ class Command
         }
 
         echo 'PDepend ', $version, PHP_EOL, PHP_EOL;
-    }
-
-    /**
-     * If the current PHP installation requires some workarounds or limitations,
-     * this method will output a message on STDOUT.
-     *
-     * @return void
-     */
-    protected function printWorkarounds()
-    {
-        $workarounds = new Workarounds();
-
-        if ($workarounds->isNotRequired()) {
-            return;
-        }
-
-        echo 'Your PHP version requires some workaround:', PHP_EOL;
-        foreach ($workarounds->getRequiredWorkarounds() as $workaround) {
-            echo '- ', $workaround, PHP_EOL;
-        }
-        echo PHP_EOL;
     }
 
     /**

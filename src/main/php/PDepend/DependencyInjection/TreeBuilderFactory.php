@@ -43,7 +43,6 @@
 namespace PDepend\DependencyInjection;
 
 use PDepend\Util\FileUtil;
-use PDepend\Util\Workarounds;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
@@ -78,9 +77,8 @@ class TreeBuilderFactory
     public function getConfigTreeBuilder()
     {
         $home = FileUtil::getUserHomeDirOrSysTempDir();
-        $workarounds = new Workarounds();
 
-        $defaultCacheDriver = ($workarounds->hasSerializeReferenceIssue()) ? 'memory' : 'file';
+        $defaultCacheDriver = 'file';
 
         $name = 'pdepend';
         $treeBuilder = new TreeBuilder($name);

@@ -117,10 +117,6 @@ class ConfigurationTest extends AbstractTest
             $config->getConfigTreeBuilder()
         );
 
-        if (PHP_VERSION < 7) {
-            return;
-        }
-
         $method = new ReflectionMethod(
             'PDepend\\DependencyInjection\\Configuration',
             'getConfigTreeBuilder'

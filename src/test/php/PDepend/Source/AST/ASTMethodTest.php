@@ -326,19 +326,6 @@ class ASTMethodTest extends AbstractASTArtifactTest
     }
 
     /**
-     * Tests that the build interface method doesn't update an existing source
-     * file info.
-     *
-     * @return void
-     */
-    public function testDoesntSetSourceFileInformationForNotNullValue()
-    {
-        $this->markTestSkipped(
-            'This test should be removed, but a default implementation exists.'
-        );
-    }
-
-    /**
      * testByDefaultGetParentReturnsNull
      *
      * @return void

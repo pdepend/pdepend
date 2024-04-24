@@ -458,10 +458,6 @@ class PHPTokenizerInternalTest extends AbstractTest
      */
     public function testTokenizingShortTagsWithMultipleVariables()
     {
-        if (PHP_VERSION < 5.4 && ! ini_get('short_open_tag')) {
-            $this->markTestSkipped('Must enable short_open_tag before PHP 5.4');
-        }
-
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
