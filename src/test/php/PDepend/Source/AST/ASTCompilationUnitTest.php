@@ -240,7 +240,7 @@ class ASTCompilationUnitTest extends AbstractTest
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
     {
         $node = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
-            ->setMethods(array('setCompilationUnit'))
+            ->onlyMethods(array('setCompilationUnit'))
             ->setConstructorArgs(array(__CLASS__))
             ->getMock();
         $node->expects($this->once())

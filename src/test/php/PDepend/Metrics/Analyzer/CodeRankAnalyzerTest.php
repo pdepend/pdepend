@@ -65,7 +65,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
         'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
         'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
         'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
-        CORE_PACKAGE  =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
+        'core'        =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
         'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),

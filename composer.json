@@ -20,7 +20,7 @@
         "squizlabs/php_codesniffer": "^2.0.0",
         "gregwar/rst": "^1.0",
         "easy-doc/easy-doc": "0.0.0|^1.2.3",
-        "phpunit/phpunit": "^9.6.19"
+        "phpunit/phpunit": "^10.5.20"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {

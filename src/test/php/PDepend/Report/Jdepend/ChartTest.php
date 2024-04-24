@@ -311,7 +311,7 @@ class ChartTest extends AbstractTest
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
 
-        $this->assertFileNotExists($fileName);
+        $this->assertFileDoesNotExist($fileName);
         $logger->close();
         $this->assertFileExists($fileName);
 
@@ -346,7 +346,7 @@ class ChartTest extends AbstractTest
     private function createPackage($userDefined, $packageName)
     {
         $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
-            ->setMethods(array('isUserDefined'))
+            ->onlyMethods(array('isUserDefined'))
             ->setConstructorArgs(array($packageName))
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')
             ->getMock();

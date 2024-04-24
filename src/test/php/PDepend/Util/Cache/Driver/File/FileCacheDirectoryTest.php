@@ -152,7 +152,7 @@ class FileCacheDirectoryTest extends AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileNotExists($cacheFile);
+        $this->assertFileDoesNotExist($cacheFile);
     }
 
     /**
@@ -168,7 +168,7 @@ class FileCacheDirectoryTest extends AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileNotExists($cacheDir);
+        $this->assertFileDoesNotExist($cacheDir);
     }
 
     /**
@@ -186,7 +186,7 @@ class FileCacheDirectoryTest extends AbstractTest
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileNotExists("{$this->cacheDir}/test");
+        $this->assertFileDoesNotExist("{$this->cacheDir}/test");
     }
 
     /**

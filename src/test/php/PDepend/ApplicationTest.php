@@ -87,9 +87,9 @@ class ApplicationTest extends AbstractTest
         unlink('foo.xml');
         chdir($cwd);
 
-        $this->assertRegExp('/Parsing source files:\s*\.\s+1/', $output);
-        $this->assertRegExp('/<class\s.*name="FooBar"/', $xml);
-        $this->assertRegExp('/<file\s.*name="php:\/\/stdin"/', $xml);
+        $this->assertMatchesRegularExpression('/Parsing source files:\s*\.\s+1/', $output);
+        $this->assertMatchesRegularExpression('/<class\s.*name="FooBar"/', $xml);
+        $this->assertMatchesRegularExpression('/<file\s.*name="php:\/\/stdin"/', $xml);
     }
 
     /**

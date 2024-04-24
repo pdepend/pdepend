@@ -86,7 +86,7 @@ class NewClassInstanceTest extends AbstractFeatureTest
             $children = $children[0]->getChildren();
             $self->assertCount(2, $children);
             $self->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
-            $self->assertRegExp('/^\$object\d+$/', $children[0]->getImage());
+            $self->assertMatchesRegularExpression('/^\$object\d+$/', $children[0]->getImage());
             $self->assertInstanceOf('PDepend\\Source\\AST\\ASTAllocationExpression', $children[1]);
             $children = $children[1]->getChildren();
             $self->assertCount(1, $children);

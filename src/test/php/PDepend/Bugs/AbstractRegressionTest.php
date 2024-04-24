@@ -63,7 +63,7 @@ abstract class AbstractRegressionTest extends AbstractTest
     protected function createSummaryXmlForCallingTest()
     {
         $this->changeWorkingDirectory(
-            $this->createCodeResourceURI('config/')
+            self::createCodeResourceURI('config/')
         );
 
         $file = $this->createRunResourceURI('summary.xml');
@@ -106,7 +106,7 @@ abstract class AbstractRegressionTest extends AbstractTest
 
         preg_match('(Bug(\d+)Test$)', $class, $match);
 
-        return $this->createCodeResourceURI(
+        return self::createCodeResourceURI(
             sprintf('bugs/%s/%s.php', $match[1], $method)
         );
     }
