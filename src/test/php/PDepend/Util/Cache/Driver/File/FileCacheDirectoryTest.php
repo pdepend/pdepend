@@ -82,6 +82,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         parent::setUp();
 
         $this->cacheDir    = $this->createRunResourceURI('cache');
+        unlink($this->cacheDir);
         $this->versionFile = "{$this->cacheDir}/_version";
     }
 

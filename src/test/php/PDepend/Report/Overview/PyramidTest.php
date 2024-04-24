@@ -230,7 +230,7 @@ class PyramidTest extends AbstractTestCase
      */
     public function testCollectedAndComputedValuesInOutputSVG()
     {
-        $output = $this->createRunResourceURI('temp.svg');
+        $output = $this->createRunResourceURI('temp') . '.svg';
         if (file_exists($output)) {
             unlink($output);
         }

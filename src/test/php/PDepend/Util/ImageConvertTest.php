@@ -63,7 +63,7 @@ class ImageConvertTest extends AbstractTestCase
     public function testConvertMakesCopyForSameMimeType()
     {
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.out.svg');
+        $output = $this->createRunResourceURI('pdepend.out') . '.svg';
 
         ImageConvert::convert($input, $output);
         $this->assertFileEquals($input, $output);
@@ -79,7 +79,7 @@ class ImageConvertTest extends AbstractTestCase
         $this->requireImagick();
 
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.out.png');
+        $output = $this->createRunResourceURI('pdepend.out') . '.png';
 
         ImageConvert::convert($input, $output);
         $this->assertFileExists($output);
@@ -130,7 +130,7 @@ class ImageConvertTest extends AbstractTestCase
         ConfigurationInstance::set($config);
 
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.svg');
+        $output = $this->createRunResourceURI('pdepend') . '.svg';
 
         ImageConvert::convert($input, $output);
 
@@ -165,7 +165,7 @@ class ImageConvertTest extends AbstractTestCase
         ConfigurationInstance::set($config);
 
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.svg');
+        $output = $this->createRunResourceURI('pdepend') . '.svg';
 
         ImageConvert::convert($input, $output);
 

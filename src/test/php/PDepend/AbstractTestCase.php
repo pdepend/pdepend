@@ -669,11 +669,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createRunResourceURI($fileName = null)
     {
-        $uri = __DIR__ . '/_run/' . ($fileName ? $fileName : uniqid());
-        if (file_exists($uri) === true) {
-            throw new \ErrorException("File '{$fileName}' already exists.");
-        }
-        return $uri;
+        return tempnam(sys_get_temp_dir(), $fileName ?: uniqid());
     }
 
     /**
