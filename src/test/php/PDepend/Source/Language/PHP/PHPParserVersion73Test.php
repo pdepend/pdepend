@@ -68,8 +68,10 @@ class PHPParserVersion73Test extends AbstractTest
      */
     public function testArrowFunctions()
     {
-        $this->setExpectedException(
-            'PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            'PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             version_compare(phpversion(), '7.4.0', '>=')
                 ? 'Unexpected token: fn, line: 4, col: 22, file:'
                 : 'Unexpected token: =>, line: 4, col: 34, file:'

@@ -62,7 +62,7 @@ class ASTWhileStatementTest extends ASTNodeTest
     public function testWhileStatementGraphWithBooleanExpressions()
     {
         $stmt = $this->getFirstWhileStatementInFunction();
-        $this->assertEquals(2, count($stmt->getChildren()));
+        $this->assertCount(2, $stmt->getChildren());
     }
 
     /**

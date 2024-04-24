@@ -62,7 +62,7 @@ class ASTExpressionTest extends ASTNodeTest
     public function testExpressionHasExpectedNumberOfChildNodes()
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, count($expr->getChild(0)->getChildren()));
+        $this->assertCount(5, $expr->getChild(0)->getChildren());
     }
 
     /**

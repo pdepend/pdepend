@@ -76,10 +76,11 @@ class ConfigurationTest extends AbstractTest
      * testPropertyAccessForNotExistingValueThrowsExpectedException
      *
      * @return void
-     * @expectedException \OutOfRangeException
      */
     public function testPropertyAccessForNotExistingValueThrowsExpectedException()
     {
+        $this->expectException(\OutOfRangeException::class);
+
         $settings      = new \stdClass();
         $settings->foo = 42;
 
@@ -91,10 +92,11 @@ class ConfigurationTest extends AbstractTest
      * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
      *
      * @return void
-     * @expectedException \OutOfRangeException
      */
     public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown()
     {
+        $this->expectException(\OutOfRangeException::class);
+
         $configuration      = new Configuration(new \stdClass());
         $configuration->foo = 42;
     }

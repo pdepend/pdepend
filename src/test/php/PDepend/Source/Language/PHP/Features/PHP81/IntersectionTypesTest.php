@@ -111,20 +111,22 @@ class IntersectionTypesTest extends PHPParserVersion81Test
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\ParserException
-     * @expectedExceptionMessage Unexpected token
      */
     public function testIntersectionTypesCantBeMixedWithUnionTypes()
     {
+        $this->expectException(\PDepend\Source\Parser\ParserException::class);
+        $this->expectExceptionMessage('Unexpected token');
+
         $this->getFirstMethodForTestCase();
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\ParserException
-     * @expectedExceptionMessage int can not be used in an intersection type
      */
     public function testIntersectionTypesCantBeScalar()
     {
+        $this->expectException(\PDepend\Source\Parser\ParserException::class);
+        $this->expectExceptionMessage('int can not be used in an intersection type');
+
         $this->getFirstMethodForTestCase();
     }
 }

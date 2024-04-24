@@ -69,7 +69,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             ->current()
             ->getProperties();
 
-        $this->assertEquals(2, count($properties));
+        $this->assertCount(2, $properties);
     }
 
     /**

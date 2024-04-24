@@ -69,7 +69,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
             ->current()
             ->getConstants();
 
-        $this->assertEquals(2, count($constants));
+        $this->assertCount(2, $constants);
     }
 
     /**
@@ -86,7 +86,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
             ->current()
             ->getConstants();
 
-        $this->assertEquals(2, count($constants));
+        $this->assertCount(2, $constants);
     }
 
     /**
@@ -103,6 +103,6 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
             ->current()
             ->getConstants();
 
-        $this->assertEquals(5, count($constants));
+        $this->assertCount(5, $constants);
     }
 }

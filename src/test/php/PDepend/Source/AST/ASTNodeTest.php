@@ -237,11 +237,12 @@ abstract class ASTNodeTest extends AbstractTest
      * testGetChildThrowsExpectedExceptionForInvalidChildIndex
      *
      * @return void
-     * @expectedException OutOfBoundsException
      * @since 1.0.0
      */
     public function testGetChildThrowsExpectedExceptionForInvalidChildIndex()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $node = $this->createNodeInstance();
         $node->addChild($child0 = $this->getNodeMock());
         $node->addChild($child1 = $this->getNodeMock());
@@ -754,10 +755,11 @@ abstract class ASTNodeTest extends AbstractTest
      *
      * @return void
      * @covers \PDepend\Source\AST\ASTNode
-     * @expectedException OutOfBoundsException
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $node = $this->createNodeInstance();
         $node->getChild(42);
     }

@@ -92,7 +92,7 @@ class ASTFormalParameterTest extends ASTNodeTest
         $parameter = new ASTFormalParameter();
         $parameter->addChild(new ASTVariableDeclarator());
 
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException('\\OutOfBoundsException');
 
         $parameter->getType();
     }

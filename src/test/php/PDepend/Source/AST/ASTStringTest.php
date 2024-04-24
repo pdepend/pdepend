@@ -62,7 +62,7 @@ class ASTStringTest extends ASTNodeTest
     public function testDoubleQuoteStringContainsTwoChildNodes()
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertEquals(2, count($string->getChildren()));
+        $this->assertCount(2, $string->getChildren());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTStringTest extends ASTNodeTest
     public function testDoubleQuoteStringContainsExpectedTextContent()
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertContains("Hello", $string->getChild(0)->getImage());
+        $this->assertStringContainsString("Hello", $string->getChild(0)->getImage());
     }
 
     /**
@@ -84,7 +84,7 @@ class ASTStringTest extends ASTNodeTest
     public function testBacktickExpressionContainsTwoChildNodes()
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertEquals(2, count($string->getChildren()));
+        $this->assertCount(2, $string->getChildren());
     }
 
     /**
@@ -128,7 +128,7 @@ class ASTStringTest extends ASTNodeTest
             $actual[] = $child->getImage();
         }
         $expected = array('Issue "', '$ticketNo', '"');
-        
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -213,10 +213,11 @@ class ASTStringTest extends ASTNodeTest
      * Tests that an invalid literal results in the expected exception.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

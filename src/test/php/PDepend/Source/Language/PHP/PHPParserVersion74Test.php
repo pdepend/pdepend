@@ -160,8 +160,10 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testTypedPropertiesSyntaxError()
     {
-        $this->setExpectedException(
-            'PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            'PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: string, line: 4, col: 16, file:'
         );
 
@@ -398,29 +400,32 @@ class PHPParserVersion74Test extends AbstractTest
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 8, col: 27
      */
     public function testCatchWithoutVariable()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 8, col: 27');
+
         $this->getFirstClassForTestCase();
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 5, col: 32
      */
     public function testTrailingCommaInClosureUseListError()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 5, col: 32');
+
         $this->parseCodeResourceForTest();
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 4, col: 43
      */
     public function testTrailingCommaInParameterList()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 43');
+
         $this->getFirstMethodForTestCase();
     }
 

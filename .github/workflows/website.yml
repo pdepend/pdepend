@@ -32,12 +32,12 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-v3-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}
+            ${{ runner.os }}-v3-php-${{ matrix.php }}-${{ matrix.setup }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress

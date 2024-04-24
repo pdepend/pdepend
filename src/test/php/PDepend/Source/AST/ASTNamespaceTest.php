@@ -160,7 +160,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace->addType($class);
         $namespace->addType($class);
 
-        $this->assertEquals(1, count($namespace->getClasses()));
+        $this->assertCount(1, $namespace->getClasses());
     }
 
     /**
@@ -171,7 +171,7 @@ class ASTNamespaceTest extends AbstractTest
     public function testGetInterfacesReturnsAnEmptyResultByDefault()
     {
         $namespace = new ASTNamespace(__FUNCTION__);
-        $this->assertEquals(0, count($namespace->getInterfaces()));
+        $this->assertCount(0, $namespace->getInterfaces());
     }
 
     /**
@@ -184,7 +184,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace = new ASTNamespace(__FUNCTION__);
         $namespace->addType(new ASTInterface(__CLASS__));
 
-        $this->assertEquals(1, count($namespace->getInterfaces()));
+        $this->assertCount(1, $namespace->getInterfaces());
     }
 
     /**
@@ -197,7 +197,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace = new ASTNamespace(__FUNCTION__);
         $namespace->addType(new ASTClass(__CLASS__));
 
-        $this->assertEquals(0, count($namespace->getInterfaces()));
+        $this->assertCount(0, $namespace->getInterfaces());
     }
     
     /**
@@ -248,7 +248,7 @@ class ASTNamespaceTest extends AbstractTest
         $namespace->addType(new ASTInterface('Interface'));
         $namespace->addType(new ASTTrait('Trait1'));
 
-        $this->assertEquals(2, count($namespace->getTraits()));
+        $this->assertCount(2, $namespace->getTraits());
     }
 
     /**

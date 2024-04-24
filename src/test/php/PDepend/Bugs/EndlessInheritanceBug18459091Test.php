@@ -68,7 +68,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         set_time_limit(-1);
 
@@ -79,10 +79,11 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
      * testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
      *
      * @return void
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         set_time_limit(5);
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
@@ -98,10 +99,11 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
      * testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
      *
      * @return void
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         set_time_limit(5);
 
         $ccnAnalyzer = new CyclomaticComplexityAnalyzer();
@@ -153,10 +155,11 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
      * testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
      *
      * @return void
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         set_time_limit(5);
 
         $analyzer = new InheritanceAnalyzer();
@@ -167,10 +170,11 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
      * testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy
      *
      * @return void
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         set_time_limit(5);
 
         $analyzer = new InheritanceAnalyzer();
@@ -225,6 +229,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
         $command->run();
 
         $output = ob_get_clean();
-        $this->assertContains(' is part of an endless inheritance hierarchy', $output);
+        $this->assertStringContainsString(' is part of an endless inheritance hierarchy', $output);
     }
 }

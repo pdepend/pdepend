@@ -407,7 +407,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
     public function testGetNodeMetrics()
     {
         $namespaces = $this->parseCodeResourceForTest();
-        
+
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);
 
@@ -425,12 +425,12 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
         foreach ($expected as $key => $info) {
             $metrics = $this->analyzer->getNodeMetrics($info[0]);
 
-            $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
-            $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
+            $this->assertEqualsWithDelta($info[1]['cr'], $metrics['cr'], 0.00005);
+            $this->assertEqualsWithDelta($info[1]['rcr'], $metrics['rcr'], 0.00005);
 
             unset($expected[$key]);
         }
-        $this->assertEquals(0, count($expected));
+        $this->assertCount(0, $expected);
     }
 
     /**
@@ -448,12 +448,12 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
 
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);
-        
+
         $class   = new ASTClass('PDepend');
         $metrics = $this->analyzer->getNodeMetrics($class);
 
-        $this->assertInternalType('array', $metrics);
-        $this->assertEquals(0, count($metrics));
+        $this->assertIsArray($metrics);
+        $this->assertCount(0, $metrics);
     }
 
     protected function getCodeRankForTestCase(array $options = array())

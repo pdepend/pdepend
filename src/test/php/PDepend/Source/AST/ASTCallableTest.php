@@ -75,7 +75,7 @@ class ASTCallableTest extends AbstractTest
     public function testGetParametersReturnsArrayWithOneElement()
     {
         $callable = $this->getFirstCallableForTest();
-        $this->assertEquals(1, count($callable->getParameters()));
+        $this->assertCount(1, $callable->getParameters());
     }
 
     /**
@@ -86,7 +86,7 @@ class ASTCallableTest extends AbstractTest
     public function testGetParametersReturnsArrayWithThreeElements()
     {
         $callable = $this->getFirstCallableForTest();
-        $this->assertEquals(3, count($callable->getParameters()));
+        $this->assertCount(3, $callable->getParameters());
     }
 
     /**
@@ -155,7 +155,7 @@ class ASTCallableTest extends AbstractTest
         $children = $this->getFirstCallableForTest()
             ->getChildren();
 
-        $this->assertEquals(2, count($children));
+        $this->assertCount(2, $children);
     }
 
     /**

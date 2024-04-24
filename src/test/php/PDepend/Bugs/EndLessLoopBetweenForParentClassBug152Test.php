@@ -71,10 +71,11 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
      *
      * @return void
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
@@ -152,6 +153,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
             ->current()
             ->getClasses();
 
-        $this->assertEquals(1, count($classes));
+        $this->assertCount(1, $classes);
     }
 }

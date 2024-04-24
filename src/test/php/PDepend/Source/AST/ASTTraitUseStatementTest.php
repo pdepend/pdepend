@@ -218,7 +218,7 @@ class ASTTraitUseStatementTest extends ASTNodeTest
     public function testGetAllMethodsWithAliasedMethodCollision()
     {
         $useStmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(2, count($useStmt->getAllMethods()));
+        $this->assertCount(2, $useStmt->getAllMethods());
     }
 
     /**
@@ -229,7 +229,7 @@ class ASTTraitUseStatementTest extends ASTNodeTest
     public function testGetAllMethodsWithAliasedMethodTwice()
     {
         $useStmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(2, count($useStmt->getAllMethods()));
+        $this->assertCount(2, $useStmt->getAllMethods());
     }
 
     /**
@@ -336,7 +336,7 @@ class ASTTraitUseStatementTest extends ASTNodeTest
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
     {
         $useStmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertSame(2, count($useStmt->getAllMethods()));
+        $this->assertCount(2, $useStmt->getAllMethods());
     }
 
     /**

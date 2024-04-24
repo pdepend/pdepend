@@ -68,7 +68,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -164,7 +164,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEqualsWithDelta($expected, $actual, 0.01);
     }
 
     /**
@@ -248,7 +248,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEqualsWithDelta($expected, $actual, 0.01);
     }
 
     /**

@@ -106,7 +106,7 @@ class ASTElseIfStatementTest extends ASTNodeTest
     public function testElseIfStatementGraphWithBooleanExpressions()
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($stmt->getChildren()));
+        $this->assertCount(2, $stmt->getChildren());
     }
     
     /**

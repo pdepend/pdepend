@@ -113,8 +113,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: as, line: 2, col: 19, file: '
         );
 
@@ -141,7 +143,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
     public function testParserDoesNotAddEmptyNamespaceToResultSet()
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
-        $this->assertEquals(0, count($namespaces));
+        $this->assertCount(0, $namespaces);
     }
 
     /**
@@ -177,8 +179,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: ;, line: 2, col: 18, file: '
         );
 
@@ -193,8 +197,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
      */
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: {, line: 2, col: 13, file: '
         );
 
@@ -245,7 +251,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
         $namespaces = $this->parseSource('issues/002-012-multiple-namespaces.php');
 
         $this->assertEquals(3, $namespaces->count());
-        
+
         $namespace = $namespaces->current();
         $types = $namespace->getTypes();
         $this->assertEquals('bar', $namespace->getName());
@@ -355,7 +361,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
                                ->current();
 
         $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
-        $this->assertContains(
+        $this->assertStringContainsString(
             $function->getNamespace()->getName(),
             $dependency->getNamespace()->getName()
         );
@@ -379,7 +385,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->current()
             ->getDependencies()
             ->current();
-        
+
         $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 
@@ -467,7 +473,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTest
             ->current()
             ->getDependencies()
             ->current();
-        
+
         $this->assertEquals($namespaceName, $dependency->getNamespace()->getName());
     }
 

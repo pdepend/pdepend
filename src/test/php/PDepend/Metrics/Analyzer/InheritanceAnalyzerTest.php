@@ -75,7 +75,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertEquals(0.7368, $project['andc'], null, 0.0001);
+        $this->assertEqualsWithDelta(0.7368, $project['andc'], 0.0001);
     }
 
     /**
@@ -213,7 +213,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $actual = array();
         foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
-            
+
             $actual[$class->getName()] = $metrics['dit'];
         }
         ksort($actual);

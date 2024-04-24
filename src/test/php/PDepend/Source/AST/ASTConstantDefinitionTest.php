@@ -83,8 +83,10 @@ class ASTConstantDefinitionTest extends ASTNodeTest
     {
         $definition = new ASTConstantDefinition();
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
+        $this->expectException(
+            'InvalidArgumentException'
+        );
+        $this->expectExceptionMessage(
             'Invalid field modifiers given, allowed modifiers are ' .
             'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_FINAL.'
         );

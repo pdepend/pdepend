@@ -237,7 +237,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
     public function testParserHandlesParameterDefaultValueFloat()
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertEquals(42.23, $parameters[0]->getDefaultValue(), null, 0.001);
+        $this->assertEqualsWithDelta(42.23, $parameters[0]->getDefaultValue(), 0.001);
     }
 
     /**
@@ -664,10 +664,11 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      *
      * @return void
      * @covers \PDepend\Source\Parser\MissingValueException
-     * @expectedException \PDepend\Source\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue()
     {
+        $this->expectException(\PDepend\Source\Parser\MissingValueException::class);
+
         $this->parseTestCase();
     }
 
@@ -677,10 +678,11 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
      *
      * @return void
      * @covers \PDepend\Source\Parser\TokenStreamEndException
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->parseTestCase();
     }
 

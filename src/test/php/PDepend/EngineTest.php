@@ -66,7 +66,8 @@ class EngineTest extends AbstractTest
         $dir = __DIR__ . '/foobar';
         $msg = "Invalid directory '{$dir}' added.";
 
-        $this->setExpectedException('InvalidArgumentException', $msg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($msg);
 
         $engine = $this->createEngineFixture();
         $engine->addDirectory($dir);
@@ -121,7 +122,7 @@ class EngineTest extends AbstractTest
             unset($expected[$metric->getName()]);
         }
 
-        $this->assertEquals(0, count($expected));
+        $this->assertCount(0, $expected);
     }
 
     /**
@@ -133,7 +134,8 @@ class EngineTest extends AbstractTest
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
     {
         $engine = $this->createEngineFixture();
-        $this->setExpectedException('RuntimeException', 'No source directory and file set.');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('No source directory and file set.');
         $engine->analyze();
     }
 
@@ -148,7 +150,7 @@ class EngineTest extends AbstractTest
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(array(__METHOD__)));
 
-        $this->assertEquals(0, count($engine->analyze()));
+        $this->assertCount(0, $engine->analyze());
     }
 
     /**
@@ -199,8 +201,10 @@ class EngineTest extends AbstractTest
      */
     public function testCountClassesWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'countClasses() doesn\'t work before the source was analyzed.'
         );
 
@@ -232,8 +236,10 @@ class EngineTest extends AbstractTest
      */
     public function testCountNamespacesWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'countNamespaces() doesn\'t work before the source was analyzed.'
         );
 
@@ -275,8 +281,10 @@ class EngineTest extends AbstractTest
      */
     public function testGetNamespaceWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'getNamespace() doesn\'t work before the source was analyzed.'
         );
 
@@ -293,8 +301,10 @@ class EngineTest extends AbstractTest
      */
     public function testGetNamespacesWithUnknownPackageFail()
     {
-        $this->setExpectedException(
-            'OutOfBoundsException',
+        $this->expectException(
+            'OutOfBoundsException'
+        );
+        $this->expectExceptionMessage(
             'Unknown namespace "nspace".'
         );
 
@@ -332,8 +342,10 @@ class EngineTest extends AbstractTest
      */
     public function testGetNamespacesWithoutAnalyzeFail()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'getNamespaces() doesn\'t work before the source was analyzed.'
         );
 
@@ -354,7 +366,7 @@ class EngineTest extends AbstractTest
         $engine->analyze();
 
         $namespaces = $engine->getNamespaces();
-        $this->assertSame(1, count($namespaces));
+        $this->assertCount(1, $namespaces);
 
         return $namespaces[0];
     }
@@ -366,7 +378,7 @@ class EngineTest extends AbstractTest
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace)
     {
-        $this->assertSame(1, count($namespace->getClasses()));
+        $this->assertCount(1, $namespace->getClasses());
     }
 
     /**
@@ -376,7 +388,7 @@ class EngineTest extends AbstractTest
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace)
     {
-        $this->assertSame(1, count($namespace->getInterfaces()));
+        $this->assertCount(1, $namespace->getInterfaces());
     }
 
     /**
@@ -384,10 +396,11 @@ class EngineTest extends AbstractTest
      * added file does not exist.
      *
      * @return void
-     * @expectedException InvalidArgumentException
      */
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $engine = $this->createEngineFixture();
         $engine->addFile($this->createRunResourceURI('pdepend_'));
     }

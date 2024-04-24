@@ -61,7 +61,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
     public function testParserSetsExpectedNumberOfFunctionParameters()
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertEquals(3, count($parameters));
+        $this->assertCount(3, $parameters);
     }
 
     /**
@@ -114,7 +114,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
     public function testParserSetsExpectedNumberOfMethodParameters()
     {
         $parameters = $this->getParametersOfFirstMethod();
-        $this->assertEquals(3, count($parameters));
+        $this->assertCount(3, $parameters);
     }
 
     /**

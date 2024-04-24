@@ -63,10 +63,11 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * method fails with an exception if no cc analyzer was set.
      *
      * @return void
-     * @expectedException RuntimeException
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
+        $this->expectException(\RuntimeException::class);
+
         $namespace = new ASTNamespace('package1');
         $namespaces = new ASTArtifactList(array($namespace));
 
@@ -79,10 +80,11 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * fails for an invalid child analyzer.
      *
      * @return void
-     * @expectedException InvalidArgumentException
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer(new CodeRankAnalyzer());
     }
@@ -508,7 +510,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
     {
         $metrics = $this->calculateTraitMetrics();
 
-        $this->assertInternalType('array', $metrics);
+        $this->assertIsArray($metrics);
 
         return $metrics;
     }

@@ -133,11 +133,12 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80Test
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenException
-     * @expectedExceptionMessage Unexpected token: private, line: 5, col: 9
      */
     public function testPropertyPromotionOnRandomMethod()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenException::class);
+        $this->expectExceptionMessage('Unexpected token: private, line: 5, col: 9');
+
         $this->parseCodeResourceForTest();
     }
 }

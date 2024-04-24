@@ -77,8 +77,10 @@ class PHPParserVersion71Test extends AbstractTest
      */
     public function testConstVisibilityInInterfaceProtected()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'Constant can\'t be declared private or protected in interface "TestInterface".'
         );
 
@@ -90,8 +92,10 @@ class PHPParserVersion71Test extends AbstractTest
      */
     public function testConstVisibilityInInterfacePrivate()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'Constant can\'t be declared private or protected in interface "TestInterface".'
         );
         
