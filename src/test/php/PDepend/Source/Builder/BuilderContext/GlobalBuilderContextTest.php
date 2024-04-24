@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\Builder\BuilderContext;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -58,7 +58,7 @@ use PDepend\Source\AST\ASTTrait;
  * @covers \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext
  * @group unittest
  */
-class GlobalBuilderContextTest extends AbstractTest
+class GlobalBuilderContextTest extends AbstractTestCase
 {
     /**
      * testRegisterTraitCallsRestoreClassOnBuilder

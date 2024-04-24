@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Coverage;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\CloverReport} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Coverage\CloverReport
  * @group unittest
  */
-class CloverReportTest extends AbstractTest
+class CloverReportTest extends AbstractTestCase
 {
     /**
      * testReportReturnsExpected0PercentCoverage

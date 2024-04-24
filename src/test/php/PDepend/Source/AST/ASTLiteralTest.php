@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTLiteral
  * @group unittest
  */
-class ASTLiteralTest extends ASTNodeTest
+class ASTLiteralTest extends ASTNodeTestCase
 {
     /**
      * testLiteralWithBooleanTrueExpression

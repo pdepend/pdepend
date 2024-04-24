@@ -53,10 +53,9 @@ namespace PDepend\Bugs;
  * @since 0.10.8
  *
  * @ticket 23905939
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug23905939Test extends AbstractRegressionTest
+class ParserBug23905939Test extends AbstractRegressionTestCase
 {
     /**
      * testParserExtractsCorrectClassPackage

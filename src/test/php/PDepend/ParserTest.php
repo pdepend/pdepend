@@ -64,7 +64,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ParserTest extends AbstractTest
+class ParserTest extends AbstractTestCase
 {
     /**
      * testParserHandlesMaxNestingLevel

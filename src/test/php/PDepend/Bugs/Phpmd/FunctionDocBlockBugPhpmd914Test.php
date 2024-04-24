@@ -43,13 +43,13 @@
 namespace PDepend\Bugs\Phpmd;
 
 
-use PDepend\Bugs\AbstractRegressionTest;
+use PDepend\Bugs\AbstractRegressionTestCase;
 use PDepend\Source\AST\ASTFunction;
 
 /**
  * https://github.com/phpmd/phpmd/issues/914
  */
-class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTest
+class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
 {
     public function testFunctionDocBlockCanBeRead()
     {

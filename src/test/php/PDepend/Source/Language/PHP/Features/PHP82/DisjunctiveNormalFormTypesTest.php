@@ -47,7 +47,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
  * @group unittest
  * @group php8.2
  */
-class DisjunctiveNormalFormTypesTest extends PHPParserVersion82Test
+class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void

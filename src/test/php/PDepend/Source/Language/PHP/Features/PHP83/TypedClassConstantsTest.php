@@ -58,7 +58,7 @@ use PDepend\Source\AST\ASTValue;
  * @group unittest
  * @group php8.3
  */
-class TypedClassConstantsTest extends PHPParserVersion83Test
+class TypedClassConstantsTest extends PHPParserVersion83TestCase
 {
     /**
      * @return void

@@ -47,7 +47,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP80;
  * @group unittest
  * @group php8.0
  */
-class ExplicitOctalNotationTest extends PHPParserVersion80Test
+class ExplicitOctalNotationTest extends PHPParserVersion80TestCase
 {
     /**
      */

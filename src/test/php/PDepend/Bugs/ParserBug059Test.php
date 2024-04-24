@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 59
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug059Test extends AbstractRegressionTest
+class ParserBug059Test extends AbstractRegressionTestCase
 {
 
     /**

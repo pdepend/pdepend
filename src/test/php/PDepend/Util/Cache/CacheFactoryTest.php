@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Cache;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Util\Cache\Driver\FileCacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
@@ -55,7 +55,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Util\Cache\CacheFactory
  * @group unittest
  */
-class CacheFactoryTest extends AbstractTest
+class CacheFactoryTest extends AbstractTestCase
 {
     /**
      * testCreateReturnsDriverInstance

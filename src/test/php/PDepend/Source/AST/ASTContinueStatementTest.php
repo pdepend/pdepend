@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTContinueStatement
  * @group unittest
  */
-class ASTContinueStatementTest extends ASTNodeTest
+class ASTContinueStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the start line value.

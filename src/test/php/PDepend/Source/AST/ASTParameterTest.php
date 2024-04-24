@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the code parameter class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTParameter
  * @group unittest
  */
-class ASTParameterTest extends AbstractTest
+class ASTParameterTest extends AbstractTestCase
 {
     /**
      * testGetIdReturnsExpectedObjectHash

@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 
 /**
  * Test cases for the {@link  \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
@@ -53,7 +53,7 @@ use PDepend\Metrics\AbstractMetricsTest;
  * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
  * @group unittest
  */
-class CrapIndexAnalyzerTest extends AbstractMetricsTest
+class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testAnalyzerReturnsExpectedDependencies

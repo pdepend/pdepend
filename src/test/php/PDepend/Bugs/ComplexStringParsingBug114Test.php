@@ -51,10 +51,9 @@ use PDepend\Source\AST\ASTString;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ComplexStringParsingBug114Test extends AbstractRegressionTest
+class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesStringWithEmbeddedBacktickExpression

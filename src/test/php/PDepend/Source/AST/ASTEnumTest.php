@@ -57,7 +57,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Source\AST\ASTForInit
  * @group unittest
  */
-class ASTEnumTest extends AbstractASTArtifactTest
+class ASTEnumTest extends AbstractASTArtifactTestCase
 {
     /**
      * testForInitHasExpectedStartLine

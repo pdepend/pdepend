@@ -42,7 +42,7 @@
 
 namespace PDepend\DependencyInjection;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
-class TreeBuilderTest extends AbstractTest
+class TreeBuilderTest extends AbstractTestCase
 {
     public function testTreeBuilder()
     {

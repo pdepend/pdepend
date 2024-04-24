@@ -56,7 +56,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTClassFqnPostfix
  */
-class ASTClassFqnPostfixTest extends ASTNodeTest
+class ASTClassFqnPostfixTest extends ASTNodeTestCase
 {
     /**
      * testGetImage

@@ -53,7 +53,7 @@ use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
  * @covers \PDepend\Application
  * @group integration
  */
-class ApplicationTest extends AbstractTest
+class ApplicationTest extends AbstractTestCase
 {
     public function testGetRunner()
     {

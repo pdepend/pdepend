@@ -54,10 +54,9 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegressionTest
+class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegressionTestCase
 {
     /**
      * testAnalyzerCountsNumberOfMethodsForClassInterfaceSize

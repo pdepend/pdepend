@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTNode;
  * @covers \PDepend\Source\AST\ASTParameter
  * @group unittest
  */
-class ReflectionCompatibilityIssue067Test extends AbstractFeatureTest
+class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parser sets the parameter flag by reference.

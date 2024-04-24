@@ -42,7 +42,7 @@
 
 namespace PDepend\Bugs;
 
-class ConflictingImportTest extends AbstractRegressionTest
+class ConflictingImportTest extends AbstractRegressionTestCase
 {
     public function testSymfonyExtension()
     {

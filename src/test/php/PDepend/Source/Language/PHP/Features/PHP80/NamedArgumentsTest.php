@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTVariable;
  * @group unittest
  * @group php8
  */
-class NamedArgumentsTest extends PHPParserVersion80Test
+class NamedArgumentsTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void

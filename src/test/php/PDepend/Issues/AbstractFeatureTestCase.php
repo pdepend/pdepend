@@ -2,6 +2,8 @@
 /**
  * This file is part of PDepend.
  *
+ * PHP Version 5
+ *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,32 +40,73 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP80;
+namespace PDepend\Issues;
 
-use PDepend\AbstractTest;
-use PDepend\Source\Builder\Builder;
-use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Util\Cache\CacheDriver;
+use PDepend\AbstractTestCase;
 
 /**
+ * Abstract base class for issue tests.
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
- * @group unittest
  */
-abstract class PHPParserVersion80Test extends AbstractTest
+abstract class AbstractFeatureTestCase extends AbstractTestCase
 {
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     * Returns the parameters of the first function in the test case file.
+     *
+     * @return \PDepend\Source\AST\ASTParameter[]
      */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    protected function getParametersOfFirstFunction()
     {
-        return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion80',
-            array($tokenizer, $builder, $cache)
-        );
+        return $this->getFirstFunctionForTestCase()
+            ->getParameters();
+    }
+    
+    /**
+     * Parses the source for the calling test case.
+     *
+     * @param string $testCase
+     * @return \PDepend\Source\AST\ASTNamespace[]
+     */
+    protected function parseTestCase($testCase = null)
+    {
+        if ($testCase === null) {
+            $testCase = $this->getTestCaseMethod();
+        }
+        return $this->parseTestCaseSource($testCase);
+    }
+
+    /**
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PDepend\Source\AST\ASTNamespace[]
+     */
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    {
+        list($class, $method) = explode('::', $testCase);
+        if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
+            throw new \ErrorException('Unexpected class name format');
+        }
+        return $this->parseSource('issues/' . $match[1] . '/' . $method . '.php');
+    }
+
+    /**
+     * Returns a php callback for the calling test case method.
+     *
+     * @return string
+     */
+    protected function getTestCaseMethod()
+    {
+        $trace = debug_backtrace();
+        foreach ($trace as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return $frame['class'] . '::' . $frame['function'];
+            }
+        }
+        throw new \ErrorException('Cannot locate test case method.');
     }
 }

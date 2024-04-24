@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 8
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug008Test extends AbstractRegressionTest
+class ParserBug008Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser handles curly braces in strings correct.

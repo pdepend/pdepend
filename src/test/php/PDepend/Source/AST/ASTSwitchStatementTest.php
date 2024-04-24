@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTSwitchStatement
  * @group unittest
  */
-class ASTSwitchStatementTest extends ASTNodeTest
+class ASTSwitchStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the generated object graph of a switch statement.

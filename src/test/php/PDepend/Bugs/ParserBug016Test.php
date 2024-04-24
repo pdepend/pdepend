@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 16
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug016Test extends AbstractRegressionTest
+class ParserBug016Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser detect a type within an instance of operator.

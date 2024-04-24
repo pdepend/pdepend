@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTIncludeExpression
  * @group unittest
  */
-class ASTIncludeExpressionTest extends ASTNodeTest
+class ASTIncludeExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIsOnceReturnsFalseByDefault

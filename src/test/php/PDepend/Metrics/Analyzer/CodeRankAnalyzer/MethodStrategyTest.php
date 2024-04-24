@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy;
  * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
  * @group unittest
  */
-class MethodStrategyTest extends AbstractTest
+class MethodStrategyTest extends AbstractTestCase
 {
     /**
      * testStrategyCountsCorrectTypes

@@ -42,7 +42,7 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Input\ExtensionFilter;
 use PDepend\Input\Filter;
 use PDepend\Report\ReportGeneratorFactory;
@@ -58,7 +58,7 @@ use Symfony\Component\DependencyInjection\Container;
  * @covers \PDepend\TextUI\Runner
  * @group unittest
  */
-class RunnerTest extends AbstractTest
+class RunnerTest extends AbstractTestCase
 {
     /**
      * Tests that the runner exits with an exception for an invalud source

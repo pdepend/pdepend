@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -55,7 +55,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
  * @group unittest
  */
-class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTest
+class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver

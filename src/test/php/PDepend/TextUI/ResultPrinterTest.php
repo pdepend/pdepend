@@ -42,7 +42,7 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Source\AST\ASTMethod;
@@ -58,7 +58,7 @@ use PDepend\Source\Language\PHP\PHPTokenizerInternal;
  * @covers \PDepend\TextUI\ResultPrinter
  * @group unittest
  */
-class ResultPrinterTest extends AbstractTest
+class ResultPrinterTest extends AbstractTestCase
 {
     /**
      * Tests the output for a single file entry.

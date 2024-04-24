@@ -59,7 +59,7 @@ use PDepend\Source\AST\ASTValue;
  * @group unittest
  * @group php8.3
  */
-class UnionTypedClassConstantsTest extends PHPParserVersion83Test
+class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
 {
     /**
      * @return void

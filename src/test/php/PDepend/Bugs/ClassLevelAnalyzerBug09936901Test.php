@@ -55,10 +55,9 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @link https://www.pivotaltracker.com/story/show/9936901
  *
  * @ticket 9936901
- * @covers \stdClass
  * @group regressiontest
  */
-class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTest
+class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTestCase
 {
     /**
      * testWmciMetricIsCalculatedForCurrentAndNotParentClass

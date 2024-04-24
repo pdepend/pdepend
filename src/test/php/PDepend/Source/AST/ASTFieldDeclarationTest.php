@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTFieldDeclaration;
  * @covers \PDepend\Source\AST\ASTFieldDeclaration
  * @group unittest
  */
-class ASTFieldDeclarationTest extends ASTNodeTest
+class ASTFieldDeclarationTest extends ASTNodeTestCase
 {
     /**
      * Tests that a field declaration contains the expected class reference.

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConstantDeclarator
  * @group unittest
  */
-class ASTConstantDeclaratorTest extends ASTNodeTest
+class ASTConstantDeclaratorTest extends ASTNodeTestCase
 {
     /**
      * testReturnValueOfMagicSleepContainsValueProperty

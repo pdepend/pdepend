@@ -50,10 +50,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTest
+class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the result does not contain an interface with a broken body.

@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Cache\Driver;
 
-use PDepend\Util\Cache\AbstractDriverTest;
+use PDepend\Util\Cache\AbstractDriverTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\FileCacheDriver} class.
@@ -53,7 +53,7 @@ use PDepend\Util\Cache\AbstractDriverTest;
  * @covers \PDepend\Util\Cache\Driver\FileCacheDriver
  * @group unittest
  */
-class FileCacheDriverTest extends AbstractDriverTest
+class FileCacheDriverTest extends AbstractDriverTestCase
 {
     /**
      * Temporary cache directory.

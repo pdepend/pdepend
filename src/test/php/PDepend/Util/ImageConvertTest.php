@@ -42,7 +42,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the image convert utility class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\ImageConvert
  * @group unittest
  */
-class ImageConvertTest extends AbstractTest
+class ImageConvertTest extends AbstractTestCase
 {
     /**
      * Tests the copy behaviour for same mime types.

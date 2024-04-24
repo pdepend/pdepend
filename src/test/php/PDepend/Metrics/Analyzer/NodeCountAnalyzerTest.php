@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 
@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTNamespace;
  * @covers \PDepend\Metrics\Analyzer\NodeCountAnalyzer
  * @group unittest
  */
-class NodeCountAnalyzerTest extends AbstractMetricsTest
+class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testVisitClassIgnoresClassesThatAreNotUserDefined

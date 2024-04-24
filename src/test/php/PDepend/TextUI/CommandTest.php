@@ -42,7 +42,7 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\MockCommand;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
@@ -58,7 +58,7 @@ use ReflectionProperty;
  * @covers \PDepend\TextUI\Command
  * @group unittest
  */
-class CommandTest extends AbstractTest
+class CommandTest extends AbstractTestCase
 {
     /**
      * Expected output of the --version option.

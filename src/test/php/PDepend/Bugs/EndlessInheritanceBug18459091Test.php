@@ -58,10 +58,9 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @since 1.0.0
  *
  * @ticket 18459091
- * @covers \stdClass
  * @group regressiontest
  */
-class EndlessInheritanceBug18459091Test extends AbstractRegressionTest
+class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 {
     /**
      * Resets the execution time to -1.

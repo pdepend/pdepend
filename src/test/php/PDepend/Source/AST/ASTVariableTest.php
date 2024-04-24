@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTVariable
  * @group unittest
  */
-class ASTVariableTest extends ASTNodeTest
+class ASTVariableTest extends ASTNodeTestCase
 {
     /**
      * testIsThisReturnsTrueForThisImageName

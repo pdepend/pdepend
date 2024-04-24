@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Jdepend;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 use PDepend\Source\AST\AbstractASTArtifact;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * @covers \PDepend\Report\Jdepend\Chart
  * @group unittest
  */
-class ChartTest extends AbstractTest
+class ChartTest extends AbstractTestCase
 {
     /**
      * Temporary output file.

@@ -53,10 +53,9 @@ use PDepend\Source\AST\ASTPropertyPostfix;
  * @link       https://www.pivotaltracker.com/story/show/8927377
  *
  * @ticket 8927377
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug8927377Test extends AbstractRegressionTest
+class ParserBug8927377Test extends AbstractRegressionTestCase
 {
     /**
      * testPropertyPostfixHasExpectedStartLine

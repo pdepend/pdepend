@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\ASTVisitor;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTTrait;
  * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
  * @group unittest
  */
-class DefaultVisitorTest extends AbstractTest
+class DefaultVisitorTest extends AbstractTestCase
 {
     /**
      * Tests the execution order of the default visitor implementation.

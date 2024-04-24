@@ -49,10 +49,9 @@ namespace PDepend;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserRegressionTest extends AbstractTest
+class ParserRegressionTest extends AbstractTestCase
 {
     /**
      * Tests that the parser handles the given source file.

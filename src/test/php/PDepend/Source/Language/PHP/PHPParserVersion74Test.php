@@ -41,7 +41,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use OutOfBoundsException;
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClosure;
@@ -67,7 +67,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
  * @group unittest
  */
-class PHPParserVersion74Test extends AbstractTest
+class PHPParserVersion74Test extends AbstractTestCase
 {
     /**
      * @return void

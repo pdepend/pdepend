@@ -43,7 +43,7 @@
 namespace PDepend\DependencyInjection;
 
 use Exception;
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
 use ReflectionMethod;
 
@@ -57,7 +57,7 @@ use ReflectionMethod;
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
-class ConfigurationTest extends AbstractTest
+class ConfigurationTest extends AbstractTestCase
 {
     /**
      * @return bool

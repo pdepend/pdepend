@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -58,7 +58,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion54
  * @group unittest
  */
-class PHPParserVersion54Test extends AbstractTest
+class PHPParserVersion54Test extends AbstractTestCase
 {
     /**
      * testParserHandlesBinaryIntegerLiteral

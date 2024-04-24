@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Report\DummyAnalyzer;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Report\DummyAnalyzer;
  * @covers \PDepend\Metrics\AnalyzerIterator
  * @group unittest
  */
-class AnalyzerIteratorTest extends AbstractTest
+class AnalyzerIteratorTest extends AbstractTestCase
 {
     /**
      * testIteratorReturnsEnabledAnalyzerInstances

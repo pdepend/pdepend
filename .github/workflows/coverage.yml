@@ -46,7 +46,7 @@ jobs:
         composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
     - name: Coverage
-      run: vendor/bin/phpunit -v --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
+      run: vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
       env:
         XDEBUG_MODE: coverage
 

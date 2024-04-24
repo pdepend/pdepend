@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Tokenizer\Token;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Source\Tokenizer\Token;
  * @covers \PDepend\Source\AST\AbstractASTCallable
  * @group unittest
  */
-class ASTCallableTest extends AbstractTest
+class ASTCallableTest extends AbstractTestCase
 {
     /**
      * testGetParametersReturnsEmptyArrayByDefault

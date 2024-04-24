@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTAssignmentExpression
  * @group unittest
  */
-class ASTAssignmentExpressionTest extends ASTNodeTest
+class ASTAssignmentExpressionTest extends ASTNodeTestCase
 {
     /**
      * testAssignmentExpressionFromMethodInvocation

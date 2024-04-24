@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTPreDecrementExpression
  * @group unittest
  */
-class ASTPreDecrementExpressionTest extends ASTNodeTest
+class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 {
     /**
      * testPreDecrementExpressionOnStaticClassMember

@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,65 +36,34 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP82;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Base test case for abstract item implementations.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PDepend\Source\AST\AbstractASTArtifact
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
  * @group unittest
  */
-abstract class AbstractASTArtifactTest extends AbstractTest
+abstract class PHPParserVersion82TestCase extends AbstractTestCase
 {
     /**
-     * testSetNameChangesPreviousName
-     *
-     * @return void
-     * @since 1.0.0
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    public function testSetNameChangesPreviousName()
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        $item = $this->createItem();
-        $item->setName(__METHOD__);
-
-        $this->assertEquals(__METHOD__, $item->getName());
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion82',
+            array($tokenizer, $builder, $cache)
+        );
     }
-
-    /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @param string  $testCase
-     * @param boolean $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
-     */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
-    {
-        list($class, $method) = explode('::', $testCase);
-
-        $fileName = substr($class, strrpos($class, '\\') + 1, -4);
-        $fileName = 'code/' . $fileName . '/' . $method;
-
-        try {
-            $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (ErrorException $e) {
-            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
-        }
-
-        return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
-    }
-
-    /**
-     * Creates an abstract item instance.
-     *
-     * @return \PDepend\Source\AST\AbstractASTArtifact
-     */
-    abstract protected function createItem();
 }

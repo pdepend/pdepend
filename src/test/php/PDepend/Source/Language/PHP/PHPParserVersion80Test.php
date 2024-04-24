@@ -40,7 +40,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\Builder\Builder;
@@ -55,7 +55,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
  * @group unittest
  */
-class PHPParserVersion80Test extends AbstractTest
+class PHPParserVersion80Test extends AbstractTestCase
 {
     /**
      * testCatchWithoutVariable

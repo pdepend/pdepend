@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Cache\Driver;
 
-use PDepend\Util\Cache\AbstractDriverTest;
+use PDepend\Util\Cache\AbstractDriverTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\MemoryCacheDriver} class.
@@ -53,7 +53,7 @@ use PDepend\Util\Cache\AbstractDriverTest;
  * @covers \PDepend\Util\Cache\Driver\MemoryCacheDriver
  * @group unittest
  */
-class MemoryCacheDriverTest extends AbstractDriverTest
+class MemoryCacheDriverTest extends AbstractDriverTestCase
 {
     /**
      * Creates a test fixture.

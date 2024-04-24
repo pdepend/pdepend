@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case the node iterator.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTArtifactList
  * @group unittest
  */
-class ASTArtifactListTest extends AbstractTest
+class ASTArtifactListTest extends AbstractTestCase
 {
     /**
      * Tests the ctor with an valid input array of {@link \PDepend\Source\AST\AbstractASTArtifact}

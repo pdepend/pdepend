@@ -51,7 +51,7 @@ namespace PDepend\Issues;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatureTest
+class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parser recognizes a inline type definition within a comment.

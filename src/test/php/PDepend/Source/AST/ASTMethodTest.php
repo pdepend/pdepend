@@ -55,7 +55,7 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
  * @covers \PDepend\Source\AST\ASTMethod
  * @group unittest
  */
-class ASTMethodTest extends AbstractASTArtifactTest
+class ASTMethodTest extends AbstractASTArtifactTestCase
 {
     /**
      * testIsCachedReturnsFalseByDefault

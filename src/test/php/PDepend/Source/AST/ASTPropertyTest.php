@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the code property class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTProperty
  * @group unittest
  */
-class ASTPropertyTest extends AbstractTest
+class ASTPropertyTest extends AbstractTestCase
 {
     /**
      * testGetDeclaringClass

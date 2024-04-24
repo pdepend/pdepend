@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConstantDefinition
  * @group unittest
  */
-class ASTConstantDefinitionTest extends ASTNodeTest
+class ASTConstantDefinitionTest extends ASTNodeTestCase
 {
     /**
      * Tests that the field declaration <b>setModifiers()</b> method accepts all

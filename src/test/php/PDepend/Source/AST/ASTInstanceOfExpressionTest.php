@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTInstanceOfExpression
  * @group unittest
  */
-class ASTInstanceOfExpressionTest extends ASTNodeTest
+class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 {
     /**
      * Tests that the created instanceof object graph has the expected structure.

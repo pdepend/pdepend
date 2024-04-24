@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTConstantDefinition;
@@ -69,7 +69,7 @@ use ReflectionMethod;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion56
  * @group unittest
  */
-class PHPParserVersion56Test extends AbstractTest
+class PHPParserVersion56Test extends AbstractTestCase
 {
     /**
      * testComplexExpressionInParameterInitializer

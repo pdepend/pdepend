@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTElseIfStatement
  * @group unittest
  */
-class ASTElseIfStatementTest extends ASTNodeTest
+class ASTElseIfStatementTest extends ASTNodeTestCase
 {
     /**
      * testHasElseMethodReturnsFalseByDefault

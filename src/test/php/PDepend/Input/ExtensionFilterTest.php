@@ -42,7 +42,7 @@
 
 namespace PDepend\Input;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the file extension filter.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Input\ExtensionFilter
  * @group unittest
  */
-class ExtensionFilterTest extends AbstractTest
+class ExtensionFilterTest extends AbstractTestCase
 {
     /**
      * testExtensionFilterAcceptsOneFileExtension

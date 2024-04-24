@@ -51,7 +51,7 @@ namespace PDepend\Issues;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTest
+class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 {
     /**
      * testParserSetsExpectedNumberOfFunctionParameters

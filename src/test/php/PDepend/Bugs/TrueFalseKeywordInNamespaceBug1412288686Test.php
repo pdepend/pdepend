@@ -48,10 +48,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTest
+class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTestCase
 {
     /**
      * testTrueKeywordInNamespace

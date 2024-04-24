@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8.1
  */
-class InInitializersTest extends PHPParserVersion81Test
+class InInitializersTest extends PHPParserVersion81TestCase
 {
     /**
      * @return void

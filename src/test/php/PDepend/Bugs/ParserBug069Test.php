@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 69
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug069Test extends AbstractRegressionTest
+class ParserBug069Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that parser handles a php 5.3 static method call correct.

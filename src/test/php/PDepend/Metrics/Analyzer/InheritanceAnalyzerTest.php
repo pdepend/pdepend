@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\AST\ASTClass;
@@ -56,7 +56,7 @@ use PDepend\Source\AST\ASTClass;
  * @covers \PDepend\Metrics\Analyzer\InheritanceAnalyzer
  * @group unittest
  */
-class InheritanceAnalyzerTest extends AbstractMetricsTest
+class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * Tests that the analyzer calculates the correct average number of derived

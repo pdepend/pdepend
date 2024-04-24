@@ -55,7 +55,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class DoubleClassModifierIssue638Test extends AbstractFeatureTest
+class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that a class can have a readonly modifier

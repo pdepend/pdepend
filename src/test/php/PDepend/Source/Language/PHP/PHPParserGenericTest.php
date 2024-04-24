@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -55,7 +55,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
  * @group unittest
  */
-class PHPParserGenericTest extends AbstractTest
+class PHPParserGenericTest extends AbstractTestCase
 {
     /**
      * testParserAcceptsStringAsClassName

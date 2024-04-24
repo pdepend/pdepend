@@ -42,7 +42,7 @@
 
 namespace PDepend\Input;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the exclude path filter.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Input\ExcludePathFilter
  * @group unittest
  */
-class ExcludePathFilterTest extends AbstractTest
+class ExcludePathFilterTest extends AbstractTestCase
 {
     /**
      * testAbsoluteUnixPathAsFilterPatternMatches

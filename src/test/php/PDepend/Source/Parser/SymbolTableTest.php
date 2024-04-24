@@ -42,7 +42,7 @@
 
 namespace PDepend\PDepend\Source\Parser;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Parser\SymbolTable;
 
 /**
@@ -51,7 +51,7 @@ use PDepend\Source\Parser\SymbolTable;
  * @covers \PDepend\Source\Parser\SymbolTable
  * @group unittest
  */
-class SymbolTableTest extends AbstractTest
+class SymbolTableTest extends AbstractTestCase
 {
     /**
      * Tests that no symbol can be added to a symbol table without active scope.

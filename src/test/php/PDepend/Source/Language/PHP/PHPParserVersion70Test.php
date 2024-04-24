@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTNamespace;
@@ -61,7 +61,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion70
  * @group unittest
  */
-class PHPParserVersion70Test extends AbstractTest
+class PHPParserVersion70Test extends AbstractTestCase
 {
     /**
      * testFormalParameterScalarTypeHintInt

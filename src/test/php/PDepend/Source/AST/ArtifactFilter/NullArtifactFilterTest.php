@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\AST\ASTArtifactList;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
@@ -62,7 +62,7 @@ use PDepend\Source\AST\ASTTrait;
  * @covers \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter
  * @group unittest
  */
-class NullArtifactFilterTest extends AbstractTest
+class NullArtifactFilterTest extends AbstractTestCase
 {
     /**
      * testAcceptsReturnsTrueForClass

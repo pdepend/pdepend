@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTIssetExpression
  * @group unittest
  */
-class ASTIssetExpressionTest extends ASTNodeTest
+class ASTIssetExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIssetExpressionGraphWithMultipleVariables

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTVariableVariable
  * @group unittest
  */
-class ASTVariableVariableTest extends ASTNodeTest
+class ASTVariableVariableTest extends ASTNodeTestCase
 {
     /**
      * testVariableVariable

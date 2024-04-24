@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTClass;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTClass;
  * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer
  * @group unittest
  */
-class CodeRankAnalyzerTest extends AbstractMetricsTest
+class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * Test input data.

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTMemberPrimaryPrefix
  * @group unittest
  */
-class ASTMemberPrimaryPrefixTest extends ASTNodeTest
+class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
 {
     /**
      * testMemberPrimaryPrefixGraphDereferencedFromArray

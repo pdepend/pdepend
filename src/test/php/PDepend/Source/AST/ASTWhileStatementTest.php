@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTWhileStatement
  * @group unittest
  */
-class ASTWhileStatementTest extends ASTNodeTest
+class ASTWhileStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the generated object graph of a while statement.

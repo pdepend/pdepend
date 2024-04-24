@@ -42,7 +42,7 @@
 
 namespace PDepend\Input;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the composite filter.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Input\CompositeFilter
  * @group unittest
  */
-class CompositeFilterTest extends AbstractTest
+class CompositeFilterTest extends AbstractTestCase
 {
     /**
      * testCompositeInvokesFirstAcceptInFilterChain

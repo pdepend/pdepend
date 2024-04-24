@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\AST\ASTArtifactList;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 
 /**
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTClass;
  * @covers \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
  * @group unittest
  */
-class CollectionArtifactFilterTest extends AbstractTest
+class CollectionArtifactFilterTest extends AbstractTestCase
 {
     /**
      * testAcceptsReturnsTrueByDefault

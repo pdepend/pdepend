@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Overview;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Report\DummyAnalyzer;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Report\DummyAnalyzer;
  * @covers \PDepend\Report\Overview\Pyramid
  * @group unittest
  */
-class PyramidTest extends AbstractTest
+class PyramidTest extends AbstractTestCase
 {
     /**
      * Tests that the logger returns the expected set of analyzers.

@@ -51,10 +51,9 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 124
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug124Test extends AbstractRegressionTest
+class ParserBug124Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser detects the classname scalar.

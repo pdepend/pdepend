@@ -60,7 +60,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTClassTest extends AbstractASTArtifactTest
+class ASTClassTest extends AbstractASTArtifactTestCase
 {
     /**
      * testGetAllMethodsContainsMethodsOfImplementedInterface

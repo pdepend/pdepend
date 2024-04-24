@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTScope;
  * @group unittest
  * @group php8.3
  */
-class DynamicClassConstantFetchTest extends PHPParserVersion83Test
+class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
 {
     /**
      * @return void

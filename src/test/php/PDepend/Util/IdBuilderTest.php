@@ -43,7 +43,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
@@ -60,7 +60,7 @@ use PDepend\Source\AST\ASTMethod;
  * @covers \PDepend\Util\IdBuilder
  * @group unittest
  */
-class IdBuilderTest extends AbstractTest
+class IdBuilderTest extends AbstractTestCase
 {
     /**
      * testBuilderCreatesExpectedIdentifierForFile

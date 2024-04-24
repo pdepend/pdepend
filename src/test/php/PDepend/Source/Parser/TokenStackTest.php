@@ -55,7 +55,7 @@ use PDepend\Source\Tokenizer\Token;
  * @covers \PDepend\Source\Parser\TokenStack
  * @group unittest
  */
-class TokenStackTest extends AbstractParserTest
+class TokenStackTest extends AbstractParserTestCase
 {
     /**
      * testAddReturnsGivenTokenInstance

@@ -53,7 +53,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTPreIncrementExpression
  * @group unittest
  */
-class ASTPreIncrementExpressionTest extends ASTNodeTest
+class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 {
     /**
      * testPreIncrementExpressionOnStaticClassMember

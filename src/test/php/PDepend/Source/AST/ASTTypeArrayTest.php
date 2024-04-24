@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTypeArray
  * @group unittest
  */
-class ASTTypeArrayTest extends ASTNodeTest
+class ASTTypeArrayTest extends ASTNodeTestCase
 {
     /**
      * testArrayType

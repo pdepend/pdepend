@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
@@ -56,7 +56,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Metrics\Analyzer\ClassLevelAnalyzer
  * @group unittest
  */
-class ClassLevelAnalyzerTest extends AbstractMetricsTest
+class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * Tests that the {@link \PDepend\Metrics\Analyzer\ClassLevelAnalyzer::analyzer()}

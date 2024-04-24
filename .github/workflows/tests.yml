@@ -52,4 +52,4 @@ jobs:
         run: php src/test/symfony-version.php
 
       - name: Run test suite
-        run: vendor/bin/phpunit -v
+        run: composer test

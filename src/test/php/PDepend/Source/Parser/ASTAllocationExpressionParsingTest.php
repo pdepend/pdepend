@@ -63,7 +63,7 @@ use PDepend\Source\AST\ASTVariableVariable;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTAllocationExpressionParsingTest extends AbstractParserTest
+class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 {
     /**
      * testAllocationExpressionForSelfProperty

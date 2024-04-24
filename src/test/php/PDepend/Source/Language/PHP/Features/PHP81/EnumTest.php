@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTParameter;
  * @group unittest
  * @group php8.1
  */
-class EnumTest extends PHPParserVersion81Test
+class EnumTest extends PHPParserVersion81TestCase
 {
     /**
      * @return void

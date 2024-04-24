@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTraitAdaptationAlias
  * @group unittest
  */
-class ASTTraitAdaptationAliasTest extends ASTNodeTest
+class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 {
     /**
      * testGetNewNameReturnsNullByDefault

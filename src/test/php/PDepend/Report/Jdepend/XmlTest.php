@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Jdepend;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 
@@ -55,7 +55,7 @@ use PDepend\Report\DummyAnalyzer;
  * @covers \PDepend\Report\Jdepend\Xml
  * @group unittest
  */
-class XmlTest extends AbstractTest
+class XmlTest extends AbstractTestCase
 {
     /**
      * Test code structure.

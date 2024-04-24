@@ -42,7 +42,7 @@
 
 namespace PDepend\Input;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the php file filter iterator.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Input\Iterator
  * @group unittest
  */
-class IteratorTest extends AbstractTest
+class IteratorTest extends AbstractTestCase
 {
     /**
      * testIteratorWithOneFileExtension
