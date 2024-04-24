@@ -72,9 +72,7 @@ class PHPParserVersion73Test extends AbstractTest
             'PDepend\\Source\\Parser\\UnexpectedTokenException'
         );
         $this->expectExceptionMessage(
-            version_compare(phpversion(), '7.4.0', '>=')
-                ? 'Unexpected token: fn, line: 4, col: 22, file:'
-                : 'Unexpected token: =>, line: 4, col: 34, file:'
+            'Unexpected token: fn, line: 4, col: 22, file:'
         );
 
         $this->parseCodeResourceForTest();
@@ -85,10 +83,6 @@ class PHPParserVersion73Test extends AbstractTest
      */
     public function testHereDocAndNowDoc()
     {
-        if (version_compare(phpversion(), '7.3.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.3');
-        }
-
         /** @var ASTHeredoc $heredoc */
         $heredoc = $this->getFirstNodeOfTypeInFunction('', 'PDepend\\Source\\AST\\ASTArray');
         $arrayElements = $heredoc->getChildren();

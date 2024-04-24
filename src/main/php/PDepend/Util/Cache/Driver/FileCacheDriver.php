@@ -110,7 +110,7 @@ class FileCacheDriver implements CacheDriver
     public function __construct($root, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {
         $this->directory = new FileCacheDirectory($root);
-        $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
+        $this->version   = preg_replace('(^(\d+\.\d+).*)', '\\1', PHP_VERSION);
 
         $this->cacheKey = $cacheKey;
 

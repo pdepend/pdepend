@@ -57,8 +57,6 @@ class AttributeTest extends PHPParserVersion80Test
      */
     public function testAttribute()
     {
-        self::needsPHP80();
-
         $types = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes();

@@ -90,7 +90,6 @@ class NullsafeOperatorTest extends PHPParserVersion80Test
             $chain[] = $node->getImage();
         }
 
-        $nullSafe = static::isLowerThanPHP80() ? '->' : '?->';
-        $this->assertSame(array('$this', '->', 'a', $nullSafe, 'b', '->'), $chain);
+        $this->assertSame(array('$this', '->', 'a', '?->', 'b', '->'), $chain);
     }
 }

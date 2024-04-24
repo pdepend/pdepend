@@ -53,18 +53,6 @@ use PDepend\Util\Cache\CacheDriver;
  */
 abstract class PHPParserVersion80Test extends AbstractTest
 {
-    protected static function needsPHP80()
-    {
-        if (static::isLowerThanPHP80()) {
-            self::markTestSkipped('Requires at least PHP 8.0');
-        }
-    }
-
-    protected static function isLowerThanPHP80()
-    {
-        return version_compare(PHP_VERSION, '8.0.0-dev', '<');
-    }
-
     /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder $builder

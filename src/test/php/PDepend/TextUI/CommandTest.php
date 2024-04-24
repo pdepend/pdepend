@@ -547,7 +547,7 @@ class CommandTest extends AbstractTest
         );
     }
 
-    public function testQuietModeWillSuppressVersionAndWorkaroundsAndStatistics()
+    public function testQuietModeWillSuppressVersionAndStatistics()
     {
         $argv = array(
             '--quiet',
