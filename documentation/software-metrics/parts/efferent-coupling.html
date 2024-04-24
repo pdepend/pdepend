@@ -7,13 +7,13 @@
     <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
     <meta name="author" content="Manuel Pichler"/>
     <meta name="language" content="en"/>
-    <meta name="date" content="Tue, 19 Mar 2024 23:06:49 +0000"/>
+    <meta name="date" content="Wed, 24 Apr 2024 10:29:00 +0000"/>
     <meta name="robots" content="all"/>
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
     <meta name="DC.title" content="News"/>
     <meta name="DC.creator" content="Manuel Pichler"/>
-    <meta name="DC.date" content="Tue, 19 Mar 2024 23:06:49 +0000"/>
+    <meta name="DC.date" content="Wed, 24 Apr 2024 10:29:00 +0000"/>
     <meta name="DC.rights" content="CC by-nc-sa"/>
 
     <link rel="canonical" href="https://pdepend.org/news.html"/>
@@ -57,12 +57,12 @@
 :Description:  This article describes the CE - Efferent Coupling metric that
                describes the dependencies a software artifact has onto other
                artifacts in the same software system. The content of this
-               article is based on Uncle Bob's whitepaper &quot;OO Design Quality
+               article is based on Uncle Bob&#039;s whitepaper &quot;OO Design Quality
                Metrics - An Analysis of Dependencies&quot;.
 :Keywords:     CE, Efferent Coupling, Uncle Bob, Robert C. Martin, Class Coupling, Package Coupling, Maintainability, Testing, Stability</p>
 <p>The <em>Efferent Coupling</em> or <em>CE</em> counts the number of software artifacts a
 software entity depends on. Therefore it takes all artifacts the entity<br />depends on and builds a unique set for these dependencies. This means that
-if there are N dependencies from <code>A</code> to <code>B</code> and M dependencies from <code>A</code><br />to <code>C</code>, the <em>Efferent Coupling</em> of <code>A</code> is <code>2</code>. Because we like and<br />force reuse of existing code a high value for this metric isn't that bad at<br />a first glance. But what does a high <em>Efferent Coupling</em> value mean beside
+if there are N dependencies from <code>A</code> to <code>B</code> and M dependencies from <code>A</code><br />to <code>C</code>, the <em>Efferent Coupling</em> of <code>A</code> is <code>2</code>. Because we like and<br />force reuse of existing code a high value for this metric isn&#039;t that bad at<br />a first glance. But what does a high <em>Efferent Coupling</em> value mean beside
 code reuse? It means that a component depends on several other implementation
 details and this makes the component itself instable, because an incompatible
 change between two versions or a switch to a different library will/may break
@@ -77,8 +77,8 @@ extremely high. A good solution to high <em>Efferent Coupling</em> is the introd
 of additional abstraction. For the given example this would mean, that you add
 an additional package which abstracts the concrete product vendor and then you
 derive concrete implementations from this abstract package.</p>
-<p>A detailed description of the <em>CE</em> metric, it's impact on the stability of a
-software system and the introduction of more abstraction can be found in<br />Uncle Bob's whitepaper &quot;OO Design Quality Metrics - An Analysis of
+<p>A detailed description of the <em>CE</em> metric, it&#039;s impact on the stability of a
+software system and the introduction of more abstraction can be found in<br />Uncle Bob&#039;s whitepaper &quot;OO Design Quality Metrics - An Analysis of
 Dependencies&quot; [#ubdqm]_.</p>
 <a id="thresholds"></a>
 <h3>Thresholds</h3>
