@@ -357,10 +357,11 @@ class ASTPropertyPostfixTest extends ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testPropertyPostfixSelfVariableInFunctionThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -368,10 +369,11 @@ class ASTPropertyPostfixTest extends ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testPropertyPostfixParentVariableInFunctionThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -379,10 +381,11 @@ class ASTPropertyPostfixTest extends ASTNodeTest
      * Tests that a parsed property postfix has the expected object structure.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testPropertyPostfixParentVariableInClassWithoutParentThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 

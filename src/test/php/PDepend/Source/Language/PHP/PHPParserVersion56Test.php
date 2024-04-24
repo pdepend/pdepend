@@ -138,21 +138,23 @@ class PHPParserVersion56Test extends AbstractTest
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessageRegExp (Unexpected token: list, line: 4, col: 21, file: )
      */
     public function testListKeywordAsMethodNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessageMatches('(Unexpected token: list, line: 4, col: 21, file: )');
+
         $this->parseCodeResourceForTest();
     }
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessageRegExp (Unexpected token: list, line: 2, col: 10, file: )
      */
     public function testListKeywordAsFunctionNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessageMatches('(Unexpected token: list, line: 2, col: 10, file: )');
+
         $this->parseCodeResourceForTest();
     }
 
@@ -166,21 +168,23 @@ class PHPParserVersion56Test extends AbstractTest
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessageRegExp (^Unexpected token: \{, line: 2, col: 24, file: )
      */
     public function testGroupUseStatementThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessageMatches('(^Unexpected token: \\{, line: 2, col: 24, file: )');
+
         $this->parseCodeResourceForTest();
     }
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessageRegExp (^Unexpected token: ::, line: 8, col: 24, file: )
      */
     public function testUniformVariableSyntaxThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessageMatches('(^Unexpected token: ::, line: 8, col: 24, file: )');
+
         $this->parseCodeResourceForTest();
     }
 
@@ -200,8 +204,10 @@ class PHPParserVersion56Test extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: const, line: 4, col: 13, file: '
         );
 
@@ -285,8 +291,10 @@ class PHPParserVersion56Test extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForOF()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: function, line: 1, col: 1, file:'
         );
 
@@ -329,8 +337,10 @@ class PHPParserVersion56Test extends AbstractTest
      */
     public function testReservedKeyword()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: NEW, line: 5, col: 11, file: '
         );
 

@@ -605,7 +605,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
     public function testGetNodeMetricsForTrait()
     {
         $metrics = $this->calculateTraitMetrics();
-        $this->assertInternalType('array', $metrics);
+        $this->assertIsArray($metrics);
 
         return $metrics;
     }
@@ -678,7 +678,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
         $analyzer->analyze($this->parseCodeResourceForTest());
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertInternalType('array', $metrics);
+        $this->assertIsArray($metrics);
 
         return $metrics;
     }

@@ -103,10 +103,11 @@ class ASTSelfReferenceTest extends ASTNodeTest
      * testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -114,10 +115,11 @@ class ASTSelfReferenceTest extends ASTNodeTest
      * testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 

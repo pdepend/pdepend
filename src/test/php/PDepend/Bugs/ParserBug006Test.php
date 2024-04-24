@@ -68,6 +68,6 @@ class ParserBug006Test extends AbstractRegressionTest
             ->getMethods()
             ->current();
 
-        $this->assertEquals(0, count($method->getDependencies()));
+        $this->assertCount(0, $method->getDependencies());
     }
 }

@@ -138,11 +138,12 @@ class CacheFactoryTest extends AbstractTest
      * testCreateThrowsExpectedExceptionForUnknownCacheDriver
      *
      * @return void
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage The value "fail" is not allowed for path "pdepend.cache.driver". Permissible values: "file", "memory"
      */
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver()
     {
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The value "fail" is not allowed for path "pdepend.cache.driver". Permissible values: "file", "memory"');
+
         $this->changeWorkingDirectory();
 
         $factory = $this->createFactoryFixture();

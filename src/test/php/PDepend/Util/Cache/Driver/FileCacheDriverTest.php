@@ -74,7 +74,7 @@ class FileCacheDriverTest extends AbstractDriverTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -106,7 +106,7 @@ class FileCacheDriverTest extends AbstractDriverTest
         $key = md5('baz' . 'foo');
         $dir = substr($key, 0, 2);
 
-        $this->assertEquals(1, count(glob("{$this->cacheDir}/{$dir}/{$key}*.bar")));
+        $this->assertCount(1, glob("{$this->cacheDir}/{$dir}/{$key}*.bar"));
     }
 
     /**

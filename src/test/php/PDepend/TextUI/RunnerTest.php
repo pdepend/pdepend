@@ -65,10 +65,11 @@ class RunnerTest extends AbstractTest
      * directory.
      *
      * @return void
-     * @expectedException \RuntimeException
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
     {
+        $this->expectException(\RuntimeException::class);
+
         $runner = $this->createTextUiRunner();
         $runner->setSourceArguments(array('foo/bar'));
         $runner->run();
@@ -78,10 +79,11 @@ class RunnerTest extends AbstractTest
      * Tests that the runner stops processing if no logger is specified.
      *
      * @return void
-     * @expectedException \RuntimeException
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
     {
+        $this->expectException(\RuntimeException::class);
+
         $runner = $this->createTextUiRunner();
         $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
         $runner->run();
@@ -311,17 +313,18 @@ class RunnerTest extends AbstractTest
         ob_end_clean();
 
         $errors = $runner->getParseErrors();
-        $this->assertContains('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
+        $this->assertStringContainsString('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
     }
 
     /**
      * testRunnerThrowsExceptionForUndefinedLoggerClass
      *
      * @return void
-     * @expectedException \RuntimeException
      */
     public function testRunnerThrowsExceptionForUndefinedLoggerClass()
     {
+        $this->expectException(\RuntimeException::class);
+
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('FooBarLogger', $this->createRunResourceURI());
         $runner->run();

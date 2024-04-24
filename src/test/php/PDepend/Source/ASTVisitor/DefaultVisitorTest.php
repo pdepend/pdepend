@@ -390,6 +390,6 @@ class DefaultVisitorTest extends AbstractTest
             ->getMock();
         $visitor->addVisitListener($listener);
 
-        $this->assertEquals(1, count($visitor->getVisitListeners()));
+        $this->assertCount(1, $visitor->getVisitListeners());
     }
 }

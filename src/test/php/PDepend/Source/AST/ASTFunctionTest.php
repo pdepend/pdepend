@@ -607,7 +607,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, count($copy->getNamespace()->getFunctions()));
+        $this->assertCount(1, $copy->getNamespace()->getFunctions());
     }
 
     /**

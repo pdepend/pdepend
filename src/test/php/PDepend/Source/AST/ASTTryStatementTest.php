@@ -173,10 +173,11 @@ class ASTTryStatementTest extends ASTNodeTest
      * testParserThrowsExceptionWhenNoCatchStatementFollows
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstTryStatementInFunction();
     }
 

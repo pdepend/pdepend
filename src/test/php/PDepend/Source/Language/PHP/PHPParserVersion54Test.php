@@ -90,10 +90,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsClassName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsClassName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -101,10 +102,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsFunctionName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsFunctionName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -112,10 +114,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsInterfaceName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsInterfaceName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -123,10 +126,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsMethodName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsMethodName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -134,10 +138,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsNamespaceName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsNamespaceName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -145,10 +150,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsCalledFunction
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsCalledFunction()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -156,10 +162,11 @@ class PHPParserVersion54Test extends AbstractTest
      * Tests that ::class is not allowed PHP < 5.5.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testDoubleColonClass()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -167,10 +174,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsCalledMethod
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsCalledMethod()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -178,10 +186,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForTraitAsConstant
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForTraitAsConstant()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -189,10 +198,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsClassName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsClassName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -200,10 +210,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsFunctionName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsFunctionName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -211,10 +222,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -222,10 +234,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsMethodName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsMethodName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -233,10 +246,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsNamespaceName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -244,10 +258,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -255,10 +270,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsCalledMethod
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsCalledMethod()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -266,10 +282,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForInsteadOfAsConstant
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsConstant()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -277,10 +294,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsClassName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsClassName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -288,10 +306,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsFunctionName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsFunctionName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -299,10 +318,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsInterfaceName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsInterfaceName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -310,10 +330,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsMethodName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsMethodName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -321,10 +342,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsInterfaceName
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsNamespaceName()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -332,10 +354,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsCalledFunction
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsCalledFunction()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -343,10 +366,11 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExpectedExceptionForCallableAsConstant
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForCallableAsConstant()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -354,28 +378,31 @@ class PHPParserVersion54Test extends AbstractTest
      * testParserThrowsExceptionForParameterWithExpressionValue
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionForParameterWithExpressionValue()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testListKeywordAsMethodNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testListKeywordAsFunctionNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -395,8 +422,10 @@ class PHPParserVersion54Test extends AbstractTest
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInPropertyDeclaration()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: const, line: 4, col: 13, file: '
         );
 

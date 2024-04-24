@@ -166,7 +166,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
 
         $interfaces = $namespace->getInterfaces();
 
-        $this->assertSame(0, count($interfaces[0]->getInterfaces()));
+        $this->assertCount(0, $interfaces[0]->getInterfaces());
     }
 
     /**
@@ -362,7 +362,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
         $parameters = $class->findChildrenOfType(
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
-        $this->assertEquals(4, count($parameters));
+        $this->assertCount(4, $parameters);
     }
 
     /**
@@ -370,10 +370,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
      * setParentClassReference() method and throws an exception.
      *
      * @return void
-     * @expectedException BadMethodCallException
      */
     public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $interface = $this->createItem();
 
         $reference = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTClassReference')
@@ -646,7 +647,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(3, count($interface->getInterfaceReferences()));
+        $this->assertCount(3, $interface->getInterfaceReferences());
     }
 
     /**
@@ -670,7 +671,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertSame(2, count($interface->getChildren()));
+        $this->assertCount(2, $interface->getChildren());
     }
 
     /**
@@ -682,7 +683,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetDependenciesReturnsEmptyResultByDefault()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(0, count($interface->getDependencies()));
+        $this->assertCount(0, $interface->getDependencies());
     }
 
     /**
@@ -694,7 +695,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetDependenciesContainsExtendedInterface()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(1, count($interface->getDependencies()));
+        $this->assertCount(1, $interface->getDependencies());
     }
 
     /**
@@ -706,7 +707,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTest
     public function testGetDependenciesContainsExtendedInterfaces()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(3, count($interface->getDependencies()));
+        $this->assertCount(3, $interface->getDependencies());
     }
 
     /**

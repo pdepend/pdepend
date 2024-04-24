@@ -86,8 +86,10 @@ class PyramidTest extends AbstractTest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Report\\NoLogOutputException',
+        $this->expectException(
+            '\\PDepend\\Report\\NoLogOutputException'
+        );
+        $this->expectExceptionMessage(
             "The log target is not configured for 'PDepend\\Report\\Overview\\Pyramid'."
         );
 
@@ -113,8 +115,10 @@ class PyramidTest extends AbstractTest
      */
     public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Missing Coupling analyzer.'
         );
 
@@ -134,8 +138,10 @@ class PyramidTest extends AbstractTest
      */
     public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Missing Cyclomatic Complexity analyzer.'
         );
 
@@ -155,8 +161,10 @@ class PyramidTest extends AbstractTest
      */
     public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Missing Inheritance analyzer.'
         );
 
@@ -176,8 +184,10 @@ class PyramidTest extends AbstractTest
      */
     public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Missing Node Count analyzer.'
         );
 
@@ -197,8 +207,10 @@ class PyramidTest extends AbstractTest
      */
     public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Missing Node LOC analyzer.'
         );
 
@@ -259,7 +271,7 @@ class PyramidTest extends AbstractTest
         foreach ($expected as $name => $value) {
             $elem = $svg->getElementById("pdepend.{$name}");
             $this->assertInstanceOf('\\DOMElement', $elem);
-            $this->assertEquals($value, $elem->nodeValue, null, 0.01);
+            $this->assertEqualsWithDelta($value, $elem->nodeValue, 0.01);
         }
 
         unlink($output);

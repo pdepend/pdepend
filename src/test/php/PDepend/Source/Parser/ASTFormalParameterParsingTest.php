@@ -71,10 +71,11 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
      * testWithParentTypeHintInFunctionThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testWithParentTypeHintInFunctionThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -82,10 +83,11 @@ class ASTFormalParameterParsingTest extends AbstractParserTest
      * testWithParentTypeHintInRootClassThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testWithParentTypeHintInRootClassThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->parseCodeResourceForTest();
     }
 

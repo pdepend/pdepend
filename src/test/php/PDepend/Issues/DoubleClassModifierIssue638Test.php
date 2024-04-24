@@ -235,10 +235,11 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTest
      * Tests that a class can have a readonly and final modifier
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testAbstractFinalReadonlyClass()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstClassForTestCase();
     }
 }

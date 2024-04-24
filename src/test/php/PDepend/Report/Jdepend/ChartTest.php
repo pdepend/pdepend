@@ -71,7 +71,7 @@ class ChartTest extends AbstractTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -86,7 +86,7 @@ class ChartTest extends AbstractTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->outputFile)) {
             unlink($this->outputFile);
@@ -111,10 +111,11 @@ class ChartTest extends AbstractTest
      * configured.
      *
      * @return void
-     * @expectedException \PDepend\Report\NoLogOutputException
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
+        $this->expectException(\PDepend\Report\NoLogOutputException::class);
+
         $logger = new Chart();
         $logger->close();
     }
@@ -282,8 +283,8 @@ class ChartTest extends AbstractTest
         $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
         $matrixB  = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
-        $this->assertEquals(0.3333333, $matches[1], null, 0.000001);
-        $this->assertEquals(0.3333333, $matches[4], null, 0.000001);
+        $this->assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);
+        $this->assertEqualsWithDelta(0.3333333, $matches[4], 0.000001);
     }
 
     /**

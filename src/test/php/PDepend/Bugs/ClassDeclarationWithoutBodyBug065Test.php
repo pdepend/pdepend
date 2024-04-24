@@ -61,8 +61,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testInterfaceDeclarationWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -77,8 +79,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testInterfaceDeclarationWithExtendWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -93,8 +97,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testInterfaceDeclarationWithInvalidInterfaceList()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: {, line: 2, col: 28, file: '
         );
 
@@ -109,8 +115,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testClassDeclarationWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -125,8 +133,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testClassDeclarationWithExtendsWithoutClassName()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -141,8 +151,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testClassDeclarationWithExtendsWithoutInterfaceName()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -157,8 +169,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testClassDeclarationWithParentInterfaceWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 
@@ -173,8 +187,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
      */
     public function testClassDeclarationWithIncompleteParentInterfaceWithoutBody()
     {
-        $this->setExpectedException(
-            'RuntimeException',
+        $this->expectException(
+            'RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
         );
 

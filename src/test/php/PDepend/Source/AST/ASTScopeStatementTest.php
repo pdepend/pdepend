@@ -63,7 +63,7 @@ class ASTScopeStatementTest extends ASTNodeTest
     public function testParserHandlesInlineScopeStatement()
     {
         $stmt = $this->getFirstScopeStatementInFunction();
-        $this->assertEquals(1, count($stmt->getChildren()));
+        $this->assertCount(1, $stmt->getChildren());
 
         return $stmt;
     }

@@ -75,7 +75,7 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(0, count($pdepend->analyze()));
+        $this->assertCount(0, $pdepend->analyze());
     }
 
 
@@ -97,7 +97,7 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(0, count($pdepend->analyze()));
+        $this->assertCount(0, $pdepend->analyze());
     }
 
     /**
@@ -122,9 +122,9 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(
+        $this->assertCount(
             1,
-            count($pdepend->analyze()),
+            $pdepend->analyze(),
             sprintf(
                 'Pattern "%s" does not match in directory "%s".',
                 $pattern,
@@ -151,6 +151,6 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(1, count($pdepend->analyze()));
+        $this->assertCount(1, $pdepend->analyze());
     }
 }

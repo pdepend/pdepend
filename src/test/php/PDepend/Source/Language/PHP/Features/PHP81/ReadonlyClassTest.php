@@ -54,8 +54,10 @@ class ReadonlyClassTest extends PHPParserVersion81Test
      */
     public function testReadonlyClass()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: readonly, line: 2, col: 1, file: '
         );
 

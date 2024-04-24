@@ -97,8 +97,10 @@ class ReportGeneratorFactoryTest extends AbstractTest
      */
     public function testCreateGeneratorWithInvalidIdentifierFail()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unknown generator with identifier "foo-bar-xml".'
         );
 

@@ -106,7 +106,7 @@ class ASTIfStatementTest extends ASTNodeTest
     public function testIfStatementGraphWithBooleanExpressions()
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($stmt->getChildren()));
+        $this->assertCount(2, $stmt->getChildren());
     }
 
     /**
@@ -135,10 +135,11 @@ class ASTIfStatementTest extends ASTNodeTest
      * testParserThrowsExpectedExceptionWhenIfStatementHasNoBody
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstIfStatementInFunction(__METHOD__);
     }
 
@@ -337,7 +338,7 @@ class ASTIfStatementTest extends ASTNodeTest
     public function testIfStatementWithElseContainsExpectedNumberOfChildNodes()
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
-        $this->assertEquals(3, count($stmt->getChildren()));
+        $this->assertCount(3, $stmt->getChildren());
     }
 
     /**

@@ -62,7 +62,7 @@ class ASTDoWhileStatementTest extends ASTNodeTest
     public function testDoWhileStatementHasExpectedNumberOfChildNodes()
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($stmt->getChildren()));
+        $this->assertCount(2, $stmt->getChildren());
     }
     
     /**

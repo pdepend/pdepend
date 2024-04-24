@@ -81,8 +81,10 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The keyword "parent" was used as type hint but the parameter ' .
             'declaration is not in a class scope.'
         );
@@ -97,8 +99,10 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The keyword "parent" was used as type hint but the ' .
             'class "Baz" does not declare a parent.'
         );

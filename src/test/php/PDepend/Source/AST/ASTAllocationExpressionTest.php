@@ -64,7 +64,7 @@ class ASTAllocationExpressionTest extends ASTNodeTest
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
         $args = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTArguments');
 
-        $this->assertEquals(0, count($args));
+        $this->assertCount(0, $args);
     }
 
     /**
@@ -77,7 +77,7 @@ class ASTAllocationExpressionTest extends ASTNodeTest
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
         $args = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTArguments');
 
-        $this->assertEquals(1, count($args));
+        $this->assertCount(1, $args);
     }
 
     /**
