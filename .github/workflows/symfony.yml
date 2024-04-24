@@ -61,10 +61,6 @@ jobs:
             symfony/filesystem:^${{ matrix.symfony }} \
             symfony/config:^${{ matrix.symfony }}
 
-      - name: Upgrade PHPUnit
-        if: matrix.php >= 7.2
-        run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
-
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
