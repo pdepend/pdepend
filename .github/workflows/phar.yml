@@ -51,7 +51,6 @@ jobs:
 
       - name: Ant
         run: |
-          php src/conf/prepare-phar.php
           ant package -D-phar:filename=./pdepend.phar;
           ./pdepend.phar --version;
 

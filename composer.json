@@ -10,10 +10,10 @@
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
-        "php": ">=5.3.7",
-        "symfony/config": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-        "symfony/dependency-injection": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-        "symfony/filesystem": "^2.3.0|^3|^4|^5|^6.0|^7.0",
+        "php": ">=8.1",
+        "symfony/config": "^5.4|^6.0|^7.0",
+        "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+        "symfony/filesystem": "^5.4|^6.0|^7.0",
         "symfony/polyfill-mbstring": "^1.19"
     },
     "require-dev": {
