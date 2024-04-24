@@ -155,10 +155,11 @@ class ASTArtifactListTest extends AbstractTestCase
      * testCurrentReturnsFalseWhenNoMoreElementExists
      *
      * @return void
-     * @expectedException OutOfBoundsException
      */
     public function testCurrentThrowsOutOfBoundsExceptionWhenNoMoreElementExists()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $iterator = new ASTArtifactList(array());
         $this->assertFalse($iterator->valid());
         $iterator->current();
