@@ -22,6 +22,9 @@
         "phpunit/phpunit": "^10.5.20",
         "squizlabs/php_codesniffer": "^2.0.0"
     },
+    "replace": {
+        "symfony/polyfill-php80": "*"
+    },
     "bin": ["src/bin/pdepend"],
     "autoload": {
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
