@@ -46,7 +46,6 @@ namespace PDepend\Metrics;
 
 use ArrayIterator;
 use FilterIterator;
-use ReturnTypeWillChange;
 
 /**
  * Filter iterator that only returns enabled {@link Analyzer}
@@ -71,11 +70,8 @@ class AnalyzerIterator extends FilterIterator
 
     /**
      * Returns <b>true</b> when the current analyzer instance is enabled.
-     *
-     * @return bool
      */
-    #[ReturnTypeWillChange]
-    public function accept()
+    public function accept(): bool
     {
         return $this->getInnerIterator()->current()->isEnabled();
     }

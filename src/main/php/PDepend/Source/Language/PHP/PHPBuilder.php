@@ -165,7 +165,6 @@ use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Log;
 use PDepend\Util\Type;
-use ReturnTypeWillChange;
 
 /**
  * Default code tree builder implementation.
@@ -2147,8 +2146,7 @@ class PHPBuilder implements Builder
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    #[ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): ASTArtifactList
     {
         return $this->getNamespaces();
     }

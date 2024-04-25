@@ -76,10 +76,8 @@ class CompositeFilter implements Filter
      *
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
-     *
-     * @return bool
      */
-    public function accept($relative, $absolute)
+    public function accept($relative, $absolute): bool
     {
         foreach ($this->filters as $filter) {
             if (!$filter->accept($relative, $absolute)) {
