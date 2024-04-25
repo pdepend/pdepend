@@ -42,16 +42,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
 
       - name: Cache test packages
         id: composer-test-cache
         uses: actions/cache@v3
         with:
           path: src/test/vendor
-          key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.json') }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
