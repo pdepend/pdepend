@@ -498,10 +498,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * analyzed test source and returns the metric value for the given <b>$name</b>.
      *
      * @param string $name Name of the requested software metric.
-     *
-     * @return mixed
      */
-    private function calculateTypeMetric($name)
+    private function calculateTypeMetric($name): mixed
     {
         $namespaces = $this->parseCodeResourceForTest();
         $types = $namespaces[0]->getTypes();
@@ -729,7 +727,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * Analyzes the source code associated with the calling test method and
      * returns all measured metrics.
      *
-     * @return mixed
+     * @return array<string, mixed>
      * @since 1.0.6
      */
     private function calculateTraitMetrics()

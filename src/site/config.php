@@ -44,11 +44,9 @@ class ClassDirective extends Directive
     /**
      * @param Parser $parser
      * @param ParagraphNode $node
-     * @param mixed $variable
-     * @param mixed $data
      * @param array $options
      */
-    public function process(Parser $parser, $node, $variable, $data, array $options)
+    public function process(Parser $parser, $node, mixed $variable, mixed $data, array $options)
     {
         $node = new ParagraphClassNode($node->getValue(), $data);
 

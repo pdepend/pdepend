@@ -147,7 +147,7 @@ class MemoryCacheDriver implements CacheDriver
      * @param string $key  The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function restore($key, $hash = null)
+    public function restore($key, $hash = null): mixed
     {
         $cacheKey = $this->getCacheKey($key);
         if (isset($this->cache[$cacheKey]) && $this->cache[$cacheKey][0] === $hash) {

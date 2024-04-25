@@ -184,7 +184,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to retrieve
      *
-     * @param mixed $offset
+     * @param string|int $offset
      *
      * @throws OutOfBoundsException
      *
@@ -204,8 +204,8 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to set
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param string|int $offset
+     * @param T $value
      *
      * @throws BadMethodCallException
      *
@@ -222,7 +222,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to unset
      *
-     * @param mixed $offset
+     * @param int|string $offset
      *
      * @throws BadMethodCallException
      *

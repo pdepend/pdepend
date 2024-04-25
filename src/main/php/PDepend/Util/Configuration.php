@@ -84,13 +84,11 @@ class Configuration
      *
      * @param string $name Name of the requested configuration value.
      *
-     * @return mixed
-     *
      * @throws OutOfRangeException If no matching configuration value exists.
      *
      * @since  0.10.0
      */
-    public function __get($name)
+    public function __get($name): mixed
     {
         if (isset($this->settings->{$name})) {
             return $this->settings->{$name};

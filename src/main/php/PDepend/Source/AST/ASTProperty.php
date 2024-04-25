@@ -321,11 +321,9 @@ class ASTProperty extends AbstractASTArtifact
      * This method will return the default value for this property instance or
      * <b>null</b> when this property was only declared and not initialized.
      *
-     * @return mixed
-     *
      * @since  0.9.6
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): mixed
     {
         $value = $this->variableDeclarator->getValue();
         if ($value === null) {
