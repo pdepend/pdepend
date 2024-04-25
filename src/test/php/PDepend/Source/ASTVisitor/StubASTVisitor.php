@@ -266,7 +266,7 @@ class StubASTVisitor implements ASTVisitor
      * @param string $method Name of the called method.
      * @param array $args Array with method argument.
      *
-     * @return mixed
+     * @return array
      * @since 0.9.12
      */
     public function __call($method, $args)

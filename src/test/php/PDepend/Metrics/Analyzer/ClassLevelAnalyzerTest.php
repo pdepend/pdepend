@@ -471,10 +471,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * a single measured metric.
      *
      * @param string $name Name of the searched metric.
-     *
-     * @return mixed
      */
-    private function calculateClassMetric($name)
+    private function calculateClassMetric($name): mixed
     {
         $metrics = $this->calculateClassMetrics();
         return $metrics[$name];
@@ -484,7 +482,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Analyzes the source code associated with the calling test method and
      * returns all measured metrics.
      *
-     * @return mixed
+     * @return array<string, mixed>
      */
     private function calculateClassMetrics()
     {
@@ -676,7 +674,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Analyzes the source code associated with the calling test method and
      * returns all measured metrics.
      *
-     * @return mixed
+     * @return array<string, mixed>
      * @since 1.0.6
      */
     private function calculateTraitMetrics()

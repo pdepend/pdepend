@@ -338,11 +338,9 @@ class ASTParameter extends AbstractASTArtifact
      * {@link ASTParameter::isDefaultValueAvailable()} to
      * detect a NULL-value.
      *
-     * @return mixed
-     *
      * @since  0.9.5
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): mixed
     {
         $value = $this->variableDeclarator->getValue();
 

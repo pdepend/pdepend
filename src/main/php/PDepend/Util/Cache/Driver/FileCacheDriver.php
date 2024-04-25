@@ -184,7 +184,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $key  The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function restore($key, $hash = null)
+    public function restore($key, $hash = null): mixed
     {
         $file = $this->getCacheFile($key);
         if (file_exists($file)) {
@@ -200,10 +200,8 @@ class FileCacheDriver implements CacheDriver
      *
      * @param string $file The cache file name.
      * @param string $hash The verification hash.
-     *
-     * @return mixed
      */
-    protected function restoreFile($file, $hash)
+    protected function restoreFile($file, $hash): mixed
     {
         // unserialize() throws E_NOTICE when data is corrupt
         $data = @unserialize($this->read($file));
