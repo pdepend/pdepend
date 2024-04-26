@@ -48,10 +48,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTest
+class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser does not end in an endless loop when it detects an

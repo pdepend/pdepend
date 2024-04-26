@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 1
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug001Test extends AbstractRegressionTest
+class ParserBug001Test extends AbstractRegressionTestCase
 {
     /**
      * Test case for parser bug 01 that doesn't add dependencies for static

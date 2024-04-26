@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTypeIterable
  * @group unittest
  */
-class ASTTypeIterableTest extends ASTNodeTest
+class ASTTypeIterableTest extends ASTNodeTestCase
 {
     /**
      * testIterableType

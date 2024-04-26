@@ -49,11 +49,10 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\ASTScope
  * @group unittest
  */
-class ASTScopeTest extends ASTNodeTest
+class ASTScopeTest extends ASTNodeTestCase
 {
     /**
      * testScope

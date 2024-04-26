@@ -58,7 +58,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  * @covers \PDepend\Source\AST\AbstractASTType
  * @group unittest
  */
-class ASTTraitTest extends AbstractASTArtifactTest
+class ASTTraitTest extends AbstractASTArtifactTestCase
 {
     /**
      * testGetAllMethodsOnSimpleTraitReturnsExpectedResult

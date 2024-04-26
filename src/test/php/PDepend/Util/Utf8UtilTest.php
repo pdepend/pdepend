@@ -42,7 +42,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use ReflectionMethod;
 
 /**
@@ -54,7 +54,7 @@ use ReflectionMethod;
  * @covers \PDepend\Util\Utf8Util
  * @group unittest
  */
-class Utf8UtilTest extends AbstractTest
+class Utf8UtilTest extends AbstractTestCase
 {
     public function testEnsureEncoding()
     {

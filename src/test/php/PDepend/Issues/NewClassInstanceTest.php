@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTStatement;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class NewClassInstanceTest extends AbstractFeatureTest
+class NewClassInstanceTest extends AbstractFeatureTestCase
 {
     /**
      * Tests that a new keyword can be followed by variable or parentheses expression.

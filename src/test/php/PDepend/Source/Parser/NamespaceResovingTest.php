@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTClassOrInterfaceReference;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class NamespaceResovingTest extends AbstractParserTest
+class NamespaceResovingTest extends AbstractParserTestCase
 {
     /**
      * testNamespacesAreCorrectlyLookedUp

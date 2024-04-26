@@ -48,10 +48,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
+class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser does not throw an exception when it detects a

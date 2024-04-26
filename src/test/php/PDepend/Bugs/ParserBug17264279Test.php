@@ -51,10 +51,9 @@ namespace PDepend\Bugs;
  * @link       https://www.pivotaltracker.com/story/show/17264279
  *
  * @ticket 17264279
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug17264279Test extends AbstractRegressionTest
+class ParserBug17264279Test extends AbstractRegressionTestCase
 {
     /**
      * testParserAcceptsUseAsClassName

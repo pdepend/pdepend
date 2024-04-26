@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTLogicalXorExpression
  * @group unittest
  */
-class ASTLogicalXorExpressionTest extends ASTNodeTest
+class ASTLogicalXorExpressionTest extends ASTNodeTestCase
 {
     /**
      * testLogicalXorExpressionHasExpectedStartLine

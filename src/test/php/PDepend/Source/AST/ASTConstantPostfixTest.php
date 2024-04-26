@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConstantPostfix
  * @group unittest
  */
-class ASTConstantPostfixTest extends ASTNodeTest
+class ASTConstantPostfixTest extends ASTNodeTestCase
 {
     /**
      * Tests that a parsed constant postfix has the expected object structure.

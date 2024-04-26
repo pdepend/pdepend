@@ -49,7 +49,7 @@ use PDepend\Source\AST\State;
  * @group unittest
  * @group php8.1
  */
-class ReadonlyPropertiesTest extends PHPParserVersion81Test
+class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
 {
     /**
      * @return void

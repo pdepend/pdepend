@@ -53,7 +53,7 @@ use PDepend\Input\ExtensionFilter;
  * @covers \PDepend\Engine
  * @group unittest
  */
-class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
+class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the {@link \PDepend\Engine::getExceptions()} returns a

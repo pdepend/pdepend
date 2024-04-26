@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTIfStatement
  * @group unittest
  */
-class ASTIfStatementTest extends ASTNodeTest
+class ASTIfStatementTest extends ASTNodeTestCase
 {
     /**
      * testHasElseMethodReturnsFalseByDefault

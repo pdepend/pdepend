@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTScalarType
  * @group unittest
  */
-class ASTScalarTypeTest extends ASTNodeTest
+class ASTScalarTypeTest extends ASTNodeTestCase
 {
     /**
      * testIsArrayReturnsFalse

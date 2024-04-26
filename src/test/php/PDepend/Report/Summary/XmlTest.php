@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Summary;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * @covers \PDepend\Report\Summary\Xml
  * @group unittest
  */
-class XmlTest extends AbstractTest
+class XmlTest extends AbstractTestCase
 {
     /**
      * Test code structure.

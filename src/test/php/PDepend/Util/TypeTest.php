@@ -42,7 +42,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for type utility class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Type
  * @group unittest
  */
-class TypeTest extends AbstractTest
+class TypeTest extends AbstractTestCase
 {
     /**
      * testIsInternalTypeDetectsInternalClassPrefixedWithBackslash

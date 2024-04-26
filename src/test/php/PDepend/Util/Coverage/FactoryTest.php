@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Coverage;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\Factory} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Coverage\Factory
  * @group unittest
  */
-class FactoryTest extends AbstractTest
+class FactoryTest extends AbstractTestCase
 {
     /**
      * testCreateReturnsCloverReportInstanceForCloverInputFile

@@ -53,10 +53,9 @@ use PDepend\Source\Tokenizer\Tokens;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTest
+class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
 {
     /**
      * This method tests that the parser does not substitute keyword tokens in

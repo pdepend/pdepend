@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTCastExpression
  * @group unittest
  */
-class ASTCastExpressionTest extends ASTNodeTest
+class ASTCastExpressionTest extends ASTNodeTestCase
 {
     /**
      * testNormalizesWhitespacesInCastExpression

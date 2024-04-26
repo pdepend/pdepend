@@ -49,7 +49,7 @@ use PDepend\Source\AST\ASTMethodPostfix;
  * @group unittest
  * @group php8.1
  */
-class FirstClassCallableSyntaxTest extends PHPParserVersion81Test
+class FirstClassCallableSyntaxTest extends PHPParserVersion81TestCase
 {
     /**
      * @return void

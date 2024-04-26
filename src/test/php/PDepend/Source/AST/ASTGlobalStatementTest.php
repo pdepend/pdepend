@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTGlobalStatement
  * @group unittest
  */
-class ASTGlobalStatementTest extends ASTNodeTest
+class ASTGlobalStatementTest extends ASTNodeTestCase
 {
     /**
      * testGlobalStatementHasExpectedStartLine

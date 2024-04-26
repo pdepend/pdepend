@@ -71,7 +71,7 @@ use ReflectionProperty;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTest extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * The current working directory.
@@ -909,4 +909,4 @@ abstract class AbstractTest extends TestCase
     }
 }
 
-AbstractTest::init();
+AbstractTestCase::init();

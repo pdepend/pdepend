@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Cache;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Abstract test case that validates the behavior of concrete driver
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  *
    * @group unittest
  */
-abstract class AbstractDriverTest extends AbstractTest
+abstract class AbstractDriverTestCase extends AbstractTestCase
 {
     /**
      * testTypeMethodReturnsSameObjectInstance

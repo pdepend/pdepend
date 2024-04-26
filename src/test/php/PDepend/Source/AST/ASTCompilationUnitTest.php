@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the code file class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTCompilationUnit
  * @group unittest
  */
-class ASTCompilationUnitTest extends AbstractTest
+class ASTCompilationUnitTest extends AbstractTestCase
 {
     /**
      * testGetNameReturnsTheFileName

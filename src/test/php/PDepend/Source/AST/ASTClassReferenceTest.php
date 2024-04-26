@@ -54,7 +54,7 @@ use PDepend\Source\Builder\BuilderContext;
  * @covers \PDepend\Source\AST\ASTClassReference
  * @group unittest
  */
-class ASTClassReferenceTest extends ASTNodeTest
+class ASTClassReferenceTest extends ASTNodeTestCase
 {
     /**
      * testGetTypeDelegatesToBuilderContextGetClass

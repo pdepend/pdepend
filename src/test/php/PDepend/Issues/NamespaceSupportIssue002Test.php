@@ -51,7 +51,7 @@ namespace PDepend\Issues;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class NamespaceSupportIssue002Test extends AbstractFeatureTest
+class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parser handles a simple use statement as expected.

@@ -56,10 +56,9 @@ use PDepend\Source\AST\ASTInterface;
  * @since 0.10.9
  *
  * @ticket 23951621
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug23951621Test extends AbstractRegressionTest
+class ParserBug23951621Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesHeredocAsPropertyDefaultValue

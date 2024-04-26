@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTNamespace;
  * @covers \PDepend\Engine
  * @group unittest
  */
-class EngineTest extends AbstractTest
+class EngineTest extends AbstractTestCase
 {
     /**
      * Tests that the {@link \PDepend\Engine::addDirectory()} method

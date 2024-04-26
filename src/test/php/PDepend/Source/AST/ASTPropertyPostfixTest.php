@@ -56,7 +56,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTPropertyPostfix
  */
-class ASTPropertyPostfixTest extends ASTNodeTest
+class ASTPropertyPostfixTest extends ASTNodeTestCase
 {
     /**
      * testGetImageForArrayIndexedRegularProperty

@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\ASTVisitor\StubASTVisitor;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
  * @covers \PDepend\Source\AST\ASTNamespace
  * @group unittest
  */
-class ASTNamespaceTest extends AbstractTest
+class ASTNamespaceTest extends AbstractTestCase
 {
     /**
      * testGetIdReturnsExpectedObjectHash

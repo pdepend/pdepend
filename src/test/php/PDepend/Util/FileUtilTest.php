@@ -42,7 +42,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\FileUtil} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\FileUtil
  * @group unittest
  */
-class FileUtilTest extends AbstractTest
+class FileUtilTest extends AbstractTestCase
 {
     /**
      * testGetSysTempDirReturnsExpectedDirectory

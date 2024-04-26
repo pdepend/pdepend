@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
  * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory
  * @group unittest
  */
-class StrategyFactoryTest extends AbstractTest
+class StrategyFactoryTest extends AbstractTestCase
 {
     /**
      * Tests that the factory throws the expected exception for an invalid

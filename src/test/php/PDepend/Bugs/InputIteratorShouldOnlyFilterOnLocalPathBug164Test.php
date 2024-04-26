@@ -51,10 +51,9 @@ use PDepend\Input\Iterator;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/164
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegressionTest
+class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegressionTestCase
 {
     /**
      * testIteratorOnlyPassesLocalPathToFilter

@@ -47,7 +47,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
  * @group unittest
  * @group php8.2
  */
-class TypedClassConstantsTest extends PHPParserVersion82Test
+class TypedClassConstantsTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void

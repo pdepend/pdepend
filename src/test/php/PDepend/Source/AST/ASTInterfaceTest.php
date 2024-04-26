@@ -57,7 +57,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTInterfaceTest extends AbstractASTArtifactTest
+class ASTInterfaceTest extends AbstractASTArtifactTestCase
 {
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.

@@ -51,10 +51,9 @@ use PDepend\Input\ExcludePathFilter;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/191
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractRegressionTest
+class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractRegressionTestCase
 {
     /**
      * testAbsoluteUnixPathAsFilterPattern

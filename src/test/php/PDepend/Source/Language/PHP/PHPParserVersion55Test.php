@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -58,7 +58,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion55
  * @group unittest
  */
-class PHPParserVersion55Test extends AbstractTest
+class PHPParserVersion55Test extends AbstractTestCase
 {
     /**
      * testParserThrowsExceptionForParameterWithExpressionValue

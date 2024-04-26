@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTArray
  * @group unittest
  */
-class ASTArrayTest extends ASTNodeTest
+class ASTArrayTest extends ASTNodeTestCase
 {
     /**
      * testArrayGraphForEmptyArrayDefinition

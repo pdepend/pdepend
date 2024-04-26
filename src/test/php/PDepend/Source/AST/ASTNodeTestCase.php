@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Abstract test case for classes derived {@link \PDepend\Source\AST\ASTNode}ö
@@ -50,11 +50,10 @@ use PDepend\AbstractTest;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\AbstractASTNode
  * @group unittest
  */
-abstract class ASTNodeTest extends AbstractTest
+abstract class ASTNodeTestCase extends AbstractTestCase
 {
     /**
      * testGetImageReturnsExpectedNodeImage
@@ -754,7 +753,6 @@ abstract class ASTNodeTest extends AbstractTest
      * an exception for an undefined node offset.
      *
      * @return void
-     * @covers \PDepend\Source\AST\ASTNode
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
     {

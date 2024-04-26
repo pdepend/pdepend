@@ -37,9 +37,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: vendor
-        key: ${{ runner.os }}-v3-coverage-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-v3-coverage-php-${{ matrix.php }}-${{ matrix.setup }}-
+        key: ${{ runner.os }}-coverage-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
@@ -48,7 +46,7 @@ jobs:
         composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
     - name: Coverage
-      run: vendor/bin/phpunit -v --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
+      run: vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
       env:
         XDEBUG_MODE: coverage
 

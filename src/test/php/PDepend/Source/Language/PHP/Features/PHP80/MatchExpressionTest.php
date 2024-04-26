@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTReturnStatement;
  * @group unittest
  * @group php8
  */
-class MatchExpressionTest extends PHPParserVersion80Test
+class MatchExpressionTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void

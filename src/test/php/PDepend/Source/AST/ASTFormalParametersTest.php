@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTFormalParameters
  * @group unittest
  */
-class ASTFormalParametersTest extends ASTNodeTest
+class ASTFormalParametersTest extends ASTNodeTestCase
 {
     /**
      * testFormalParametersHasExpectedStartLine

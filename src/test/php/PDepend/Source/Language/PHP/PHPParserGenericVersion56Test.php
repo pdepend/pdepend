@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -57,7 +57,7 @@ use PDepend\AbstractTest;
  * @group unittest
  * @link https://github.com/pdepend/pdepend/issues/180
  */
-class PHPParserGenericVersion56Test extends AbstractTest
+class PHPParserGenericVersion56Test extends AbstractTestCase
 {
     /**
      * testShiftLeftInConstantInitializer

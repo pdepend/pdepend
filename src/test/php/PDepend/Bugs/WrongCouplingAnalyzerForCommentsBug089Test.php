@@ -53,10 +53,9 @@ use PDepend\Metrics\Analyzer\CouplingAnalyzer;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTest
+class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the analyzer calculates the expected result.

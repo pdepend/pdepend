@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTUnsetStatement
  * @group unittest
  */
-class ASTUnsetStatementTest extends ASTNodeTest
+class ASTUnsetStatementTest extends ASTNodeTestCase
 {
     /**
      * testUnsetStatement

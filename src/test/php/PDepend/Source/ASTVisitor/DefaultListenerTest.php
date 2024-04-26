@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\ASTVisitor;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTTrait;
@@ -56,7 +56,7 @@ use PDepend\Source\AST\ASTTrait;
  * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
  * @group unittest
  */
-class DefaultListenerTest extends AbstractTest
+class DefaultListenerTest extends AbstractTestCase
 {
     /**
      * testDefaultImplementationCallsListeners

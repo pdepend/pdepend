@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 
 /**
  * Tests the for the package metrics visitor.
@@ -53,7 +53,7 @@ use PDepend\Metrics\AbstractMetricsTest;
  * @covers \PDepend\Metrics\Analyzer\DependencyAnalyzer
  * @group unittest
  */
-class DependencyAnalyzerTest extends AbstractMetricsTest
+class DependencyAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * The used node builder.

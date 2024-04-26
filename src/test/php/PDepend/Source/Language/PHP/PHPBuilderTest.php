@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTComment;
 use PDepend\Source\AST\ASTConstantPostfix;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTFunction;
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @group unittest
  */
-class PHPBuilderTest extends AbstractTest
+class PHPBuilderTest extends AbstractTestCase
 {
     /**
      * testBuilderAddsMultiplePackagesForClassesToListOfPackages

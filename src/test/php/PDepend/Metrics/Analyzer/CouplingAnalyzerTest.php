@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Metrics\Analyzer\CouplingAnalyzer;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Metrics\Analyzer\CouplingAnalyzer;
  * @covers \PDepend\Metrics\Analyzer\CouplingAnalyzer
  * @group unittest
  */
-class CouplingAnalyzerTest extends AbstractMetricsTest
+class CouplingAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testGetNodeMetricsReturnsAnEmptyArrayByDefault

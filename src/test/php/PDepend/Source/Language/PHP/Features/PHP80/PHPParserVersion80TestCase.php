@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,74 +38,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Bugs;
+namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\AbstractTest;
-use PDepend\Report\Summary\Xml;
+use PDepend\AbstractTestCase;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Abstract test case for the "Bugs" package.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ * @group unittest
  */
-abstract class AbstractRegressionTest extends AbstractTest
+abstract class PHPParserVersion80TestCase extends AbstractTestCase
 {
     /**
-     * Creates the PDepend summary report for the source associated with the
-     * calling test case.
-     *
-     * @return string
-     * @since 0.10.0
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    protected function createSummaryXmlForCallingTest()
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        $this->changeWorkingDirectory(
-            self::createCodeResourceURI('config/')
-        );
-
-        $file = $this->createRunResourceURI('summary.xml');
-
-        $log = new Xml();
-        $log->setLogFile($file);
-
-        $pdepend = $this->createEngineFixture();
-        $pdepend->addFile($this->createCodeResourceUriForTest());
-        $pdepend->addReportGenerator($log);
-        $pdepend->analyze();
-
-        return $file;
-    }
-
-    /**
-     * Parses the source of a test case file.
-     *
-     * @param string $testCase
-     * @param boolean $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
-     */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
-    {
-        return $this->parseSource(
-            $this->getSourceFileForTestCase($testCase),
-            $ignoreAnnotations
-        );
-    }
-
-    /**
-     * Returns the source file for the given test case.
-     *
-     * @param string $testCase The qualified test case name.
-     * @return string
-     */
-    protected function getSourceFileForTestCase($testCase)
-    {
-        list($class, $method) = explode('::', $testCase);
-
-        preg_match('(Bug(\d+)Test$)', $class, $match);
-
-        return self::createCodeResourceURI(
-            sprintf('bugs/%s/%s.php', $match[1], $method)
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion80',
+            array($tokenizer, $builder, $cache)
         );
     }
 }

@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTFormalParameter;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTFormalParameterParsingTest extends AbstractParserTest
+class ASTFormalParameterParsingTest extends AbstractParserTestCase
 {
     /**
      * testWithParentTypeHint

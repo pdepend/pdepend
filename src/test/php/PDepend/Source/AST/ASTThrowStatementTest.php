@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTThrowStatement
  * @group unittest
  */
-class ASTThrowStatementTest extends ASTNodeTest
+class ASTThrowStatementTest extends ASTNodeTestCase
 {
     /**
      * testThrowStatement

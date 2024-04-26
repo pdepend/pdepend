@@ -50,10 +50,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://github.com/pdepend/pdepend/issues/100
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class TraitsNotHandledCorrrectBug00000100Test extends AbstractRegressionTest
+class TraitsNotHandledCorrrectBug00000100Test extends AbstractRegressionTestCase
 {
     /**
      * testHandlingOfSelfReferenceInTrait

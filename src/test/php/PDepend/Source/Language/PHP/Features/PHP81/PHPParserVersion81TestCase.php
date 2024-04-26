@@ -2,8 +2,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -40,53 +38,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Abstract base class for tests of the metrics package.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @group unittest
  */
-abstract class AbstractMetricsTest extends AbstractTest
+abstract class PHPParserVersion81TestCase extends AbstractTestCase
 {
     /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @param string  $testCase
-     * @param boolean $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
+     * @param \PDepend\Source\Builder\Builder $builder
+     * @param \PDepend\Util\Cache\CacheDriver $cache
+     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
-        list($class, $method) = explode('::', $testCase);
-
-        $parts = explode('\\', $class);
-
-        try {
-            return parent::parseSource(
-                sprintf(
-                    'Metrics/%s/%s/%s.php',
-                    $parts[count($parts) - 2],
-                    substr($parts[count($parts) - 1], 0, -4),
-                    $method
-                ),
-                $ignoreAnnotations
-            );
-        } catch (\Exception $e) {
-        }
-        
-        return parent::parseSource(
-            sprintf(
-                'Metrics/%s/%s/%s',
-                $parts[count($parts) - 2],
-                substr($parts[count($parts) - 1], 0, -4),
-                $method
-            ),
-            $ignoreAnnotations
+        return $this->getAbstractClassMock(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion81',
+            array($tokenizer, $builder, $cache)
         );
     }
 }

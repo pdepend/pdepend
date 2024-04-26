@@ -57,7 +57,7 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
  * @covers \PDepend\Source\AST\ASTFunction
  * @group unittest
  */
-class ASTFunctionTest extends AbstractASTArtifactTest
+class ASTFunctionTest extends AbstractASTArtifactTestCase
 {
     /**
      * testReturnsReferenceReturnsExpectedTrue

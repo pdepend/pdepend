@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTNamedArgument;
  * @group unittest
  * @group php8
  */
-class ConstructorPropertyPromotionTest extends PHPParserVersion80Test
+class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void

@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTValue} class.
@@ -55,7 +55,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTValue
  * @group unittest
  */
-class ASTValueTest extends AbstractTest
+class ASTValueTest extends AbstractTestCase
 {
     /**
      * testIsValueAvailableReturnsFalseByDefault

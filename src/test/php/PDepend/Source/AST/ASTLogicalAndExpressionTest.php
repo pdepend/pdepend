@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTLogicalAndExpression
  * @group unittest
  */
-class ASTLogicalAndExpressionTest extends ASTNodeTest
+class ASTLogicalAndExpressionTest extends ASTNodeTestCase
 {
     /**
      * testLogicalAndExpressionHasExpectedStartLine

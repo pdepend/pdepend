@@ -43,7 +43,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Configuration} class.
@@ -55,7 +55,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Configuration
  * @group unittest
  */
-class ConfigurationTest extends AbstractTest
+class ConfigurationTest extends AbstractTestCase
 {
     /**
      * testPropertyAccessForExistingValue

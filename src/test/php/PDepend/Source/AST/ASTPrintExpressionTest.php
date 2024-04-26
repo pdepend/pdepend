@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTPrintExpression
  * @group unittest
  */
-class ASTPrintExpressionTest extends ASTNodeTest
+class ASTPrintExpressionTest extends ASTNodeTestCase
 {
     /**
      * @return \PDepend\Source\AST\ASTPrintExpression

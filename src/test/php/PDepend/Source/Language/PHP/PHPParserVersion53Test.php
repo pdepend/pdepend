@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Token;
@@ -63,7 +63,7 @@ use ReflectionMethod;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion53
  * @group unittest
  */
-class PHPParserVersion53Test extends AbstractTest
+class PHPParserVersion53Test extends AbstractTestCase
 {
     /**
      * testParserThrowsExpectedExceptionForStaticMemberExpressionSyntax

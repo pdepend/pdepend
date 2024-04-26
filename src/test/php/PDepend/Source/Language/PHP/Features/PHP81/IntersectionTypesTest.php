@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8.1
  */
-class IntersectionTypesTest extends PHPParserVersion81Test
+class IntersectionTypesTest extends PHPParserVersion81TestCase
 {
     /**
      * @return void

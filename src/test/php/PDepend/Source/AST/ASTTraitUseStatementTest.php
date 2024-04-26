@@ -57,7 +57,7 @@ use ReflectionMethod;
  * @covers \PDepend\Source\AST\ASTTraitUseStatement
  * @group unittest
  */
-class ASTTraitUseStatementTest extends ASTNodeTest
+class ASTTraitUseStatementTest extends ASTNodeTestCase
 {
     /**
      * testHasExcludeForReturnsFalseIfNoInsteadExists

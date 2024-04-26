@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTDoWhileStatement
  * @group unittest
  */
-class ASTDoWhileStatementTest extends ASTNodeTest
+class ASTDoWhileStatementTest extends ASTNodeTestCase
 {
     /**
      * testDoWhileStatementHasExpectedNumberOfChildNodes

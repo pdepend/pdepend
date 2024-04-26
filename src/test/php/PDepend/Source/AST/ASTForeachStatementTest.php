@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTForeachStatement
  * @group unittest
  */
-class ASTForeachStatementTest extends ASTNodeTest
+class ASTForeachStatementTest extends ASTNodeTestCase
 {
     /**
      * testThirdChildOfForeachStatementIsASTScopeStatement

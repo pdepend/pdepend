@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8
  */
-class ThrowExpressionTest extends PHPParserVersion80Test
+class ThrowExpressionTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void

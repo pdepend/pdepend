@@ -51,11 +51,10 @@ namespace PDepend\Source\AST;
  * @since 1.0.0
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\ASTArrayElement
  * @group unittest
  */
-class ASTArrayElementTest extends ASTNodeTest
+class ASTArrayElementTest extends ASTNodeTestCase
 {
     /**
      * testArrayElementGraphSimpleValue

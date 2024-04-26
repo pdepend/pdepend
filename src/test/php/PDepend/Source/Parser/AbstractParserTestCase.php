@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Parser;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Abstract test case class for this sub namespace.
@@ -52,6 +52,6 @@ use PDepend\AbstractTest;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.20
  */
-abstract class AbstractParserTest extends AbstractTest
+abstract class AbstractParserTestCase extends AbstractTestCase
 {
 }

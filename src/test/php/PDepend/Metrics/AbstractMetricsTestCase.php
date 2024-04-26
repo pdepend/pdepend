@@ -2,6 +2,8 @@
 /**
  * This file is part of PDepend.
  *
+ * PHP Version 5
+ *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -38,32 +40,53 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP83;
+namespace PDepend\Metrics;
 
-use PDepend\AbstractTest;
-use PDepend\Source\Builder\Builder;
-use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Util\Cache\CacheDriver;
+use PDepend\AbstractTestCase;
 
 /**
+ * Abstract base class for tests of the metrics package.
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
- * @group unittest
  */
-abstract class PHPParserVersion83Test extends AbstractTest
+abstract class AbstractMetricsTestCase extends AbstractTestCase
 {
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     * Parses the given source file or directory with the default tokenizer
+     * and node builder implementations.
+     *
+     * @param string  $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion83',
-            array($tokenizer, $builder, $cache)
+        list($class, $method) = explode('::', $testCase);
+
+        $parts = explode('\\', $class);
+
+        try {
+            return parent::parseSource(
+                sprintf(
+                    'Metrics/%s/%s/%s.php',
+                    $parts[count($parts) - 2],
+                    substr($parts[count($parts) - 1], 0, -4),
+                    $method
+                ),
+                $ignoreAnnotations
+            );
+        } catch (\Exception $e) {
+        }
+        
+        return parent::parseSource(
+            sprintf(
+                'Metrics/%s/%s/%s',
+                $parts[count($parts) - 2],
+                substr($parts[count($parts) - 1], 0, -4),
+                $method
+            ),
+            $ignoreAnnotations
         );
     }
 }

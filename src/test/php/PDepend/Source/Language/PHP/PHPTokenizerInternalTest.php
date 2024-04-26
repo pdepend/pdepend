@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -55,7 +55,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @covers \PDepend\Source\Language\PHP\PHPTokenizerInternal
  * @group unittest
  */
-class PHPTokenizerInternalTest extends AbstractTest
+class PHPTokenizerInternalTest extends AbstractTestCase
 {
     /**
      * testTokenizerReturnsExpectedConstantForTraitKeyword

@@ -40,7 +40,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
@@ -54,7 +54,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion71
  * @group unittest
  */
-class PHPParserVersion71Test extends AbstractTest
+class PHPParserVersion71Test extends AbstractTestCase
 {
     /**
      * @return void

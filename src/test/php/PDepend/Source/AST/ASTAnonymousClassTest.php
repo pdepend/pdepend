@@ -55,7 +55,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Source\AST\ASTAnonymousClass
  * @group unittest
  */
-class ASTAnonymousClassTest extends ASTNodeTest
+class ASTAnonymousClassTest extends ASTNodeTestCase
 {
     /**
      * @return void

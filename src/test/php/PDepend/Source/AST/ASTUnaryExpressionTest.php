@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTUnaryExpression
  * @group unittest
  */
-class ASTUnaryExpressionTest extends ASTNodeTest
+class ASTUnaryExpressionTest extends ASTNodeTestCase
 {
     /**
      * testUnaryExpression

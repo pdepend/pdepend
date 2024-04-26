@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTPropertyPostfix;
  * @group unittest
  * @group php8.2
  */
-class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Test
+class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void

@@ -53,7 +53,7 @@ namespace PDepend\Source\Parser;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTArgumentsParsingTest extends AbstractParserTest
+class ASTArgumentsParsingTest extends AbstractParserTestCase
 {
     /**
      * Tests that the parser adds the expected children to an argument instance.
