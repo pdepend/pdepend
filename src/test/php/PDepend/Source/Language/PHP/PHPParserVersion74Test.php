@@ -376,7 +376,9 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     public function testReadOnlyNamedImport()
     {
-        $this->assertFalse($this->parseCodeResourceForTest()->current());
+        $this->expectException(\OutOfBoundsException::class);
+
+        $this->parseCodeResourceForTest()->current();
     }
 
     /**
