@@ -445,12 +445,12 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *   </class>
      * </code>
      *
-     * @param DOMElement         $xml             The parent xml element.
-     * @param ASTCompilationUnit $compilationUnit The code file instance.
+     * @param DOMElement          $xml             The parent xml element.
+     * @param ?ASTCompilationUnit $compilationUnit The code file instance.
      *
      * @return void
      */
-    protected function writeFileReference(DOMElement $xml, ASTCompilationUnit $compilationUnit = null)
+    protected function writeFileReference(DOMElement $xml, ?ASTCompilationUnit $compilationUnit = null)
     {
         if (in_array($compilationUnit, $this->fileSet, true) === false) {
             $this->fileSet[] = $compilationUnit;

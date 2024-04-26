@@ -64,7 +64,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      */
     private $type;
 
-    public function __construct($name, ASTScalarType $type = null)
+    public function __construct($name, ?ASTScalarType $type = null)
     {
         parent::__construct($name);
 

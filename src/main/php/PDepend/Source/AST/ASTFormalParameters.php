@@ -61,7 +61,7 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * class Foo {
  *     //                 -----------------
- *     public function bar(Foo $obj = null) {}
+ *     public function bar(?Foo $obj = null) {}
  *     //                 -----------------
  * }
  * </code>
