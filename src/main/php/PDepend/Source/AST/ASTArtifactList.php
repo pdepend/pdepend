@@ -48,7 +48,6 @@ use Countable;
 use Iterator;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
-use ReturnTypeWillChange;
 
 /**
  * Iterator for code nodes.
@@ -114,11 +113,8 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Returns the number of {@link ASTArtifact}
      * objects in this iterator.
-     *
-     * @return int
      */
-    #[ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         return count($this->artifacts);
     }
@@ -128,8 +124,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @return false|T
      */
-    #[ReturnTypeWillChange]
-    public function current()
+    public function current(): false|ASTArtifact
     {
         if ($this->offset >= $this->count) {
             return false;
@@ -139,44 +134,32 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
 
     /**
      * Returns the name of the current {@link ASTArtifact}.
-     *
-     * @return string
      */
-    #[ReturnTypeWillChange]
-    public function key()
+    public function key(): string
     {
         return $this->artifacts[$this->offset]->getName();
     }
 
     /**
      * Moves the internal pointer to the next {@link ASTArtifact}.
-     *
-     * @return void
      */
-    #[ReturnTypeWillChange]
-    public function next()
+    public function next(): void
     {
         ++$this->offset;
     }
 
     /**
      * Rewinds the internal pointer.
-     *
-     * @return void
      */
-    #[ReturnTypeWillChange]
-    public function rewind()
+    public function rewind(): void
     {
         $this->offset = 0;
     }
 
     /**
      * Returns <b>true</b> while there is a next {@link ASTArtifact}.
-     *
-     * @return bool
      */
-    #[ReturnTypeWillChange]
-    public function valid()
+    public function valid(): bool
     {
         return ($this->offset < $this->count);
     }
@@ -192,8 +175,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
      */
-    #[ReturnTypeWillChange]
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->artifacts[$offset]);
     }
@@ -210,8 +192,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetget.php
      */
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet($offset): ASTArtifact
     {
         if (isset($this->artifacts[$offset])) {
             return $this->artifacts[$offset];
@@ -232,8 +213,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php
      */
-    #[ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new BadMethodCallException('Not supported operation.');
     }
@@ -245,13 +225,10 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @throws BadMethodCallException
      *
-     * @return void
-     *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetunset.php
      */
-    #[ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new BadMethodCallException('Not supported operation.');
     }
