@@ -497,8 +497,10 @@ class CommandTest extends AbstractTestCase
      */
     public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist()
     {
+        $filePath = $this->createRunResourceURI('foobar');
+        unlink($filePath);
         $argv = array(
-            '--coverage-report=' . $this->createRunResourceURI('foobar'),
+            '--coverage-report=' . $filePath,
             '--dummy-logger=' . $this->createRunResourceURI(),
             __FILE__,
         );
@@ -534,7 +536,7 @@ class CommandTest extends AbstractTestCase
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
     {
-        $configFile = $this->createRunResourceURI('config.xml');
+        $configFile = $this->createRunResourceURI('config') . '.xml';
 
         $argv = array('--configuration=' . $configFile, __FILE__);
 

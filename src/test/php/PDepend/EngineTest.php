@@ -400,8 +400,10 @@ class EngineTest extends AbstractTestCase
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
     {
         $this->expectException(\InvalidArgumentException::class);
+        $filePath = $this->createRunResourceURI('pdepend_');
+        unlink($filePath);
 
         $engine = $this->createEngineFixture();
-        $engine->addFile($this->createRunResourceURI('pdepend_'));
+        $engine->addFile($filePath);
     }
 }

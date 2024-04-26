@@ -78,7 +78,9 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->cacheDir = $this->createRunResourceURI('cache') . '/';
+        $tmp = $this->createRunResourceURI('cache');
+        unlink($tmp);
+        $this->cacheDir = $tmp . '/';
         $this->cacheTtl = FileCacheGarbageCollector::DEFAULT_TTL;
         mkdir($this->cacheDir);
     }

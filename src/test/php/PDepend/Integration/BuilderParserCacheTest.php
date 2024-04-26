@@ -89,6 +89,7 @@ class BuilderParserCacheTest extends AbstractTestCase
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cacheDir');
+        unlink($this->cacheDir);
         $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
         $this->testFile = $this->createRunResourceURI('testFile');
     }

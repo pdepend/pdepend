@@ -75,7 +75,7 @@ class ChartTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->outputFile = $this->createRunResourceURI('jdepend-test-out.svg');
+        $this->outputFile = $this->createRunResourceURI('jdepend-test-out') . '.svg';
         if (file_exists($this->outputFile)) {
             unlink($this->outputFile);
         }
@@ -296,7 +296,7 @@ class ChartTest extends AbstractTestCase
     {
         $this->requireImagick();
 
-        $fileName = $this->createRunResourceURI('jdepend-test-out.png');
+        $fileName = $this->createRunResourceURI('jdepend-test-out') . '.png';
         if (file_exists($fileName)) {
             unlink($fileName);
         }
