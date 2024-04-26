@@ -46,15 +46,15 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-dev -o -a
 
-      - name: Git submodules
-        run: git submodule update --init
-
-      - name: Ant
+      - name: Build
         run: |
-          ant package -D-phar:filename=./pdepend.phar;
+          php scripts/update-version.php;
+          php -d phar.readonly=0 scripts/build.php;
+          chmod +x ./pdepend.phar;
           ./pdepend.phar --version;
 
       - name: Sign phar
+        if: github.repository == 'pdepend/pdepend' && github.event_name == 'release'
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
