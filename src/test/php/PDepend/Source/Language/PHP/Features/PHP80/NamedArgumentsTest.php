@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTVariable;
  * @group unittest
  * @group php8
  */
-class NamedArgumentsTest extends PHPParserVersion80TestCase
+class NamedArgumentsTest extends PHPParserVersion81TestCase
 {
     public function testNamedArguments(): void
     {

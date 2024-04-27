@@ -50,7 +50,7 @@ use PDepend\Source\AST\ASTMethod;
  * @group unittest
  * @group php8
  */
-class AttributeTest extends PHPParserVersion80TestCase
+class AttributeTest extends PHPParserVersion81TestCase
 {
     public function testAttribute(): void
     {

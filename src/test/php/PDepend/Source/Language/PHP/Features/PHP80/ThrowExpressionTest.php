@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTVariable;
  * @group unittest
  * @group php8
  */
-class ThrowExpressionTest extends PHPParserVersion80TestCase
+class ThrowExpressionTest extends PHPParserVersion81TestCase
 {
     public function testNullcoalescingThrow(): void
     {

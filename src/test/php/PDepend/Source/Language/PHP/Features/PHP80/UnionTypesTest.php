@@ -54,7 +54,7 @@ use PDepend\Source\Parser\ParserException;
  * @group unittest
  * @group php8
  */
-class UnionTypesTest extends PHPParserVersion80TestCase
+class UnionTypesTest extends PHPParserVersion81TestCase
 {
     public function testUnionTypes(): void
     {

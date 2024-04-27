@@ -60,7 +60,7 @@ use PDepend\Source\Parser\UnexpectedTokenException;
  * @group unittest
  * @group php8
  */
-class MatchExpressionTest extends PHPParserVersion80TestCase
+class MatchExpressionTest extends PHPParserVersion81TestCase
 {
     public function testMatchExpression(): void
     {
