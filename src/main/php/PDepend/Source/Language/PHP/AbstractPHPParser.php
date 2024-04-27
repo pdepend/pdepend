@@ -145,6 +145,7 @@ use PDepend\Source\AST\ASTTryStatement;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTTypeArray;
 use PDepend\Source\AST\ASTUnaryExpression;
+use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTUnsetStatement;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariable;
@@ -332,6 +333,8 @@ abstract class AbstractPHPParser
         Tokens::T_BACKSLASH,
         Tokens::T_CALLABLE,
         Tokens::T_SELF,
+        Tokens::T_NULL,
+        Tokens::T_FALSE,
     );
 
     /**
@@ -525,16 +528,7 @@ abstract class AbstractPHPParser
      */
     protected function parseEndReturnTypeHint()
     {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_ARRAY:
-                return $this->parseArrayType();
-            case Tokens::T_SELF:
-                return $this->parseSelfType();
-            case Tokens::T_PARENT:
-                return $this->parseParentType();
-            default:
-                return $this->parseTypeHint();
-        }
+        return $this->parseTypeHint();
     }
 
     /**
@@ -661,6 +655,17 @@ abstract class AbstractPHPParser
      */
     protected function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
+        if ($this->tokenizer->peek() === Tokens::T_COLON) {
+            $token = $this->tokenizer->next();
+            assert($token instanceof Token);
+            $this->tokenStack->add($token);
+
+            return $this->builder->buildAstNamedArgument(
+                $constant->getImage(),
+                $this->parseOptionalExpression()
+            );
+        }
+
         return $constant;
     }
 
@@ -669,6 +674,18 @@ abstract class AbstractPHPParser
      */
     protected function parseArgumentExpression()
     {
+        if ($this->tokenizer->peekNext() === Tokens::T_COLON) {
+            $token = $this->tokenizer->currentToken();
+            $image = $token->image;
+
+            // Variable RegExp from https://www.php.net/manual/en/language.variables.basics.php
+            if (preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $image)) {
+                $this->consumeToken($token->type);
+
+                return $this->builder->buildAstConstant($image);
+            }
+        }
+
         return $this->parseOptionalExpression();
     }
 
@@ -892,10 +909,20 @@ abstract class AbstractPHPParser
     protected function isClassName($tokenType)
     {
         switch ($tokenType) {
+            case Tokens::T_DIR:
+            case Tokens::T_USE:
+            case Tokens::T_GOTO:
             case Tokens::T_NULL:
+            case Tokens::T_NS_C:
             case Tokens::T_TRUE:
+            case Tokens::T_CLONE:
             case Tokens::T_FALSE:
+            case Tokens::T_TRAIT:
             case Tokens::T_STRING:
+            case Tokens::T_TRAIT_C:
+            case Tokens::T_CALLABLE:
+            case Tokens::T_INSTEADOF:
+            case Tokens::T_NAMESPACE:
             case Tokens::T_READONLY:
                 return true;
         }
@@ -3579,6 +3606,7 @@ abstract class AbstractPHPParser
         $nextTokenType = $this->tokenizer->peek();
 
         switch ($nextTokenType) {
+            case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
             case Tokens::T_SPACESHIP:
             case Tokens::T_COALESCE:
             case Tokens::T_POW:
@@ -4007,6 +4035,10 @@ abstract class AbstractPHPParser
      */
     protected function parseCatchVariable(ASTCatchStatement $stmt): void
     {
+        if ($this->tokenizer->peek() !== Tokens::T_VARIABLE) {
+            return;
+        }
+
         $stmt->addChild($this->parseVariable());
 
         $this->consumeComments();
@@ -4555,7 +4587,10 @@ abstract class AbstractPHPParser
      */
     protected function isNextTokenObjectOperator()
     {
-        return $this->tokenizer->peek() === Tokens::T_OBJECT_OPERATOR;
+        return in_array($this->tokenizer->peek(), array(
+            Tokens::T_OBJECT_OPERATOR,
+            Tokens::T_NULLSAFE_OBJECT_OPERATOR,
+        ), true);
     }
 
     /**
@@ -4565,7 +4600,11 @@ abstract class AbstractPHPParser
      */
     protected function consumeObjectOperatorToken()
     {
-        return $this->consumeToken(Tokens::T_OBJECT_OPERATOR);
+        return $this->consumeToken(
+            $this->tokenizer->peek() === Tokens::T_NULLSAFE_OBJECT_OPERATOR
+                ? Tokens::T_NULLSAFE_OBJECT_OPERATOR
+                : Tokens::T_OBJECT_OPERATOR
+        );
     }
 
     /**
@@ -4712,11 +4751,46 @@ abstract class AbstractPHPParser
 
         $function = $this->builder->buildAstFunctionPostfix($image);
         $function->addChild($node);
-        $function->addChild($this->parseArguments());
 
-        return $this->parseOptionalMemberPrimaryPrefix(
-            $this->parseOptionalIndexExpression($function),
+        if (!($node instanceof ASTIdentifier) || $node->getImageWithoutNamespace() !== 'match') {
+            $function->addChild($this->parseArguments());
+
+            return $this->parseOptionalMemberPrimaryPrefix(
+                $this->parseOptionalIndexExpression($function),
+            );
+        }
+
+        $this->consumeComments();
+
+        $this->tokenStack->push();
+
+        $function->addChild(
+            $this->parseArgumentsParenthesesContent(
+                $this->builder->buildAstMatchArgument()
+            )
         );
+
+        $this->consumeComments();
+        $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+
+        $matchBlock = $this->builder->buildAstMatchBlock();
+
+        while ($this->tokenizer->peek() !== Tokens::T_CURLY_BRACE_CLOSE) {
+            $matchBlock->addChild($this->parseMatchEntry());
+
+            $this->consumeComments();
+
+            if ($this->tokenizer->peek() === Tokens::T_COMMA) {
+                $this->consumeToken(Tokens::T_COMMA);
+                $this->consumeComments();
+            }
+        }
+
+        $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);
+
+        $function->addChild($matchBlock);
+
+        return $function;
     }
 
     /**
@@ -6277,6 +6351,32 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Parse the modifiers for construct parameter
+     *
+     * @return int
+     */
+    protected function parseConstructFormalParameterModifiers()
+    {
+        static $states = array(
+            Tokens::T_PUBLIC => State::IS_PUBLIC,
+            Tokens::T_PROTECTED => State::IS_PROTECTED,
+            Tokens::T_PRIVATE => State::IS_PRIVATE,
+        );
+
+        $modifier = 0;
+        $token = $this->tokenizer->peek();
+
+        if (isset($states[$token])) {
+            $modifier |= $states[$token];
+            $next = $this->tokenizer->next();
+            assert($next instanceof Token);
+            $this->tokenStack->add($next);
+        }
+
+        return $modifier;
+    }
+
+    /**
      * This method parse a formal parameter and all the stuff that may be allowed
      * before it according to the PHP level (type hint, passing by reference, property promotion).
      *
@@ -6286,7 +6386,19 @@ abstract class AbstractPHPParser
      */
     protected function parseFormalParameterOrPrefix(ASTCallable $callable)
     {
-        return $this->parseFormalParameterOrTypeHintOrByReference();
+        $modifier = 0;
+
+        if ($callable instanceof ASTMethod && $callable->getName() === '__construct') {
+            $modifier = $this->parseConstructFormalParameterModifiers();
+        }
+
+        $parameter = $this->parseFormalParameterOrTypeHintOrByReference();
+
+        if ($modifier && $parameter instanceof ASTFormalParameter) {
+            $parameter->setModifiers($modifier);
+        }
+
+        return $parameter;
     }
 
     /**
@@ -6322,7 +6434,7 @@ abstract class AbstractPHPParser
             $this->consumeComments();
             $tokenType = $this->tokenizer->peek();
 
-            if ($this->allowTrailingCommaInFormalParametersList() && $tokenType === Tokens::T_PARENTHESIS_CLOSE) {
+            if ($tokenType === Tokens::T_PARENTHESIS_CLOSE) {
                 break;
             }
 
@@ -6344,17 +6456,6 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn($formalParameters);
-    }
-
-    /**
-     * use of trailing comma in formal parameters list is allowed since PHP 8.0
-     * example function foo(string $bar, int $baz,)
-     *
-     * @return bool
-     */
-    protected function allowTrailingCommaInFormalParametersList()
-    {
-        return false;
     }
 
     /**
@@ -6687,6 +6788,9 @@ abstract class AbstractPHPParser
             case Tokens::T_BACKSLASH:
             case Tokens::T_NAMESPACE:
             case Tokens::T_ARRAY:
+            case Tokens::T_NULL:
+            case Tokens::T_FALSE:
+            case Tokens::T_STATIC:
                 return true;
         }
 
@@ -6696,10 +6800,10 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version.
      *
-     * @return ASTType|null
+     * @return ?ASTType
      * @since 1.0.0
      */
-    protected function parseTypeHint()
+    protected function parseBasicTypeHint()
     {
         $this->consumeQuestionMark();
 
@@ -6729,6 +6833,131 @@ abstract class AbstractPHPParser
             default:
                 return null;
         }
+    }
+
+    /**
+     * @return ?ASTType
+     */
+    protected function parseSingleTypeHint()
+    {
+        $this->consumeComments();
+
+        switch ($this->tokenizer->peek()) {
+            case Tokens::T_ARRAY:
+                $type = $this->parseArrayType();
+                break;
+            case Tokens::T_SELF:
+                $type = $this->parseSelfType();
+                break;
+            case Tokens::T_PARENT:
+                $type = $this->parseParentType();
+                break;
+            case Tokens::T_STATIC:
+                $type = $this->parseStaticType();
+                break;
+            case Tokens::T_NULL:
+                $type = new ASTScalarType('null');
+                $token = $this->tokenizer->next();
+                assert($token instanceof Token);
+                $this->tokenStack->add($token);
+                break;
+            case Tokens::T_FALSE:
+                $type = new ASTScalarType('false');
+                $token = $this->tokenizer->next();
+                assert($token instanceof Token);
+                $this->tokenStack->add($token);
+                break;
+            case Tokens::T_ARRAY:
+                $type = $this->parseArrayType();
+                break;
+            case Tokens::T_SELF:
+                $type = $this->parseSelfType();
+                break;
+            case Tokens::T_PARENT:
+                $type = $this->parseParentType();
+                break;
+            default:
+                $type = $this->parseBasicTypeHint();
+                break;
+        }
+
+        $this->consumeComments();
+
+        return $type;
+    }
+
+    /**
+     * @param ASTType $firstType
+     *
+     * @return ASTUnionType
+     */
+    protected function parseUnionTypeHint($firstType)
+    {
+        $types = array($firstType);
+
+        while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            $token = $this->tokenizer->next();
+            assert($token instanceof Token);
+            $this->tokenStack->add($token);
+            $types[] = $this->parseSingleTypeHint();
+        }
+
+        $unionType = $this->builder->buildAstUnionType();
+        foreach ($types as $type) {
+            $unionType->addChild($type);
+        }
+
+        return $unionType;
+    }
+
+    /**
+     * @param ASTType $type
+     *
+     * @return ASTType
+     */
+    protected function parseTypeHintCombination($type)
+    {
+        if ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+            return $this->parseUnionTypeHint($type);
+        }
+
+        return $type;
+    }
+
+    /**
+     * @param ASTNode $type
+     *
+     * @return bool
+     */
+    protected function canNotBeStandAloneType($type)
+    {
+        return $type instanceof ASTScalarType && ($type->isFalse() || $type->isNull());
+    }
+
+    /**
+     * Parses a type hint that is valid in the supported PHP version.
+     *
+     * @return ASTType|null
+     *
+     * @since 1.0.0
+     */
+    protected function parseTypeHint()
+    {
+        $this->consumeComments();
+        $token = $this->tokenizer->currentToken();
+        $type = $this->parseSingleTypeHint();
+
+        $type = $this->parseTypeHintCombination($type);
+
+        if ($this->canNotBeStandAloneType($type)) {
+            throw new ParserException(
+                $type->getImage() . ' can not be used as a standalone type',
+                0,
+                $this->getUnexpectedTokenException($token)
+            );
+        }
+
+        return $type;
     }
 
     /**
@@ -7014,8 +7243,7 @@ abstract class AbstractPHPParser
         while ($this->tokenizer->peek() !== Tokenizer::T_EOF) {
             $this->consumeComments();
 
-            if ($this->allowTrailingCommaInClosureUseList() &&
-                $this->tokenizer->peek() === Tokens::T_PARENTHESIS_CLOSE) {
+            if ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_CLOSE) {
                 break;
             }
 
@@ -7040,16 +7268,6 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $closure;
-    }
-
-    /**
-     * Trailing commas is allowed in closure use list from PHP 8.0
-     *
-     * @return bool
-     */
-    protected function allowTrailingCommaInClosureUseList()
-    {
-        return false;
     }
 
     /**
@@ -8444,9 +8662,18 @@ abstract class AbstractPHPParser
      */
     protected function parseThrowExpression()
     {
+        if ($this->tokenizer->peek() === Tokens::T_THROW) {
+            return $this->parseThrowStatement(array(
+                Tokens::T_SEMICOLON,
+                Tokens::T_COMMA,
+                Tokens::T_COLON,
+                Tokens::T_PARENTHESIS_CLOSE,
+                Tokens::T_SQUARED_BRACKET_CLOSE,
+            ));
+        }
+
         throw $this->getUnexpectedNextTokenException();
     }
-
     /**
      * Parses enum declaration. available since PHP 8.1. Ex.:
      *  enum Suit: string { case HEARTS = 'hearts'; }

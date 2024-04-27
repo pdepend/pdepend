@@ -48,10 +48,9 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\Parser\ParserException;
 
 /**
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @group unittest
  * @group php8
  */
