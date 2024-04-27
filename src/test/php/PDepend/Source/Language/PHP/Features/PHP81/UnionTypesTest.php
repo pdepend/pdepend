@@ -39,14 +39,14 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP80;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\Source\AST\ASTEchoStatement;
-use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTPropertyPostfix;
-use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTType;
+use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Parser\ParserException;
 
 /**
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
@@ -55,41 +55,65 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8
  */
-class NullsafeOperatorTest extends PHPParserVersion81TestCase
+class UnionTypesTest extends PHPParserVersion81TestCase
 {
-    public function testNullsafeOperator(): void
+    public function testUnionTypes(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $method->getFirstChildOfType(
+            ASTFormalParameter::class
+        );
+        $children = $parameter->getChildren();
+
+        static::assertInstanceOf(ASTUnionType::class, $children[0]);
+
+        /** @var ASTUnionType $unionType */
+        $unionType = $children[0];
+        static::assertSame('array|int|float|Bar\Biz|null', $unionType->getImage());
+
+        static::assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
 
         /** @var ASTVariableDeclarator $variable */
-        $variable = $method->getFirstChildOfType(
-            ASTVariableDeclarator::class
-        );
-
-        static::assertSame('$obj', $variable->getImage());
+        $variable = $children[1];
+        static::assertSame('$number', $variable->getImage());
     }
 
-    public function testNullsafeOperatorChain(): void
+    public function testUnionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
 
-        /** @var ASTEchoStatement $variable */
-        $echo = $method->getFirstChildOfType(ASTEchoStatement::class);
-        $chain = [];
-        $node = $echo;
+        /** @var ASTType $return */
+        $return = $method->getFirstChildOfType(
+            ASTType::class
+        );
 
-        while ($node = $node->getFirstChildOfType(ASTMemberPrimaryPrefix::class)) {
-            if ($variable = $node->getFirstChildOfType(ASTVariable::class)) {
-                $chain[] = $variable->getImage();
-            } elseif ($property = $node->getFirstChildOfType(ASTPropertyPostfix::class)) {
-                $chain[] = $property->getImage();
-            }
+        static::assertInstanceOf(ASTUnionType::class, $return);
+        static::assertSame('int|float|Bar\Biz|null', $return->getImage());
+    }
 
-            $chain[] = $node->getImage();
-        }
+    public function testUnionTypesAsReturnWithArray(): void
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
 
-        static::assertSame(['$this', '->', 'a', '?->', 'b', '->'], $chain);
+        /** @var ASTType $return */
+        $return = $method->getFirstChildOfType(
+            ASTType::class
+        );
+
+        static::assertInstanceOf(ASTUnionType::class, $return);
+        static::assertSame('array|iterable', $return->getImage());
+    }
+
+    public function testUnionTypesStandaloneNull(): void
+    {
+        $this->expectException(ParserException::class);
+        $this->expectExceptionMessage('null can not be used as a standalone type');
+
+        $this->getFirstMethodForTestCase();
     }
 }

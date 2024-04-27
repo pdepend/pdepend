@@ -39,7 +39,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP80;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
