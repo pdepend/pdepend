@@ -205,13 +205,6 @@ class Command
             unset($options['--without-annotations']);
         }
 
-        if (isset($options['--optimization'])) {
-            // This option is deprecated.
-            echo 'Option --optimization is ambiguous.', PHP_EOL;
-            // Remove option
-            unset($options['--optimization']);
-        }
-
         if (isset($options['--quiet'])) {
             $runSilent = true;
             unset($options['--quiet']);

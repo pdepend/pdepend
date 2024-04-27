@@ -533,23 +533,4 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'exceptionClassReferences'
         );
     }
-
-    // @codeCoverageIgnoreStart
-
-    /**
-     * This method can be called by the PDepend runtime environment or a
-     * utilizing component to free up memory. This methods are required for
-     * PHP version < 5.3 where cyclic references can not be resolved
-     * automatically by PHP's garbage collector.
-     *
-     * @return void
-     *
-     * @since  0.9.12
-     */
-    public function free()
-    {
-        trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
-    }
-
-    // @codeCoverageIgnoreEnd
 }

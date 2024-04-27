@@ -63,10 +63,8 @@ class IdBuilder
 {
     /**
      * @var array<string, array<string, int>>
-     *
-     * @deprecated 3.0.0 This property will no longer be accessible on the public access level in next major version.
      */
-    public $offsetInFile = array();
+    private $offsetInFile = array();
 
     /**
      * Generates an identifier for the given file instance.
