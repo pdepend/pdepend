@@ -27,7 +27,7 @@ jobs:
         php-version: ${{ matrix.php }}
         extensions: json
         tools: composer:v2
-        coverage: xdebug
+        coverage: pcov
 
     - name: Imagick SVG support
       run: sudo apt-get install libmagickcore-6.q16-3-extra
@@ -41,14 +41,10 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: |
-        composer require symfony/config:^5 symfony/dependency-injection:^5 symfony/filesystem:^5 --no-update --no-interaction
-        composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
+      run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
     - name: Coverage
       run: vendor/bin/paratest --coverage-clover=coverage.xml --coverage-text --coverage-html=coverage
-      env:
-        XDEBUG_MODE: coverage
 
     - name: Archive Code Coverage Results
       uses: codecov/codecov-action@v3
