@@ -48,7 +48,6 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * Test case for the {@link \PDepend\Source\AST\ASTCatchStatement} class.
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
  * @covers \PDepend\Source\AST\ASTAnonymousClass
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
