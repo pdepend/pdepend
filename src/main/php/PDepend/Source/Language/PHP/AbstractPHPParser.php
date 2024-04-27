@@ -2729,14 +2729,6 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @return bool
-     */
-    protected function allowTrailingCommaInSpecialFunctions()
-    {
-        return false;
-    }
-
-    /**
      * @param int $tokenType
      * @return ASTClassOrInterfaceReference
      */
@@ -5509,7 +5501,6 @@ abstract class AbstractPHPParser
                 $this->consumeComments();
 
                 if ($inCall &&
-                    $this->allowTrailingCommaInSpecialFunctions() &&
                     $this->tokenizer->peek() === Tokens::T_PARENTHESIS_CLOSE
                 ) {
                     break;
