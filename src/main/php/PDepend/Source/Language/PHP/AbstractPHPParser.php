@@ -8065,22 +8065,6 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * Throws an UnexpectedTokenException
-     *
-     * @throws UnexpectedTokenException
-     *
-     * @return never
-     *
-     * @since 2.2.5
-     * @deprecated 3.0.0 Use throw $this->getUnexpectedTokenException($token) instead
-     * @codeCoverageIgnore
-     */
-    protected function throwUnexpectedTokenException(?Token $token = null)
-    {
-        throw $this->getUnexpectedTokenException($token);
-    }
-
-    /**
      * @return void
      */
     protected function checkEllipsisInExpressionSupport()

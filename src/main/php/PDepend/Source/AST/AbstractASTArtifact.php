@@ -235,32 +235,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
     // BEGIN@deprecated
 
     /**
-     * Returns the doc comment for this item or <b>null</b>.
-     *
-     * @return string
-     *
-     * @deprecated Use getComment() inherit from ASTNode instead.
-     */
-    public function getDocComment()
-    {
-        return $this->getComment();
-    }
-
-    /**
-     * Sets the doc comment for this item.
-     *
-     * @param string $docComment
-     *
-     * @return void
-     *
-     * @deprecated Use setComment() inherit from ASTNode instead.
-     */
-    public function setDocComment($docComment)
-    {
-        $this->setComment($docComment);
-    }
-
-    /**
      * @template T of array<string, mixed>|string|null
      *
      * @param T $data

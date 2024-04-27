@@ -90,13 +90,6 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     private $rootClasses = array();
 
     /**
-     * @var array<integer>
-     *
-     * @deprecated 3.0.0 This property will no longer be accessible on the public access level in next major version.
-     */
-    public $derivedClasses = array();
-
-    /**
      * The maximum depth of inheritance tree value within the analyzed source code.
      *
      * @var int
@@ -246,10 +239,6 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     private function calculateNumberOfDerivedClasses(ASTClass $class)
     {
         $id = $class->getId();
-        if (isset($this->derivedClasses[$id]) === false) {
-            $this->derivedClasses[$id] = 0;
-        }
-
         $parentClass = $class->getParentClass();
         if ($parentClass !== null && $parentClass->isUserDefined()) {
             $id = $parentClass->getId();
