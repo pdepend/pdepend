@@ -159,39 +159,9 @@ class PHPParserVersion72Test extends AbstractTestCase
     }
 
     /**
-     * testParserThrowsExpectedExceptionForTraitAsClassName
-     */
-    public function testParserThrowsExpectedExceptionForTraitAsClassName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
      * testParserThrowsExpectedExceptionForTraitAsFunctionName
      */
     public function testParserThrowsExpectedExceptionForTraitAsFunctionName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForTraitAsInterfaceName
-     */
-    public function testParserThrowsExpectedExceptionForTraitAsInterfaceName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForTraitAsNamespaceName
-     */
-    public function testParserThrowsExpectedExceptionForTraitAsNamespaceName(): void
     {
         $this->expectException(UnexpectedTokenException::class);
 
@@ -209,39 +179,9 @@ class PHPParserVersion72Test extends AbstractTestCase
     }
 
     /**
-     * testParserThrowsExpectedExceptionForInsteadOfAsClassName
-     */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsClassName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
      * testParserThrowsExpectedExceptionForInsteadOfAsFunctionName
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsFunctionName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName
-     */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName
-     */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsNamespaceName(): void
     {
         $this->expectException(UnexpectedTokenException::class);
 
@@ -259,39 +199,9 @@ class PHPParserVersion72Test extends AbstractTestCase
     }
 
     /**
-     * testParserThrowsExpectedExceptionForCallableAsClassName
-     */
-    public function testParserThrowsExpectedExceptionForCallableAsClassName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
      * testParserThrowsExpectedExceptionForCallableAsFunctionName
      */
     public function testParserThrowsExpectedExceptionForCallableAsFunctionName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForCallableAsInterfaceName
-     */
-    public function testParserThrowsExpectedExceptionForCallableAsInterfaceName(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserThrowsExpectedExceptionForCallableAsInterfaceName
-     */
-    public function testParserThrowsExpectedExceptionForCallableAsNamespaceName(): void
     {
         $this->expectException(UnexpectedTokenException::class);
 
@@ -903,78 +813,6 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->assertSame('insteadof', $constants[2]->getImage());
     }
 
-    public function testCallableKeywordAsClassName(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: callable, line: 3, col: 7, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
-    public function testTraitKeywordAsClassName(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: trait, line: 3, col: 7, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
-    public function testInsteadofKeywordAsClassName(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: insteadof, line: 3, col: 7, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
-    public function testCallableKeywordAsInterfaceName(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: callable, line: 3, col: 11, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
-    public function testTraitKeywordAsInterfaceName(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: trait, line: 3, col: 11, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
-    public function testInsteadofKeywordAsInterfaceName(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: insteadof, line: 3, col: 11, file: '
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
     /**
      * Tests that the parser does not throw an exception when it detects a reserved
      * keyword in constant class names.
@@ -1146,7 +984,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion80',
             [$tokenizer, $builder, $cache]
         );
     }

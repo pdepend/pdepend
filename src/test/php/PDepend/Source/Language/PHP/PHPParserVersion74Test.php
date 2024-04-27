@@ -73,9 +73,9 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion74} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -394,37 +394,13 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->parseCodeResourceForTest()->current();
     }
 
-    public function testCatchWithoutVariable(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-        $this->expectExceptionMessage('Unexpected token: ), line: 8, col: 27');
-
-        $this->getFirstClassForTestCase();
-    }
-
-    public function testTrailingCommaInClosureUseListError(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-        $this->expectExceptionMessage('Unexpected token: ), line: 5, col: 32');
-
-        $this->parseCodeResourceForTest();
-    }
-
-    public function testTrailingCommaInParameterList(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-        $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 43');
-
-        $this->getFirstMethodForTestCase();
-    }
-
     /**
      * @return AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion80',
             [$tokenizer, $builder, $cache]
         );
     }

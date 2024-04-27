@@ -67,7 +67,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.9
  */
-abstract class PHPParserVersion80 extends PHPParserVersion74
+abstract class PHPParserVersion80 extends AbstractPHPParser
 {
     protected $possiblePropertyTypes = [
         Tokens::T_STRING,
