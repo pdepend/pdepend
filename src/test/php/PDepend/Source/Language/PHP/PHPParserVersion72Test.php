@@ -74,12 +74,11 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use ReflectionMethod;
 
 /**
- * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion72} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @group unittest
  */
 class PHPParserVersion72Test extends AbstractTestCase
@@ -1147,16 +1146,8 @@ class PHPParserVersion72Test extends AbstractTestCase
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion72',
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion73',
             [$tokenizer, $builder, $cache]
         );
-    }
-
-    public function testTrailingCommasInUnsetCall(): void
-    {
-        $this->expectException(UnexpectedTokenException::class);
-        $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 14');
-
-        $this->parseCodeResourceForTest();
     }
 }

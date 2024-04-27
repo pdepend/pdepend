@@ -50,7 +50,7 @@ namespace PDepend\Source\Language\PHP;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4
  */
-abstract class PHPParserVersion73 extends PHPParserVersion72
+abstract class PHPParserVersion73 extends AbstractPHPParser
 {
     /**
      * @return bool
