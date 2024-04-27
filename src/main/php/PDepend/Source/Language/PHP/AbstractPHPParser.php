@@ -200,20 +200,21 @@ abstract class AbstractPHPParser
 {
     /**
      * Regular expression for integer numbers representation.
-     * (Underscore and explicit octal notation were not allowed before PHP 7.4.)
+     * (Add support for octal explicit notation.)
      *
-     * @see https://github.com/php/doc-en/blob/528e97348f45b473ca8ecea9997be1e268703562/language/types/integer.xml#L74-L86
+     * @see https://php.net/manual/en/language.types.integer.php
+     * @see https://github.com/php/doc-en/blob/085c38d45e466691062b4444c71f4dbe4198f884/language/types/integer.xml#L79-L91
      */
     protected const REGEXP_INTEGER = '/^(
                        0
                        |
-                       [1-9][0-9]*
+                       [1-9][0-9]*(?:_[0-9]+)*
                        |
-                       0[xX][0-9a-fA-F]+
+                       0[xX][0-9a-fA-F]+(?:_[0-9a-fA-F]+)*
                        |
-                       0[0-7]+
+                       0[0-7]+(?:_[0-7]+)*
                        |
-                       0[bB][01]+
+                       0[bB][01]+(?:_[01]+)*
                      )$/x';
 
     /**
@@ -322,6 +323,16 @@ abstract class AbstractPHPParser
      * The used code tokenizer.
      */
     protected Tokenizer $tokenizer;
+
+    /** @var array<int, int> */
+    protected $possiblePropertyTypes = array(
+        Tokens::T_STRING,
+        Tokens::T_ARRAY,
+        Tokens::T_QUESTION_MARK,
+        Tokens::T_BACKSLASH,
+        Tokens::T_CALLABLE,
+        Tokens::T_SELF,
+    );
 
     /**
      * The name of the last detected namespace.
@@ -1497,6 +1508,19 @@ abstract class AbstractPHPParser
      */
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
+        /**
+         * Typed properties
+         * https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.typed-properties
+         */
+        if (in_array($tokenType, $this->possiblePropertyTypes, true)) {
+            $type = $this->parseTypeHint();
+            $declaration = $this->parseFieldDeclaration();
+            $declaration->prependChild($type);
+            $declaration->setModifiers($modifiers);
+
+            return $declaration;
+        }
+
         if ($tokenType != Tokens::T_CONST) {
             throw $this->getUnexpectedNextTokenException();
         }
@@ -3462,8 +3486,6 @@ abstract class AbstractPHPParser
                     $expressions[] = $expr;
                     break;
                 case Tokens::T_ELLIPSIS:
-                    $this->checkEllipsisInExpressionSupport();
-                    // no break
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -7734,7 +7756,6 @@ abstract class AbstractPHPParser
                     $this->consumeToken(Tokens::T_PLUS);
                     break;
                 case Tokens::T_ELLIPSIS:
-                    $this->checkEllipsisInExpressionSupport();
                     $this->consumeToken(Tokens::T_ELLIPSIS);
                     break;
                 case Tokens::T_MINUS:
@@ -7873,8 +7894,6 @@ abstract class AbstractPHPParser
                     $expressions[] = $this->parseShiftRightExpression();
                     break;
                 case Tokens::T_ELLIPSIS:
-                    $this->checkEllipsisInExpressionSupport();
-                    // no break
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -7995,7 +8014,24 @@ abstract class AbstractPHPParser
      */
     protected function parseLambdaFunctionDeclaration()
     {
-        throw $this->getUnexpectedNextTokenException();
+        $this->tokenStack->push();
+
+        if (Tokens::T_FN === $this->tokenizer->peek()) {
+            $this->consumeToken(Tokens::T_FN);
+        }
+
+        $closure = $this->builder->buildAstClosure();
+        $closure->setReturnsByReference($this->parseOptionalByReference());
+        $closure->addChild($this->parseFormalParameters($closure));
+        $this->parseCallableDeclarationAddition($closure);
+
+        $closure->addChild(
+            $this->buildReturnStatement(
+                $this->consumeToken(Tokens::T_DOUBLE_ARROW)
+            )
+        );
+
+        return $this->setNodePositionsAndReturn($closure);
     }
 
     /**
