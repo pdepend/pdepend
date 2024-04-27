@@ -51,14 +51,13 @@ use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\Builder\Builder;
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion73} class.
+ * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion73
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -66,18 +65,6 @@ use PDepend\Util\Cache\CacheDriver;
  */
 class PHPParserVersion73Test extends AbstractTestCase
 {
-    public function testArrowFunctions(): void
-    {
-        $this->expectException(
-            UnexpectedTokenException::class
-        );
-        $this->expectExceptionMessage(
-            'Unexpected token: fn, line: 4, col: 22, file:'
-        );
-
-        $this->parseCodeResourceForTest();
-    }
-
     public function testHereDocAndNowDoc(): void
     {
         /** @var ASTHeredoc $heredoc */
@@ -197,7 +184,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion73',
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
             [$tokenizer, $builder, $cache]
         );
     }

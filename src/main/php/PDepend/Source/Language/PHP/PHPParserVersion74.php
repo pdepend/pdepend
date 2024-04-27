@@ -53,7 +53,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.4
  */
-abstract class PHPParserVersion74 extends PHPParserVersion73
+abstract class PHPParserVersion74 extends AbstractPHPParser
 {
     /**
      * Regular expression for integer numbers representation.
