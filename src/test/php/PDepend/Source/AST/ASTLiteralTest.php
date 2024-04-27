@@ -172,7 +172,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      * @since 1.0.0
-     * @covers \PDepend\Source\Language\PHP\PHPParserVersion54
+     * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
      */
     public function testLiteralWithZeroBinaryIntegerValue()
     {
@@ -209,7 +209,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      * @since 1.0.0
-     * @covers \PDepend\Source\Language\PHP\PHPParserVersion54
+     * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
      */
     public function testLiteralWithNonZeroBinaryIntegerValue()
     {

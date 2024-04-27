@@ -51,7 +51,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion70
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
  * @covers \PDepend\Source\AST\ASTAnonymousClass
  * @group unittest
  */
