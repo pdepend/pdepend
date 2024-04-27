@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTCompoundVariable
  * @group unittest
  */
-class ASTCompoundVariableTest extends ASTNodeTest
+class ASTCompoundVariableTest extends ASTNodeTestCase
 {
     /**
      * Tests that a parsed compound variable has the expected object graph.
@@ -116,10 +116,11 @@ class ASTCompoundVariableTest extends ASTNodeTest
      * Tests that an invalid compound variable results in the expected exception.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testUnclosedCompoundVariableThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->parseCodeResourceForTest();
     }
     

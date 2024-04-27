@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4]
+        php: [8.1]
         setup: [prefer-stable]
 
     name: Release phar
@@ -36,7 +36,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
@@ -44,18 +44,17 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress --no-dev -o -a
 
-      - name: Git submodules
-        run: git submodule update --init
-
-      - name: Ant
+      - name: Build
         run: |
-          php src/conf/prepare-phar.php
-          ant package -D-phar:filename=./pdepend.phar;
+          php scripts/update-version.php;
+          php -d phar.readonly=0 scripts/build.php;
+          chmod +x ./pdepend.phar;
           ./pdepend.phar --version;
 
       - name: Sign phar
+        if: github.repository == 'pdepend/pdepend' && github.event_name == 'release'
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}

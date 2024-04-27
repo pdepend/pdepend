@@ -42,7 +42,7 @@
 
 namespace PDepend\PDepend\Source\Parser;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Parser\SymbolTable;
 
 /**
@@ -51,15 +51,17 @@ use PDepend\Source\Parser\SymbolTable;
  * @covers \PDepend\Source\Parser\SymbolTable
  * @group unittest
  */
-class SymbolTableTest extends AbstractTest
+class SymbolTableTest extends AbstractTestCase
 {
     /**
      * Tests that no symbol can be added to a symbol table without active scope.
      */
     public function testCannotAddSymbolToASymbolTableWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 
@@ -73,8 +75,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotPerformLookupOnASymbolTableWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 
@@ -88,8 +92,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotResetWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 
@@ -103,8 +109,10 @@ class SymbolTableTest extends AbstractTest
      */
     public function testCannotDestroyWithoutActiveScope()
     {
-        $this->setExpectedException(
-            '\PDepend\Source\Parser\NoActiveScopeException',
+        $this->expectException(
+            '\PDepend\Source\Parser\NoActiveScopeException'
+        );
+        $this->expectExceptionMessage(
             'No active scope in symbol table.'
         );
 

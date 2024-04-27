@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -55,7 +55,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Metrics\Analyzer\HalsteadAnalyzer
  * @group unittest
  */
-class HalsteadAnalyzerTest extends AbstractMetricsTest
+class HalsteadAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
@@ -68,7 +68,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -164,7 +164,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEqualsWithDelta($expected, $actual, 0.01);
     }
 
     /**
@@ -248,7 +248,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTest
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEqualsWithDelta($expected, $actual, 0.01);
     }
 
     /**

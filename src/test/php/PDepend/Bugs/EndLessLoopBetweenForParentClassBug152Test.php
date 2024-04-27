@@ -48,10 +48,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
+class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestCase
 {
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass
@@ -71,10 +70,11 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
      *
      * @return void
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
@@ -152,6 +152,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTest
             ->current()
             ->getClasses();
 
-        $this->assertEquals(1, count($classes));
+        $this->assertCount(1, $classes);
     }
 }

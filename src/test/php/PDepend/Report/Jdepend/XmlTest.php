@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Jdepend;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 
@@ -55,7 +55,7 @@ use PDepend\Report\DummyAnalyzer;
  * @covers \PDepend\Report\Jdepend\Xml
  * @group unittest
  */
-class XmlTest extends AbstractTest
+class XmlTest extends AbstractTestCase
 {
     /**
      * Test code structure.
@@ -83,7 +83,7 @@ class XmlTest extends AbstractTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -95,7 +95,7 @@ class XmlTest extends AbstractTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         @unlink($this->resultFile);
 
@@ -124,8 +124,10 @@ class XmlTest extends AbstractTest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Report\\NoLogOutputException',
+        $this->expectException(
+            '\\PDepend\\Report\\NoLogOutputException'
+        );
+        $this->expectExceptionMessage(
             "The log target is not configured for 'PDepend\\Report\\Jdepend\\Xml'."
         );
 

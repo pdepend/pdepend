@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the code property class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTProperty
  * @group unittest
  */
-class ASTPropertyTest extends AbstractTest
+class ASTPropertyTest extends AbstractTestCase
 {
     /**
      * testGetDeclaringClass
@@ -279,7 +279,7 @@ class ASTPropertyTest extends AbstractTest
     public function testPropertyContainsExpectDefaultValueArray()
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertInternalType('array', $property->getDefaultValue());
+        $this->assertIsArray($property->getDefaultValue());
     }
 
     /**
@@ -290,7 +290,7 @@ class ASTPropertyTest extends AbstractTest
     public function testPropertyContainsExpectedDefaultValueFloat()
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(3.14, $property->getDefaultValue(), '', 0.001);
+        $this->assertEqualsWithDelta(3.14, $property->getDefaultValue(), 0.001);
     }
 
     /**
@@ -478,7 +478,7 @@ class ASTPropertyTest extends AbstractTest
             ->method('visitProperty');
 
         $property = $this->getMockBuilder('PDepend\\Source\\AST\\ASTProperty')
-            ->setMethods(array('__construct'))
+            ->onlyMethods(array('__construct'))
             ->disableOriginalConstructor()
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTProperty')
             ->getMock();

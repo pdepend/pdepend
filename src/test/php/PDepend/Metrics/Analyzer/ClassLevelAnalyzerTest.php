@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
@@ -56,17 +56,18 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Metrics\Analyzer\ClassLevelAnalyzer
  * @group unittest
  */
-class ClassLevelAnalyzerTest extends AbstractMetricsTest
+class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * Tests that the {@link \PDepend\Metrics\Analyzer\ClassLevelAnalyzer::analyzer()}
      * method fails with an exception if no cc analyzer was set.
      *
      * @return void
-     * @expectedException RuntimeException
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail()
     {
+        $this->expectException(\RuntimeException::class);
+
         $namespace = new ASTNamespace('package1');
         $namespaces = new ASTArtifactList(array($namespace));
 
@@ -79,10 +80,11 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * fails for an invalid child analyzer.
      *
      * @return void
-     * @expectedException InvalidArgumentException
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer(new CodeRankAnalyzer());
     }
@@ -469,10 +471,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * a single measured metric.
      *
      * @param string $name Name of the searched metric.
-     *
-     * @return mixed
      */
-    private function calculateClassMetric($name)
+    private function calculateClassMetric($name): mixed
     {
         $metrics = $this->calculateClassMetrics();
         return $metrics[$name];
@@ -482,7 +482,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * Analyzes the source code associated with the calling test method and
      * returns all measured metrics.
      *
-     * @return mixed
+     * @return array<string, mixed>
      */
     private function calculateClassMetrics()
     {
@@ -508,7 +508,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
     {
         $metrics = $this->calculateTraitMetrics();
 
-        $this->assertInternalType('array', $metrics);
+        $this->assertIsArray($metrics);
 
         return $metrics;
     }
@@ -674,7 +674,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTest
      * Analyzes the source code associated with the calling test method and
      * returns all measured metrics.
      *
-     * @return mixed
+     * @return array<string, mixed>
      * @since 1.0.6
      */
     private function calculateTraitMetrics()

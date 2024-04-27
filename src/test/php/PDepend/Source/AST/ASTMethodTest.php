@@ -55,7 +55,7 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
  * @covers \PDepend\Source\AST\ASTMethod
  * @group unittest
  */
-class ASTMethodTest extends AbstractASTArtifactTest
+class ASTMethodTest extends AbstractASTArtifactTestCase
 {
     /**
      * testIsCachedReturnsFalseByDefault
@@ -297,10 +297,11 @@ class ASTMethodTest extends AbstractASTArtifactTest
      *
      * @return void
      * @covers \PDepend\Source\AST\ASTCompilationUnitNotFoundException
-     * @expectedException \PDepend\Source\AST\ASTCompilationUnitNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined()
     {
+        $this->expectException(\PDepend\Source\AST\ASTCompilationUnitNotFoundException::class);
+
         $method = new ASTMethod('method');
         $method->getCompilationUnit();
     }
@@ -322,19 +323,6 @@ class ASTMethodTest extends AbstractASTArtifactTest
         $method->setParent($class);
 
         $this->assertSame($file, $method->getCompilationUnit());
-    }
-
-    /**
-     * Tests that the build interface method doesn't update an existing source
-     * file info.
-     *
-     * @return void
-     */
-    public function testDoesntSetSourceFileInformationForNotNullValue()
-    {
-        $this->markTestSkipped(
-            'This test should be removed, but a default implementation exists.'
-        );
     }
 
     /**
@@ -400,7 +388,7 @@ class ASTMethodTest extends AbstractASTArtifactTest
      */
     public function testSetInvalidModifierFail()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
 
         $method = new ASTMethod('method');
         $method->setModifiers(-1);
@@ -808,11 +796,12 @@ class ASTMethodTest extends AbstractASTArtifactTest
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage An AST node should contain at least one token
      */
     public function testSetTokensWithEmptyArray()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('An AST node should contain at least one token');
+
         $method = new ASTMethod('FooBar');
         $method->setTokens(array());
     }

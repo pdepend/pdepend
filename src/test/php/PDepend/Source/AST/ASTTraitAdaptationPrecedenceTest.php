@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTraitAdaptationPrecedence
  * @group unittest
  */
-class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
+class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 {
     /**
      * testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences
@@ -64,12 +64,10 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
     public function testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences()
     {
         $stmt = $this->getFirstTraitAdaptationPrecedenceInClass();
-        $this->assertEquals(
+        $this->assertCount(
             3,
-            count(
-                $stmt->findChildrenOfType(
-                    'PDepend\\Source\\AST\\ASTTraitReference'
-                )
+            $stmt->findChildrenOfType(
+                'PDepend\\Source\\AST\\ASTTraitReference'
             )
         );
     }
@@ -78,10 +76,11 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTest
      * testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\InvalidStateException
      */
     public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+
         $this->getFirstTraitAdaptationPrecedenceInClass();
     }
 

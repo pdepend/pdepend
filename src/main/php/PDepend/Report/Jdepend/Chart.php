@@ -55,6 +55,7 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PDepend\Util\FileUtil;
 use PDepend\Util\ImageConvert;
 use PDepend\Util\Utf8Util;
+use RuntimeException;
 
 /**
  * Generates a chart with the aggregated metrics.
@@ -155,7 +156,12 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $bias = 0.1;
 
         $svg = new DOMDocument('1.0', 'UTF-8');
-        $svg->loadXML(file_get_contents(dirname(__FILE__) . '/chart.svg'));
+        $templatePath = __DIR__ . '/chart.svg';
+        $template = file_get_contents($templatePath);
+        if (!$template) {
+            throw new RuntimeException('Missing ' . $templatePath);
+        }
+        $svg->loadXML($template);
 
         $layer = $svg->getElementById('jdepend.layer');
 

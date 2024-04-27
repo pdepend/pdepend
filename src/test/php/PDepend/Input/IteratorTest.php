@@ -42,7 +42,7 @@
 
 namespace PDepend\Input;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the php file filter iterator.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Input\Iterator
  * @group unittest
  */
-class IteratorTest extends AbstractTest
+class IteratorTest extends AbstractTestCase
 {
     /**
      * testIteratorWithOneFileExtension
@@ -123,7 +123,7 @@ class IteratorTest extends AbstractTest
         $iterator = new Iterator(
             new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
             $filter,
-            dirname(__FILE__)
+            __DIR__
         );
         $iterator->accept();
     }

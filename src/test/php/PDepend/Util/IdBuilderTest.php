@@ -43,7 +43,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
@@ -60,7 +60,7 @@ use PDepend\Source\AST\ASTMethod;
  * @covers \PDepend\Util\IdBuilder
  * @group unittest
  */
-class IdBuilderTest extends AbstractTest
+class IdBuilderTest extends AbstractTestCase
 {
     /**
      * testBuilderCreatesExpectedIdentifierForFile
@@ -72,7 +72,7 @@ class IdBuilderTest extends AbstractTest
         $file    = new ASTCompilationUnit(__FILE__);
         $builder = new IdBuilder();
 
-        $this->assertRegExp('/^[a-z0-9]{11}$/', $builder->forFile($file));
+        $this->assertMatchesRegularExpression('/^[a-z0-9]{11}$/', $builder->forFile($file));
     }
 
     /**
@@ -116,7 +116,7 @@ class IdBuilderTest extends AbstractTest
 
         $builder = new IdBuilder();
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class));
     }
 
     /**
@@ -135,7 +135,7 @@ class IdBuilderTest extends AbstractTest
         $builder = new IdBuilder();
         $builder->forClassOrInterface($class);
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forClassOrInterface($class));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forClassOrInterface($class));
     }
 
     /**
@@ -157,7 +157,7 @@ class IdBuilderTest extends AbstractTest
         $builder = new IdBuilder();
         $builder->forClassOrInterface($class1);
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class2));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class2));
     }
 
     /**
@@ -169,10 +169,10 @@ class IdBuilderTest extends AbstractTest
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);
-        
+
         $class0 = new ASTClass(__FUNCTION__);
         $class0->setCompilationUnit($compilationUnit);
-        
+
         $class1 = new ASTClass(strtolower(__FUNCTION__));
         $class1->setCompilationUnit($compilationUnit);
 
@@ -225,7 +225,7 @@ class IdBuilderTest extends AbstractTest
 
         $builder = new IdBuilder();
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function));
     }
 
     /**
@@ -268,7 +268,7 @@ class IdBuilderTest extends AbstractTest
 
         $builder = new IdBuilder();
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}$/', $builder->forMethod($method));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}$/', $builder->forMethod($method));
     }
 
     /**
@@ -287,7 +287,7 @@ class IdBuilderTest extends AbstractTest
         $builder = new IdBuilder();
         $builder->forFunction($function);
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forFunction($function));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forFunction($function));
     }
 
     /**
@@ -309,7 +309,7 @@ class IdBuilderTest extends AbstractTest
         $builder = new IdBuilder();
         $builder->forFunction($function1);
 
-        $this->assertRegExp('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function2));
+        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function2));
     }
 
     /**

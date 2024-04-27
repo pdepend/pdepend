@@ -47,7 +47,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
  * @group unittest
  * @group php8.2
  */
-class DisjunctiveNormalFormTypesTest extends PHPParserVersion82Test
+class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void
@@ -116,12 +116,15 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82Test
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
         $children = $type->getChildren();
 
-        $this->assertCount(2, $children);
+        $this->assertCount(3, $children);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
         $this->assertSame('A&B', $children[0]->getImage());
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[1]);
         $this->assertSame('D', $children[1]->getImage());
+
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[1]);
+        $this->assertSame('null', $children[2]->getImage());
     }
 
     /**

@@ -198,7 +198,12 @@ class Pyramid implements FileAwareGenerator
         $proportions = $this->computeProportions($metrics);
 
         $svg = new DOMDocument('1.0', 'UTF-8');
-        $svg->loadXML(file_get_contents(dirname(__FILE__) . '/pyramid.svg'));
+        $templatePath = __DIR__ . '/pyramid.svg';
+        $template = file_get_contents($templatePath);
+        if (!$template) {
+            throw new RuntimeException('Missing ' . $templatePath);
+        }
+        $svg->loadXML($template);
 
         $items = array_merge($metrics, $proportions);
         foreach ($items as $name => $value) {

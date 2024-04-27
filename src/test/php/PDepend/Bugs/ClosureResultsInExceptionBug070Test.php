@@ -48,10 +48,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
+class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser does not throw an exception when it detects a
@@ -98,10 +97,11 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTest
      * Tests that the parser handles a closure function with bound variables.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

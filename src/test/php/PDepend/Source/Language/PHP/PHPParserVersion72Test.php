@@ -40,7 +40,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
@@ -57,7 +57,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
  * @group unittest
  */
-class PHPParserVersion72Test extends AbstractTest
+class PHPParserVersion72Test extends AbstractTestCase
 {
     /**
      * @return void
@@ -128,11 +128,12 @@ class PHPParserVersion72Test extends AbstractTest
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 4, col: 14
      */
     public function testTrailingCommasInUnsetCall()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 14');
+
         $this->parseCodeResourceForTest();
     }
 }

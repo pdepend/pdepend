@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -55,7 +55,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
  * @group unittest
  */
-class PHPParserGenericTest extends AbstractTest
+class PHPParserGenericTest extends AbstractTestCase
 {
     /**
      * testParserAcceptsStringAsClassName
@@ -369,10 +369,11 @@ class PHPParserGenericTest extends AbstractTest
      *
      * @return void
      * @covers \PDepend\Source\Parser\TokenStreamEndException
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -381,10 +382,11 @@ class PHPParserGenericTest extends AbstractTest
      *
      * @return void
      * @covers \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -599,10 +601,11 @@ class PHPParserGenericTest extends AbstractTest
      * testParserThrowsExpectedExceptionForInvalidToken
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForInvalidToken()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 
@@ -610,10 +613,11 @@ class PHPParserGenericTest extends AbstractTest
      * testParserThrowsExpectedExceptionForTokenStreamEnd
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionForTokenStreamEnd()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->parseCodeResourceForTest();
     }
 

@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTNamedArgument;
  * @group unittest
  * @group php8
  */
-class ConstructorPropertyPromotionTest extends PHPParserVersion80Test
+class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void
@@ -133,11 +133,12 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80Test
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenException
-     * @expectedExceptionMessage Unexpected token: private, line: 5, col: 9
      */
     public function testPropertyPromotionOnRandomMethod()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenException::class);
+        $this->expectExceptionMessage('Unexpected token: private, line: 5, col: 9');
+
         $this->parseCodeResourceForTest();
     }
 }

@@ -12,3 +12,6 @@ composer.phar
 composer.lock
 dist
 /clover.xml
+.phpunit.cache
+coverage.xml
+coverage

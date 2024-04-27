@@ -50,15 +50,13 @@ use PDepend\Source\AST\ASTMethod;
  * @group unittest
  * @group php8
  */
-class AttributeTest extends PHPParserVersion80Test
+class AttributeTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void
      */
     public function testAttribute()
     {
-        self::needsPHP80();
-
         $types = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes();

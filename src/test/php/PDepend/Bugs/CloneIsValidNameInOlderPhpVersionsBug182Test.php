@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTest
+class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTestCase
 {
     /**
      * testParserAcceptsCloneAsFunctionName

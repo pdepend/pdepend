@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTFieldDeclaration;
  * @covers \PDepend\Source\AST\ASTFieldDeclaration
  * @group unittest
  */
-class ASTFieldDeclarationTest extends ASTNodeTest
+class ASTFieldDeclarationTest extends ASTNodeTestCase
 {
     /**
      * Tests that a field declaration contains the expected class reference.
@@ -149,8 +149,10 @@ class ASTFieldDeclarationTest extends ASTNodeTest
     {
         $declaration = new ASTFieldDeclaration();
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
+        $this->expectException(
+            'InvalidArgumentException'
+        );
+        $this->expectExceptionMessage(
             'Invalid field modifiers given, allowed modifiers are ' .
             'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.'
         );

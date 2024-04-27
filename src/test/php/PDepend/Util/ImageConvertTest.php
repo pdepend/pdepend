@@ -42,7 +42,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the image convert utility class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\ImageConvert
  * @group unittest
  */
-class ImageConvertTest extends AbstractTest
+class ImageConvertTest extends AbstractTestCase
 {
     /**
      * Tests the copy behaviour for same mime types.
@@ -63,7 +63,7 @@ class ImageConvertTest extends AbstractTest
     public function testConvertMakesCopyForSameMimeType()
     {
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.out.svg');
+        $output = $this->createRunResourceURI('pdepend.out') . '.svg';
 
         ImageConvert::convert($input, $output);
         $this->assertFileEquals($input, $output);
@@ -79,7 +79,7 @@ class ImageConvertTest extends AbstractTest
         $this->requireImagick();
 
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.out.png');
+        $output = $this->createRunResourceURI('pdepend.out') . '.png';
 
         ImageConvert::convert($input, $output);
         $this->assertFileExists($output);
@@ -110,7 +110,7 @@ class ImageConvertTest extends AbstractTest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
     {
-        $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
+        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
         $this->assertEquals(25, substr_count($svg, 'font-family:Arial'));
     }
 
@@ -130,7 +130,7 @@ class ImageConvertTest extends AbstractTest
         ConfigurationInstance::set($config);
 
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.svg');
+        $output = $this->createRunResourceURI('pdepend') . '.svg';
 
         ImageConvert::convert($input, $output);
 
@@ -145,7 +145,7 @@ class ImageConvertTest extends AbstractTest
      */
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
     {
-        $svg = file_get_contents(dirname(__FILE__) . '/_input/pyramid.svg');
+        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
         $this->assertEquals(25, substr_count($svg, 'font-size:11px'));
     }
 
@@ -165,7 +165,7 @@ class ImageConvertTest extends AbstractTest
         ConfigurationInstance::set($config);
 
         $input  = $this->createInputSvg();
-        $output = $this->createRunResourceURI('pdepend.svg');
+        $output = $this->createRunResourceURI('pdepend') . '.svg';
 
         ImageConvert::convert($input, $output);
 
@@ -181,7 +181,7 @@ class ImageConvertTest extends AbstractTest
     protected function createInputSvg()
     {
         $input = $this->createRunResourceURI(uniqid('input_')) . '.svg';
-        copy(dirname(__FILE__) . '/_input/pyramid.svg', $input);
+        copy(__DIR__ . '/_input/pyramid.svg', $input);
 
         return $input;
     }

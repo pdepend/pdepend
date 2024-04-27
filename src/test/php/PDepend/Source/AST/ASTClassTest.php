@@ -60,7 +60,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTClassTest extends AbstractASTArtifactTest
+class ASTClassTest extends AbstractASTArtifactTestCase
 {
     /**
      * testGetAllMethodsContainsMethodsOfImplementedInterface
@@ -353,7 +353,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(1, count($class->getAllMethods()));
+        $this->assertCount(1, $class->getAllMethods());
     }
 
     /**
@@ -362,12 +362,13 @@ class ASTClassTest extends AbstractASTArtifactTest
      * @return void
      * @since 1.0.0
      * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
-     * @expectedException \PDepend\Source\AST\ASTTraitMethodCollisionException
      *
      * @group issue-154
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\AST\ASTTraitMethodCollisionException::class);
+
         $class = $this->getFirstClassForTestCase();
         $class->getAllMethods();
     }
@@ -393,7 +394,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertSame(2, count($class->getChildren()));
+        $this->assertCount(2, $class->getChildren());
     }
 
     /**
@@ -538,7 +539,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetDependenciesReturnsEmptyResultByDefault()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(0, count($class->getDependencies()));
+        $this->assertCount(0, $class->getDependencies());
     }
 
     /**
@@ -550,7 +551,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetDependenciesContainsImplementedInterface()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(1, count($class->getDependencies()));
+        $this->assertCount(1, $class->getDependencies());
     }
 
     /**
@@ -562,7 +563,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetDependenciesContainsImplementedInterfaces()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(3, count($class->getDependencies()));
+        $this->assertCount(3, $class->getDependencies());
     }
 
     /**
@@ -574,7 +575,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetDependenciesContainsParentClass()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(1, count($class->getDependencies()));
+        $this->assertCount(1, $class->getDependencies());
     }
 
     /**
@@ -586,7 +587,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetDependenciesContainsParentClassAndInterfaces()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(3, count($class->getDependencies()));
+        $this->assertCount(3, $class->getDependencies());
     }
 
     /**
@@ -712,7 +713,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
 
-        $this->assertEquals(4, count($params));
+        $this->assertCount(4, $params);
     }
 
     /**
@@ -727,7 +728,7 @@ class ASTClassTest extends AbstractASTArtifactTest
             'PDepend\\Source\\AST\\ASTVariableDeclarator'
         );
 
-        $this->assertEquals(2, count($params));
+        $this->assertCount(2, $params);
     }
 
     /**
@@ -848,7 +849,7 @@ class ASTClassTest extends AbstractASTArtifactTest
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, count($orig->getNamespace()->getClasses()));
+        $this->assertCount(1, $orig->getNamespace()->getClasses());
     }
 
     /**
@@ -915,10 +916,11 @@ class ASTClassTest extends AbstractASTArtifactTest
      * when it is called with an invalid modifier.
      *
      * @return void
-     * @expectedException InvalidArgumentException
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifier()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(
             2 |
@@ -1192,17 +1194,18 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetPropertiesReturnsExpectedNumberOfProperties()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(6, count($class->getProperties()));
+        $this->assertCount(6, $class->getProperties());
     }
 
     /**
      * Tests that it is not possible to overwrite previously set class modifiers.
      *
      * @return void
-     * @expectedException BadMethodCallException
      */
     public function testSetModifiersThrowsExpectedExceptionOnOverwrite()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(State::IS_FINAL);
         $class->setModifiers(State::IS_FINAL);
@@ -1391,10 +1394,11 @@ class ASTClassTest extends AbstractASTArtifactTest
      *
      * @return void
      * @covers \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
@@ -1461,10 +1465,11 @@ class ASTClassTest extends AbstractASTArtifactTest
      *
      * @return void
      * @covers \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
-     * @expectedException \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy()
     {
+        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+
         $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
@@ -1491,7 +1496,7 @@ class ASTClassTest extends AbstractASTArtifactTest
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces()
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(3, count($class->getInterfaceReferences()));
+        $this->assertCount(3, $class->getInterfaceReferences());
     }
 
     /**

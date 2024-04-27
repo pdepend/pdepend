@@ -10,23 +10,29 @@
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
-        "php": ">=7.2.0",
-        "symfony/config": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-        "symfony/dependency-injection": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-        "symfony/filesystem": "^2.3.0|^3|^4|^5|^6.0|^7.0",
+        "php": ">=8.1",
+        "symfony/config": "^5.4|^6.0|^7.0",
+        "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+        "symfony/filesystem": "^5.4|^6.0|^7.0",
         "symfony/polyfill-mbstring": "^1.19"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.0.0",
+        "brianium/paratest": "^7.3",
+        "easy-doc/easy-doc": "0.0.0|^1.2.3",
         "gregwar/rst": "^1.0",
-        "easy-doc/easy-doc": "0.0.0|^1.2.3"
+        "phpstan/phpstan": "~1.10.67",
+        "phpunit/phpunit": "^10.5.20",
+        "squizlabs/php_codesniffer": "^2.0.0"
+    },
+    "replace": {
+        "symfony/polyfill-php80": "*"
     },
     "bin": ["src/bin/pdepend"],
     "autoload": {
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
     },
     "scripts": {
-        "test": "php src/test/php/PDepend/install-test-vendor.php && php src/test/vendor/bin/phpunit --no-coverage",
+        "test": "paratest --no-coverage",
         "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "build-website": [
@@ -40,6 +46,7 @@
         }
     },
     "config": {
-        "process-timeout": 900
+        "process-timeout": 900,
+        "sort-packages": true
     }
 }

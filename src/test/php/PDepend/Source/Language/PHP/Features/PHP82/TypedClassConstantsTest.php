@@ -47,15 +47,17 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
  * @group unittest
  * @group php8.2
  */
-class TypedClassConstantsTest extends PHPParserVersion82Test
+class TypedClassConstantsTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void
      */
     public function testInterface()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: string, line: 4, col: 11, file: '
         );
 
@@ -67,8 +69,10 @@ class TypedClassConstantsTest extends PHPParserVersion82Test
      */
     public function testBroken()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: 7, line: 4, col: 11, file: '
         );
 

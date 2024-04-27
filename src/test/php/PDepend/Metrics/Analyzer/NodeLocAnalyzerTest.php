@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
@@ -56,7 +56,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Metrics\Analyzer\NodeLocAnalyzer
  * @group unittest
  */
-class NodeLocAnalyzerTest extends AbstractMetricsTest
+class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
@@ -69,7 +69,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -128,7 +128,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
 
         ksort($expected);
         ksort($actual);
-        
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -700,10 +700,9 @@ class NodeLocAnalyzerTest extends AbstractMetricsTest
      *
      * @param string $name The name of the requested metric.
      *
-     * @return mixed
      * @since 0.10.2
      */
-    private function calculateFunctionMetric($name)
+    private function calculateFunctionMetric($name): mixed
     {
         $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
         $function = $namespaces->current()

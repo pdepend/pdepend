@@ -94,13 +94,13 @@ final class CollectionArtifactFilter implements ArtifactFilter
     /**
      * Sets the used filter instance.
      *
-     * @param ArtifactFilter $filter
+     * @param ?ArtifactFilter $filter
      *
      * @return void
      *
      * @since  0.9.12
      */
-    public function setFilter(ArtifactFilter $filter = null)
+    public function setFilter(?ArtifactFilter $filter = null)
     {
         $this->filter = $filter;
     }

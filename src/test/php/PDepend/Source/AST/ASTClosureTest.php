@@ -49,11 +49,10 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\ASTClosure
  * @group unittest
  */
-class ASTClosureTest extends ASTNodeTest
+class ASTClosureTest extends ASTNodeTestCase
 {
     /**
      * testReturnsByReferenceReturnsFalseByDefault
@@ -203,7 +202,7 @@ class ASTClosureTest extends ASTNodeTest
     public function testClosureContainsExpectedNumberChildNodes()
     {
         $closure = $this->getFirstClosureInFunction();
-        $this->assertEquals(2, count($closure->getChildren()));
+        $this->assertCount(2, $closure->getChildren());
     }
 
     /**

@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTClass;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTClass;
  * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer
  * @group unittest
  */
-class CodeRankAnalyzerTest extends AbstractMetricsTest
+class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * Test input data.
@@ -65,7 +65,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
         'package1'    =>  array('cr'  =>  0.2775,     'rcr'  =>  0.385875),
         'package2'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.47799375),
         'package3'    =>  array('cr'  =>  0.385875,   'rcr'  =>  0.2775),
-        CORE_PACKAGE  =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
+        'core'        =>  array('cr'  =>  0.47799375, 'rcr'  =>  0.15),
         'pkg1Foo'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2FooI'    =>  array('cr'  =>  0.15,       'rcr'  =>  0.181875),
         'pkg2Bar'     =>  array('cr'  =>  0.15,       'rcr'  =>  0.1755),
@@ -407,7 +407,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
     public function testGetNodeMetrics()
     {
         $namespaces = $this->parseCodeResourceForTest();
-        
+
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);
 
@@ -425,12 +425,12 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
         foreach ($expected as $key => $info) {
             $metrics = $this->analyzer->getNodeMetrics($info[0]);
 
-            $this->assertEquals($info[1]['cr'], $metrics['cr'], '', 0.00005);
-            $this->assertEquals($info[1]['rcr'], $metrics['rcr'], '', 0.00005);
+            $this->assertEqualsWithDelta($info[1]['cr'], $metrics['cr'], 0.00005);
+            $this->assertEqualsWithDelta($info[1]['rcr'], $metrics['rcr'], 0.00005);
 
             unset($expected[$key]);
         }
-        $this->assertEquals(0, count($expected));
+        $this->assertCount(0, $expected);
     }
 
     /**
@@ -448,12 +448,12 @@ class CodeRankAnalyzerTest extends AbstractMetricsTest
 
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);
-        
+
         $class   = new ASTClass('PDepend');
         $metrics = $this->analyzer->getNodeMetrics($class);
 
-        $this->assertInternalType('array', $metrics);
-        $this->assertEquals(0, count($metrics));
+        $this->assertIsArray($metrics);
+        $this->assertCount(0, $metrics);
     }
 
     protected function getCodeRankForTestCase(array $options = array())

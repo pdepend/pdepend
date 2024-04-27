@@ -54,10 +54,9 @@ use PDepend\Util\Configuration\ConfigurationFactory;
  * @link https://www.pivotaltracker.com/story/show/13405179
  *
  * @ticket 13405179
- * @covers \stdClass
  * @group regressiontest
  */
-class PHPDependBug13405179Test extends AbstractRegressionTest
+class PHPDependBug13405179Test extends AbstractRegressionTestCase
 {
     /**
      * testLogFileIsCreatedForUnstructuredCode
@@ -88,7 +87,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTest
      *
      * @return array
      */
-    public function getLoggerClassNames()
+    public static function getLoggerClassNames()
     {
         return array(
             array('PDepend\\Report\\Jdepend\\Chart', 'svg'),

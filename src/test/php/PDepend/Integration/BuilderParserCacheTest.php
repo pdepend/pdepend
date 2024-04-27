@@ -42,7 +42,7 @@
 
 namespace PDepend\Integration;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -54,10 +54,9 @@ use PDepend\Util\Cache\Driver\FileCacheDriver;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group integrationtest
  */
-class BuilderParserCacheTest extends AbstractTest
+class BuilderParserCacheTest extends AbstractTestCase
 {
     /**
      * The temporary cache directory.
@@ -85,11 +84,12 @@ class BuilderParserCacheTest extends AbstractTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cacheDir');
+        unlink($this->cacheDir);
         $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
         $this->testFile = $this->createRunResourceURI('testFile');
     }

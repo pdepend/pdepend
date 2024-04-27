@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConditionalExpression
  * @group unittest
  */
-class ASTConditionalExpressionTest extends ASTNodeTest
+class ASTConditionalExpressionTest extends ASTNodeTestCase
 {
     /**
      * testConditionalExpressionHasExpectedStartLine

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTLabelStatement
  * @group unittest
  */
-class ASTLabelStatementTest extends ASTNodeTest
+class ASTLabelStatementTest extends ASTNodeTestCase
 {
     /**
      * testLabelStatementHasExpectedStartLine

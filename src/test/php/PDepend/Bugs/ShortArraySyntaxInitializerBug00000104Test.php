@@ -56,10 +56,9 @@ namespace PDepend\Bugs;
  *
  * @ticket 104
  * @ticket 95
- * @covers \stdClass
  * @group regressiontest
  */
-class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTest
+class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTestCase
 {
     /**
      * testPropertyDefaultValue

@@ -53,7 +53,7 @@ namespace PDepend\Source\Parser;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class UnstructuredCodeTest extends AbstractParserTest
+class UnstructuredCodeTest extends AbstractParserTestCase
 {
     /**
      * testParserHandlesNonPhpCodeInFileProlog

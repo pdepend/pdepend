@@ -38,9 +38,9 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP83;
+namespace PDepend\Source\Language\PHP\Features\PHP82;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -48,10 +48,10 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
  * @group unittest
  */
-abstract class PHPParserVersion83Test extends AbstractTest
+abstract class PHPParserVersion82TestCase extends AbstractTestCase
 {
     /**
      * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
@@ -62,7 +62,7 @@ abstract class PHPParserVersion83Test extends AbstractTest
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion83',
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion82',
             array($tokenizer, $builder, $cache)
         );
     }

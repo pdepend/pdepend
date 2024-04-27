@@ -53,7 +53,7 @@ namespace PDepend\Source\Parser;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTArgumentsParsingTest extends AbstractParserTest
+class ASTArgumentsParsingTest extends AbstractParserTestCase
 {
     /**
      * Tests that the parser adds the expected children to an argument instance.
@@ -219,7 +219,7 @@ class ASTArgumentsParsingTest extends AbstractParserTest
         $postfixes = $arguments->findChildrenOfType(
             'PDepend\\Source\\AST\\ASTMethodPostfix'
         );
-        $this->assertEquals(1, count($postfixes));
+        $this->assertCount(1, $postfixes);
     }
 
     /**
@@ -227,10 +227,11 @@ class ASTArgumentsParsingTest extends AbstractParserTest
      * exception.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

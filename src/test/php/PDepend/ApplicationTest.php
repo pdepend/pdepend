@@ -53,7 +53,7 @@ use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
  * @covers \PDepend\Application
  * @group integration
  */
-class ApplicationTest extends AbstractTest
+class ApplicationTest extends AbstractTestCase
 {
     public function testGetRunner()
     {
@@ -87,17 +87,18 @@ class ApplicationTest extends AbstractTest
         unlink('foo.xml');
         chdir($cwd);
 
-        $this->assertRegExp('/Parsing source files:\s*\.\s+1/', $output);
-        $this->assertRegExp('/<class\s.*name="FooBar"/', $xml);
-        $this->assertRegExp('/<file\s.*name="php:\/\/stdin"/', $xml);
+        $this->assertMatchesRegularExpression('/Parsing source files:\s*\.\s+1/', $output);
+        $this->assertMatchesRegularExpression('/<class\s.*name="FooBar"/', $xml);
+        $this->assertMatchesRegularExpression('/<file\s.*name="php:\/\/stdin"/', $xml);
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessageRegExp (^The configuration file ".*fileThatDoesNotExists\.txt" doesn\'t exist\.$)
      */
     public function testSetConfigurationFileAndThrowInvalidArgumentException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('(^The configuration file ".*fileThatDoesNotExists\\.txt" doesn\\\'t exist\\.$)');
+
         $filename = __DIR__ . '/fileThatDoesNotExists.txt';
 
         $application = new \PDepend\Application();

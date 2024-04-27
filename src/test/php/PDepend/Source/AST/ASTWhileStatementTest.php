@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTWhileStatement
  * @group unittest
  */
-class ASTWhileStatementTest extends ASTNodeTest
+class ASTWhileStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the generated object graph of a while statement.
@@ -62,7 +62,7 @@ class ASTWhileStatementTest extends ASTNodeTest
     public function testWhileStatementGraphWithBooleanExpressions()
     {
         $stmt = $this->getFirstWhileStatementInFunction();
-        $this->assertEquals(2, count($stmt->getChildren()));
+        $this->assertCount(2, $stmt->getChildren());
     }
 
     /**

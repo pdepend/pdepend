@@ -43,7 +43,7 @@
 namespace PDepend\DependencyInjection;
 
 use Exception;
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
 use ReflectionMethod;
 
@@ -57,35 +57,10 @@ use ReflectionMethod;
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
-class ConfigurationTest extends AbstractTest
+class ConfigurationTest extends AbstractTestCase
 {
-    /**
-     * @return bool
-     */
-    private function isStronglyTyped()
+    public function testSymfony()
     {
-        try {
-            $method = new ReflectionMethod(
-                'Symfony\\Component\\Config\\Definition\\ConfigurationInterface',
-                'getConfigTreeBuilder'
-            );
-
-            if (method_exists($method, 'hasReturnType') && $method->hasReturnType()) {
-                return true;
-            }
-        } catch (Exception $exception) {
-            // keep "weak"
-        }
-
-        return false;
-    }
-
-    public function testSymfonyGte7()
-    {
-        if (!self::isStronglyTyped()) {
-            $this->markTestSkipped('This test requires Symfony >= 7');
-        }
-
         $config = new Configuration(array(new TestExtension()));
 
         $this->assertInstanceOf(
@@ -102,30 +77,5 @@ class ConfigurationTest extends AbstractTest
             'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
             $method->getReturnType()->getName()
         );
-    }
-
-    public function testSymfonyLt7()
-    {
-        if (self::isStronglyTyped()) {
-            $this->markTestSkipped('This test requires Symfony < 7');
-        }
-
-        $config = new Configuration(array(new TestExtension()));
-
-        $this->assertInstanceOf(
-            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
-            $config->getConfigTreeBuilder()
-        );
-
-        if (PHP_VERSION < 7) {
-            return;
-        }
-
-        $method = new ReflectionMethod(
-            'PDepend\\DependencyInjection\\Configuration',
-            'getConfigTreeBuilder'
-        );
-
-        $this->assertNull($method->getReturnType());
     }
 }

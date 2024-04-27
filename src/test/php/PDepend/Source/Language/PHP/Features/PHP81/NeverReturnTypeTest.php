@@ -47,7 +47,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
  * @group unittest
  * @group php8.1
  */
-class NeverReturnTypeTest extends PHPParserVersion81Test
+class NeverReturnTypeTest extends PHPParserVersion81TestCase
 {
     /**
      * @return void

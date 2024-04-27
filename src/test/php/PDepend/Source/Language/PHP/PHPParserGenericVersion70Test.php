@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTNamespace;
 
@@ -56,7 +56,7 @@ use PDepend\Source\AST\ASTNamespace;
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
  * @group unittest
  */
-class PHPParserGenericVersion70Test extends AbstractTest
+class PHPParserGenericVersion70Test extends AbstractTestCase
 {
     /**
      * testFormalParameterScalarTypeHintInt
@@ -447,10 +447,11 @@ class PHPParserGenericVersion70Test extends AbstractTest
 
     /**
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testListKeywordAsFunctionNameThrowsException()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->parseCodeResourceForTest();
     }
 

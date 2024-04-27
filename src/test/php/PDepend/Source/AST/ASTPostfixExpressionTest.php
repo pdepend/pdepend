@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTPostfixExpression
  * @group unittest
  */
-class ASTPostfixExpressionTest extends ASTNodeTest
+class ASTPostfixExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIncrementPostfixExpressionOnStaticClassMember

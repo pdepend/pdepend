@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Abstract test case for classes derived {@link \PDepend\Source\AST\ASTNode}ö
@@ -50,11 +50,10 @@ use PDepend\AbstractTest;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\AbstractASTNode
  * @group unittest
  */
-abstract class ASTNodeTest extends AbstractTest
+abstract class ASTNodeTestCase extends AbstractTestCase
 {
     /**
      * testGetImageReturnsExpectedNodeImage
@@ -237,11 +236,12 @@ abstract class ASTNodeTest extends AbstractTest
      * testGetChildThrowsExpectedExceptionForInvalidChildIndex
      *
      * @return void
-     * @expectedException OutOfBoundsException
      * @since 1.0.0
      */
     public function testGetChildThrowsExpectedExceptionForInvalidChildIndex()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $node = $this->createNodeInstance();
         $node->addChild($child0 = $this->getNodeMock());
         $node->addChild($child1 = $this->getNodeMock());
@@ -753,11 +753,11 @@ abstract class ASTNodeTest extends AbstractTest
      * an exception for an undefined node offset.
      *
      * @return void
-     * @covers \PDepend\Source\AST\ASTNode
-     * @expectedException OutOfBoundsException
      */
     public function testGetChildThrowsExpectedExceptionForUndefinedOffset()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $node = $this->createNodeInstance();
         $node->getChild(42);
     }

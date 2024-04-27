@@ -42,12 +42,12 @@
 
 namespace PDepend\TextUI;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\MockCommand;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
-use PHPUnit_Framework_TestCase;
-use ReflectionProperty;
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * Test case for the text ui command.
@@ -58,7 +58,7 @@ use ReflectionProperty;
  * @covers \PDepend\TextUI\Command
  * @group unittest
  */
-class CommandTest extends AbstractTest
+class CommandTest extends AbstractTestCase
 {
     /**
      * Expected output of the --version option.
@@ -74,7 +74,7 @@ class CommandTest extends AbstractTest
      */
     private $usageOutput;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -205,7 +205,7 @@ class CommandTest extends AbstractTest
         $logFile  = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
-        set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+        set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
 
         $argv = array(
             '--suffix=inc',
@@ -232,7 +232,7 @@ class CommandTest extends AbstractTest
         $logFile  = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
-        set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+        set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
 
         $argv = array(
             '--suffix=inc',
@@ -487,7 +487,7 @@ class CommandTest extends AbstractTest
     public function testTextUiCommandOutputContainsExpectedCoverageReportOption()
     {
         list(, $actual) = $this->executeCommand(array());
-        $this->assertContains('--coverage-report=<file>', $actual);
+        $this->assertStringContainsString('--coverage-report=<file>', $actual);
     }
 
     /**
@@ -497,8 +497,10 @@ class CommandTest extends AbstractTest
      */
     public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist()
     {
+        $filePath = $this->createRunResourceURI('foobar');
+        unlink($filePath);
         $argv = array(
-            '--coverage-report=' . $this->createRunResourceURI('foobar'),
+            '--coverage-report=' . $filePath,
             '--dummy-logger=' . $this->createRunResourceURI(),
             __FILE__,
         );
@@ -516,7 +518,7 @@ class CommandTest extends AbstractTest
     public function testTextUiCommandAcceptsExistingFileForCoverageReportOption()
     {
         $argv = array(
-            '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
+            '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
@@ -534,24 +536,24 @@ class CommandTest extends AbstractTest
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
     {
-        $configFile = $this->createRunResourceURI('config.xml');
+        $configFile = $this->createRunResourceURI('config') . '.xml';
 
         $argv = array('--configuration=' . $configFile, __FILE__);
 
         list($exitCode, $actual) = $this->executeCommand($argv);
 
         $this->assertSame(Command::CLI_ERROR, $exitCode);
-        $this->assertContains(
+        $this->assertStringContainsString(
             sprintf('The configuration file "%s" doesn\'t exist.', $configFile),
             $actual
         );
     }
 
-    public function testQuietModeWillSuppressVersionAndWorkaroundsAndStatistics()
+    public function testQuietModeWillSuppressVersionAndStatistics()
     {
         $argv = array(
             '--quiet',
-            '--coverage-report=' . dirname(__FILE__) . '/_files/clover.xml',
+            '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
@@ -577,9 +579,8 @@ class CommandTest extends AbstractTest
     public function testDebugErrorDisplay()
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
-        $streamProperty = new ReflectionProperty('PDepend\\Util\\Log', 'stream');
-        $streamProperty->setAccessible(true);
-        $streamProperty->setValue(fopen($file, 'a+'));
+        $streamProperty = new ReflectionClass('PDepend\\Util\\Log');
+        $streamProperty->setStaticPropertyValue('stream', fopen($file, 'a+'));
 
         Log::setSeverity(Log::DEBUG);
 
@@ -591,11 +592,11 @@ class CommandTest extends AbstractTest
         Log::setSeverity(2);
         $error = file_get_contents($file);
         unlink($file);
-        $streamProperty->setValue(STDERR);
+        $streamProperty->setStaticPropertyValue('stream', STDERR);
 
         $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
         $this->assertSame(42, $exitCode);
-        $this->assertRegExp('/^
+        $this->assertMatchesRegularExpression('/^
                 \nRuntimeException\(Bad\susage\)\n
                 ##\s.+[\/\\\\]MockCommand\.php\(20\)\n
                 #0 .+[\/\\\\]Command\.php\(\d+\):\sPDepend\MockCommand->printVersion\(\)\n
@@ -619,28 +620,28 @@ class CommandTest extends AbstractTest
     {
         $startsWith = $prologText . $this->versionOutput . $this->usageOutput;
         $startsWith = '/^' . preg_quote($startsWith) . '/';
-        $this->assertRegExp($startsWith, $actual);
+        $this->assertMatchesRegularExpression($startsWith, $actual);
 
-        $this->assertRegExp('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
-        $this->assertRegExp('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
-        $this->assertRegExp('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
-        $this->assertRegExp('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
-        $this->assertRegExp('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
-        $this->assertRegExp('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
-        $this->assertRegExp('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
-        $this->assertRegExp('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
-        $this->assertRegExp('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
+        $this->assertMatchesRegularExpression('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
+        $this->assertMatchesRegularExpression('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
     }
 
     /**
      * Executes the text ui command and returns the exit code and the output as
      * an array <b>array($exitCode, $output)</b>.
      *
-     * @param array $argv The cli parameters.
+     * @param ?array $argv The cli parameters.
      *
      * @return array<mixed>
      */
-    private function executeCommand(array $argv = null)
+    private function executeCommand(?array $argv = null)
     {
         $this->prepareArgv($argv);
 
@@ -655,11 +656,11 @@ class CommandTest extends AbstractTest
     /**
      * Prepares a fake <b>$argv</b>.
      *
-     * @param array $argv The cli parameters.
+     * @param ?array $argv The cli parameters.
      *
      * @return void
      */
-    private function prepareArgv(array $argv = null)
+    private function prepareArgv(?array $argv = null)
     {
         unset($_SERVER['argv']);
 

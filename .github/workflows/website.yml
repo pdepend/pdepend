@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4]
+        php: [8.1]
         setup: [prefer-stable]
 
     name: Build website
@@ -32,7 +32,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
@@ -43,7 +43,9 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Build website
-        run: composer build-website
+        run: |
+          cp -r src/site/rst/schema src/site/resources/web/
+          composer build-website
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CNAME: pdepend.org

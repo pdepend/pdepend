@@ -57,7 +57,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTest
+class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parameter contains the start line of the first token.

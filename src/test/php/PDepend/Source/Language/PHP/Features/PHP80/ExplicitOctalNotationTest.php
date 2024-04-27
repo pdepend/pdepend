@@ -47,14 +47,15 @@ namespace PDepend\Source\Language\PHP\Features\PHP80;
  * @group unittest
  * @group php8.0
  */
-class ExplicitOctalNotationTest extends PHPParserVersion80Test
+class ExplicitOctalNotationTest extends PHPParserVersion80TestCase
 {
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid number 0o16
      */
     public function testExplicitOctalNotation()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid number 0o16');
+
         $this->getFirstClassForTestCase();
     }
 }

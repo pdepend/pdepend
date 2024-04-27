@@ -78,7 +78,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
     /**
      * use Foo\Bar\{TestA, TestB,} trailing comma is supported since PHP 7.2
      */
-    protected function allowUseGroupDeclarationTrailingComma()
+    protected function allowUseGroupDeclarationTrailingComma(): bool
     {
         return true;
     }
@@ -191,6 +191,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
+     *
+     * @return ASTType|false
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -740,10 +742,12 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
             $this->consumeComments();
 
             // Add mapping between image and qualified name to symbol table
-            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+            if ($image !== false) {
+                $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+            }
         } while (true);
 
-        if (isset($image, $subFragments)) {
+        if (isset($image, $subFragments) && $image !== false) {
             $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
         }
 
@@ -1264,7 +1268,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         }
 
         $token1 = $this->consumeToken(Tokens::T_STRING);
-        if (0 === preg_match('(^b[01]+$)i', $token1->image)) {
+        if (!preg_match('(^b[01]+$)i', $token1->image)) {
             throw new UnexpectedTokenException(
                 $token1,
                 $this->tokenizer->getSourceFile()

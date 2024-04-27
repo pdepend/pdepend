@@ -472,7 +472,8 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
                 Tokens::T_SEMICOLON,
                 Tokens::T_COMMA,
                 Tokens::T_COLON,
-                Tokens::T_PARENTHESIS_CLOSE
+                Tokens::T_PARENTHESIS_CLOSE,
+                Tokens::T_SQUARED_BRACKET_CLOSE
             ));
         }
 

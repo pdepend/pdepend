@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTFinallyStatement
  * @group unittest
  */
-class ASTFinallyStatementTest extends ASTNodeTest
+class ASTFinallyStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the start line value.

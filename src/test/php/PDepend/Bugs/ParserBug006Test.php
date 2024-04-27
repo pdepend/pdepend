@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 006
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug006Test extends AbstractRegressionTest
+class ParserBug006Test extends AbstractRegressionTestCase
 {
     /**
      * testParserNotSetsReferenceForVariableObjectInstantiation
@@ -68,6 +67,6 @@ class ParserBug006Test extends AbstractRegressionTest
             ->getMethods()
             ->current();
 
-        $this->assertEquals(0, count($method->getDependencies()));
+        $this->assertCount(0, $method->getDependencies());
     }
 }

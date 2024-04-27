@@ -42,7 +42,7 @@
 
 namespace PDepend\Input;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the composite filter.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Input\CompositeFilter
  * @group unittest
  */
-class CompositeFilterTest extends AbstractTest
+class CompositeFilterTest extends AbstractTestCase
 {
     /**
      * testCompositeInvokesFirstAcceptInFilterChain
@@ -67,7 +67,7 @@ class CompositeFilterTest extends AbstractTest
         $composite = new CompositeFilter();
         $composite->append($filter0);
 
-        $composite->accept(dirname(__FILE__), dirname(__FILE__));
+        $composite->accept(__DIR__, __DIR__);
 
         $this->assertTrue($filter0->invoked);
     }
@@ -86,7 +86,7 @@ class CompositeFilterTest extends AbstractTest
         $composite->append($filter0);
         $composite->append($filter1);
 
-        $composite->accept(dirname(__FILE__), dirname(__FILE__));
+        $composite->accept(__DIR__, __DIR__);
 
         $this->assertTrue($filter1->invoked);
     }
@@ -105,7 +105,7 @@ class CompositeFilterTest extends AbstractTest
         $composite->append($filter0);
         $composite->append($filter1);
 
-        $composite->accept(dirname(__FILE__), dirname(__FILE__));
+        $composite->accept(__DIR__, __DIR__);
 
         $this->assertFalse($filter1->invoked);
     }

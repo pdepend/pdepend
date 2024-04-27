@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of PHP_Depend.
+ * This file is part of PDepend.
  *
  * PHP Version 5
  *
@@ -40,52 +40,74 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Util;
+namespace PDepend\Bugs;
+
+use PDepend\AbstractTestCase;
+use PDepend\Report\Summary\Xml;
 
 /**
- * Utility class used to test for required php version workarounds.
+ * Abstract test case for the "Bugs" package.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Workarounds
+abstract class AbstractRegressionTestCase extends AbstractTestCase
 {
     /**
-     * Tests if the used PHP version has the known unserialize issue with object
-     * references.
+     * Creates the PDepend summary report for the source associated with the
+     * calling test case.
      *
-     * @return bool
-     *
-     * @see    https://bugs.php.net/bug.php?id=62373
+     * @return string
+     * @since 0.10.0
      */
-    public function hasSerializeReferenceIssue()
+    protected function createSummaryXmlForCallingTest()
     {
-        return version_compare(PHP_VERSION, '5.4.0', '>') && version_compare(PHP_VERSION, '5.4.5', '<=');
+        $this->changeWorkingDirectory(
+            self::createCodeResourceURI('config/')
+        );
+
+        $file = $this->createRunResourceURI('summary.xml');
+
+        $log = new Xml();
+        $log->setLogFile($file);
+
+        $pdepend = $this->createEngineFixture();
+        $pdepend->addFile($this->createCodeResourceUriForTest());
+        $pdepend->addReportGenerator($log);
+        $pdepend->analyze();
+
+        return $file;
     }
 
     /**
-     * Tests if the current environment has no known issues and does not
-     * require any workaround.
+     * Parses the source of a test case file.
      *
-     * @return bool
+     * @param string $testCase
+     * @param boolean $ignoreAnnotations
+     * @return \PDepend\Source\AST\ASTNamespace[]
      */
-    public function isNotRequired()
+    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        return !$this->hasSerializeReferenceIssue();
+        return $this->parseSource(
+            $this->getSourceFileForTestCase($testCase),
+            $ignoreAnnotations
+        );
     }
 
     /**
-     * Returns an array with error messages related to the required workarounds.
+     * Returns the source file for the given test case.
      *
-     * @return array<int, string>
+     * @param string $testCase The qualified test case name.
+     * @return string
      */
-    public function getRequiredWorkarounds()
+    protected function getSourceFileForTestCase($testCase)
     {
-        $issues = array();
-        if ($this->hasSerializeReferenceIssue()) {
-            $issues[] = 'File cache deactivated due to known serialize() issues in PHP ' . PHP_VERSION;
-        }
+        list($class, $method) = explode('::', $testCase);
 
-        return $issues;
+        preg_match('(Bug(\d+)Test$)', $class, $match);
+
+        return self::createCodeResourceURI(
+            sprintf('bugs/%s/%s.php', $match[1], $method)
+        );
     }
 }

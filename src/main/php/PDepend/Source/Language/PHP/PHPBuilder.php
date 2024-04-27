@@ -165,7 +165,6 @@ use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Log;
 use PDepend\Util\Type;
-use ReturnTypeWillChange;
 
 /**
  * Default code tree builder implementation.
@@ -222,21 +221,21 @@ class PHPBuilder implements Builder
     /**
      * All generated {@link ASTTrait} objects
      *
-     * @var array<string, array<string, array<int, ASTTrait>>>
+     * @var array<string, array<string, array<string, ASTTrait>>>
      */
     private $traits = array();
 
     /**
      * All generated {@link ASTClass} objects
      *
-     * @var array<string, array<string, array<int, ASTClass>>>
+     * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
     private $classes = array();
 
     /**
      * All generated {@link ASTInterface} instances.
      *
-     * @var array<string, array<string, array<int, ASTInterface>>>
+     * @var array<string, array<string, array<string, ASTInterface>>>
      */
     private $interfaces = array();
 
@@ -264,21 +263,21 @@ class PHPBuilder implements Builder
     /**
      * Cache of all traits created during the regular parsing process.
      *
-     * @var array<string, array<string, array<int, ASTTrait>>>
+     * @var array<string, array<string, array<string, ASTTrait>>>
      */
     private $frozenTraits = array();
 
     /**
      * Cache of all classes created during the regular parsing process.
      *
-     * @var array<string, array<string, array<int, ASTClass>>>
+     * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
     private $frozenClasses = array();
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
-     * @var array<string, array<string, array<int, ASTInterface>>>
+     * @var array<string, array<string, array<string, ASTInterface>>>
      */
     private $frozenInterfaces = array();
 
@@ -483,7 +482,7 @@ class PHPBuilder implements Builder
      *
      * @param string $qualifiedName The full qualified type identifier.
      *
-     * @return ASTClass
+     * @return ASTClass|ASTEnum
      *
      * @since  0.9.5
      */
@@ -2147,8 +2146,7 @@ class PHPBuilder implements Builder
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    #[ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): ASTArtifactList
     {
         return $this->getNamespaces();
     }
@@ -2391,7 +2389,7 @@ class PHPBuilder implements Builder
      *
      * @param string $qualifiedName
      *
-     * @return ASTClass|null
+     * @return ASTClass|ASTEnum|null
      *
      * @since  0.9.5
      */
@@ -2399,7 +2397,7 @@ class PHPBuilder implements Builder
     {
         $this->freeze();
 
-        /** @var ASTClass|null $class */
+        /** @var ASTClass|ASTEnum|null $class */
         $class = $this->findType(
             $this->frozenClasses,
             $qualifiedName
@@ -2418,7 +2416,7 @@ class PHPBuilder implements Builder
      *
      * @template T of AbstractASTType
      *
-     * @param array<string, array<string, array<int, T>>> $instances
+     * @param array<string, array<string, array<string, T>>> $instances
      * @param string                                         $qualifiedName
      *
      * @return T|null
@@ -2486,10 +2484,10 @@ class PHPBuilder implements Builder
      *
      * @template T of AbstractASTType
      *
-     * @param array<string, array<string, array<int, T>>> $originalTypes The original types created during the parsing
+     * @param array<string, array<string, array<string, T>>> $originalTypes The original types created during the parsing
      *                                                                   process.
      *
-     * @return array<string, array<string, array<int, T>>>
+     * @return array<string, array<string, array<string, T>>>
      */
     private function copyTypesWithPackage(array $originalTypes)
     {
@@ -2584,12 +2582,12 @@ class PHPBuilder implements Builder
     /**
      * Builds an enum definition.
      *
-     * @param string        $name The enum name.
-     * @param ASTScalarType $type The enum type ('string', 'int', or null if not backed).
+     * @param string         $name The enum name.
+     * @param ?ASTScalarType $type The enum type ('string', 'int', or null if not backed).
      *
      * @return ASTEnum The created class object.
      */
-    public function buildEnum($name, ASTScalarType $type = null)
+    public function buildEnum($name, ?ASTScalarType $type = null)
     {
         $this->checkBuilderState();
 
@@ -2604,12 +2602,12 @@ class PHPBuilder implements Builder
     /**
      * Builds an enum definition.
      *
-     * @param string          $name  The enum case name.
-     * @param AbstractASTNode $value The enum case value if backed.
+     * @param string           $name  The enum case name.
+     * @param ?AbstractASTNode $value The enum case value if backed.
      *
      * @return ASTEnumCase The created class object.
      */
-    public function buildEnumCase($name, AbstractASTNode $value = null)
+    public function buildEnumCase($name, ?AbstractASTNode $value = null)
     {
         $this->checkBuilderState();
 

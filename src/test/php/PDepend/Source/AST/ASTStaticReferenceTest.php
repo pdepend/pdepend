@@ -54,7 +54,7 @@ use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
  * @covers \PDepend\Source\AST\ASTStaticReference
  * @group unittest
  */
-class ASTStaticReferenceTest extends ASTNodeTest
+class ASTStaticReferenceTest extends ASTNodeTestCase
 {
     /**
      * testGetTypeReturnsInjectedConstructorTargetArgument
@@ -105,8 +105,10 @@ class ASTStaticReferenceTest extends ASTNodeTest
      */
     public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The keyword "static" was used outside of a class/method scope.'
         );
 
@@ -120,8 +122,10 @@ class ASTStaticReferenceTest extends ASTNodeTest
      */
     public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The keyword "static" was used outside of a class/method scope.'
         );
 

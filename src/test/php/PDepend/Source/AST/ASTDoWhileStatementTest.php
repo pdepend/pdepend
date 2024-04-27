@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTDoWhileStatement
  * @group unittest
  */
-class ASTDoWhileStatementTest extends ASTNodeTest
+class ASTDoWhileStatementTest extends ASTNodeTestCase
 {
     /**
      * testDoWhileStatementHasExpectedNumberOfChildNodes
@@ -62,7 +62,7 @@ class ASTDoWhileStatementTest extends ASTNodeTest
     public function testDoWhileStatementHasExpectedNumberOfChildNodes()
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($stmt->getChildren()));
+        $this->assertCount(2, $stmt->getChildren());
     }
     
     /**

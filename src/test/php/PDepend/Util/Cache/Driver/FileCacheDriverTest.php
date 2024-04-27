@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Cache\Driver;
 
-use PDepend\Util\Cache\AbstractDriverTest;
+use PDepend\Util\Cache\AbstractDriverTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\FileCacheDriver} class.
@@ -53,7 +53,7 @@ use PDepend\Util\Cache\AbstractDriverTest;
  * @covers \PDepend\Util\Cache\Driver\FileCacheDriver
  * @group unittest
  */
-class FileCacheDriverTest extends AbstractDriverTest
+class FileCacheDriverTest extends AbstractDriverTestCase
 {
     /**
      * Temporary cache directory.
@@ -74,11 +74,12 @@ class FileCacheDriverTest extends AbstractDriverTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->cacheDir = $this->createRunResourceURI('cache');
+        unlink($this->cacheDir);
         $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
     }
 
@@ -106,7 +107,7 @@ class FileCacheDriverTest extends AbstractDriverTest
         $key = md5('baz' . 'foo');
         $dir = substr($key, 0, 2);
 
-        $this->assertEquals(1, count(glob("{$this->cacheDir}/{$dir}/{$key}*.bar")));
+        $this->assertCount(1, glob("{$this->cacheDir}/{$dir}/{$key}*.bar"));
     }
 
     /**

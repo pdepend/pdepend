@@ -18,4 +18,11 @@ class Foo {
             $callables
         );
     }
+
+    public function throwInKey(array $a, ?string $value): mixed
+    {
+        return $a[
+            $value ?? throw new \InvalidArgumentException('should not be null')
+        ];
+    }
 }

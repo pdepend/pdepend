@@ -51,10 +51,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegressionTest
+class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser handles a comma separated property declaration.
@@ -69,7 +68,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             ->current()
             ->getProperties();
 
-        $this->assertEquals(2, count($properties));
+        $this->assertCount(2, $properties);
     }
 
     /**

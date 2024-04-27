@@ -54,7 +54,7 @@ use PDepend\Source\Builder\BuilderContext;
  * @covers \PDepend\Source\AST\ASTClassOrInterfaceReference
  * @group unittest
  */
-class ASTClassOrInterfaceReferenceTest extends ASTNodeTest
+class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 {
     /**
      * testReturnValueOfMagicSleepContainsContextProperty

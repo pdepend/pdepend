@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Cache\Driver\File;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector
  * @group unittest
  */
-class FileCacheGarbageCollectorTest extends AbstractTest
+class FileCacheGarbageCollectorTest extends AbstractTestCase
 {
     /**
      * Temporary cache directory.
@@ -74,11 +74,13 @@ class FileCacheGarbageCollectorTest extends AbstractTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->cacheDir = $this->createRunResourceURI('cache') . '/';
+        $tmp = $this->createRunResourceURI('cache');
+        unlink($tmp);
+        $this->cacheDir = $tmp . '/';
         $this->cacheTtl = FileCacheGarbageCollector::DEFAULT_TTL;
         mkdir($this->cacheDir);
     }

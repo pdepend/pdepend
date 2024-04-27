@@ -41,6 +41,7 @@
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
@@ -50,15 +51,13 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8
  */
-class ThrowExpressionTest extends PHPParserVersion80Test
+class ThrowExpressionTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void
      */
     public function testNullcoalescingThrow()
     {
-        self::needsPHP80();
-
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
@@ -86,8 +85,6 @@ class ThrowExpressionTest extends PHPParserVersion80Test
      */
     public function testShorthandTernaryOperator()
     {
-        self::needsPHP80();
-
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
@@ -116,8 +113,6 @@ class ThrowExpressionTest extends PHPParserVersion80Test
      */
     public function testTernaryOperator()
     {
-        self::needsPHP80();
-
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
@@ -151,8 +146,6 @@ class ThrowExpressionTest extends PHPParserVersion80Test
      */
     public function testThrowFromArrowFunction()
     {
-        self::needsPHP80();
-
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
@@ -176,8 +169,6 @@ class ThrowExpressionTest extends PHPParserVersion80Test
      */
     public function testThrowFromArrowFunctionAsParameter()
     {
-        self::needsPHP80();
-
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
@@ -229,5 +220,29 @@ class ThrowExpressionTest extends PHPParserVersion80Test
         $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
         $this->assertEmpty($throw->findChildrenOfType('PDepend\\Source\\AST\\ASTLiteral'));
+
+        $methods = $this->getFirstTypeForTestCase()
+            ->getMethods();
+        /** @var ASTMethod $arrayAccessMethod */
+        $arrayAccessMethod = $methods[2];
+        /** @var ASTReturnStatement $return */
+        $return = $arrayAccessMethod->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+        $value = $return->getChild(0);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArrayIndexExpression', $value);
+
+        $children = $value->getChildren();
+
+        $this->assertCount(2, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
+        $this->assertSame('$a', $children[0]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $children[1]);
+
+        $children = $children[1]->getChildren();
+        $this->assertCount(3, $children);
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
+        $this->assertSame('$value', $children[0]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $children[1]);
+        $this->assertSame('??', $children[1]->getImage());
+        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $children[2]);
     }
 }

@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTComment;
 use PDepend\Source\AST\ASTConstantPostfix;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTFunction;
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @group unittest
  */
-class PHPBuilderTest extends AbstractTest
+class PHPBuilderTest extends AbstractTestCase
 {
     /**
      * testBuilderAddsMultiplePackagesForClassesToListOfPackages
@@ -74,7 +74,7 @@ class PHPBuilderTest extends AbstractTest
         $namespace = $builder->buildNamespace(__CLASS__);
         $namespace->addType($builder->buildClass(__CLASS__));
 
-        $this->assertEquals(2, count($builder->getNamespaces()));
+        $this->assertCount(2, $builder->getNamespaces());
     }
 
     /**
@@ -92,7 +92,7 @@ class PHPBuilderTest extends AbstractTest
         $builder->buildNamespace(__CLASS__);
         $builder->buildFunction(__CLASS__);
 
-        $this->assertEquals(2, count($builder->getNamespaces()));
+        $this->assertCount(2, $builder->getNamespaces());
     }
 
     /**
@@ -129,7 +129,7 @@ class PHPBuilderTest extends AbstractTest
         $function->setNamespace($namespace);
 
         $builder->restoreFunction($function);
-        $this->assertEquals(1, count($namespace->getFunctions()));
+        $this->assertCount(1, $namespace->getFunctions());
     }
 
     /**
@@ -657,8 +657,10 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getClass('Foo');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
+        $this->expectException(
+            'BadMethodCallException'
+        );
+        $this->expectExceptionMessage(
             'Cannot create new nodes, when internal state is frozen.'
         );
 
@@ -679,8 +681,10 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getClass('Foo');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
+        $this->expectException(
+            'BadMethodCallException'
+        );
+        $this->expectExceptionMessage(
             'Cannot create new nodes, when internal state is frozen.'
         );
 
@@ -701,8 +705,10 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getClass('Foo');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
+        $this->expectException(
+            'BadMethodCallException'
+        );
+        $this->expectExceptionMessage(
             'Cannot create new nodes, when internal state is frozen.'
         );
 
@@ -723,8 +729,10 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getInterface('Inter');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
+        $this->expectException(
+            'BadMethodCallException'
+        );
+        $this->expectExceptionMessage(
             'Cannot create new nodes, when internal state is frozen.'
         );
 
@@ -745,8 +753,10 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getInterface('Inter');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
+        $this->expectException(
+            'BadMethodCallException'
+        );
+        $this->expectExceptionMessage(
             'Cannot create new nodes, when internal state is frozen.'
         );
 
@@ -767,8 +777,10 @@ class PHPBuilderTest extends AbstractTest
         // Freeze object
         $builder->getInterface('Inter');
 
-        $this->setExpectedException(
-            'BadMethodCallException',
+        $this->expectException(
+            'BadMethodCallException'
+        );
+        $this->expectExceptionMessage(
             'Cannot create new nodes, when internal state is frozen.'
         );
 

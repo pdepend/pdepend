@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConstant
  * @group unittest
  */
-class ASTConstantTest extends ASTNodeTest
+class ASTConstantTest extends ASTNodeTestCase
 {
     /**
      * Tests that a parsed constant has the expected object graph.

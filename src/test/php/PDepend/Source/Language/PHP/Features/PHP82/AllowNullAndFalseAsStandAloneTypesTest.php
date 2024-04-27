@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTParameter;
  * @group unittest
  * @group php8.2
  */
-class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82Test
+class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void

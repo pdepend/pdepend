@@ -55,10 +55,9 @@ namespace PDepend\Bugs;
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since 0.10.0
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTest
+class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTestCase
 {
     /**
      * testUnexpectedTokenDoesNotQuitPDepend

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTConstantDefinition
  * @group unittest
  */
-class ASTConstantDefinitionTest extends ASTNodeTest
+class ASTConstantDefinitionTest extends ASTNodeTestCase
 {
     /**
      * Tests that the field declaration <b>setModifiers()</b> method accepts all
@@ -83,8 +83,10 @@ class ASTConstantDefinitionTest extends ASTNodeTest
     {
         $definition = new ASTConstantDefinition();
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
+        $this->expectException(
+            'InvalidArgumentException'
+        );
+        $this->expectExceptionMessage(
             'Invalid field modifiers given, allowed modifiers are ' .
             'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_FINAL.'
         );

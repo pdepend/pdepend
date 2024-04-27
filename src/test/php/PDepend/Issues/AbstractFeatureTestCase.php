@@ -40,53 +40,73 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Metrics;
+namespace PDepend\Issues;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
- * Abstract base class for tests of the metrics package.
+ * Abstract base class for issue tests.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractMetricsTest extends AbstractTest
+abstract class AbstractFeatureTestCase extends AbstractTestCase
 {
+    /**
+     * Returns the parameters of the first function in the test case file.
+     *
+     * @return \PDepend\Source\AST\ASTParameter[]
+     */
+    protected function getParametersOfFirstFunction()
+    {
+        return $this->getFirstFunctionForTestCase()
+            ->getParameters();
+    }
+    
+    /**
+     * Parses the source for the calling test case.
+     *
+     * @param string $testCase
+     * @return \PDepend\Source\AST\ASTNamespace[]
+     */
+    protected function parseTestCase($testCase = null)
+    {
+        if ($testCase === null) {
+            $testCase = $this->getTestCaseMethod();
+        }
+        return $this->parseTestCaseSource($testCase);
+    }
+
     /**
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase
+     * @param string $testCase
      * @param boolean $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         list($class, $method) = explode('::', $testCase);
-
-        $parts = explode('\\', $class);
-
-        try {
-            return parent::parseSource(
-                sprintf(
-                    'Metrics/%s/%s/%s.php',
-                    $parts[count($parts) - 2],
-                    substr($parts[count($parts) - 1], 0, -4),
-                    $method
-                ),
-                $ignoreAnnotations
-            );
-        } catch (\Exception $e) {
+        if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
+            throw new \ErrorException('Unexpected class name format');
         }
-        
-        return parent::parseSource(
-            sprintf(
-                'Metrics/%s/%s/%s',
-                $parts[count($parts) - 2],
-                substr($parts[count($parts) - 1], 0, -4),
-                $method
-            ),
-            $ignoreAnnotations
-        );
+        return $this->parseSource('issues/' . $match[1] . '/' . $method . '.php');
+    }
+
+    /**
+     * Returns a php callback for the calling test case method.
+     *
+     * @return string
+     */
+    protected function getTestCaseMethod()
+    {
+        $trace = debug_backtrace();
+        foreach ($trace as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return $frame['class'] . '::' . $frame['function'];
+            }
+        }
+        throw new \ErrorException('Cannot locate test case method.');
     }
 }

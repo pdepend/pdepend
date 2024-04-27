@@ -50,10 +50,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
+class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser handles the parent type hint as expected.
@@ -81,8 +80,10 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The keyword "parent" was used as type hint but the parameter ' .
             'declaration is not in a class scope.'
         );
@@ -97,8 +98,10 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTest
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\InvalidStateException'
+        );
+        $this->expectExceptionMessage(
             'The keyword "parent" was used as type hint but the ' .
             'class "Baz" does not declare a parent.'
         );

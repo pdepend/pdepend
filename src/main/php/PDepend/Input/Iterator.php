@@ -43,7 +43,6 @@
 namespace PDepend\Input;
 
 use FilterIterator;
-use ReturnTypeWillChange;
 use SplFileInfo;
 
 /**
@@ -87,11 +86,8 @@ class Iterator extends FilterIterator
 
     /**
      * Returns <b>true</b> if the file name ends with '.php'.
-     *
-     * @return bool
      */
-    #[ReturnTypeWillChange]
-    public function accept()
+    public function accept(): bool
     {
         if ($this->getInnerIterator()->current()->isDir()) {
             return false;

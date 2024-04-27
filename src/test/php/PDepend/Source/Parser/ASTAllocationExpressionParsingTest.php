@@ -63,7 +63,7 @@ use PDepend\Source\AST\ASTVariableVariable;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class ASTAllocationExpressionParsingTest extends AbstractParserTest
+class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 {
     /**
      * testAllocationExpressionForSelfProperty
@@ -273,8 +273,10 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTest
      */
     public function testInvalidAllocationExpressionResultsInExpectedException()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: ;, line: 4, col: 9, file: '
         );
         $this->parseCodeResourceForTest();

@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\Tokenizer;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\Tokenizer\Token} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\Tokenizer\Token
  * @group unittest
  */
-class TokenTest extends AbstractTest
+class TokenTest extends AbstractTestCase
 {
     /**
      * testConstructorSetsTypeProperty

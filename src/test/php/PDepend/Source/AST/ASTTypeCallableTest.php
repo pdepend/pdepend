@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTypeCallable
  * @group unittest
  */
-class ASTTypeCallableTest extends ASTNodeTest
+class ASTTypeCallableTest extends ASTNodeTestCase
 {
     /**
      * testCallableTypeIsHandledCaseInsensitive

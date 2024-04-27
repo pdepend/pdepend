@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Dependencies;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * @covers \PDepend\Report\Dependencies\Xml
  * @group unittest
  */
-class XmlTest extends AbstractTest
+class XmlTest extends AbstractTestCase
 {
     /**
      * Test code structure.
@@ -75,7 +75,7 @@ class XmlTest extends AbstractTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -87,7 +87,7 @@ class XmlTest extends AbstractTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         @unlink($this->resultFile);
 
@@ -118,8 +118,10 @@ class XmlTest extends AbstractTest
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
-        $this->setExpectedException(
-            '\\PDepend\\Report\\NoLogOutputException',
+        $this->expectException(
+            '\\PDepend\\Report\\NoLogOutputException'
+        );
+        $this->expectExceptionMessage(
             "The log target is not configured for 'PDepend\\Report\\Dependencies\\Xml'."
         );
 
@@ -177,7 +179,7 @@ class XmlTest extends AbstractTest
 
         $fileName = 'xml-log-without-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
     }
@@ -223,7 +225,7 @@ class XmlTest extends AbstractTest
 
         $fileName = 'xml-log-with-metrics.xml';
         $this->assertXmlStringEqualsXmlString(
-            $this->getNormalizedPathXml(dirname(__FILE__) . "/_expected/{$fileName}"),
+            $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
     }

@@ -42,7 +42,7 @@
 
 namespace PDepend\Integration;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Tests the integration of the {@link \PDepend\Engine} class and the
@@ -51,10 +51,9 @@ use PDepend\AbstractTest;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group integrationtest
  */
-class DependExcludePathFilterTest extends AbstractTest
+class DependExcludePathFilterTest extends AbstractTestCase
 {
 
     /**
@@ -75,7 +74,7 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(0, count($pdepend->analyze()));
+        $this->assertCount(0, $pdepend->analyze());
     }
 
 
@@ -97,7 +96,7 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(0, count($pdepend->analyze()));
+        $this->assertCount(0, $pdepend->analyze());
     }
 
     /**
@@ -122,9 +121,9 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(
+        $this->assertCount(
             1,
-            count($pdepend->analyze()),
+            $pdepend->analyze(),
             sprintf(
                 'Pattern "%s" does not match in directory "%s".',
                 $pattern,
@@ -151,6 +150,6 @@ class DependExcludePathFilterTest extends AbstractTest
             new \PDepend\Input\ExcludePathFilter(array($pattern))
         );
 
-        $this->assertEquals(1, count($pdepend->analyze()));
+        $this->assertCount(1, $pdepend->analyze());
     }
 }

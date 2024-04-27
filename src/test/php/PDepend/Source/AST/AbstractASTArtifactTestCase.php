@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Base test case for abstract item implementations.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\AbstractASTArtifact
  * @group unittest
  */
-abstract class AbstractASTArtifactTest extends AbstractTest
+abstract class AbstractASTArtifactTestCase extends AbstractTestCase
 {
     /**
      * testSetNameChangesPreviousName
@@ -85,9 +85,9 @@ abstract class AbstractASTArtifactTest extends AbstractTest
         $fileName = 'code/' . $fileName . '/' . $method;
 
         try {
-            $fileOrDirectory = $this->createCodeResourceURI($fileName);
+            $fileOrDirectory = self::createCodeResourceURI($fileName);
         } catch (ErrorException $e) {
-            $fileOrDirectory = $this->createCodeResourceURI($fileName . '.php');
+            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
         return $this->parseSource($fileOrDirectory, $ignoreAnnotations);

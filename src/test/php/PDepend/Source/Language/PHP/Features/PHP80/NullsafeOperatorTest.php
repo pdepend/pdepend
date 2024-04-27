@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTVariableDeclarator;
  * @group unittest
  * @group php8
  */
-class NullsafeOperatorTest extends PHPParserVersion80Test
+class NullsafeOperatorTest extends PHPParserVersion80TestCase
 {
     /**
      * @return void
@@ -90,7 +90,6 @@ class NullsafeOperatorTest extends PHPParserVersion80Test
             $chain[] = $node->getImage();
         }
 
-        $nullSafe = static::isLowerThanPHP80() ? '->' : '?->';
-        $this->assertSame(array('$this', '->', 'a', $nullSafe, 'b', '->'), $chain);
+        $this->assertSame(array('$this', '->', 'a', '?->', 'b', '->'), $chain);
     }
 }

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTBooleanAndExpression
  * @group unittest
  */
-class ASTBooleanAndExpressionTest extends ASTNodeTest
+class ASTBooleanAndExpressionTest extends ASTNodeTestCase
 {
     /**
      * testBooleanAndExpressionHasExpectedStartLine

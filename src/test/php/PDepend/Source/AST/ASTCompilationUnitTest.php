@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the code file class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTCompilationUnit
  * @group unittest
  */
-class ASTCompilationUnitTest extends AbstractTest
+class ASTCompilationUnitTest extends AbstractTestCase
 {
     /**
      * testGetNameReturnsTheFileName
@@ -240,7 +240,7 @@ class ASTCompilationUnitTest extends AbstractTest
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
     {
         $node = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
-            ->setMethods(array('setCompilationUnit'))
+            ->onlyMethods(array('setCompilationUnit'))
             ->setConstructorArgs(array(__CLASS__))
             ->getMock();
         $node->expects($this->once())

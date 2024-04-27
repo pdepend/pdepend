@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTLiteral
  * @group unittest
  */
-class ASTLiteralTest extends ASTNodeTest
+class ASTLiteralTest extends ASTNodeTestCase
 {
     /**
      * testLiteralWithBooleanTrueExpression
@@ -250,10 +250,11 @@ class ASTLiteralTest extends ASTNodeTest
      * Tests that an invalid literal results in the expected exception.
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->parseCodeResourceForTest();
     }
 

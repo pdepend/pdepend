@@ -42,7 +42,7 @@
 
 namespace PDepend\DependencyInjection;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -57,7 +57,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @group unittest
  */
-class ExtensionManagerTest extends AbstractTest
+class ExtensionManagerTest extends AbstractTestCase
 {
     public function testExtensionManager()
     {

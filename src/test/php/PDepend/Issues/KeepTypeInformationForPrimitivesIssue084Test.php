@@ -55,7 +55,7 @@ use PDepend\Source\AST\ASTType;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTest
+class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parser sets the expected primitive type information.

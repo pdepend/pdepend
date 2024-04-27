@@ -55,10 +55,9 @@ use PDepend\Util\Cache\CacheDriver;
  * @link    https://github.com/pdepend/pdepend/issues/247
  *
  * @ticket 247
- * @covers \stdClass
  * @group regressiontest
  */
-class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
+class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTestCase
 {
     /**
      * testUseConst

@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\AST\ASTClass;
@@ -56,7 +56,7 @@ use PDepend\Source\AST\ASTClass;
  * @covers \PDepend\Metrics\Analyzer\InheritanceAnalyzer
  * @group unittest
  */
-class InheritanceAnalyzerTest extends AbstractMetricsTest
+class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * Tests that the analyzer calculates the correct average number of derived
@@ -75,7 +75,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertEquals(0.7368, $project['andc'], null, 0.0001);
+        $this->assertEqualsWithDelta(0.7368, $project['andc'], 0.0001);
     }
 
     /**
@@ -213,7 +213,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
         $actual = array();
         foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
-            
+
             $actual[$class->getName()] = $metrics['dit'];
         }
         ksort($actual);
@@ -325,10 +325,8 @@ class InheritanceAnalyzerTest extends AbstractMetricsTest
      *
      * @param string $testCase Name of the calling test case.
      * @param string $metric   Name of the searched metric.
-     *
-     * @return mixed
      */
-    private function getCalculatedMetric($testCase, $metric)
+    private function getCalculatedMetric($testCase, $metric): mixed
     {
         $namespaces = $this->parseTestCaseSource($testCase);
         $namespace  = $namespaces->current();

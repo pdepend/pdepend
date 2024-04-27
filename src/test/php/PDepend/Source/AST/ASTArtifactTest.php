@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\AbstractASTArtifact} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\AbstractASTArtifact
  * @group unittest
  */
-class ASTArtifactTest extends AbstractTest
+class ASTArtifactTest extends AbstractTestCase
 {
     /**
      * testGetNameReturnsValueOfFirstConstructorArgument
@@ -87,7 +87,7 @@ class ASTArtifactTest extends AbstractTest
     public function testGetIdReturnsMd5HashByDefault()
     {
         $item = $this->getItemMock();
-        $this->assertRegExp('(^[a-f0-9]{32}$)', $item->getId());
+        $this->assertMatchesRegularExpression('(^[a-f0-9]{32}$)', $item->getId());
     }
 
     /**

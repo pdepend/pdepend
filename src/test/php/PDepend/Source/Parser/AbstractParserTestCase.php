@@ -38,35 +38,20 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @since 0.9.20
  */
 
-namespace PDepend\DependencyInjection;
+namespace PDepend\Source\Parser;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
+use PDepend\AbstractTestCase;
 
-// <AbstractConfiguration>
 /**
- * This is the class that validates and merges configuration
+ * Abstract test case class for this sub namespace.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @codeCoverageIgnore
+ * @since 0.9.20
  */
-abstract class AbstractConfiguration implements ConfigurationInterface
+abstract class AbstractParserTestCase extends AbstractTestCase
 {
-    /**
-     * @var TreeBuilderFactory
-     */
-    protected $treeBuilderFactory;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getConfigTreeBuilder(): TreeBuilder
-    {
-        return $this->treeBuilderFactory->getConfigTreeBuilder();
-    }
 }
-// </AbstractConfiguration>

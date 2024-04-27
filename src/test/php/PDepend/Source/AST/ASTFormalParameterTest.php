@@ -49,11 +49,10 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTNode
  * @covers \PDepend\Source\AST\ASTFormalParameter
  * @group unittest
  */
-class ASTFormalParameterTest extends ASTNodeTest
+class ASTFormalParameterTest extends ASTNodeTestCase
 {
     /**
      * testHasTypeReturnsFalseByDefault
@@ -92,7 +91,7 @@ class ASTFormalParameterTest extends ASTNodeTest
         $parameter = new ASTFormalParameter();
         $parameter->addChild(new ASTVariableDeclarator());
 
-        $this->setExpectedException('\\OutOfBoundsException');
+        $this->expectException('\\OutOfBoundsException');
 
         $parameter->getType();
     }

@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTSwitchLabel
  * @group unittest
  */
-class ASTSwitchLabelTest extends ASTNodeTest
+class ASTSwitchLabelTest extends ASTNodeTestCase
 {
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
@@ -440,10 +440,11 @@ class ASTSwitchLabelTest extends ASTNodeTest
      * testParserThrowsExceptionForUnclosedSwitchLabelBody
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody()
     {
+        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+
         $this->getFirstSwitchLabelInFunction();
     }
 

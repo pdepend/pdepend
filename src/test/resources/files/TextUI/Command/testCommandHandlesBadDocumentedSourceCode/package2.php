@@ -4,7 +4,7 @@ interface pkg2FooI extends pkg1FooI {
 }
 
 abstract class pkg2Bar extends pkg1Bar {
-    public static function doIt(Bar $foo = null)
+    public static function doIt(?Bar $foo = null)
     {
         $foo = new pkg1Foobar();
     }

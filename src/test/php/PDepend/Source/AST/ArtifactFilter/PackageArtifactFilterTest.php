@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST\ASTArtifactList;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -58,7 +58,7 @@ use PDepend\Source\AST\ASTNamespace;
  * @covers \PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter
  * @group unittest
  */
-class PackageArtifactFilterTest extends AbstractTest
+class PackageArtifactFilterTest extends AbstractTestCase
 {
     /**
      * Tests that the package filter accepts valid packages.

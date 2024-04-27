@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Metrics\Analyzer\CouplingAnalyzer;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Metrics\Analyzer\CouplingAnalyzer;
  * @covers \PDepend\Metrics\Analyzer\CouplingAnalyzer
  * @group unittest
  */
-class CouplingAnalyzerTest extends AbstractMetricsTest
+class CouplingAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testGetNodeMetricsReturnsAnEmptyArrayByDefault
@@ -498,10 +498,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      * analyzed test source and returns the metric value for the given <b>$name</b>.
      *
      * @param string $name Name of the requested software metric.
-     *
-     * @return mixed
      */
-    private function calculateTypeMetric($name)
+    private function calculateTypeMetric($name): mixed
     {
         $namespaces = $this->parseCodeResourceForTest();
         $types = $namespaces[0]->getTypes();
@@ -605,7 +603,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
     public function testGetNodeMetricsForTrait()
     {
         $metrics = $this->calculateTraitMetrics();
-        $this->assertInternalType('array', $metrics);
+        $this->assertIsArray($metrics);
 
         return $metrics;
     }
@@ -678,7 +676,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
         $analyzer->analyze($this->parseCodeResourceForTest());
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertInternalType('array', $metrics);
+        $this->assertIsArray($metrics);
 
         return $metrics;
     }
@@ -729,7 +727,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTest
      * Analyzes the source code associated with the calling test method and
      * returns all measured metrics.
      *
-     * @return mixed
+     * @return array<string, mixed>
      * @since 1.0.6
      */
     private function calculateTraitMetrics()

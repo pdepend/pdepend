@@ -43,7 +43,7 @@
 
 namespace PDepend\Util;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Configuration} class.
@@ -55,7 +55,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Configuration
  * @group unittest
  */
-class ConfigurationTest extends AbstractTest
+class ConfigurationTest extends AbstractTestCase
 {
     /**
      * testPropertyAccessForExistingValue
@@ -76,10 +76,11 @@ class ConfigurationTest extends AbstractTest
      * testPropertyAccessForNotExistingValueThrowsExpectedException
      *
      * @return void
-     * @expectedException \OutOfRangeException
      */
     public function testPropertyAccessForNotExistingValueThrowsExpectedException()
     {
+        $this->expectException(\OutOfRangeException::class);
+
         $settings      = new \stdClass();
         $settings->foo = 42;
 
@@ -91,10 +92,11 @@ class ConfigurationTest extends AbstractTest
      * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
      *
      * @return void
-     * @expectedException \OutOfRangeException
      */
     public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown()
     {
+        $this->expectException(\OutOfRangeException::class);
+
         $configuration      = new Configuration(new \stdClass());
         $configuration->foo = 42;
     }

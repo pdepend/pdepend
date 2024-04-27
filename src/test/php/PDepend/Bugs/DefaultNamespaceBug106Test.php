@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class DefaultNamespaceBug106Test extends AbstractRegressionTest
+class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
 {
     /**
      * testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
@@ -62,7 +61,7 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTest
     public function testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
-        $this->assertEquals(0, count($sxml->xpath('//class[@name="RuntimeException"]')));
+        $this->assertCount(0, $sxml->xpath('//class[@name="RuntimeException"]'));
     }
 
     /**
@@ -73,6 +72,6 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTest
     public function testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
-        $this->assertEquals(0, count($sxml->xpath('//class[@name="RuntimeException"]')));
+        $this->assertCount(0, $sxml->xpath('//class[@name="RuntimeException"]'));
     }
 }

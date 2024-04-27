@@ -41,7 +41,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use OutOfBoundsException;
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClosure;
@@ -67,7 +67,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
  * @group unittest
  */
-class PHPParserVersion74Test extends AbstractTest
+class PHPParserVersion74Test extends AbstractTestCase
 {
     /**
      * @return void
@@ -160,8 +160,10 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testTypedPropertiesSyntaxError()
     {
-        $this->setExpectedException(
-            'PDepend\\Source\\Parser\\UnexpectedTokenException',
+        $this->expectException(
+            'PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
             'Unexpected token: string, line: 4, col: 16, file:'
         );
 
@@ -170,10 +172,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testArrowFunctions()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -216,10 +214,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testArrowFunctionsWithReturnType()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -271,10 +265,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNullCoalescingAssignmentOperator()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -286,10 +276,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testUnpackingInsideArrays()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArray'
@@ -324,10 +310,6 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testNumericLiteralSeparator()
     {
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            $this->markTestSkipped('This test requires PHP >= 7.4');
-        }
-
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTExpression'
@@ -394,33 +376,38 @@ class PHPParserVersion74Test extends AbstractTest
 
     public function testReadOnlyNamedImport()
     {
-        $this->assertFalse($this->parseCodeResourceForTest()->current());
+        $this->expectException(\OutOfBoundsException::class);
+
+        $this->parseCodeResourceForTest()->current();
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 8, col: 27
      */
     public function testCatchWithoutVariable()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 8, col: 27');
+
         $this->getFirstClassForTestCase();
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 5, col: 32
      */
     public function testTrailingCommaInClosureUseListError()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 5, col: 32');
+
         $this->parseCodeResourceForTest();
     }
 
     /**
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
-     * @expectedExceptionMessage Unexpected token: ), line: 4, col: 43
      */
     public function testTrailingCommaInParameterList()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 43');
+
         $this->getFirstMethodForTestCase();
     }
 

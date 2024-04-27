@@ -49,10 +49,9 @@ namespace PDepend;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserRegressionTest extends AbstractTest
+class ParserRegressionTest extends AbstractTestCase
 {
     /**
      * Tests that the parser handles the given source file.
@@ -72,10 +71,10 @@ class ParserRegressionTest extends AbstractTest
      *
      * @return array<array>
      */
-    public function dataProviderSourceFiles()
+    public static function dataProviderSourceFiles()
     {
         $files = array();
-        foreach (new \DirectoryIterator($this->createCodeResourceURI('parser_regression')) as $file) {
+        foreach (new \DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {
             if ($file->isFile()) {
                 $files[] = array(realpath($file->getPathname()));
             }

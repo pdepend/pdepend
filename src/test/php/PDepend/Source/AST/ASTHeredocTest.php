@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTHeredoc
  * @group unittest
  */
-class ASTHeredocTest extends ASTNodeTest
+class ASTHeredocTest extends ASTNodeTestCase
 {
     /**
      * testHeredocAsArrayInitializeValue

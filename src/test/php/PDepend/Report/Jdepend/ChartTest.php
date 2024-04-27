@@ -42,7 +42,7 @@
 
 namespace PDepend\Report\Jdepend;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 use PDepend\Source\AST\AbstractASTArtifact;
@@ -57,7 +57,7 @@ use PDepend\Source\AST\ASTArtifactList;
  * @covers \PDepend\Report\Jdepend\Chart
  * @group unittest
  */
-class ChartTest extends AbstractTest
+class ChartTest extends AbstractTestCase
 {
     /**
      * Temporary output file.
@@ -71,11 +71,11 @@ class ChartTest extends AbstractTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->outputFile = $this->createRunResourceURI('jdepend-test-out.svg');
+        $this->outputFile = $this->createRunResourceURI('jdepend-test-out') . '.svg';
         if (file_exists($this->outputFile)) {
             unlink($this->outputFile);
         }
@@ -86,7 +86,7 @@ class ChartTest extends AbstractTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->outputFile)) {
             unlink($this->outputFile);
@@ -111,10 +111,11 @@ class ChartTest extends AbstractTest
      * configured.
      *
      * @return void
-     * @expectedException \PDepend\Report\NoLogOutputException
      */
     public function testThrowsExceptionForInvalidLogTarget()
     {
+        $this->expectException(\PDepend\Report\NoLogOutputException::class);
+
         $logger = new Chart();
         $logger->close();
     }
@@ -282,8 +283,8 @@ class ChartTest extends AbstractTest
         $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
         $matrixB  = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
-        $this->assertEquals(0.3333333, $matches[1], null, 0.000001);
-        $this->assertEquals(0.3333333, $matches[4], null, 0.000001);
+        $this->assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);
+        $this->assertEqualsWithDelta(0.3333333, $matches[4], 0.000001);
     }
 
     /**
@@ -295,7 +296,7 @@ class ChartTest extends AbstractTest
     {
         $this->requireImagick();
 
-        $fileName = $this->createRunResourceURI('jdepend-test-out.png');
+        $fileName = $this->createRunResourceURI('jdepend-test-out') . '.png';
         if (file_exists($fileName)) {
             unlink($fileName);
         }
@@ -310,7 +311,7 @@ class ChartTest extends AbstractTest
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
 
-        $this->assertFileNotExists($fileName);
+        $this->assertFileDoesNotExist($fileName);
         $logger->close();
         $this->assertFileExists($fileName);
 
@@ -345,7 +346,7 @@ class ChartTest extends AbstractTest
     private function createPackage($userDefined, $packageName)
     {
         $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
-            ->setMethods(array('isUserDefined'))
+            ->onlyMethods(array('isUserDefined'))
             ->setConstructorArgs(array($packageName))
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')
             ->getMock();

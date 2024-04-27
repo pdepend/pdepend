@@ -43,7 +43,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator}
@@ -56,7 +56,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator
  * @group unittest
  */
-class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTest
+class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
 {
     /**
      * testIteratorReturnsExpectedClasses

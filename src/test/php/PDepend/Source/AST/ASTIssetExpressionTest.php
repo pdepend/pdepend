@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTIssetExpression
  * @group unittest
  */
-class ASTIssetExpressionTest extends ASTNodeTest
+class ASTIssetExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIssetExpressionGraphWithMultipleVariables
@@ -65,7 +65,7 @@ class ASTIssetExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
         $vars = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable');
-        $this->assertEquals(3, count($vars));
+        $this->assertCount(3, $vars);
     }
 
     /**
@@ -77,7 +77,7 @@ class ASTIssetExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
         $vars = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');
-        $this->assertEquals(1, count($vars));
+        $this->assertCount(1, $vars);
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTIssetExpressionTest extends ASTNodeTest
     {
         $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
         $vars = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');
-        $this->assertEquals(1, count($vars));
+        $this->assertCount(1, $vars);
     }
 
     /**

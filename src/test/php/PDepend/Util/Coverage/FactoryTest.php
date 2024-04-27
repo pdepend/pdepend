@@ -42,7 +42,7 @@
 
 namespace PDepend\Util\Coverage;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\Factory} class.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Util\Coverage\Factory
  * @group unittest
  */
-class FactoryTest extends AbstractTest
+class FactoryTest extends AbstractTestCase
 {
     /**
      * testCreateReturnsCloverReportInstanceForCloverInputFile
@@ -72,10 +72,11 @@ class FactoryTest extends AbstractTest
      * testCreateMethodThrowsExceptionWhenFileDoesNotExist
      *
      * @return void
-     * @expectedException \RuntimeException
      */
     public function testCreateMethodThrowsExceptionWhenFileDoesNotExist()
     {
+        $this->expectException(\RuntimeException::class);
+
         $factory = new Factory();
         $factory->create(__FUNCTION__);
     }
@@ -84,10 +85,11 @@ class FactoryTest extends AbstractTest
      * testCreateMethodThrowsExceptionWhenFileIsNotValidXml
      *
      * @return void
-     * @expectedException \RuntimeException
      */
     public function testCreateMethodThrowsExceptionWhenFileIsNotValidXml()
     {
+        $this->expectException(\RuntimeException::class);
+
         $factory = new Factory();
         $factory->create(__FILE__);
     }
@@ -96,11 +98,12 @@ class FactoryTest extends AbstractTest
      * testCreateMethodThrowsExceptionForUnsupportedReportFormat
      *
      * @return void
-     * @expectedException \RuntimeException
      */
     public function testCreateMethodThrowsExceptionForUnsupportedReportFormat()
     {
+        $this->expectException(\RuntimeException::class);
+
         $factory = new Factory();
-        $factory->create(dirname(__FILE__) . '/_files/fail.xml');
+        $factory->create(__DIR__ . '/_files/fail.xml');
     }
 }

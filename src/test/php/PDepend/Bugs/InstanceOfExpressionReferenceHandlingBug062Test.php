@@ -51,10 +51,9 @@ namespace PDepend\Bugs;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \stdClass
  * @group regressiontest
  */
-class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegressionTest
+class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser handles an interface within an instanceof operator

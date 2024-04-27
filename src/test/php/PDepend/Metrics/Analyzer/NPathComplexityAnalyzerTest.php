@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
@@ -56,7 +56,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @covers \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
  * @group unittest
  */
-class NPathComplexityAnalyzerTest extends AbstractMetricsTest
+class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
@@ -69,7 +69,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -230,7 +230,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTest
     {
         $this->assertEquals(63, $this->calculateFunctionMetric());
     }
-    
+
     /**
      * testNPathComplexityForConditionalsInArrayDeclaration
      *

@@ -42,7 +42,7 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case the node iterator.
@@ -53,7 +53,7 @@ use PDepend\AbstractTest;
  * @covers \PDepend\Source\AST\ASTArtifactList
  * @group unittest
  */
-class ASTArtifactListTest extends AbstractTest
+class ASTArtifactListTest extends AbstractTestCase
 {
     /**
      * Tests the ctor with an valid input array of {@link \PDepend\Source\AST\AbstractASTArtifact}
@@ -156,10 +156,13 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      */
-    public function testCurrentReturnsFalseWhenNoMoreElementExists()
+    public function testCurrentThrowsOutOfBoundsExceptionWhenNoMoreElementExists()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $iterator = new ASTArtifactList(array());
-        $this->assertFalse($iterator->current());
+        $this->assertFalse($iterator->valid());
+        $iterator->current();
     }
 
     /**
@@ -215,10 +218,11 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException OutOfBoundsException
      */
     public function testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException()
     {
+        $this->expectException(\OutOfBoundsException::class);
+
         $iterator = new ASTArtifactList(array());
         $iterator[0]->getName();
     }
@@ -228,10 +232,11 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException BadMethodCallException
      */
     public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $iterator    = new ASTArtifactList(array());
         $iterator[0] = new ASTClass('Class');
     }
@@ -241,10 +246,11 @@ class ASTArtifactListTest extends AbstractTest
      *
      * @return void
      * @since 1.0.0
-     * @expectedException BadMethodCallException
      */
     public function testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException()
     {
+        $this->expectException(\BadMethodCallException::class);
+
         $iterator = new ASTArtifactList(array());
         unset($iterator[0]);
     }

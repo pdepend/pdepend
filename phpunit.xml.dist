@@ -1,31 +1,28 @@
 <?xml version="1.0"?>
-<phpunit bootstrap="src/test/php/PDepend/bootstrap.php">
-    <php>
-        <ini name="date.timezone" value="UTC" />
-    </php>
-
-    <testsuites>
-        <testsuite name="PHP Depends Test Suite">
-            <directory suffix="Test.php">src/test/php</directory>
-            <directory suffix=".phpt">src/test/php</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/main/php/</directory>
-
-            <exclude>
-                <!-- Exclude all vendor files -->
-                <directory suffix=".php">vendor/</directory>
-                <directory suffix=".php">src/test</directory>
-                <!-- Exclude this exotic result printer -->
-                <file>src/main/php/PDepend/DbusUI/ResultPrinter.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-
-    <logging>
-        <log type="coverage-clover" target="clover.xml"/>
-    </logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="src/test/php/PDepend/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
+  <coverage includeUncoveredFiles="true" cacheDirectory=".phpunit.cache">
+    <report>
+      <clover outputFile="clover.xml"/>
+    </report>
+  </coverage>
+  <php>
+    <ini name="date.timezone" value="UTC"/>
+  </php>
+  <testsuites>
+    <testsuite name="PHP Depends Test Suite">
+      <directory suffix="Test.php">src/test/php</directory>
+      <directory suffix=".phpt">src/test/php</directory>
+    </testsuite>
+  </testsuites>
+  <logging/>
+  <source>
+    <include>
+      <directory suffix=".php">src/main/php/</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">vendor/</directory>
+      <directory suffix=".php">src/test</directory>
+      <file>src/main/php/PDepend/DbusUI/ResultPrinter.php</file>
+    </exclude>
+  </source>
 </phpunit>

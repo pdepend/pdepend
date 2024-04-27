@@ -57,7 +57,7 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
  * @covers \PDepend\Source\AST\ASTFunction
  * @group unittest
  */
-class ASTFunctionTest extends AbstractASTArtifactTest
+class ASTFunctionTest extends AbstractASTArtifactTestCase
 {
     /**
      * testReturnsReferenceReturnsExpectedTrue
@@ -607,7 +607,7 @@ class ASTFunctionTest extends AbstractASTArtifactTest
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, count($copy->getNamespace()->getFunctions()));
+        $this->assertCount(1, $copy->getNamespace()->getFunctions());
     }
 
     /**

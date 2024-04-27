@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTTryStatement
  * @group unittest
  */
-class ASTTryStatementTest extends ASTNodeTest
+class ASTTryStatementTest extends ASTNodeTestCase
 {
     /**
      * testTryStatement
@@ -173,10 +173,11 @@ class ASTTryStatementTest extends ASTNodeTest
      * testParserThrowsExceptionWhenNoCatchStatementFollows
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstTryStatementInFunction();
     }
 

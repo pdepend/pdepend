@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer;
 
-use PDepend\Metrics\AbstractMetricsTest;
+use PDepend\Metrics\AbstractMetricsTestCase;
 
 /**
  * Test cases for the {@link  \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
@@ -53,7 +53,7 @@ use PDepend\Metrics\AbstractMetricsTest;
  * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
  * @group unittest
  */
-class CrapIndexAnalyzerTest extends AbstractMetricsTest
+class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testAnalyzerReturnsExpectedDependencies
@@ -77,7 +77,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
     public function testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied()
     {
         $analyzer = new CrapIndexAnalyzer();
-        
+
         $this->assertFalse($analyzer->isEnabled());
     }
 
@@ -178,7 +178,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
     private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex)
     {
         $metrics = $this->calculateCrapIndex($testCase, $ccn);
-        $this->assertEquals($crapIndex, $metrics['crap'], '', 0.005);
+        $this->assertEqualsWithDelta($crapIndex, $metrics['crap'], 0.005);
     }
 
     /**
@@ -225,7 +225,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTest
     {
         $pathName = $this->createRunResourceURI('clover.xml');
 
-        $content = file_get_contents(dirname(__FILE__) . '/_files/clover.xml');
+        $content = file_get_contents(__DIR__ . '/_files/clover.xml');
         $directory = dirname($this->createCodeResourceUriForTest()) . DIRECTORY_SEPARATOR;
         $content = str_replace('${pathName}', $directory, $content);
         file_put_contents($pathName, $content);

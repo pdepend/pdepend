@@ -63,7 +63,6 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_Exception;
 use ReflectionProperty;
 
 /**
@@ -72,7 +71,7 @@ use ReflectionProperty;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTest extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * The current working directory.
@@ -87,7 +86,7 @@ abstract class AbstractTest extends TestCase
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -108,7 +107,7 @@ abstract class AbstractTest extends TestCase
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         CollectionArtifactFilter::getInstance()->setFilter();
 
@@ -120,26 +119,6 @@ abstract class AbstractTest extends TestCase
         }
 
         parent::tearDown();
-    }
-
-    /**
-     * Override to run the test and assert its state.
-     *
-     * @return mixed
-     *
-     * @throws Exception|PHPUnit_Framework_Exception
-     */
-    protected function runTest()
-    {
-        $inputReflector = new ReflectionProperty('PHPUnit_Framework_TestCase', 'dependencyInput');
-        $inputReflector->setAccessible(true);
-        $input = $inputReflector->getValue($this);
-
-        if (!empty($input)) {
-            $inputReflector->setValue($this, array_values($input));
-        }
-
-        return parent::runTest();
     }
 
     /**
@@ -471,42 +450,6 @@ abstract class AbstractTest extends TestCase
     }
 
     /**
-     * Helper method to allow PHPUnit versions < 3.5.x
-     *
-     * @param string $expected The expected class or interface.
-     * @param mixed  $actual   The actual variable/value.
-     * @param string $message  Optional error/fail message.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public static function assertInstanceOf($expected, $actual, $message = '')
-    {
-        if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
-            return parent::assertInstanceOf($expected, $actual, $message);
-        }
-        return parent::assertType($expected, $actual, $message);
-    }
-
-    /**
-     * Helper method to allow PHPUnit versions < 3.5.x
-     *
-     * @param string $expected The expected internal type.
-     * @param mixed  $actual   The actual variable/value.
-     * @param string $message  Optional error/fail message.
-     *
-     * @return void
-     * @since 0.10.2
-     */
-    public static function assertInternalType($expected, $actual, $message = '')
-    {
-        if (is_callable(get_parent_class(__CLASS__) . '::') . __FUNCTION__) {
-            return parent::assertInternalType($expected, $actual, $message);
-        }
-        return parent::assertType($expected, $actual, $message);
-    }
-
-    /**
      * Creates a mocked class instance without calling the constructor.
      *
      * @param string $className Name of the class to mock.
@@ -517,7 +460,7 @@ abstract class AbstractTest extends TestCase
     protected function getMockWithoutConstructor($className)
     {
         $mock = $this->getMockBuilder($className)
-            ->setMethods(array('__construct'))
+            ->onlyMethods(array('__construct'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -584,7 +527,7 @@ abstract class AbstractTest extends TestCase
     protected function createEngineFixture()
     {
         $this->changeWorkingDirectory(
-            $this->createCodeResourceURI('config/')
+            self::createCodeResourceURI('config/')
         );
 
         $application = $this->createTestApplication();
@@ -726,11 +669,7 @@ abstract class AbstractTest extends TestCase
      */
     protected function createRunResourceURI($fileName = null)
     {
-        $uri = __DIR__ . '/_run/' . ($fileName ? $fileName : uniqid());
-        if (file_exists($uri) === true) {
-            throw new \ErrorException("File '{$fileName}' already exists.");
-        }
-        return $uri;
+        return tempnam(sys_get_temp_dir(), $fileName ?: uniqid());
     }
 
     /**
@@ -740,7 +679,7 @@ abstract class AbstractTest extends TestCase
      * @return string
      * @throws \ErrorException
      */
-    protected function createCodeResourceURI($fileName)
+    protected static function createCodeResourceURI($fileName)
     {
         $uri = realpath(__DIR__ . '/../../resources/files') . DIRECTORY_SEPARATOR . $fileName;
 
@@ -777,9 +716,9 @@ abstract class AbstractTest extends TestCase
 
         $fileName = substr(join(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
         try {
-            return $this->createCodeResourceURI($fileName);
+            return self::createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {
-            return $this->createCodeResourceURI("{$fileName}.php");
+            return self::createCodeResourceURI("{$fileName}.php");
         }
     }
 
@@ -809,18 +748,16 @@ abstract class AbstractTest extends TestCase
         spl_autoload_register(array(__CLASS__, 'autoload'));
 
         // Is it not installed?
-        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
-            $path  = realpath(dirname(__FILE__) . '/../../../main/php/');
+        if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
+            $path  = realpath(__DIR__ . '/../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
         }
 
         // Set test path
-        $path  = realpath(dirname(__FILE__) . '/..');
+        $path  = realpath(__DIR__ . '/..');
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
-
-        self::initVersionCompatibility();
     }
 
     /**
@@ -832,29 +769,11 @@ abstract class AbstractTest extends TestCase
     public static function autoload($className)
     {
         $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
-        if (is_file(dirname(__FILE__) . '/../../../main/php/PDepend/Engine.php')) {
-            $file = dirname(__FILE__) . '/../../../main/php/' . $file;
+        if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
+            $file = __DIR__ . '/../../../main/php/' . $file;
         }
         if (file_exists($file)) {
             include $file;
-        }
-    }
-
-    /**
-     * There was an api change between PHP 5.3.0alpha3 and 5.3.0beta1, the new
-     * extension name "Core" was introduced and interfaces like "Iterator" are
-     * now part of "Core" instead of "Standard".
-     *
-     * @return void
-     */
-    private static function initVersionCompatibility()
-    {
-        $reflection = new \ReflectionClass('Iterator');
-        $extension  = strtolower($reflection->getExtensionName());
-        $extension  = ($extension === '' ? 'standard' : $extension);
-
-        if (defined('CORE_PACKAGE') === false) {
-            define('CORE_PACKAGE', '+' . $extension);
         }
     }
 
@@ -888,9 +807,9 @@ abstract class AbstractTest extends TestCase
         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $fileName) . DIRECTORY_SEPARATOR . $method;
 
         try {
-            $fileOrDirectory = $this->createCodeResourceURI($fileName);
+            $fileOrDirectory = self::createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {
-            $fileOrDirectory = $this->createCodeResourceURI($fileName . '.php');
+            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
         return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
@@ -907,7 +826,7 @@ abstract class AbstractTest extends TestCase
     public function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
         if (file_exists($fileOrDirectory) === false) {
-            $fileOrDirectory = $this->createCodeResourceURI($fileOrDirectory);
+            $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);
         }
 
         if (is_dir($fileOrDirectory)) {
@@ -963,20 +882,9 @@ abstract class AbstractTest extends TestCase
         );
     }
 
-    public function getMockBuilder($className)
-    {
-        include_once __DIR__ . '/MockBuilder.php';
-
-        return new MockBuilder($this, $className);
-    }
-
     protected function getAbstractClassMock($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = array(), $cloneArguments = false)
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
-            return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
-        }
-
-        return @$this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
+        return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
 
     /**
@@ -997,4 +905,4 @@ abstract class AbstractTest extends TestCase
     }
 }
 
-AbstractTest::init();
+AbstractTestCase::init();

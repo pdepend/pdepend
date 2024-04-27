@@ -53,7 +53,7 @@ use PDepend\Input\ExtensionFilter;
  * @covers \PDepend\Engine
  * @group unittest
  */
-class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
+class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the {@link \PDepend\Engine::getExceptions()} returns a
@@ -129,7 +129,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
 
         list($exitCode, $output) = $this->runTextUICommand();
 
-        $this->assertNotContains('Following errors occurred:', $output);
+        $this->assertStringNotContainsString('Following errors occurred:', $output);
     }
 
     /**
@@ -149,7 +149,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTest
         );
         list($exitCode, $output) = $this->runTextUICommand();
 
-        $this->assertContains('Unexpected token: ), line: 7, col: 49, file:', $output);
+        $this->assertStringContainsString('Unexpected token: ), line: 7, col: 49, file:', $output);
     }
 
     /**

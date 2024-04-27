@@ -51,7 +51,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTType
  * @group unittest
  */
-class ASTTypeTest extends ASTNodeTest
+class ASTTypeTest extends ASTNodeTestCase
 {
     /**
      * testIsArrayReturnsFalseByDefault

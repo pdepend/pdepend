@@ -54,7 +54,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTDeclareStatement
  * @group unittest
  */
-class ASTDeclareStatementTest extends ASTNodeTest
+class ASTDeclareStatementTest extends ASTNodeTestCase
 {
     /**
      * testDeclareStatementWithSingleParameter
@@ -64,7 +64,7 @@ class ASTDeclareStatementTest extends ASTNodeTest
     public function testDeclareStatementWithSingleParameter()
     {
         $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(1, count($stmt->getValues()));
+        $this->assertCount(1, $stmt->getValues());
     }
 
     /**
@@ -75,7 +75,7 @@ class ASTDeclareStatementTest extends ASTNodeTest
     public function testDeclareStatementWithMultipleParameter()
     {
         $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
-        $this->assertEquals(2, count($stmt->getValues()));
+        $this->assertCount(2, $stmt->getValues());
     }
 
     /**

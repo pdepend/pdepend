@@ -42,7 +42,7 @@
 
 namespace PDepend\Report;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 
 /**
  * Test case for the logger factory.
@@ -50,7 +50,7 @@ use PDepend\AbstractTest;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ReportGeneratorFactoryTest extends AbstractTest
+class ReportGeneratorFactoryTest extends AbstractTestCase
 {
     private function createReportGeneratorFactory()
     {
@@ -97,8 +97,10 @@ class ReportGeneratorFactoryTest extends AbstractTest
      */
     public function testCreateGeneratorWithInvalidIdentifierFail()
     {
-        $this->setExpectedException(
-            '\RuntimeException',
+        $this->expectException(
+            '\RuntimeException'
+        );
+        $this->expectExceptionMessage(
             'Unknown generator with identifier "foo-bar-xml".'
         );
 

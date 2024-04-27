@@ -52,7 +52,7 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\AST\ASTForeachStatement
  * @group unittest
  */
-class ASTYieldStatementTest extends ASTNodeTest
+class ASTYieldStatementTest extends ASTNodeTestCase
 {
     /**
      * testYield
@@ -152,7 +152,7 @@ class ASTYieldStatementTest extends ASTNodeTest
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $stmt->getChildren();
 
-        $this->assertEquals(2, count($nodes));
+        $this->assertCount(2, $nodes);
 
         return $nodes;
     }
@@ -180,7 +180,7 @@ class ASTYieldStatementTest extends ASTNodeTest
         $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $yield->getChildren();
 
-        $this->assertEquals(1, count($nodes));
+        $this->assertCount(1, $nodes);
 
         return $yield;
     }
@@ -210,7 +210,7 @@ class ASTYieldStatementTest extends ASTNodeTest
         $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $yield->getChildren();
 
-        $this->assertEquals(2, count($nodes));
+        $this->assertCount(2, $nodes);
 
         return $yield;
     }

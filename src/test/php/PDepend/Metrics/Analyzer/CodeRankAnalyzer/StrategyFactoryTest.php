@@ -42,7 +42,7 @@
 
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
-use PDepend\AbstractTest;
+use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
 
 /**
@@ -54,7 +54,7 @@ use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
  * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory
  * @group unittest
  */
-class StrategyFactoryTest extends AbstractTest
+class StrategyFactoryTest extends AbstractTestCase
 {
     /**
      * Tests that the factory throws the expected exception for an invalid
@@ -66,8 +66,10 @@ class StrategyFactoryTest extends AbstractTest
     {
         $factory = new StrategyFactory();
 
-        $this->setExpectedException(
-            'InvalidArgumentException',
+        $this->expectException(
+            'InvalidArgumentException'
+        );
+        $this->expectExceptionMessage(
             'Cannot load file for identifier "foo_bar_baz".'
         );
 

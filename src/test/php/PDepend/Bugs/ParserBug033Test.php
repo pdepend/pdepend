@@ -49,10 +49,9 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 33
- * @covers \stdClass
  * @group regressiontest
  */
-class ParserBug033Test extends AbstractRegressionTest
+class ParserBug033Test extends AbstractRegressionTestCase
 {
     /**
      * The type hint detection was broken when a constant was used as default

@@ -53,7 +53,7 @@ use PDepend\Source\AST\ASTScalarType;
  * @group unittest
  * @group php8.2
  */
-class TrueTypeTest extends PHPParserVersion82Test
+class TrueTypeTest extends PHPParserVersion82TestCase
 {
     /**
      * @return void

@@ -28,7 +28,7 @@ $regexp = '(
     \s+\}
 )xi';
 
-if (0 === preg_match_all($regexp, $data, $matches)) {
+if (!preg_match_all($regexp, $data, $matches)) {
     fwrite(STDERR, "No matches found :-(\nUsage:\n~ \$ php-keywords.php <path/to/zend_language_scanner.l>\n");
     exit(42);
 }

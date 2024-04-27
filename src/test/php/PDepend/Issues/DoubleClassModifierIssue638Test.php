@@ -55,7 +55,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
-class DoubleClassModifierIssue638Test extends AbstractFeatureTest
+class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that a class can have a readonly modifier
@@ -235,10 +235,11 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTest
      * Tests that a class can have a readonly and final modifier
      *
      * @return void
-     * @expectedException \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testAbstractFinalReadonlyClass()
     {
+        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+
         $this->getFirstClassForTestCase();
     }
 }
