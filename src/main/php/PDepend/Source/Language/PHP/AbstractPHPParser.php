@@ -4342,7 +4342,7 @@ abstract class AbstractPHPParser
      *
      * @param T $expr
      *
-     * @return ASTMemberPrimaryPrefix|T
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T
      */
     protected function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
     {
@@ -4481,7 +4481,7 @@ abstract class AbstractPHPParser
      *
      * @param T $node The previously parsed node.
      *
-     * @return ASTFunctionPostfix|T The original input node or this node wrapped with a function postfix instance.
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T The original input node or this node wrapped with a function postfix instance.
      *
      * @since 1.0.0
      */
@@ -4508,7 +4508,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return ASTFunctionPostfix
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
      *
      * @since 0.9.6
      */
@@ -4560,7 +4560,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return ASTMemberPrimaryPrefix|T
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T
      *
      * @since 0.9.6
      */
@@ -4593,7 +4593,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return ASTMemberPrimaryPrefix
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
      *
      * @since 0.9.6
      */
@@ -4694,7 +4694,7 @@ abstract class AbstractPHPParser
      *
      * @throws ParserException
      *
-     * @return ASTMemberPrimaryPrefix
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
      *
      * @since 0.9.6
      */
@@ -4847,7 +4847,7 @@ abstract class AbstractPHPParser
      *
      * @param ASTNode $node Node that represents the image of the method postfix node.
      *
-     * @return ASTMethodPostfix
+     * @return ASTMethodPostfix|ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
      *
      * @since 1.0.0
      */
