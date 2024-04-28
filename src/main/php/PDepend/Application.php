@@ -216,10 +216,10 @@ class Application
 
         foreach ($loggerServices as $loggerServiceTags) {
             foreach ($loggerServiceTags as $loggerServiceTag) {
-                if (isset($loggerServiceTag['option']) && isset($loggerServiceTag['message'])) {
+                if (isset($loggerServiceTag['option'], $loggerServiceTag['message']) && is_string($loggerServiceTag['option']) && is_string($loggerServiceTag['message'])) {
                     $options[$loggerServiceTag['option']] = array(
                         'message' => $loggerServiceTag['message'],
-                        'value' => isset($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file'
+                        'value' => isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file'
                     );
                 }
             }
