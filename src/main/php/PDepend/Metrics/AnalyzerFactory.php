@@ -42,6 +42,7 @@
 
 namespace PDepend\Metrics;
 
+use InvalidArgumentException;
 use PDepend\Report\ReportGenerator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -71,6 +72,8 @@ class AnalyzerFactory
      *
      * @param ReportGenerator[] $generators
      *
+     * @throws InvalidArgumentException
+     *
      * @return Analyzer[]
      */
     public function createRequiredForGenerators(array $generators)
@@ -79,7 +82,13 @@ class AnalyzerFactory
 
         foreach ($generators as $logger) {
             foreach ($logger->getAcceptedAnalyzers() as $type) {
-                $analyzers[$type] = $this->container->get($type);
+                $analyzer = $this->container->get($type);
+                if (!$analyzer instanceof Analyzer) {
+                    throw new InvalidArgumentException(
+                        sprintf('No analyzer by the name "%s" was found.', $type),
+                    );
+                }
+                $analyzers[$type] = $analyzer;
             }
         }
 
