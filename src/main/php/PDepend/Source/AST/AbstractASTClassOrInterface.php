@@ -78,7 +78,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * An <b>array</b> with all constant declarators defined in this class or interface.
      *
-     * @var array<string, mixed>
+     * @var array<string, ASTConstantDeclarator>
      */
     protected $constantDeclarators = null;
 
@@ -222,7 +222,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns an <b>array</b> with all constant declarators defined in this class or interface.
      *
-     * @return array<string, mixed>
+     * @return array<string, ASTConstantDeclarator>
      */
     public function getConstantDeclarators()
     {
