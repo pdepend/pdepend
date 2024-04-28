@@ -43,6 +43,7 @@
 namespace PDepend\Util;
 
 use Imagick;
+use InvalidArgumentException;
 
 /**
  * Simple utility class that is used to create different image formats. This
@@ -135,6 +136,8 @@ class ImageConvert
      * file.
      *
      * @param string $input The input svg file.
+     *
+     * @throws InvalidArgumentException
      */
     protected static function prepareSvg($input): void
     {
@@ -144,6 +147,9 @@ class ImageConvert
         }
 
         $svg = file_get_contents($input);
+        if (!$svg) {
+            throw new InvalidArgumentException(sprintf('The given file "%s" does not exist.', $input));
+        }
 
         // Check for font family
         if (isset($config->imageConvert->fontFamily)) {
