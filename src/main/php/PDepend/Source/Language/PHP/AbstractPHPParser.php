@@ -4847,7 +4847,7 @@ abstract class AbstractPHPParser
      *
      * @param ASTNode $node Node that represents the image of the method postfix node.
      *
-     * @return ASTMethodPostfix|ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|ASTMethodPostfix
      *
      * @since 1.0.0
      */
@@ -7136,7 +7136,7 @@ abstract class AbstractPHPParser
     /**
      * @param array<string> $fragments
      *
-     * @return string|false
+     * @return false|string
      */
     protected function parseNamespaceImage(array $fragments)
     {
@@ -8207,7 +8207,7 @@ abstract class AbstractPHPParser
     /**
      * @param string $numberRepresentation
      *
-     * @return string|float|int
+     * @return float|int|string
      */
     private function getNumberFromImage($numberRepresentation)
     {

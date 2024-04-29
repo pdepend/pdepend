@@ -98,14 +98,14 @@ interface ASTNode
      *
      * @throws OutOfBoundsException When no node exists at the given index.
      *
-     * @return ASTArtifact|AbstractASTNode
+     * @return AbstractASTNode|ASTArtifact
      */
     public function getChild($index);
 
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return (ASTArtifact|AbstractASTNode)[]
+     * @return (AbstractASTNode|ASTArtifact)[]
      */
     public function getChildren();
 
