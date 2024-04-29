@@ -84,6 +84,7 @@ class ASTArguments extends AbstractASTNode
      * This method can be used to mark the argument list as variadic placeholder
      *
      * @return void
+     *
      * @since 2.11.0
      */
     public function setVariadicPlaceholder()

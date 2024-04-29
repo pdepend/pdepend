@@ -157,6 +157,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Adds a parsed child node to this node.
      *
      * @return void
+     *
      * @access private
      */
     public function addChild(ASTNode $node)
@@ -207,6 +208,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @param class-string<T> $targetType Searched class or interface type.
      *
      * @return T|null
+     *
      * @access private
      *
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
@@ -241,6 +243,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @param R[]             $results    The found children.
      *
      * @return T[]
+     *
      * @access private
      *
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
