@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This node class encapsultes a shift left expression.

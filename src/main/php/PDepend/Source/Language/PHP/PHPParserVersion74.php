@@ -45,9 +45,6 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTClosure;
-use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTType;
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**

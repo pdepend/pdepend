@@ -45,7 +45,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents arguments as they are supplied to functions or

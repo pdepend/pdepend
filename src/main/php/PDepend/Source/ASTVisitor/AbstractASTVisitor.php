@@ -44,7 +44,6 @@ namespace PDepend\Source\ASTVisitor;
 
 use ArrayIterator;
 use Iterator;
-use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTEnum;

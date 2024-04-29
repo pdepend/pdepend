@@ -44,7 +44,6 @@ namespace PDepend\Source\AST;
 
 use BadMethodCallException;
 use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Represents a php class node.
