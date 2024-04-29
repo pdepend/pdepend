@@ -235,7 +235,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @var array<int, integer>
+     * @var array<int, int>
      */
     protected static $tokenMap = array(
         T_AS                        => Tokens::T_AS,
@@ -387,7 +387,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
-     * @var array<string, integer>
+     * @var array<string, int>
      */
     protected static $literalMap = array(
         '@'              =>  Tokens::T_AT,
@@ -566,7 +566,7 @@ class PHPTokenizerInternal implements FullTokenizer
     );
 
     /**
-     * @var array<int, array<int, array<string, integer|string>>>
+     * @var array<int, array<int, array<string, int|string>>>
      */
     protected static $reductionMap = array(
         Tokens::T_CONCAT => array(
@@ -1085,7 +1085,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array<array<int, integer|string>|string> $tokens Reference to the current token stream.
+     * @param array<array<int, int|string>|string> $tokens Reference to the current token stream.
      *
      * @return string|null
      */
