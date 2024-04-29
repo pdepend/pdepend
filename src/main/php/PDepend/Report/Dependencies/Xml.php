@@ -211,7 +211,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Generates the XML for a class or trait node.
      *
-     * @param string   $typeIdentifier
+     * @param string $typeIdentifier
      *
      * @return void
      */

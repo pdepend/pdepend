@@ -303,7 +303,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int $index
+     * @param int    $index
      * @param string $value
      *
      * @return void

@@ -172,7 +172,7 @@ interface ASTVisitor
      * @template T of array<string, mixed>|numeric-string
      *
      * @param ASTNode $node
-     * @param T $value
+     * @param T       $value
      *
      * @return T
      */
