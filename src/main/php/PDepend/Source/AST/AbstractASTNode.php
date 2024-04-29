@@ -419,8 +419,6 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method adds a new child node to this node instance.
      *
-     * @param ASTNode $node
-     *
      * @return void
      */
     public function addChild(ASTNode $node)

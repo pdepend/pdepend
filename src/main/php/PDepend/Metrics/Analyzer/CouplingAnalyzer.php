@@ -369,8 +369,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Calculates the coupling between the given types.
      *
-     * @param AbstractASTType $coupledType
-     *
      * @return void
      *
      * @since  0.10.2
