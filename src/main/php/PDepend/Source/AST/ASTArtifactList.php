@@ -211,8 +211,6 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @throws BadMethodCallException
      *
-     * @return void
-     *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php
      */
