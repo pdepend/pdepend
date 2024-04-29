@@ -172,8 +172,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
                 $this->parsedFiles,
                 (date('i:s', time() - $this->startTime))
             ),
-            new DBusArray(DBus::STRING, array()),
-            new DBusDict(DBus::VARIANT, array()),
+            new DBusArray(Dbus::STRING, array()),
+            new DBusDict(Dbus::VARIANT, array()),
             1000
         );
     }

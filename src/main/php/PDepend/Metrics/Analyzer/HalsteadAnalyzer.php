@@ -347,7 +347,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_METHOD_C:
                 case Tokens::T_NS_C:
                 case Tokens::T_DIR:
-                case TOKENS::T_ENCAPSED_AND_WHITESPACE: // content of HEREDOC
+                case Tokens::T_ENCAPSED_AND_WHITESPACE: // content of HEREDOC
                     $operands[] = $token->image;
                     break;
 

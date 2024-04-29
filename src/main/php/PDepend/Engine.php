@@ -275,7 +275,7 @@ class Engine
      *
      * @return void
      */
-    public function addReportGenerator(Report\ReportGenerator $generator)
+    public function addReportGenerator(ReportGenerator $generator)
     {
         $this->generators[] = $generator;
     }
