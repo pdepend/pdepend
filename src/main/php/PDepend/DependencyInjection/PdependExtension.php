@@ -42,8 +42,8 @@
 
 namespace PDepend\DependencyInjection;
 
-use stdClass;
 use RuntimeException;
+use stdClass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as SymfonyExtension;
