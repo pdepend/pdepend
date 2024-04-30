@@ -831,7 +831,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array<int|string> $token
      * @param string            $namespace
      *
-     * @return array<int, array<int, string|int>>
+     * @return array<int, array<int, int|string>>
      */
     private function splitRelativeNameToken($token, $namespace)
     {
