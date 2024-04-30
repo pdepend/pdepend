@@ -43,7 +43,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 

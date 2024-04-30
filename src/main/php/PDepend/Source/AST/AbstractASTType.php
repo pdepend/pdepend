@@ -46,7 +46,6 @@ namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\AST\ASTTraitUseStatement;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;

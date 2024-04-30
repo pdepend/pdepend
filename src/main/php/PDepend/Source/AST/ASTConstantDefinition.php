@@ -43,7 +43,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a single constant definition as it can occure in

@@ -46,7 +46,6 @@ namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a field or property declaration of a class.

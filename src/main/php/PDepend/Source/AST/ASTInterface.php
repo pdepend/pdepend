@@ -43,7 +43,6 @@
 namespace PDepend\Source\AST;
 
 use BadMethodCallException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Representation of a code interface.
