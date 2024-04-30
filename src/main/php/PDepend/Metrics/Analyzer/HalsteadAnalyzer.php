@@ -103,7 +103,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * for the given <b>$node</b> (n1, n2, N1, N2). If there are no metrics for
      * the requested node, this method will return an empty <b>array</b>.
      *
-     * @return array<string, integer>
+     * @return array<string, int>
      */
     public function getNodeBasisMetrics(ASTArtifact $artifact)
     {

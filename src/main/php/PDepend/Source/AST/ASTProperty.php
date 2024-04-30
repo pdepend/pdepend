@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This code class represents a class property.
@@ -221,7 +220,7 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
-     * @return string
+     * @return ?string
      */
     public function getComment()
     {

@@ -2806,8 +2806,8 @@ abstract class AbstractPHPParser
      *
      * @template T of AbstractASTNode
      *
-     * @param T   $node
-     * @param int $closeToken
+     * @param T        $node
+     * @param int      $closeToken
      * @param int|null $separatorToken
      *
      * @throws TokenStreamEndException
@@ -4847,7 +4847,7 @@ abstract class AbstractPHPParser
      *
      * @param ASTNode $node Node that represents the image of the method postfix node.
      *
-     * @return ASTMethodPostfix|ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|ASTMethodPostfix
      *
      * @since 1.0.0
      */
@@ -5330,7 +5330,7 @@ abstract class AbstractPHPParser
      *
      * @template T of AbstractASTNode
      *
-     * @param T $node The context parent node.
+     * @param T    $node   The context parent node.
      * @param bool $inCall
      *
      * @return T The prepared entire node.
@@ -7136,7 +7136,7 @@ abstract class AbstractPHPParser
     /**
      * @param array<string> $fragments
      *
-     * @return string|false
+     * @return false|string
      */
     protected function parseNamespaceImage(array $fragments)
     {
@@ -8155,6 +8155,7 @@ abstract class AbstractPHPParser
      * Peek the next token if it's of the given type, add it to current tokenStack, and return it if so.
      *
      * @param string $type
+     *
      * @psalm-param Tokens::T_* $type
      *
      * @return Token|null
@@ -8207,7 +8208,7 @@ abstract class AbstractPHPParser
     /**
      * @param string $numberRepresentation
      *
-     * @return string|float|int
+     * @return float|int|string
      */
     private function getNumberFromImage($numberRepresentation)
     {
@@ -8277,6 +8278,7 @@ abstract class AbstractPHPParser
 
     /**
      * @param string $type
+     *
      * @psalm-param Tokens::T_* $type
      *
      * @return string

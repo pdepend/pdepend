@@ -48,6 +48,7 @@ use PDepend\DbusUI\ResultPrinter as DbusResultPrinter;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use RuntimeException;
+use Throwable;
 
 /**
  * Handles the command line stuff and starts the text ui runner.
@@ -629,7 +630,7 @@ class Command
     }
 
     /**
-     * @param Exception|\Throwable $exception
+     * @param Exception|Throwable $exception
      *
      * @return string
      */

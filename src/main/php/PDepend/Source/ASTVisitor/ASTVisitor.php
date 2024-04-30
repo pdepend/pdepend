@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\ASTVisitor;
 
-use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTEnum;
@@ -172,7 +171,7 @@ interface ASTVisitor
      * @template T of array<string, mixed>|numeric-string
      *
      * @param ASTNode $node
-     * @param T $value
+     * @param T       $value
      *
      * @return T
      */

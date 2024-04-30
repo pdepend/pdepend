@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
 use BadMethodCallException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a formal parameter within the signature of a function,

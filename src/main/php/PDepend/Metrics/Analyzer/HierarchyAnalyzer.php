@@ -117,14 +117,14 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Number of all root classes within the analyzed source code.
      *
-     * @var array<string, boolean>
+     * @var array<string, bool>
      */
     private $roots = array();
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
-     * @var array<string, boolean>
+     * @var array<string, bool>
      */
     private $noneLeafs = array();
 

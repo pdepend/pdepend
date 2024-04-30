@@ -2485,7 +2485,7 @@ class PHPBuilder implements Builder
      * @template T of AbstractASTType
      *
      * @param array<string, array<string, array<string, T>>> $originalTypes The original types created during the parsing
-     *                                                                   process.
+     *                                                                      process.
      *
      * @return array<string, array<string, array<string, T>>>
      */

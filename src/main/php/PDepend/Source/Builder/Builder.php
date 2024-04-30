@@ -163,6 +163,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @template T of mixed
+ *
  * @extends \IteratorAggregate<T>
  */
 interface Builder extends IteratorAggregate

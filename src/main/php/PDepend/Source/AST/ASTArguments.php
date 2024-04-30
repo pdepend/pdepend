@@ -45,7 +45,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents arguments as they are supplied to functions or
@@ -84,6 +83,7 @@ class ASTArguments extends AbstractASTNode
      * This method can be used to mark the argument list as variadic placeholder
      *
      * @return void
+     *
      * @since 2.11.0
      */
     public function setVariadicPlaceholder()

@@ -95,7 +95,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     /**
      * Collected project metrics.
      *
-     * @var array<string, integer>
+     * @var array<string, int>
      */
     private $projectMetrics = array(
         self::M_LINES_OF_CODE              =>  0,
@@ -139,7 +139,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @return array<string, integer>
+     * @return array<string, int>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -161,7 +161,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @return array<string, integer>
+     * @return array<string, int>
      */
     public function getProjectMetrics()
     {
@@ -414,7 +414,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * @param array<int, Token> $tokens The raw token stream.
      * @param bool              $search Optional boolean flag, search start.
      *
-     * @return array<int, integer>
+     * @return array<int, int>
      */
     private function linesOfCode(array $tokens, $search = false)
     {

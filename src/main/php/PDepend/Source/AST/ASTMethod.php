@@ -43,7 +43,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Represents a php method node.
