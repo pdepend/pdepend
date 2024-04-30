@@ -85,7 +85,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * analyzed system. The array size is equal to the number of analyzed root
      * classes.
      *
-     * @var array<integer>
+     * @var array<int>
      */
     private $rootClasses = array();
 
