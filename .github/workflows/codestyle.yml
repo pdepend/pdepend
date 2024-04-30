@@ -1,0 +1,62 @@
+name: Codestyle
+
+on:
+  push:
+    branches:
+      - "*"
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - '.php-cs-fixer.php'
+      - '.github/workflows/codestyle.yml'
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - '.php-cs-fixer.php'
+      - '.github/workflows/codestyle.yml'
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [8.3]
+        dependency-version: [prefer-stable]
+
+    name: Codestyle check
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2, cs2pr
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            vendor
+            .php-cs-fixer.cache
+          key: ${{ runner.os }}-php-cs-fixer-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHP Coding Standards Fixer
+        run: |
+          vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
+          vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
