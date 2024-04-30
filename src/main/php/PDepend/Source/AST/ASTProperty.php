@@ -221,7 +221,7 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * Returns the doc comment for this item or <b>null</b>.
      *
-     * @return string
+     * @return ?string
      */
     public function getComment()
     {
