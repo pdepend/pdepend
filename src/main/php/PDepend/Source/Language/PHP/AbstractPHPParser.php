@@ -8155,6 +8155,7 @@ abstract class AbstractPHPParser
      * Peek the next token if it's of the given type, add it to current tokenStack, and return it if so.
      *
      * @param string $type
+     *
      * @psalm-param Tokens::T_* $type
      *
      * @return Token|null
@@ -8277,6 +8278,7 @@ abstract class AbstractPHPParser
 
     /**
      * @param string $type
+     *
      * @psalm-param Tokens::T_* $type
      *
      * @return string

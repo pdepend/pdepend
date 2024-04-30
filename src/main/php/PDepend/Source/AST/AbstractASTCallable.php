@@ -146,6 +146,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @param AbstractASTNode $node A parsed child node instance.
      *
      * @return void
+     *
      * @access private
      *
      * @since  0.9.6
@@ -177,6 +178,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @param class-string<T> $targetType Searched class or interface type.
      *
      * @return T|null
+     *
      * @access private
      *
      * @since  0.9.6
@@ -203,6 +205,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @param T[]             $results    The found children.
      *
      * @return T[]
+     *
      * @access private
      *
      * @since  0.9.6
