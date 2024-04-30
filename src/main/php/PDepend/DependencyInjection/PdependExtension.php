@@ -62,6 +62,7 @@ class PdependExtension extends SymfonyExtension
      * @param array<array<array<array<string>>>> $configs
      *
      * @return void
+     *
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)

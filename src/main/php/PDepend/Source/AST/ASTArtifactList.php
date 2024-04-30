@@ -205,7 +205,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * Offset to set
      *
      * @param int|string $offset
-     * @param T $value
+     * @param T          $value
      *
      * @throws BadMethodCallException
      *

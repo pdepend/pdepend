@@ -2806,8 +2806,8 @@ abstract class AbstractPHPParser
      *
      * @template T of AbstractASTNode
      *
-     * @param T   $node
-     * @param int $closeToken
+     * @param T        $node
+     * @param int      $closeToken
      * @param int|null $separatorToken
      *
      * @throws TokenStreamEndException
@@ -5330,7 +5330,7 @@ abstract class AbstractPHPParser
      *
      * @template T of AbstractASTNode
      *
-     * @param T $node The context parent node.
+     * @param T    $node   The context parent node.
      * @param bool $inCall
      *
      * @return T The prepared entire node.
