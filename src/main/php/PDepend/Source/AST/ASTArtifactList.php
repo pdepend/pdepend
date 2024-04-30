@@ -123,14 +123,14 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Returns the current node
      *
-     * @throws \OutOfBoundsException
+     * @throws OutOfBoundsException
      *
      * @return T
      */
     public function current(): false|ASTArtifact
     {
         if ($this->offset >= $this->count) {
-            throw new \OutOfBoundsException("The offset does not exist.");
+            throw new OutOfBoundsException("The offset does not exist.");
         }
         return $this->artifacts[$this->offset];
     }
