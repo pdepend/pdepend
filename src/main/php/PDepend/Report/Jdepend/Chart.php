@@ -82,7 +82,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * The context analyzer instance.
      *
-     * @var Analyzer\DependencyAnalyzer
+     * @var DependencyAnalyzer
      */
     private $analyzer = null;
 
