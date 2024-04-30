@@ -56,6 +56,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @template T of ASTArtifact
+ *
  * @implements \Iterator<int|string, T>
  * @implements \ArrayAccess<int|string, T>
  */
@@ -123,6 +124,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * Returns the current node
      *
      * @throws OutOfBoundsException
+     *
      * @return T
      */
     public function current(): false|ASTArtifact
@@ -184,7 +186,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to retrieve
      *
-     * @param string|int $offset
+     * @param int|string $offset
      *
      * @throws OutOfBoundsException
      *
@@ -204,8 +206,8 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to set
      *
-     * @param string|int $offset
-     * @param T $value
+     * @param int|string $offset
+     * @param T          $value
      *
      * @throws BadMethodCallException
      *
