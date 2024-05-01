@@ -145,7 +145,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
             array('PDepend\\Source\\AST\\ASTVariable', '$in'),
             array('PDepend\\Source\\AST\\ASTLiteral', ']'),
         ), array_map(function ($node) {
-            return array(get_class($node), $node->getImage());
+            return [$node::class, $node->getImage()];
         }, $new->getChild(1)->getChild(0)->getChildren()));
     }
 
@@ -223,7 +223,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
             array('PDepend\\Source\\AST\\ASTVariable', '$in'),
             array('PDepend\\Source\\AST\\ASTLiteral', ']'),
         ), array_map(function ($node) {
-            return array(get_class($node), $node->getImage());
+            return [$node::class, $node->getImage()];
         }, $new->getChild(1)->getChild(0)->getChildren()));
     }
 

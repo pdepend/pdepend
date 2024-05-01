@@ -86,7 +86,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
     {
-        $this->visits[] = get_class($compilationUnit);
+        $this->visits[] = $compilationUnit::class;
 
         parent::visitCompilationUnit($compilationUnit);
     }

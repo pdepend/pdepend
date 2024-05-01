@@ -204,7 +204,7 @@ class ASTNamespace extends AbstractASTArtifact
     {
         $types = array();
         foreach ($this->types as $type) {
-            if ($type instanceof $className && get_class($type) === $className) {
+            if ($type instanceof $className && $type::class === $className) {
                 $types[] = $type;
             }
         }

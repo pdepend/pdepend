@@ -636,7 +636,7 @@ class Command
      */
     private function getErrorTrace($exception)
     {
-        return get_class($exception) . '(' . $exception->getMessage() . ')' . PHP_EOL .
+        return $exception::class . '(' . $exception->getMessage() . ')' . PHP_EOL .
             '## ' . $exception->getFile() . '(' . $exception->getLine() . ')' . PHP_EOL .
             $exception->getTraceAsString();
     }

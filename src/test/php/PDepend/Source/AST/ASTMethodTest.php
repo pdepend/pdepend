@@ -587,7 +587,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method->addChild($node1);
         $method->addChild($node2);
 
-        $child = $method->getFirstChildOfType(get_class($node2));
+        $child = $method->getFirstChildOfType($node2::class);
         $this->assertSame($node2, $child);
     }
 
@@ -622,7 +622,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method->addChild($node2);
         $method->addChild($node3);
 
-        $child = $method->getFirstChildOfType(get_class($node1));
+        $child = $method->getFirstChildOfType($node1::class);
         $this->assertSame($node1, $child);
     }
 
@@ -682,7 +682,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method->addChild($node1);
         $method->addChild($node2);
 
-        $children = $method->findChildrenOfType(get_class($node2));
+        $children = $method->findChildrenOfType($node2::class);
         $this->assertSame(array($node2), $children);
     }
 

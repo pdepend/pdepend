@@ -121,7 +121,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
                 'in'   =>  array(),
                 'out'  =>  array(),
                 'name'  =>  $node->getName(),
-                'type'  =>  get_class($node),
+                'type'  =>  $node::class,
             );
         }
     }
