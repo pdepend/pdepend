@@ -743,12 +743,12 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
             // Add mapping between image and qualified name to symbol table
             if ($image !== false) {
-                $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+                $this->useSymbolTable->add($image, implode('', array_merge($fragments, $subFragments)));
             }
         } while (true);
 
         if (isset($image, $subFragments) && $image !== false) {
-            $this->useSymbolTable->add($image, join('', array_merge($fragments, $subFragments)));
+            $this->useSymbolTable->add($image, implode('', array_merge($fragments, $subFragments)));
         }
 
         $this->consumeToken(Tokens::T_CURLY_BRACE_CLOSE);

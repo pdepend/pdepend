@@ -714,7 +714,7 @@ abstract class AbstractTestCase extends TestCase
             array_unshift($parts, strtolower(array_shift($parts)));
         }
 
-        $fileName = substr(join(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
+        $fileName = substr(implode(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
         try {
             return self::createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {

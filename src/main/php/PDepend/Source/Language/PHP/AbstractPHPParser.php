@@ -6889,7 +6889,7 @@ abstract class AbstractPHPParser
 
         // Check for fully qualified name
         if ($fragments[0] === '\\') {
-            return join('', $fragments);
+            return implode('', $fragments);
         }
 
         if ($this->isScalarOrCallableTypeHint($fragments[0])) {
@@ -6910,7 +6910,7 @@ abstract class AbstractPHPParser
             array_unshift($fragments, $this->namespaceName, '\\');
         }
 
-        return join('', $fragments);
+        return implode('', $fragments);
     }
 
     /**
@@ -7130,7 +7130,7 @@ abstract class AbstractPHPParser
         }
 
         // Add mapping between image and qualified name to symbol table
-        $this->useSymbolTable->add($image, join('', $fragments));
+        $this->useSymbolTable->add($image, implode('', $fragments));
     }
 
     /**
