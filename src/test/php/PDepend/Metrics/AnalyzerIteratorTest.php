@@ -61,7 +61,7 @@ class AnalyzerIteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsEnabledAnalyzerInstances()
+    public function testIteratorReturnsEnabledAnalyzerInstances(): void
     {
         $analyzer = $this->getMockBuilder(DummyAnalyzer::class)
             ->getMock();
@@ -78,7 +78,7 @@ class AnalyzerIteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorDoesNotReturnDisabledAnalyzerInstances()
+    public function testIteratorDoesNotReturnDisabledAnalyzerInstances(): void
     {
         $analyzer = $this->createMock(DummyAnalyzer::class);
         $analyzer->method('isEnabled')

@@ -64,7 +64,7 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testWmciMetricIsCalculatedForCurrentAndNotParentClass()
+    public function testWmciMetricIsCalculatedForCurrentAndNotParentClass(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 

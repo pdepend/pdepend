@@ -75,10 +75,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * @param string $image
-     *
-     * @return void
      */
-    public function setImage($image)
+    public function setImage($image): void
     {
         $this->setName($image);
     }
@@ -142,11 +140,9 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * @param int $startColumn
      * @param int $endColumn
      *
-     * @return void
-     *
      * @since 0.9.10
      */
-    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn)
+    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void
     {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);
@@ -167,10 +163,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * Sets the parent node of this node.
-     *
-     * @return void
      */
-    public function setParent(ASTNode $node)
+    public function setParent(ASTNode $node): void
     {
         $this->parent = $node;
     }
@@ -199,10 +193,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * This method adds a new child node at the first position of the children.
-     *
-     * @return void
      */
-    public function prependChild(ASTNode $node)
+    public function prependChild(ASTNode $node): void
     {
         array_unshift($this->nodes, $node);
         $node->setParent($this);
@@ -238,10 +230,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * a serialized instance of this class was unserialized. This implementation
      * of the wakeup method will register this object in the the global class
      * context.
-     *
-     * @return void
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->methods = null;
 
@@ -273,11 +263,9 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * @param int $index
      * @param int $value
      *
-     * @return void
-     *
      * @since 0.10.4
      */
-    protected function setMetadataInteger($index, $value)
+    protected function setMetadataInteger($index, $value): void
     {
         $this->setMetadata($index, (string) $value);
     }
@@ -304,11 +292,9 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * @param int    $index
      * @param string $value
      *
-     * @return void
-     *
      * @since 0.10.4
      */
-    protected function setMetadata($index, $value)
+    protected function setMetadata($index, $value): void
     {
         $metadata         = explode(':', $this->metadata, $this->getMetadataSize());
         $metadata[$index] = $value;

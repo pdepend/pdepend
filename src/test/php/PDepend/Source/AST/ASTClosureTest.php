@@ -59,7 +59,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnsByReferenceReturnsFalseByDefault()
+    public function testReturnsByReferenceReturnsFalseByDefault(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertFalse($closure->returnsByReference());
@@ -70,7 +70,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnsByReferenceReturnsFalseByDefaultForStaticClosure()
+    public function testReturnsByReferenceReturnsFalseByDefaultForStaticClosure(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertFalse($closure->returnsByReference());
@@ -81,7 +81,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnsByReferenceReturnsTrueForClosure()
+    public function testReturnsByReferenceReturnsTrueForClosure(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertTrue($closure->returnsByReference());
@@ -92,7 +92,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnsByReferenceReturnsTrueForStaticClosure()
+    public function testReturnsByReferenceReturnsTrueForStaticClosure(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertTrue($closure->returnsByReference());
@@ -103,7 +103,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnsByReferenceReturnsTrueForAssignedClosure()
+    public function testReturnsByReferenceReturnsTrueForAssignedClosure(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertTrue($closure->returnsByReference());
@@ -115,7 +115,7 @@ class ASTClosureTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testParserHandlesPureClosureStatementWithoutAssignment()
+    public function testParserHandlesPureClosureStatementWithoutAssignment(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClosure', $closure);
@@ -126,7 +126,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsFalseByDefault()
+    public function testIsStaticReturnsFalseByDefault(): void
     {
         $closure = new \PDepend\Source\AST\ASTClosure();
         $this->assertFalse($closure->isStatic());
@@ -137,7 +137,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsTrueWhenSetToTrue()
+    public function testIsStaticReturnsTrueWhenSetToTrue(): void
     {
         $closure = new \PDepend\Source\AST\ASTClosure();
         $closure->setStatic(true);
@@ -150,7 +150,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsFalseWhenSetToFalse()
+    public function testIsStaticReturnsFalseWhenSetToFalse(): void
     {
         $closure = new \PDepend\Source\AST\ASTClosure();
         $closure->setStatic(false);
@@ -170,7 +170,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsFalseForNonStaticClosure()
+    public function testIsStaticReturnsFalseForNonStaticClosure(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertFalse($closure->isStatic());
@@ -188,7 +188,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsTrueForStaticClosure()
+    public function testIsStaticReturnsTrueForStaticClosure(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertTrue($closure->isStatic());
@@ -199,7 +199,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClosureContainsExpectedNumberChildNodes()
+    public function testClosureContainsExpectedNumberChildNodes(): void
     {
         $closure = $this->getFirstClosureInFunction();
         $this->assertCount(2, $closure->getChildren());
@@ -210,7 +210,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClosureHasExpectedStartLine()
+    public function testClosureHasExpectedStartLine(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(4, $label->getStartLine());
@@ -221,7 +221,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClosureHasExpectedStartColumn()
+    public function testClosureHasExpectedStartColumn(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(12, $label->getStartColumn());
@@ -232,7 +232,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClosureHasExpectedEndLine()
+    public function testClosureHasExpectedEndLine(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(6, $label->getEndLine());
@@ -243,7 +243,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClosureHasExpectedEndColumn()
+    public function testClosureHasExpectedEndColumn(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(5, $label->getEndColumn());
@@ -254,7 +254,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testStaticClosureHasExpectedStartLine()
+    public function testStaticClosureHasExpectedStartLine(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(4, $label->getStartLine());
@@ -265,7 +265,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testStaticClosureHasExpectedEndLine()
+    public function testStaticClosureHasExpectedEndLine(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(7, $label->getEndLine());
@@ -276,7 +276,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testStaticClosureHasExpectedStartColumn()
+    public function testStaticClosureHasExpectedStartColumn(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(12, $label->getStartColumn());
@@ -287,7 +287,7 @@ class ASTClosureTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testStaticClosureHasExpectedEndColumn()
+    public function testStaticClosureHasExpectedEndColumn(): void
     {
         $label = $this->getFirstClosureInFunction();
         $this->assertEquals(9, $label->getEndColumn());

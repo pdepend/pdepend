@@ -63,7 +63,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      *
      * @return void
      */
-    public function testAnalyzerIgnoresObjectAllocation()
+    public function testAnalyzerIgnoresObjectAllocation(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -79,7 +79,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      *
      * @return void
      */
-    public function testAnalyzerDetectsIdenticalFunctionCalls()
+    public function testAnalyzerDetectsIdenticalFunctionCalls(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -95,7 +95,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      *
      * @return void
      */
-    public function testAnalyzerDetectsDifferentFunctionCalls()
+    public function testAnalyzerDetectsDifferentFunctionCalls(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -111,7 +111,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      *
      * @return void
      */
-    public function testAnalyzerDetectsIdenticalMethodCalls()
+    public function testAnalyzerDetectsIdenticalMethodCalls(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -127,7 +127,7 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
      *
      * @return void
      */
-    public function testAnalyzerDetectsDifferentMethodCalls()
+    public function testAnalyzerDetectsDifferentMethodCalls(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 

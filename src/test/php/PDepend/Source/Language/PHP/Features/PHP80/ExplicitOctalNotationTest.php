@@ -51,7 +51,7 @@ class ExplicitOctalNotationTest extends PHPParserVersion80TestCase
 {
     /**
      */
-    public function testExplicitOctalNotation()
+    public function testExplicitOctalNotation(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid number 0o16');

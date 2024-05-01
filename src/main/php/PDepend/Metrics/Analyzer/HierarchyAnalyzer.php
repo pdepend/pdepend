@@ -153,10 +153,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
@@ -208,10 +206,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$class</b> instance.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         if (false === $class->isUserDefined()) {
             return;
@@ -248,10 +244,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$function</b> instance.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
         ++$this->fcs;
@@ -260,10 +254,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$interface</b> instance.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
 
@@ -278,10 +270,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
         ++$this->mts;
@@ -290,10 +280,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$namespace</b> instance.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 

@@ -77,10 +77,8 @@ class ASTArrayElement extends ASTExpression
 
     /**
      * This method can be used to mark the element value as passed by reference.
-     *
-     * @return void
      */
-    public function setByReference()
+    public function setByReference(): void
     {
         $this->setMetadataBoolean(5, true);
     }

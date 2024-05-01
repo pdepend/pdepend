@@ -180,10 +180,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->uninitialized) {
             $this->doAnalyze($namespaces);
@@ -197,11 +195,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    private function doAnalyze($namespaces)
+    private function doAnalyze($namespaces): void
     {
         $this->fireStartAnalyzer();
         $this->reset();
@@ -218,11 +214,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This method resets all internal state variables before the analyzer can
      * start the object tree traversal.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    private function reset()
+    private function reset(): void
     {
         $this->calls         = 0;
         $this->fanout        = 0;
@@ -234,11 +228,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This method takes the temporary coupling map with node IDs and calculates
      * the concrete node metrics.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    private function postProcessTemporaryCouplingMap()
+    private function postProcessTemporaryCouplingMap(): void
     {
         foreach ($this->dependencyMap as $id => $metrics) {
             $afferentCoupling = count($metrics['ca']);
@@ -258,10 +250,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -298,11 +288,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Visit method for classes that will be called by PDepend during the
      * analysis phase with the current context class.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->initDependencyMap($class);
         parent::visitClass($class);
@@ -312,11 +300,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Visit method for interfaces that will be called by PDepend during the
      * analysis phase with the current context interface.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->initDependencyMap($interface);
         parent::visitInterface($interface);
@@ -324,10 +310,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -352,10 +336,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property): void
     {
         $this->fireStartProperty($property);
 
@@ -370,14 +352,12 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Calculates the coupling between the given types.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
     private function calculateCoupling(
         AbstractASTType $declaringType,
         AbstractASTType $coupledType = null,
-    ) {
+    ): void {
         $this->initDependencyMap($declaringType);
 
         if (null === $coupledType) {
@@ -408,11 +388,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This method will initialize a temporary coupling container for the given
      * given class or interface instance.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    private function initDependencyMap(AbstractASTType $type)
+    private function initDependencyMap(AbstractASTType $type): void
     {
         if (isset($this->dependencyMap[$type->getId()])) {
             return;
@@ -426,10 +404,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
     /**
      * Counts all calls within the given <b>$callable</b>
-     *
-     * @return void
      */
-    private function countCalls(AbstractASTCallable $callable)
+    private function countCalls(AbstractASTCallable $callable): void
     {
         $invocations = $callable->findChildrenOfType('PDepend\\Source\\AST\\ASTInvocation');
 

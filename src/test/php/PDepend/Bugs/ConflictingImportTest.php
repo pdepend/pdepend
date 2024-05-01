@@ -44,7 +44,7 @@ namespace PDepend\Bugs;
 
 class ConflictingImportTest extends AbstractRegressionTestCase
 {
-    public function testSymfonyExtension()
+    public function testSymfonyExtension(): void
     {
         // force compilation of both conflicting files
         new \ReflectionClass('PDepend\DependencyInjection\Extension');

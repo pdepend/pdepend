@@ -61,7 +61,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetNewNameReturnsNullByDefault()
+    public function testGetNewNameReturnsNullByDefault(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertNull($alias->getNewName());
@@ -72,7 +72,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetNewNameReturnsExpectedValue()
+    public function testGetNewNameReturnsExpectedValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals('myMethodAlias', $alias->getNewName());
@@ -83,7 +83,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetNewModifierReturnsMinusOneByDefault()
+    public function testGetNewModifierReturnsMinusOneByDefault(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(-1, $alias->getNewModifier());
@@ -94,7 +94,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetNewModifierReturnsExpectedIsPublicValue()
+    public function testGetNewModifierReturnsExpectedIsPublicValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(
@@ -108,7 +108,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetNewModifierReturnsExpectedIsProtectedValue()
+    public function testGetNewModifierReturnsExpectedIsProtectedValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(
@@ -122,7 +122,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
         $alias = new \PDepend\Source\AST\ASTTraitAdaptationAlias();
         $this->assertSame(
@@ -142,7 +142,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetNewModifierReturnsExpectedIsPrivateValue()
+    public function testGetNewModifierReturnsExpectedIsPrivateValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         $this->assertEquals(State::IS_PRIVATE, $alias->getNewModifier());
@@ -170,7 +170,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedStartLine($alias)
+    public function testTraitAdaptationAliasHasExpectedStartLine($alias): void
     {
         $this->assertEquals(6, $alias->getStartLine());
     }
@@ -183,7 +183,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedStartColumn($alias)
+    public function testTraitAdaptationAliasHasExpectedStartColumn($alias): void
     {
         $this->assertEquals(9, $alias->getStartColumn());
     }
@@ -196,7 +196,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedEndLine($alias)
+    public function testTraitAdaptationAliasHasExpectedEndLine($alias): void
     {
         $this->assertEquals(6, $alias->getEndLine());
     }
@@ -209,7 +209,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedEndColumn($alias)
+    public function testTraitAdaptationAliasHasExpectedEndColumn($alias): void
     {
         $this->assertEquals(46, $alias->getEndColumn());
     }
@@ -249,7 +249,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine($reference)
+    public function testTraitReferenceHasExpectedStartLine($reference): void
     {
         $this->assertEquals(7, $reference->getStartLine());
     }
@@ -262,7 +262,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn($reference)
+    public function testTraitReferenceHasExpectedStartColumn($reference): void
     {
         $this->assertEquals(9, $reference->getStartColumn());
     }
@@ -275,7 +275,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine($reference)
+    public function testTraitReferenceHasExpectedEndLine($reference): void
     {
         $this->assertEquals(7, $reference->getEndLine());
     }
@@ -288,7 +288,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn($reference)
+    public function testTraitReferenceHasExpectedEndColumn($reference): void
     {
         $this->assertEquals(36, $reference->getEndColumn());
     }

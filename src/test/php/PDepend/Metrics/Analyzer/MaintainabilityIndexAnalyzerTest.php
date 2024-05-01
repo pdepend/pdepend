@@ -80,7 +80,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testGetNodeMetricsReturnsNothingForUnknownNode()
+    public function testGetNodeMetricsReturnsNothingForUnknownNode(): void
     {
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
@@ -94,7 +94,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateFunctionMaintainabilityIndex()
+    public function testCalculateFunctionMaintainabilityIndex(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -123,7 +123,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateMethodMaintainabilityIndex()
+    public function testCalculateMethodMaintainabilityIndex(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -156,7 +156,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
+    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
@@ -180,7 +180,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
+    public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();

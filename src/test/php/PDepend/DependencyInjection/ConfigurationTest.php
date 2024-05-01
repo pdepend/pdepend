@@ -59,7 +59,7 @@ use ReflectionMethod;
  */
 class ConfigurationTest extends AbstractTestCase
 {
-    public function testSymfony()
+    public function testSymfony(): void
     {
         $config = new Configuration(array(new TestExtension()));
 

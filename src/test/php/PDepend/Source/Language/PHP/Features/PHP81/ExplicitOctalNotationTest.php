@@ -52,7 +52,7 @@ use PDepend\Source\AST\ASTConstantDeclarator;
  */
 class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
 {
-    public function testExplicitOctalNotation()
+    public function testExplicitOctalNotation(): void
     {
         $class = $this->getFirstClassForTestCase();
 

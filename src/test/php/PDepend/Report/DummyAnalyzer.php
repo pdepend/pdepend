@@ -62,14 +62,14 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @var array
      */
     public $projectMetrics = array();
-    
+
     /**
      * Test node metrics.
      *
      * @var array
      */
     public $nodeMetrics = array();
-    
+
     /**
      * Constructs a new analyzer instance.
      *
@@ -79,7 +79,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     public function __construct(array $options = array())
     {
     }
-    
+
     /**
      * Returns the project metrics.
      *
@@ -103,33 +103,33 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
         }
         return array();
     }
-    
+
     /**
      * Adds a listener to this analyzer.
      *
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener)
+    public function addAnalyzeListener(AnalyzerListener $listener): void
     {
     }
-    
+
     /**
      * Removes the listener from this analyzer.
      *
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(AnalyzerListener $listener)
+    public function removeAnalyzeListener(AnalyzerListener $listener): void
     {
     }
-    
+
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      *
      * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
     }
 
@@ -151,7 +151,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @param array<string, mixed> $options
      * @since 2.0.1
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = []): void
     {
     }
 }

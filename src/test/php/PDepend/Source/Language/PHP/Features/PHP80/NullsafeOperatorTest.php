@@ -56,7 +56,7 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testNullsafeOperator()
+    public function testNullsafeOperator(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -71,7 +71,7 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testNullsafeOperatorChain()
+    public function testNullsafeOperatorChain(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();

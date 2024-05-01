@@ -60,7 +60,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testTypeMethodReturnsSameObjectInstance()
+    public function testTypeMethodReturnsSameObjectInstance(): void
     {
         $driver = $this->createDriver();
         $this->assertSame($driver, $driver->type(__FUNCTION__));
@@ -71,7 +71,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testRestoreMethodReturnsNullByDefault()
+    public function testRestoreMethodReturnsNullByDefault(): void
     {
         $driver = $this->createDriver();
         $this->assertNull($driver->restore(__FUNCTION__));
@@ -82,7 +82,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testStoreMethodPersistsGivenData()
+    public function testStoreMethodPersistsGivenData(): void
     {
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
@@ -95,7 +95,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testStoreMethodPersistsGivenDataWithHash()
+    public function testStoreMethodPersistsGivenDataWithHash(): void
     {
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__, '#42');
@@ -108,7 +108,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testRestoreMethodWithDifferentHashReturnsNull()
+    public function testRestoreMethodWithDifferentHashReturnsNull(): void
     {
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
@@ -121,7 +121,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testStoreAndRestoreMethodsWithSpecialType()
+    public function testStoreAndRestoreMethodsWithSpecialType(): void
     {
         $driver = $this->createDriver();
         $driver->type('type')->store(__FUNCTION__, __CLASS__);
@@ -134,7 +134,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testStoreMethodWithSpecialTypeNotOverwriteRecordInDefaultType()
+    public function testStoreMethodWithSpecialTypeNotOverwriteRecordInDefaultType(): void
     {
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
@@ -148,7 +148,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveDeletesExistingCacheEntry()
+    public function testRemoveDeletesExistingCacheEntry(): void
     {
         $key  = __FUNCTION__ . '.tokens';
         $data = __METHOD__;
@@ -165,7 +165,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix()
+    public function testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix(): void
     {
         $key  = __FUNCTION__ . '.tokens';
         $data = __METHOD__;
@@ -182,7 +182,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveDeletesExistingCacheEntryOfDifferentType()
+    public function testRemoveDeletesExistingCacheEntryOfDifferentType(): void
     {
         $key  = __FUNCTION__ . '.tokens';
         $data = __METHOD__;
@@ -199,7 +199,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveSilentlyIgnoresPatternsWithoutMatch()
+    public function testRemoveSilentlyIgnoresPatternsWithoutMatch(): void
     {
         $key  = __FUNCTION__;
         $data = __METHOD__;

@@ -59,7 +59,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSingleLineCommentHasExpectedStartLine()
+    public function testSingleLineCommentHasExpectedStartLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getStartLine());
@@ -70,7 +70,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSingleLineCommentHasExpectedStartColumn()
+    public function testSingleLineCommentHasExpectedStartColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(5, $comment->getStartColumn());
@@ -81,7 +81,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSingleLineCommentHasExpectedEndLine()
+    public function testSingleLineCommentHasExpectedEndLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getEndLine());
@@ -92,7 +92,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSingleLineCommentHasExpectedEndColumn()
+    public function testSingleLineCommentHasExpectedEndColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(48, $comment->getEndColumn());
@@ -103,7 +103,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMultiLineCommentHasExpectedStartLine()
+    public function testMultiLineCommentHasExpectedStartLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getStartLine());
@@ -114,7 +114,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMultiLineCommentHasExpectedStartColumn()
+    public function testMultiLineCommentHasExpectedStartColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(5, $comment->getStartColumn());
@@ -125,7 +125,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMultiLineCommentHasExpectedEndLine()
+    public function testMultiLineCommentHasExpectedEndLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(8, $comment->getEndLine());
@@ -136,7 +136,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMultiLineCommentHasExpectedEndColumn()
+    public function testMultiLineCommentHasExpectedEndColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(7, $comment->getEndColumn());
@@ -147,7 +147,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDocCommentHasExpectedStartLine()
+    public function testDocCommentHasExpectedStartLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(4, $comment->getStartLine());
@@ -158,7 +158,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDocCommentHasExpectedStartColumn()
+    public function testDocCommentHasExpectedStartColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(5, $comment->getStartColumn());
@@ -169,7 +169,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDocCommentHasExpectedEndLine()
+    public function testDocCommentHasExpectedEndLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(8, $comment->getEndLine());
@@ -180,7 +180,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDocCommentHasExpectedEndColumn()
+    public function testDocCommentHasExpectedEndColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
         $this->assertEquals(7, $comment->getEndColumn());

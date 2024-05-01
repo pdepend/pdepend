@@ -55,7 +55,7 @@ class AttributeTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testAttribute()
+    public function testAttribute(): void
     {
         $types = $this->parseCodeResourceForTest()
             ->current()

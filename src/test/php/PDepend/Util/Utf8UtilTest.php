@@ -56,7 +56,7 @@ use ReflectionMethod;
  */
 class Utf8UtilTest extends AbstractTestCase
 {
-    public function testEnsureEncoding()
+    public function testEnsureEncoding(): void
     {
         self::assertSame('🚀', Utf8Util::ensureEncoding('🚀'));
         self::assertSame('', Utf8Util::ensureEncoding(''));

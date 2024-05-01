@@ -62,7 +62,7 @@ class StrategyFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier()
+    public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier(): void
     {
         $factory = new StrategyFactory();
 

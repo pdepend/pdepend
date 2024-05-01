@@ -59,7 +59,7 @@ class ASTForUpdateTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForUpdateHasExpectedStartLine()
+    public function testForUpdateHasExpectedStartLine(): void
     {
         $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(4, $init->getStartLine());
@@ -70,7 +70,7 @@ class ASTForUpdateTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForUpdateHasExpectedStartColumn()
+    public function testForUpdateHasExpectedStartColumn(): void
     {
         $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(36, $init->getStartColumn());
@@ -81,7 +81,7 @@ class ASTForUpdateTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForUpdateHasExpectedEndLine()
+    public function testForUpdateHasExpectedEndLine(): void
     {
         $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(4, $init->getEndLine());
@@ -92,7 +92,7 @@ class ASTForUpdateTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForUpdateHasExpectedEndColumn()
+    public function testForUpdateHasExpectedEndColumn(): void
     {
         $init = $this->getFirstForUpdateInFunction(__METHOD__);
         $this->assertEquals(45, $init->getEndColumn());

@@ -58,7 +58,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testTypedProperties()
+    public function testTypedProperties(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -99,7 +99,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testReturnTypes()
+    public function testReturnTypes(): void
     {
         $class = $this->getFirstClassForTestCase();
         /** @var ASTMethod[] $methods */
@@ -115,7 +115,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testParameters()
+    public function testParameters(): void
     {
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTParameter[] $methods */

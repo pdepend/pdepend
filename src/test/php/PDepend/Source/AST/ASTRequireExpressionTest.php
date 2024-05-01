@@ -61,7 +61,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsOnceReturnsFalseByDefault()
+    public function testIsOnceReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTRequireExpression();
         $this->assertFalse($expr->isOnce());
@@ -72,7 +72,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsOnceReturnsTrueForRequireOnceExpression()
+    public function testIsOnceReturnsTrueForRequireOnceExpression(): void
     {
         $expr = $this->getFirstRequireExpressionInFunction();
         $this->assertTrue($expr->isOnce());
@@ -83,7 +83,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $expr = new \PDepend\Source\AST\ASTRequireExpression();
         $this->assertEquals(
@@ -119,7 +119,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedStartLine($expr)
+    public function testRequireExpressionHasExpectedStartLine($expr): void
     {
         $this->assertEquals(4, $expr->getStartLine());
     }
@@ -132,7 +132,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedStartColumn($expr)
+    public function testRequireExpressionHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(5, $expr->getStartColumn());
     }
@@ -145,7 +145,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedEndLine($expr)
+    public function testRequireExpressionHasExpectedEndLine($expr): void
     {
         $this->assertEquals(4, $expr->getEndLine());
     }
@@ -158,7 +158,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedEndColumn($expr)
+    public function testRequireExpressionHasExpectedEndColumn($expr): void
     {
         $this->assertEquals(35, $expr->getEndColumn());
     }
@@ -185,7 +185,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedStartLine($expr)
+    public function testRequireExpressionWithParenthesisHasExpectedStartLine($expr): void
     {
         $this->assertEquals(4, $expr->getStartLine());
     }
@@ -198,7 +198,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedStartColumn($expr)
+    public function testRequireExpressionWithParenthesisHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(5, $expr->getStartColumn());
     }
@@ -211,7 +211,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedEndLine($expr)
+    public function testRequireExpressionWithParenthesisHasExpectedEndLine($expr): void
     {
         $this->assertEquals(6, $expr->getEndLine());
     }
@@ -224,7 +224,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedEndColumn($expr)
+    public function testRequireExpressionWithParenthesisHasExpectedEndColumn($expr): void
     {
         $this->assertEquals(5, $expr->getEndColumn());
     }

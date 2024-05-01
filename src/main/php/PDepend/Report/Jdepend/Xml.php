@@ -141,10 +141,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     *
-     * @return void
      */
-    public function setLogFile($logFile)
+    public function setLogFile($logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -164,10 +162,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Sets the context code nodes.
      *
      * @param ASTArtifactList<ASTNamespace> $artifacts
-     *
-     * @return void
      */
-    public function setArtifacts(ASTArtifactList $artifacts)
+    public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->code = $artifacts;
     }
@@ -194,10 +190,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Closes the logger process and writes the output file.
      *
      * @throws NoLogOutputException If the no log target exists.
-     *
-     * @return void
      */
-    public function close()
+    public function close(): void
     {
         // Check for configured output
         if ($this->logFile === null) {
@@ -224,10 +218,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         if (!$class->isUserDefined()) {
             return;
@@ -252,10 +244,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         if (!$interface->isUserDefined()) {
             return;
@@ -276,10 +266,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a package node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         if (!$namespace->isUserDefined()) {
             return;

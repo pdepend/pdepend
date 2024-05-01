@@ -62,7 +62,7 @@ class ParserBug23905939Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserExtractsCorrectClassPackage()
+    public function testParserExtractsCorrectClassPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();
@@ -79,7 +79,7 @@ class ParserBug23905939Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserExtractsCorrectInterfacePackage()
+    public function testParserExtractsCorrectInterfacePackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();

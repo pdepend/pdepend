@@ -109,7 +109,7 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testGenerateMetrics()
+    public function testGenerateMetrics(): void
     {
         $visitor = new ClassDependencyAnalyzer();
 

@@ -59,7 +59,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchStatementGraphWithBooleanExpressions()
+    public function testSwitchStatementGraphWithBooleanExpressions(): void
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
@@ -72,7 +72,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchStatementGraphWithLabels()
+    public function testSwitchStatementGraphWithLabels(): void
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
         $children  = $stmt->getChildren();
@@ -103,7 +103,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedStartLine($stmt)
+    public function testSwitchStatementHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -116,7 +116,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedStartColumn($stmt)
+    public function testSwitchStatementHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getStartColumn());
     }
@@ -129,7 +129,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedEndLine($stmt)
+    public function testSwitchStatementHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(8, $stmt->getEndLine());
     }
@@ -142,7 +142,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatement
      */
-    public function testSwitchStatementHasExpectedEndColumn($stmt)
+    public function testSwitchStatementHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getEndColumn());
     }
@@ -152,7 +152,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserIgnoresDocCommentInSwitchStatement()
+    public function testParserIgnoresDocCommentInSwitchStatement(): void
     {
         $this->getFirstSwitchStatementInFunction();
     }
@@ -162,7 +162,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserIgnoresCommentInSwitchStatement()
+    public function testParserIgnoresCommentInSwitchStatement(): void
     {
         $this->getFirstSwitchStatementInFunction();
     }
@@ -172,7 +172,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInvalidStatementInSwitchStatementResultsInExpectedException()
+    public function testInvalidStatementInSwitchStatementResultsInExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -184,7 +184,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testUnclosedSwitchStatementResultsInExpectedException()
+    public function testUnclosedSwitchStatementResultsInExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
 
@@ -213,7 +213,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedStartLine($stmt)
+    public function testSwitchStatementAlternativeScopeHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -226,7 +226,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedStartColumn($stmt)
+    public function testSwitchStatementAlternativeScopeHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getStartColumn());
     }
@@ -239,7 +239,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedEndLine($stmt)
+    public function testSwitchStatementAlternativeScopeHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(25, $stmt->getEndLine());
     }
@@ -252,7 +252,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
-    public function testSwitchStatementAlternativeScopeHasExpectedEndColumn($stmt)
+    public function testSwitchStatementAlternativeScopeHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(14, $stmt->getEndColumn());
     }
@@ -262,7 +262,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchStatementTerminatedByPhpCloseTag()
+    public function testSwitchStatementTerminatedByPhpCloseTag(): void
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
         $this->assertEquals(9, $stmt->getEndColumn());
@@ -290,7 +290,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
-    public function testSwitchStatementWithNestedNonePhpCodeStartLine(ASTSwitchStatement $switch)
+    public function testSwitchStatementWithNestedNonePhpCodeStartLine(ASTSwitchStatement $switch): void
     {
         $this->assertSame(5, $switch->getStartLine());
     }
@@ -303,7 +303,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
-    public function testSwitchStatementWithNestedNonePhpCodeEndLine(ASTSwitchStatement $switch)
+    public function testSwitchStatementWithNestedNonePhpCodeEndLine(ASTSwitchStatement $switch): void
     {
         $this->assertSame(16, $switch->getEndLine());
     }
@@ -316,7 +316,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
-    public function testSwitchStatementWithNestedNonePhpCodeStartColumn(ASTSwitchStatement $switch)
+    public function testSwitchStatementWithNestedNonePhpCodeStartColumn(ASTSwitchStatement $switch): void
     {
         $this->assertSame(7, $switch->getStartColumn());
     }
@@ -329,7 +329,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
-    public function testSwitchStatementWithNestedNonePhpCodeEndColumn(ASTSwitchStatement $switch)
+    public function testSwitchStatementWithNestedNonePhpCodeEndColumn(ASTSwitchStatement $switch): void
     {
         $this->assertSame(16, $switch->getEndColumn());
     }

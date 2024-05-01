@@ -129,11 +129,9 @@ abstract class AbstractASTArtifact implements ASTArtifact
      *
      * @param string $name The item name.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -158,11 +156,9 @@ abstract class AbstractASTArtifact implements ASTArtifact
      *
      * @param string $id Identifier for this node.
      *
-     * @return void
-     *
      * @since  0.9.12
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -179,10 +175,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Sets the source file for this item.
-     *
-     * @return void
      */
-    public function setCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function setCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
         if ($this->compilationUnit === null || $this->compilationUnit->getName() === null) {
             $this->compilationUnit = $compilationUnit;
@@ -204,10 +198,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Sets the raw doc comment for this node.
      *
      * @param string $comment
-     *
-     * @return void
      */
-    public function setComment($comment)
+    public function setComment($comment): void
     {
         $this->comment = $comment;
     }

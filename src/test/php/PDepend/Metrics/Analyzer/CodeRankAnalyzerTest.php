@@ -92,7 +92,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testCodeRankOfSimpleInheritanceExample()
+    public function testCodeRankOfSimpleInheritanceExample(): void
     {
         $actual = $this->getCodeRankForTestCase();
 
@@ -110,7 +110,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testReverseCodeRankOfSimpleInheritanceExample()
+    public function testReverseCodeRankOfSimpleInheritanceExample(): void
     {
         $actual = $this->getReverseCodeRankForTestCase();
 
@@ -128,7 +128,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testCodeRankOfNamespacedSameNameInheritanceExample()
+    public function testCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
         $actual = $this->getCodeRankForTestCase();
         $this->assertEquals(array('Foo' =>  0.15), $actual);
@@ -140,7 +140,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
-    public function testCodeRankOfNamespacedSameNamePropertyExample()
+    public function testCodeRankOfNamespacedSameNamePropertyExample(): void
     {
         $options = array('coderank-mode' => array('property'));
         $actual  = $this->getCodeRankForTestCase($options);
@@ -154,7 +154,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
-    public function testReverseCodeRankOfNamespacedSameNamePropertyExample()
+    public function testReverseCodeRankOfNamespacedSameNamePropertyExample(): void
     {
         $options = array('coderank-mode' => array('property'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -168,7 +168,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
-    public function testCodeRankOfNamespacedSameNameMethodParamExample()
+    public function testCodeRankOfNamespacedSameNameMethodParamExample(): void
     {
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getCodeRankForTestCase($options);
@@ -182,7 +182,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
-    public function testReverseCodeRankOfNamespacedSameNameMethodParamExample()
+    public function testReverseCodeRankOfNamespacedSameNameMethodParamExample(): void
     {
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -196,7 +196,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
-    public function testCodeRankOfNamespacedSameNameMethodReturnExample()
+    public function testCodeRankOfNamespacedSameNameMethodReturnExample(): void
     {
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -210,7 +210,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
-    public function testReverseCodeRankOfNamespacedSameNameMethodReturnExample()
+    public function testReverseCodeRankOfNamespacedSameNameMethodReturnExample(): void
     {
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -224,7 +224,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
-    public function testCodeRankOfNamespacedSameNameMethodExceptionExample()
+    public function testCodeRankOfNamespacedSameNameMethodExceptionExample(): void
     {
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getCodeRankForTestCase($options);
@@ -238,7 +238,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
-    public function testReverseCodeRankOfNamespacedSameNameMethodExceptionExample()
+    public function testReverseCodeRankOfNamespacedSameNameMethodExceptionExample(): void
     {
         $options = array('coderank-mode' => array('method'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -252,7 +252,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testReverseCodeRankOfNamespacedSameNameInheritanceExample()
+    public function testReverseCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
         $actual = $this->getReverseCodeRankForTestCase();
         $this->assertEquals(array('Foo' => 0.2775), $actual);
@@ -265,7 +265,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy()
+    public function testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
         $options = array('coderank-mode' => array('inheritance', 'method'));
         $actual  = $this->getCodeRankForTestCase($options);
@@ -288,7 +288,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy()
+    public function testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
         $options = array('coderank-mode' => array('inheritance', 'method'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -311,7 +311,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy()
+    public function testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
         $options = array('coderank-mode' => array('inheritance', 'property'));
         $actual  = $this->getCodeRankForTestCase($options);
@@ -334,7 +334,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy()
+    public function testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
         $options = array('coderank-mode' => array('inheritance', 'property'));
         $actual  = $this->getReverseCodeRankForTestCase($options);
@@ -358,7 +358,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testCodeRankOfInternalInterfaceExample()
+    public function testCodeRankOfInternalInterfaceExample(): void
     {
         $options = array('coderank-mode' => array('inheritance', 'method', 'property'));
         $actual  = $this->getCodeRankForTestCase($options);
@@ -381,7 +381,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testReverseCodeRankOfInternalInterfaceExample()
+    public function testReverseCodeRankOfInternalInterfaceExample(): void
     {
         $options = array('coderank-mode' => array('inheritance', 'method', 'property'));
         $actual = $this->getReverseCodeRankForTestCase($options);
@@ -404,7 +404,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testGetNodeMetrics()
+    public function testGetNodeMetrics(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -442,7 +442,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
-    public function testGetNodeMetricsInvalidIdentifier()
+    public function testGetNodeMetricsInvalidIdentifier(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 

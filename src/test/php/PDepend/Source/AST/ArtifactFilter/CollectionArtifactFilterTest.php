@@ -64,7 +64,7 @@ class CollectionArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueByDefault()
+    public function testAcceptsReturnsTrueByDefault(): void
     {
         $collection = new CollectionArtifactFilter();
         $this->assertTrue($collection->accept(new ASTClass(__CLASS__)));
@@ -75,7 +75,7 @@ class CollectionArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsCallsNestedFilterWhenSet()
+    public function testAcceptsCallsNestedFilterWhenSet(): void
     {
         $class = new ASTClass(__CLASS__);
 

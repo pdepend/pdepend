@@ -82,11 +82,9 @@ class ASTArguments extends AbstractASTNode
     /**
      * This method can be used to mark the argument list as variadic placeholder
      *
-     * @return void
-     *
      * @since 2.11.0
      */
-    public function setVariadicPlaceholder()
+    public function setVariadicPlaceholder(): void
     {
         $this->setMetadataBoolean(4, true);
     }
@@ -103,10 +101,8 @@ class ASTArguments extends AbstractASTNode
 
     /**
      * This method adds a new child node to this node instance.
-     *
-     * @return void
      */
-    public function addChild(ASTNode $node)
+    public function addChild(ASTNode $node): void
     {
         if (!$this->acceptsMoreArguments()) {
             throw new InvalidArgumentException('No more arguments allowed.');

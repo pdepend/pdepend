@@ -66,7 +66,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
      * @return void
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */
-    public function testParserSetsExpectedPrimitivePropertyType($actual, $expected)
+    public function testParserSetsExpectedPrimitivePropertyType($actual, $expected): void
     {
         $type = $this->parseTestCase(__METHOD__ . '_' . $actual)
             ->current()
@@ -83,7 +83,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
      *
      * @return void
      */
-    public function testParserSetsExpectedArrayPropertyType()
+    public function testParserSetsExpectedArrayPropertyType(): void
     {
         $type = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
@@ -97,7 +97,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
      *
      * @return void
      */
-    public function testParserSetsExpectedArrayWithParenthesisPropertyType()
+    public function testParserSetsExpectedArrayWithParenthesisPropertyType(): void
     {
         $type = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')

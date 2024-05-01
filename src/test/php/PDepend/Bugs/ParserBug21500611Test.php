@@ -64,7 +64,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesNowdocInPropertyDeclaration()
+    public function testParserHandlesNowdocInPropertyDeclaration(): void
     {
         $this->assertNull($this->getFirstHeredocInClass());
     }
@@ -74,7 +74,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesNowdocInStaticVariableDeclaration()
+    public function testParserHandlesNowdocInStaticVariableDeclaration(): void
     {
         $this->assertNull($this->getFirstHeredocInClass());
     }
@@ -84,7 +84,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesNowdocForMultipleStaticVariableDeclarations()
+    public function testParserHandlesNowdocForMultipleStaticVariableDeclarations(): void
     {
         $this->assertNull($this->getFirstHeredocInClass());
     }
@@ -94,7 +94,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesNowdocInParameterDefaultValue()
+    public function testParserHandlesNowdocInParameterDefaultValue(): void
     {
         $this->assertNull($this->getFirstHeredocInClass());
     }
@@ -104,7 +104,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesNowdocForMultipleParametersDefaultValue()
+    public function testParserHandlesNowdocForMultipleParametersDefaultValue(): void
     {
         $this->assertNull($this->getFirstHeredocInClass());
     }

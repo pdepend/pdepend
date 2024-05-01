@@ -71,7 +71,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesMaxNestingLevel()
+    public function testParserHandlesMaxNestingLevel(): void
     {
         ini_set('xdebug.max_nesting_level', '100');
 
@@ -91,7 +91,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParseMixedCode()
+    public function testParseMixedCode(): void
     {
         $expected = array(
             'pkg1'                               =>  true,
@@ -137,7 +137,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserWithUnclosedClassFail()
+    public function testParserWithUnclosedClassFail(): void
     {
         $sourceFile = $this->createCodeResourceUriForTest();
         $this->expectException(
@@ -156,7 +156,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserWithUnclosedFunctionFail()
+    public function testParserWithUnclosedFunctionFail(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\TokenStreamEndException'
@@ -174,7 +174,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserWithInvalidFunction1Fail()
+    public function testParserWithInvalidFunction1Fail(): void
     {
         $this->expectException(
             '\\RuntimeException'
@@ -192,7 +192,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserWithInvalidFunction2Fail()
+    public function testParserWithInvalidFunction2Fail(): void
     {
         $this->expectException(
             '\\RuntimeException'
@@ -209,7 +209,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectFunctionLineNumber()
+    public function testParserSetsCorrectFunctionLineNumber(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[1]->getFunctions();
@@ -222,7 +222,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectFunctionTokens()
+    public function testParserSetsCorrectFunctionTokens(): void
     {
         $tokens = array(
             new Token(Tokens::T_FUNCTION, 'function', 5, 5, 1, 8),
@@ -264,7 +264,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectFileComment()
+    public function testParserSetsCorrectFileComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->count()); // default
@@ -294,7 +294,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserDoesntReuseTypeComment()
+    public function testParserDoesntReuseTypeComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->count()); // +global
@@ -314,7 +314,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserDoesntReuseFunctionComment()
+    public function testParserDoesntReuseFunctionComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->count()); // +global
@@ -334,7 +334,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectClassStartLineNumber()
+    public function testParserSetsCorrectClassStartLineNumber(): void
     {
         $this->assertEquals(30, $this->getClassForTest()->getStartLine());
     }
@@ -344,7 +344,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectClassEndLineNumber()
+    public function testParserSetsCorrectClassEndLineNumber(): void
     {
         $this->assertEquals(49, $this->getClassForTest()->getEndLine());
     }
@@ -354,7 +354,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectClassMethodStartLineNumber()
+    public function testParserSetsCorrectClassMethodStartLineNumber(): void
     {
         $methods = $this->getClassMethodsForTest();
 
@@ -368,7 +368,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectClassMethodEndLineNumber()
+    public function testParserSetsCorrectClassMethodEndLineNumber(): void
     {
         $methods = $this->getClassMethodsForTest();
 
@@ -382,7 +382,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectInterfaceStartLineNumber()
+    public function testParserSetsCorrectInterfaceStartLineNumber(): void
     {
         $this->assertEquals(15, $this->getInterfaceForTest()->getStartLine());
     }
@@ -392,7 +392,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectInterfaceEndLineNumber()
+    public function testParserSetsCorrectInterfaceEndLineNumber(): void
     {
         $this->assertEquals(18, $this->getInterfaceForTest()->getEndLine());
     }
@@ -403,7 +403,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectInterfaceMethodStartLineNumbers()
+    public function testParserSetsCorrectInterfaceMethodStartLineNumbers(): void
     {
         $methods = $this->getInterfaceMethodsForTest();
         $this->assertEquals(17, $methods->current()->getStartLine());
@@ -414,7 +414,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectInterfaceMethodEndLineNumbers()
+    public function testParserSetsCorrectInterfaceMethodEndLineNumbers(): void
     {
         $methods = $this->getInterfaceMethodsForTest();
         $this->assertEquals(17, $methods->current()->getEndLine());
@@ -425,7 +425,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsAllInterfaceMethodsAbstract()
+    public function testParserSetsAllInterfaceMethodsAbstract(): void
     {
         $methods = $this->getInterfaceMethodsForTest();
         $this->assertTrue($methods->current()->isAbstract());
@@ -436,7 +436,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesClassWithMultipleImplementedInterfaces()
+    public function testParserHandlesClassWithMultipleImplementedInterfaces(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -451,7 +451,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesInterfaceWithMultipleParentInterfaces()
+    public function testParserHandlesInterfaceWithMultipleParentInterfaces(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -466,7 +466,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectMethodLineNumber()
+    public function testParserSetsCorrectMethodLineNumber(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -484,7 +484,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserDoesNotMarkNonAbstractMethodAsAbstract()
+    public function testParserDoesNotMarkNonAbstractMethodAsAbstract(): void
     {
         $methods = $this->getClassForTest()->getMethods();
         // TODO: Replace this loop with an array(<method>=><abstract>)
@@ -498,7 +498,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserMarksAbstractMethodAsAbstract()
+    public function testParserMarksAbstractMethodAsAbstract(): void
     {
         $method = $this->getClassForTest()
                        ->getParentClass()
@@ -513,7 +513,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserParseNewInstancePHP53()
+    public function testParserParseNewInstancePHP53(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $function = $namespaces->current()
@@ -531,7 +531,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectFunctionDocComment()
+    public function testParserSetsCorrectFunctionDocComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -559,7 +559,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsCorrectFunctionReturnType
      */
-    public function testParserSetsFunctionReturnTypeToNull($functions)
+    public function testParserSetsFunctionReturnTypeToNull($functions): void
     {
         $this->assertSame(
             array(
@@ -578,7 +578,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsCorrectFunctionReturnType
      */
-    public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions)
+    public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions): void
     {
         $this->assertSame(
             array(
@@ -597,7 +597,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsCorrectFunctionReturnType
      */
-    public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions)
+    public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions): void
     {
         $this->assertSame(
             array(
@@ -616,7 +616,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectFunctionExceptionTypes()
+    public function testParserSetsCorrectFunctionExceptionTypes(): void
     {
         $functions = $this->parseCodeResourceForTest()
             ->current()
@@ -644,7 +644,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesIgnoreAnnotationsCorrectForFunctions()
+    public function testParserHandlesIgnoreAnnotationsCorrectForFunctions(): void
     {
         $functions = $this->parseCodeResourceForTest(true)
             ->current()
@@ -664,7 +664,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectMethodDocComment()
+    public function testParserSetsCorrectMethodDocComment(): void
     {
         $nodes = $this->parseCodeResourceForTest()
             ->current()
@@ -680,7 +680,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectMethodReturnType()
+    public function testParserSetsCorrectMethodReturnType(): void
     {
         $nodes = $this->parseCodeResourceForTest()
             ->current()
@@ -705,7 +705,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectMethodExceptionTypes()
+    public function testParserSetsCorrectMethodExceptionTypes(): void
     {
         $nodes = $this->parseCodeResourceForTest()
             ->current()
@@ -739,7 +739,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesIgnoreAnnotationsCorrectForMethods()
+    public function testParserHandlesIgnoreAnnotationsCorrectForMethods(): void
     {
         $methods = $this->parseCodeResourceForTest(true)
             ->current()
@@ -761,7 +761,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectPropertyDocComment()
+    public function testParserSetsCorrectPropertyDocComment(): void
     {
         $nodes    = $this->parseCodeResourceForTest()
             ->current()
@@ -777,7 +777,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectPropertyVisibility()
+    public function testParserSetsCorrectPropertyVisibility(): void
     {
         $nodes = $this->parseCodeResourceForTest()
             ->current()
@@ -810,7 +810,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectPropertyTypes()
+    public function testParserSetsCorrectPropertyTypes(): void
     {
         $nodes = $this->parseCodeResourceForTest()
             ->current()
@@ -849,7 +849,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedPropertyTypeForChainedComment()
+    public function testParserSetsExpectedPropertyTypeForChainedComment(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -874,7 +874,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedPropertyTypeForChainedCommentInArray()
+    public function testParserSetsExpectedPropertyTypeForChainedCommentInArray(): void
     {
         $type = $this->parseCodeResourceForTest()
             ->current()
@@ -899,7 +899,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedReturnTypeForChainedComment()
+    public function testParserSetsExpectedReturnTypeForChainedComment(): void
     {
         $type = $this->parseCodeResourceForTest()
             ->current()
@@ -924,7 +924,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedReturnTypeForChainedCommentInArray()
+    public function testParserSetsExpectedReturnTypeForChainedCommentInArray(): void
     {
         $type = $this->parseCodeResourceForTest()
             ->current()
@@ -942,7 +942,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testHandlesIgnoreAnnotationsCorrectForProperties()
+    public function testHandlesIgnoreAnnotationsCorrectForProperties(): void
     {
         $nodes = $this->parseCodeResourceForTest(true)
             ->current()
@@ -964,7 +964,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsCorrectClassOrInterfaceDocComment()
+    public function testParserSetsCorrectClassOrInterfaceDocComment(): void
     {
         $actual   = array();
         $expected = array(
@@ -987,7 +987,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSubpackageSupport()
+    public function testParserSubpackageSupport(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
         $this->assertEquals('PHP\Depend', $namespace->getName());
@@ -1012,7 +1012,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces)
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
         $this->assertCount(2, $functions);
@@ -1023,7 +1023,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces)
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces): void
     {
         $functions = $namespaces[1]->getFunctions();
         $this->assertCount(1, $functions);
@@ -1034,7 +1034,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace($namespaces)
+    public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace($namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
 
@@ -1046,7 +1046,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace($namespaces)
+    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace($namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
 
@@ -1058,7 +1058,7 @@ class ParserTest extends AbstractTestCase
      * @return void
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace($namespaces)
+    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace($namespaces): void
     {
         $functions = $namespaces[1]->getFunctions();
 
@@ -1070,7 +1070,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsAbstractPropertyOnClass()
+    public function testParserSetsAbstractPropertyOnClass(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -1085,7 +1085,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsAbstractModifierOnClass()
+    public function testParserSetsAbstractModifierOnClass(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -1103,7 +1103,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsFinalPropertyOnClass()
+    public function testParserSetsFinalPropertyOnClass(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -1118,7 +1118,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsFinalModifierOnClass()
+    public function testParserSetsFinalModifierOnClass(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -1134,7 +1134,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesNestedArraysAsParameterDefaultValue()
+    public function testParserHandlesNestedArraysAsParameterDefaultValue(): void
     {
         // Current implementation cannot handle nested structures
         $this->parseCodeResourceForTest();
@@ -1145,7 +1145,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserStripsCommentsInParseExpressionUntilCorrect()
+    public function testParserStripsCommentsInParseExpressionUntilCorrect(): void
     {
         $method = $this->parseCodeResourceForTest()
             ->current()
@@ -1164,7 +1164,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue()
+    public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1182,7 +1182,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue()
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1200,7 +1200,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody()
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1218,7 +1218,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration()
+    public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1236,7 +1236,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesParentKeywordInFunctionParameterDefaultValue()
+    public function testParserHandlesParentKeywordInFunctionParameterDefaultValue(): void
     {
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
 
@@ -1251,7 +1251,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesParentKeywordInMethodParameterDefaultValue()
+    public function testParserHandlesParentKeywordInMethodParameterDefaultValue(): void
     {
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
         $this->assertTrue($parameters[0]->isDefaultValueAvailable());
@@ -1262,7 +1262,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesSelfKeywordAsParameterTypeHint()
+    public function testParserHandlesSelfKeywordAsParameterTypeHint(): void
     {
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
         $this->assertNotNull($parameters[0]);
@@ -1273,7 +1273,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals()
+    public function testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();
@@ -1290,7 +1290,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf()
+    public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf(): void
     {
         $class = $this->getFirstClassForTestCase();
         $methods = $class->getMethods();
@@ -1304,7 +1304,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserStripsLeadingSlashFromNamespacedClassName()
+    public function testParserStripsLeadingSlashFromNamespacedClassName(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
         $this->assertEquals('foo', $namespace->getName());
@@ -1315,7 +1315,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserStripsLeadingSlashFromNamespaceAliasedClassName()
+    public function testParserStripsLeadingSlashFromNamespaceAliasedClassName(): void
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
@@ -1329,7 +1329,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserStripsLeadingSlashFromInheritNamespacedClassName()
+    public function testParserStripsLeadingSlashFromInheritNamespacedClassName(): void
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
@@ -1343,7 +1343,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists()
+    public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists(): void
     {
         $this->expectException(\PDepend\Source\Parser\MissingValueException::class);
 
@@ -1355,7 +1355,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue()
+    public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1365,7 +1365,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesDoubleQuoteStringWithEscapedVariable()
+    public function testParserHandlesDoubleQuoteStringWithEscapedVariable(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -1383,7 +1383,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote()
+    public function testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -1401,7 +1401,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall()
+    public function testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -1419,7 +1419,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment()
+    public function testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -1437,7 +1437,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
+    public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator(): void
     {
         $method = $this->parseCodeResourceForTest()
             ->current()
@@ -1455,7 +1455,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserStopsProcessingWhenCacheContainsValidResult()
+    public function testParserStopsProcessingWhenCacheContainsValidResult(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -1483,7 +1483,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParseClosureAsFunctionArgument()
+    public function testParseClosureAsFunctionArgument(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1493,7 +1493,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParseNowdocInMethodBody()
+    public function testParseNowdocInMethodBody(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1503,7 +1503,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParseDoWhileStatement()
+    public function testParseDoWhileStatement(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1513,7 +1513,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesCompoundExpressionInArrayBrackets()
+    public function testParserHandlesCompoundExpressionInArrayBrackets(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1523,7 +1523,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesEmptyNonePhpCodeInMethodBody()
+    public function testParserHandlesEmptyNonePhpCodeInMethodBody(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1533,7 +1533,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesPhpCloseTagInMethodBody()
+    public function testParserHandlesPhpCloseTagInMethodBody(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1543,7 +1543,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesMultiplePhpCloseTagsInMethodBody()
+    public function testParserHandlesMultiplePhpCloseTagsInMethodBody(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -1553,7 +1553,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testParseExpressionUntilThrowsExceptionForUnclosedStatement()
+    public function testParseExpressionUntilThrowsExceptionForUnclosedStatement(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -1565,7 +1565,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionDocBlockIsCorrectlyParsed()
+    public function testFunctionDocBlockIsCorrectlyParsed(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -1634,7 +1634,7 @@ class ParserTest extends AbstractTestCase
      * @param integer $indent
      * @return void
      */
-    protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, $indent = 1)
+    protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, $indent = 1): void
     {
         $ws = str_repeat(" ", 4 * $indent);
 

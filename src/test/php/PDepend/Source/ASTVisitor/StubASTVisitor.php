@@ -131,7 +131,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\ASTVisitor\ASTVisitListener $listener
      * @return void
      */
-    public function addVisitListener(ASTVisitListener $listener)
+    public function addVisitListener(ASTVisitListener $listener): void
     {
     }
 
@@ -141,7 +141,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->class = $class;
     }
@@ -152,7 +152,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTEnum $enum
      * @return void
      */
-    public function visitEnum(ASTEnum $enum)
+    public function visitEnum(ASTEnum $enum): void
     {
         $this->enum = $enum;
     }
@@ -164,7 +164,7 @@ class StubASTVisitor implements ASTVisitor
      * @return void
      * @since 1.0.0
      */
-    public function visitTrait(ASTTrait $trait)
+    public function visitTrait(ASTTrait $trait): void
     {
         $this->trait = $trait;
     }
@@ -176,7 +176,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->interface = $interface;
     }
@@ -187,7 +187,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->method = $method;
     }
@@ -198,7 +198,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
      * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->namespace = $namespace;
     }
@@ -209,7 +209,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTParameter $parameter
      * @return void
      */
-    public function visitParameter(ASTParameter $parameter)
+    public function visitParameter(ASTParameter $parameter): void
     {
         $this->parameter = $parameter;
     }
@@ -220,7 +220,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property): void
     {
         $this->property = $property;
     }
@@ -231,7 +231,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->function = $function;
     }
@@ -242,7 +242,7 @@ class StubASTVisitor implements ASTVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
     }
 
@@ -273,7 +273,7 @@ class StubASTVisitor implements ASTVisitor
     {
     }
 
-    public function visit($node, $value)
+    public function visit($node, $value): void
     {
     }
 }

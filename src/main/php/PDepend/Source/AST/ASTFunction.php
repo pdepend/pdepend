@@ -105,10 +105,8 @@ class ASTFunction extends AbstractASTCallable
 
     /**
      * Sets the parent namespace for this function.
-     *
-     * @return void
      */
-    public function setNamespace(ASTNamespace $namespace)
+    public function setNamespace(ASTNamespace $namespace): void
     {
         $this->namespaceName = $namespace->getName();
         $this->namespace = $namespace;
@@ -117,11 +115,9 @@ class ASTFunction extends AbstractASTCallable
     /**
      * Resets the namespace associated with this function node.
      *
-     * @return void
-     *
      * @since  0.10.2
      */
-    public function unsetNamespace()
+    public function unsetNamespace(): void
     {
         $this->namespaceName = null;
         $this->namespace = null;
@@ -160,11 +156,9 @@ class ASTFunction extends AbstractASTCallable
      * of the wakeup method will register this object in the the global function
      * context.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->context->registerFunction($this);
     }

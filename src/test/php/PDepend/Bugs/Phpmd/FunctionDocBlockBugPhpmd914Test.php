@@ -51,7 +51,7 @@ use PDepend\Source\AST\ASTFunction;
  */
 class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
 {
-    public function testFunctionDocBlockCanBeRead()
+    public function testFunctionDocBlockCanBeRead(): void
     {
         /** @var ASTFunction $function */
         $function = $this->getFirstFunctionForTestCase();
@@ -66,7 +66,7 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
         ), $lines);
     }
 
-    public function testMethodDocBlockCanBeRead()
+    public function testMethodDocBlockCanBeRead(): void
     {
         /** @var ASTFunction $function */
         $function = $this->getFirstClassMethodForTestCase();

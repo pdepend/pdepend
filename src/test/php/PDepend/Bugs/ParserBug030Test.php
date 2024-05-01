@@ -62,7 +62,7 @@ class ParserBug030Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testCorrectClassTokensAreSet()
+    public function testCorrectClassTokensAreSet(): void
     {
         $testClass = $this->parseCodeResourceForTest()
             ->current()

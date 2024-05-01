@@ -58,7 +58,7 @@ class EnumTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testEnum()
+    public function testEnum(): void
     {
         $types = $this->parseCodeResourceForTest()
             ->current()

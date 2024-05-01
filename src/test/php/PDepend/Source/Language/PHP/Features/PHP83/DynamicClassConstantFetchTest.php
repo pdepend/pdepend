@@ -56,7 +56,7 @@ class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
     /**
      * @return void
      */
-    public function testFetch()
+    public function testFetch(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
         $children = $method->getChildren();

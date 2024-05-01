@@ -63,7 +63,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsExpectedClasses()
+    public function testIteratorReturnsExpectedClasses(): void
     {
         $class1 = new ASTClass('c1');
         $class1->setId(md5(23));
@@ -101,7 +101,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsSameClassOnlyOnce()
+    public function testIteratorReturnsSameClassOnlyOnce(): void
     {
         $class1 = new ASTClass('c1');
         $class1->setId(md5(23));

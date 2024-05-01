@@ -60,7 +60,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphDereferencedFromArray()
+    public function testMemberPrimaryPrefixGraphDereferencedFromArray(): void
     {
         $this->getFirstMemberPrimaryPrefixInFunction();
     }
@@ -93,7 +93,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphInIssetExpression()
+    public function testMemberPrimaryPrefixGraphInIssetExpression(): void
     {
         $this->assertGraph(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -133,7 +133,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant()
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticConstant(): void
     {
         $this->assertGraphEquals(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -164,7 +164,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticProperty()
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticProperty(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
@@ -198,7 +198,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticMethod()
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndStaticMethod(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
@@ -234,7 +234,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphWithDynamicClassAndDynamicMethod()
+    public function testMemberPrimaryPrefixGraphWithDynamicClassAndDynamicMethod(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
@@ -270,7 +270,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodInvocation()
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodInvocation(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraph(
@@ -310,7 +310,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodChain()
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndMethodChain(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraph(
@@ -349,7 +349,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyAccess()
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyAccess(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraph(
@@ -386,7 +386,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyChain()
+    public function testMemberPrimaryPrefixGraphStartedWithAllocationAndPropertyChain(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraph(
@@ -412,7 +412,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphForObjectPropertyAccess()
+    public function testMemberPrimaryPrefixGraphForObjectPropertyAccess(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
@@ -444,7 +444,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphForObjectWithVariablePropertyAccess()
+    public function testMemberPrimaryPrefixGraphForObjectWithVariablePropertyAccess(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
@@ -466,7 +466,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphForObjectMethodAccess()
+    public function testMemberPrimaryPrefixGraphForObjectMethodAccess(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraphEquals(
@@ -502,7 +502,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess()
+    public function testMemberPrimaryPrefixGraphForObjectWithVariableMethodAccess(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertGraph(
@@ -542,7 +542,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGraphDereferencedArrayFromFunctionCallAndMethodInvocation()
+    public function testGraphDereferencedArrayFromFunctionCallAndMethodInvocation(): void
     {
         $this->assertGraphEquals(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -569,7 +569,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess()
+    public function testMemberPrimaryPrefixGraphForChainedObjectMemberAccess(): void
     {
         $this->assertGraph(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -599,7 +599,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGraphDereferencedArrayFromFunctionCallAndMultipleMethodInvocations()
+    public function testGraphDereferencedArrayFromFunctionCallAndMultipleMethodInvocations(): void
     {
         $this->assertGraph(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -633,7 +633,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGraphDereferencedArrayFromStaticMethodCallAndMultipleMethodInvocations()
+    public function testGraphDereferencedArrayFromStaticMethodCallAndMultipleMethodInvocations(): void
     {
         $this->assertGraph(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -669,7 +669,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGraphDereferencedArrayFromVariableClassStaticMethodCallAndMultipleMethodInvocations()
+    public function testGraphDereferencedArrayFromVariableClassStaticMethodCallAndMultipleMethodInvocations(): void
     {
         $this->assertGraph(
             $this->getFirstMemberPrimaryPrefixInFunction(),
@@ -700,7 +700,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testObjectMemberPrimaryPrefixHasExpectedStartLine()
+    public function testObjectMemberPrimaryPrefixHasExpectedStartLine(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(4, $prefix->getStartLine());
@@ -711,7 +711,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testObjectMemberPrimaryPrefixHasExpectedStartColumn()
+    public function testObjectMemberPrimaryPrefixHasExpectedStartColumn(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(5, $prefix->getStartColumn());
@@ -722,7 +722,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testObjectMemberPrimaryPrefixHasExpectedEndLine()
+    public function testObjectMemberPrimaryPrefixHasExpectedEndLine(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(6, $prefix->getEndLine());
@@ -733,7 +733,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testObjectMemberPrimaryPrefixHasExpectedEndColumn()
+    public function testObjectMemberPrimaryPrefixHasExpectedEndColumn(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertEquals(10, $prefix->getEndColumn());
@@ -744,7 +744,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse()
+    public function testObjectPropertyMemberPrimaryPrefixIsStaticReturnsFalse(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertFalse($prefix->isStatic());
@@ -755,7 +755,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse()
+    public function testObjectMethodMemberPrimaryPrefixIsStaticReturnsFalse(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertFalse($prefix->isStatic());
@@ -766,7 +766,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue()
+    public function testClassPropertyMemberPrimaryPrefixIsStaticReturnsTrue(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertTrue($prefix->isStatic());
@@ -777,7 +777,7 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue()
+    public function testClassMethodMemberPrimaryPrefixIsStaticReturnsTrue(): void
     {
         $prefix = $this->getFirstMemberPrimaryPrefixInFunction();
         $this->assertTrue($prefix->isStatic());

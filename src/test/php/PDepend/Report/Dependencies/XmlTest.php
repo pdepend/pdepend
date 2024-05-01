@@ -99,7 +99,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExceptedAnalyzers()
+    public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
@@ -116,7 +116,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testThrowsExceptionForInvalidLogTarget()
+    public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
             '\\PDepend\\Report\\NoLogOutputException'
@@ -134,7 +134,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testLogMethodReturnsFalseForWrongAnalyzer()
+    public function testLogMethodReturnsFalseForWrongAnalyzer(): void
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
             ->getMock();
@@ -150,7 +150,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer()
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer(): void
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer')
             ->getMock();
@@ -168,7 +168,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testXmlLogWithoutMetrics()
+    public function testXmlLogWithoutMetrics(): void
     {
         $this->namespaces = self::parseCodeResourceForTest();
 
@@ -190,7 +190,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testXmlLogWithMetrics()
+    public function testXmlLogWithMetrics(): void
     {
         $this->namespaces = self::parseCodeResourceForTest();
 

@@ -57,7 +57,7 @@ class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testParserResetsReconfiguredXdebugMaxNestingLevel()
+    public function testParserResetsReconfiguredXdebugMaxNestingLevel(): void
     {
         ini_restore('xdebug.max_nesting_level');
         $level = ini_get('xdebug.max_nesting_level');
@@ -72,7 +72,7 @@ class ReconfigureXdebugMaxNestingLevelBug133Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testParserReconfiguresXdebugMaxNestingLevel()
+    public function testParserReconfiguresXdebugMaxNestingLevel(): void
     {
         ini_set('xdebug.max_nesting_level', '100');
 

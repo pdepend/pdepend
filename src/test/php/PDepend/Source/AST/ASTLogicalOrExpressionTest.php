@@ -61,7 +61,7 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalOrExpressionHasExpectedStartLine()
+    public function testLogicalOrExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstLogicalOrExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -72,7 +72,7 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalOrExpressionHasExpectedStartColumn()
+    public function testLogicalOrExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstLogicalOrExpressionInFunction(__METHOD__);
         $this->assertEquals(18, $expr->getStartColumn());
@@ -83,7 +83,7 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalOrExpressionHasExpectedEndLine()
+    public function testLogicalOrExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstLogicalOrExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
@@ -94,7 +94,7 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalOrExpressionHasExpectedEndColumn()
+    public function testLogicalOrExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstLogicalOrExpressionInFunction(__METHOD__);
         $this->assertEquals(19, $expr->getEndColumn());

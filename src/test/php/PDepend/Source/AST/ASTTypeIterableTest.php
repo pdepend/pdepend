@@ -76,7 +76,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      * @return void
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedStartLine($type)
+    public function testIterableTypeHasExpectedStartLine($type): void
     {
         $this->assertEquals(2, $type->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      * @return void
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedStartColumn($type)
+    public function testIterableTypeHasExpectedStartColumn($type): void
     {
         $this->assertEquals(24, $type->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      * @return void
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedEndLine($type)
+    public function testIterableTypeHasExpectedEndLine($type): void
     {
         $this->assertEquals(2, $type->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      * @return void
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedEndColumn($type)
+    public function testIterableTypeHasExpectedEndColumn($type): void
     {
         $this->assertEquals(31, $type->getEndColumn());
     }
@@ -125,7 +125,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsArrayReturnsTrue()
+    public function testIsArrayReturnsTrue(): void
     {
         $type = new \PDepend\Source\AST\ASTTypeIterable();
         $this->assertTrue($type->isArray());
@@ -136,7 +136,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPrimitiveReturnsFalse()
+    public function testIsPrimitiveReturnsFalse(): void
     {
         $type = new \PDepend\Source\AST\ASTTypeIterable();
         $this->assertFalse($type->isScalar());

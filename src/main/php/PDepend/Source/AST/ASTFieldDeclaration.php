@@ -117,10 +117,8 @@ class ASTFieldDeclaration extends AbstractASTNode
      * @param int $modifiers The declared modifiers for this node.
      *
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
-     *
-     * @return void
      */
-    public function setModifiers($modifiers)
+    public function setModifiers($modifiers): void
     {
         $expected = ~State::IS_PUBLIC
                   & ~State::IS_PROTECTED

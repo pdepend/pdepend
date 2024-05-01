@@ -166,10 +166,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         // Check for previous run
         if ($this->nodeMetrics === null) {
@@ -187,10 +185,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         if (false === $class->isUserDefined()) {
             return;
@@ -217,10 +213,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -235,10 +229,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         if (false === $interface->isUserDefined()) {
             return;
@@ -265,10 +257,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -289,10 +279,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 

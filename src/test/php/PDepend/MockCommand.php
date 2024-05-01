@@ -15,11 +15,11 @@ class MockCommand extends Command
         return $command->run();
     }
 
-    protected function parseArguments()
+    protected function parseArguments(): void
     {
     }
 
-    protected function printVersion()
+    protected function printVersion(): void
     {
         $cause = $this->getCause();
 

@@ -60,7 +60,7 @@ class FileUtilTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetSysTempDirReturnsExpectedDirectory()
+    public function testGetSysTempDirReturnsExpectedDirectory(): void
     {
         $this->assertEquals(
             sys_get_temp_dir(),
@@ -73,7 +73,7 @@ class FileUtilTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetUserHomeDirReturnsExpectedDirectory()
+    public function testGetUserHomeDirReturnsExpectedDirectory(): void
     {
         $this->assertEquals(
             getenv('HOME'),
@@ -86,7 +86,7 @@ class FileUtilTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory()
+    public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory(): void
     {
         $this->assertEquals(
             getenv('HOME'),

@@ -60,7 +60,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorWithOneFileExtension()
+    public function testIteratorWithOneFileExtension(): void
     {
         $actual   = $this->createFilteredFileList(array('php4'));
         $expected = array('file4.php4');
@@ -73,7 +73,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorWithMultipleFileExtensions()
+    public function testIteratorWithMultipleFileExtensions(): void
     {
         $actual   = $this->createFilteredFileList(array('inc', 'php'));
         $expected = array('file1.inc', 'file2.php');
@@ -86,7 +86,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsOnlyFiles()
+    public function testIteratorReturnsOnlyFiles(): void
     {
         $directory=$this->createCodeResourceUriForTest();
         $pattern = $directory . DIRECTORY_SEPARATOR . 'Ignored';
@@ -112,7 +112,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
+    public function testIteratorPassesLocalPathToFilterWhenRootIsPresent(): void
     {
         $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
             ->getMock();
@@ -133,7 +133,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
+    public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent(): void
     {
         $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
 
@@ -152,7 +152,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
+    public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches(): void
     {
         $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
 

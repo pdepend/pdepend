@@ -157,10 +157,8 @@ class Runner
      * NOTE: If you call this method, it will replace the default file extensions.
      *
      * @param array<string> $extensions
-     *
-     * @return void
      */
-    public function setFileExtensions(array $extensions)
+    public function setFileExtensions(array $extensions): void
     {
         $this->extensions = $extensions;
     }
@@ -171,10 +169,8 @@ class Runner
      * NOTE: If this method is called, it will overwrite the default settings.
      *
      * @param array<string> $excludeDirectories
-     *
-     * @return void
      */
-    public function setExcludeDirectories(array $excludeDirectories)
+    public function setExcludeDirectories(array $excludeDirectories): void
     {
         $this->excludeDirectories = $excludeDirectories;
     }
@@ -183,10 +179,8 @@ class Runner
      * Sets a list of exclude packages.
      *
      * @param array<string> $excludePackages
-     *
-     * @return void
      */
-    public function setExcludeNamespaces(array $excludePackages)
+    public function setExcludeNamespaces(array $excludePackages): void
     {
         $this->excludeNamespaces = $excludePackages;
     }
@@ -195,20 +189,16 @@ class Runner
      * Sets a list of source directories and files.
      *
      * @param array<string> $sourceArguments
-     *
-     * @return void
      */
-    public function setSourceArguments(array $sourceArguments)
+    public function setSourceArguments(array $sourceArguments): void
     {
         $this->sourceArguments = $sourceArguments;
     }
 
     /**
      * Should the parser ignore doc comment annotations?
-     *
-     * @return void
      */
-    public function setWithoutAnnotations()
+    public function setWithoutAnnotations(): void
     {
         $this->withoutAnnotations = true;
     }
@@ -218,10 +208,8 @@ class Runner
      *
      * @param string $generatorId
      * @param string $reportFile
-     *
-     * @return void
      */
-    public function addReportGenerator($generatorId, $reportFile)
+    public function addReportGenerator($generatorId, $reportFile): void
     {
         $this->loggerMap[$generatorId] = $reportFile;
     }
@@ -231,10 +219,8 @@ class Runner
      *
      * @param string               $identifier
      * @param array<string>|string $value
-     *
-     * @return void
      */
-    public function addOption($identifier, $value)
+    public function addOption($identifier, $value): void
     {
         $this->options[$identifier] = $value;
     }
@@ -242,10 +228,8 @@ class Runner
     /**
      * Adds a process listener instance that will be hooked into PDepend's
      * analyzing process.
-     *
-     * @return void
      */
-    public function addProcessListener(ProcessListener $processListener)
+    public function addProcessListener(ProcessListener $processListener): void
     {
         $this->processListeners[] = $processListener;
     }

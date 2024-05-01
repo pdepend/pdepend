@@ -52,7 +52,7 @@ class TypedClassConstantsTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testInterface()
+    public function testInterface(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -67,7 +67,7 @@ class TypedClassConstantsTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testBroken()
+    public function testBroken(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'

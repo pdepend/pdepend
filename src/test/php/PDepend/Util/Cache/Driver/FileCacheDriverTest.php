@@ -99,7 +99,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testFileDriverStoresFileWithCacheKeyIfPresent()
+    public function testFileDriverStoresFileWithCacheKeyIfPresent(): void
     {
         $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
@@ -116,7 +116,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testFileDriverRestoresFileWithCacheKeyIfPresent()
+    public function testFileDriverRestoresFileWithCacheKeyIfPresent(): void
     {
         $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
@@ -124,7 +124,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
         $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));
     }
 
-    public function testFileDriverHandlingOfCorruptCache()
+    public function testFileDriverHandlingOfCorruptCache(): void
     {
         $cacheKey = 'foo';
         $cacheType = 'bar';

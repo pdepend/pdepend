@@ -216,10 +216,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * This method parses class references in catch statement.
      *
      * @param ASTCatchStatement $stmt The owning catch statement.
-     *
-     * @return void
      */
-    protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
+    protected function parseCatchExceptionClass(ASTCatchStatement $stmt): void
     {
         do {
             $repeat = false;
@@ -242,10 +240,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         return true;
     }
 
-    /**
-     * @return void
-     */
-    private function consumeQuestionMark()
+    private function consumeQuestionMark(): void
     {
         if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
             $this->consumeToken(Tokens::T_QUESTION_MARK);
@@ -689,10 +684,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * @param array<string> $fragments
-     *
-     * @return void
      */
-    protected function parseUseDeclarationForVersion(array $fragments)
+    protected function parseUseDeclarationForVersion(array $fragments): void
     {
         if (Tokens::T_CURLY_BRACE_OPEN === $this->tokenizer->peek()) {
             $this->parseUseDeclarationVersion70($fragments);
@@ -705,10 +698,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * @param array<string> $fragments
-     *
-     * @return void
      */
-    protected function parseUseDeclarationVersion70(array $fragments)
+    protected function parseUseDeclarationVersion70(array $fragments): void
     {
         $namespacePrefixReplaced = $this->namespacePrefixReplaced;
 
@@ -967,10 +958,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * Parses use declarations that are valid in the supported php version.
-     *
-     * @return void
      */
-    protected function parseUseDeclarations()
+    protected function parseUseDeclarations(): void
     {
         // Consume use keyword
         $this->consumeToken(Tokens::T_USE);

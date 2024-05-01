@@ -79,7 +79,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedStartLine($expr)
+    public function testStringIndexExpressionHasExpectedStartLine($expr): void
     {
         $this->assertEquals(4, $expr->getStartLine());
     }
@@ -92,7 +92,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedStartColumn($expr)
+    public function testStringIndexExpressionHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(23, $expr->getStartColumn());
     }
@@ -105,7 +105,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedEndLine($expr)
+    public function testStringIndexExpressionHasExpectedEndLine($expr): void
     {
         $this->assertEquals(4, $expr->getEndLine());
     }
@@ -118,7 +118,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedEndColumn($expr)
+    public function testStringIndexExpressionHasExpectedEndColumn($expr): void
     {
         $this->assertEquals(28, $expr->getEndColumn());
     }

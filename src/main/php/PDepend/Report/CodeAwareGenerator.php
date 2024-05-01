@@ -57,8 +57,6 @@ interface CodeAwareGenerator extends ReportGenerator
      * Sets the context code nodes.
      *
      * @param ASTArtifactList<ASTNamespace> $artifacts
-     *
-     * @return void
      */
-    public function setArtifacts(ASTArtifactList $artifacts);
+    public function setArtifacts(ASTArtifactList $artifacts): void;
 }

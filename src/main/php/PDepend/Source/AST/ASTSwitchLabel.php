@@ -73,10 +73,8 @@ class ASTSwitchLabel extends AbstractASTNode
 
     /**
      * Flags this node instance as the default switch label.
-     *
-     * @return void
      */
-    public function setDefault()
+    public function setDefault(): void
     {
         $this->default = true;
     }

@@ -57,7 +57,7 @@ class InvalidNowdocSubstitutionBug150Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testTokenizerDoesNotDetectNowdocSyntaxInString()
+    public function testTokenizerDoesNotDetectNowdocSyntaxInString(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $this->assertEquals(1, $namespaces->current()->getFunctions()->count());

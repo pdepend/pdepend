@@ -63,7 +63,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetTraitDelegatesToContextGetTraitMethod()
+    public function testGetTraitDelegatesToContextGetTraitMethod(): void
     {
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
@@ -97,7 +97,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine($reference)
+    public function testTraitReferenceHasExpectedStartLine($reference): void
     {
         $this->assertEquals(5, $reference->getStartLine());
     }
@@ -110,7 +110,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn($reference)
+    public function testTraitReferenceHasExpectedStartColumn($reference): void
     {
         $this->assertEquals(9, $reference->getStartColumn());
     }
@@ -123,7 +123,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine($reference)
+    public function testTraitReferenceHasExpectedEndLine($reference): void
     {
         $this->assertEquals(5, $reference->getEndLine());
     }
@@ -136,7 +136,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn($reference)
+    public function testTraitReferenceHasExpectedEndColumn($reference): void
     {
         $this->assertEquals(27, $reference->getEndColumn());
     }

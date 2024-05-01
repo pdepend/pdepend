@@ -117,10 +117,8 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
@@ -181,10 +179,8 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
     /**
      * Generates the forward and reverse code rank for the given <b>$nodes</b>.
-     *
-     * @return void
      */
-    protected function buildCodeRankMetrics()
+    protected function buildCodeRankMetrics(): void
     {
         foreach (array_keys($this->nodes) as $id) {
             $this->nodeMetrics[$id] = array(

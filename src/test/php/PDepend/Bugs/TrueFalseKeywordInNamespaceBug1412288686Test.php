@@ -57,7 +57,7 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testTrueKeywordInNamespace()
+    public function testTrueKeywordInNamespace(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -67,7 +67,7 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testFalseKeywordInNamespace()
+    public function testFalseKeywordInNamespace(): void
     {
         $this->parseCodeResourceForTest();
     }

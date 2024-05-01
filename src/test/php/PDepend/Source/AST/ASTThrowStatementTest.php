@@ -76,7 +76,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedStartLine($stmt)
+    public function testThrowStatementHasExpectedStartLine($stmt): void
     {
         $this->assertSame(4, $stmt->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedStartColumn($stmt)
+    public function testThrowStatementHasExpectedStartColumn($stmt): void
     {
         $this->assertSame(5, $stmt->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedEndLine($stmt)
+    public function testThrowStatementHasExpectedEndLine($stmt): void
     {
         $this->assertSame(5, $stmt->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testThrowStatement
      */
-    public function testThrowStatementHasExpectedEndColumn($stmt)
+    public function testThrowStatementHasExpectedEndColumn($stmt): void
     {
         $this->assertSame(38, $stmt->getEndColumn());
     }

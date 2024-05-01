@@ -60,7 +60,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReportReturnsExpected0PercentCoverage()
+    public function testReportReturnsExpected0PercentCoverage(): void
     {
         $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -73,7 +73,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReportReturnsExpected50PercentCoverage()
+    public function testReportReturnsExpected50PercentCoverage(): void
     {
         $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -86,7 +86,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReportReturnsExpected100PercentCoverage()
+    public function testReportReturnsExpected100PercentCoverage(): void
     {
         $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -99,7 +99,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReportReturnsExpected100PercentCoverageWithCoverageIgnore()
+    public function testReportReturnsExpected100PercentCoverageWithCoverageIgnore(): void
     {
         $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -112,7 +112,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReportReturnsExpected0PercentCoverageForOneLineMethod()
+    public function testReportReturnsExpected0PercentCoverageForOneLineMethod(): void
     {
         $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -125,7 +125,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNamespacedReportReturnsExpected0PercentCoverage()
+    public function testNamespacedReportReturnsExpected0PercentCoverage(): void
     {
         $report   = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -138,7 +138,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNamespacedReportReturnsExpected50PercentCoverage()
+    public function testNamespacedReportReturnsExpected50PercentCoverage(): void
     {
         $report   = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -151,7 +151,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNamespacedReportReturnsExpected100PercentCoverage()
+    public function testNamespacedReportReturnsExpected100PercentCoverage(): void
     {
         $report   = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
@@ -164,7 +164,7 @@ class CloverReportTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists()
+    public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists(): void
     {
         $report   = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));

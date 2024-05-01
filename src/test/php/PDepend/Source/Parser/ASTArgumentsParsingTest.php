@@ -60,7 +60,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsStaticMethodPostfixExpression()
+    public function testArgumentsContainsStaticMethodPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
@@ -79,7 +79,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsMethodPostfixExpression()
+    public function testArgumentsContainsMethodPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
@@ -98,7 +98,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsConstantsPostfixExpression()
+    public function testArgumentsContainsConstantsPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
@@ -116,7 +116,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsPropertyPostfixExpression()
+    public function testArgumentsContainsPropertyPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
@@ -134,7 +134,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsSelfPropertyPostfixExpression()
+    public function testArgumentsContainsSelfPropertyPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfMethod(),
@@ -152,7 +152,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsParentMethodPostfixExpression()
+    public function testArgumentsContainsParentMethodPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfMethod(),
@@ -171,7 +171,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsAllocationExpression()
+    public function testArgumentsContainsAllocationExpression(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -184,7 +184,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsWithSeveralParameters()
+    public function testArgumentsWithSeveralParameters(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -199,7 +199,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsWithInlineComments()
+    public function testArgumentsWithInlineComments(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -212,7 +212,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsWithInlineConcatExpression()
+    public function testArgumentsWithInlineConcatExpression(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -228,7 +228,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testUnclosedArgumentsExpressionThrowsExpectedException()
+    public function testUnclosedArgumentsExpressionThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 

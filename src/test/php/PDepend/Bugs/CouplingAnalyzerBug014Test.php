@@ -59,7 +59,7 @@ class CouplingAnalyzerBug014Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testAnalyzerExecutionChain()
+    public function testAnalyzerExecutionChain(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 

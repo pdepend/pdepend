@@ -61,7 +61,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testPHPDependReturnsExpectedExceptionInstances()
+    public function testPHPDependReturnsExpectedExceptionInstances(): void
     {
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($this->createCodeResourceUriForTest());
@@ -83,7 +83,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\TextUI\Runner
      */
-    public function testRunnerReturnsFalseWhenNoErrorOccurredDuringTheParsingProcess()
+    public function testRunnerReturnsFalseWhenNoErrorOccurredDuringTheParsingProcess(): void
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI('pdepend.log'));
@@ -100,7 +100,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\TextUI\Runner
      */
-    public function testRunnerReturnsTrueWhenAnErrorOccurredDuringTheParsingProcess()
+    public function testRunnerReturnsTrueWhenAnErrorOccurredDuringTheParsingProcess(): void
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI('pdepend.log'));
@@ -118,7 +118,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\TextUI\Command
      */
-    public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess()
+    public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess(): void
     {
         $this->prepareArgv(
             array(
@@ -138,7 +138,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\TextUI\Command
      */
-    public function testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess()
+    public function testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess(): void
     {
         $this->prepareArgv(
             array(
@@ -159,7 +159,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    protected function prepareArgv($argv)
+    protected function prepareArgv($argv): void
     {
         array_unshift($argv, __FILE__);
 

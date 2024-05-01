@@ -59,7 +59,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testWhileStatementGraphWithBooleanExpressions()
+    public function testWhileStatementGraphWithBooleanExpressions(): void
     {
         $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertCount(2, $stmt->getChildren());
@@ -70,7 +70,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFirstChildOfWhileStatementIsASTExpression()
+    public function testFirstChildOfWhileStatementIsASTExpression(): void
     {
         $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
@@ -81,7 +81,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSecondChildOfWhileStatementIsASTScopeStatement()
+    public function testSecondChildOfWhileStatementIsASTScopeStatement(): void
     {
         $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
@@ -109,7 +109,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedStartLine($stmt)
+    public function testWhileStatementHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -122,7 +122,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedStartColumn($stmt)
+    public function testWhileStatementHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getStartColumn());
     }
@@ -135,7 +135,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedEndLine($stmt)
+    public function testWhileStatementHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(6, $stmt->getEndLine());
     }
@@ -148,7 +148,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedEndColumn($stmt)
+    public function testWhileStatementHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getEndColumn());
     }
@@ -175,7 +175,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedStartLine($stmt)
+    public function testWhileStatementAlternativeScopeHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -188,7 +188,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedStartColumn($stmt)
+    public function testWhileStatementAlternativeScopeHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getStartColumn());
     }
@@ -201,7 +201,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedEndLine($stmt)
+    public function testWhileStatementAlternativeScopeHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(8, $stmt->getEndLine());
     }
@@ -214,7 +214,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedEndColumn($stmt)
+    public function testWhileStatementAlternativeScopeHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(13, $stmt->getEndColumn());
     }
@@ -224,7 +224,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testWhileStatementTerminatedByPhpCloseTag()
+    public function testWhileStatementTerminatedByPhpCloseTag(): void
     {
         $stmt = $this->getFirstWhileStatementInFunction();
         $this->assertEquals(9, $stmt->getEndColumn());

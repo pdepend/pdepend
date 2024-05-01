@@ -62,7 +62,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testStaticMethodCallInFunctionBody()
+    public function testStaticMethodCallInFunctionBody(): void
     {
         $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
@@ -81,7 +81,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testStaticMethodLeadingBackslashCallInFunctionBody()
+    public function testStaticMethodLeadingBackslashCallInFunctionBody(): void
     {
         $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
@@ -100,7 +100,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testNotHandlesQualifiedFunctionCallAsDependencyInFunctionBody()
+    public function testNotHandlesQualifiedFunctionCallAsDependencyInFunctionBody(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -119,7 +119,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testQualifiedPropertyAccessAsDependencyInFunctionBody()
+    public function testQualifiedPropertyAccessAsDependencyInFunctionBody(): void
     {
         $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()
@@ -138,7 +138,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testQualifiedConstantAccessAsDependencyInFunctionBody()
+    public function testQualifiedConstantAccessAsDependencyInFunctionBody(): void
     {
         $namespace = $this->getFirstFunctionForTestCase()
             ->getDependencies()

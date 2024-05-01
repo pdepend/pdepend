@@ -65,155 +65,115 @@ interface ASTVisitListener
      * Is called when the visitor starts a new class instance.
      *
      * @param ASTClass $class The context class instance.
-     *
-     * @return void
      */
-    public function startVisitClass(ASTClass $class);
+    public function startVisitClass(ASTClass $class): void;
 
     /**
      * Is called when the visitor ends with a class instance.
      *
      * @param ASTClass $class The context class instance.
-     *
-     * @return void
      */
-    public function endVisitClass(ASTClass $class);
+    public function endVisitClass(ASTClass $class): void;
 
     /**
      * Is called when the visitor starts a new enum instance.
      *
-     * @return void
-     *
      * @since  2.11.1
      */
-    public function startVisitEnum(ASTEnum $enum);
+    public function startVisitEnum(ASTEnum $enum): void;
 
     /**
      * Is called when the visitor ends with an enum instance.
      *
-     * @return void
-     *
      * @since  2.11.1
      */
-    public function endVisitEnum(ASTEnum $enum);
+    public function endVisitEnum(ASTEnum $enum): void;
 
     /**
      * Is called when the visitor starts a new trait instance.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function startVisitTrait(ASTTrait $trait);
+    public function startVisitTrait(ASTTrait $trait): void;
 
     /**
      * Is called when the visitor ends with a trait instance.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function endVisitTrait(ASTTrait $trait);
+    public function endVisitTrait(ASTTrait $trait): void;
 
     /**
      * Is called when the visitor starts a new file instance.
      *
      * @param ASTCompilationUnit $compilationUnit The context file instance.
-     *
-     * @return void
      */
-    public function startVisitFile(ASTCompilationUnit $compilationUnit);
+    public function startVisitFile(ASTCompilationUnit $compilationUnit): void;
 
     /**
      * Is called when the visitor ends with a file instance.
      *
      * @param ASTCompilationUnit $compilationUnit The context file instance.
-     *
-     * @return void
      */
-    public function endVisitFile(ASTCompilationUnit $compilationUnit);
+    public function endVisitFile(ASTCompilationUnit $compilationUnit): void;
 
     /**
      * Is called when the visitor starts a new function instance.
-     *
-     * @return void
      */
-    public function startVisitFunction(ASTFunction $function);
+    public function startVisitFunction(ASTFunction $function): void;
 
     /**
      * Is called when the visitor ends with a function instance.
-     *
-     * @return void
      */
-    public function endVisitFunction(ASTFunction $function);
+    public function endVisitFunction(ASTFunction $function): void;
 
     /**
      * Is called when the visitor starts a new interface instance.
-     *
-     * @return void
      */
-    public function startVisitInterface(ASTInterface $interface);
+    public function startVisitInterface(ASTInterface $interface): void;
 
     /**
      * Is called when the visitor ends with an interface instance.
-     *
-     * @return void
      */
-    public function endVisitInterface(ASTInterface $interface);
+    public function endVisitInterface(ASTInterface $interface): void;
 
     /**
      * Is called when the visitor starts a new method instance.
-     *
-     * @return void
      */
-    public function startVisitMethod(ASTMethod $method);
+    public function startVisitMethod(ASTMethod $method): void;
 
     /**
      * Is called when the visitor ends with a method instance.
-     *
-     * @return void
      */
-    public function endVisitMethod(ASTMethod $method);
+    public function endVisitMethod(ASTMethod $method): void;
 
     /**
      * Is called when the visitor starts a new namespace instance.
-     *
-     * @return void
      */
-    public function startVisitNamespace(ASTNamespace $namespace);
+    public function startVisitNamespace(ASTNamespace $namespace): void;
 
     /**
      * Is called when the visitor ends with a namespace instance.
-     *
-     * @return void
      */
-    public function endVisitNamespace(ASTNamespace $namespace);
+    public function endVisitNamespace(ASTNamespace $namespace): void;
 
     /**
      * Is called when the visitor starts a new parameter instance.
-     *
-     * @return void
      */
-    public function startVisitParameter(ASTParameter $parameter);
+    public function startVisitParameter(ASTParameter $parameter): void;
 
     /**
      * Is called when the visitor ends with a parameter instance.
-     *
-     * @return void
      */
-    public function endVisitParameter(ASTParameter $parameter);
+    public function endVisitParameter(ASTParameter $parameter): void;
 
     /**
      * Is called when the visitor starts a new property instance.
-     *
-     * @return void
      */
-    public function startVisitProperty(ASTProperty $property);
+    public function startVisitProperty(ASTProperty $property): void;
 
     /**
      * Is called when the visitor ends with a property instance.
-     *
-     * @return void
      */
-    public function endVisitProperty(ASTProperty $property);
+    public function endVisitProperty(ASTProperty $property): void;
 }

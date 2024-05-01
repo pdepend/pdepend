@@ -61,7 +61,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExceptedAnalyzers()
+    public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Pyramid();
         $actual    = $logger->getAcceptedAnalyzers();
@@ -84,7 +84,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testThrowsExceptionForInvalidLogTarget()
+    public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
             '\\PDepend\\Report\\NoLogOutputException'
@@ -102,7 +102,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPyramidDoesntAcceptInvalidAnalyzer()
+    public function testPyramidDoesntAcceptInvalidAnalyzer(): void
     {
         $logger = new Pyramid();
         $this->assertFalse($logger->log(new DummyAnalyzer()));
@@ -113,7 +113,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet()
+    public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet(): void
     {
         $this->expectException(
             '\RuntimeException'
@@ -136,7 +136,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet()
+    public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet(): void
     {
         $this->expectException(
             '\RuntimeException'
@@ -159,7 +159,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet()
+    public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet(): void
     {
         $this->expectException(
             '\RuntimeException'
@@ -182,7 +182,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet()
+    public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet(): void
     {
         $this->expectException(
             '\RuntimeException'
@@ -205,7 +205,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet()
+    public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet(): void
     {
         $this->expectException(
             '\RuntimeException'
@@ -228,7 +228,7 @@ class PyramidTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCollectedAndComputedValuesInOutputSVG()
+    public function testCollectedAndComputedValuesInOutputSVG(): void
     {
         $output = $this->createRunResourceURI('temp') . '.svg';
         if (file_exists($output)) {

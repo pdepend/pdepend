@@ -100,7 +100,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExceptedAnalyzers()
+    public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Chart();
         $this->assertEquals(array('pdepend.analyzer.dependency'), $logger->getAcceptedAnalyzers());
@@ -112,7 +112,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testThrowsExceptionForInvalidLogTarget()
+    public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(\PDepend\Report\NoLogOutputException::class);
 
@@ -125,7 +125,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testChartLogAcceptsValidAnalyzer()
+    public function testChartLogAcceptsValidAnalyzer(): void
     {
         $logger = new Chart();
         $this->assertTrue($logger->log(new DependencyAnalyzer()));
@@ -136,7 +136,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testChartLogRejectsInvalidAnalyzer()
+    public function testChartLogRejectsInvalidAnalyzer(): void
     {
         $logger = new Chart();
         $this->assertFalse($logger->log(new DummyAnalyzer()));
@@ -147,7 +147,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGeneratesCorrectSVGImageFile()
+    public function testGeneratesCorrectSVGImageFile(): void
     {
         $nodes = new ASTArtifactList($this->createPackages(true, true));
 
@@ -168,7 +168,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGeneratedSvgImageContainsExpectedPackages()
+    public function testGeneratedSvgImageContainsExpectedPackages(): void
     {
         $nodes = new ASTArtifactList($this->createPackages(true, true));
 
@@ -196,7 +196,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages()
+    public function testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages(): void
     {
         $nodes = new ASTArtifactList($this->createPackages(true, false, true));
 
@@ -223,7 +223,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCalculateCorrectEllipseSize()
+    public function testCalculateCorrectEllipseSize(): void
     {
         $nodes = $this->createPackages(true, true);
 
@@ -292,7 +292,7 @@ class ChartTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGeneratesImageFile()
+    public function testGeneratesImageFile(): void
     {
         $this->requireImagick();
 

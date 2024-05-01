@@ -55,7 +55,7 @@ use PDepend\AbstractTestCase;
  */
 class TreeBuilderTest extends AbstractTestCase
 {
-    public function testTreeBuilder()
+    public function testTreeBuilder(): void
     {
         $treeBuilder = new TreeBuilder();
 

@@ -82,10 +82,8 @@ class ASTValue
      * following calls will be ignored.
      *
      * @param mixed $value The parsed PHP-value.
-     *
-     * @return void
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
         if ($this->valueAvailable === false) {
             $this->value          = $value;

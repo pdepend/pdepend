@@ -61,7 +61,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetTypeDelegatesToBuilderContextGetClass()
+    public function testGetTypeDelegatesToBuilderContextGetClass(): void
     {
         $context = $this->getBuilderContextMock();
         $context->expects($this->once())
@@ -78,7 +78,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetTypeCachesReturnValueOfBuilderContextGetClass()
+    public function testGetTypeCachesReturnValueOfBuilderContextGetClass(): void
     {
         $context = $this->getBuilderContextMock();
         $context->expects($this->exactly(1))
@@ -95,7 +95,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnValueOfMagicSleepContainsContextProperty()
+    public function testReturnValueOfMagicSleepContainsContextProperty(): void
     {
         $this->assertEquals(
             array(
@@ -113,7 +113,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClassReferenceHasExpectedStartLine()
+    public function testClassReferenceHasExpectedStartLine(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(4, $reference->getStartLine());
@@ -124,7 +124,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClassReferenceHasExpectedStartColumn()
+    public function testClassReferenceHasExpectedStartColumn(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(16, $reference->getStartColumn());
@@ -135,7 +135,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClassReferenceHasExpectedEndLine()
+    public function testClassReferenceHasExpectedEndLine(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(4, $reference->getEndLine());
@@ -146,7 +146,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testClassReferenceHasExpectedEndColumn()
+    public function testClassReferenceHasExpectedEndColumn(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
         $this->assertEquals(18, $reference->getEndColumn());
@@ -158,7 +158,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      * @return void
      * @since 0.10.5
      */
-    public function testReferenceInClassExtendsHasExpectedStartLine()
+    public function testReferenceInClassExtendsHasExpectedStartLine(): void
     {
         $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(2, $reference->getStartLine());
@@ -170,7 +170,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      * @return void
      * @since 0.10.5
      */
-    public function testReferenceInClassExtendsHasExpectedStartColumn()
+    public function testReferenceInClassExtendsHasExpectedStartColumn(): void
     {
         $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(65, $reference->getStartColumn());
@@ -182,7 +182,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      * @return void
      * @since 0.10.5
      */
-    public function testReferenceInClassExtendsHasExpectedEndLine()
+    public function testReferenceInClassExtendsHasExpectedEndLine(): void
     {
         $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(2, $reference->getEndLine());
@@ -194,7 +194,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      * @return void
      * @since 0.10.5
      */
-    public function testReferenceInClassExtendsHasExpectedEndColumn()
+    public function testReferenceInClassExtendsHasExpectedEndColumn(): void
     {
         $reference = $this->getFirstReferenceInClass();
         $this->assertEquals(65, $reference->getEndColumn());

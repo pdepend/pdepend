@@ -60,7 +60,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNameReturnsTheFileName()
+    public function testGetNameReturnsTheFileName(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertEquals(__FILE__, $file->getName());
@@ -71,7 +71,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetFileNameReturnsTheFileName()
+    public function testGetFileNameReturnsTheFileName(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertEquals(__FILE__, $file->getFileName());
@@ -82,7 +82,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetIdReturnsNullByDefault()
+    public function testGetIdReturnsNullByDefault(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertNull($file->getId());
@@ -93,7 +93,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetIdReturnsInjectedIdValue()
+    public function testGetIdReturnsInjectedIdValue(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);
@@ -106,7 +106,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetDocCommentReturnsNullByDefault()
+    public function testGetDocCommentReturnsNullByDefault(): void
     {
         $file = new ASTCompilationUnit(null);
         $this->assertNull($file->getComment());
@@ -117,7 +117,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetDocCommentReturnsInjectedDocCommentValue()
+    public function testGetDocCommentReturnsInjectedDocCommentValue(): void
     {
         $file = new ASTCompilationUnit(null);
         $file->setComment('/** Manuel */');
@@ -130,7 +130,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetTokensDelegatesCallToCacheRestoreWithFileId()
+    public function testGetTokensDelegatesCallToCacheRestoreWithFileId(): void
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -153,7 +153,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSetTokensDelegatesCallToCacheStoreWithFileId()
+    public function testSetTokensDelegatesCallToCacheStoreWithFileId(): void
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -176,7 +176,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptInvokesVisitFileOnGivenVisitor()
+    public function testAcceptInvokesVisitFileOnGivenVisitor(): void
     {
         $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
             ->getMock();
@@ -193,7 +193,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull()
+    public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull(): void
     {
         $file = new ASTCompilationUnit(null);
         $this->assertSame('', $file->__toString());
@@ -204,7 +204,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testMagicStringMethodReturnInjectedFileNameValue()
+    public function testMagicStringMethodReturnInjectedFileNameValue(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertEquals(__FILE__, $file->__toString());
@@ -215,7 +215,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertEquals(
@@ -237,7 +237,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes()
+    public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes(): void
     {
         $node = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
             ->onlyMethods(array('setCompilationUnit'))
@@ -257,7 +257,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsCachedReturnsFalseByDefault()
+    public function testIsCachedReturnsFalseByDefault(): void
     {
         $file = new ASTCompilationUnit(null);
         $this->assertFalse($file->isCached());
@@ -268,7 +268,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
+    public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
         $file = new ASTCompilationUnit(null);
         serialize($file);
@@ -281,7 +281,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsCachedReturnsTrueAfterCallToWakeup()
+    public function testIsCachedReturnsTrueAfterCallToWakeup(): void
     {
         $file = new ASTCompilationUnit(null);
         $file = unserialize(serialize($file));
@@ -294,7 +294,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetStartLineReturnsZeroWhenSourceFileNotExists()
+    public function testGetStartLineReturnsZeroWhenSourceFileNotExists(): void
     {
         $file = new ASTCompilationUnit(null);
         $this->assertSame(0, $file->getStartLine());
@@ -305,7 +305,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetStartLineReturnsOneWhenSourceFileExists()
+    public function testGetStartLineReturnsOneWhenSourceFileExists(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertEquals(1, $file->getStartLine());
@@ -316,7 +316,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetEndLineReturnsZeroWhenSourceFileNotExists()
+    public function testGetEndLineReturnsZeroWhenSourceFileNotExists(): void
     {
         $file = new ASTCompilationUnit(null);
         $this->assertSame(0, $file->getEndLine());
@@ -327,7 +327,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetEndLineReturnsOneWhenSourceFileExists()
+    public function testGetEndLineReturnsOneWhenSourceFileExists(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertSame($this->getEndLineOfThisFile(), $file->getEndLine());
@@ -338,7 +338,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetSourceReturnsNullWhenSourceFileNotExists()
+    public function testGetSourceReturnsNullWhenSourceFileNotExists(): void
     {
         $file = new ASTCompilationUnit(null);
         $this->assertNull($file->getSource());
@@ -349,7 +349,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetSourceReturnsOriginalFileContents()
+    public function testGetSourceReturnsOriginalFileContents(): void
     {
         $file = new ASTCompilationUnit($this->createCodeResourceUriForTest());
 

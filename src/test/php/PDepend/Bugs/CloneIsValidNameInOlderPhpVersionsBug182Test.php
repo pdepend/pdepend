@@ -58,7 +58,7 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testParserAcceptsCloneAsFunctionName()
+    public function testParserAcceptsCloneAsFunctionName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -68,7 +68,7 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testParserAcceptsCloneAsMethodName()
+    public function testParserAcceptsCloneAsMethodName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -78,7 +78,7 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testParserAcceptsCloneAsClassName()
+    public function testParserAcceptsCloneAsClassName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -88,7 +88,7 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
      *
      * @return void
      */
-    public function testParserAcceptsCloneAsInterfaceName()
+    public function testParserAcceptsCloneAsInterfaceName(): void
     {
         $this->parseCodeResourceForTest();
     }

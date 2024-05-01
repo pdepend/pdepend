@@ -59,7 +59,7 @@ class InInitializersTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testInInitializers()
+    public function testInInitializers(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
@@ -99,7 +99,7 @@ class InInitializersTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testInInitializersMultipleProperties()
+    public function testInInitializersMultipleProperties(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();

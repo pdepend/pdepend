@@ -74,10 +74,8 @@ class Application
 
     /**
      * @param string $configurationFile
-     *
-     * @return void
      */
-    public function setConfigurationFile($configurationFile)
+    public function setConfigurationFile($configurationFile): void
     {
         if (!file_exists($configurationFile)) {
             throw new InvalidArgumentException(

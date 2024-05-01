@@ -61,7 +61,7 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterface()
+    public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterface(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
 
@@ -88,7 +88,7 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserTreatsTypeInInstanceOfOperatorGenericWithClass()
+    public function testParserTreatsTypeInInstanceOfOperatorGenericWithClass(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
 

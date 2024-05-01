@@ -62,10 +62,8 @@ class CompositeFilter implements Filter
      * Adds a file filter to this composite.
      *
      * @param Filter $filter The new filter object.
-     *
-     * @return void
      */
-    public function append(Filter $filter)
+    public function append(Filter $filter): void
     {
         $this->filters[] = $filter;
     }

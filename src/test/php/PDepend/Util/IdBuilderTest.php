@@ -67,7 +67,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForFile()
+    public function testBuilderCreatesExpectedIdentifierForFile(): void
     {
         $file    = new ASTCompilationUnit(__FILE__);
         $builder = new IdBuilder();
@@ -80,7 +80,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesCaseSensitiveFileIdentifiers()
+    public function testBuilderCreatesCaseSensitiveFileIdentifiers(): void
     {
         $builder = new IdBuilder();
 
@@ -106,7 +106,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForClass()
+    public function testBuilderCreatesExpectedIdentifierForClass(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId('FooBar');
@@ -124,7 +124,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass()
+    public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId('FooBar');
@@ -143,7 +143,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForSecondClass()
+    public function testBuilderCreatesExpectedIdentifierForSecondClass(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId('FooBar');
@@ -165,7 +165,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesCaseInSensitiveClassIdentifiers()
+    public function testBuilderCreatesCaseInSensitiveClassIdentifiers(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);
@@ -190,7 +190,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers()
+    public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);
@@ -215,7 +215,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForFunction()
+    public function testBuilderCreatesExpectedIdentifierForFunction(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId('FooBar');
@@ -233,7 +233,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers()
+    public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);
@@ -258,7 +258,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForMethod()
+    public function testBuilderCreatesExpectedIdentifierForMethod(): void
     {
         $class = new ASTClass(__CLASS__);
         $class->setId('FooBar');
@@ -276,7 +276,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction()
+    public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId('FooBar');
@@ -295,7 +295,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesExpectedIdentifierForSecondFunction()
+    public function testBuilderCreatesExpectedIdentifierForSecondFunction(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId('FooBar');
@@ -317,7 +317,7 @@ class IdBuilderTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testBuilderCreatesCaseInSensitiveMethodIdentifiers()
+    public function testBuilderCreatesCaseInSensitiveMethodIdentifiers(): void
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);

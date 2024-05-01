@@ -99,7 +99,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExceptedAnalyzers()
+    public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
@@ -128,7 +128,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testThrowsExceptionForInvalidLogTarget()
+    public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
             '\\PDepend\\Report\\NoLogOutputException'
@@ -146,7 +146,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware()
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware(): void
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerProjectAware')
             ->getMock();
@@ -162,7 +162,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware()
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware(): void
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
             ->getMock();
@@ -180,7 +180,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testXmlLogWithoutMetrics()
+    public function testXmlLogWithoutMetrics(): void
     {
         $this->namespaces = $this->parseCodeResourceForTest();
 
@@ -202,7 +202,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testProjectAwareAnalyzerWithoutCode()
+    public function testProjectAwareAnalyzerWithoutCode(): void
     {
         $metricsOne = array('interfs'  =>  42, 'cls'  =>  23);
         $resultOne  = new AnalyzerProjectAwareDummy($metricsOne);
@@ -230,7 +230,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected()
+    public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected(): void
     {
         $this->namespaces = $this->parseCodeResourceForTest();
 
@@ -259,7 +259,7 @@ class XmlTest extends AbstractTestCase
      * @return void
      * @dataProvider dataProviderNodeAware
      */
-    public function testNodeAwareAnalyzer($fixture, $expectation)
+    public function testNodeAwareAnalyzer($fixture, $expectation): void
     {
         $this->namespaces = $this->parseSource($fixture);
 

@@ -65,7 +65,7 @@ class ResultPrinterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testResultPrinterOutputForSingleEntry()
+    public function testResultPrinterOutputForSingleEntry(): void
     {
         // Create dummy objects
         $builder   = new PHPBuilder();
@@ -90,7 +90,7 @@ class ResultPrinterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testResultPrinterOutputForMultipleEntries()
+    public function testResultPrinterOutputForMultipleEntries(): void
     {
         // Create dummy objects
         $builder   = new PHPBuilder();
@@ -118,7 +118,7 @@ class ResultPrinterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testResultPrinterForMultipleEntries()
+    public function testResultPrinterForMultipleEntries(): void
     {
         // Create dummy objects
         $method   = new ASTMethod('method');
@@ -145,7 +145,7 @@ class ResultPrinterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testResultPrinterForCompleteLine()
+    public function testResultPrinterForCompleteLine(): void
     {
         // Create dummy objects
         $method   = new ASTMethod('method');
@@ -167,11 +167,11 @@ class ResultPrinterTest extends AbstractTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testStartParseProcess()
+    public function testStartParseProcess(): void
     {
         self::expectOutput(
             'Parsing source files:',
-            function () {
+            function (): void {
                 $printer = new ResultPrinter();
 
                 $printer->startParseProcess(new PHPBuilder());
@@ -179,11 +179,11 @@ class ResultPrinterTest extends AbstractTestCase
         );
     }
 
-    public function testStartLogProcess()
+    public function testStartLogProcess(): void
     {
         self::expectOutput(
             'Generating pdepend log files, this may take a moment.',
-            function () {
+            function (): void {
                 $printer = new ResultPrinter();
 
                 $printer->startLogProcess();
@@ -191,11 +191,11 @@ class ResultPrinterTest extends AbstractTestCase
         );
     }
 
-    public function testStartAnalyzer()
+    public function testStartAnalyzer(): void
     {
         self::expectOutput(
             'Calculating Dependency metrics:',
-            function () {
+            function (): void {
                 $printer = new ResultPrinter();
 
                 $printer->startAnalyzer(new DependencyAnalyzer());
@@ -203,11 +203,11 @@ class ResultPrinterTest extends AbstractTestCase
         );
     }
 
-    public function testEmptyMethods()
+    public function testEmptyMethods(): void
     {
         self::expectOutput(
             '',
-            function () {
+            function (): void {
                 $printer = new ResultPrinter();
 
                 $printer->endFileParsing(new PHPTokenizerInternal());
@@ -218,7 +218,7 @@ class ResultPrinterTest extends AbstractTestCase
         );
     }
 
-    private static function expectOutput($expected, $action)
+    private static function expectOutput($expected, $action): void
     {
         ob_start();
         call_user_func($action);

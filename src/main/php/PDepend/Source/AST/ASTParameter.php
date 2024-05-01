@@ -156,11 +156,9 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * Sets the parent function or method object.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setDeclaringFunction(AbstractASTCallable $function)
+    public function setDeclaringFunction(AbstractASTCallable $function): void
     {
         $this->declaringFunction = $function;
     }
@@ -197,10 +195,8 @@ class ASTParameter extends AbstractASTArtifact
      * Sets the parameter position in the method/function signature.
      *
      * @param int $position The parameter position.
-     *
-     * @return void
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -303,11 +299,9 @@ class ASTParameter extends AbstractASTArtifact
      * @param bool $optional Boolean flag that marks this parameter a
      *                       optional or not.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setOptional($optional)
+    public function setOptional($optional): void
     {
         $this->optional = (bool) $optional;
     }

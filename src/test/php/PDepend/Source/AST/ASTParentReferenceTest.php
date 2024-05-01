@@ -66,7 +66,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetTypeDelegatesCallToInjectedReferenceObject()
+    public function testGetTypeDelegatesCallToInjectedReferenceObject(): void
     {
         $reference = $this->createNodeInstance();
         $this->referenceMock->expects($this->once())
@@ -81,7 +81,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $reference = $this->createNodeInstance();
         $this->assertEquals(
@@ -101,7 +101,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
+    public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
 
@@ -113,7 +113,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceInClassWithoutParentThrowsException()
+    public function testParentReferenceInClassWithoutParentThrowsException(): void
     {
         $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
 
@@ -125,7 +125,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
+    public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
 
@@ -138,7 +138,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetImageReturnsExpectedValue()
+    public function testGetImageReturnsExpectedValue(): void
     {
         $reference = $this->createNodeInstance();
         $this->assertEquals('parent', $reference->getImage());
@@ -149,7 +149,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceHasExpectedStartLine()
+    public function testParentReferenceHasExpectedStartLine(): void
     {
         $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(5, $reference->getStartLine());
@@ -160,7 +160,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceHasExpectedStartColumn()
+    public function testParentReferenceHasExpectedStartColumn(): void
     {
         $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(20, $reference->getStartColumn());
@@ -171,7 +171,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceHasExpectedEndLine()
+    public function testParentReferenceHasExpectedEndLine(): void
     {
         $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(5, $reference->getEndLine());
@@ -182,7 +182,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParentReferenceHasExpectedEndColumn()
+    public function testParentReferenceHasExpectedEndColumn(): void
     {
         $reference = $this->getFirstParentReferenceInClass(__METHOD__);
         $this->assertEquals(25, $reference->getEndColumn());

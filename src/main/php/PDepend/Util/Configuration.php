@@ -109,11 +109,9 @@ class Configuration
      *
      * @throws OutOfRangeException Whenever this method is called.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function __set($name, $value)
+    public function __set($name, $value): void
     {
         throw new OutOfRangeException(
             sprintf("A configuration option '%s' not exists.", $name),

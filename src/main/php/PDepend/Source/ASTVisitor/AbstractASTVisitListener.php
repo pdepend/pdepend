@@ -65,40 +65,32 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
 {
     /**
      * Is called when the visitor starts a new class instance.
-     *
-     * @return void
      */
-    public function startVisitClass(ASTClass $class)
+    public function startVisitClass(ASTClass $class): void
     {
         $this->startVisitNode($class);
     }
 
     /**
      * Is called when the visitor ends with a class instance.
-     *
-     * @return void
      */
-    public function endVisitClass(ASTClass $class)
+    public function endVisitClass(ASTClass $class): void
     {
         $this->endVisitNode($class);
     }
 
     /**
      * Is called when the visitor starts a new enum instance.
-     *
-     * @return void
      */
-    public function startVisitEnum(ASTEnum $enum)
+    public function startVisitEnum(ASTEnum $enum): void
     {
         $this->startVisitNode($enum);
     }
 
     /**
      * Is called when the visitor ends with an enum instance.
-     *
-     * @return void
      */
-    public function endVisitEnum(ASTEnum $enum)
+    public function endVisitEnum(ASTEnum $enum): void
     {
         $this->endVisitNode($enum);
     }
@@ -106,11 +98,9 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor starts a new trait instance.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function startVisitTrait(ASTTrait $trait)
+    public function startVisitTrait(ASTTrait $trait): void
     {
         $this->startVisitNode($trait);
     }
@@ -118,166 +108,132 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
     /**
      * Is called when the visitor ends with a trait instance.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function endVisitTrait(ASTTrait $trait)
+    public function endVisitTrait(ASTTrait $trait): void
     {
         $this->endVisitNode($trait);
     }
 
     /**
      * Is called when the visitor starts a new file instance.
-     *
-     * @return void
      */
-    public function startVisitFile(ASTCompilationUnit $compilationUnit)
+    public function startVisitFile(ASTCompilationUnit $compilationUnit): void
     {
         $this->startVisitNode($compilationUnit);
     }
 
     /**
      * Is called when the visitor ends with a file instance.
-     *
-     * @return void
      */
-    public function endVisitFile(ASTCompilationUnit $compilationUnit)
+    public function endVisitFile(ASTCompilationUnit $compilationUnit): void
     {
         $this->endVisitNode($compilationUnit);
     }
 
     /**
      * Is called when the visitor starts a new function instance.
-     *
-     * @return void
      */
-    public function startVisitFunction(ASTFunction $function)
+    public function startVisitFunction(ASTFunction $function): void
     {
         $this->startVisitNode($function);
     }
 
     /**
      * Is called when the visitor ends with a function instance.
-     *
-     * @return void
      */
-    public function endVisitFunction(ASTFunction $function)
+    public function endVisitFunction(ASTFunction $function): void
     {
         $this->endVisitNode($function);
     }
 
     /**
      * Is called when the visitor starts a new interface instance.
-     *
-     * @return void
      */
-    public function startVisitInterface(ASTInterface $interface)
+    public function startVisitInterface(ASTInterface $interface): void
     {
         $this->startVisitNode($interface);
     }
 
     /**
      * Is called when the visitor ends with an interface instance.
-     *
-     * @return void
      */
-    public function endVisitInterface(ASTInterface $interface)
+    public function endVisitInterface(ASTInterface $interface): void
     {
         $this->endVisitNode($interface);
     }
 
     /**
      * Is called when the visitor starts a new method instance.
-     *
-     * @return void
      */
-    public function startVisitMethod(ASTMethod $method)
+    public function startVisitMethod(ASTMethod $method): void
     {
         $this->startVisitNode($method);
     }
 
     /**
      * Is called when the visitor ends with a method instance.
-     *
-     * @return void
      */
-    public function endVisitMethod(ASTMethod $method)
+    public function endVisitMethod(ASTMethod $method): void
     {
         $this->endVisitNode($method);
     }
 
     /**
      * Is called when the visitor starts a new namespace instance.
-     *
-     * @return void
      */
-    public function startVisitNamespace(ASTNamespace $namespace)
+    public function startVisitNamespace(ASTNamespace $namespace): void
     {
         $this->startVisitNode($namespace);
     }
 
     /**
      * Is called when the visitor ends with a namespace instance.
-     *
-     * @return void
      */
-    public function endVisitNamespace(ASTNamespace $namespace)
+    public function endVisitNamespace(ASTNamespace $namespace): void
     {
         $this->endVisitNode($namespace);
     }
 
     /**
      * Is called when the visitor starts a new parameter instance.
-     *
-     * @return void
      */
-    public function startVisitParameter(ASTParameter $parameter)
+    public function startVisitParameter(ASTParameter $parameter): void
     {
         $this->startVisitNode($parameter);
     }
 
     /**
      * Is called when the visitor ends with a parameter instance.
-     *
-     * @return void
      */
-    public function endVisitParameter(ASTParameter $parameter)
+    public function endVisitParameter(ASTParameter $parameter): void
     {
         $this->endVisitNode($parameter);
     }
 
     /**
      * Is called when the visitor starts a new property instance.
-     *
-     * @return void
      */
-    public function startVisitProperty(ASTProperty $property)
+    public function startVisitProperty(ASTProperty $property): void
     {
         $this->startVisitNode($property);
     }
 
     /**
      * Is called when the visitor ends with a property instance.
-     *
-     * @return void
      */
-    public function endVisitProperty(ASTProperty $property)
+    public function endVisitProperty(ASTProperty $property): void
     {
         $this->endVisitNode($property);
     }
 
     /**
      * Generic notification method that is called for every node start.
-     *
-     * @return void
      */
-    protected function startVisitNode(AbstractASTArtifact $node) {}
+    protected function startVisitNode(AbstractASTArtifact $node): void {}
 
     /**
      * Generic notification method that is called when the node processing ends.
-     *
-     * @return void
      */
-    protected function endVisitNode(AbstractASTArtifact $node) {}
+    protected function endVisitNode(AbstractASTArtifact $node): void {}
 }

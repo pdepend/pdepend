@@ -90,10 +90,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     *
-     * @return void
      */
-    public function setLogFile($logFile)
+    public function setLogFile($logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -113,10 +111,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Sets the context code nodes.
      *
      * @param ASTArtifactList<ASTNamespace> $artifacts
-     *
-     * @return void
      */
-    public function setArtifacts(ASTArtifactList $artifacts)
+    public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->code = $artifacts;
     }
@@ -143,10 +139,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Closes the logger process and writes the output file.
      *
      * @throws NoLogOutputException If the no log target exists.
-     *
-     * @return void
      */
-    public function close()
+    public function close(): void
     {
         // Check for configured log file
         if ($this->logFile === null) {

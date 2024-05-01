@@ -59,7 +59,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testParserSetsExpectedParentTypeHintReference()
+    public function testParserSetsExpectedParentTypeHintReference(): void
     {
         $parameters = $this->parseCodeResourceForTest()
             ->current()
@@ -78,7 +78,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForParentTypeHintInFunction()
+    public function testParserThrowsExpectedExceptionForParentTypeHintInFunction(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\InvalidStateException'
@@ -96,7 +96,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass()
+    public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\InvalidStateException'

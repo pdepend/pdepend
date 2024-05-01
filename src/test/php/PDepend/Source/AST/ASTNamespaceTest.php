@@ -62,7 +62,7 @@ class ASTNamespaceTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetIdReturnsExpectedObjectHash()
+    public function testGetIdReturnsExpectedObjectHash(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $this->assertEquals(spl_object_hash($namespace), $namespace->getId());
@@ -74,7 +74,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetTypeNodeIterator()
+    public function testGetTypeNodeIterator(): void
     {
         $namespace = new ASTNamespace('package1');
         $types = $namespace->getTypes();
@@ -89,7 +89,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddTypeAddsTypeToPackage()
+    public function testAddTypeAddsTypeToPackage(): void
     {
         $namespace = new ASTNamespace('package1');
         $class = new ASTClass('Class', 0, 'class.php');
@@ -103,7 +103,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddTypeSetNamespaceOnAddedInstance()
+    public function testAddTypeSetNamespaceOnAddedInstance(): void
     {
         $namespace = new ASTNamespace('package1');
         $class = new ASTClass('Class', 0, 'class.php');
@@ -118,7 +118,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddTypeReparentTheGivenInstance()
+    public function testAddTypeReparentTheGivenInstance(): void
     {
         $namespace1 = new ASTNamespace('package1');
         $namespace2 = new ASTNamespace('package2');
@@ -135,7 +135,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddTypeRemovesGivenTypeFromPreviousParentPackage()
+    public function testAddTypeRemovesGivenTypeFromPreviousParentPackage(): void
     {
         $namespace1 = new ASTNamespace('package1');
         $namespace2 = new ASTNamespace('package2');
@@ -152,7 +152,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPackageAcceptsTheSameTypeOnlyOneTime()
+    public function testPackageAcceptsTheSameTypeOnlyOneTime(): void
     {
         $namespace = new ASTNamespace('foo');
         $class   = new ASTClass('Bar');
@@ -168,7 +168,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetInterfacesReturnsAnEmptyResultByDefault()
+    public function testGetInterfacesReturnsAnEmptyResultByDefault(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $this->assertCount(0, $namespace->getInterfaces());
@@ -179,7 +179,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetInterfacesReturnsInjectInterfaceInstance()
+    public function testGetInterfacesReturnsInjectInterfaceInstance(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $namespace->addType(new ASTInterface(__CLASS__));
@@ -192,7 +192,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetInterfacesReturnsNotInjectClassInstance()
+    public function testGetInterfacesReturnsNotInjectClassInstance(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $namespace->addType(new ASTClass(__CLASS__));
@@ -207,7 +207,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveType()
+    public function testRemoveType(): void
     {
         $namespace = new ASTNamespace('package1');
         $class2  = new ASTClass('Class2', 0, 'class2.php');
@@ -223,7 +223,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveTypeResetsPackageReferenceFromRemovedType()
+    public function testRemoveTypeResetsPackageReferenceFromRemovedType(): void
     {
         $namespace = new ASTNamespace('package1');
         $class = new ASTClass('Class');
@@ -240,7 +240,7 @@ class ASTNamespaceTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetTraitsReturnsExpectedNumberOfTraits()
+    public function testGetTraitsReturnsExpectedNumberOfTraits(): void
     {
         $namespace = new ASTNamespace('package');
         $namespace->addType(new ASTClass('Class'));
@@ -257,7 +257,7 @@ class ASTNamespaceTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetTraitsContainsExpectedTrait()
+    public function testGetTraitsContainsExpectedTrait(): void
     {
         $namespace = new ASTNamespace('package');
         $trait   = $namespace->addType(new ASTTrait('Trait'));
@@ -272,7 +272,7 @@ class ASTNamespaceTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAddTypeSetsParentPackageOfTrait()
+    public function testAddTypeSetsParentPackageOfTrait(): void
     {
         $namespace = new ASTNamespace('package');
         $trait   = $namespace->addType(new ASTTrait('Trait'));
@@ -286,7 +286,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetFunctionsNodeIterator()
+    public function testGetFunctionsNodeIterator(): void
     {
         $namespace   = new ASTNamespace('package1');
         $functions = $namespace->getFunctions();
@@ -301,7 +301,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddFunction()
+    public function testAddFunction(): void
     {
         $namespace  = new ASTNamespace('package1');
         $function = new ASTFunction('function', 0);
@@ -315,7 +315,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddFunctionSetsParentPackageOnGivenInstance()
+    public function testAddFunctionSetsParentPackageOnGivenInstance(): void
     {
         $namespace  = new ASTNamespace('package1');
         $function = new ASTFunction('function', 0);
@@ -330,7 +330,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddFunctionReparent()
+    public function testAddFunctionReparent(): void
     {
         $namespace1 = new ASTNamespace('package1');
         $namespace2 = new ASTNamespace('package2');
@@ -347,7 +347,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddFunctionRemovesFunctionFromPreviousParentPackage()
+    public function testAddFunctionRemovesFunctionFromPreviousParentPackage(): void
     {
         $namespace1 = new ASTNamespace('package1');
         $namespace2 = new ASTNamespace('package2');
@@ -366,7 +366,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveFunction()
+    public function testRemoveFunction(): void
     {
         $namespace   = new ASTNamespace('package1');
         $function1 = new ASTFunction('func1', 0);
@@ -384,7 +384,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRemoveFunctionSetsParentPackageToNull()
+    public function testRemoveFunctionSetsParentPackageToNull(): void
     {
         $namespace  = new ASTNamespace('nspace');
         $function = new ASTFunction('func', 0);
@@ -400,7 +400,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorAccept()
+    public function testVisitorAccept(): void
     {
         $namespace = new ASTNamespace('package1');
         $visitor = new StubASTVisitor();
@@ -414,7 +414,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsUserDefinedReturnsFalseWhenPackageIsEmpty()
+    public function testIsUserDefinedReturnsFalseWhenPackageIsEmpty(): void
     {
         $namespace = new ASTNamespace('package1');
         $this->assertFalse($namespace->isUserDefined());
@@ -425,7 +425,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsUserDefinedReturnsFalseWhenAllChildElementsAreNotUserDefined()
+    public function testIsUserDefinedReturnsFalseWhenAllChildElementsAreNotUserDefined(): void
     {
         $namespace = new ASTNamespace('package1');
         $namespace->addType(new ASTClass('class', 0));
@@ -438,7 +438,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsUserDefinedReturnsTrueWhenChildElementIsUserDefined()
+    public function testIsUserDefinedReturnsTrueWhenChildElementIsUserDefined(): void
     {
         $class = new ASTClass('class', 0);
         $class->setUserDefined();
@@ -454,7 +454,7 @@ class ASTNamespaceTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsUserDefinedReturnsTrueWhenAtLeastOneFunctionExists()
+    public function testIsUserDefinedReturnsTrueWhenAtLeastOneFunctionExists(): void
     {
         $namespace = new ASTNamespace('package1');
         $namespace->addFunction(new ASTFunction("foo", 0));
@@ -465,7 +465,7 @@ class ASTNamespaceTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testIsPackageAnnotationReturnsFalseByDefault()
+    public function testIsPackageAnnotationReturnsFalseByDefault(): void
     {
         $namespace = new ASTNamespace('namespace');
         $this->assertFalse($namespace->isPackageAnnotation());
@@ -474,7 +474,7 @@ class ASTNamespaceTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testIsPackageAnnotationReturnsFalseTrue()
+    public function testIsPackageAnnotationReturnsFalseTrue(): void
     {
         $namespace = new ASTNamespace('namespace');
         $namespace->setPackageAnnotation(true);

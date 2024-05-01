@@ -66,7 +66,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testArrowFunctions()
+    public function testArrowFunctions(): void
     {
         $this->expectException(
             'PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -81,7 +81,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testHereDocAndNowDoc()
+    public function testHereDocAndNowDoc(): void
     {
         /** @var ASTHeredoc $heredoc */
         $heredoc = $this->getFirstNodeOfTypeInFunction('', 'PDepend\\Source\\AST\\ASTArray');
@@ -104,7 +104,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testDestructuringArrayReference()
+    public function testDestructuringArrayReference(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
         $statements = $functionChildren[1]->getChildren();
@@ -146,7 +146,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testInstanceOfLiterals()
+    public function testInstanceOfLiterals(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
         $statements = $functionChildren[1]->getChildren();
@@ -169,7 +169,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testTrailingCommasInCall()
+    public function testTrailingCommasInCall(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
         $statements = $functionChildren[1]->getChildren();
@@ -195,7 +195,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testTrailingCommasInUnsetCall()
+    public function testTrailingCommasInUnsetCall(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
         $statements = $functionChildren[1]->getChildren();

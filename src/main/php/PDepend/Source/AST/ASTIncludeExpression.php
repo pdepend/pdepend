@@ -73,10 +73,8 @@ class ASTIncludeExpression extends ASTExpression
 
     /**
      * Flags this node as a <b>include_once</b>-expression.
-     *
-     * @return void
      */
-    public function setOnce()
+    public function setOnce(): void
     {
         $this->once = true;
     }

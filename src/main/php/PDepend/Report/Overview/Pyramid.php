@@ -129,10 +129,8 @@ class Pyramid implements FileAwareGenerator
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     *
-     * @return void
      */
-    public function setLogFile($logFile)
+    public function setLogFile($logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -184,10 +182,8 @@ class Pyramid implements FileAwareGenerator
      * Closes the logger process and writes the output file.
      *
      * @throws NoLogOutputException
-     *
-     * @return void
      */
-    public function close()
+    public function close(): void
     {
         // Check for configured log file
         if ($this->logFile === null) {

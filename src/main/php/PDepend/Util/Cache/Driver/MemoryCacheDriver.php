@@ -129,10 +129,8 @@ class MemoryCacheDriver implements CacheDriver
      * @param string $key  The cache key for the given data.
      * @param mixed  $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return void
      */
-    public function store($key, $data, $hash = null)
+    public function store($key, $data, $hash = null): void
     {
         $this->cache[$this->getCacheKey($key)] = array($hash, $data);
     }
@@ -163,10 +161,8 @@ class MemoryCacheDriver implements CacheDriver
      * nothing.
      *
      * @param string $pattern The cache key pattern.
-     *
-     * @return void
      */
-    public function remove($pattern)
+    public function remove($pattern): void
     {
         foreach (array_keys($this->cache) as $key) {
             if (str_starts_with($key, $pattern)) {
@@ -209,11 +205,9 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * PHP's magic serialize wakeup method.
      *
-     * @return void
-     *
      * @since  1.0.2
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->cache = self::$staticCache[$this->staticId];
     }

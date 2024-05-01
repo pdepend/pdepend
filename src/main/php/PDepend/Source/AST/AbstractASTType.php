@@ -155,11 +155,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Adds a parsed child node to this node.
      *
-     * @return void
-     *
      * @access private
      */
-    public function addChild(ASTNode $node)
+    public function addChild(ASTNode $node): void
     {
         $this->nodes[] = $node;
     }
@@ -277,10 +275,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * This method can be used to mark a type as user defined. User defined
      * means that the type has a valid declaration in the analyzed source files.
-     *
-     * @return void
      */
-    public function setUserDefined()
+    public function setUserDefined(): void
     {
         $this->userDefined = true;
     }
@@ -397,10 +393,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Sets the tokens for this type.
      *
      * @param Token[] $tokens
-     *
-     * @return void
      */
-    public function setTokens(array $tokens, ?Token $startToken = null)
+    public function setTokens(array $tokens, ?Token $startToken = null): void
     {
         if ($tokens === array()) {
             throw new InvalidArgumentException('An AST node should contain at least one token');
@@ -451,10 +445,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * Sets the parent namespace for this type.
-     *
-     * @return void
      */
-    public function setNamespace(ASTNamespace $namespace)
+    public function setNamespace(ASTNamespace $namespace): void
     {
         $this->namespace = $namespace;
         $this->namespaceName = $namespace->getName();
@@ -462,10 +454,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * Resets the associated namespace reference.
-     *
-     * @return void
      */
-    public function unsetNamespace()
+    public function unsetNamespace(): void
     {
         $this->namespace = null;
         $this->namespaceName = null;
@@ -539,10 +529,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * are restored. This implementation of the <b>__wakeup()</b> method sets
      * a flag that this object was restored from the cache and it restores the
      * dependency between this class or interface and it's child methods.
-     *
-     * @return void
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->methods = null;
     }

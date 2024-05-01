@@ -59,7 +59,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class ExtensionManagerTest extends AbstractTestCase
 {
-    public function testExtensionManager()
+    public function testExtensionManager(): void
     {
         $extensionManager = new ExtensionManager();
 

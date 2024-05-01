@@ -54,8 +54,6 @@ interface FileAwareGenerator extends ReportGenerator
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     *
-     * @return void
      */
-    public function setLogFile($logFile);
+    public function setLogFile($logFile): void;
 }

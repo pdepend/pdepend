@@ -59,7 +59,7 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
      *
      * @return void
      */
-    public function testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten()
+    public function testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $class    = $namespaces->current()->getClasses()->current();
@@ -76,7 +76,7 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
      *
      * @return void
      */
-    public function testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten()
+    public function testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $class    = $namespaces->current()->getClasses()->current();

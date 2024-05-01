@@ -60,7 +60,7 @@ class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegress
      *
      * @return void
      */
-    public function testIteratorOnlyPassesLocalPathToFilter()
+    public function testIteratorOnlyPassesLocalPathToFilter(): void
     {
         $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
             ->getMock();

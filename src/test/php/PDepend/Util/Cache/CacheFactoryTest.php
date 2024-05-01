@@ -62,7 +62,7 @@ class CacheFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateReturnsDriverInstance()
+    public function testCreateReturnsDriverInstance(): void
     {
         $factory = new CacheFactory(
             $this->createConfigurationFixture()
@@ -75,7 +75,7 @@ class CacheFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateHasSingletonBehaviorForIdenticalCacheNames()
+    public function testCreateHasSingletonBehaviorForIdenticalCacheNames(): void
     {
         $factory = new CacheFactory(
             $this->createConfigurationFixture()
@@ -92,7 +92,7 @@ class CacheFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateReturnsDifferentInstancesForDifferentCacheNames()
+    public function testCreateReturnsDifferentInstancesForDifferentCacheNames(): void
     {
         $factory = new CacheFactory(
             $this->createConfigurationFixture()
@@ -109,7 +109,7 @@ class CacheFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateReturnsCacheInstanceOfTypeFile()
+    public function testCreateReturnsCacheInstanceOfTypeFile(): void
     {
         $this->changeWorkingDirectory();
 
@@ -124,7 +124,7 @@ class CacheFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateReturnsCacheInstanceOfTypeMemory()
+    public function testCreateReturnsCacheInstanceOfTypeMemory(): void
     {
         $this->changeWorkingDirectory();
 
@@ -139,7 +139,7 @@ class CacheFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateThrowsExpectedExceptionForUnknownCacheDriver()
+    public function testCreateThrowsExpectedExceptionForUnknownCacheDriver(): void
     {
         $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $this->expectExceptionMessage('The value "fail" is not allowed for path "pdepend.cache.driver". Permissible values: "file", "memory"');

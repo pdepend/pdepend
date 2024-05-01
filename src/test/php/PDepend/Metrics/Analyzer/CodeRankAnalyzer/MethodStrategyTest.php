@@ -61,7 +61,7 @@ class MethodStrategyTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testStrategyCountsCorrectTypes()
+    public function testStrategyCountsCorrectTypes(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         

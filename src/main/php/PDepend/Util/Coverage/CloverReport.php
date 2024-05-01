@@ -74,10 +74,8 @@ class CloverReport implements Report
      * Reads the coverage information for a project.
      *
      * @param SimpleXMLElement $sxml Element representing the clover project tag.
-     *
-     * @return void
      */
-    private function readProjectCoverage(SimpleXMLElement $sxml)
+    private function readProjectCoverage(SimpleXMLElement $sxml): void
     {
         $this->readFileCoverage($sxml);
         foreach ($sxml->package as $package) {
@@ -90,10 +88,8 @@ class CloverReport implements Report
      * parent.
      *
      * @param SimpleXMLElement $sxml Element representing a file parent element.
-     *
-     * @return void
      */
-    private function readFileCoverage(SimpleXMLElement $sxml)
+    private function readFileCoverage(SimpleXMLElement $sxml): void
     {
         foreach ($sxml->file as $file) {
             $lines = array();

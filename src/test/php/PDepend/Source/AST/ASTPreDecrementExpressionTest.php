@@ -59,7 +59,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionOnStaticClassMember()
+    public function testPreDecrementExpressionOnStaticClassMember(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
@@ -78,7 +78,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionOnSelfClassMember()
+    public function testPreDecrementExpressionOnSelfClassMember(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
@@ -97,7 +97,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionOnParentClassMember()
+    public function testPreDecrementExpressionOnParentClassMember(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
@@ -116,7 +116,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionOnFunctionPostfix()
+    public function testPreDecrementExpressionOnFunctionPostfix(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
@@ -134,7 +134,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionOnStaticVariableMember()
+    public function testPreDecrementExpressionOnStaticVariableMember(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
@@ -153,7 +153,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionHasExpectedStartLine()
+    public function testPreDecrementExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -164,7 +164,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionHasExpectedStartColumn()
+    public function testPreDecrementExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(12, $expr->getStartColumn());
@@ -175,7 +175,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionHasExpectedEndLine()
+    public function testPreDecrementExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(7, $expr->getEndLine());
@@ -186,7 +186,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testPreDecrementExpressionHasExpectedEndColumn()
+    public function testPreDecrementExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
         $this->assertEquals(21, $expr->getEndColumn());

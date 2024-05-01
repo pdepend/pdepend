@@ -58,7 +58,7 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testConstructorPropertyPromotion()
+    public function testConstructorPropertyPromotion(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
@@ -96,7 +96,7 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testConstructorPropertyPromotionWithComments()
+    public function testConstructorPropertyPromotionWithComments(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
@@ -134,7 +134,7 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testPropertyPromotionOnRandomMethod()
+    public function testPropertyPromotionOnRandomMethod(): void
     {
         $this->expectException(\PDepend\Source\Parser\TokenException::class);
         $this->expectExceptionMessage('Unexpected token: private, line: 5, col: 9');

@@ -93,10 +93,8 @@ class ASTDeclareStatement extends ASTStatement
      * Adds a parameter/value for this declare-statement.
      *
      * @param string $name
-     *
-     * @return void
      */
-    public function addValue($name, ASTValue $value)
+    public function addValue($name, ASTValue $value): void
     {
         $this->values[$name] = $value;
     }

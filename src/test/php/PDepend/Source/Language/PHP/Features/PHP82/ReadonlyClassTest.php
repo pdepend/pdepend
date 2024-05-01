@@ -52,7 +52,7 @@ class ReadonlyClassTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testReadonlyClass()
+    public function testReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 

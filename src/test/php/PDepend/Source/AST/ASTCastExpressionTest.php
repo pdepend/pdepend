@@ -59,7 +59,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testNormalizesWhitespacesInCastExpression()
+    public function testNormalizesWhitespacesInCastExpression(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression("\n( float )\t\r");
         $this->assertEquals('(float)', $expr->getImage());
@@ -70,7 +70,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testNormalizesCaseInCastExpressionImage()
+    public function testNormalizesCaseInCastExpressionImage(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression("(DouBlE)");
         $this->assertEquals('(double)', $expr->getImage());
@@ -81,7 +81,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsBooleanReturnsFalseByDefault()
+    public function testIsBooleanReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('');
         $this->assertFalse($expr->isBoolean());
@@ -92,7 +92,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsBooleanReturnsTrueForShortExpression()
+    public function testIsBooleanReturnsTrueForShortExpression(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(bool)');
         $this->assertTrue($expr->isBoolean());
@@ -103,7 +103,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsBooleanReturnsTrueForLongExpression()
+    public function testIsBooleanReturnsTrueForLongExpression(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(boolean)');
         $this->assertTrue($expr->isBoolean());
@@ -114,7 +114,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsIntegerReturnsFalseByDefault()
+    public function testIsIntegerReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('');
         $this->assertFalse($expr->isInteger());
@@ -125,7 +125,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsIntegerReturnsTrueForShortNotation()
+    public function testIsIntegerReturnsTrueForShortNotation(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(int)');
         $this->assertTrue($expr->isInteger());
@@ -136,7 +136,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsIntegerReturnsTrueForLongNotation()
+    public function testIsIntegerReturnsTrueForLongNotation(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(integer)');
         $this->assertTrue($expr->isInteger());
@@ -147,7 +147,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsArrayReturnsFalseByDefault()
+    public function testIsArrayReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('');
         $this->assertFalse($expr->isArray());
@@ -158,7 +158,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsArrayReturnsTrueForArrayCast()
+    public function testIsArrayReturnsTrueForArrayCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(array)');
         $this->assertTrue($expr->isArray());
@@ -169,7 +169,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsFloatReturnsFalseByDefault()
+    public function testIsFloatReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('');
         $this->assertFalse($expr->isFloat());
@@ -180,7 +180,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsFloatReturnsTrueForRealCast()
+    public function testIsFloatReturnsTrueForRealCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(real)');
         $this->assertTrue($expr->isFloat());
@@ -191,7 +191,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsFloatReturnsTrueForFloatCast()
+    public function testIsFloatReturnsTrueForFloatCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(float)');
         $this->assertTrue($expr->isFloat());
@@ -202,7 +202,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsFloatReturnsTrueForDoubleCast()
+    public function testIsFloatReturnsTrueForDoubleCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(double)');
         $this->assertTrue($expr->isFloat());
@@ -213,7 +213,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStringReturnsFalseByDefault()
+    public function testIsStringReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('( )');
         $this->assertFalse($expr->isString());
@@ -224,7 +224,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStringReturnsTrueForStringCast()
+    public function testIsStringReturnsTrueForStringCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(string)');
         $this->assertTrue($expr->isString());
@@ -235,7 +235,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsObjectReturnsFalseByDefault()
+    public function testIsObjectReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('( obj )');
         $this->assertFalse($expr->isObject());
@@ -246,7 +246,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsObjectReturnsTrueForObjectCast()
+    public function testIsObjectReturnsTrueForObjectCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(object)');
         $this->assertTrue($expr->isObject());
@@ -257,7 +257,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsUnsetReturnsFalseByDefault()
+    public function testIsUnsetReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(nu)');
         $this->assertFalse($expr->isUnset());
@@ -268,7 +268,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsUnsetReturnsTrueForUnsetCast()
+    public function testIsUnsetReturnsTrueForUnsetCast(): void
     {
         $expr = new \PDepend\Source\AST\ASTCastExpression('(unset)');
         $this->assertTrue($expr->isUnset());
@@ -279,7 +279,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserHandlesNestedCastExpressions()
+    public function testParserHandlesNestedCastExpressions(): void
     {
         $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
@@ -298,7 +298,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCastExpressionHasExpectedStartLine()
+    public function testCastExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -309,7 +309,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCastExpressionHasExpectedStartColumn()
+    public function testCastExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(12, $expr->getStartColumn());
@@ -320,7 +320,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCastExpressionHasExpectedEndLine()
+    public function testCastExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
@@ -331,7 +331,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCastExpressionHasExpectedEndColumn()
+    public function testCastExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertEquals(26, $expr->getEndColumn());
