@@ -66,6 +66,4 @@ namespace PDepend\Source\AST;
  *
  * @since @TODO
  */
-class ASTYieldStatement extends ASTStatement
-{
-}
+class ASTYieldStatement extends ASTStatement {}

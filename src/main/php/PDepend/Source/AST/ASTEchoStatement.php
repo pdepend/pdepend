@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTEchoStatement extends ASTStatement
-{
-}
+class ASTEchoStatement extends ASTStatement {}

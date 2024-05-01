@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.8
  */
-class ASTWhileStatement extends ASTStatement
-{
-}
+class ASTWhileStatement extends ASTStatement {}

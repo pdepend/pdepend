@@ -50,6 +50,4 @@ use RuntimeException;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ParserException extends RuntimeException
-{
-}
+class ParserException extends RuntimeException {}

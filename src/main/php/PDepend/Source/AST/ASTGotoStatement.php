@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTGotoStatement extends ASTStatement
-{
-}
+class ASTGotoStatement extends ASTStatement {}

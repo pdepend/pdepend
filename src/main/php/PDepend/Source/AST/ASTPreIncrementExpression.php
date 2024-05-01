@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.10.0
  */
-class ASTPreIncrementExpression extends ASTUnaryExpression
-{
-}
+class ASTPreIncrementExpression extends ASTUnaryExpression {}

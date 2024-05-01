@@ -66,6 +66,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.11
  */
-class ASTUnaryExpression extends ASTExpression
-{
-}
+class ASTUnaryExpression extends ASTExpression {}

@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTConstant extends AbstractASTNode
-{
-}
+class ASTConstant extends AbstractASTNode {}

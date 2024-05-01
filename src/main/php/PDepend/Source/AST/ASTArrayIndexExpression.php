@@ -62,6 +62,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTArrayIndexExpression extends ASTIndexExpression
-{
-}
+class ASTArrayIndexExpression extends ASTIndexExpression {}

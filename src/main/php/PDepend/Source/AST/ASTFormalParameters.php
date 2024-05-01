@@ -69,6 +69,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTFormalParameters extends AbstractASTNode
-{
-}
+class ASTFormalParameters extends AbstractASTNode {}

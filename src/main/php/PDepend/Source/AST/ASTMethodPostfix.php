@@ -62,6 +62,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTMethodPostfix extends ASTInvocation
-{
-}
+class ASTMethodPostfix extends ASTInvocation {}
