@@ -183,13 +183,13 @@ class Command
                 unset($options[$option]);
 
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
-                    echo 'Option ', $option, ' requires a value.', PHP_EOL;
+                    echo 'Option ' . $option . ' requires a value.' . PHP_EOL;
                     return self::INPUT_ERROR;
                 } elseif ($analyzerOptions[$option]['value'] === 'file'
                     && file_exists($value) === false
                 ) {
-                    echo 'Specified file ', $option, '=', $value,
-                         ' not exists.', PHP_EOL;
+                    echo 'Specified file ' . $option . '=' . $value
+                        . ' not exists.' . PHP_EOL;
 
                     return self::INPUT_ERROR;
                 } elseif ($analyzerOptions[$option]['value'] === '*[,...]') {
@@ -258,10 +258,10 @@ class Command
 
             return $result;
         } catch (RuntimeException $e) {
-            echo PHP_EOL, PHP_EOL,
-                 'Critical error:', PHP_EOL,
-                 '===============', PHP_EOL,
-                  $e->getMessage(), PHP_EOL;
+            echo PHP_EOL . PHP_EOL
+                . 'Critical error:' . PHP_EOL
+                . '===============' . PHP_EOL
+                . $e->getMessage() . PHP_EOL;
 
             Log::debug($this->getErrorTrace($e));
 
