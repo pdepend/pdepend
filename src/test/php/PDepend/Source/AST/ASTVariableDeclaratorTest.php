@@ -87,12 +87,12 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     {
         $declarator = new ASTVariableDeclarator();
         $this->assertEquals(
-            array(
+            [
                 'value',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $declarator->__sleep()
         );
     }

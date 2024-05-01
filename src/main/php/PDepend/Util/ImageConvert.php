@@ -112,11 +112,11 @@ class ImageConvert
     protected static function hasImagickConvert()
     {
         // @codeCoverageIgnoreStart
-        $desc = array(
-            0  =>  array('pipe', 'r'),
-            1  =>  array('pipe', 'w'),
-            2  =>  array('pipe', 'a'),
-        );
+        $desc = [
+            0  =>  ['pipe', 'r'],
+            1  =>  ['pipe', 'w'],
+            2  =>  ['pipe', 'a'],
+        ];
 
         $proc = proc_open('convert', $desc, $pipes);
         if (is_resource($proc)) {

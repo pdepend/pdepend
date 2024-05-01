@@ -103,9 +103,9 @@ class XmlTest extends AbstractTestCase
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $expected = array(
+        $expected = [
             'pdepend.analyzer.class_dependency',
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -211,11 +211,11 @@ class XmlTest extends AbstractTestCase
         $analyzer
             ->expects($this->any())
             ->method('getEfferents')
-            ->will($this->returnValue(array($type)));
+            ->will($this->returnValue([$type]));
         $analyzer
             ->expects($this->any())
             ->method('getAfferents')
-            ->will($this->returnValue(array($type, $type)));
+            ->will($this->returnValue([$type, $type]));
 
         $log = new Xml();
         $log->log($analyzer);
@@ -233,8 +233,8 @@ class XmlTest extends AbstractTestCase
     protected function getNormalizedPathXml($fileName)
     {
         return preg_replace(
-            array('(file\s+name="[^"]+")', '(generated="[^"]*")'),
-            array('file name="' . __FILE__ . '"', 'generated=""'),
+            ['(file\s+name="[^"]+")', '(generated="[^"]*")'],
+            ['file name="' . __FILE__ . '"', 'generated=""'],
             file_get_contents($fileName)
         );
     }

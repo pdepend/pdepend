@@ -89,7 +89,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var ASTCompilationUnit[]
      */
-    protected $fileSet = array();
+    protected $fileSet = [];
 
     /**
      * @var ClassDependencyAnalyzer|null
@@ -101,7 +101,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var DOMElement[]
      */
-    private $xmlStack = array();
+    private $xmlStack = [];
 
     /**
      * Sets the output log file.
@@ -123,9 +123,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function getAcceptedAnalyzers()
     {
-        return array(
+        return [
             'pdepend.analyzer.class_dependency',
-        );
+        ];
     }
 
     /**

@@ -77,14 +77,14 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
                      )$/x';
 
     /** @var array<int, int> */
-    protected $possiblePropertyTypes = array(
+    protected $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
         Tokens::T_BACKSLASH,
         Tokens::T_CALLABLE,
         Tokens::T_SELF,
-    );
+    ];
 
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {

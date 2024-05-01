@@ -103,7 +103,7 @@ class XmlTest extends AbstractTestCase
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $expected = array(
+        $expected = [
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.node_loc',
             'pdepend.analyzer.npath_complexity',
@@ -117,7 +117,7 @@ class XmlTest extends AbstractTestCase
             'pdepend.analyzer.cohesion',
             'pdepend.analyzer.halstead',
             'pdepend.analyzer.maintainability',
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -204,15 +204,15 @@ class XmlTest extends AbstractTestCase
      */
     public function testProjectAwareAnalyzerWithoutCode()
     {
-        $metricsOne = array('interfs'  =>  42, 'cls'  =>  23);
+        $metricsOne = ['interfs'  =>  42, 'cls'  =>  23];
         $resultOne  = new AnalyzerProjectAwareDummy($metricsOne);
 
-        $metricsTwo = array('ncloc'  =>  1742, 'loc'  =>  4217);
+        $metricsTwo = ['ncloc'  =>  1742, 'loc'  =>  4217];
         $resultTwo  = new AnalyzerProjectAwareDummy($metricsTwo);
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
-        $log->setArtifacts(new ASTArtifactList(array()));
+        $log->setArtifacts(new ASTArtifactList([]));
         $log->log($resultOne);
         $log->log($resultTwo);
 
@@ -235,8 +235,8 @@ class XmlTest extends AbstractTestCase
         $this->namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = new AnalyzerNodeAndProjectAwareDummy(
-            array('foo' => 42, 'bar' => 23),
-            array('baz' => 23, 'foobar' => 42)
+            ['foo' => 42, 'bar' => 23],
+            ['baz' => 23, 'foobar' => 42]
         );
 
         $log = new Xml();
@@ -263,22 +263,22 @@ class XmlTest extends AbstractTestCase
     {
         $this->namespaces = $this->parseSource($fixture);
 
-        $input = array(
-            array('loc'  =>  42),  array('ncloc'  =>  23),
-            array('loc'  =>  9),   array('ncloc'  =>  7),
-            array('loc'  =>  101), array('ncloc'  =>  99),
-            array('loc'  =>  90),  array('ncloc'  =>  80),
-            array('loc'  =>  50),  array('ncloc'  =>  45),
-            array('loc'  =>  30),  array('ncloc'  =>  22),
-            array('loc'  =>  9),   array('ncloc'  =>  9),
-            array('loc'  =>  3),   array('ncloc'  =>  3),
-            array('loc'  =>  42),  array('ncloc'  =>  23),
-            array('loc'  =>  33),  array('ncloc'  =>  20),
-            array('loc'  =>  9),   array('ncloc'  =>  7),
-        );
+        $input = [
+            ['loc'  =>  42],  ['ncloc'  =>  23],
+            ['loc'  =>  9],   ['ncloc'  =>  7],
+            ['loc'  =>  101], ['ncloc'  =>  99],
+            ['loc'  =>  90],  ['ncloc'  =>  80],
+            ['loc'  =>  50],  ['ncloc'  =>  45],
+            ['loc'  =>  30],  ['ncloc'  =>  22],
+            ['loc'  =>  9],   ['ncloc'  =>  9],
+            ['loc'  =>  3],   ['ncloc'  =>  3],
+            ['loc'  =>  42],  ['ncloc'  =>  23],
+            ['loc'  =>  33],  ['ncloc'  =>  20],
+            ['loc'  =>  9],   ['ncloc'  =>  7],
+        ];
 
-        $metricsOne = array();
-        $metricsTwo = array();
+        $metricsOne = [];
+        $metricsTwo = [];
         foreach ($this->namespaces as $namespace) {
             $metricsOne[$namespace->getId()] = array_shift($input);
             $metricsTwo[$namespace->getId()] = array_shift($input);
@@ -315,23 +315,23 @@ class XmlTest extends AbstractTestCase
 
     public static function dataProviderNodeAware()
     {
-        return array(
-            array(
+        return [
+            [
                 'Report/Summary/Xml/testNodeAwareAnalyzerWithNamespaces.php',
                 'node-aware-result-set-with-namespaces.xml',
-            ),
-            array(
+            ],
+            [
                 'Report/Summary/Xml/testNodeAwareAnalyzerWithPackages.php',
                 'node-aware-result-set-with-packages.xml',
-            ),
-        );
+            ],
+        ];
     }
 
     protected function getNormalizedPathXml($fileName)
     {
         return preg_replace(
-            array('(file\s+name="[^"]+")', '(generated="[^"]*")'),
-            array('file name="' . __FILE__ . '"', 'generated=""'),
+            ['(file\s+name="[^"]+")', '(generated="[^"]*")'],
+            ['file name="' . __FILE__ . '"', 'generated=""'],
             file_get_contents($fileName)
         );
     }

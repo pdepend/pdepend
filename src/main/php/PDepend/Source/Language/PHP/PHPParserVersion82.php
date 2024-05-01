@@ -61,7 +61,7 @@ use PDepend\Source\Tokenizer\Tokens;
 abstract class PHPParserVersion82 extends PHPParserVersion81
 {
     /** @var array<int, int> */
-    protected $possiblePropertyTypes = array(
+    protected $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
@@ -71,7 +71,7 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
         Tokens::T_NULL,
         Tokens::T_FALSE,
         Tokens::T_TRUE,
-    );
+    ];
 
     /**
      * Since PHP 8.2, readonly is allowed as class modifier.
@@ -96,7 +96,7 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
 
     protected function isTypeHint($tokenType)
     {
-        if (in_array($tokenType, array(Tokens::T_TRUE, Tokens::T_PARENTHESIS_OPEN), true)) {
+        if (in_array($tokenType, [Tokens::T_TRUE, Tokens::T_PARENTHESIS_OPEN], true)) {
             return true;
         }
 

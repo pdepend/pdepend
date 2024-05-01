@@ -120,14 +120,14 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      *
      * @var array<string, bool>
      */
-    private $roots = array();
+    private $roots = [];
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
      * @var array<string, bool>
      */
-    private $noneLeafs = array();
+    private $noneLeafs = [];
 
     /**
      * Hash with all calculated node metrics.
@@ -162,7 +162,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             // Visit all nodes
             foreach ($namespaces as $namespace) {
@@ -183,12 +183,12 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Count none leaf classes
         $noneLeafs = count($this->noneLeafs);
 
-        return array(
+        return [
             self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  $this->clsa,
             self::M_NUMBER_OF_CONCRETE_CLASSES  =>  $this->cls - $this->clsa,
             self::M_NUMBER_OF_ROOT_CLASSES      =>  count($this->roots),
             self::M_NUMBER_OF_LEAF_CLASSES      =>  $this->cls - $noneLeafs,
-        );
+        ];
     }
 
     /**
@@ -203,7 +203,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -234,7 +234,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         // Store node metric
-        $this->nodeMetrics[$class->getId()] = array();
+        $this->nodeMetrics[$class->getId()] = [];
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);

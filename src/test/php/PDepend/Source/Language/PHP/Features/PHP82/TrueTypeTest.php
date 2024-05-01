@@ -68,15 +68,15 @@ class TrueTypeTest extends PHPParserVersion82TestCase
         $declarations = array_map(function (ASTFieldDeclaration $child) {
             $childChildren = $child->getChildren();
 
-            return array(
+            return [
                 $child->hasType() ? $child->getType() : null,
                 $childChildren[1],
-            );
+            ];
         }, $children);
 
-        foreach (array(
-            array('true', '$truthy'),
-        ) as $index => $expected) {
+        foreach ([
+            ['true', '$truthy'],
+        ] as $index => $expected) {
             list($expectedType, $expectedVariable) = $expected;
             $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
             list($type, $variable) = $declarations[$index];

@@ -65,13 +65,13 @@ class ASTArgumentsTest extends ASTNodeTestCase
         $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertGraph(
             $arguments,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTConstant'         . ' (__CLASS__)',
                 'PDepend\\Source\\AST\\ASTLiteral'          . ' ("run")',
-                'PDepend\\Source\\AST\\ASTArray'            . ' ()', array(
-                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', array(
-                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)'))
-            )
+                'PDepend\\Source\\AST\\ASTArray'            . ' ()', [
+                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
+                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)']]
+            ]
         );
     }
 

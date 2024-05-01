@@ -74,7 +74,7 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor->visitNamespace($namespaces[0]);
 
         $actual   = $listener->nodes;
-        $expected = array(
+        $expected = [
             $codeUri . '#start'  =>  true,
             $codeUri . '#end'  =>  true,
             'package#start'  =>  true,
@@ -95,7 +95,7 @@ class DefaultListenerTest extends AbstractTestCase
             'm4#end'  =>  true,
             '$_p1#start'  =>  true,
             '$_p1#end'  =>  true,
-        );
+        ];
 
         ksort($actual);
         ksort($expected);
@@ -121,12 +121,12 @@ class DefaultListenerTest extends AbstractTestCase
         $class->accept($visitor);
 
         $actual   = $listener->nodes;
-        $expected = array(
+        $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
             realpath($GLOBALS['argv'][0]) . '#start' => true,
             realpath($GLOBALS['argv'][0]) . '#end' => true,
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -149,12 +149,12 @@ class DefaultListenerTest extends AbstractTestCase
         $interface->accept($visitor);
 
         $actual   = $listener->nodes;
-        $expected = array(
+        $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
             realpath($GLOBALS['argv'][0]) . '#start' => true,
             realpath($GLOBALS['argv'][0]) . '#end' => true,
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -177,12 +177,12 @@ class DefaultListenerTest extends AbstractTestCase
         $function->accept($visitor);
 
         $actual   = $listener->nodes;
-        $expected = array(
+        $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
             realpath($GLOBALS['argv'][0]) . '#start' => true,
             realpath($GLOBALS['argv'][0]) . '#end' => true,
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -205,10 +205,10 @@ class DefaultListenerTest extends AbstractTestCase
         $method->accept($visitor);
 
         $actual   = $listener->nodes;
-        $expected = array(
+        $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -221,7 +221,7 @@ class DefaultListenerTest extends AbstractTestCase
     public function testListenerCallsStartVisitNodeForPassedParameterInstance()
     {
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
-            ->onlyMethods(array('startVisitNode'))
+            ->onlyMethods(['startVisitNode'])
             ->getMock();
         $listener->expects($this->once())
             ->method('startVisitNode');
@@ -240,7 +240,7 @@ class DefaultListenerTest extends AbstractTestCase
     public function testListenerCallsEndVisitNodeForPassedParameterInstance()
     {
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
-            ->onlyMethods(array('endVisitNode'))
+            ->onlyMethods(['endVisitNode'])
             ->getMock();
         $listener->expects($this->once())
             ->method('endVisitNode');
@@ -260,7 +260,7 @@ class DefaultListenerTest extends AbstractTestCase
     public function testListenerInvokesStartVisitNotForTrait()
     {
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
-            ->onlyMethods(array('startVisitNode'))
+            ->onlyMethods(['startVisitNode'])
             ->getMock();
         $listener->expects($this->once())
             ->method('startVisitNode');
@@ -277,7 +277,7 @@ class DefaultListenerTest extends AbstractTestCase
     public function testListenerInvokesEndVisitNotForTrait()
     {
         $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitListener')
-            ->onlyMethods(array('endVisitNode'))
+            ->onlyMethods(['endVisitNode'])
             ->getMock();
         $listener->expects($this->once())
             ->method('endVisitNode');

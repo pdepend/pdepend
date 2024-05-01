@@ -104,7 +104,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      */
     protected function isListUnpacking($tokenType = null)
     {
-        return in_array($tokenType ?: $this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN));
+        return in_array($tokenType ?: $this->tokenizer->peek(), [Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN]);
     }
 
     /**
@@ -784,7 +784,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
-        $expressions = array();
+        $expressions = [];
 
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
             switch ($tokenType) {

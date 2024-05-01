@@ -185,7 +185,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     public function getParentsOfType($parentType)
     {
-        $parents = array();
+        $parents = [];
 
         $parentNode = $this->parent;
         while (is_object($parentNode)) {
@@ -230,7 +230,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     public function __sleep()
     {
-        return array_merge(array('metadata'), parent::__sleep());
+        return array_merge(['metadata'], parent::__sleep());
     }
 
     /**

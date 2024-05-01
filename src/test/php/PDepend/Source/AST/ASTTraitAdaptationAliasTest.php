@@ -126,13 +126,13 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     {
         $alias = new \PDepend\Source\AST\ASTTraitAdaptationAlias();
         $this->assertSame(
-            array(
+            [
                 'newName',
                 'newModifier',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $alias->__sleep()
         );
     }

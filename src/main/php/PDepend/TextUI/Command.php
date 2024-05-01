@@ -73,14 +73,14 @@ class Command
      *
      * @var array<string, mixed>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * The directories/files to be analyzed
      *
      * @var array<int, string>
      */
-    private $source = array();
+    private $source = [];
 
     /**
      * The used text ui runner.
@@ -484,7 +484,7 @@ class Command
     protected function printLogOptions()
     {
         $maxLength = 0;
-        $options   = array();
+        $options   = [];
         $logOptions = $this->application->getAvailableLoggerOptions();
         foreach ($logOptions as $option => $info) {
             // Build log option identifier

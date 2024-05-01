@@ -75,7 +75,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      *
      * @var array<string, mixed>
      */
-    private $metricsCached = array();
+    private $metricsCached = [];
 
     /**
      * Injected cache driver.
@@ -147,6 +147,6 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
             ->type('metrics')
             ->store(get_class($this), $this->metrics);
 
-        $this->metricsCached = array();
+        $this->metricsCached = [];
     }
 }

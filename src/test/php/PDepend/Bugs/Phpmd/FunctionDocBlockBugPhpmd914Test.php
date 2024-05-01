@@ -60,10 +60,10 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
             return trim($line, " \t\n\r\0\x0B/*");
         }, explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")));
 
-        $this->assertSame(array(
+        $this->assertSame([
             '@SuppressWarnings(PHPMD.CyclomaticComplexity)',
             '@SuppressWarnings(PHPMD.NPathComplexity)',
-        ), $lines);
+        ], $lines);
     }
 
     public function testMethodDocBlockCanBeRead()
@@ -75,9 +75,9 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
             return trim($line, " \t\n\r\0\x0B/*");
         }, explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")));
 
-        $this->assertSame(array(
+        $this->assertSame([
             '@SuppressWarnings(PHPMD.CyclomaticComplexity)',
             '@SuppressWarnings(PHPMD.NPathComplexity)',
-        ), $lines);
+        ], $lines);
     }
 }

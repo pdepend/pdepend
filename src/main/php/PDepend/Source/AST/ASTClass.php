@@ -109,7 +109,7 @@ class ASTClass extends AbstractASTClassOrInterface
     public function getProperties()
     {
         if ($this->properties === null) {
-            $this->properties = array();
+            $this->properties = [];
 
             $declarations = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
             foreach ($declarations as $declaration) {

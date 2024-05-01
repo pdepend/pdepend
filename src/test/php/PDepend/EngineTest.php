@@ -93,7 +93,7 @@ class EngineTest extends AbstractTestCase
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
-        $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
 
         $this->assertInstanceOf('Iterator', $engine->analyze());
     }
@@ -108,15 +108,15 @@ class EngineTest extends AbstractTestCase
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
-        $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
 
         $metrics = $engine->analyze();
 
-        $expected = array(
+        $expected = [
             'package1'  =>  true,
             'package2'  =>  true,
             'package3'  =>  true
-        );
+        ];
 
         foreach ($metrics as $metric) {
             unset($expected[$metric->getName()]);
@@ -148,7 +148,7 @@ class EngineTest extends AbstractTestCase
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
-        $engine->addFileFilter(new Input\ExtensionFilter(array(__METHOD__)));
+        $engine->addFileFilter(new Input\ExtensionFilter([__METHOD__]));
 
         $this->assertCount(0, $engine->analyze());
     }
@@ -163,7 +163,7 @@ class EngineTest extends AbstractTestCase
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
-        $engine->addFileFilter(new Input\ExtensionFilter(array('inc')));
+        $engine->addFileFilter(new Input\ExtensionFilter(['inc']));
         $engine->setWithoutAnnotations();
         $namespaces = $engine->analyze();
 
@@ -187,7 +187,7 @@ class EngineTest extends AbstractTestCase
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
-        $engine->addFileFilter(new Input\ExtensionFilter(array('php')));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
         $engine->analyze();
 
         $this->assertEquals(10, $engine->countClasses());
@@ -260,11 +260,11 @@ class EngineTest extends AbstractTestCase
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
 
-        $namespaces = array(
+        $namespaces = [
             'package1',
             'package2',
             'package3'
-        );
+        ];
 
         $className = '\\PDepend\\Source\\AST\\ASTNamespace';
 

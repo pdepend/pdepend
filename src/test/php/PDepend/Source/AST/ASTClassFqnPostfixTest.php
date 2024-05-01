@@ -78,10 +78,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTStaticReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
+            ]
         );
     }
 
@@ -105,10 +105,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
+            ]
         );
     }
 
@@ -121,10 +121,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
+            ]
         );
     }
 
@@ -137,10 +137,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTClassFqnPostfix'
-            )
+            ]
         );
     }
 

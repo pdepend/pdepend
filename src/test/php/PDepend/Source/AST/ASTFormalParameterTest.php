@@ -247,12 +247,12 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     {
         $param = $this->createNodeInstance();
         $this->assertEquals(
-            array(
+            [
                 'modifiers',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $param->__sleep()
         );
     }

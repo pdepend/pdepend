@@ -93,15 +93,15 @@ class ParserTest extends AbstractTestCase
      */
     public function testParseMixedCode()
     {
-        $expected = array(
+        $expected = [
             'pkg1'                               =>  true,
             'pkg2'                               =>  true,
             'pkg3'                               =>  true,
             \PDepend\Source\Builder\Builder::DEFAULT_NAMESPACE  =>  true
-        );
+        ];
 
         $tmp = $this->parseCodeResourceForTest();
-        $namespaces = array();
+        $namespaces = [];
 
         $this->assertCount(4, $tmp);
 
@@ -224,7 +224,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectFunctionTokens()
     {
-        $tokens = array(
+        $tokens = [
             new Token(Tokens::T_FUNCTION, 'function', 5, 5, 1, 8),
             new Token(Tokens::T_STRING, 'foo', 5, 5, 10, 12),
             new Token(Tokens::T_PARENTHESIS_OPEN, '(', 5, 5, 13, 13),
@@ -251,7 +251,7 @@ class ParserTest extends AbstractTestCase
             new Token(Tokens::T_SEMICOLON, ';', 7, 7, 24, 24),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 8, 8, 5, 5),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 9, 9, 1, 1),
-        );
+        ];
 
         $namespaces = $this->parseSource('/Parser/parser-sets-expected-function-tokens.php');
         $functions = $namespaces[0]->getFunctions();
@@ -562,14 +562,14 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsFunctionReturnTypeToNull($functions)
     {
         $this->assertSame(
-            array(
+            [
                 'function' => 'func1',
                 'returnClass' => null
-            ),
-            array(
+            ],
+            [
                 'function' => $functions[0]->getName(),
                 'returnClass' => $functions[0]->getReturnClass()
-            )
+            ]
         );
     }
 
@@ -581,14 +581,14 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions)
     {
         $this->assertSame(
-            array(
+            [
                 'function' => 'func2',
                 'returnClass' => 'SplObjectStore'
-            ),
-            array(
+            ],
+            [
                 'function' => $functions[1]->getName(),
                 'returnClass' => $functions[1]->getReturnClass()->getName()
-            )
+            ]
         );
     }
 
@@ -600,14 +600,14 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions)
     {
         $this->assertSame(
-            array(
+            [
                 'function' => 'func3',
                 'returnClass' => 'SplObjectStore'
-            ),
-            array(
+            ],
+            [
                 'function' => $functions[2]->getName(),
                 'returnClass' => $functions[2]->getReturnClass()->getName()
-            )
+            ]
         );
     }
 
@@ -622,7 +622,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getFunctions();
 
-        $actual = array();
+        $actual = [];
         foreach ($functions as $function) {
             foreach ($function->getExceptionClasses() as $exception) {
                 $actual[] = "{$function->getName()} throws {$exception->getName()}";
@@ -630,11 +630,11 @@ class ParserTest extends AbstractTestCase
         }
 
         $this->assertEquals(
-            array(
+            [
                 'func1 throws RuntimeException',
                 'func2 throws OutOfRangeException',
                 'func2 throws InvalidArgumentException',
-            ),
+            ],
             $actual
         );
     }
@@ -650,13 +650,13 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getFunctions();
 
-        $actual = array();
+        $actual = [];
         foreach ($functions as $function) {
             $actual[] = $function->getExceptionClasses()->count();
             $actual[] = $function->getReturnClass();
         }
 
-        $this->assertSame(array(0, null, 0, null, 0, null), $actual);
+        $this->assertSame([0, null, 0, null, 0, null], $actual);
     }
 
     /**
@@ -688,14 +688,14 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getMethods();
 
-        $actual = array();
+        $actual = [];
         foreach ($nodes as $method) {
             $actual[] = $method->getName();
             $actual[] = $method->getReturnClass() ? $method->getReturnClass()->getName() : null;
         }
 
         $this->assertEquals(
-            array('__construct', null, 'method1', 'SplObjectStore', 'method2', 'SplSubject'),
+            ['__construct', null, 'method1', 'SplObjectStore', 'method2', 'SplSubject'],
             $actual
         );
     }
@@ -713,7 +713,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getMethods();
 
-        $actual = array();
+        $actual = [];
         foreach ($nodes as $method) {
             $actual[] = $method->getName();
             foreach ($method->getExceptionClasses() as $exception) {
@@ -722,14 +722,14 @@ class ParserTest extends AbstractTestCase
         }
 
         $this->assertEquals(
-            array(
+            [
                 '__construct',
                 'RuntimeException',
                 'method1',
                 'OutOfRangeException',
                 'OutOfBoundsException',
                 'method2'
-            ),
+            ],
             $actual
         );
     }
@@ -747,13 +747,13 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getMethods();
 
-        $actual = array();
+        $actual = [];
         foreach ($methods as $method) {
             $actual[] = $method->getExceptionClasses()->count();
             $actual[] = $method->getReturnClass();
         }
 
-        $this->assertSame(array(0, null, 0, null, 0, null), $actual);
+        $this->assertSame([0, null, 0, null, 0, null], $actual);
     }
 
     /**
@@ -785,22 +785,22 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getProperties();
 
-        $actual = array();
+        $actual = [];
         foreach ($nodes as $node) {
-            $actual[] = array(
+            $actual[] = [
                 'public'     =>  $node->isPublic(),
                 'protected'  =>  $node->isProtected(),
                 'private'    =>  $node->isPrivate(),
-            );
+            ];
         }
 
         $this->assertEquals(
-            array(
-                array('public' => false, 'protected' => false, 'private' => true),
-                array('public' => true,  'protected' => false, 'private' => false),
-                array('public' => false, 'protected' => true,  'private' => false),
-                array('public' => false, 'protected' => true,  'private' => false),
-            ),
+            [
+                ['public' => false, 'protected' => false, 'private' => true],
+                ['public' => true,  'protected' => false, 'private' => false],
+                ['public' => false, 'protected' => true,  'private' => false],
+                ['public' => false, 'protected' => true,  'private' => false],
+            ],
             $actual
         );
     }
@@ -818,21 +818,21 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getProperties();
 
-        $actual = array();
+        $actual = [];
         foreach ($nodes as $node) {
             $className = $node->getClass() ? $node->getClass()->getName() : null;
             $actual[$node->getName()] = $className;
         }
 
         $this->assertEquals(
-            array(
+            [
                 '$property1'  =>  'MyPropertyClass2',
                 '$property2'  =>  'MyPropertyClass2',
                 '$property3'  =>  'MyPropertyClass2',
                 '$property4'  =>  'MyPropertyClass2',
                 '$property5'  =>  null,
                 '$property6'  =>  null,
-            ),
+            ],
             $actual
         );
     }
@@ -950,12 +950,12 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getProperties();
 
-        $actual = array();
+        $actual = [];
         foreach ($nodes as $property) {
             $actual[] = $property->getClass();
         }
 
-        $this->assertEquals(array(null, null, null, null, null, null), $actual);
+        $this->assertEquals([null, null, null, null, null, null], $actual);
     }
 
     /**
@@ -966,13 +966,13 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectClassOrInterfaceDocComment()
     {
-        $actual   = array();
-        $expected = array(
+        $actual   = [];
+        $expected = [
             "/**\n * Sample comment.\n */",
             null,
             null,
             "/**\n * A second comment...\n */",
-        );
+        ];
 
         $namespaces = $this->parseCodeResourceForTest();
         foreach ($namespaces[0]->getTypes() as $type) {
@@ -1638,14 +1638,14 @@ class ParserTest extends AbstractTestCase
     {
         $ws = str_repeat(" ", 4 * $indent);
 
-        $expected = array(
+        $expected = [
             "/**\n{$ws} * This is one comment.\n{$ws} */",
             null,
             null,
             "/**\n{$ws} * This is a second comment.\n{$ws} */",
-        );
+        ];
 
-        $actual = array();
+        $actual = [];
         foreach ($nodes as $callable) {
             $actual[] = $callable->getComment();
         }

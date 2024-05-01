@@ -102,11 +102,11 @@ class EnumTest extends PHPParserVersion81TestCase
         $this->assertFalse($enum->isAbstract());
         $this->assertCount(0, $enum->getProperties());
         $this->assertSame(
-            array(
+            [
                 'UnitEnum' => 'UnitEnum',
                 'BackedEnum' => 'BackedEnum',
                 'HasColor' => 'HasColor',
-            ),
+            ],
             array_map(
                 function (ASTInterface $interface) {
                     return $interface->getName();
@@ -115,12 +115,12 @@ class EnumTest extends PHPParserVersion81TestCase
             )
         );
         $this->assertSame(
-            array(
+            [
                 'cases' => 'cases',
                 'from' => 'from',
                 'tryfrom' => 'tryFrom',
                 'getcolor' => 'getColor',
-            ),
+            ],
             array_map(
                 function (ASTMethod $interface) {
                     return $interface->getName();
@@ -131,12 +131,12 @@ class EnumTest extends PHPParserVersion81TestCase
         $cases = $enum->getCases();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList', $cases);
         $this->assertSame(
-            array(
+            [
                 'HEARTS' => "'hearts'",
                 'DIAMONDS' => "'diamonds'",
                 'CLUBS' => "'clubs'",
                 'SPADES' => "'spades'",
-            ),
+            ],
             array_map(
                 function (ASTEnumCase $case) {
                     return $case->getValue()->getImage();

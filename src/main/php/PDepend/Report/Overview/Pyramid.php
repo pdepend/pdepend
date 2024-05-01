@@ -114,16 +114,16 @@ class Pyramid implements FileAwareGenerator
      *
      * @var array<string, array<int, float>>
      */
-    private $thresholds = array(
-        'cyclo-loc'     =>  array(0.16, 0.20, 0.24),
-        'loc-nom'       =>  array(7, 10, 13),
-        'nom-noc'       =>  array(4, 7, 10),
-        'noc-nop'       =>  array(6, 17, 26),
-        'calls-nom'     =>  array(2.01, 2.62, 3.2),
-        'fanout-calls'  =>  array(0.56, 0.62, 0.68),
-        'andc'          =>  array(0.25, 0.41, 0.57),
-        'ahh'           =>  array(0.09, 0.21, 0.32),
-    );
+    private $thresholds = [
+        'cyclo-loc'     =>  [0.16, 0.20, 0.24],
+        'loc-nom'       =>  [7, 10, 13],
+        'nom-noc'       =>  [4, 7, 10],
+        'noc-nop'       =>  [6, 17, 26],
+        'calls-nom'     =>  [2.01, 2.62, 3.2],
+        'fanout-calls'  =>  [0.56, 0.62, 0.68],
+        'andc'          =>  [0.25, 0.41, 0.57],
+        'ahh'           =>  [0.09, 0.21, 0.32],
+    ];
 
     /**
      * Sets the output log file.
@@ -145,13 +145,13 @@ class Pyramid implements FileAwareGenerator
      */
     public function getAcceptedAnalyzers()
     {
-        return array(
+        return [
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.inheritance',
             'pdepend.analyzer.node_count',
             'pdepend.analyzer.node_loc',
-        );
+        ];
     }
 
     /**
@@ -276,12 +276,12 @@ class Pyramid implements FileAwareGenerator
      */
     private function computeProportions(array $metrics)
     {
-        $orders = array(
-            array('cyclo', 'loc', 'nom', 'noc', 'nop'),
-            array('fanout', 'calls', 'nom'),
-        );
+        $orders = [
+            ['cyclo', 'loc', 'nom', 'noc', 'nop'],
+            ['fanout', 'calls', 'nom'],
+        ];
 
-        $proportions = array();
+        $proportions = [];
         foreach ($orders as $names) {
             for ($i = 1, $c = count($names); $i < $c; ++$i) {
                 $value1 = $metrics[$names[$i]];
@@ -330,7 +330,7 @@ class Pyramid implements FileAwareGenerator
         $nodeCount   = $this->nodeCount->getProjectMetrics();
         $nodeLoc     = $this->nodeLoc->getProjectMetrics();
 
-        return array(
+        return [
             'cyclo'   =>  $cyclomatic['ccn2'],
             'loc'     =>  $nodeLoc['eloc'],
             'nom'     =>  ($nodeCount['nom'] + $nodeCount['nof']),
@@ -340,6 +340,6 @@ class Pyramid implements FileAwareGenerator
             'andc'    =>  round($inheritance['andc'], 3),
             'fanout'  =>  $coupling['fanout'],
             'calls'   =>  $coupling['calls'],
-        );
+        ];
     }
 }

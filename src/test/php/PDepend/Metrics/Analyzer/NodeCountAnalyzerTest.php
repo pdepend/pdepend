@@ -70,7 +70,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($notUserDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(0, $metrics['noc']);
@@ -90,7 +90,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($userDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(1, $metrics['noc']);
@@ -109,7 +109,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($notUserDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(0, $metrics['noi']);
@@ -129,7 +129,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($userDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(1, $metrics['noi']);
@@ -176,17 +176,17 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0),
-                'B' => array('noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0),
-                'C' => array('noc' => 1, 'noi' => 0, 'nom' => 0, 'nof' => 0),
-            ),
+            [
+                'A' => ['noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0],
+                'B' => ['noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0],
+                'C' => ['noc' => 1, 'noi' => 0, 'nom' => 0, 'nof' => 0],
+            ],
             $metrics
         );
     }
@@ -217,17 +217,17 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0),
-                'B' => array('noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0),
-                'C' => array('noc' => 0, 'noi' => 3, 'nom' => 0, 'nof' => 0),
-            ),
+            [
+                'A' => ['noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0],
+                'B' => ['noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0],
+                'C' => ['noc' => 0, 'noi' => 3, 'nom' => 0, 'nof' => 0],
+            ],
             $metrics
         );
     }
@@ -258,17 +258,17 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0),
-                'B' => array('noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0),
-                'C' => array('noc' => 0, 'noi' => 1, 'nom' => 2, 'nof' => 0),
-            ),
+            [
+                'A' => ['noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0],
+                'B' => ['noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0],
+                'C' => ['noc' => 0, 'noi' => 1, 'nom' => 2, 'nof' => 0],
+            ],
             $metrics
         );
     }
@@ -299,17 +299,17 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3),
-                'B' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2),
-                'C' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 1),
-            ),
+            [
+                'A' => ['noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3],
+                'B' => ['noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2],
+                'C' => ['noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 1],
+            ],
             $metrics
         );
     }

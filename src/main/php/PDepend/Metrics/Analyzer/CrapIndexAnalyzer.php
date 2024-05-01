@@ -118,7 +118,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         if (isset($this->metrics[$artifact->getId()])) {
             return $this->metrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -129,7 +129,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function getRequiredAnalyzers()
     {
-        return array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
+        return ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
     }
 
     /**
@@ -165,7 +165,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     private function doAnalyze($namespaces)
     {
-        $this->metrics = array();
+        $this->metrics = [];
 
         $this->ccnAnalyzer->analyze($namespaces);
 
@@ -207,10 +207,10 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     private function visitCallable(AbstractASTCallable $callable)
     {
-        $this->metrics[$callable->getId()] = array(
+        $this->metrics[$callable->getId()] = [
             self::M_CRAP_INDEX => $this->calculateCrapIndex($callable),
             self::M_COVERAGE   => $this->calculateCoverage($callable),
-        );
+        ];
     }
 
     /**

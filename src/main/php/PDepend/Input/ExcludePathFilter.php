@@ -68,10 +68,10 @@ class ExcludePathFilter implements Filter
     public function __construct(array $patterns)
     {
         $quoted = array_map('preg_quote', $patterns);
-        $pattern = strtr(implode('|', $quoted), array(
+        $pattern = strtr(implode('|', $quoted), [
             '\\*' => '.*',
             '\\\\' => '/',
-        ));
+        ]);
 
         $this->pattern = '(^(' . $pattern . '))i';
     }

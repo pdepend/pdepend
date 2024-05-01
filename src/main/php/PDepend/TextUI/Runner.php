@@ -75,7 +75,7 @@ class Runner
      *
      * @var array<string>
      */
-    private $extensions = array('php', 'php5');
+    private $extensions = ['php', 'php5'];
 
     /**
      * List of exclude directories. Default exclude dirs are <b>.svn</b> and
@@ -83,21 +83,21 @@ class Runner
      *
      * @var array<string>
      */
-    private $excludeDirectories = array('.git', '.svn', 'CVS');
+    private $excludeDirectories = ['.git', '.svn', 'CVS'];
 
     /**
      * List of exclude namespaces.
      *
      * @var array<string>
      */
-    private $excludeNamespaces = array();
+    private $excludeNamespaces = [];
 
     /**
      * List of source code directories and files.
      *
      * @var array<string>
      */
-    private $sourceArguments = array();
+    private $sourceArguments = [];
 
     /**
      * Should the parse ignore doc comment annotations?
@@ -111,14 +111,14 @@ class Runner
      *
      * @var array<string, string>
      */
-    private $loggerMap = array();
+    private $loggerMap = [];
 
     /**
      * List of cli options for loggers or analyzers.
      *
      * @var array<string, mixed>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * This of process listeners that will be hooked into PDepend's analyzing
@@ -126,14 +126,14 @@ class Runner
      *
      * @var ProcessListener[]
      */
-    private $processListeners = array();
+    private $processListeners = [];
 
     /**
      * List of error messages for all parsing errors.
      *
      * @var array<string>
      */
-    private $parseErrors = array();
+    private $parseErrors = [];
 
     /**
      * @var ReportGeneratorFactory

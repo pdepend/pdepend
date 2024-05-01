@@ -66,7 +66,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     public function testTokenizerReturnsExpectedConstantForTraitKeyword()
     {
         $this->assertEquals(
-            array(
+            [
                 Tokens::T_OPEN_TAG,
                 Tokens::T_TRAIT,
                 Tokens::T_STRING,
@@ -82,7 +82,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
                 Tokens::T_SEMICOLON,
                 Tokens::T_CURLY_BRACE_CLOSE,
                 Tokens::T_CURLY_BRACE_CLOSE,
-            ),
+            ],
             $this->getTokenTypesForTest()
         );
     }
@@ -96,7 +96,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     public function testTokenizerReturnsExpectedConstantForTraitMagicConstant()
     {
         $this->assertEquals(
-            array(
+            [
                 Tokens::T_OPEN_TAG,
                 Tokens::T_TRAIT,
                 Tokens::T_STRING,
@@ -112,7 +112,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
                 Tokens::T_SEMICOLON,
                 Tokens::T_CURLY_BRACE_CLOSE,
                 Tokens::T_CURLY_BRACE_CLOSE,
-            ),
+            ],
             $this->getTokenTypesForTest()
         );
     }
@@ -124,7 +124,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testInternalWithClasses()
     {
-        $expected = array(
+        $expected = [
             Tokens::T_OPEN_TAG,
             Tokens::T_DOC_COMMENT,
             Tokens::T_ABSTRACT,
@@ -159,7 +159,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_SEMICOLON,
             Tokens::T_CURLY_BRACE_CLOSE,
             Tokens::T_CURLY_BRACE_CLOSE
-        );
+        ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
@@ -175,38 +175,38 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $expected = array(
-            array(Tokens::T_OPEN_TAG, 1),
-            array(Tokens::T_COMMENT, 2),
-            array(Tokens::T_FUNCTION, 5),
-            array(Tokens::T_STRING, 5),
-            array(Tokens::T_PARENTHESIS_OPEN, 5),
-            array(Tokens::T_VARIABLE, 5),
-            array(Tokens::T_COMMA, 5),
-            array(Tokens::T_VARIABLE, 5),
-            array(Tokens::T_PARENTHESIS_CLOSE, 5),
-            array(Tokens::T_CURLY_BRACE_OPEN, 5),
-            array(Tokens::T_NEW, 6),
-            array(Tokens::T_STRING, 6),
-            array(Tokens::T_PARENTHESIS_OPEN, 6),
-            array(Tokens::T_VARIABLE, 6),
-            array(Tokens::T_COMMA, 6),
-            array(Tokens::T_VARIABLE, 6),
-            array(Tokens::T_PARENTHESIS_CLOSE, 6),
-            array(Tokens::T_SEMICOLON, 6),
-            array(Tokens::T_CURLY_BRACE_CLOSE, 7),
-            array(Tokens::T_DOC_COMMENT, 10),
-            array(Tokens::T_CLASS, 13),
-            array(Tokens::T_STRING, 13),
-            array(Tokens::T_CURLY_BRACE_OPEN, 13),
-            array(Tokens::T_COMMENT, 14),
-            array(Tokens::T_CURLY_BRACE_CLOSE, 15),
-            array(Tokens::T_CLOSE_TAG, 16)
-        );
+        $expected = [
+            [Tokens::T_OPEN_TAG, 1],
+            [Tokens::T_COMMENT, 2],
+            [Tokens::T_FUNCTION, 5],
+            [Tokens::T_STRING, 5],
+            [Tokens::T_PARENTHESIS_OPEN, 5],
+            [Tokens::T_VARIABLE, 5],
+            [Tokens::T_COMMA, 5],
+            [Tokens::T_VARIABLE, 5],
+            [Tokens::T_PARENTHESIS_CLOSE, 5],
+            [Tokens::T_CURLY_BRACE_OPEN, 5],
+            [Tokens::T_NEW, 6],
+            [Tokens::T_STRING, 6],
+            [Tokens::T_PARENTHESIS_OPEN, 6],
+            [Tokens::T_VARIABLE, 6],
+            [Tokens::T_COMMA, 6],
+            [Tokens::T_VARIABLE, 6],
+            [Tokens::T_PARENTHESIS_CLOSE, 6],
+            [Tokens::T_SEMICOLON, 6],
+            [Tokens::T_CURLY_BRACE_CLOSE, 7],
+            [Tokens::T_DOC_COMMENT, 10],
+            [Tokens::T_CLASS, 13],
+            [Tokens::T_STRING, 13],
+            [Tokens::T_CURLY_BRACE_OPEN, 13],
+            [Tokens::T_COMMENT, 14],
+            [Tokens::T_CURLY_BRACE_CLOSE, 15],
+            [Tokens::T_CLOSE_TAG, 16]
+        ];
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array($token->type, $token->startLine);
+            $actual[] = [$token->type, $token->startLine];
         }
 
         $this->assertEquals($expected, $actual);
@@ -233,7 +233,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testInternalWithProceduralCodeAndFunction()
     {
-        $expected = array(
+        $expected = [
             Tokens::T_OPEN_TAG,
             Tokens::T_FUNCTION,
             Tokens::T_STRING,
@@ -267,7 +267,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_PARENTHESIS_CLOSE,
             Tokens::T_SEMICOLON,
             Tokens::T_CLOSE_TAG
-        );
+        ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
@@ -279,7 +279,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testInternalStaticCallBug01()
     {
-        $expected = array(
+        $expected = [
             Tokens::T_OPEN_TAG,
             Tokens::T_DOC_COMMENT,
             Tokens::T_CLASS,
@@ -299,7 +299,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_SEMICOLON,
             Tokens::T_CURLY_BRACE_CLOSE,
             Tokens::T_CURLY_BRACE_CLOSE,
-        );
+        ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
@@ -321,7 +321,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testInternalDollarSyntaxBug09()
     {
-        $expected = array(
+        $expected = [
             Tokens::T_OPEN_TAG,
             Tokens::T_DOC_COMMENT,
             Tokens::T_CLASS,
@@ -343,7 +343,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_SEMICOLON,
             Tokens::T_CURLY_BRACE_CLOSE,
             Tokens::T_CURLY_BRACE_CLOSE,
-        );
+        ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
@@ -362,46 +362,46 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $expected = array(
-            array(Tokens::T_OPEN_TAG, 1),
-            array(Tokens::T_CLASS, 2),
-            array(Tokens::T_STRING, 2),
-            array(Tokens::T_CURLY_BRACE_OPEN, 3),
-            array(Tokens::T_FUNCTION, 4),
-            array(Tokens::T_STRING, 4),
-            array(Tokens::T_PARENTHESIS_OPEN, 4),
-            array(Tokens::T_PARENTHESIS_CLOSE, 4),
-            array(Tokens::T_CURLY_BRACE_OPEN, 5),
-            array(Tokens::T_CLOSE_TAG, 6),
-            array(Tokens::T_NO_PHP, 7),
-            array(Tokens::T_OPEN_TAG_WITH_ECHO, 7),
-            array(Tokens::T_STRING, 7),
-            array(Tokens::T_SEMICOLON, 7),
-            array(Tokens::T_CLOSE_TAG,  7),
-            array(Tokens::T_NO_PHP, 7),
-            array(Tokens::T_OPEN_TAG, 8),
-            array(Tokens::T_ECHO, 8),
-            array(Tokens::T_STRING, 8),
-            array(Tokens::T_PARENTHESIS_OPEN, 8),
-            array(Tokens::T_VARIABLE, 8),
-            array(Tokens::T_PARENTHESIS_CLOSE, 8),
-            array(Tokens::T_SEMICOLON, 8),
-            array(Tokens::T_CLOSE_TAG, 8),
-            array(Tokens::T_NO_PHP, 8),
-            array(Tokens::T_OPEN_TAG, 10),
-            array(Tokens::T_CURLY_BRACE_CLOSE, 11),
-            array(Tokens::T_FUNCTION, 13),
-            array(Tokens::T_STRING, 13),
-            array(Tokens::T_PARENTHESIS_OPEN, 13),
-            array(Tokens::T_PARENTHESIS_CLOSE, 13),
-            array(Tokens::T_CURLY_BRACE_OPEN, 14),
-            array(Tokens::T_CURLY_BRACE_CLOSE, 16),
-            array(Tokens::T_CURLY_BRACE_CLOSE, 17),
-        );
+        $expected = [
+            [Tokens::T_OPEN_TAG, 1],
+            [Tokens::T_CLASS, 2],
+            [Tokens::T_STRING, 2],
+            [Tokens::T_CURLY_BRACE_OPEN, 3],
+            [Tokens::T_FUNCTION, 4],
+            [Tokens::T_STRING, 4],
+            [Tokens::T_PARENTHESIS_OPEN, 4],
+            [Tokens::T_PARENTHESIS_CLOSE, 4],
+            [Tokens::T_CURLY_BRACE_OPEN, 5],
+            [Tokens::T_CLOSE_TAG, 6],
+            [Tokens::T_NO_PHP, 7],
+            [Tokens::T_OPEN_TAG_WITH_ECHO, 7],
+            [Tokens::T_STRING, 7],
+            [Tokens::T_SEMICOLON, 7],
+            [Tokens::T_CLOSE_TAG,  7],
+            [Tokens::T_NO_PHP, 7],
+            [Tokens::T_OPEN_TAG, 8],
+            [Tokens::T_ECHO, 8],
+            [Tokens::T_STRING, 8],
+            [Tokens::T_PARENTHESIS_OPEN, 8],
+            [Tokens::T_VARIABLE, 8],
+            [Tokens::T_PARENTHESIS_CLOSE, 8],
+            [Tokens::T_SEMICOLON, 8],
+            [Tokens::T_CLOSE_TAG, 8],
+            [Tokens::T_NO_PHP, 8],
+            [Tokens::T_OPEN_TAG, 10],
+            [Tokens::T_CURLY_BRACE_CLOSE, 11],
+            [Tokens::T_FUNCTION, 13],
+            [Tokens::T_STRING, 13],
+            [Tokens::T_PARENTHESIS_OPEN, 13],
+            [Tokens::T_PARENTHESIS_CLOSE, 13],
+            [Tokens::T_CURLY_BRACE_OPEN, 14],
+            [Tokens::T_CURLY_BRACE_CLOSE, 16],
+            [Tokens::T_CURLY_BRACE_CLOSE, 17],
+        ];
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array($token->type, $token->startLine);
+            $actual[] = [$token->type, $token->startLine];
         }
 
         $this->assertSame($expected, $actual);
@@ -421,31 +421,31 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $expected = array(
-            array(Tokens::T_NO_PHP, "<html>\n    <head>\n        <title>", 1, 3, 1, 15),
-            array(Tokens::T_OPEN_TAG_WITH_ECHO, '<?=', 3, 3, 16, 18),
-            array(Tokens::T_VARIABLE, '$foo', 3, 3, 19, 22),
-            array(Tokens::T_SEMICOLON, ';', 3, 3, 23, 23),
-            array(Tokens::T_CLOSE_TAG, '?>', 3, 3, 24, 25),
-            array(Tokens::T_NO_PHP, "</title>\n    </head>\n    <body>", 3, 5, 26, 10),
-            array(Tokens::T_OPEN_TAG, '<?', 6, 6, 9, 10),
-            array(Tokens::T_ECHO, 'echo', 6, 6, 12, 15),
-            array(Tokens::T_VARIABLE, '$bar', 6, 6, 17, 20),
-            array(Tokens::T_SEMICOLON, ';', 6, 6, 21, 21),
-            array(Tokens::T_CLOSE_TAG, '?>', 6, 6, 23, 24),
-            array(Tokens::T_NO_PHP, "    </body>\n</html>", 7, 8, 1, 7),
-        );
+        $expected = [
+            [Tokens::T_NO_PHP, "<html>\n    <head>\n        <title>", 1, 3, 1, 15],
+            [Tokens::T_OPEN_TAG_WITH_ECHO, '<?=', 3, 3, 16, 18],
+            [Tokens::T_VARIABLE, '$foo', 3, 3, 19, 22],
+            [Tokens::T_SEMICOLON, ';', 3, 3, 23, 23],
+            [Tokens::T_CLOSE_TAG, '?>', 3, 3, 24, 25],
+            [Tokens::T_NO_PHP, "</title>\n    </head>\n    <body>", 3, 5, 26, 10],
+            [Tokens::T_OPEN_TAG, '<?', 6, 6, 9, 10],
+            [Tokens::T_ECHO, 'echo', 6, 6, 12, 15],
+            [Tokens::T_VARIABLE, '$bar', 6, 6, 17, 20],
+            [Tokens::T_SEMICOLON, ';', 6, 6, 21, 21],
+            [Tokens::T_CLOSE_TAG, '?>', 6, 6, 23, 24],
+            [Tokens::T_NO_PHP, "    </body>\n</html>", 7, 8, 1, 7],
+        ];
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array(
+            $actual[] = [
                 $token->type,
                 $token->image,
                 $token->startLine,
                 $token->endLine,
                 $token->startColumn,
                 $token->endColumn
-            );
+            ];
         }
 
         $this->assertSame($expected, $actual);
@@ -461,24 +461,24 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $expected = array(
-            array(Tokens::T_OPEN_TAG_WITH_ECHO, '<?=', 1, 1, 1, 3),
-            array(Tokens::T_VARIABLE, '$foo', 1, 1, 4, 7),
-            array(Tokens::T_COMMA, ',', 1, 1, 8, 8),
-            array(Tokens::T_VARIABLE, '$bar', 1, 1, 9, 12),
-            array(Tokens::T_CLOSE_TAG, '?>', 1, 1, 13, 14),
-        );
+        $expected = [
+            [Tokens::T_OPEN_TAG_WITH_ECHO, '<?=', 1, 1, 1, 3],
+            [Tokens::T_VARIABLE, '$foo', 1, 1, 4, 7],
+            [Tokens::T_COMMA, ',', 1, 1, 8, 8],
+            [Tokens::T_VARIABLE, '$bar', 1, 1, 9, 12],
+            [Tokens::T_CLOSE_TAG, '?>', 1, 1, 13, 14],
+        ];
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array(
+            $actual[] = [
                 $token->type,
                 $token->image,
                 $token->startLine,
                 $token->endLine,
                 $token->startColumn,
                 $token->endColumn
-            );
+            ];
         }
 
         $this->assertSame($expected, $actual);
@@ -498,32 +498,32 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $expected = array(
-            array(Tokens::T_NO_PHP, 'Hello', 1, 1, 1, 5),
-            array(Tokens::T_OPEN_TAG, '<?php', 1, 1, 7, 11),
-            array(Tokens::T_ECHO, 'echo', 1, 1, 13, 16),
-            array(Tokens::T_VARIABLE, '$user', 1, 1, 18, 22),
-            array(Tokens::T_SEMICOLON, ';', 1, 1, 23, 23),
-            array(Tokens::T_CLOSE_TAG, '?>', 1, 1, 25, 26),
-            array(Tokens::T_NO_PHP, "\nthis is a simple letter to users of", 2, 3, 1, 35),
-            array(Tokens::T_OPEN_TAG, '<?php', 3, 3, 37, 41),
-            array(Tokens::T_PRINT, 'print', 3, 3, 43, 47),
-            array(Tokens::T_VARIABLE, '$service', 3, 3, 49, 56),
-            array(Tokens::T_SEMICOLON, ';', 3, 3, 57, 57),
-            array(Tokens::T_CLOSE_TAG, '?>', 3, 3, 59, 60),
-            array(Tokens::T_NO_PHP, ".\n\nManuel", 3, 5, 61, 6),
-        );
+        $expected = [
+            [Tokens::T_NO_PHP, 'Hello', 1, 1, 1, 5],
+            [Tokens::T_OPEN_TAG, '<?php', 1, 1, 7, 11],
+            [Tokens::T_ECHO, 'echo', 1, 1, 13, 16],
+            [Tokens::T_VARIABLE, '$user', 1, 1, 18, 22],
+            [Tokens::T_SEMICOLON, ';', 1, 1, 23, 23],
+            [Tokens::T_CLOSE_TAG, '?>', 1, 1, 25, 26],
+            [Tokens::T_NO_PHP, "\nthis is a simple letter to users of", 2, 3, 1, 35],
+            [Tokens::T_OPEN_TAG, '<?php', 3, 3, 37, 41],
+            [Tokens::T_PRINT, 'print', 3, 3, 43, 47],
+            [Tokens::T_VARIABLE, '$service', 3, 3, 49, 56],
+            [Tokens::T_SEMICOLON, ';', 3, 3, 57, 57],
+            [Tokens::T_CLOSE_TAG, '?>', 3, 3, 59, 60],
+            [Tokens::T_NO_PHP, ".\n\nManuel", 3, 5, 61, 6],
+        ];
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array(
+            $actual[] = [
                 $token->type,
                 $token->image,
                 $token->startLine,
                 $token->endLine,
                 $token->startColumn,
                 $token->endColumn
-            );
+            ];
         }
 
         $this->assertSame($expected, $actual);
@@ -539,21 +539,21 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array($token->type, $token->startColumn, $token->endColumn);
+            $actual[] = [$token->type, $token->startColumn, $token->endColumn];
         }
 
-        $expected = array(
-            array(Tokens::T_OPEN_TAG, 1, 5),
-            array(Tokens::T_DOLLAR, 1, 1),
-            array(Tokens::T_CURLY_BRACE_OPEN, 2, 2),
-            array(Tokens::T_VARIABLE, 3, 6),
-            array(Tokens::T_CONCAT, 8, 8),
-            array(Tokens::T_VARIABLE, 10, 13),
-            array(Tokens::T_CURLY_BRACE_CLOSE, 14, 14),
-            array(Tokens::T_SEMICOLON, 15, 15),
-        );
+        $expected = [
+            [Tokens::T_OPEN_TAG, 1, 5],
+            [Tokens::T_DOLLAR, 1, 1],
+            [Tokens::T_CURLY_BRACE_OPEN, 2, 2],
+            [Tokens::T_VARIABLE, 3, 6],
+            [Tokens::T_CONCAT, 8, 8],
+            [Tokens::T_VARIABLE, 10, 13],
+            [Tokens::T_CURLY_BRACE_CLOSE, 14, 14],
+            [Tokens::T_SEMICOLON, 15, 15],
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -568,20 +568,20 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
-            $actual[] = array($token->type);
+            $actual[] = [$token->type];
         }
 
-        $expected = array(
-            array(Tokens::T_OPEN_TAG),
-            array(Tokens::T_DOUBLE_QUOTE),
-            array(Tokens::T_ENCAPSED_AND_WHITESPACE),
-            array(Tokens::T_VARIABLE),
-            array(Tokens::T_BACKTICK),
-            array(Tokens::T_DOUBLE_QUOTE),
-            array(Tokens::T_SEMICOLON),
-        );
+        $expected = [
+            [Tokens::T_OPEN_TAG],
+            [Tokens::T_DOUBLE_QUOTE],
+            [Tokens::T_ENCAPSED_AND_WHITESPACE],
+            [Tokens::T_VARIABLE],
+            [Tokens::T_BACKTICK],
+            [Tokens::T_DOUBLE_QUOTE],
+            [Tokens::T_SEMICOLON],
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -593,7 +593,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString()
     {
-        $expected = array(
+        $expected = [
             Tokens::T_OPEN_TAG,
             Tokens::T_BACKTICK,
             Tokens::T_ENCAPSED_AND_WHITESPACE,
@@ -601,7 +601,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_DOUBLE_QUOTE,
             Tokens::T_BACKTICK,
             Tokens::T_SEMICOLON,
-        );
+        ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
     }
@@ -617,7 +617,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $types = array();
+        $types = [];
         while (is_object($token = $tokenizer->next())) {
             $types[] = $token->type;
         }

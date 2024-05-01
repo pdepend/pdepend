@@ -68,7 +68,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @var T[]
      */
-    private $artifacts = array();
+    private $artifacts = [];
 
     /**
      * Total number of available nodes.
@@ -94,7 +94,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     {
         $filter = CollectionArtifactFilter::getInstance();
 
-        $nodeKeys = array();
+        $nodeKeys = [];
         foreach ($artifacts as $artifact) {
             $id = $artifact->getId();
 

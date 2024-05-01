@@ -52,7 +52,7 @@ use PDepend\Source\AST\AbstractASTArtifact;
  */
 class StubAbstractASTVisitListener extends AbstractASTVisitListener
 {
-    public $nodes = array();
+    public $nodes = [];
     
     public function startVisitNode(AbstractASTArtifact $node)
     {
