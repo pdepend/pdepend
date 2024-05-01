@@ -44,7 +44,7 @@
 use PDepend\TextUI\Command;
 
 // PEAR/svn workaround
-if (strpos('@php_bin@', '@php_bin') === 0) {
+if (str_starts_with('@php_bin@', '@php_bin')) {
     set_include_path('.' . PATH_SEPARATOR . __DIR__ . '/../main/php');
 }
 

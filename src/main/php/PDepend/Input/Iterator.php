@@ -117,7 +117,7 @@ class Iterator extends FilterIterator
      */
     protected function getLocalPath()
     {
-        if ($this->rootPath && 0 === strpos($this->getFullPath(), $this->rootPath)) {
+        if ($this->rootPath && str_starts_with($this->getFullPath(), $this->rootPath)) {
             return substr($this->getFullPath(), strlen($this->rootPath));
         }
         return $this->getFullPath();

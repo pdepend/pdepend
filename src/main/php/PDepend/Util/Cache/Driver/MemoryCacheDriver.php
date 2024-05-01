@@ -169,7 +169,7 @@ class MemoryCacheDriver implements CacheDriver
     public function remove($pattern)
     {
         foreach (array_keys($this->cache) as $key) {
-            if (0 === strpos($key, $pattern)) {
+            if (str_starts_with($key, $pattern)) {
                 unset($this->cache[$key]);
             }
         }

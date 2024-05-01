@@ -111,7 +111,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $directory = $this->createCodeResourceUriForTest();
         $pattern   = $directory . DIRECTORY_SEPARATOR . 'Integration';
 
-        if (0 === strpos($directory, '/scratch/')) {
+        if (str_starts_with($directory, '/scratch/')) {
             $this->markTestSkipped('Not sure why, but this test fails @CloudBees');
         }
 

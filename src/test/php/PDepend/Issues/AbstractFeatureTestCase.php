@@ -62,7 +62,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
         return $this->getFirstFunctionForTestCase()
             ->getParameters();
     }
-    
+
     /**
      * Parses the source for the calling test case.
      *
@@ -103,7 +103,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
     {
         $trace = debug_backtrace();
         foreach ($trace as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
+            if (str_starts_with($frame['function'], 'test')) {
                 return $frame['class'] . '::' . $frame['function'];
             }
         }

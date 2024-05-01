@@ -76,7 +76,7 @@ class ExtensionFilter implements Filter
      */
     public function accept($relative, $absolute): bool
     {
-        if (strpos($absolute, 'php://') === 0) {
+        if (str_starts_with($absolute, 'php://')) {
             return true;
         }
 
