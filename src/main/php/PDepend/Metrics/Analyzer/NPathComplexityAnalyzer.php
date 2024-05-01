@@ -518,6 +518,23 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $this->collector = MathUtil::mul($npath, $this->collector);
     }
 
+    public function dispatch(ASTNode $node): void
+    {
+        match ($node::class) {
+            ASTConditionalExpression::class => $this->visitConditionalExpression($node),
+            ASTDoWhileStatement::class => $this->visitDoWhileStatement($node),
+            ASTElseIfStatement::class => $this->visitElseIfStatement($node),
+            ASTForeachStatement::class => $this->visitForeachStatement($node),
+            ASTForStatement::class => $this->visitForStatement($node),
+            ASTIfStatement::class => $this->visitIfStatement($node),
+            ASTReturnStatement::class => $this->visitReturnStatement($node),
+            ASTSwitchStatement::class => $this->visitSwitchStatement($node),
+            ASTTryStatement::class => $this->visitTryStatement($node),
+            ASTWhileStatement::class => $this->visitWhileStatement($node),
+            default => parent::dispatch($node),
+        };
+    }
+
     /**
      * Calculates the expression sum of the given node.
      *

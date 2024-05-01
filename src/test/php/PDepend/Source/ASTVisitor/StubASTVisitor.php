@@ -190,11 +190,18 @@ class StubASTVisitor implements ASTVisitor
 
     public function dispatch(ASTNode $node): void
     {
-        $methodName = 'visit' . substr($node::class, 22);
-        if (method_exists($this, $methodName)) {
-            $this->{$methodName}($node);
-        } else {
-            $this->visit($node);
-        }
+        match ($node::class) {
+            ASTClass::class => $this->visitClass($node),
+            ASTCompilationUnit::class => $this->visitCompilationUnit($node),
+            ASTEnum::class => $this->visitEnum($node),
+            ASTFunction::class => $this->visitFunction($node),
+            ASTInterface::class => $this->visitInterface($node),
+            ASTMethod::class => $this->visitMethod($node),
+            ASTNamespace::class => $this->visitNamespace($node),
+            ASTParameter::class => $this->visitParameter($node),
+            ASTProperty::class => $this->visitProperty($node),
+            ASTTrait::class => $this->visitTrait($node),
+            default => $this->visit($node),
+        };
     }
 }

@@ -51,6 +51,7 @@ use PDepend\Report\DummyAnalyzer;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTNamespace;
 
 /**
@@ -325,14 +326,14 @@ class ChartTest extends AbstractTestCase
      */
     private function createPackage($userDefined, $packageName)
     {
-        $packageA = $this->getMockBuilder(ASTNamespace::class)
+        $packageA = new ASTNamespace($packageName);
+        $type = $this->getMockBuilder(ASTClass::class)
             ->onlyMethods(['isUserDefined'])
-            ->setConstructorArgs([$packageName])
-            ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')
             ->getMock();
-        $packageA->expects(static::atLeastOnce())
+        $type->expects(static::atLeastOnce())
             ->method('isUserDefined')
             ->will(static::returnValue($userDefined));
+        $packageA->addType($type);
 
         return $packageA;
     }
