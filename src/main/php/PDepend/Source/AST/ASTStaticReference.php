@@ -58,7 +58,7 @@ class ASTStaticReference extends ASTSelfReference
     /**
      * The source image of this node.
      */
-    const IMAGE = 'static';
+    public const IMAGE = 'static';
 
     /**
      * Returns the visual representation for this node type.

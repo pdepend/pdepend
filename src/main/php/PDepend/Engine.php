@@ -87,16 +87,6 @@ use SplFileObject;
 class Engine
 {
     /**
-     * Marks the storage used for runtime tokens.
-     */
-    const TOKEN_STORAGE = 1;
-
-    /**
-     * Marks the storag engine used for parser artifacts.
-     */
-    const PARSER_STORAGE = 2;
-
-    /**
      * The system configuration.
      *
      * @var Configuration

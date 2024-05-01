@@ -57,7 +57,7 @@ class ASTTypeIterable extends ASTType
     /**
      * The visual image for this node type.
      */
-    const IMAGE = 'iterable';
+    public const IMAGE = 'iterable';
 
     /**
      * @return string

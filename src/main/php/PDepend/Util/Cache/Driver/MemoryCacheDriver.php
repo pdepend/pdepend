@@ -63,7 +63,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Default cache entry type.
      */
-    const ENTRY_TYPE = 'cache';
+    private const ENTRY_TYPE = 'cache';
 
     /**
      * The in memory cache.

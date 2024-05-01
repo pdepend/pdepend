@@ -171,7 +171,7 @@ interface Builder extends IteratorAggregate
     /**
      * The default package name.
      */
-    const DEFAULT_NAMESPACE = '+global';
+    public const DEFAULT_NAMESPACE = '+global';
 
     /**
      * Setter method for the currently used token cache.

@@ -78,7 +78,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_NPATH_COMPLEXITY = 'npath';
+    private const M_NPATH_COMPLEXITY = 'npath';
 
     /**
      * Processes all {@link ASTNamespace} code nodes.

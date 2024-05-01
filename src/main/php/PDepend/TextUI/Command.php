@@ -61,12 +61,12 @@ class Command
     /**
      * Marks a cli error exit.
      */
-    const CLI_ERROR = 1742;
+    public const CLI_ERROR = 1742;
 
     /**
      * Marks an input error exit.
      */
-    const INPUT_ERROR = 1743;
+    public const INPUT_ERROR = 1743;
 
     /**
      * The recieved cli options

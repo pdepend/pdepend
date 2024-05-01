@@ -86,11 +86,12 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_LINES_OF_CODE             = 'loc',
-          M_COMMENT_LINES_OF_CODE     = 'cloc',
-          M_EXECUTABLE_LINES_OF_CODE  = 'eloc',
-          M_LOGICAL_LINES_OF_CODE     = 'lloc',
-          M_NON_COMMENT_LINES_OF_CODE = 'ncloc';
+    public const
+        M_LINES_OF_CODE             = 'loc',
+        M_COMMENT_LINES_OF_CODE     = 'cloc',
+        M_EXECUTABLE_LINES_OF_CODE  = 'eloc',
+        M_LOGICAL_LINES_OF_CODE     = 'lloc',
+        M_NON_COMMENT_LINES_OF_CODE = 'ncloc';
 
     /**
      * Collected project metrics.

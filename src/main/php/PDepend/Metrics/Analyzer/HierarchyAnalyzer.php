@@ -74,10 +74,11 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_NUMBER_OF_ABSTRACT_CLASSES = 'clsa',
-          M_NUMBER_OF_CONCRETE_CLASSES = 'clsc',
-          M_NUMBER_OF_ROOT_CLASSES     = 'roots',
-          M_NUMBER_OF_LEAF_CLASSES     = 'leafs';
+    private const
+        M_NUMBER_OF_ABSTRACT_CLASSES = 'clsa',
+        M_NUMBER_OF_CONCRETE_CLASSES = 'clsc',
+        M_NUMBER_OF_ROOT_CLASSES     = 'roots',
+        M_NUMBER_OF_LEAF_CLASSES     = 'leafs';
 
     /**
      * Number of all analyzed functions.

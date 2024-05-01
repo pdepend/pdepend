@@ -65,15 +65,16 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_HALSTEAD_LENGTH = 'hnt', // N = N1 + N2 (total operators + operands)
-          M_HALSTEAD_VOCABULARY = 'hnd', // n = n1 + n2 (distinct operators + operands)
-          M_HALSTEAD_VOLUME = 'hv', // V = N * log2(n)
-          M_HALSTEAD_DIFFICULTY = 'hd', // D = (n1 / 2) * (N2 / n2)
-          M_HALSTEAD_LEVEL = 'hl', // L = 1 / D
-          M_HALSTEAD_EFFORT = 'he', // E = V * D
-          M_HALSTEAD_TIME = 'ht', // T = E / 18
-          M_HALSTEAD_BUGS = 'hb', // B = (E ** (2/3)) / 3000
-          M_HALSTEAD_CONTENT = 'hi'; // I = (V / D)
+    public const
+        M_HALSTEAD_LENGTH = 'hnt', // N = N1 + N2 (total operators + operands)
+        M_HALSTEAD_VOCABULARY = 'hnd', // n = n1 + n2 (distinct operators + operands)
+        M_HALSTEAD_VOLUME = 'hv', // V = N * log2(n)
+        M_HALSTEAD_DIFFICULTY = 'hd', // D = (n1 / 2) * (N2 / n2)
+        M_HALSTEAD_LEVEL = 'hl', // L = 1 / D
+        M_HALSTEAD_EFFORT = 'he', // E = V * D
+        M_HALSTEAD_TIME = 'ht', // T = E / 18
+        M_HALSTEAD_BUGS = 'hb', // B = (E ** (2/3)) / 3000
+        M_HALSTEAD_CONTENT = 'hi'; // I = (V / D)
 
     /**
      * Processes all {@link ASTNamespace} code nodes.

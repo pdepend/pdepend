@@ -55,17 +55,17 @@ class StrategyFactory
     /**
      * The identifier for the inheritance strategy.
      */
-    const STRATEGY_INHERITANCE = 'inheritance';
+    private const STRATEGY_INHERITANCE = 'inheritance';
 
     /**
      * The identifier for the property strategy.
      */
-    const STRATEGY_PROPERTY = 'property';
+    private const STRATEGY_PROPERTY = 'property';
 
     /**
      * The identifier for the method strategy.
      */
-    const STRATEGY_METHOD = 'method';
+    private const STRATEGY_METHOD = 'method';
 
     /**
      * The default strategy.

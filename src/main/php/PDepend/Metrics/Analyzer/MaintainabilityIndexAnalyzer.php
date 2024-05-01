@@ -64,7 +64,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_MAINTAINABILITY_INDEX = 'mi';
+    private const M_MAINTAINABILITY_INDEX = 'mi';
 
     /**
      * @var CyclomaticComplexityAnalyzer

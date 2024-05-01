@@ -62,12 +62,12 @@ class Runner
     /**
      * Marks the default success exit.
      */
-    const SUCCESS_EXIT = 0;
+    public const SUCCESS_EXIT = 0;
 
     /**
      * Marks an internal exception exit.
      */
-    const EXCEPTION_EXIT = 2;
+    public const EXCEPTION_EXIT = 2;
 
     /**
      * List of allowed file extensions. Default file extensions are <b>php</b>

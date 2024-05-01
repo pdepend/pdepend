@@ -382,7 +382,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Internally used transition token.
      */
-    const T_ELLIPSIS = 23006;
+    private const T_ELLIPSIS = 23006;
 
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.

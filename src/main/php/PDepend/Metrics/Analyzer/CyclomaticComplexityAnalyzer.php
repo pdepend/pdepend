@@ -66,8 +66,9 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_CYCLOMATIC_COMPLEXITY_1 = 'ccn',
-          M_CYCLOMATIC_COMPLEXITY_2 = 'ccn2';
+    private const
+        M_CYCLOMATIC_COMPLEXITY_1 = 'ccn',
+        M_CYCLOMATIC_COMPLEXITY_2 = 'ccn2';
 
     /**
      * The project Cyclomatic Complexity Number.

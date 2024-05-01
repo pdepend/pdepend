@@ -57,45 +57,45 @@ interface State
     /**
      * Marks a class or interface as implicit abstract.
      */
-    const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
+    public const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
 
     /**
      * Marks a class or interface as explicit abstract.
      */
-    const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
+    public const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
 
     /**
      * Marks a node as public.
      */
-    const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
+    public const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
 
     /**
      * Marks a node as protected.
      */
-    const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
+    public const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
 
     /**
      * Marks a node as private.
      */
-    const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
+    public const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
 
     /**
      * Marks a node as abstract.
      */
-    const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
+    public const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
 
     /**
      * Marks a node as final.
      */
-    const IS_FINAL = ReflectionMethod::IS_FINAL;
+    public const IS_FINAL = ReflectionMethod::IS_FINAL;
 
     /**
      * Marks a node as static.
      */
-    const IS_STATIC = ReflectionMethod::IS_STATIC;
+    public const IS_STATIC = ReflectionMethod::IS_STATIC;
 
     /**
      * Marks a node as readonly.
      */
-    const IS_READONLY = ReflectionProperty::IS_READONLY;
+    public const IS_READONLY = ReflectionProperty::IS_READONLY;
 }

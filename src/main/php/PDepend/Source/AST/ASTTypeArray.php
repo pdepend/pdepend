@@ -57,7 +57,7 @@ class ASTTypeArray extends ASTType
     /**
      * The visual image for this node type.
      */
-    const IMAGE = 'array';
+    public const IMAGE = 'array';
 
     /**
      * @return string

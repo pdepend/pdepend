@@ -56,7 +56,7 @@ use UnexpectedValueException;
  */
 class FileCacheGarbageCollector
 {
-    const DEFAULT_TTL = 2592000; //30 days
+    public const DEFAULT_TTL = 2592000; //30 days
 
     /**
      * @var string

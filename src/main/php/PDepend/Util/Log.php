@@ -53,7 +53,7 @@ final class Log
     /**
      * Log debug messages.
      */
-    const DEBUG = 1;
+    public const DEBUG = 1;
 
     /**
      * The log output stream, defaults for the moment to stderr.

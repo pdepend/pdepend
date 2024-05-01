@@ -68,13 +68,14 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_CRAP_INDEX = 'crap',
-          M_COVERAGE = 'cov';
+    private const
+        M_CRAP_INDEX = 'crap',
+        M_COVERAGE = 'cov';
 
     /**
      * The report option name.
      */
-    const REPORT_OPTION = 'coverage-report';
+    public const REPORT_OPTION = 'coverage-report';
 
     /**
      * Calculated crap metrics.

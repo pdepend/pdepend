@@ -62,12 +62,12 @@ use PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector;
  */
 class FileCacheDriver implements CacheDriver
 {
-    const DEFAULT_TTL = 2592000; //30 days
+    public const DEFAULT_TTL = 2592000; //30 days
 
     /**
      * Default cache entry type.
      */
-    const ENTRY_TYPE = 'cache';
+    private const ENTRY_TYPE = 'cache';
 
     /**
      * The cache directory handler

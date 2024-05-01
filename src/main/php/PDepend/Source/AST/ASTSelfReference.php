@@ -60,7 +60,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     /**
      * The source image of this node.
      */
-    const IMAGE = 'self';
+    public const IMAGE = 'self';
 
     /**
      * The currently used builder context.
