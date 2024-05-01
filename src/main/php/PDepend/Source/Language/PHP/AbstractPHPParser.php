@@ -5386,7 +5386,7 @@ abstract class AbstractPHPParser
      * @throws ParserException
      * @throws UnexpectedTokenException
      *
-     * @return ASTCompoundVariable|ASTVariableVariable|ASTVariable
+     * @return ASTCompoundVariable|ASTVariable|ASTVariableVariable
      *
      * @since 0.9.6
      */
