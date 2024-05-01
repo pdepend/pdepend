@@ -81,7 +81,7 @@ class Application
     {
         if (!file_exists($configurationFile)) {
             throw new InvalidArgumentException(
-                sprintf('The configuration file "%s" doesn\'t exist.', $configurationFile)
+                sprintf('The configuration file "%s" doesn\'t exist.', $configurationFile),
             );
         }
 
@@ -219,7 +219,7 @@ class Application
                 if (isset($loggerServiceTag['option'], $loggerServiceTag['message']) && is_string($loggerServiceTag['option']) && is_string($loggerServiceTag['message'])) {
                     $options[$loggerServiceTag['option']] = array(
                         'message' => $loggerServiceTag['message'],
-                        'value' => isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file'
+                        'value' => isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file',
                     );
                 }
             }

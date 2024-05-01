@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * Represents a php class node.
  *
@@ -160,7 +158,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return ASTNode
+     * @return ?ASTNode
      */
     public function getParent()
     {
@@ -281,7 +279,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     protected function setMetadataInteger($index, $value)
     {
-        $this->setMetadata($index, (string)$value);
+        $this->setMetadata($index, (string) $value);
     }
 
     /**
@@ -303,7 +301,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int $index
+     * @param int    $index
      * @param string $value
      *
      * @return void

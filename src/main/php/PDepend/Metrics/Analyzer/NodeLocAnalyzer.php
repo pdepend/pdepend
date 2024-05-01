@@ -95,14 +95,14 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     /**
      * Collected project metrics.
      *
-     * @var array<string, integer>
+     * @var array<string, int>
      */
     private $projectMetrics = array(
         self::M_LINES_OF_CODE              =>  0,
         self::M_COMMENT_LINES_OF_CODE      =>  0,
         self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
         self::M_LOGICAL_LINES_OF_CODE      =>  0,
-        self::M_NON_COMMENT_LINES_OF_CODE  =>  0
+        self::M_NON_COMMENT_LINES_OF_CODE  =>  0,
     );
 
     /**
@@ -139,7 +139,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @return array<string, integer>
+     * @return array<string, int>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
@@ -161,7 +161,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * )
      * </code>
      *
-     * @return array<string, integer>
+     * @return array<string, int>
      */
     public function getProjectMetrics()
     {
@@ -263,7 +263,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
             self::M_LOGICAL_LINES_OF_CODE      =>  $lloc,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
 
         $this->updateProjectMetrics($id);
@@ -289,7 +289,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         list($cloc, $eloc, $lloc) = $this->linesOfCode(
             $function->getTokens(),
-            true
+            true,
         );
 
         $loc   = $function->getEndLine() - $function->getStartLine() + 1;
@@ -300,7 +300,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
             self::M_LOGICAL_LINES_OF_CODE      =>  $lloc,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
 
         $this->fireEndFunction($function);
@@ -336,7 +336,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
             self::M_LOGICAL_LINES_OF_CODE      =>  0,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
 
         $this->fireEndInterface($interface);
@@ -355,7 +355,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             $this->fireEndMethod($method);
             return;
         }
-        
+
         if ($method->isAbstract()) {
             $cloc = 0;
             $eloc = 0;
@@ -363,7 +363,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         } else {
             list($cloc, $eloc, $lloc) = $this->linesOfCode(
                 $method->getTokens(),
-                true
+                true,
             );
         }
         $loc   = $method->getEndLine() - $method->getStartLine() + 1;
@@ -374,7 +374,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
             self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
             self::M_LOGICAL_LINES_OF_CODE      =>  $lloc,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc
+            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
         );
 
         $this->classExecutableLines += $eloc;
@@ -414,7 +414,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * @param array<int, Token> $tokens The raw token stream.
      * @param bool              $search Optional boolean flag, search start.
      *
-     * @return array<int, integer>
+     * @return array<int, int>
      */
     private function linesOfCode(array $tokens, $search = false)
     {
@@ -441,9 +441,9 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             if ($token->type === Tokens::T_COMMENT
                 || $token->type === Tokens::T_DOC_COMMENT
             ) {
-                $lines =& $clines;
+                $lines = &$clines;
             } else {
-                $lines =& $elines;
+                $lines = &$elines;
             }
 
             switch ($token->type) {

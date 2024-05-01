@@ -43,7 +43,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 
@@ -146,6 +145,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @param AbstractASTNode $node A parsed child node instance.
      *
      * @return void
+     *
      * @access private
      *
      * @since  0.9.6
@@ -177,6 +177,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @param class-string<T> $targetType Searched class or interface type.
      *
      * @return T|null
+     *
      * @access private
      *
      * @since  0.9.6
@@ -203,6 +204,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @param T[]             $results    The found children.
      *
      * @return T[]
+     *
      * @access private
      *
      * @since  0.9.6
@@ -285,8 +287,8 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     {
         return new ASTClassOrInterfaceReferenceIterator(
             $this->findChildrenOfType(
-                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
-            )
+                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
+            ),
         );
     }
 
@@ -368,7 +370,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @since  0.9.5
      */
     public function addExceptionClassReference(
-        ASTClassOrInterfaceReference $classReference
+        ASTClassOrInterfaceReference $classReference,
     ) {
         $this->exceptionClassReferences[] = $classReference;
     }
@@ -382,7 +384,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     public function getExceptionClasses()
     {
         return new ASTClassOrInterfaceReferenceIterator(
-            $this->exceptionClassReferences
+            $this->exceptionClassReferences,
         );
     }
 
@@ -438,11 +440,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         $staticVariables = array();
 
         $declarations = $this->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTStaticVariableDeclaration'
+            'PDepend\\Source\\AST\\ASTStaticVariableDeclaration',
         );
         foreach ($declarations as $declaration) {
             $variables = $declaration->findChildrenOfType(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator'
+                'PDepend\\Source\\AST\\ASTVariableDeclarator',
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
@@ -483,11 +485,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         $parameters = array();
 
         $formalParameters = $this->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTFormalParameters'
+            'PDepend\\Source\\AST\\ASTFormalParameters',
         );
 
         $formalParameters = $formalParameters->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTFormalParameter'
+            'PDepend\\Source\\AST\\ASTFormalParameter',
         );
 
         foreach ($formalParameters as $formalParameter) {
@@ -530,7 +532,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'comment',
             'returnsReference',
             'returnClassReference',
-            'exceptionClassReferences'
+            'exceptionClassReferences',
         );
     }
 }

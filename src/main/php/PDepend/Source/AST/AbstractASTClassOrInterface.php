@@ -78,7 +78,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * An <b>array</b> with all constant declarators defined in this class or interface.
      *
-     * @var array<string, mixed>
+     * @var array<string, ASTConstantDeclarator>
      */
     protected $constantDeclarators = null;
 
@@ -222,7 +222,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns an <b>array</b> with all constant declarators defined in this class or interface.
      *
-     * @return array<string, mixed>
+     * @return array<string, ASTConstantDeclarator>
      */
     public function getConstantDeclarators()
     {
@@ -394,7 +394,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         foreach ($this->getInterfaces() as $interface) {
             $this->constantDeclarators = array_merge(
                 $this->constantDeclarators,
-                $interface->getConstantDeclarators()
+                $interface->getConstantDeclarators(),
             );
         }
 
@@ -425,7 +425,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     {
         return array_merge(
             array('constants', 'interfaceReferences', 'parentClassReference'),
-            parent::__sleep()
+            parent::__sleep(),
         );
     }
 }

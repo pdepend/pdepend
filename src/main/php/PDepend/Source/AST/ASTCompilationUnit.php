@@ -42,8 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use InvalidArgumentException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 use RuntimeException;
@@ -315,7 +313,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
             'endLine',
             'fileName',
             'startLine',
-            'id'
+            'id',
         );
     }
 

@@ -79,11 +79,11 @@ class StrategyFactory
      *
      * @var array<string, class-string<CodeRankStrategyI>>
      */
-    private $validStrategies = array(
+    private $validStrategies = [
         self::STRATEGY_INHERITANCE => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\InheritanceStrategy',
         self::STRATEGY_METHOD => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\MethodStrategy',
         self::STRATEGY_PROPERTY => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\PropertyStrategy',
-    );
+    ];
 
     /**
      * Creates the default code rank strategy.
@@ -109,7 +109,7 @@ class StrategyFactory
     {
         if (!isset($this->validStrategies[$strategyName])) {
             throw new InvalidArgumentException(
-                sprintf('Cannot load file for identifier "%s".', $strategyName)
+                sprintf('Cannot load file for identifier "%s".', $strategyName),
             );
         }
 

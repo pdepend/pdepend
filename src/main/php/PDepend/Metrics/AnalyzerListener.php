@@ -61,7 +61,7 @@ interface AnalyzerListener extends ASTVisitListener
      * @return void
      */
     public function startAnalyzer(Analyzer $analyzer);
-    
+
     /**
      * This method is called when the analyzer has finished code processing.
      *

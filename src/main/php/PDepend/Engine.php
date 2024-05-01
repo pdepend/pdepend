@@ -212,7 +212,7 @@ class Engine
     public function __construct(
         Configuration $configuration,
         CacheFactory $cacheFactory,
-        AnalyzerFactory $analyzerFactory
+        AnalyzerFactory $analyzerFactory,
     ) {
         $this->configuration = $configuration;
 
@@ -275,7 +275,7 @@ class Engine
      *
      * @return void
      */
-    public function addReportGenerator(Report\ReportGenerator $generator)
+    public function addReportGenerator(ReportGenerator $generator)
     {
         $this->generators[] = $generator;
     }
@@ -592,7 +592,7 @@ class Engine
             $parser = new PHPParserGeneric(
                 $tokenizer,
                 $this->builder,
-                $this->cacheFactory->create()
+                $this->cacheFactory->create(),
             );
             $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
@@ -671,7 +671,7 @@ class Engine
             $fileIterator->append(
                 $this->isPhpStream($file)
                     ? new ArrayIterator(array(new SplFileObject($file)))
-                    : new Iterator(new GlobIterator($file), $this->fileFilter)
+                    : new Iterator(new GlobIterator($file), $this->fileFilter),
             );
         }
 
@@ -681,12 +681,12 @@ class Engine
                     new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator(
                             $directory . '/',
-                            RecursiveDirectoryIterator::FOLLOW_SYMLINKS
-                        )
+                            RecursiveDirectoryIterator::FOLLOW_SYMLINKS,
+                        ),
                     ),
                     $this->fileFilter,
-                    $directory
-                )
+                    $directory,
+                ),
             );
         }
 

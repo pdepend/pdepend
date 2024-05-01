@@ -44,12 +44,11 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This class represents an intersection type
  *
  * @see https://php.watch/versions/8.1/intersection-types
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */

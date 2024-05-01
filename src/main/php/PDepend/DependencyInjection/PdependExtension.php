@@ -42,8 +42,8 @@
 
 namespace PDepend\DependencyInjection;
 
-use stdClass;
 use RuntimeException;
+use stdClass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as SymfonyExtension;
@@ -62,6 +62,7 @@ class PdependExtension extends SymfonyExtension
      * @param array<array<array<array<string>>>> $configs
      *
      * @return void
+     *
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -79,7 +80,7 @@ class PdependExtension extends SymfonyExtension
                 }
                 if (!is_a($config['class'], 'PDepend\DependencyInjection\Extension', true)) {
                     throw new RuntimeException(
-                        sprintf('Class "%s" is not a valid Extension', $config['class'])
+                        sprintf('Class "%s" is not a valid Extension', $config['class']),
                     );
                 }
 

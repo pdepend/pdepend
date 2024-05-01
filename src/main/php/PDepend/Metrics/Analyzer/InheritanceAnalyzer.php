@@ -85,7 +85,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * analyzed system. The array size is equal to the number of analyzed root
      * classes.
      *
-     * @var array<integer>
+     * @var array<int>
      */
     private $rootClasses = array();
 
@@ -221,7 +221,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         $this->fireStartClass($class);
 
         $this->initNodeMetricsForClass($class);
-        
+
         $this->calculateNumberOfDerivedClasses($class);
         $this->calculateNumberOfAddedAndOverwrittenMethods($class);
         $this->calculateDepthOfInheritanceTree($class);
@@ -268,7 +268,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             ++$dit;
             $root = $parent->getId();
         }
-        
+
         // Collect max dit value
         $this->maxDIT = max($this->maxDIT, $dit);
 
@@ -305,7 +305,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             if ($method->getParent() !== $class) {
                 continue;
             }
-            
+
             if (isset($parentMethodNames[$method->getName()])) {
                 if (!$parentMethodNames[$method->getName()]) {
                     ++$numberOfOverwrittenMethods;
@@ -341,7 +341,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             self::M_DEPTH_OF_INHERITANCE_TREE     => 0,
             self::M_NUMBER_OF_ADDED_METHODS       => 0,
             self::M_NUMBER_OF_DERIVED_CLASSES     => 0,
-            self::M_NUMBER_OF_OVERWRITTEN_METHODS => 0
+            self::M_NUMBER_OF_OVERWRITTEN_METHODS => 0,
         );
 
         foreach ($class->getParentClasses() as $parent) {

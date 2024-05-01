@@ -45,9 +45,6 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTClosure;
-use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTType;
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -125,8 +122,8 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
 
         $closure->addChild(
             $this->buildReturnStatement(
-                $this->consumeToken(Tokens::T_DOUBLE_ARROW)
-            )
+                $this->consumeToken(Tokens::T_DOUBLE_ARROW),
+            ),
         );
 
         return $this->setNodePositionsAndReturn($closure);

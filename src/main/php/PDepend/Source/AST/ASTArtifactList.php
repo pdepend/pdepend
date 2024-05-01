@@ -56,6 +56,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @template T of ASTArtifact
+ *
  * @implements \Iterator<int|string, T>
  * @implements \ArrayAccess<int|string, T>
  */
@@ -122,13 +123,14 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Returns the current node
      *
-     * @throws \OutOfBoundsException
+     * @throws OutOfBoundsException
+     *
      * @return T
      */
     public function current(): false|ASTArtifact
     {
         if ($this->offset >= $this->count) {
-            throw new \OutOfBoundsException("The offset does not exist.");
+            throw new OutOfBoundsException("The offset does not exist.");
         }
         return $this->artifacts[$this->offset];
     }
@@ -184,7 +186,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to retrieve
      *
-     * @param string|int $offset
+     * @param int|string $offset
      *
      * @throws OutOfBoundsException
      *
@@ -204,12 +206,10 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Offset to set
      *
-     * @param string|int $offset
-     * @param T $value
+     * @param int|string $offset
+     * @param T          $value
      *
      * @throws BadMethodCallException
-     *
-     * @return void
      *
      * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php

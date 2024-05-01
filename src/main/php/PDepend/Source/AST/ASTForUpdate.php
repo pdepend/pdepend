@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This node class represent the update part of a for-statement.
  *

@@ -82,7 +82,7 @@ interface Tokenizer
      * Returns the next token or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
-     * @return int|Token
+     * @return Token|Tokenizer::T_*
      */
     public function next();
 
@@ -111,7 +111,7 @@ interface Tokenizer
      * @return int
      */
     public function peek();
-    
+
     /**
      * Returns the type of next token, after the current token. This method
      * ignores all comments between the current and the next token.

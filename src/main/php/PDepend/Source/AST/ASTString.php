@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This class represents PHP strings that can embed various other expressions.
  *

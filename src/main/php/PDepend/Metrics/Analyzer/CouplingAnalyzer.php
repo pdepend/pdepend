@@ -150,7 +150,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     {
         return array(
             self::M_CALLS   =>  $this->calls,
-            self::M_FANOUT  =>  $this->fanout
+            self::M_FANOUT  =>  $this->fanout,
         );
     }
 
@@ -246,7 +246,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
             $this->nodeMetrics[$id] = array(
                 self::M_CA   =>  $afferentCoupling,
                 self::M_CBO  =>  $efferentCoupling,
-                self::M_CE   =>  $efferentCoupling
+                self::M_CE   =>  $efferentCoupling,
             );
 
             $this->fanout += $efferentCoupling;
@@ -334,7 +334,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
         $this->calculateCoupling(
             $declaringClass,
-            $method->getReturnClass()
+            $method->getReturnClass(),
         );
 
         foreach ($method->getExceptionClasses() as $type) {
@@ -360,7 +360,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
         $this->calculateCoupling(
             $property->getDeclaringClass(),
-            $property->getClass()
+            $property->getClass(),
         );
 
         $this->fireEndProperty($property);
@@ -369,15 +369,13 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Calculates the coupling between the given types.
      *
-     * @param AbstractASTType $coupledType
-     *
      * @return void
      *
      * @since  0.10.2
      */
     private function calculateCoupling(
         AbstractASTType $declaringType,
-        AbstractASTType $coupledType = null
+        AbstractASTType $coupledType = null,
     ) {
         $this->initDependencyMap($declaringType);
 
@@ -421,7 +419,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
         $this->dependencyMap[$type->getId()] = array(
             'ce' => array(),
-            'ca' => array()
+            'ca' => array(),
         );
     }
 

@@ -117,13 +117,13 @@ class CacheFactory
                 return $this->createFileCache(
                     $this->configuration->cache->location,
                     $this->configuration->cache->ttl,
-                    $cacheKey
+                    $cacheKey,
                 );
             case 'memory':
                 return $this->createMemoryCache();
         }
         throw new InvalidArgumentException(
-            "Unknown cache driver '{$this->configuration->cache->driver}' given."
+            "Unknown cache driver '{$this->configuration->cache->driver}' given.",
         );
     }
 

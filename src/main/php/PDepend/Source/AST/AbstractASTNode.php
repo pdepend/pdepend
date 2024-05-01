@@ -209,7 +209,7 @@ abstract class AbstractASTNode implements ASTNode
         $startLine,
         $endLine,
         $startColumn,
-        $endColumn
+        $endColumn,
     ) {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);
@@ -244,7 +244,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected function setMetadataInteger($index, $value)
     {
-        $this->setMetadata($index, (string)$value);
+        $this->setMetadata($index, (string) $value);
     }
 
     /**
@@ -296,7 +296,7 @@ abstract class AbstractASTNode implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int $index
+     * @param int    $index
      * @param string $value
      *
      * @return void
@@ -341,8 +341,8 @@ abstract class AbstractASTNode implements ASTNode
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
-                get_class($this)
-            )
+                get_class($this),
+            ),
         );
     }
 
@@ -419,8 +419,6 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * This method adds a new child node to this node instance.
      *
-     * @param ASTNode $node
-     *
      * @return void
      */
     public function addChild(ASTNode $node)
@@ -433,7 +431,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
      *
-     * @return ASTNode
+     * @return ?ASTNode
      */
     public function getParent()
     {
@@ -476,7 +474,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
      *
-     * @return string
+     * @return ?string
      */
     public function getComment()
     {
@@ -509,7 +507,7 @@ abstract class AbstractASTNode implements ASTNode
         return array(
             'comment',
             'metadata',
-            'nodes'
+            'nodes',
         );
     }
 

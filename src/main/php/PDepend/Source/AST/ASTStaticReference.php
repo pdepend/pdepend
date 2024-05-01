@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>static</b> is used to reference a class or interface.

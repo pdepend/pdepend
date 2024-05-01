@@ -44,8 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * This node class represents a closure-expression.
  *
@@ -89,7 +87,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      */
     public function setReturnsByReference($returnsReference)
     {
-        $this->setMetadataBoolean(5, (boolean) $returnsReference);
+        $this->setMetadataBoolean(5, (bool) $returnsReference);
     }
 
     /**
@@ -132,7 +130,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      */
     public function setStatic($static)
     {
-        $this->setMetadataBoolean(6, (boolean) $static);
+        $this->setMetadataBoolean(6, (bool) $static);
     }
 
     /**

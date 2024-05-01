@@ -42,8 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * An instance of this class represents a function or method parameter within
  * the analyzed source code.
@@ -107,7 +105,7 @@ class ASTParameter extends AbstractASTArtifact
     {
         $this->formalParameter    = $formalParameter;
         $this->variableDeclarator = $formalParameter->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTVariableDeclarator'
+            'PDepend\\Source\\AST\\ASTVariableDeclarator',
         );
 
         $this->id = spl_object_hash($this);
@@ -218,7 +216,7 @@ class ASTParameter extends AbstractASTArtifact
     public function getClass()
     {
         $classReference = $this->formalParameter->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
         );
         if ($classReference === null) {
             return null;
@@ -311,7 +309,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function setOptional($optional)
     {
-        $this->optional = (boolean) $optional;
+        $this->optional = (bool) $optional;
     }
 
     /**
@@ -402,7 +400,7 @@ class ASTParameter extends AbstractASTArtifact
             $typeHint,
             $reference,
             $this->getName(),
-            $default
+            $default,
         );
     }
 

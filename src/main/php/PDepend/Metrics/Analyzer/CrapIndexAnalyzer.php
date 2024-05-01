@@ -208,7 +208,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     {
         $this->metrics[$callable->getId()] = array(
             self::M_CRAP_INDEX => $this->calculateCrapIndex($callable),
-            self::M_COVERAGE   => $this->calculateCoverage($callable)
+            self::M_COVERAGE   => $this->calculateCoverage($callable),
         );
     }
 

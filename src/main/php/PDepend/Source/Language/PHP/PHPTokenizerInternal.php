@@ -235,7 +235,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
-     * @var array<int, integer>
+     * @var array<int, int>
      */
     protected static $tokenMap = array(
         T_AS                        => Tokens::T_AS,
@@ -387,7 +387,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.
      *
-     * @var array<string, integer>
+     * @var array<string, int>
      */
     protected static $literalMap = array(
         '@'              =>  Tokens::T_AT,
@@ -566,7 +566,7 @@ class PHPTokenizerInternal implements FullTokenizer
     );
 
     /**
-     * @var array<int, array<int, array<string, integer|string>>>
+     * @var array<int, array<int, array<string, int|string>>>
      */
     protected static $reductionMap = array(
         Tokens::T_CONCAT => array(
@@ -577,28 +577,28 @@ class PHPTokenizerInternal implements FullTokenizer
             self::T_ELLIPSIS  =>  array(
                 'type'  => Tokens::T_ELLIPSIS,
                 'image' => '...',
-            )
+            ),
         ),
 
         Tokens::T_ANGLE_BRACKET_CLOSE => array(
             Tokens::T_IS_SMALLER_OR_EQUAL => array(
                 'type'  => Tokens::T_SPACESHIP,
                 'image' => '<=>',
-            )
+            ),
         ),
 
         Tokens::T_QUESTION_MARK => array(
             Tokens::T_QUESTION_MARK => array(
                 'type'  => Tokens::T_COALESCE,
                 'image' => '??',
-            )
+            ),
         ),
 
         Tokens::T_MUL => array(
             Tokens::T_MUL => array(
                 'type'  => Tokens::T_POW,
                 'image' => '**',
-            )
+            ),
         ),
     );
 
@@ -831,7 +831,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array<int|string> $token
      * @param string            $namespace
      *
-     * @return array<int, array<int, string|int>>
+     * @return array<int, array<int, int|string>>
      */
     private function splitRelativeNameToken($token, $namespace)
     {
@@ -994,7 +994,7 @@ class PHPTokenizerInternal implements FullTokenizer
                     $startColumn += strlen($token[1]);
                 } else {
                     $startColumn = strlen(
-                        substr($token[1], strrpos($token[1], "\n") + 1)
+                        substr($token[1], strrpos($token[1], "\n") + 1),
                     ) + 1;
                 }
 
@@ -1042,7 +1042,7 @@ class PHPTokenizerInternal implements FullTokenizer
                     $endColumn = $startColumn + strlen($rtrim) - 1;
                 } else {
                     $endColumn = strlen(
-                        substr($rtrim, strrpos($rtrim, "\n") + 1)
+                        substr($rtrim, strrpos($rtrim, "\n") + 1),
                     );
                 }
 
@@ -1062,7 +1062,7 @@ class PHPTokenizerInternal implements FullTokenizer
                     $startColumn += strlen($image);
                 } else {
                     $startColumn = strlen(
-                        substr($image, strrpos($image, "\n") + 1)
+                        substr($image, strrpos($image, "\n") + 1),
                     ) + 1;
                 }
 
@@ -1085,7 +1085,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * returns the collected content. The returned value will be null if there
      * was no none php token.
      *
-     * @param array<array<int, integer|string>|string> $tokens Reference to the current token stream.
+     * @param array<array<int, int|string>|string> $tokens Reference to the current token stream.
      *
      * @return string|null
      */

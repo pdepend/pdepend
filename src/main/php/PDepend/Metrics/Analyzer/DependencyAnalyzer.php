@@ -311,7 +311,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
         foreach ($type->getDependencies() as $dependency) {
             $this->collectDependencies(
                 $type->getNamespace(),
-                $dependency->getNamespace()
+                $dependency->getNamespace(),
             );
         }
 
@@ -363,7 +363,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
                 self::M_EFFERENT_COUPLING           =>  array(),
                 self::M_ABSTRACTION                 =>  0,
                 self::M_INSTABILITY                 =>  0,
-                self::M_DISTANCE                    =>  0
+                self::M_DISTANCE                    =>  0,
             );
         }
     }
@@ -446,7 +446,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
             $this->nodeMetrics[$id][self::M_DISTANCE] = abs(
-                ($metrics[self::M_ABSTRACTION] + $metrics[self::M_INSTABILITY]) - 1
+                ($metrics[self::M_ABSTRACTION] + $metrics[self::M_INSTABILITY]) - 1,
             );
         }
     }

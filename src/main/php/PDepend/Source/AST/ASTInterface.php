@@ -43,7 +43,6 @@
 namespace PDepend\Source\AST;
 
 use BadMethodCallException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Representation of a code interface.
@@ -83,7 +82,7 @@ class ASTInterface extends AbstractASTClassOrInterface
     public function setParentClassReference(ASTClassReference $classReference)
     {
         throw new BadMethodCallException(
-            'Unsupported method ' . __METHOD__ . '() called.'
+            'Unsupported method ' . __METHOD__ . '() called.',
         );
     }
 

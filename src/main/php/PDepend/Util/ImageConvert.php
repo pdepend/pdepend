@@ -94,10 +94,10 @@ class ImageConvert
         } else {
             $fallback = substr($output, 0, -strlen($outputType)) . $inputType;
 
-            echo "WARNING: Cannot generate image of type '{$outputType}'. This",
-                 " feature needs either the\n         pecl/imagick extension or",
-                 " the ImageMagick cli tool 'convert'.\n\n",
-                 "Writing alternative image:\n{$fallback}\n\n";
+            echo "WARNING: Cannot generate image of type '{$outputType}'. This"
+                . " feature needs either the\n         pecl/imagick extension or"
+                . " the ImageMagick cli tool 'convert'.\n\n"
+                . "Writing alternative image:\n{$fallback}\n\n";
 
             file_put_contents($fallback, file_get_contents($input));
         }

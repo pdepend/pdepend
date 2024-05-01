@@ -239,8 +239,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $classXml->setAttribute('sourceFile', (string) $class->getCompilationUnit());
         $classXml->appendChild(
             $doc->createTextNode(
-                Utf8Util::ensureEncoding($class->getName())
-            )
+                Utf8Util::ensureEncoding($class->getName()),
+            ),
         );
 
         if ($class->isAbstract()) {
@@ -267,8 +267,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $classXml->setAttribute('sourceFile', (string) $interface->getCompilationUnit());
         $classXml->appendChild(
             $doc->createTextNode(
-                Utf8Util::ensureEncoding($interface->getName())
-            )
+                Utf8Util::ensureEncoding($interface->getName()),
+            ),
         );
 
         $this->abstractClasses->appendChild($classXml);
@@ -321,8 +321,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild(
                 $doc->createTextNode(
-                    Utf8Util::ensureEncoding($efferent->getName())
-                )
+                    Utf8Util::ensureEncoding($efferent->getName()),
+                ),
             );
 
             $dependsUpon->appendChild($efferentXml);
@@ -333,8 +333,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild(
                 $doc->createTextNode(
-                    Utf8Util::ensureEncoding($afferent->getName())
-                )
+                    Utf8Util::ensureEncoding($afferent->getName()),
+                ),
             );
 
             $usedBy->appendChild($afferentXml);
@@ -354,8 +354,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
                 $cycleXml->appendChild($doc->createElement('Package'))
                     ->appendChild(
                         $doc->createTextNode(
-                            Utf8Util::ensureEncoding($cycle->getName())
-                        )
+                            Utf8Util::ensureEncoding($cycle->getName()),
+                        ),
                     );
             }
 

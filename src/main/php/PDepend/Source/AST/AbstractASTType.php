@@ -46,7 +46,6 @@ namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\AST\ASTTraitUseStatement;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
@@ -157,6 +156,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Adds a parsed child node to this node.
      *
      * @return void
+     *
      * @access private
      */
     public function addChild(ASTNode $node)
@@ -182,8 +182,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
-                get_class($this)
-            )
+                get_class($this),
+            ),
         );
     }
 
@@ -207,6 +207,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @param class-string<T> $targetType Searched class or interface type.
      *
      * @return T|null
+     *
      * @access private
      *
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
@@ -241,6 +242,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @param R[]             $results    The found children.
      *
      * @return T[]
+     *
      * @access private
      *
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
@@ -339,7 +341,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         /** @var ASTTraitUseStatement[] */
         $uses = $this->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            'PDepend\\Source\\AST\\ASTTraitUseStatement',
         );
 
         foreach ($uses as $use) {
@@ -527,7 +529,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             'namespaceName',
             'startLine',
             'userDefined',
-            'id'
+            'id',
         );
     }
 

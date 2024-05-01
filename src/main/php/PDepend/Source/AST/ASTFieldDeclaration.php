@@ -46,7 +46,6 @@ namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a field or property declaration of a class.
@@ -132,7 +131,7 @@ class ASTFieldDeclaration extends AbstractASTNode
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException(
                 'Invalid field modifiers given, allowed modifiers are ' .
-                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.'
+                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.',
             );
         }
 

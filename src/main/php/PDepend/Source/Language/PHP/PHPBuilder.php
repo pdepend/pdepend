@@ -324,7 +324,7 @@ class PHPBuilder implements Builder
         Log::debug(
             'Creating: \\PDepend\\Source\\AST\\ASTClassOrInterfaceReference(' .
             $qualifiedName .
-            ')'
+            ')',
         );
 
         return new ASTClassOrInterfaceReference($this->context, $qualifiedName);
@@ -429,7 +429,7 @@ class PHPBuilder implements Builder
         $this->checkBuilderState();
 
         Log::debug(
-            'Creating: \\PDepend\\Source\\AST\\ASTTraitReference(' . $qualifiedName . ')'
+            'Creating: \\PDepend\\Source\\AST\\ASTTraitReference(' . $qualifiedName . ')',
         );
 
         return new ASTTraitReference($this->context, $qualifiedName);
@@ -519,7 +519,7 @@ class PHPBuilder implements Builder
 
         // Debug method creation
         Log::debug(
-            'Creating: \\PDepend\\Source\\AST\\ASTClassReference(' . $qualifiedName . ')'
+            'Creating: \\PDepend\\Source\\AST\\ASTClassReference(' . $qualifiedName . ')',
         );
 
         return new ASTClassReference($this->context, $qualifiedName);
@@ -624,7 +624,7 @@ class PHPBuilder implements Builder
         if (!isset($this->namespaces[$name])) {
             // Debug package creation
             Log::debug(
-                'Creating: \\PDepend\\Source\\AST\\ASTNamespace(' . $name . ')'
+                'Creating: \\PDepend\\Source\\AST\\ASTNamespace(' . $name . ')',
             );
 
             $this->namespaces[$name] = new ASTNamespace($name);
@@ -665,7 +665,7 @@ class PHPBuilder implements Builder
     public function buildAstSelfReference(AbstractASTClassOrInterface $type)
     {
         Log::debug(
-            'Creating: \\PDepend\\Source\\AST\\ASTSelfReference(' . $type->getName() . ')'
+            'Creating: \\PDepend\\Source\\AST\\ASTSelfReference(' . $type->getName() . ')',
         );
 
         return new ASTSelfReference($this->context, $type);
@@ -2223,7 +2223,7 @@ class PHPBuilder implements Builder
 
         $trait = $this->buildTrait($qualifiedName);
         $trait->setNamespace(
-            $this->buildNamespace($this->extractNamespaceName($qualifiedName))
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName)),
         );
 
         $this->restoreTrait($trait);
@@ -2249,7 +2249,7 @@ class PHPBuilder implements Builder
         /** @var ASTTrait|null $trait */
         $trait = $this->findType(
             $this->frozenTraits,
-            $qualifiedName
+            $qualifiedName,
         );
 
         if ($trait === null) {
@@ -2300,7 +2300,7 @@ class PHPBuilder implements Builder
 
         $interface = $this->buildInterface($qualifiedName);
         $interface->setNamespace(
-            $this->buildNamespace($this->extractNamespaceName($qualifiedName))
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName)),
         );
 
         $this->restoreInterface($interface);
@@ -2326,13 +2326,13 @@ class PHPBuilder implements Builder
         /** @var ASTInterface|null $interface */
         $interface = $this->findType(
             $this->frozenInterfaces,
-            $qualifiedName
+            $qualifiedName,
         );
 
         if ($interface === null) {
             $interface = $this->findType(
                 $this->interfaces,
-                $qualifiedName
+                $qualifiedName,
             );
         }
         return $interface;
@@ -2374,7 +2374,7 @@ class PHPBuilder implements Builder
 
         $class = $this->buildClass($qualifiedName);
         $class->setNamespace(
-            $this->buildNamespace($this->extractNamespaceName($qualifiedName))
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName)),
         );
 
         $this->restoreClass($class);
@@ -2400,7 +2400,7 @@ class PHPBuilder implements Builder
         /** @var ASTClass|ASTEnum|null $class */
         $class = $this->findType(
             $this->frozenClasses,
-            $qualifiedName
+            $qualifiedName,
         );
 
         if ($class === null) {
@@ -2485,7 +2485,7 @@ class PHPBuilder implements Builder
      * @template T of AbstractASTType
      *
      * @param array<string, array<string, array<string, T>>> $originalTypes The original types created during the parsing
-     *                                                                   process.
+     *                                                                      process.
      *
      * @return array<string, array<string, array<string, T>>>
      */
@@ -2527,7 +2527,7 @@ class PHPBuilder implements Builder
         $this->storeTrait(
             $trait->getName(),
             $trait->getNamespaceName(),
-            $trait
+            $trait,
         );
     }
 
@@ -2543,7 +2543,7 @@ class PHPBuilder implements Builder
         $this->storeClass(
             $class->getName(),
             $class->getNamespaceName(),
-            $class
+            $class,
         );
     }
 
@@ -2559,7 +2559,7 @@ class PHPBuilder implements Builder
         $this->storeEnum(
             $enum->getName(),
             $enum->getNamespaceName(),
-            $enum
+            $enum,
         );
     }
 
@@ -2575,7 +2575,7 @@ class PHPBuilder implements Builder
         $this->storeInterface(
             $interface->getName(),
             $interface->getNamespaceName(),
-            $interface
+            $interface,
         );
     }
 
@@ -2724,7 +2724,7 @@ class PHPBuilder implements Builder
     {
         if ($this->frozen === true && $this->internal === false) {
             throw new BadMethodCallException(
-                'Cannot create new nodes, when internal state is frozen.'
+                'Cannot create new nodes, when internal state is frozen.',
             );
         }
         $this->internal = $internal;

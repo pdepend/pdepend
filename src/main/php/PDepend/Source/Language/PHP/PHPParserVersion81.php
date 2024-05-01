@@ -182,7 +182,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
                 throw new ParserException(
                     $type->getImage() . ' can not be used in an intersection type',
                     0,
-                    $this->getUnexpectedTokenException($token)
+                    $this->getUnexpectedTokenException($token),
                 );
             }
 

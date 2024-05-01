@@ -82,7 +82,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * The context analyzer instance.
      *
-     * @var Analyzer\DependencyAnalyzer
+     * @var DependencyAnalyzer
      */
     private $analyzer = null;
 
@@ -198,8 +198,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 $angle = rand(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
                 if ($legend instanceof DOMElement) {
-                    $legend->setAttribute('x', (string)($e + $item['ratio'] * (1 + cos($angle))));
-                    $legend->setAttribute('y', (string)($f + $item['ratio'] * (1 + sin($angle))));
+                    $legend->setAttribute('x', (string) ($e + $item['ratio'] * (1 + cos($angle))));
+                    $legend->setAttribute('y', (string) ($f + $item['ratio'] * (1 + sin($angle))));
                     $legend->nodeValue = $found[1];
                     $legendTemplate->parentNode->appendChild($legend);
                 }
@@ -242,7 +242,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 'abstraction'  =>  $metrics['a'],
                 'instability'  =>  $metrics['i'],
                 'distance'     =>  $metrics['d'],
-                'name'         =>  Utf8Util::ensureEncoding($namespace->getName())
+                'name'         =>  Utf8Util::ensureEncoding($namespace->getName()),
             );
         }
 
@@ -251,7 +251,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             $items,
             function ($a, $b) {
                 return ($a['size'] - $b['size']);
-            }
+            },
         );
 
         if ($items) {

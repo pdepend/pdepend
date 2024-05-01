@@ -43,8 +43,8 @@
 namespace PDepend\Report;
 
 use RuntimeException;
-use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 
 /**
  * This factory creates singleton instances of available loggers.

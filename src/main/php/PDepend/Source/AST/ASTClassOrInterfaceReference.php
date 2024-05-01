@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Builder\BuilderContext;
 
 /**
@@ -93,7 +92,7 @@ class ASTClassOrInterfaceReference extends ASTType
     {
         if ($this->typeInstance === null) {
             $this->typeInstance = $this->context->getClassOrInterface(
-                $this->getImage()
+                $this->getImage(),
             );
         }
         return $this->typeInstance;

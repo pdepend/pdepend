@@ -114,7 +114,7 @@ final class Type
           IMAGE_SOUNDEX_STRING       = 'S365',
           IMAGE_SOUNDEX_STDCLASS     = 'S324',
           IMAGE_SOUNDEX_UNKNOWN      = 'U525';
- 
+
     /**
      * Constants for other types/keywords frequently used.
      */

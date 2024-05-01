@@ -72,16 +72,16 @@ class ExtensionManager
             throw new RuntimeException(
                 sprintf(
                     'Cannot find extension class "%s" for PDepend. Maybe the plugin is not installed?',
-                    $className
-                )
+                    $className,
+                ),
             );
         }
 
-        $extension = new $className;
+        $extension = new $className();
 
         if (!($extension instanceof Extension)) {
             throw new RuntimeException(
-                sprintf('Class "%s" is not a valid Extension', $className)
+                sprintf('Class "%s" is not a valid Extension', $className),
             );
         }
 

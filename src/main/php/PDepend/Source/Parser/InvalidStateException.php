@@ -66,8 +66,8 @@ class InvalidStateException extends ParserException
                 '"%s". Please check the following conditions: %s',
                 $lineNumber,
                 $fileName,
-                $reason
-            )
+                $reason,
+            ),
         );
     }
 }

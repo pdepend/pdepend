@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
 use BadMethodCallException;
 use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This class represents a formal parameter within the signature of a function,
@@ -185,7 +184,7 @@ class ASTFormalParameter extends AbstractASTNode
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
-                'Cannot overwrite previously set constructor property modifiers.'
+                'Cannot overwrite previously set constructor property modifiers.',
             );
         }
 

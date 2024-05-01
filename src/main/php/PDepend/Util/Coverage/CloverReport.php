@@ -142,7 +142,7 @@ class CloverReport implements Report
      *
      * @param string $fileName The source file name.
      *
-     * @return array<boolean>
+     * @return array<bool>
      */
     private function getLines($fileName)
     {
