@@ -231,7 +231,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
             self::M_PROPERTIES_NON_PRIVATE       => 0,
             self::M_WEIGHTED_METHODS             => 0,
             self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
-            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
+            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0,
         );
 
         foreach ($trait->getProperties() as $property) {
@@ -418,7 +418,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
             self::M_PROPERTIES_NON_PRIVATE       => 0,
             self::M_WEIGHTED_METHODS             => 0,
             self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
-            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0
+            self::M_WEIGHTED_METHODS_NON_PRIVATE => 0,
         );
 
         if ($class instanceof ASTClass) {

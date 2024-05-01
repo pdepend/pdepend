@@ -279,7 +279,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     protected function setMetadataInteger($index, $value)
     {
-        $this->setMetadata($index, (string)$value);
+        $this->setMetadata($index, (string) $value);
     }
 
     /**

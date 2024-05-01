@@ -394,7 +394,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         foreach ($this->getInterfaces() as $interface) {
             $this->constantDeclarators = array_merge(
                 $this->constantDeclarators,
-                $interface->getConstantDeclarators()
+                $interface->getConstantDeclarators(),
             );
         }
 
@@ -425,7 +425,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     {
         return array_merge(
             array('constants', 'interfaceReferences', 'parentClassReference'),
-            parent::__sleep()
+            parent::__sleep(),
         );
     }
 }

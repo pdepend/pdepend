@@ -61,7 +61,7 @@ interface ReportGenerator
      * @return bool
      */
     public function log(Analyzer $analyzer);
-    
+
     /**
      * Closes the logger process and writes the output file.
      *
@@ -70,7 +70,7 @@ interface ReportGenerator
      * @return void
      */
     public function close();
-    
+
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be
      * concrete analyzer classes or one of the descriptive analyzer interfaces.

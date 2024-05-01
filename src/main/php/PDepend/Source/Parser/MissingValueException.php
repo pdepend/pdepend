@@ -68,7 +68,7 @@ class MissingValueException extends ParserException
             'Missing default value on line: %d, col: %d, file: %s.',
             $token->startLine,
             $token->startColumn,
-            $tokenizer->getSourceFile()
+            $tokenizer->getSourceFile(),
         );
 
         parent::__construct($message);

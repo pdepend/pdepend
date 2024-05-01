@@ -64,7 +64,7 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
      * @return void
      */
     public function startParseProcess(Builder $builder);
-    
+
     /**
      * Is called when PDepend has finished the file parsing process.
      *
@@ -73,42 +73,42 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
      * @return void
      */
     public function endParseProcess(Builder $builder);
-    
+
     /**
      * Is called when PDepend starts parsing of a new file.
      *
      * @return void
      */
     public function startFileParsing(Tokenizer $tokenizer);
-    
+
     /**
      * Is called when PDepend has finished a file.
      *
      * @return void
      */
     public function endFileParsing(Tokenizer $tokenizer);
-    
+
     /**
      * Is called when PDepend starts the analyzing process.
      *
      * @return void
      */
     public function startAnalyzeProcess();
-    
+
     /**
      * Is called when PDepend has finished the analyzing process.
      *
      * @return void
      */
     public function endAnalyzeProcess();
-    
+
     /**
      * Is called when PDepend starts the logging process.
      *
      * @return void
      */
     public function startLogProcess();
-    
+
     /**
      * Is called when PDepend has finished the logging process.
      *

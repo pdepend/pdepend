@@ -182,8 +182,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
-                get_class($this)
-            )
+                get_class($this),
+            ),
         );
     }
 
@@ -341,7 +341,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         /** @var ASTTraitUseStatement[] */
         $uses = $this->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            'PDepend\\Source\\AST\\ASTTraitUseStatement',
         );
 
         foreach ($uses as $use) {
@@ -529,7 +529,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             'namespaceName',
             'startLine',
             'userDefined',
-            'id'
+            'id',
         );
     }
 

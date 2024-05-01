@@ -281,7 +281,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_OBJECT_OPERATOR:
                 case Tokens::T_DOUBLE_COLON:
                     // Glue ->/:: and before & after parts together.
-                    $image = array_pop($operands).$token->image.$tokens[$i + 1]->image;
+                    $image = array_pop($operands) . $token->image . $tokens[$i + 1]->image;
                     $operands[] = $image;
 
                     // Skip next part (would be seen as operand)
@@ -388,7 +388,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
         $measures[self::M_HALSTEAD_EFFORT] =
             $measures[self::M_HALSTEAD_VOLUME] * $measures[self::M_HALSTEAD_DIFFICULTY];
         $measures[self::M_HALSTEAD_TIME] = $measures[self::M_HALSTEAD_EFFORT] / 18;
-        $measures[self::M_HALSTEAD_BUGS] = pow($measures[self::M_HALSTEAD_EFFORT], (2/3)) / 3000;
+        $measures[self::M_HALSTEAD_BUGS] = pow($measures[self::M_HALSTEAD_EFFORT], (2 / 3)) / 3000;
         $measures[self::M_HALSTEAD_CONTENT] =
             $measures[self::M_HALSTEAD_VOLUME] / ($measures[self::M_HALSTEAD_DIFFICULTY] ?: 1);
 

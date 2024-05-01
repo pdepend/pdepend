@@ -313,7 +313,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
             'endLine',
             'fileName',
             'startLine',
-            'id'
+            'id',
         );
     }
 

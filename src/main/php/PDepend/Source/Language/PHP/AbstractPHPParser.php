@@ -527,7 +527,7 @@ abstract class AbstractPHPParser
         $this->cache->store(
             $this->compilationUnit->getId(),
             $this->compilationUnit,
-            $hash ?: null
+            $hash ?: null,
         );
 
         $this->tearDownEnvironment();
@@ -542,7 +542,7 @@ abstract class AbstractPHPParser
      */
     protected function setUpEnvironment()
     {
-        ini_set('xdebug.max_nesting_level', (string)$this->getMaxNestingLevel());
+        ini_set('xdebug.max_nesting_level', (string) $this->getMaxNestingLevel());
 
         $this->useSymbolTable->createScope();
 
@@ -920,7 +920,7 @@ abstract class AbstractPHPParser
         $validModifiers = array(
             Tokens::T_ABSTRACT,
             Tokens::T_FINAL,
-            Tokens::T_READONLY
+            Tokens::T_READONLY,
         );
 
         $finalAllowed = true;
@@ -975,9 +975,9 @@ abstract class AbstractPHPParser
         $class->setParentClassReference(
             $this->setNodePositionsAndReturn(
                 $this->builder->buildAstClassReference(
-                    $this->parseQualifiedName()
-                )
-            )
+                    $this->parseQualifiedName(),
+                ),
+            ),
         );
 
         return $class;
@@ -998,9 +998,9 @@ abstract class AbstractPHPParser
             $abstractType->addInterfaceReference(
                 $this->setNodePositionsAndReturn(
                     $this->builder->buildAstClassOrInterfaceReference(
-                        $this->parseQualifiedName()
-                    )
-                )
+                        $this->parseQualifiedName(),
+                    ),
+                ),
             );
 
             $this->consumeComments();
@@ -1054,7 +1054,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_VARIABLE:
                 case Tokens::T_VAR:
                     $methodOrProperty = $this->parseMethodOrFieldDeclaration(
-                        $defaultModifier
+                        $defaultModifier,
                     );
 
                     if ($methodOrProperty instanceof ASTNode) {
@@ -1085,7 +1085,7 @@ abstract class AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $classOrInterface->addChild($comment);
@@ -1098,7 +1098,7 @@ abstract class AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $classOrInterface->addChild($comment);
@@ -1111,7 +1111,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_CASE:
                     if (!($classOrInterface instanceof ASTEnum)) {
                         throw new TokenException(
-                            'Enum case should be located only inside enum classes'
+                            'Enum case should be located only inside enum classes',
                         );
                     }
 
@@ -1288,7 +1288,7 @@ abstract class AbstractPHPParser
 
         if ($this->isNextTokenFormalParameterList()) {
             return $this->setNodePositionsAndReturn(
-                $this->parseClosureDeclaration()
+                $this->parseClosureDeclaration(),
             );
         }
 
@@ -1518,7 +1518,7 @@ abstract class AbstractPHPParser
         }
 
         return $this->setNodePositionsAndReturn(
-            $this->parseOptionalTraitAdaptation($useStatement)
+            $this->parseOptionalTraitAdaptation($useStatement),
         );
     }
 
@@ -1536,8 +1536,8 @@ abstract class AbstractPHPParser
 
         return $this->setNodePositionsAndReturn(
             $this->builder->buildAstTraitReference(
-                $this->parseQualifiedName()
-            )
+                $this->parseQualifiedName(),
+            ),
         );
     }
 
@@ -1626,7 +1626,7 @@ abstract class AbstractPHPParser
 
         if (Tokens::T_DOUBLE_COLON === $this->tokenizer->peek()) {
             $traitReference = $this->setNodePositionsAndReturn(
-                $this->builder->buildAstTraitReference($qualifiedName)
+                $this->builder->buildAstTraitReference($qualifiedName),
             );
 
             $this->consumeToken(Tokens::T_DOUBLE_COLON);
@@ -1701,7 +1701,7 @@ abstract class AbstractPHPParser
             throw new InvalidStateException(
                 $this->requireNextToken()->startLine,
                 $this->compilationUnit->getFileName(),
-                'Expecting full qualified trait method name.'
+                'Expecting full qualified trait method name.',
             );
         }
 
@@ -2090,7 +2090,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $expr;
@@ -2134,7 +2134,7 @@ abstract class AbstractPHPParser
             $child->getStartLine(),
             $token->endLine,
             $child->getStartColumn(),
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $expr;
@@ -2156,7 +2156,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $expr;
@@ -2200,7 +2200,7 @@ abstract class AbstractPHPParser
             $child->getStartLine(),
             $token->endLine,
             $child->getStartColumn(),
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $expr;
@@ -2222,7 +2222,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $expr;
@@ -2286,7 +2286,7 @@ abstract class AbstractPHPParser
         ASTNode $node,
         ASTExpression $expr,
         $open,
-        $close
+        $close,
     ) {
         $this->consumeToken($open);
 
@@ -2300,7 +2300,7 @@ abstract class AbstractPHPParser
             $node->getStartLine(),
             $token->endLine,
             $node->getStartColumn(),
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $this->parseOptionalIndexExpression($expr);
@@ -2330,7 +2330,7 @@ abstract class AbstractPHPParser
             $node,
             $expr,
             Tokens::T_SQUARED_BRACKET_OPEN,
-            Tokens::T_SQUARED_BRACKET_CLOSE
+            Tokens::T_SQUARED_BRACKET_CLOSE,
         );
     }
 
@@ -2358,7 +2358,7 @@ abstract class AbstractPHPParser
             $node,
             $expr,
             Tokens::T_CURLY_BRACE_OPEN,
-            Tokens::T_CURLY_BRACE_CLOSE
+            Tokens::T_CURLY_BRACE_CLOSE,
         );
     }
 
@@ -2398,7 +2398,7 @@ abstract class AbstractPHPParser
             $start->startLine,
             $end->endLine,
             $start->startColumn,
-            $end->endColumn
+            $end->endColumn,
         );
 
         return $node;
@@ -2460,7 +2460,7 @@ abstract class AbstractPHPParser
 
         return $this->parseExpressionTypeReference(
             $this->builder->buildAstInstanceOfExpression($token->image),
-            false
+            false,
         );
     }
 
@@ -2500,7 +2500,7 @@ abstract class AbstractPHPParser
             $startToken->startLine,
             $stopToken->endLine,
             $startToken->startColumn,
-            $stopToken->endColumn
+            $stopToken->endColumn,
         );
 
         return $expr;
@@ -2575,9 +2575,9 @@ abstract class AbstractPHPParser
         $expr->addChild(
             $this->parseOptionalMemberPrimaryPrefix(
                 $this->parseOptionalStaticMemberPrimaryPrefix(
-                    $this->parseStandAloneExpressionType($classRef)
-                )
-            )
+                    $this->parseStandAloneExpressionType($classRef),
+                ),
+            ),
         );
 
         return $expr;
@@ -2629,7 +2629,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2650,7 +2650,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2671,7 +2671,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2692,7 +2692,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2713,7 +2713,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2734,7 +2734,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2755,7 +2755,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $expr;
     }
@@ -2776,8 +2776,8 @@ abstract class AbstractPHPParser
         return $this->setNodePositionsAndReturn(
             $this->builder->buildAstNeededReference(
                 $this->parseQualifiedName(),
-                $classReference
-            )
+                $classReference,
+            ),
         );
     }
 
@@ -2820,7 +2820,7 @@ abstract class AbstractPHPParser
         ASTNode $node,
         Token $start,
         $closeToken,
-        $separatorToken = null
+        $separatorToken = null,
     ) {
         if (is_object($expr = $this->parseOptionalExpression())) {
             $node->addChild($expr);
@@ -2844,7 +2844,7 @@ abstract class AbstractPHPParser
             $start->startLine,
             $end->endLine,
             $start->startColumn,
-            $end->endColumn
+            $end->endColumn,
         );
         return $node;
     }
@@ -2972,8 +2972,8 @@ abstract class AbstractPHPParser
                 Tokens::T_ENDFOREACH,
                 Tokens::T_ENDIF,
                 Tokens::T_ENDSWITCH,
-                Tokens::T_ENDWHILE
-            )
+                Tokens::T_ENDWHILE,
+            ),
         );
     }
 
@@ -3066,7 +3066,7 @@ abstract class AbstractPHPParser
             throw new InvalidStateException(
                 $token->startLine,
                 $this->compilationUnit->getFileName(),
-                'Mandatory expression expected.'
+                'Mandatory expression expected.',
             );
         }
         return $expr;
@@ -3199,7 +3199,7 @@ abstract class AbstractPHPParser
                     $expressions[] = $this->parseBraceExpression(
                         $this->builder->buildAstExpression(),
                         $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN),
-                        Tokens::T_CURLY_BRACE_CLOSE
+                        Tokens::T_CURLY_BRACE_CLOSE,
                     );
                     break;
                 case Tokens::T_INCLUDE:
@@ -3258,7 +3258,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_CONCAT_EQUAL:
                 case Tokens::T_COALESCE_EQUAL:
                     $expressions[] = $this->parseAssignmentExpression(
-                        array_pop($expressions)
+                        array_pop($expressions),
                     );
                     break;
                 // TODO: Handle comments here
@@ -3274,7 +3274,7 @@ abstract class AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $expressions[] = $expr;
@@ -3309,7 +3309,7 @@ abstract class AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $expressions[] = $expr;
@@ -3323,7 +3323,7 @@ abstract class AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $expressions[] = $expr;
@@ -3354,7 +3354,7 @@ abstract class AbstractPHPParser
             $expressions[0]->getStartLine(),
             $expressions[$count - 1]->getEndLine(),
             $expressions[0]->getStartColumn(),
-            $expressions[$count - 1]->getEndColumn()
+            $expressions[$count - 1]->getEndColumn(),
         );
 
         return $expr;
@@ -3414,7 +3414,7 @@ abstract class AbstractPHPParser
                     $expr->getStartLine(),
                     $child->getEndLine(),
                     $expr->getStartColumn(),
-                    $child->getEndColumn()
+                    $child->getEndColumn(),
                 );
 
                 unset($expressions[$i + 1]);
@@ -3710,7 +3710,7 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_COLON);
 
         return $this->setNodePositionsAndReturn(
-            $this->builder->buildAstLabelStatement($token->image)
+            $this->builder->buildAstLabelStatement($token->image),
         );
     }
 
@@ -3817,8 +3817,8 @@ abstract class AbstractPHPParser
     {
         $stmt->addChild(
             $this->builder->buildAstClassOrInterfaceReference(
-                $this->parseQualifiedName()
-            )
+                $this->parseQualifiedName(),
+            ),
         );
     }
 
@@ -4048,7 +4048,7 @@ abstract class AbstractPHPParser
         }
 
         $children = array(
-            $this->parseVariableOrConstantOrPrimaryPrefix()
+            $this->parseVariableOrConstantOrPrimaryPrefix(),
         );
 
         if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
@@ -4092,7 +4092,7 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
 
         return $this->setNodePositionsAndReturn(
-            $this->parseStatementBody($foreach)
+            $this->parseStatementBody($foreach),
         );
     }
 
@@ -4112,7 +4112,7 @@ abstract class AbstractPHPParser
         $stmt->addChild($this->parseParenthesisExpression());
 
         return $this->setNodePositionsAndReturn(
-            $this->parseStatementBody($stmt)
+            $this->parseStatementBody($stmt),
         );
     }
 
@@ -4247,7 +4247,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         $stmt = $this->buildReturnStatement(
-            $this->consumeToken(Tokens::T_RETURN)
+            $this->consumeToken(Tokens::T_RETURN),
         );
 
         $this->parseStatementTermination();
@@ -4310,7 +4310,7 @@ abstract class AbstractPHPParser
         $token = $this->consumeToken(Tokens::T_ECHO);
 
         $stmt = $this->parseExpressionList(
-            $this->builder->buildAstEchoStatement($token->image)
+            $this->builder->buildAstEchoStatement($token->image),
         );
 
         $this->parseStatementTermination();
@@ -4333,7 +4333,7 @@ abstract class AbstractPHPParser
     protected function parseParenthesisExpressionOrPrimaryPrefix()
     {
         return $this->parseParenthesisExpressionOrPrimaryPrefixForVersion(
-            $this->parseParenthesisExpression()
+            $this->parseParenthesisExpression(),
         );
     }
 
@@ -4391,7 +4391,7 @@ abstract class AbstractPHPParser
         $expr = $this->parseBraceExpression(
             $expr,
             $this->consumeToken(Tokens::T_PARENTHESIS_OPEN),
-            Tokens::T_PARENTHESIS_CLOSE
+            Tokens::T_PARENTHESIS_CLOSE,
         );
 
         return $this->setNodePositionsAndReturn($expr);
@@ -4521,7 +4521,7 @@ abstract class AbstractPHPParser
         $function->addChild($this->parseArguments());
 
         return $this->parseOptionalMemberPrimaryPrefix(
-            $this->parseOptionalIndexExpression($function)
+            $this->parseOptionalIndexExpression($function),
         );
     }
 
@@ -4632,12 +4632,12 @@ abstract class AbstractPHPParser
 
         $prefix->addChild(
             $this->parseMethodOrPropertyPostfix(
-                $this->parseOptionalIndexExpression($child)
-            )
+                $this->parseOptionalIndexExpression($child),
+            ),
         );
 
         return $this->parseOptionalMemberPrimaryPrefix(
-            $this->parseOptionalIndexExpression($prefix)
+            $this->parseOptionalIndexExpression($prefix),
         );
     }
 
@@ -4716,7 +4716,7 @@ abstract class AbstractPHPParser
                 break;
             default:
                 $postfix = $this->parseMethodOrPropertyPostfix(
-                    $this->parsePostfixIdentifier()
+                    $this->parsePostfixIdentifier(),
                 );
                 break;
         }
@@ -4724,7 +4724,7 @@ abstract class AbstractPHPParser
         $prefix->addChild($postfix);
 
         return $this->parseOptionalMemberPrimaryPrefix(
-            $this->parseOptionalIndexExpression($prefix)
+            $this->parseOptionalIndexExpression($prefix),
         );
     }
 
@@ -4804,7 +4804,7 @@ abstract class AbstractPHPParser
             $node->getStartLine(),
             $node->getEndLine(),
             $node->getStartColumn(),
-            $node->getEndColumn()
+            $node->getEndColumn(),
         );
 
         return $postfix;
@@ -4864,7 +4864,7 @@ abstract class AbstractPHPParser
             $node->getStartLine(),
             $args->getEndLine(),
             $node->getStartColumn(),
-            $args->getEndColumn()
+            $args->getEndColumn(),
         );
 
         return $this->parseOptionalMemberPrimaryPrefix($postfix);
@@ -4886,7 +4886,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         return $this->parseArgumentsParenthesesContent(
-            $this->builder->buildAstArguments()
+            $this->builder->buildAstArguments(),
         );
     }
 
@@ -5028,7 +5028,7 @@ abstract class AbstractPHPParser
             $left->getStartLine(),
             $expr->getEndLine(),
             $left->getStartColumn(),
-            $expr->getEndColumn()
+            $expr->getEndColumn(),
         );
 
         return $node;
@@ -5055,7 +5055,7 @@ abstract class AbstractPHPParser
             throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->compilationUnit,
-                'The keyword "static" was used outside of a class/method scope.'
+                'The keyword "static" was used outside of a class/method scope.',
             );
         }
 
@@ -5064,7 +5064,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $ref;
@@ -5088,7 +5088,7 @@ abstract class AbstractPHPParser
             throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->compilationUnit,
-                'The keyword "self" was used outside of a class/method scope.'
+                'The keyword "self" was used outside of a class/method scope.',
             );
         }
 
@@ -5097,7 +5097,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $ref;
@@ -5127,7 +5127,7 @@ abstract class AbstractPHPParser
                 $token = $this->consumeToken($type);
 
                 return $this->setNodePositionsAndReturn(
-                    $this->builder->buildAstConstant($token->image)
+                    $this->builder->buildAstConstant($token->image),
                 );
         }
 
@@ -5155,7 +5155,7 @@ abstract class AbstractPHPParser
 
         if ($this->tokenizer->peek() == Tokens::T_DOUBLE_COLON) {
             return $this->parseStaticMemberPrimaryPrefix(
-                $this->parseSelfReference($token)
+                $this->parseSelfReference($token),
             );
         }
 
@@ -5181,7 +5181,7 @@ abstract class AbstractPHPParser
                 $token->startLine,
                 (string) $this->compilationUnit,
                 'The keyword "parent" was used as type hint but the parameter ' .
-                'declaration is not in a class scope.'
+                'declaration is not in a class scope.',
             );
         }
 
@@ -5196,8 +5196,8 @@ abstract class AbstractPHPParser
                 sprintf(
                     'The keyword "parent" was used as type hint but the ' .
                     'class "%s" does not declare a parent.',
-                    $this->classOrInterface->getName()
-                )
+                    $this->classOrInterface->getName(),
+                ),
             );
         }
 
@@ -5206,7 +5206,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $ref;
@@ -5233,7 +5233,7 @@ abstract class AbstractPHPParser
 
         if ($this->tokenizer->peek() == Tokens::T_DOUBLE_COLON) {
             return $this->parseStaticMemberPrimaryPrefix(
-                $this->parseParentReference($token)
+                $this->parseParentReference($token),
             );
         }
 
@@ -5318,7 +5318,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $variable;
@@ -5462,7 +5462,7 @@ abstract class AbstractPHPParser
             case Tokens::T_VARIABLE:
                 $variable = $this->builder->buildAstVariableVariable($token->image);
                 $variable->addChild(
-                    $this->parseCompoundVariableOrVariableVariableOrVariable()
+                    $this->parseCompoundVariableOrVariableVariableOrVariable(),
                 );
                 break;
             default:
@@ -5493,7 +5493,7 @@ abstract class AbstractPHPParser
         return $this->parseBraceExpression(
             $this->builder->buildAstCompoundVariable($token->image),
             $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN),
-            Tokens::T_CURLY_BRACE_CLOSE
+            Tokens::T_CURLY_BRACE_CLOSE,
         );
     }
 
@@ -5529,7 +5529,7 @@ abstract class AbstractPHPParser
                 return $this->parseBraceExpression(
                     $this->builder->buildAstCompoundExpression(),
                     $token,
-                    Tokens::T_CURLY_BRACE_CLOSE
+                    Tokens::T_CURLY_BRACE_CLOSE,
                 );
         }
 
@@ -5538,7 +5538,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $literal;
@@ -5567,7 +5567,7 @@ abstract class AbstractPHPParser
         return $this->parseBraceExpression(
             $this->builder->buildAstCompoundExpression(),
             $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN),
-            Tokens::T_CURLY_BRACE_CLOSE
+            Tokens::T_CURLY_BRACE_CLOSE,
         );
     }
 
@@ -5590,7 +5590,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $node;
@@ -5622,7 +5622,7 @@ abstract class AbstractPHPParser
                     $token->startLine,
                     $token->endLine,
                     $token->startColumn,
-                    $token->endColumn
+                    $token->endColumn,
                 );
                 return $literal;
             case Tokens::T_LNUMBER:
@@ -5648,7 +5648,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $literal;
@@ -5670,8 +5670,8 @@ abstract class AbstractPHPParser
         return $this->setNodePositionsAndReturn(
             $this->parseArray(
                 $this->builder->buildAstArray(),
-                $static
-            )
+                $static,
+            ),
         );
     }
 
@@ -5994,7 +5994,7 @@ abstract class AbstractPHPParser
             $startLine,
             $endLine,
             $startColumn,
-            $endColumn
+            $endColumn,
         );
 
         return $string;
@@ -6069,7 +6069,7 @@ abstract class AbstractPHPParser
             }
         }
         return $this->setNodePositionsAndReturn(
-            $this->builder->buildAstLiteral($image)
+            $this->builder->buildAstLiteral($image),
         );
     }
 
@@ -6090,7 +6090,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $node;
@@ -6150,7 +6150,7 @@ abstract class AbstractPHPParser
             }
 
             $formalParameters->addChild(
-                $this->parseFormalParameterOrPrefix($callable)
+                $this->parseFormalParameterOrPrefix($callable),
             );
 
             $this->consumeComments();
@@ -6209,7 +6209,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
 
         return $this->setNodePositionsAndReturn(
-            $this->parseFormalParameterFromType($tokenType)
+            $this->parseFormalParameterFromType($tokenType),
         );
     }
 
@@ -6278,7 +6278,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $type;
@@ -6533,7 +6533,7 @@ abstract class AbstractPHPParser
             case Tokens::T_NAMESPACE:
             case Tokens::T_CLASS:
                 return $this->builder->buildAstClassOrInterfaceReference(
-                    $this->parseQualifiedName()
+                    $this->parseQualifiedName(),
                 );
         }
 
@@ -6658,7 +6658,7 @@ abstract class AbstractPHPParser
                 return $this->parseCommentWithOptionalInlineClassOrInterfaceReference();
             case Tokens::T_DOC_COMMENT:
                 return $this->builder->buildAstComment(
-                    $this->consumeToken(Tokens::T_DOC_COMMENT)->image
+                    $this->consumeToken(Tokens::T_DOC_COMMENT)->image,
                 );
             case Tokens::T_CURLY_BRACE_OPEN:
                 return $this->parseRegularScope();
@@ -6775,7 +6775,7 @@ abstract class AbstractPHPParser
             $image = $this->useSymbolTable->lookup($match[1]) ?: $match[1];
 
             $comment->addChild(
-                $this->builder->buildAstClassOrInterfaceReference($image)
+                $this->builder->buildAstClassOrInterfaceReference($image),
             );
         }
 
@@ -6783,7 +6783,7 @@ abstract class AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
         return $comment;
     }
@@ -6800,7 +6800,7 @@ abstract class AbstractPHPParser
      * @since 1.0.0
      */
     protected function parseOptionalBoundVariables(
-        ASTClosure $closure
+        ASTClosure $closure,
     ) {
         $this->consumeComments();
 
@@ -7347,8 +7347,8 @@ abstract class AbstractPHPParser
         ) {
             return $this->setNodePositionsAndReturn(
                 $this->parseStaticMemberPrimaryPrefix(
-                    $this->parseStaticReference($token)
-                )
+                    $this->parseStaticReference($token),
+                ),
             );
         } elseif ($tokenType === Tokens::T_FUNCTION) {
             $closure = $this->parseClosureDeclaration();
@@ -7363,7 +7363,7 @@ abstract class AbstractPHPParser
         }
 
         return $this->setNodePositionsAndReturn(
-            $this->parseStaticVariableDeclaration($token)
+            $this->parseStaticVariableDeclaration($token),
         );
     }
 
@@ -7393,7 +7393,7 @@ abstract class AbstractPHPParser
     private function parseStaticVariableDeclaration(Token $token)
     {
         $staticDeclaration = $this->builder->buildAstStaticVariableDeclaration(
-            $token->image
+            $token->image,
         );
 
         // Strip optional comments
@@ -7539,12 +7539,12 @@ abstract class AbstractPHPParser
                     break;
                 case Tokens::T_LNUMBER:
                     $defaultValue->setValue($signed * $this->parseIntegerNumberImage(
-                        $this->parseNumber(Tokens::T_LNUMBER)
+                        $this->parseNumber(Tokens::T_LNUMBER),
                     ));
                     break;
                 case Tokens::T_DNUMBER:
-                    $defaultValue->setValue($signed * (double) $this->getNumberFromImage(
-                        $this->parseNumber(Tokens::T_DNUMBER)
+                    $defaultValue->setValue($signed * (float) $this->getNumberFromImage(
+                        $this->parseNumber(Tokens::T_DNUMBER),
                     ));
                     break;
                 case Tokens::T_CONSTANT_ENCAPSED_STRING:
@@ -7585,7 +7585,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_STRING:
                 case Tokens::T_BACKSLASH:
                     $node = $this->builder->buildAstClassOrInterfaceReference(
-                        $this->parseQualifiedName()
+                        $this->parseQualifiedName(),
                     );
 
                     if ($this->tokenizer->peek() === Tokens::T_DOUBLE_COLON) {
@@ -7609,7 +7609,7 @@ abstract class AbstractPHPParser
                     break;
                 case Tokens::T_START_HEREDOC:
                     $defaultValue->setValue(
-                        $this->parseHeredoc()->getChild(0)->getImage()
+                        $this->parseHeredoc()->getChild(0)->getImage(),
                     );
                     break;
                 default:
@@ -7770,7 +7770,7 @@ abstract class AbstractPHPParser
             Tokens::T_TRAIT,
             Tokens::T_ABSTRACT,
             Tokens::T_FUNCTION,
-            Tokens::T_INTERFACE
+            Tokens::T_INTERFACE,
         );
 
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
@@ -7841,7 +7841,7 @@ abstract class AbstractPHPParser
                 function ($image) use ($useSymbolTable) {
                     return $useSymbolTable->lookup($image) ?: $image;
                 },
-                array_map('trim', explode('|', end($match) ?: ''))
+                array_map('trim', explode('|', end($match) ?: '')),
             );
         }
 
@@ -7875,7 +7875,7 @@ abstract class AbstractPHPParser
         foreach ($annotations as $annotation) {
             if (Type::isPrimitiveType($annotation) === true) {
                 return $this->builder->buildAstScalarType(
-                    Type::getPrimitiveType($annotation)
+                    Type::getPrimitiveType($annotation),
                 );
             }
 
@@ -7902,7 +7902,7 @@ abstract class AbstractPHPParser
         foreach ($annotations as $annotation) {
             if (Type::isScalarType($annotation) === false) {
                 return $this->builder->buildAstClassOrInterfaceReference(
-                    $annotation
+                    $annotation,
                 );
             }
         }
@@ -7966,7 +7966,7 @@ abstract class AbstractPHPParser
 
         foreach ($throws as $qualifiedName) {
             $callable->addExceptionClassReference(
-                $this->builder->buildAstClassOrInterfaceReference($qualifiedName)
+                $this->builder->buildAstClassOrInterfaceReference($qualifiedName),
             );
         }
 
@@ -7980,7 +7980,7 @@ abstract class AbstractPHPParser
 
         if ($qualifiedName !== null) {
             $callable->setReturnClassReference(
-                $this->builder->buildAstClassOrInterfaceReference($qualifiedName)
+                $this->builder->buildAstClassOrInterfaceReference($qualifiedName),
             );
         }
     }
@@ -8128,7 +8128,7 @@ abstract class AbstractPHPParser
                 !in_array($type->getImage(), array('int', 'string'), true)
             ) {
                 throw new TokenException(
-                    "Enum backing type must be 'int' or 'string'"
+                    "Enum backing type must be 'int' or 'string'",
                 );
             }
         }

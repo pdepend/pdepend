@@ -61,8 +61,8 @@ class TokenStreamEndException extends TokenException
         parent::__construct(
             sprintf(
                 'Unexpected end of token stream in file: %s.',
-                $tokenizer->getSourceFile()
-            )
+                $tokenizer->getSourceFile(),
+            ),
         );
     }
 }

@@ -37,8 +37,8 @@ class ASTTraitMethodCollisionException extends RuntimeException
                 'collisions with other trait methods on %s\%s.',
                 $method->getName(),
                 preg_replace('(\W+)', '\\', $type->getNamespace()->getName()),
-                $type->getName()
-            )
+                $type->getName(),
+            ),
         );
     }
 }

@@ -82,7 +82,7 @@ class StrategyFactory
     private $validStrategies = array(
         self::STRATEGY_INHERITANCE,
         self::STRATEGY_METHOD,
-        self::STRATEGY_PROPERTY
+        self::STRATEGY_PROPERTY,
     );
 
     /**
@@ -109,7 +109,7 @@ class StrategyFactory
     {
         if (in_array($strategyName, $this->validStrategies) === false) {
             throw new InvalidArgumentException(
-                sprintf('Cannot load file for identifier "%s".', $strategyName)
+                sprintf('Cannot load file for identifier "%s".', $strategyName),
             );
         }
 

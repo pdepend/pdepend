@@ -122,7 +122,7 @@ class Pyramid implements FileAwareGenerator
         'calls-nom'     =>  array(2.01, 2.62, 3.2),
         'fanout-calls'  =>  array(0.56, 0.62, 0.68),
         'andc'          =>  array(0.25, 0.41, 0.57),
-        'ahh'           =>  array(0.09, 0.21, 0.32)
+        'ahh'           =>  array(0.09, 0.21, 0.32),
     );
 
     /**
@@ -278,7 +278,7 @@ class Pyramid implements FileAwareGenerator
     {
         $orders = array(
             array('cyclo', 'loc', 'nom', 'noc', 'nop'),
-            array('fanout', 'calls', 'nom')
+            array('fanout', 'calls', 'nom'),
         );
 
         $proportions = array();
@@ -339,7 +339,7 @@ class Pyramid implements FileAwareGenerator
             'ahh'     =>  round($inheritance['ahh'], 3),
             'andc'    =>  round($inheritance['andc'], 3),
             'fanout'  =>  $coupling['fanout'],
-            'calls'   =>  $coupling['calls']
+            'calls'   =>  $coupling['calls'],
         );
     }
 }

@@ -159,7 +159,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     {
         return array(
             self::M_CYCLOMATIC_COMPLEXITY_1  =>  $this->ccn,
-            self::M_CYCLOMATIC_COMPLEXITY_2  =>  $this->ccn2
+            self::M_CYCLOMATIC_COMPLEXITY_2  =>  $this->ccn2,
         );
     }
 
@@ -218,7 +218,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     {
         $data = array(
             self::M_CYCLOMATIC_COMPLEXITY_1 => 1,
-            self::M_CYCLOMATIC_COMPLEXITY_2 => 1
+            self::M_CYCLOMATIC_COMPLEXITY_2 => 1,
         );
 
         foreach ($callable->getChildren() as $child) {

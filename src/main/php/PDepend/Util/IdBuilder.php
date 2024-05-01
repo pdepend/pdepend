@@ -95,7 +95,7 @@ class IdBuilder
     {
         return $this->forOffsetItem(
             $type,
-            ltrim(strrchr(strtolower(get_class($type)), '_') ?: '', '_')
+            ltrim(strrchr(strtolower(get_class($type)), '_') ?: '', '_'),
         );
     }
 
@@ -126,7 +126,7 @@ class IdBuilder
         return sprintf(
             '%s-%s',
             $method->getParent()->getId(),
-            $this->hash(strtolower($method->getName()))
+            $this->hash(strtolower($method->getName())),
         );
     }
 
@@ -160,7 +160,7 @@ class IdBuilder
         }
         return sprintf(
             '%02s',
-            base_convert((string)$this->offsetInFile[$file][$string], 10, 36)
+            base_convert((string) $this->offsetInFile[$file][$string], 10, 36),
         );
     }
 }

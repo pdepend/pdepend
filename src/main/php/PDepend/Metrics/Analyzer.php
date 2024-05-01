@@ -60,7 +60,7 @@ interface Analyzer
      *                                      can extract the required options.
      */
     public function __construct(array $options = array());
-    
+
     /**
      * Adds a listener to this analyzer.
      *
@@ -69,7 +69,7 @@ interface Analyzer
      * @return void
      */
     public function addAnalyzeListener(AnalyzerListener $listener);
-    
+
     /**
      * Processes all {@link ASTNamespace} code nodes.
      *

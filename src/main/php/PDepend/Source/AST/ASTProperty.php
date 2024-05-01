@@ -84,7 +84,7 @@ class ASTProperty extends AbstractASTArtifact
      */
     public function __construct(
         ASTFieldDeclaration $fieldDeclaration,
-        ASTVariableDeclarator $variableDeclarator
+        ASTVariableDeclarator $variableDeclarator,
     ) {
         $this->fieldDeclaration   = $fieldDeclaration;
         $this->variableDeclarator = $variableDeclarator;
@@ -170,7 +170,7 @@ class ASTProperty extends AbstractASTArtifact
     public function isArray()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType'
+            'PDepend\\Source\\AST\\ASTType',
         );
         if ($typeNode === null) {
             return false;
@@ -189,7 +189,7 @@ class ASTProperty extends AbstractASTArtifact
     public function isScalar()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType'
+            'PDepend\\Source\\AST\\ASTType',
         );
         if ($typeNode === null) {
             return false;
@@ -208,7 +208,7 @@ class ASTProperty extends AbstractASTArtifact
     public function getClass()
     {
         $reference = $this->fieldDeclaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
         );
         if ($reference === null) {
             return null;
@@ -357,7 +357,7 @@ class ASTProperty extends AbstractASTArtifact
             $visibility,
             $static,
             $this->getName(),
-            PHP_EOL
+            PHP_EOL,
         );
     }
 }
