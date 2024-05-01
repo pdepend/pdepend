@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This node class represents a switch statement.
  *

@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This ast class represents a list for formal parameters. This means the
  * parameters of a method, function or closure declaration.

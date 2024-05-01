@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This is a special reference container that is used whenever the keyword
  * <b>parent</b> is used to reference a class or interface.
