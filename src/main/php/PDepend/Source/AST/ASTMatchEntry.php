@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This class represents a single match key-expression pair.
  *

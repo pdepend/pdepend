@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This is node represents a single statement.
  *

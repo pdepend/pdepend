@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This is a trait only version of the type reference .
  *

@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * Abstract base class for a type node.
  *

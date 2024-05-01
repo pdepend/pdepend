@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * A static identifier as it can be used to access a function, method, constant
  * or property.

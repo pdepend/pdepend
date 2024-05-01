@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This node class represents a <b>require</b>- or <b>require_once</b>-expression.
  *

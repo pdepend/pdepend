@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This node class represent the init part of a for-statement.
  *

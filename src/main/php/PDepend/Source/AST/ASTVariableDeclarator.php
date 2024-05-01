@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This node type represents a variable declarator. A variable declarator always
  * contains a variable name and it can optionally provide a variable default

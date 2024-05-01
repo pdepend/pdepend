@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This node class represents a <b>include</b>- or <b>include_once</b>-expression.
  *

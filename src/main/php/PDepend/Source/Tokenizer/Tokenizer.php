@@ -82,7 +82,7 @@ interface Tokenizer
      * Returns the next token or {@link Tokenizer::T_EOF} if
      * there is no next token.
      *
-     * @return Tokenizer::T_*|Token
+     * @return Token|Tokenizer::T_*
      */
     public function next();
 

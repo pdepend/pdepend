@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * Represents a php enum definition.
  *

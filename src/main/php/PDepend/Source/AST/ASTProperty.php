@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * This code class represents a class property.
  *

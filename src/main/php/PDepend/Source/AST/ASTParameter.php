@@ -42,7 +42,6 @@
 
 namespace PDepend\Source\AST;
 
-
 /**
  * An instance of this class represents a function or method parameter within
  * the analyzed source code.
