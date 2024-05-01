@@ -77,13 +77,13 @@ class StrategyFactory
     /**
      * List of all valid properties.
      *
-     * @var array<string>
+     * @var array<string, class-string<CodeRankStrategyI>>
      */
-    private $validStrategies = array(
-        self::STRATEGY_INHERITANCE,
-        self::STRATEGY_METHOD,
-        self::STRATEGY_PROPERTY,
-    );
+    private $validStrategies = [
+        self::STRATEGY_INHERITANCE => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\InheritanceStrategy',
+        self::STRATEGY_METHOD => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\MethodStrategy',
+        self::STRATEGY_PROPERTY => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\PropertyStrategy',
+    ];
 
     /**
      * Creates the default code rank strategy.
@@ -107,19 +107,16 @@ class StrategyFactory
      */
     public function createStrategy($strategyName)
     {
-        if (in_array($strategyName, $this->validStrategies) === false) {
+        if (!isset($this->validStrategies[$strategyName])) {
             throw new InvalidArgumentException(
                 sprintf('Cannot load file for identifier "%s".', $strategyName),
             );
         }
 
-        // Prepare identifier
-        $name = ucfirst(strtolower($strategyName));
+        $className = $this->validStrategies[$strategyName];
 
-        $className = "PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\{$name}Strategy";
-
-        if (false === class_exists($className)) {
-            $fileName = "PDepend/Metrics/Analyzer/CodeRankAnalyzer/{$name}Strategy.php";
+        if (!class_exists($className)) {
+            $fileName = str_replace('\\', '/', $className) . '.php';
 
             include_once $fileName;
         }
