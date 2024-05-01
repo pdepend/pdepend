@@ -62,6 +62,20 @@ class ASTSwitchLabel extends AbstractASTNode
     protected $default = false;
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['default'], parent::__sleep());
+    }
+
+    /**
      * Returns <b>true</b> when this node is the default label.
      *
      * @return bool
@@ -77,19 +91,5 @@ class ASTSwitchLabel extends AbstractASTNode
     public function setDefault(): void
     {
         $this->default = true;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['default'], parent::__sleep());
     }
 }

@@ -80,6 +80,20 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     }
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['reference'], parent::__sleep());
+    }
+
+    /**
      * Returns the visual representation for this node type.
      *
      * @return string
@@ -99,19 +113,5 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     public function getType()
     {
         return $this->reference->getType();
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['reference'], parent::__sleep());
     }
 }

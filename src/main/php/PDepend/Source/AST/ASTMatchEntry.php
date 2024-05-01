@@ -57,4 +57,6 @@ namespace PDepend\Source\AST;
  *
  * @since 2.9.0
  */
-class ASTMatchEntry extends ASTExpression {}
+class ASTMatchEntry extends ASTExpression
+{
+}

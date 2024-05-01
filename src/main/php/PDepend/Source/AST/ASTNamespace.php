@@ -74,16 +74,16 @@ class ASTNamespace extends AbstractASTArtifact
     protected $functions = [];
 
     /**
+     * @var bool
+     */
+    protected $packageAnnotation = false;
+
+    /**
      * Does this namespace contain user defined functions, classes or interfaces?
      *
      * @var bool
      */
     private $userDefined = null;
-
-    /**
-     * @var bool
-     */
-    protected $packageAnnotation = false;
 
     /**
      * Constructs a new namespace for the given <b>$name</b>

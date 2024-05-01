@@ -118,9 +118,9 @@ class PHPParserGeneric extends PHPParserVersion83
      *
      * @param ASTValue $value
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTValue
+     *
+     * @throws UnexpectedTokenException
      *
      * @todo Handle shift left/right expressions in ASTValue
      */

@@ -90,9 +90,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return Configuration
+     *
+     * @throws Exception
      */
     public function getConfiguration()
     {
@@ -103,9 +103,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return Engine
+     *
+     * @throws Exception
      */
     public function getEngine()
     {
@@ -116,9 +116,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return Runner
+     *
+     * @throws Exception
      */
     public function getRunner()
     {
@@ -129,9 +129,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return ReportGeneratorFactory
+     *
+     * @throws Exception
      */
     public function getReportGeneratorFactory()
     {
@@ -142,9 +142,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return AnalyzerFactory
+     *
+     * @throws Exception
      */
     public function getAnalyzerFactory()
     {
@@ -155,9 +155,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return TaggedContainerInterface
+     *
+     * @throws Exception
      */
     private function getContainer()
     {
@@ -169,9 +169,9 @@ class Application
     }
 
     /**
-     * @throws Exception
-     *
      * @return TaggedContainerInterface
+     *
+     * @throws Exception
      */
     private function createContainer()
     {
@@ -199,9 +199,9 @@ class Application
     /**
      * Returns available logger options and documentation messages.
      *
-     * @throws Exception
-     *
      * @return array<string, array<string, string>>
+     *
+     * @throws Exception
      */
     public function getAvailableLoggerOptions()
     {
@@ -211,9 +211,9 @@ class Application
     /**
      * Returns available analyzer options and documentation messages.
      *
-     * @throws Exception
-     *
      * @return array<string, array<string, string>>
+     *
+     * @throws Exception
      */
     public function getAvailableAnalyzerOptions()
     {
@@ -223,9 +223,9 @@ class Application
     /**
      * @param string $serviceTag
      *
-     * @throws Exception
-     *
      * @return array<string, array<string, string>>
+     *
+     * @throws Exception
      */
     private function getAvailableOptionsFor($serviceTag)
     {

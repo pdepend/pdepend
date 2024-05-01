@@ -126,6 +126,31 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     private $parameters = null;
 
     /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for all callable instances.
+     *
+     * @return array
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return [
+            'cache',
+            'id',
+            'name',
+            'nodes',
+            'startLine',
+            'endLine',
+            'comment',
+            'returnsReference',
+            'returnClassReference',
+            'exceptionClassReferences',
+        ];
+    }
+
+    /**
      * Setter method for the currently used token cache, where this callable
      * instance can store the associated tokens.
      *
@@ -497,30 +522,5 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         }
 
         $this->parameters = $parameters;
-    }
-
-    /**
-     * The magic sleep method will be called by the PHP engine when this class
-     * gets serialized. It returns an array with those properties that should be
-     * cached for all callable instances.
-     *
-     * @return array
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return [
-            'cache',
-            'id',
-            'name',
-            'nodes',
-            'startLine',
-            'endLine',
-            'comment',
-            'returnsReference',
-            'returnClassReference',
-            'exceptionClassReferences',
-        ];
     }
 }

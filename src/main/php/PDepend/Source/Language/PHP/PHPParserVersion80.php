@@ -131,9 +131,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTNode
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseOptionalExpressionForVersion()
     {

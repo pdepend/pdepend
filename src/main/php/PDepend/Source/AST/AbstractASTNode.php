@@ -91,6 +91,51 @@ abstract class AbstractASTNode implements ASTNode
     protected $metadata = '::::';
 
     /**
+     * Constructs a new ast node instance.
+     *
+     * @param string $image The source image for this node.
+     */
+    public function __construct($image = null)
+    {
+        $this->metadata = str_repeat(':', $this->getMetadataSize() - 1);
+
+        $this->setImage($image);
+    }
+
+    /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array
+     *
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        return [
+            'comment',
+            'metadata',
+            'nodes',
+        ];
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a previously serialized object gets unserialized. This implementation of
+     * the wakeup method restores the dependencies between an ast node and the
+     * node's children.
+     *
+     * @since 0.10.0
+     */
+    public function __wakeup(): void
+    {
+        foreach ($this->nodes as $node) {
+            $node->setParent($this);
+        }
+    }
+
+    /**
      * @template T of array<string, mixed>|string|null
      *
      * @param T $data
@@ -104,18 +149,6 @@ abstract class AbstractASTNode implements ASTNode
         assert(is_callable($callable));
 
         return call_user_func($callable, $this, $data);
-    }
-
-    /**
-     * Constructs a new ast node instance.
-     *
-     * @param string $image The source image for this node.
-     */
-    public function __construct($image = null)
-    {
-        $this->metadata = str_repeat(':', $this->getMetadataSize() - 1);
-
-        $this->setImage($image);
     }
 
     /**
@@ -318,9 +351,9 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @param int $index
      *
-     * @throws OutOfBoundsException When no node exists at the given index.
-     *
      * @return ASTNode
+     *
+     * @throws OutOfBoundsException When no node exists at the given index.
      */
     public function getChild($index)
     {
@@ -473,38 +506,5 @@ abstract class AbstractASTNode implements ASTNode
     public function setComment($comment): void
     {
         $this->comment = $comment;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array
-     *
-     * @since 0.10.0
-     */
-    public function __sleep()
-    {
-        return [
-            'comment',
-            'metadata',
-            'nodes',
-        ];
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a previously serialized object gets unserialized. This implementation of
-     * the wakeup method restores the dependencies between an ast node and the
-     * node's children.
-     *
-     * @since 0.10.0
-     */
-    public function __wakeup(): void
-    {
-        foreach ($this->nodes as $node) {
-            $node->setParent($this);
-        }
     }
 }

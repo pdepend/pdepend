@@ -62,4 +62,6 @@ namespace PDepend\Source\AST;
  *
  * @since 2.0.0
  */
-class ASTClassFqnPostfix extends AbstractASTNode {}
+class ASTClassFqnPostfix extends AbstractASTNode
+{
+}

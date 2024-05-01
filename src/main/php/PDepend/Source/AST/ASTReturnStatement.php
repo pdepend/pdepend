@@ -66,4 +66,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTReturnStatement extends ASTStatement {}
+class ASTReturnStatement extends ASTStatement
+{
+}

@@ -63,6 +63,22 @@ final class CollectionArtifactFilter implements ArtifactFilter
     private static $instance = null;
 
     /**
+     * An optional configured filter instance.
+     *
+     * @var ArtifactFilter
+     */
+    private $filter = null;
+
+    /**
+     * Constructs a new static filter.
+     *
+     * @access private
+     */
+    public function __construct()
+    {
+    }
+
+    /**
      * Singleton method for this filter class.
      *
      * @return CollectionArtifactFilter
@@ -74,20 +90,6 @@ final class CollectionArtifactFilter implements ArtifactFilter
         }
         return self::$instance;
     }
-
-    /**
-     * Constructs a new static filter.
-     *
-     * @access private
-     */
-    public function __construct() {}
-
-    /**
-     * An optional configured filter instance.
-     *
-     * @var ArtifactFilter
-     */
-    private $filter = null;
 
     /**
      * Sets the used filter instance.

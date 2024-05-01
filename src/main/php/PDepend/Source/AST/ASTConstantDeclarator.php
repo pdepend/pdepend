@@ -94,6 +94,17 @@ class ASTConstantDeclarator extends AbstractASTNode
     protected $value = null;
 
     /**
+     * Magic sleep method that returns an array with those property names that
+     * should be cached for this node instance.
+     *
+     * @return array<string>
+     */
+    public function __sleep()
+    {
+        return array_merge(['value'], parent::__sleep());
+    }
+
+    /**
      * Returns the explicitly specified type of the constant.
      *
      * @return ASTType|null
@@ -127,16 +138,5 @@ class ASTConstantDeclarator extends AbstractASTNode
     public function setValue(?ASTValue $value = null): void
     {
         $this->value = $value;
-    }
-
-    /**
-     * Magic sleep method that returns an array with those property names that
-     * should be cached for this node instance.
-     *
-     * @return array<string>
-     */
-    public function __sleep()
-    {
-        return array_merge(['value'], parent::__sleep());
     }
 }

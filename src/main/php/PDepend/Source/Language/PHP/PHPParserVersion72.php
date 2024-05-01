@@ -619,9 +619,9 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTNode
+     *
+     * @throws UnexpectedTokenException
      *
      * @since 2.2
      */
@@ -769,9 +769,9 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
     /**
      * Parses additional static values that are valid in the supported php version.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTValue|null
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
@@ -1234,9 +1234,9 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
     /**
      * Parses an integer value.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTLiteral
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseIntegerNumber()
     {

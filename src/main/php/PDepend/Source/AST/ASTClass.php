@@ -60,6 +60,22 @@ class ASTClass extends AbstractASTClassOrInterface
      */
     private $properties = null;
 
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @since  0.10.0
+     */
+    public function __wakeup(): void
+    {
+        parent::__wakeup();
+
+        $this->context->registerClass($this);
+    }
+
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
@@ -196,21 +212,5 @@ class ASTClass extends AbstractASTClassOrInterface
         }
 
         $this->modifiers = $modifiers;
-    }
-
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     *
-     * @since  0.10.0
-     */
-    public function __wakeup(): void
-    {
-        parent::__wakeup();
-
-        $this->context->registerClass($this);
     }
 }

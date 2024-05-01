@@ -238,10 +238,10 @@ class Runner
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
+     * @return int
+     *
      * @throws RuntimeException An exception with a readable error message and
      *                          an exit code.
-     *
-     * @return int
      */
     public function run()
     {

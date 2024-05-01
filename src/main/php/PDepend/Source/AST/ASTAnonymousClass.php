@@ -74,6 +74,37 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     protected $metadata = ':::';
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array
+     *
+     * @since 0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['metadata'], parent::__sleep());
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     */
+    public function __wakeup(): void
+    {
+        $this->methods = null;
+
+        foreach ($this->nodes as $node) {
+            $node->setParent($this);
+        }
+
+        parent::__wakeup();
+    }
+
+    /**
      * @param string $image
      */
     public function setImage($image): void
@@ -209,37 +240,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     public function isAnonymous()
     {
         return true;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array
-     *
-     * @since 0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['metadata'], parent::__sleep());
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     */
-    public function __wakeup(): void
-    {
-        $this->methods = null;
-
-        foreach ($this->nodes as $node) {
-            $node->setParent($this);
-        }
-
-        parent::__wakeup();
     }
 
     /**

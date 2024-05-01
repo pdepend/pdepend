@@ -72,9 +72,9 @@ class AnalyzerFactory
      *
      * @param ReportGenerator[] $generators
      *
-     * @throws InvalidArgumentException
-     *
      * @return Analyzer[]
+     *
+     * @throws InvalidArgumentException
      */
     public function createRequiredForGenerators(array $generators)
     {

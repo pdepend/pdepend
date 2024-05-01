@@ -52,4 +52,6 @@ namespace PDepend\Source\AST;
  *
  * @since 1.0.0
  */
-class ASTTraitAdaptationPrecedence extends ASTStatement {}
+class ASTTraitAdaptationPrecedence extends ASTStatement
+{
+}

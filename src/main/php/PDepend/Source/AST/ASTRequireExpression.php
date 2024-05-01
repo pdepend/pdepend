@@ -62,6 +62,20 @@ class ASTRequireExpression extends ASTExpression
     protected $once = false;
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['once'], parent::__sleep());
+    }
+
+    /**
      * Does this node represent a <b>require_once</b>-expression?
      *
      * @return bool
@@ -77,19 +91,5 @@ class ASTRequireExpression extends ASTExpression
     public function setOnce(): void
     {
         $this->once = true;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['once'], parent::__sleep());
     }
 }

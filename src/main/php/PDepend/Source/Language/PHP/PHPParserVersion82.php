@@ -62,6 +62,10 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion82 extends PHPParserVersion81
 {
+    /**
+     * Since PHP 8.2, readonly is allowed as class modifier.
+     */
+    protected const READONLY_CLASS_ALLOWED = true;
     /** @var array<int, int> */
     protected $possiblePropertyTypes = [
         Tokens::T_STRING,
@@ -74,11 +78,6 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
         Tokens::T_FALSE,
         Tokens::T_TRUE,
     ];
-
-    /**
-     * Since PHP 8.2, readonly is allowed as class modifier.
-     */
-    protected const READONLY_CLASS_ALLOWED = true;
 
     /**
      * Tests if the given image is a PHP 8.2 type hint.
@@ -106,10 +105,10 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
     }
 
     /**
+     * @return ASTType
+     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
-     * @return ASTType
      */
     protected function parseSingleTypeHint()
     {

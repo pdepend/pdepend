@@ -475,9 +475,9 @@ class Command
      * Prints all available log options and returns the length of the longest
      * option.
      *
-     * @throws Exception
-     *
      * @return int
+     *
+     * @throws Exception
      */
     protected function printLogOptions()
     {
@@ -519,9 +519,9 @@ class Command
      *
      * @param int $length Length of the longest option.
      *
-     * @throws Exception
-     *
      * @return int
+     *
+     * @throws Exception
      */
     protected function printAnalyzerOptions($length)
     {

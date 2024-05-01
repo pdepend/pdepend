@@ -96,9 +96,9 @@ interface ASTNode
      *
      * @param int $index
      *
-     * @throws OutOfBoundsException When no node exists at the given index.
-     *
      * @return AbstractASTNode|ASTArtifact
+     *
+     * @throws OutOfBoundsException When no node exists at the given index.
      */
     public function getChild($index);
 

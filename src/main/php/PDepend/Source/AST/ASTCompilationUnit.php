@@ -142,6 +142,56 @@ class ASTCompilationUnit extends AbstractASTArtifact
     }
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before it serializes an instance of this class. This method returns an
+     * array with those property names that should be serialized.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return [
+            'cache',
+            'childNodes',
+            'comment',
+            'endLine',
+            'fileName',
+            'startLine',
+            'id',
+        ];
+    }
+
+    /**
+     * The magic wakeup method will is called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method restores the references between all parsed entities
+     * in this source file and this file instance.
+     *
+     * @see    ASTCompilationUnit::$childNodes
+     * @since  0.10.0
+     */
+    public function __wakeup(): void
+    {
+        $this->cached = true;
+
+        foreach ($this->childNodes as $childNode) {
+            $childNode->setCompilationUnit($this);
+        }
+    }
+
+    /**
+     * Returns the string representation of this class.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return ($this->fileName === null ? '' : $this->fileName);
+    }
+
+    /**
      * Returns the physical file name for this object.
      *
      * @return string|null
@@ -287,56 +337,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
     public function isCached()
     {
         return $this->cached;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before it serializes an instance of this class. This method returns an
-     * array with those property names that should be serialized.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return [
-            'cache',
-            'childNodes',
-            'comment',
-            'endLine',
-            'fileName',
-            'startLine',
-            'id',
-        ];
-    }
-
-    /**
-     * The magic wakeup method will is called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method restores the references between all parsed entities
-     * in this source file and this file instance.
-     *
-     * @since  0.10.0
-     * @see    ASTCompilationUnit::$childNodes
-     */
-    public function __wakeup(): void
-    {
-        $this->cached = true;
-
-        foreach ($this->childNodes as $childNode) {
-            $childNode->setCompilationUnit($this);
-        }
-    }
-
-    /**
-     * Returns the string representation of this class.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return ($this->fileName === null ? '' : $this->fileName);
     }
 
     /**

@@ -62,4 +62,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTCompoundVariable extends AbstractASTNode {}
+class ASTCompoundVariable extends AbstractASTNode
+{
+}

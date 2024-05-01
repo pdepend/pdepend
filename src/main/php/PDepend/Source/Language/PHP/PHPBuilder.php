@@ -195,15 +195,6 @@ class PHPBuilder implements Builder
     protected $context = null;
 
     /**
-     * This property holds all packages found during the parsing phase.
-     *
-     * @var ASTNamespace[]
-     *
-     * @since 0.9.12
-     */
-    private $preparedNamespaces = null;
-
-    /**
      * Default package which contains all functions and classes with an unknown
      * scope.
      *
@@ -217,6 +208,15 @@ class PHPBuilder implements Builder
      * @var ASTCompilationUnit
      */
     protected $defaultCompilationUnit = null;
+
+    /**
+     * This property holds all packages found during the parsing phase.
+     *
+     * @var ASTNamespace[]
+     *
+     * @since 0.9.12
+     */
+    private $preparedNamespaces = null;
 
     /**
      * All generated {@link ASTTrait} objects

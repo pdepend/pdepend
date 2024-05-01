@@ -57,17 +57,16 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @var TreeBuilderFactory
+     */
+    protected $treeBuilderFactory;
+    /**
      * @param array<Extension> $extensions
      */
     public function __construct(array $extensions)
     {
         $this->treeBuilderFactory = new TreeBuilderFactory($extensions);
     }
-
-    /**
-     * @var TreeBuilderFactory
-     */
-    protected $treeBuilderFactory;
 
     /**
      * {@inheritDoc}

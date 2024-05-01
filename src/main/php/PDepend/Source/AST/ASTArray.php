@@ -62,4 +62,6 @@ namespace PDepend\Source\AST;
  *
  * @since 1.0.0
  */
-class ASTArray extends ASTExpression {}
+class ASTArray extends ASTExpression
+{
+}

@@ -67,6 +67,20 @@ class ASTMethod extends AbstractASTCallable
     protected $modifiers = 0;
 
     /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for method instances.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['modifiers'], parent::__sleep());
+    }
+
+    /**
      * This method returns a OR combined integer of the declared modifiers for
      * this method.
      *
@@ -196,9 +210,9 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the source file where this method was declared.
      *
-     * @throws ASTCompilationUnitNotFoundException When no parent was set.
-     *
      * @return ASTCompilationUnit
+     *
+     * @throws ASTCompilationUnitNotFoundException When no parent was set.
      *
      * @since  0.10.0
      */
@@ -209,19 +223,5 @@ class ASTMethod extends AbstractASTCallable
         }
 
         return $this->parent->getCompilationUnit();
-    }
-
-    /**
-     * The magic sleep method will be called by the PHP engine when this class
-     * gets serialized. It returns an array with those properties that should be
-     * cached for method instances.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['modifiers'], parent::__sleep());
     }
 }

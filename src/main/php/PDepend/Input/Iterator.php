@@ -80,7 +80,7 @@ class Iterator extends FilterIterator
     {
         parent::__construct($iterator);
 
-        $this->filter   = $filter;
+        $this->filter = $filter;
         $this->rootPath = $rootPath;
     }
 

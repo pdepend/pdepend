@@ -88,8 +88,8 @@ class ASTArrayElement extends ASTExpression
      *
      * @return int
      *
-     * @since  0.10.4
      * @see    ASTNode#getMetadataSize()
+     * @since  0.10.4
      */
     protected function getMetadataSize()
     {

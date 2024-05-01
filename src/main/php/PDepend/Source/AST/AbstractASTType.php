@@ -75,13 +75,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     protected $context = null;
 
     /**
-     * The parent namespace for this class.
-     *
-     * @var ASTNamespace|null
-     */
-    private $namespace = null;
-
-    /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
      * @var array<string, mixed>|null
@@ -128,6 +121,57 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     protected $methods = [];
 
+    /**
+     * The parent namespace for this class.
+     *
+     * @var ASTNamespace|null
+     */
+    private $namespace = null;
+
+    /**
+     * The magic sleep method is called by the PHP runtime environment before an
+     * instance of this class gets serialized. It returns an array with the
+     * names of all those properties that should be cached for this class or
+     * interface instance.
+     *
+     * @return array
+     */
+    public function __sleep()
+    {
+        if (is_array($this->methods)) {
+            $this->cache
+                ->type('methods')
+                ->store($this->getId(), $this->methods);
+
+            $this->methods = null;
+        }
+
+        return [
+            'cache',
+            'context',
+            'comment',
+            'endLine',
+            'modifiers',
+            'name',
+            'nodes',
+            'namespaceName',
+            'startLine',
+            'userDefined',
+            'id',
+        ];
+    }
+
+    /**
+     * The magic wakeup method is called by the PHP runtime environment when a
+     * serialized instance of this class gets unserialized and all properties
+     * are restored. This implementation of the <b>__wakeup()</b> method sets
+     * a flag that this object was restored from the cache and it restores the
+     * dependency between this class or interface and it's child methods.
+     */
+    public function __wakeup(): void
+    {
+        $this->methods = null;
+    }
 
     /**
      * Setter method for the currently used token cache, where this class or
@@ -167,9 +211,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @param int $index
      *
-     * @throws OutOfBoundsException
-     *
      * @return ASTNode
+     *
+     * @throws OutOfBoundsException
      */
     public function getChild($index)
     {
@@ -324,60 +368,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
-     * Returns an array with {@link ASTMethod} objects
-     * that are imported through traits.
-     *
-     * @return ASTMethod[]
-     *
-     * @since  1.0.0
-     */
-    protected function getTraitMethods()
-    {
-        $methods = [];
-
-        /** @var ASTTraitUseStatement[] */
-        $uses = $this->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement',
-        );
-
-        foreach ($uses as $use) {
-            $priorMethods = [];
-            $precedences = $use->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
-
-            foreach ($precedences as $precedence) {
-                $priorMethods[strtolower($precedence->getImage())] = true;
-            }
-            foreach ($use->getAllMethods() as $method) {
-                foreach ($uses as $use2) {
-                    if ($use2->hasExcludeFor($method)) {
-                        continue 2;
-                    }
-                }
-
-                $name = strtolower($method->getName());
-
-                if (!isset($methods[$name]) || isset($priorMethods[$name])) {
-                    $methods[$name] = $method;
-                    continue;
-                }
-
-                if ($methods[$name]->isAbstract()) {
-                    $methods[$name] = $method;
-                    continue;
-                }
-
-                if ($method->isAbstract()) {
-                    continue;
-                }
-
-                throw new ASTTraitMethodCollisionException($method, $this);
-            }
-        }
-
-        return $methods;
-    }
-
-    /**
      * Returns an <b>array</b> with all tokens within this type.
      *
      * @return Token[]
@@ -491,47 +481,56 @@ abstract class AbstractASTType extends AbstractASTArtifact
     abstract public function isSubtypeOf(AbstractASTType $type);
 
     /**
-     * The magic sleep method is called by the PHP runtime environment before an
-     * instance of this class gets serialized. It returns an array with the
-     * names of all those properties that should be cached for this class or
-     * interface instance.
+     * Returns an array with {@link ASTMethod} objects
+     * that are imported through traits.
      *
-     * @return array
+     * @return ASTMethod[]
+     *
+     * @since  1.0.0
      */
-    public function __sleep()
+    protected function getTraitMethods()
     {
-        if (is_array($this->methods)) {
-            $this->cache
-                ->type('methods')
-                ->store($this->getId(), $this->methods);
+        $methods = [];
 
-            $this->methods = null;
+        /** @var ASTTraitUseStatement[] */
+        $uses = $this->findChildrenOfType(
+            'PDepend\\Source\\AST\\ASTTraitUseStatement',
+        );
+
+        foreach ($uses as $use) {
+            $priorMethods = [];
+            $precedences = $use->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
+
+            foreach ($precedences as $precedence) {
+                $priorMethods[strtolower($precedence->getImage())] = true;
+            }
+            foreach ($use->getAllMethods() as $method) {
+                foreach ($uses as $use2) {
+                    if ($use2->hasExcludeFor($method)) {
+                        continue 2;
+                    }
+                }
+
+                $name = strtolower($method->getName());
+
+                if (!isset($methods[$name]) || isset($priorMethods[$name])) {
+                    $methods[$name] = $method;
+                    continue;
+                }
+
+                if ($methods[$name]->isAbstract()) {
+                    $methods[$name] = $method;
+                    continue;
+                }
+
+                if ($method->isAbstract()) {
+                    continue;
+                }
+
+                throw new ASTTraitMethodCollisionException($method, $this);
+            }
         }
 
-        return [
-            'cache',
-            'context',
-            'comment',
-            'endLine',
-            'modifiers',
-            'name',
-            'nodes',
-            'namespaceName',
-            'startLine',
-            'userDefined',
-            'id',
-        ];
-    }
-
-    /**
-     * The magic wakeup method is called by the PHP runtime environment when a
-     * serialized instance of this class gets unserialized and all properties
-     * are restored. This implementation of the <b>__wakeup()</b> method sets
-     * a flag that this object was restored from the cache and it restores the
-     * dependency between this class or interface and it's child methods.
-     */
-    public function __wakeup(): void
-    {
-        $this->methods = null;
+        return $methods;
     }
 }

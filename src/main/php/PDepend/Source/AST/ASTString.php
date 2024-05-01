@@ -64,4 +64,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.10
  */
-class ASTString extends AbstractASTNode {}
+class ASTString extends AbstractASTNode
+{
+}

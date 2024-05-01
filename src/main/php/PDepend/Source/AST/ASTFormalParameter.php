@@ -69,6 +69,11 @@ class ASTFormalParameter extends AbstractASTNode
      */
     protected $modifiers = 0;
 
+    public function __sleep()
+    {
+        return array_merge(['modifiers'], parent::__sleep());
+    }
+
     /**
      * Checks if this parameter has a type.
      *
@@ -140,8 +145,8 @@ class ASTFormalParameter extends AbstractASTNode
      *
      * @return int
      *
-     * @since  0.10.4
      * @see    ASTNode#getMetadataSize()
+     * @since  0.10.4
      */
     protected function getMetadataSize()
     {
@@ -244,10 +249,5 @@ class ASTFormalParameter extends AbstractASTNode
     public function isPrivate()
     {
         return ($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE;
-    }
-
-    public function __sleep()
-    {
-        return array_merge(['modifiers'], parent::__sleep());
     }
 }

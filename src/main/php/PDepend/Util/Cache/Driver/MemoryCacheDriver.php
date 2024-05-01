@@ -105,6 +105,30 @@ class MemoryCacheDriver implements CacheDriver
     }
 
     /**
+     * PHP's magic serialize sleep method.
+     *
+     * @return array
+     *
+     * @since  1.0.2
+     */
+    public function __sleep()
+    {
+        self::$staticCache[$this->staticId] = $this->cache;
+
+        return ['staticId'];
+    }
+
+    /**
+     * PHP's magic serialize wakeup method.
+     *
+     * @since  1.0.2
+     */
+    public function __wakeup(): void
+    {
+        $this->cache = self::$staticCache[$this->staticId];
+    }
+
+    /**
      * Sets the type for the next <em>store()</em> or <em>restore()</em> method
      * call. A type is something like a namespace or group for cache entries.
      *
@@ -189,29 +213,5 @@ class MemoryCacheDriver implements CacheDriver
         $this->type = self::ENTRY_TYPE;
 
         return "{$key}.{$type}";
-    }
-
-    /**
-     * PHP's magic serialize sleep method.
-     *
-     * @return array
-     *
-     * @since  1.0.2
-     */
-    public function __sleep()
-    {
-        self::$staticCache[$this->staticId] = $this->cache;
-
-        return ['staticId'];
-    }
-
-    /**
-     * PHP's magic serialize wakeup method.
-     *
-     * @since  1.0.2
-     */
-    public function __wakeup(): void
-    {
-        $this->cache = self::$staticCache[$this->staticId];
     }
 }

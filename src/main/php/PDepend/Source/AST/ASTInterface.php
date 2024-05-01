@@ -61,6 +61,21 @@ class ASTInterface extends AbstractASTClassOrInterface
     protected $modifiers = State::IS_IMPLICIT_ABSTRACT;
 
     /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @since  0.10.0
+     */
+    public function __wakeup(): void
+    {
+        parent::__wakeup();
+
+        $this->context->registerInterface($this);
+    }
+
+    /**
      * Returns <b>true</b> if this is an abstract class or an interface.
      *
      * @return bool
@@ -113,20 +128,5 @@ class ASTInterface extends AbstractASTClassOrInterface
     public function getModifiers()
     {
         return $this->modifiers;
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     *
-     * @since  0.10.0
-     */
-    public function __wakeup(): void
-    {
-        parent::__wakeup();
-
-        $this->context->registerInterface($this);
     }
 }

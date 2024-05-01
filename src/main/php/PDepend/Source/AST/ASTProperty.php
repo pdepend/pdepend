@@ -93,6 +93,37 @@ class ASTProperty extends AbstractASTArtifact
     }
 
     /**
+     * This method returns a string representation of this parameter.
+     *
+     * @return string
+     *
+     * @since  0.9.6
+     */
+    public function __toString()
+    {
+        $static  = '';
+
+        if ($this->isStatic() === true) {
+            $static  = ' static';
+        }
+
+        $visibility = ' public';
+        if ($this->isProtected() === true) {
+            $visibility = ' protected';
+        } elseif ($this->isPrivate() === true) {
+            $visibility = ' private';
+        }
+
+        return sprintf(
+            'Property [%s%s %s ]%s',
+            $visibility,
+            $static,
+            $this->getName(),
+            PHP_EOL,
+        );
+    }
+
+    /**
      * Returns the item name.
      *
      * @return string
@@ -326,36 +357,5 @@ class ASTProperty extends AbstractASTArtifact
             return null;
         }
         return $value->getValue();
-    }
-
-    /**
-     * This method returns a string representation of this parameter.
-     *
-     * @return string
-     *
-     * @since  0.9.6
-     */
-    public function __toString()
-    {
-        $static  = '';
-
-        if ($this->isStatic() === true) {
-            $static  = ' static';
-        }
-
-        $visibility = ' public';
-        if ($this->isProtected() === true) {
-            $visibility = ' protected';
-        } elseif ($this->isPrivate() === true) {
-            $visibility = ' private';
-        }
-
-        return sprintf(
-            'Property [%s%s %s ]%s',
-            $visibility,
-            $static,
-            $this->getName(),
-            PHP_EOL,
-        );
     }
 }

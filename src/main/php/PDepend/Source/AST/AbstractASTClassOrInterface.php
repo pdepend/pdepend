@@ -83,11 +83,29 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     protected $constantDeclarators = null;
 
     /**
+     * The magic sleep method is called by the PHP runtime environment before an
+     * instance of this class gets serialized. It returns an array with the
+     * names of all those properties that should be cached for this class or
+     * interface instance.
+     *
+     * @return array
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(
+            ['constants', 'interfaceReferences', 'parentClassReference'],
+            parent::__sleep(),
+        );
+    }
+
+    /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
-     * @throws ASTClassOrInterfaceRecursiveInheritanceException
-     *
      * @return ASTClass|null
+     *
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function getParentClass()
     {
@@ -119,9 +137,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * direct parent of this class is the first element in the returned array
      * and parent of this parent the second element and so on.
      *
-     * @throws ASTClassOrInterfaceRecursiveInheritanceException
-     *
      * @return ASTClass[]
+     *
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      *
      * @since  1.0.0
      */
@@ -401,23 +419,5 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
                 $this->constantDeclarators[$image] = $declarator;
             }
         }
-    }
-
-    /**
-     * The magic sleep method is called by the PHP runtime environment before an
-     * instance of this class gets serialized. It returns an array with the
-     * names of all those properties that should be cached for this class or
-     * interface instance.
-     *
-     * @return array
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(
-            ['constants', 'interfaceReferences', 'parentClassReference'],
-            parent::__sleep(),
-        );
     }
 }
