@@ -1101,7 +1101,7 @@ class PHPTokenizerInternal implements FullTokenizer
         while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
                $token[0] !== T_OPEN_TAG &&
                $token[0] !== false) {
-            $content .= (isset($token[1]) ? $token[1] : $token[0]);
+            $content .= ($token[1] ?? $token[0]);
 
             $token = (array) next($tokens);
         }

@@ -141,9 +141,7 @@ class SymbolTable
 
         $normalizedKey = $this->normalizeKey($key);
 
-        return isset($this->scope[$normalizedKey])
-            ? $this->scope[$normalizedKey]
-            : null;
+        return $this->scope[$normalizedKey] ?? null;
     }
 
     /**
