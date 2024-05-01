@@ -65,6 +65,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTAllocationExpression extends AbstractASTNode
-{
-}
+class ASTAllocationExpression extends AbstractASTNode {}

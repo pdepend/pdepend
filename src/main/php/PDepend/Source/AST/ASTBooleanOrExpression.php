@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.8
  */
-class ASTBooleanOrExpression extends AbstractASTNode
-{
-}
+class ASTBooleanOrExpression extends AbstractASTNode {}

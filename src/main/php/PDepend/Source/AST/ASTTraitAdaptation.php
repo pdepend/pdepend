@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 1.0.0
  */
-class ASTTraitAdaptation extends ASTScope
-{
-}
+class ASTTraitAdaptation extends ASTScope {}

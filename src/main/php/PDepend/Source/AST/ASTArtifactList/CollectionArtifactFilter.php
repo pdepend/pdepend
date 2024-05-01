@@ -80,9 +80,7 @@ final class CollectionArtifactFilter implements ArtifactFilter
      *
      * @access private
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * An optional configured filter instance.

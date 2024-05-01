@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.10.0
  */
-class ASTPostfixExpression extends ASTExpression
-{
-}
+class ASTPostfixExpression extends ASTExpression {}

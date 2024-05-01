@@ -66,6 +66,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTBreakStatement extends ASTStatement
-{
-}
+class ASTBreakStatement extends ASTStatement {}

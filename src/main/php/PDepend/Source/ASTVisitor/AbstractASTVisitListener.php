@@ -272,16 +272,12 @@ abstract class AbstractASTVisitListener implements ASTVisitListener
      *
      * @return void
      */
-    protected function startVisitNode(AbstractASTArtifact $node)
-    {
-    }
+    protected function startVisitNode(AbstractASTArtifact $node) {}
 
     /**
      * Generic notification method that is called when the node processing ends.
      *
      * @return void
      */
-    protected function endVisitNode(AbstractASTArtifact $node)
-    {
-    }
+    protected function endVisitNode(AbstractASTArtifact $node) {}
 }

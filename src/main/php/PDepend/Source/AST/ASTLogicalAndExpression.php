@@ -52,6 +52,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.8
  */
-class ASTLogicalAndExpression extends ASTExpression
-{
-}
+class ASTLogicalAndExpression extends ASTExpression {}

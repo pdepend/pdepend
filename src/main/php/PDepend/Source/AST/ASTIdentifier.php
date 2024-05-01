@@ -53,6 +53,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTIdentifier extends ASTExpression
-{
-}
+class ASTIdentifier extends ASTExpression {}

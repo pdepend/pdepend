@@ -66,6 +66,4 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-class ASTVariableVariable extends ASTExpression
-{
-}
+class ASTVariableVariable extends ASTExpression {}
