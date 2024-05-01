@@ -577,28 +577,28 @@ class PHPTokenizerInternal implements FullTokenizer
             self::T_ELLIPSIS  =>  array(
                 'type'  => Tokens::T_ELLIPSIS,
                 'image' => '...',
-            )
+            ),
         ),
 
         Tokens::T_ANGLE_BRACKET_CLOSE => array(
             Tokens::T_IS_SMALLER_OR_EQUAL => array(
                 'type'  => Tokens::T_SPACESHIP,
                 'image' => '<=>',
-            )
+            ),
         ),
 
         Tokens::T_QUESTION_MARK => array(
             Tokens::T_QUESTION_MARK => array(
                 'type'  => Tokens::T_COALESCE,
                 'image' => '??',
-            )
+            ),
         ),
 
         Tokens::T_MUL => array(
             Tokens::T_MUL => array(
                 'type'  => Tokens::T_POW,
                 'image' => '**',
-            )
+            ),
         ),
     );
 
@@ -994,7 +994,7 @@ class PHPTokenizerInternal implements FullTokenizer
                     $startColumn += strlen($token[1]);
                 } else {
                     $startColumn = strlen(
-                        substr($token[1], strrpos($token[1], "\n") + 1)
+                        substr($token[1], strrpos($token[1], "\n") + 1),
                     ) + 1;
                 }
 
@@ -1042,7 +1042,7 @@ class PHPTokenizerInternal implements FullTokenizer
                     $endColumn = $startColumn + strlen($rtrim) - 1;
                 } else {
                     $endColumn = strlen(
-                        substr($rtrim, strrpos($rtrim, "\n") + 1)
+                        substr($rtrim, strrpos($rtrim, "\n") + 1),
                     );
                 }
 
@@ -1062,7 +1062,7 @@ class PHPTokenizerInternal implements FullTokenizer
                     $startColumn += strlen($image);
                 } else {
                     $startColumn = strlen(
-                        substr($image, strrpos($image, "\n") + 1)
+                        substr($image, strrpos($image, "\n") + 1),
                     ) + 1;
                 }
 

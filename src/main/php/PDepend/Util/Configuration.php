@@ -94,7 +94,7 @@ class Configuration
             return $this->settings->{$name};
         }
         throw new OutOfRangeException(
-            sprintf("A configuration option '%s' not exists.", $name)
+            sprintf("A configuration option '%s' not exists.", $name),
         );
     }
 
@@ -116,7 +116,7 @@ class Configuration
     public function __set($name, $value)
     {
         throw new OutOfRangeException(
-            sprintf("A configuration option '%s' not exists.", $name)
+            sprintf("A configuration option '%s' not exists.", $name),
         );
     }
 

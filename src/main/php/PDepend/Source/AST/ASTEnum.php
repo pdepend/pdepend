@@ -133,7 +133,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     public function getCases()
     {
         return new ASTArtifactList(
-            $this->findChildrenOfType('PDepend\\Source\\AST\\ASTEnumCase')
+            $this->findChildrenOfType('PDepend\\Source\\AST\\ASTEnumCase'),
         );
     }
 
@@ -248,7 +248,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
-                'Cannot overwrite previously set class modifiers.'
+                'Cannot overwrite previously set class modifiers.',
             );
         }
 
@@ -292,7 +292,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     {
         return array_merge(
             array('type'),
-            parent::__sleep()
+            parent::__sleep(),
         );
     }
 }

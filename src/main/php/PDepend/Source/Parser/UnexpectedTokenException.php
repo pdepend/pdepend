@@ -68,7 +68,7 @@ class UnexpectedTokenException extends TokenException
             $token->startLine,
             $token->startColumn,
             $fileName,
-            "\n".$exception->getTraceAsString()
+            "\n" . $exception->getTraceAsString(),
         );
 
         parent::__construct($message);

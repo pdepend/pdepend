@@ -269,8 +269,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                 (string) $this->compilationUnit,
                 sprintf(
                     'Constant can\'t be declared private or protected in interface "%s".',
-                    $this->classOrInterface->getName()
-                )
+                    $this->classOrInterface->getName(),
+                ),
             );
         }
 
@@ -368,7 +368,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                 return true;
         }
 
-        return $this->isFunctionName($tokenType);;
+        return $this->isFunctionName($tokenType);
     }
 
 
@@ -472,7 +472,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
             $expr,
             $this->consumeToken(Tokens::T_PARENTHESIS_OPEN),
             Tokens::T_PARENTHESIS_CLOSE,
-            Tokens::T_COMMA
+            Tokens::T_COMMA,
         );
 
         while ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {
@@ -550,8 +550,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
             sprintf(
                 'class@anonymous%s0x%s',
                 $this->compilationUnit->getFileName(),
-                uniqid('')
-            )
+                uniqid(''),
+            ),
         );
         $class->setCompilationUnit($this->compilationUnit);
         $class->setUserDefined();
@@ -578,8 +578,8 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         $allocation->addChild(
             $this->setNodePositionsAndReturn(
                 $this->parseTypeBody($class),
-                $tokens
-            )
+                $tokens,
+            ),
         );
         $class->setTokens($tokens);
 
@@ -646,7 +646,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                     $token->startLine,
                     $token->endLine,
                     $token->startColumn,
-                    $token->endColumn
+                    $token->endColumn,
                 );
 
                 return $expr;
@@ -881,7 +881,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $expressions[] = $expr;
@@ -900,7 +900,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                 case Tokens::T_CONCAT_EQUAL:
                 case Tokens::T_COALESCE_EQUAL:
                     $expressions[] = $this->parseAssignmentExpression(
-                        array_pop($expressions)
+                        array_pop($expressions),
                     );
                     break;
                 case Tokens::T_DIR:
@@ -926,7 +926,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                         $token->startLine,
                         $token->endLine,
                         $token->startColumn,
-                        $token->endColumn
+                        $token->endColumn,
                     );
 
                     $expressions[] = $expr;
@@ -956,7 +956,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
             $expressions[0]->getStartLine(),
             $expressions[$count - 1]->getEndLine(),
             $expressions[0]->getStartColumn(),
-            $expressions[$count - 1]->getEndColumn()
+            $expressions[$count - 1]->getEndColumn(),
         );
 
         // @todo ASTValue must be a valid node.
@@ -1120,7 +1120,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         $this->consumeToken(Tokens::T_CLASS_FQN);
 
         return $this->setNodePositionsAndReturn(
-            $this->builder->buildAstClassFqnPostfix()
+            $this->builder->buildAstClassFqnPostfix(),
         );
     }
 
@@ -1271,7 +1271,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         if (!preg_match('(^b[01]+$)i', $token1->image)) {
             throw new UnexpectedTokenException(
                 $token1,
-                $this->tokenizer->getSourceFile()
+                $this->tokenizer->getSourceFile(),
             );
         }
 
@@ -1286,7 +1286,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
             $token->startLine,
             $token->endLine,
             $token->startColumn,
-            $token->endColumn
+            $token->endColumn,
         );
 
         return $literal;

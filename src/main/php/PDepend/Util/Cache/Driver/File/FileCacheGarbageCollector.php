@@ -94,7 +94,7 @@ class FileCacheGarbageCollector
 
         try {
             $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($this->cacheDir)
+                new RecursiveDirectoryIterator($this->cacheDir),
             );
             foreach ($files as $file) {
                 if ($this->isCollectibleFile($file)) {

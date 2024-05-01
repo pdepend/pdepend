@@ -184,7 +184,7 @@ class ASTClass extends AbstractASTClassOrInterface
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
-                'Cannot overwrite previously set class modifiers.'
+                'Cannot overwrite previously set class modifiers.',
             );
         }
 

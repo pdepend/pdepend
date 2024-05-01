@@ -216,7 +216,7 @@ class Command
 
         if (isset($options['--notify-me'])) {
             $this->runner->addProcessListener(
-                new DbusResultPrinter()
+                new DbusResultPrinter(),
             );
             unset($options['--notify-me']);
         }
@@ -244,7 +244,7 @@ class Command
                     '%sThe following error%s occurred:%s',
                     PHP_EOL,
                     count($errors) > 1 ? 's' : '',
-                    PHP_EOL
+                    PHP_EOL,
                 );
 
                 foreach ($errors as $error) {
@@ -281,7 +281,7 @@ class Command
     protected function parseArguments()
     {
         if (!isset($_SERVER['argv'])) {
-            if (false === (boolean) ini_get('register_argc_argv')) {
+            if (false === (bool) ini_get('register_argc_argv')) {
                 // @codeCoverageIgnoreStart
                 echo 'Please enable register_argc_argv in your php.ini.';
             } else {
@@ -308,9 +308,9 @@ class Command
 
         for ($i = 0, $c = count($argv); $i < $c; ++$i) {
             // Is it an ini_set option?
-            $arg = (string)$argv[$i];
+            $arg = (string) $argv[$i];
             if ($arg === '-d' && isset($argv[$i + 1])) {
-                $arg = (string)$argv[++$i];
+                $arg = (string) $argv[++$i];
                 if (strpos($arg, '=') === false) {
                     ini_set($arg, 'on');
                 } else {
@@ -436,31 +436,31 @@ class Command
         $this->printOption(
             '--configuration=<file>',
             'Optional PDepend configuration file.',
-            $length
+            $length,
         );
         echo PHP_EOL;
 
         $this->printOption(
             '--suffix=<ext[,...]>',
             'List of valid PHP file extensions.',
-            $length
+            $length,
         );
         $this->printOption(
             '--ignore=<dir[,...]>',
             'List of exclude directories.',
-            $length
+            $length,
         );
         $this->printOption(
             '--exclude=<pkg[,...]>',
             'List of exclude namespaces.',
-            $length
+            $length,
         );
         echo PHP_EOL;
 
         $this->printOption(
             '--without-annotations',
             'Do not parse doc comment annotations.',
-            $length
+            $length,
         );
         echo PHP_EOL;
 
@@ -637,7 +637,7 @@ class Command
     private function getErrorTrace($exception)
     {
         return get_class($exception) . '(' . $exception->getMessage() . ')' . PHP_EOL .
-            '## ' . $exception->getFile() .'(' . $exception->getLine() . ')' . PHP_EOL .
+            '## ' . $exception->getFile() . '(' . $exception->getLine() . ')' . PHP_EOL .
             $exception->getTraceAsString();
     }
 }

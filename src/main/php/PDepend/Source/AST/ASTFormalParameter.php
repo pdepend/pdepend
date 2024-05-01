@@ -184,7 +184,7 @@ class ASTFormalParameter extends AbstractASTNode
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
-                'Cannot overwrite previously set constructor property modifiers.'
+                'Cannot overwrite previously set constructor property modifiers.',
             );
         }
 

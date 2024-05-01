@@ -209,7 +209,7 @@ abstract class AbstractASTNode implements ASTNode
         $startLine,
         $endLine,
         $startColumn,
-        $endColumn
+        $endColumn,
     ) {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);
@@ -244,7 +244,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected function setMetadataInteger($index, $value)
     {
-        $this->setMetadata($index, (string)$value);
+        $this->setMetadata($index, (string) $value);
     }
 
     /**
@@ -341,8 +341,8 @@ abstract class AbstractASTNode implements ASTNode
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
-                get_class($this)
-            )
+                get_class($this),
+            ),
         );
     }
 
@@ -507,7 +507,7 @@ abstract class AbstractASTNode implements ASTNode
         return array(
             'comment',
             'metadata',
-            'nodes'
+            'nodes',
         );
     }
 

@@ -188,7 +188,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         foreach (array_keys($this->nodes) as $id) {
             $this->nodeMetrics[$id] = array(
                 self::M_CODE_RANK          =>  0,
-                self::M_REVERSE_CODE_RANK  =>  0
+                self::M_REVERSE_CODE_RANK  =>  0,
             );
         }
         foreach ($this->computeCodeRank('out', 'in') as $id => $rank) {

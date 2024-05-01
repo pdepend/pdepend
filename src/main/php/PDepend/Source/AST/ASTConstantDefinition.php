@@ -96,7 +96,7 @@ class ASTConstantDefinition extends AbstractASTNode
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException(
                 'Invalid field modifiers given, allowed modifiers are ' .
-                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_FINAL.'
+                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_FINAL.',
             );
         }
 

@@ -122,8 +122,8 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
 
         $closure->addChild(
             $this->buildReturnStatement(
-                $this->consumeToken(Tokens::T_DOUBLE_ARROW)
-            )
+                $this->consumeToken(Tokens::T_DOUBLE_ARROW),
+            ),
         );
 
         return $this->setNodePositionsAndReturn($closure);

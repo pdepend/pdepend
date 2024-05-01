@@ -58,7 +58,7 @@ interface AggregateAnalyzer extends Analyzer
      * @return array<string>
      */
     public function getRequiredAnalyzers();
-    
+
     /**
      * Adds a required sub analyzer.
      *

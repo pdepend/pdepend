@@ -160,7 +160,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
                     $token->startLine,
                     $token->endLine,
                     $token->startColumn,
-                    $token->endColumn
+                    $token->endColumn,
                 );
 
                 return $expr;
@@ -244,7 +244,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
             return $this->builder->buildAstNamedArgument(
                 $constant->getImage(),
-                $this->parseOptionalExpression()
+                $this->parseOptionalExpression(),
             );
         }
 
@@ -268,8 +268,8 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
         $function->addChild(
             $this->parseArgumentsParenthesesContent(
-                $this->builder->buildAstMatchArgument()
-            )
+                $this->builder->buildAstMatchArgument(),
+            ),
         );
 
         $this->consumeComments();
@@ -408,7 +408,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
             throw new ParserException(
                 $type->getImage() . ' can not be used as a standalone type',
                 0,
-                $this->getUnexpectedTokenException($token)
+                $this->getUnexpectedTokenException($token),
             );
         }
 
@@ -461,7 +461,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         return $this->consumeToken(
             $this->tokenizer->peek() === Tokens::T_NULLSAFE_OBJECT_OPERATOR
                 ? Tokens::T_NULLSAFE_OBJECT_OPERATOR
-                : Tokens::T_OBJECT_OPERATOR
+                : Tokens::T_OBJECT_OPERATOR,
         );
     }
 
@@ -473,7 +473,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
                 Tokens::T_COMMA,
                 Tokens::T_COLON,
                 Tokens::T_PARENTHESIS_CLOSE,
-                Tokens::T_SQUARED_BRACKET_CLOSE
+                Tokens::T_SQUARED_BRACKET_CLOSE,
             ));
         }
 
