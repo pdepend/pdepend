@@ -71,6 +71,37 @@ class ASTEnum extends AbstractASTClassOrInterface
     }
 
     /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     *
+     * @since  0.10.0
+     */
+    public function __wakeup(): void
+    {
+        parent::__wakeup();
+
+        $this->context->registerEnum($this);
+    }
+
+    /**
+     * The magic sleep method is called by the PHP runtime environment before an
+     * instance of this class gets serialized. It returns an array with the
+     * names of all those properties that should be cached for this class or
+     * interface instance.
+     *
+     * @return array
+     */
+    public function __sleep()
+    {
+        return array_merge(
+            ['type'],
+            parent::__sleep(),
+        );
+    }
+
+    /**
      * Returns ASTScalarType if backed enumeration: https://www.php.net/manual/en/language.enumerations.backed.php
      *   - either: ASTScalarType('string')
      *   - or:     ASTScalarType('int')
@@ -259,36 +290,5 @@ class ASTEnum extends AbstractASTClassOrInterface
         }
 
         $this->modifiers = $modifiers;
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     *
-     * @since  0.10.0
-     */
-    public function __wakeup(): void
-    {
-        parent::__wakeup();
-
-        $this->context->registerEnum($this);
-    }
-
-    /**
-     * The magic sleep method is called by the PHP runtime environment before an
-     * instance of this class gets serialized. It returns an array with the
-     * names of all those properties that should be cached for this class or
-     * interface instance.
-     *
-     * @return array
-     */
-    public function __sleep()
-    {
-        return array_merge(
-            ['type'],
-            parent::__sleep(),
-        );
     }
 }

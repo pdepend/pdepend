@@ -102,17 +102,23 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished a file.
      */
-    public function endFileParsing(Tokenizer $tokenizer): void {}
+    public function endFileParsing(Tokenizer $tokenizer): void
+    {
+    }
 
     /**
      * Is called when PDepend starts the analyzing process.
      */
-    public function startAnalyzeProcess(): void {}
+    public function startAnalyzeProcess(): void
+    {
+    }
 
     /**
      * Is called when PDepend has finished the analyzing process.
      */
-    public function endAnalyzeProcess(): void {}
+    public function endAnalyzeProcess(): void
+    {
+    }
 
     /**
      * Is called when PDepend starts the logging process.
@@ -125,7 +131,9 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the logging process.
      */
-    public function endLogProcess(): void {}
+    public function endLogProcess(): void
+    {
+    }
 
     /**
      * Is called when PDepend starts a new analyzer.

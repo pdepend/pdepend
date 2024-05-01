@@ -72,6 +72,38 @@ abstract class AbstractASTVisitor implements ASTVisitor
      */
     private $listeners = [];
 
+
+    /**
+     * Magic call method used to provide simplified visitor implementations.
+     * With this method we can call <b>visit${NodeClassName}</b> on each node.
+     *
+     * <code>
+     * $visitor->visitAllocationExpression($alloc);
+     *
+     * $visitor->visitStatement($stmt);
+     * </code>
+     *
+     * All visit methods takes two argument. The first argument is the current
+     * context ast node and the second argument is a data array or object that
+     * is used to collect data.
+     *
+     * The return value of this method is the second input argument, modified
+     * by the concrete visit method.
+     *
+     * @param string            $method Name of the called method.
+     * @param array<int, mixed> $args   Array with method argument.
+     *
+     * @since  0.9.12
+     */
+    public function __call($method, $args)
+    {
+        if (!isset($args[1])) {
+            throw new RuntimeException("No node to visit provided for $method.");
+        }
+
+        return $this->visit($args[0], $args[1]);
+    }
+
     /**
      * Returns an iterator with all registered visit listeners.
      *
@@ -245,38 +277,6 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartProperty($property);
         $this->fireEndProperty($property);
-    }
-
-
-    /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * <code>
-     * $visitor->visitAllocationExpression($alloc);
-     *
-     * $visitor->visitStatement($stmt);
-     * </code>
-     *
-     * All visit methods takes two argument. The first argument is the current
-     * context ast node and the second argument is a data array or object that
-     * is used to collect data.
-     *
-     * The return value of this method is the second input argument, modified
-     * by the concrete visit method.
-     *
-     * @param string            $method Name of the called method.
-     * @param array<int, mixed> $args   Array with method argument.
-     *
-     * @since  0.9.12
-     */
-    public function __call($method, $args)
-    {
-        if (!isset($args[1])) {
-            throw new RuntimeException("No node to visit provided for $method.");
-        }
-
-        return $this->visit($args[0], $args[1]);
     }
 
     public function visit($node, $value)

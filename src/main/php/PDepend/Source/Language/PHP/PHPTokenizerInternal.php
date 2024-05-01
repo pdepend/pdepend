@@ -233,6 +233,10 @@ if (!defined('T_ENUM')) {
 class PHPTokenizerInternal implements FullTokenizer
 {
     /**
+     * Internally used transition token.
+     */
+    private const T_ELLIPSIS = 23006;
+    /**
      * Mapping between php internal tokens and php depend tokens.
      *
      * @var array<int, int>
@@ -378,11 +382,6 @@ class PHPTokenizerInternal implements FullTokenizer
         T_NULLSAFE_OBJECT_OPERATOR  => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
         T_READONLY                  => Tokens::T_READONLY,
     ];
-
-    /**
-     * Internally used transition token.
-     */
-    private const T_ELLIPSIS = 23006;
 
     /**
      * Mapping between php internal text tokens an php depend numeric tokens.

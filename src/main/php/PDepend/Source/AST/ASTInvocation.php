@@ -52,4 +52,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.6
  */
-abstract class ASTInvocation extends ASTExpression {}
+abstract class ASTInvocation extends ASTExpression
+{
+}

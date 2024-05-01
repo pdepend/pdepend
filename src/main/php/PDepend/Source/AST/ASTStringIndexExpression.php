@@ -58,4 +58,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTStringIndexExpression extends ASTIndexExpression {}
+class ASTStringIndexExpression extends ASTIndexExpression
+{
+}

@@ -71,13 +71,6 @@ use PDepend\Util\Utf8Util;
 class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
-     * The log output file.
-     *
-     * @var string
-     */
-    private $logFile = null;
-
-    /**
      * The raw {@link ASTNamespace} instances.
      *
      * @var ASTArtifactList<ASTNamespace>
@@ -90,6 +83,12 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * @var ASTCompilationUnit[]
      */
     protected $fileSet = [];
+    /**
+     * The log output file.
+     *
+     * @var string
+     */
+    private $logFile = null;
 
     /**
      * @var ClassDependencyAnalyzer|null

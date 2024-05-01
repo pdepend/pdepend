@@ -66,4 +66,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTContinueStatement extends ASTStatement {}
+class ASTContinueStatement extends ASTStatement
+{
+}

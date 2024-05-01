@@ -64,6 +64,20 @@ class ASTVariableDeclarator extends ASTExpression
     protected $value = null;
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['value'], parent::__sleep());
+    }
+
+    /**
      * Returns the initial declaration value for this node or <b>null</b> when
      * no default value exists.
      *
@@ -80,19 +94,5 @@ class ASTVariableDeclarator extends ASTExpression
     public function setValue(ASTValue $value): void
     {
         $this->value = $value;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['value'], parent::__sleep());
     }
 }

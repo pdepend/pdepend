@@ -123,9 +123,9 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
     /**
      * Returns the current node
      *
-     * @throws OutOfBoundsException
-     *
      * @return T
+     *
+     * @throws OutOfBoundsException
      */
     public function current(): false|ASTArtifact
     {
@@ -175,8 +175,8 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * @return bool Returns true on success or false on failure. The return
      *              value will be casted to boolean if non-boolean was returned.
      *
-     * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
+     * @since  1.0.0
      */
     public function offsetExists($offset): bool
     {
@@ -188,12 +188,12 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @param int|string $offset
      *
-     * @throws OutOfBoundsException
-     *
      * @return T Can return all value types.
      *
-     * @since  1.0.0
+     * @throws OutOfBoundsException
+     *
      * @link   http://php.net/manual/en/arrayaccess.offsetget.php
+     * @since  1.0.0
      */
     public function offsetGet($offset): ASTArtifact
     {
@@ -211,8 +211,8 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @throws BadMethodCallException
      *
-     * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php
+     * @since  1.0.0
      */
     public function offsetSet($offset, $value): void
     {
@@ -226,8 +226,8 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      *
      * @throws BadMethodCallException
      *
-     * @since  1.0.0
      * @link   http://php.net/manual/en/arrayaccess.offsetunset.php
+     * @since  1.0.0
      */
     public function offsetUnset($offset): void
     {

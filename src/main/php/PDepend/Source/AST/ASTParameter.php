@@ -112,6 +112,55 @@ class ASTParameter extends AbstractASTArtifact
     }
 
     /**
+     * This method returns a string representation of this parameter.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $required  = $this->isOptional() ? 'optional' : 'required';
+        $reference = $this->isPassedByReference() ? '&' : '';
+
+        $typeHint = '';
+        if ($this->isArray() === true) {
+            $typeHint = ' array';
+        } elseif ($this->getClass() !== null) {
+            $typeHint = ' ' . $this->getClass()->getName();
+        }
+
+        $default = '';
+        if ($this->isDefaultValueAvailable()) {
+            $default = ' = ';
+
+            $value = $this->getDefaultValue();
+            if ($value === null) {
+                $default  .= 'NULL';
+                $typeHint .= ($typeHint !== '' ? ' or NULL' : '');
+            } elseif ($value === false) {
+                $default .= 'false';
+            } elseif ($value === true) {
+                $default .= 'true';
+            } elseif (is_array($value) === true) {
+                $default .= 'Array';
+            } elseif (is_string($value) === true) {
+                $default .= "'" . $value . "'";
+            } else {
+                $default .= $value;
+            }
+        }
+
+        return sprintf(
+            'Parameter #%d [ <%s>%s %s%s%s ]',
+            $this->position,
+            $required,
+            $typeHint,
+            $reference,
+            $this->getName(),
+            $default,
+        );
+    }
+
+    /**
      * Returns the item name.
      *
      * @return string
@@ -167,11 +216,11 @@ class ASTParameter extends AbstractASTArtifact
      * This method will return the class where the parent method was declared.
      * The returned value will be <b>null</b> if the parent is a function.
      *
-     * @todo Review this for refactoring, maybe create a empty getParent()?
-     *
      * @return AbstractASTClassOrInterface|null
      *
      * @since  0.9.5
+     *
+     * @todo Review this for refactoring, maybe create a empty getParent()?
      */
     public function getDeclaringClass()
     {
@@ -347,55 +396,6 @@ class ASTParameter extends AbstractASTArtifact
     public function getFormalParameter()
     {
         return $this->formalParameter;
-    }
-
-    /**
-     * This method returns a string representation of this parameter.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $required  = $this->isOptional() ? 'optional' : 'required';
-        $reference = $this->isPassedByReference() ? '&' : '';
-
-        $typeHint = '';
-        if ($this->isArray() === true) {
-            $typeHint = ' array';
-        } elseif ($this->getClass() !== null) {
-            $typeHint = ' ' . $this->getClass()->getName();
-        }
-
-        $default = '';
-        if ($this->isDefaultValueAvailable()) {
-            $default = ' = ';
-
-            $value = $this->getDefaultValue();
-            if ($value === null) {
-                $default  .= 'NULL';
-                $typeHint .= ($typeHint !== '' ? ' or NULL' : '');
-            } elseif ($value === false) {
-                $default .= 'false';
-            } elseif ($value === true) {
-                $default .= 'true';
-            } elseif (is_array($value) === true) {
-                $default .= 'Array';
-            } elseif (is_string($value) === true) {
-                $default .= "'" . $value . "'";
-            } else {
-                $default .= $value;
-            }
-        }
-
-        return sprintf(
-            'Parameter #%d [ <%s>%s %s%s%s ]',
-            $this->position,
-            $required,
-            $typeHint,
-            $reference,
-            $this->getName(),
-            $default,
-        );
     }
 
     /**

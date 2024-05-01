@@ -55,6 +55,18 @@ namespace PDepend\Source\AST;
 class ASTTrait extends ASTClass
 {
     /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global class
+     * context.
+     */
+    public function __wakeup(): void
+    {
+        parent::__wakeup();
+
+        $this->context->registerTrait($this);
+    }
+    /**
      * Returns all properties for this class.
      *
      * @return ASTArtifactList<ASTProperty>
@@ -98,18 +110,5 @@ class ASTTrait extends ASTClass
     public function isSubtypeOf(AbstractASTType $type)
     {
         return false;
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global class
-     * context.
-     */
-    public function __wakeup(): void
-    {
-        parent::__wakeup();
-
-        $this->context->registerTrait($this);
     }
 }

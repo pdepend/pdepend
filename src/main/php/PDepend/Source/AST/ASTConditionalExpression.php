@@ -58,4 +58,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.8
  */
-class ASTConditionalExpression extends AbstractASTNode {}
+class ASTConditionalExpression extends AbstractASTNode
+{
+}

@@ -84,6 +84,19 @@ class ASTClassOrInterfaceReference extends ASTType
     }
 
     /**
+     * Magic method which returns the names of all those properties that should
+     * be cached for this node instance.
+     *
+     * @return array
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['context'], parent::__sleep());
+    }
+
+    /**
      * Returns the concrete type instance associated with with this placeholder.
      *
      * @return AbstractASTClassOrInterface
@@ -96,18 +109,5 @@ class ASTClassOrInterfaceReference extends ASTType
             );
         }
         return $this->typeInstance;
-    }
-
-    /**
-     * Magic method which returns the names of all those properties that should
-     * be cached for this node instance.
-     *
-     * @return array
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['context'], parent::__sleep());
     }
 }

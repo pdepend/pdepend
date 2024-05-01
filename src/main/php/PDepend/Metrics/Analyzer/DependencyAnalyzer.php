@@ -70,6 +70,11 @@ class DependencyAnalyzer extends AbstractAnalyzer
         M_ABSTRACTION                = 'a',
         M_INSTABILITY                = 'i',
         M_DISTANCE                   = 'd';
+
+    /**
+     * @var array<string, ASTNamespace>
+     */
+    protected $nodeSet = [];
     /**
      * Hash with all calculated node metrics.
      *
@@ -91,11 +96,6 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * @var array<string, array<string, mixed>>
      */
     private $nodeMetrics = null;
-
-    /**
-     * @var array<string, ASTNamespace>
-     */
-    protected $nodeSet = [];
 
     /**
      * Nodes in which the current analyzed dependency is used.

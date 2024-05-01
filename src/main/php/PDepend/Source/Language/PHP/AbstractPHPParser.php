@@ -197,6 +197,29 @@ use PDepend\Util\Type;
 abstract class AbstractPHPParser
 {
     /**
+     * Regular expression for integer numbers representation.
+     * (Underscore and explicit octal notation were not allowed before PHP 7.4.)
+     *
+     * @see https://github.com/php/doc-en/blob/528e97348f45b473ca8ecea9997be1e268703562/language/types/integer.xml#L74-L86
+     */
+    protected const REGEXP_INTEGER = '/^(
+                       0
+                       |
+                       [1-9][0-9]*
+                       |
+                       0[xX][0-9a-fA-F]+
+                       |
+                       0[0-7]+
+                       |
+                       0[bB][01]+
+                     )$/x';
+
+    /**
+     * Tell if readonly is allowed as class modifier in the current PHP level.
+     */
+    protected const READONLY_CLASS_ALLOWED = false;
+
+    /**
      * Regular expression for inline type definitions in regular comments. This
      * kind of type is supported by IDEs like Netbeans or eclipse.
      */
@@ -250,56 +273,12 @@ abstract class AbstractPHPParser
                      )ix';
 
     /**
-     * Regular expression for integer numbers representation.
-     * (Underscore and explicit octal notation were not allowed before PHP 7.4.)
-     *
-     * @see https://github.com/php/doc-en/blob/528e97348f45b473ca8ecea9997be1e268703562/language/types/integer.xml#L74-L86
-     */
-    protected const REGEXP_INTEGER = '/^(
-                       0
-                       |
-                       [1-9][0-9]*
-                       |
-                       0[xX][0-9a-fA-F]+
-                       |
-                       0[0-7]+
-                       |
-                       0[bB][01]+
-                     )$/x';
-
-    /**
-     * Tell if readonly is allowed as class modifier in the current PHP level.
-     */
-    protected const READONLY_CLASS_ALLOWED = false;
-
-    /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
      * prefixed a qualified name with the actual namespace.
      *
      * @var bool
      */
     protected $namespacePrefixReplaced = false;
-
-    /**
-     * The name of the last detected namespace.
-     *
-     * @var string|null
-     */
-    private $namespaceName;
-
-    /**
-     * Last parsed package tag.
-     *
-     * @var string|null
-     */
-    private $packageName = Builder::DEFAULT_NAMESPACE;
-
-    /**
-     * The package defined in the file level comment.
-     *
-     * @var string|null
-     */
-    private $globalPackageName = Builder::DEFAULT_NAMESPACE;
 
     /**
      * The used data structure builder.
@@ -323,6 +302,55 @@ abstract class AbstractPHPParser
     protected $useSymbolTable;
 
     /**
+     * The actually parsed class or interface instance.
+     *
+     * @var AbstractASTClassOrInterface|null
+     */
+    protected $classOrInterface;
+
+    /**
+     * Stack with all active token scopes.
+     *
+     * @var TokenStack
+     */
+    protected $tokenStack;
+
+    /**
+     * @var CacheDriver
+     *
+     * @since 0.10.0
+     */
+    protected $cache;
+
+    /**
+     * The used code tokenizer.
+     *
+     * @var Tokenizer
+     */
+    protected $tokenizer;
+
+    /**
+     * The name of the last detected namespace.
+     *
+     * @var string|null
+     */
+    private $namespaceName;
+
+    /**
+     * Last parsed package tag.
+     *
+     * @var string|null
+     */
+    private $packageName = Builder::DEFAULT_NAMESPACE;
+
+    /**
+     * The package defined in the file level comment.
+     *
+     * @var string|null
+     */
+    private $globalPackageName = Builder::DEFAULT_NAMESPACE;
+
+    /**
      * The last parsed doc comment or <b>null</b>.
      *
      * @var string|null
@@ -337,26 +365,12 @@ abstract class AbstractPHPParser
     private $modifiers = 0;
 
     /**
-     * The actually parsed class or interface instance.
-     *
-     * @var AbstractASTClassOrInterface|null
-     */
-    protected $classOrInterface;
-
-    /**
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
      *
      * @var bool
      */
     private $ignoreAnnotations = false;
-
-    /**
-     * Stack with all active token scopes.
-     *
-     * @var TokenStack
-     */
-    protected $tokenStack;
 
     /**
      * Used identifier builder instance.
@@ -375,20 +389,6 @@ abstract class AbstractPHPParser
      * @since 0.9.12
      */
     private $maxNestingLevel = 1024;
-
-    /**
-     * @var CacheDriver
-     *
-     * @since 0.10.0
-     */
-    protected $cache;
-
-    /**
-     * The used code tokenizer.
-     *
-     * @var Tokenizer
-     */
-    protected $tokenizer;
 
     /**
      * True if current statement is echoing (such as after <?=)
@@ -587,10 +587,10 @@ abstract class AbstractPHPParser
      * Parses a valid class or interface name and returns the image of the parsed
      * token.
      *
+     * @return string
+     *
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
-     *
-     * @return string
      */
     protected function parseClassName()
     {
@@ -637,10 +637,10 @@ abstract class AbstractPHPParser
      * literal representing the function name. If no valid token exists in the
      * token stream, this method will throw an exception.
      *
+     * @return string
+     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
-     * @return string
      *
      * @since 0.10.0
      */
@@ -705,10 +705,10 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @return string
+     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
-     * @return string
      */
     protected function parseMethodName()
     {
@@ -1006,10 +1006,10 @@ abstract class AbstractPHPParser
      *
      * @param T $classOrInterface
      *
+     * @return T
+     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
-     * @return T
      */
     protected function parseTypeBody(AbstractASTClassOrInterface $classOrInterface)
     {
@@ -1188,9 +1188,9 @@ abstract class AbstractPHPParser
      * @param int $tokenType
      * @param int $modifiers
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTConstantDefinition|ASTFieldDeclaration
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
@@ -1673,9 +1673,9 @@ abstract class AbstractPHPParser
      *
      * @param array<int, mixed> $reference Parsed method reference array.
      *
-     * @throws InvalidStateException
-     *
      * @return ASTTraitAdaptationPrecedence
+     *
+     * @throws InvalidStateException
      *
      * @since 1.0.0
      */
@@ -1723,9 +1723,9 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @throws ParserException
-     *
      * @return ASTAllocationExpression
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -1749,9 +1749,9 @@ abstract class AbstractPHPParser
      *
      * @param T $allocation
      *
-     * @throws ParserException
-     *
      * @return T
+     *
+     * @throws ParserException
      *
      * @since 2.3
      */
@@ -1763,9 +1763,9 @@ abstract class AbstractPHPParser
     /**
      * Parse the instanciation for new keyword without arguments.
      *
-     * @throws ParserException
-     *
      * @return ASTAllocationExpression
+     *
+     * @throws ParserException
      */
     private function parseAllocationExpressionValue()
     {
@@ -2524,9 +2524,9 @@ abstract class AbstractPHPParser
     /**
      * @param bool $classRef
      *
-     * @throws ParserException
-     *
      * @return ASTNode
+     *
+     * @throws ParserException
      */
     private function parseStandAloneExpressionType($classRef)
     {
@@ -2558,9 +2558,9 @@ abstract class AbstractPHPParser
      * @param T    $expr
      * @param bool $classRef
      *
-     * @throws ParserException
-     *
      * @return T
+     *
+     * @throws ParserException
      */
     protected function parseExpressionTypeReference(ASTNode $expr, $classRef)
     {
@@ -2802,9 +2802,9 @@ abstract class AbstractPHPParser
      * @param int      $closeToken
      * @param int|null $separatorToken
      *
-     * @throws TokenStreamEndException
-     *
      * @return T
+     *
+     * @throws TokenStreamEndException
      *
      * @since 0.9.6
      */
@@ -2871,9 +2871,9 @@ abstract class AbstractPHPParser
     /**
      * Parse a scope enclosed by curly braces.
      *
-     * @throws ParserException
-     *
      * @return ASTScopeStatement
+     *
+     * @throws ParserException
      *
      * @since 0.9.12
      */
@@ -2913,9 +2913,9 @@ abstract class AbstractPHPParser
      * Parses all statements that exist in a scope an adds them to a scope
      * instance.
      *
-     * @throws ParserException
-     *
      * @return ASTScopeStatement
+     *
+     * @throws ParserException
      *
      * @since 0.10.0
      */
@@ -3044,9 +3044,9 @@ abstract class AbstractPHPParser
      * This method parses an expression node and returns it. When no expression
      * was found this method will throw an InvalidStateException.
      *
-     * @throws ParserException
-     *
      * @return ASTNode
+     *
+     * @throws ParserException
      *
      * @since 1.0.1
      */
@@ -3068,9 +3068,9 @@ abstract class AbstractPHPParser
      * This method optionally parses an expression node and returns it. When no
      * expression was found this method will return <b>null</b>.
      *
-     * @throws ParserException
-     *
      * @return ASTNode|null
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -3356,9 +3356,9 @@ abstract class AbstractPHPParser
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTNode
+     *
+     * @throws UnexpectedTokenException
      *
      * @since 2.2
      */
@@ -3417,9 +3417,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses a switch statement.
      *
-     * @throws ParserException
-     *
      * @return ASTSwitchStatement
+     *
+     * @throws ParserException
      *
      * @since 0.9.8
      */
@@ -3440,9 +3440,9 @@ abstract class AbstractPHPParser
      *
      * @param ASTSwitchStatement $switch The parent switch stmt.
      *
-     * @throws ParserException
-     *
      * @return ASTSwitchStatement
+     *
+     * @throws ParserException
      *
      * @since 0.9.8
      */
@@ -3487,9 +3487,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses a case label of a switch statement.
      *
-     * @throws ParserException
-     *
      * @return ASTSwitchLabel
+     *
+     * @throws ParserException
      *
      * @since 0.9.8
      */
@@ -3544,9 +3544,9 @@ abstract class AbstractPHPParser
      *
      * @param ASTSwitchLabel $label The context switch label.
      *
-     * @throws ParserException
-     *
      * @return ASTSwitchLabel
+     *
+     * @throws ParserException
      */
     private function parseSwitchLabelBody(ASTSwitchLabel $label)
     {
@@ -3616,9 +3616,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses a try-statement + associated catch-statements.
      *
-     * @throws ParserException
-     *
      * @return ASTTryStatement
+     *
+     * @throws ParserException
      *
      * @since 0.9.12
      */
@@ -3912,9 +3912,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single for-statement node.
      *
-     * @throws ParserException
-     *
      * @return ASTForStatement
+     *
+     * @throws ParserException
      *
      * @since 0.9.8
      */
@@ -3978,9 +3978,9 @@ abstract class AbstractPHPParser
     /**
      * Parses the expression part of a for-statement.
      *
-     * @throws ParserException
-     *
      * @return ASTNode|null
+     *
+     * @throws ParserException
      *
      * @since 0.9.12
      */
@@ -4363,10 +4363,10 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @return Token
+     *
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
-     *
-     * @return Token
      */
     protected function consumeObjectOperatorToken()
     {
@@ -4430,9 +4430,9 @@ abstract class AbstractPHPParser
      * func();
      * </code>
      *
-     * @throws ParserException
-     *
      * @return ASTNode
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4505,9 +4505,9 @@ abstract class AbstractPHPParser
      * @param ASTNode $node This node represents the function identifier. An identifier can be a static string,
      *                      a variable, a compound variable or any other valid php function identifier.
      *
-     * @throws ParserException
-     *
      * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4557,9 +4557,9 @@ abstract class AbstractPHPParser
      *                left expression. It will be the first child of the parsed member
      *                primary expression.
      *
-     * @throws ParserException
-     *
      * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4590,9 +4590,9 @@ abstract class AbstractPHPParser
      *
      * @param ASTNode $node The left node in the parsed member primary expression.
      *
-     * @throws ParserException
-     *
      * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4649,9 +4649,9 @@ abstract class AbstractPHPParser
      * @param ASTNode $node This node represents primary prefix left expression. It will
      *                      be the first child of the parsed member primary expression.
      *
-     * @throws ParserException
-     *
      * @return ASTNode
+     *
+     * @throws ParserException
      *
      * @since 1.0.1
      */
@@ -4691,9 +4691,9 @@ abstract class AbstractPHPParser
      *
      * @param ASTNode $node The left node in the parsed member primary expression.
      *
-     * @throws ParserException
-     *
      * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4759,9 +4759,9 @@ abstract class AbstractPHPParser
      * @param ASTNode $node The identifier for the parsed postfix expression node. This node
      *                      will be the first child of the returned postfix node instance.
      *
-     * @throws ParserException
-     *
      * @return ASTNode
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4870,9 +4870,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses the arguments passed to a function- or method-call.
      *
-     * @throws ParserException
-     *
      * @return ASTArguments
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4890,9 +4890,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses the tokens after arguments passed to a function- or method-call.
      *
-     * @throws ParserException
-     *
      * @return ASTArguments
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -4966,9 +4966,9 @@ abstract class AbstractPHPParser
      * variable is followed by an object operator, double colon or opening
      * parenthesis.
      *
-     * @throws ParserException
-     *
      * @return ASTNode
+     *
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -5036,10 +5036,10 @@ abstract class AbstractPHPParser
      *
      * @param Token $token The "static" keyword token.
      *
+     * @return ASTStaticReference
+     *
      * @throws ParserException
      * @throws InvalidStateException
-     *
-     * @return ASTStaticReference
      *
      * @since 0.9.6
      */
@@ -5072,10 +5072,10 @@ abstract class AbstractPHPParser
      *
      * @param Token $token The "self" keyword token.
      *
+     * @return ASTSelfReference
+     *
      * @throws ParserException
      * @throws InvalidStateException
-     *
-     * @return ASTSelfReference
      *
      * @since 0.9.6
      */
@@ -5137,10 +5137,10 @@ abstract class AbstractPHPParser
      * contains the self reference as its first child when the self token is
      * followed by a double colon token.
      *
+     * @return ASTNode
+     *
      * @throws ParserException
      * @throws InvalidStateException
-     *
-     * @return ASTNode
      *
      * @since 0.9.6
      */
@@ -5164,10 +5164,10 @@ abstract class AbstractPHPParser
      *
      * @param Token $token The "self" keyword token.
      *
+     * @return ASTParentReference
+     *
      * @throws ParserException
      * @throws InvalidStateException
-     *
-     * @return ASTParentReference
      *
      * @since 0.9.6
      */
@@ -5215,10 +5215,10 @@ abstract class AbstractPHPParser
      * that contains the parent reference as its first child when the self token
      * is followed by a double colon token.
      *
+     * @return ASTNode
+     *
      * @throws ParserException
      * @throws InvalidStateException
-     *
-     * @return ASTNode
      *
      * @since 0.9.6
      */
@@ -5300,9 +5300,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses a simple PHP variable.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTVariable
+     *
+     * @throws UnexpectedTokenException
      *
      * @since 0.9.6
      */
@@ -5380,10 +5380,10 @@ abstract class AbstractPHPParser
      * ------
      * </code>
      *
+     * @return ASTCompoundVariable|ASTVariable|ASTVariableVariable
+     *
      * @throws ParserException
      * @throws UnexpectedTokenException
-     *
-     * @return ASTCompoundVariable|ASTVariable|ASTVariableVariable
      *
      * @since 0.9.6
      */
@@ -5434,10 +5434,10 @@ abstract class AbstractPHPParser
      * this is compound variable, otherwise it can be a variable-variable or a
      * compound-variable.
      *
+     * @return ASTCompoundVariable|ASTVariableVariable
+     *
      * @throws ParserException
      * @throws UnexpectedTokenException
-     *
-     * @return ASTCompoundVariable|ASTVariableVariable
      *
      * @since 0.9.6
      */
@@ -5550,10 +5550,10 @@ abstract class AbstractPHPParser
      * ------------------
      * </code>
      *
-     * @throws ParserException
-     * @throws ParserException
-     *
      * @return ASTCompoundExpression
+     *
+     * @throws ParserException
+     * @throws ParserException
      *
      * @since 0.9.6
      */
@@ -5598,9 +5598,9 @@ abstract class AbstractPHPParser
      * instance of {@link ASTString} that represents a string
      * in double quotes or surrounded by backticks.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTNode
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseLiteralOrString()
     {
@@ -5965,9 +5965,9 @@ abstract class AbstractPHPParser
      *
      * @param int $delimiterType The start/stop token type.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTString
+     *
+     * @throws UnexpectedTokenException
      *
      * @since 0.9.10
      */
@@ -6566,10 +6566,10 @@ abstract class AbstractPHPParser
     /**
      * Parse a statement.
      *
+     * @return ASTNode
+     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
-     * @return ASTNode
      *
      * @since 1.0.0
      */
@@ -6585,9 +6585,9 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional statement or returns <b>null</b>.
      *
-     * @throws ParserException
-     *
      * @return AbstractASTClassOrInterface|ASTCallable|ASTNode|null
+     *
+     * @throws ParserException
      *
      * @since 0.9.8
      */
@@ -6872,9 +6872,9 @@ abstract class AbstractPHPParser
      * PDepend\Source\Parser::parse();
      * </code>
      *
-     * @throws NoActiveScopeException
-     *
      * @return string
+     *
+     * @throws NoActiveScopeException
      *
      * @link   http://php.net/manual/en/language.namespaces.importing.php
      */
@@ -7311,10 +7311,10 @@ abstract class AbstractPHPParser
      * };
      * </code>
      *
+     * @return ASTNode
+     *
      * @throws ParserException
      * @throws UnexpectedTokenException
-     *
-     * @return ASTNode
      *
      * @since 0.9.6
      */
@@ -7615,9 +7615,9 @@ abstract class AbstractPHPParser
     /**
      * Parses additional static values that are valid in the supported php version.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTValue
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
@@ -7627,9 +7627,9 @@ abstract class AbstractPHPParser
     /**
      * Parses fn operator of lambda function for syntax fn() => available since PHP 7.4.
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTClosure
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseLambdaFunctionDeclaration()
     {
@@ -7825,7 +7825,7 @@ abstract class AbstractPHPParser
             $useSymbolTable = $this->useSymbolTable;
 
             return array_map(
-                static fn ($image) => $useSymbolTable->lookup($image) ?: $image,
+                static fn($image) => $useSymbolTable->lookup($image) ?: $image,
                 array_map('trim', explode('|', end($match) ?: '')),
             );
         }
@@ -7975,10 +7975,10 @@ abstract class AbstractPHPParser
      *
      * @param int $tokenType The next expected token type.
      *
+     * @return Token
+     *
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
-     *
-     * @return Token
      */
     protected function consumeToken($tokenType)
     {
@@ -8056,9 +8056,9 @@ abstract class AbstractPHPParser
      *  $value = $nullableValue ?? throw new InvalidArgumentException();
      *  $value = $falsableValue ?: throw new InvalidArgumentException();
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTThrowStatement
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseThrowExpression()
     {
@@ -8069,9 +8069,9 @@ abstract class AbstractPHPParser
      * Parses enum declaration. available since PHP 8.1. Ex.:
      *  enum Suit: string { case HEARTS = 'hearts'; }
      *
-     * @throws UnexpectedTokenException
-     *
      * @return ASTEnum
+     *
+     * @throws UnexpectedTokenException
      */
     protected function parseEnumDeclaration()
     {

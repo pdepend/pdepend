@@ -62,10 +62,10 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
     /**
      * Parse a typed constant (PHP >= 8.3).
      *
+     * @return ASTConstantDeclarator
+     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
-     * @return ASTConstantDeclarator
      *
      * @since  1.16.0
      */

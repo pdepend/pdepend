@@ -56,9 +56,9 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * Copied from Behat
  *
- * @link   https://github.com/Behat/Behat/blob/3.0/src/Behat/Behat/Extension/Extension.php
- *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
+ *
+ * @link   https://github.com/Behat/Behat/blob/3.0/src/Behat/Behat/Extension/Extension.php
  */
 abstract class Extension
 {

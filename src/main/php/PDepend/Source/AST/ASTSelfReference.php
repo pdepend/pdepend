@@ -92,6 +92,23 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     }
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        $this->qualifiedName = $this->getType()->getNamespaceName() . '\\' .
+                               $this->getType()->getName();
+
+        return array_merge(['qualifiedName'], parent::__sleep());
+    }
+
+    /**
      * Returns the visual representation for this node type.
      *
      * @return string
@@ -117,22 +134,5 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
                 ->getClassOrInterface($this->qualifiedName);
         }
         return $this->typeInstance;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        $this->qualifiedName = $this->getType()->getNamespaceName() . '\\' .
-                               $this->getType()->getName();
-
-        return array_merge(['qualifiedName'], parent::__sleep());
     }
 }

@@ -69,6 +69,18 @@ class ASTTraitAdaptationAlias extends ASTStatement
     protected $newModifier = -1;
 
     /**
+     * The magic sleep method will be called by PHP's runtime environment right
+     * before an instance of this class gets serialized. It should return an
+     * array with those property names that should be serialized for this class.
+     *
+     * @return array
+     */
+    public function __sleep()
+    {
+        return array_merge(['newName', 'newModifier'], parent::__sleep());
+    }
+
+    /**
      * Sets the new method modifier.
      *
      * @param int $newModifier The new method modifier.
@@ -108,17 +120,5 @@ class ASTTraitAdaptationAlias extends ASTStatement
     public function getNewName()
     {
         return $this->newName;
-    }
-
-    /**
-     * The magic sleep method will be called by PHP's runtime environment right
-     * before an instance of this class gets serialized. It should return an
-     * array with those property names that should be serialized for this class.
-     *
-     * @return array
-     */
-    public function __sleep()
-    {
-        return array_merge(['newName', 'newModifier'], parent::__sleep());
     }
 }

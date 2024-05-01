@@ -52,4 +52,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.12
  */
-class ASTThrowStatement extends ASTStatement {}
+class ASTThrowStatement extends ASTStatement
+{
+}

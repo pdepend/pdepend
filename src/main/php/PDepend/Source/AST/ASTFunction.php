@@ -53,15 +53,6 @@ use PDepend\Source\Builder\BuilderContext;
 class ASTFunction extends AbstractASTCallable
 {
     /**
-     * The parent namespace for this function.
-     *
-     * @var ASTNamespace|null
-     *
-     * @since 0.10.0
-     */
-    private $namespace = null;
-
-    /**
      * The currently used builder context.
      *
      * @var BuilderContext|null
@@ -77,6 +68,41 @@ class ASTFunction extends AbstractASTCallable
      * @var string|null
      */
     protected $namespaceName = null;
+    /**
+     * The parent namespace for this function.
+     *
+     * @var ASTNamespace|null
+     *
+     * @since 0.10.0
+     */
+    private $namespace = null;
+
+    /**
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for all function instances.
+     *
+     * @return array<string>
+     *
+     * @since  0.10.0
+     */
+    public function __sleep()
+    {
+        return array_merge(['context', 'namespaceName'], parent::__sleep());
+    }
+
+    /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a serialized instance of this class was unserialized. This implementation
+     * of the wakeup method will register this object in the the global function
+     * context.
+     *
+     * @since  0.10.0
+     */
+    public function __wakeup(): void
+    {
+        $this->context->registerFunction($this);
+    }
 
     /**
      * Sets the currently active builder context.
@@ -134,32 +160,5 @@ class ASTFunction extends AbstractASTCallable
     public function getNamespaceName()
     {
         return $this->namespaceName;
-    }
-
-    /**
-     * The magic sleep method will be called by the PHP engine when this class
-     * gets serialized. It returns an array with those properties that should be
-     * cached for all function instances.
-     *
-     * @return array<string>
-     *
-     * @since  0.10.0
-     */
-    public function __sleep()
-    {
-        return array_merge(['context', 'namespaceName'], parent::__sleep());
-    }
-
-    /**
-     * The magic wakeup method will be called by PHP's runtime environment when
-     * a serialized instance of this class was unserialized. This implementation
-     * of the wakeup method will register this object in the the global function
-     * context.
-     *
-     * @since  0.10.0
-     */
-    public function __wakeup(): void
-    {
-        $this->context->registerFunction($this);
     }
 }

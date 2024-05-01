@@ -243,9 +243,9 @@ final class Type
      *
      * @param string $typeName The type name.
      *
-     * @throws ReflectionException
-     *
      * @return bool
+     *
+     * @throws ReflectionException
      */
     public static function isInternalType($typeName)
     {
@@ -263,9 +263,9 @@ final class Type
      *
      * @param string $typeName The type name.
      *
-     * @throws ReflectionException
-     *
      * @return string|null
+     *
+     * @throws ReflectionException
      */
     public static function getTypePackage($typeName)
     {
@@ -282,9 +282,9 @@ final class Type
     /**
      * Returns an array with all package/extension names.
      *
-     * @throws ReflectionException
-     *
      * @return array<string>
+     *
+     * @throws ReflectionException
      */
     public static function getInternalNamespaces()
     {
@@ -303,9 +303,9 @@ final class Type
      *
      * @param string $packageName Name of a package.
      *
-     * @throws ReflectionException
-     *
      * @return bool
+     *
+     * @throws ReflectionException
      */
     public static function isInternalPackage($packageName)
     {
@@ -396,9 +396,9 @@ final class Type
      * this type belongs to an extension or is internal. All internal and extension
      * classes are collected in an internal data structure.
      *
-     * @throws ReflectionException
-     *
      * @return array<string, string>
+     *
+     * @throws ReflectionException
      */
     private static function initTypeToExtension()
     {

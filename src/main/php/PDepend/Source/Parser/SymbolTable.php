@@ -123,9 +123,9 @@ class SymbolTable
      *
      * @param string $key The key for a searched scope value.
      *
-     * @throws NoActiveScopeException
-     *
      * @return string|null
+     *
+     * @throws NoActiveScopeException
      */
     public function lookup($key)
     {

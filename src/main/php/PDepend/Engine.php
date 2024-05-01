@@ -321,9 +321,9 @@ class Engine
      * Analyzes the registered directories and returns the collection of
      * analyzed namespace.
      *
-     * @throws InvalidArgumentException
-     *
      * @return ASTArtifactList<ASTNamespace>
+     *
+     * @throws InvalidArgumentException
      */
     public function analyze()
     {
@@ -362,9 +362,9 @@ class Engine
     /**
      * Returns the number of analyzed php classes and interfaces.
      *
-     * @throws RuntimeException
-     *
      * @return int
+     *
+     * @throws RuntimeException
      */
     public function countClasses()
     {
@@ -394,9 +394,9 @@ class Engine
     /**
      * Returns the number of analyzed namespaces.
      *
-     * @throws RuntimeException
-     *
      * @return int
+     *
+     * @throws RuntimeException
      */
     public function countNamespaces()
     {
@@ -419,10 +419,10 @@ class Engine
      *
      * @param string $name
      *
+     * @return ASTNamespace
+     *
      * @throws OutOfBoundsException
      * @throws RuntimeException
-     *
-     * @return ASTNamespace
      */
     public function getNamespace($name)
     {
@@ -441,9 +441,9 @@ class Engine
     /**
      * Returns an array with the analyzed namespace.
      *
-     * @throws RuntimeException
-     *
      * @return ASTArtifactList<ASTNamespace>
+     *
+     * @throws RuntimeException
      */
     public function getNamespaces()
     {
@@ -623,9 +623,9 @@ class Engine
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
      *
-     * @throws RuntimeException
-     *
      * @return ArrayIterator<int, string>
+     *
+     * @throws RuntimeException
      */
     private function createFileIterator()
     {
@@ -686,9 +686,9 @@ class Engine
     /**
      * @param array<string, mixed> $options
      *
-     * @throws InvalidArgumentException
-     *
      * @return Analyzer[]
+     *
+     * @throws InvalidArgumentException
      */
     private function createAnalyzers($options)
     {

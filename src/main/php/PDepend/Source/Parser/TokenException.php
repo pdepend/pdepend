@@ -52,4 +52,6 @@ namespace PDepend\Source\Parser;
  *
  * @since 0.9.10
  */
-class TokenException extends ParserException {}
+class TokenException extends ParserException
+{
+}

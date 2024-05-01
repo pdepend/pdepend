@@ -60,10 +60,10 @@ class Factory
      *
      * @param string $pathName Qualified path name of a coverage report file.
      *
+     * @return CloverReport
+     *
      * @throws RuntimeException When the given path name does not point to a
      *                          valid coverage file or onto an unsupported coverage format.
-     *
-     * @return CloverReport
      */
     public function create($pathName)
     {
@@ -80,10 +80,10 @@ class Factory
      *
      * @param string $pathName Qualified path name of a coverage report file.
      *
+     * @return SimpleXMLElement
+     *
      * @throws RuntimeException When the given path name does not point to a
      *                          valid xml file.
-     *
-     * @return SimpleXMLElement
      */
     private function loadXml($pathName)
     {

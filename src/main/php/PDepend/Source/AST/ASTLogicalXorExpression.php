@@ -52,4 +52,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.9.8
  */
-class ASTLogicalXorExpression extends ASTExpression {}
+class ASTLogicalXorExpression extends ASTExpression
+{
+}

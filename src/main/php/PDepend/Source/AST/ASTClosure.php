@@ -134,8 +134,8 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      *
      * @return int
      *
-     * @since  1.0.0
      * @see    ASTNode#getMetadataSize()
+     * @since  1.0.0
      */
     protected function getMetadataSize()
     {

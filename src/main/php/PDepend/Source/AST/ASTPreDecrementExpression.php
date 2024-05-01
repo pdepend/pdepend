@@ -52,4 +52,6 @@ namespace PDepend\Source\AST;
  *
  * @since 0.10.0
  */
-class ASTPreDecrementExpression extends ASTUnaryExpression {}
+class ASTPreDecrementExpression extends ASTUnaryExpression
+{
+}

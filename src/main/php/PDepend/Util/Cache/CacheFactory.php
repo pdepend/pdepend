@@ -93,11 +93,11 @@ class CacheFactory
      *
      * @param string $cacheKey The name/identifier for the cache instance.
      *
+     * @return CacheDriver
+     *
      * @throws InvalidArgumentException
      * @throws RandomException
      * @throws RuntimeException
-     *
-     * @return CacheDriver
      */
     public function create($cacheKey = null)
     {
@@ -112,11 +112,11 @@ class CacheFactory
      *
      * @param string|null $cacheKey The name/identifier for the cache instance.
      *
+     * @return CacheDriver
+     *
      * @throws InvalidArgumentException If the configured cache driver is unknown.
      * @throws RandomException
      * @throws RuntimeException
-     *
-     * @return CacheDriver
      */
     protected function createCache($cacheKey = null)
     {
@@ -142,9 +142,9 @@ class CacheFactory
      * @param int         $ttl      Cache ttl
      * @param string|null $cacheKey The name/identifier for the cache instance.
      *
-     * @throws RuntimeException
-     *
      * @return FileCacheDriver
+     *
+     * @throws RuntimeException
      */
     protected function createFileCache($location, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {
@@ -154,9 +154,9 @@ class CacheFactory
     /**
      * Creates an in memory cache instance.
      *
-     * @throws RandomException
-     *
      * @return MemoryCacheDriver
+     *
+     * @throws RandomException
      */
     protected function createMemoryCache()
     {

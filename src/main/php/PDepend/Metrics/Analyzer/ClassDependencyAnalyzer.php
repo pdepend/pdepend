@@ -63,8 +63,13 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * Metrics provided by the analyzer implementation.
      */
     private const
-        M_AFFERENT_COUPLING          = 'ca',
-        M_EFFERENT_COUPLING          = 'ce';
+        M_AFFERENT_COUPLING = 'ca',
+        M_EFFERENT_COUPLING = 'ce';
+
+    /**
+     * @var array<string, ASTNamespace>
+     */
+    protected $nodeSet = [];
 
     /**
      * Hash with all calculated node metrics.
@@ -72,11 +77,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * @var array<string, array<string, array<string, string>>>
      */
     private $nodeMetrics = null;
-
-    /**
-     * @var array<string, ASTNamespace>
-     */
-    protected $nodeSet = [];
 
     /**
      * Nodes in which the current analyzed class is used.
@@ -241,8 +241,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
             $this->nodeSet[$id] = $type;
 
             $this->nodeMetrics[$id] = [
-                self::M_AFFERENT_COUPLING =>  [],
-                self::M_EFFERENT_COUPLING =>  [],
+                self::M_AFFERENT_COUPLING => [],
+                self::M_EFFERENT_COUPLING => [],
             ];
         }
     }

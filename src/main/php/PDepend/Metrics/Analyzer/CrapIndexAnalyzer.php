@@ -66,16 +66,15 @@ use PDepend\Util\Coverage\Report;
 class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
 {
     /**
+     * The report option name.
+     */
+    public const REPORT_OPTION = 'coverage-report';
+    /**
      * Metrics provided by the analyzer implementation.
      */
     private const
         M_CRAP_INDEX = 'crap',
         M_COVERAGE = 'cov';
-
-    /**
-     * The report option name.
-     */
-    public const REPORT_OPTION = 'coverage-report';
 
     /**
      * Calculated crap metrics.

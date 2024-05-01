@@ -298,9 +298,9 @@ class Pyramid implements FileAwareGenerator
     /**
      * Aggregates the required metrics from the registered analyzers.
      *
-     * @throws RuntimeException If one of the required analyzers isn't set.
-     *
      * @return array<string, mixed>
+     *
+     * @throws RuntimeException If one of the required analyzers isn't set.
      */
     private function collectMetrics()
     {

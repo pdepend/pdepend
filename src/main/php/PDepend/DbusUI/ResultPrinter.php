@@ -91,12 +91,16 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      *
      * @param Builder<mixed> $builder The used node builder instance.
      */
-    public function endParseProcess(Builder $builder): void {}
+    public function endParseProcess(Builder $builder): void
+    {
+    }
 
     /**
      * Is called when PDepend starts parsing of a new file.
      */
-    public function startFileParsing(Tokenizer $tokenizer): void {}
+    public function startFileParsing(Tokenizer $tokenizer): void
+    {
+    }
 
     /**
      * Is called when PDepend has finished a file.
@@ -109,17 +113,23 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts the analyzing process.
      */
-    public function startAnalyzeProcess(): void {}
+    public function startAnalyzeProcess(): void
+    {
+    }
 
     /**
      * Is called when PDepend has finished the analyzing process.
      */
-    public function endAnalyzeProcess(): void {}
+    public function endAnalyzeProcess(): void
+    {
+    }
 
     /**
      * Is called when PDepend starts the logging process.
      */
-    public function startLogProcess(): void {}
+    public function startLogProcess(): void
+    {
+    }
 
     /**
      * Is called when PDepend has finished the logging process.
@@ -130,7 +140,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
             return;
         }
 
-        $dbus  = new Dbus(Dbus::BUS_SESSION);
+        $dbus = new Dbus(Dbus::BUS_SESSION);
         $proxy = $dbus->createProxy(
             "org.freedesktop.Notifications", // connection name
             "/org/freedesktop/Notifications", // object
@@ -157,14 +167,18 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      *
      * @param Analyzer $analyzer The context analyzer instance.
      */
-    public function startAnalyzer(Analyzer $analyzer): void {}
+    public function startAnalyzer(Analyzer $analyzer): void
+    {
+    }
 
     /**
      * Is called when PDepend has finished one analyzing process.
      *
      * @param Analyzer $analyzer The context analyzer instance.
      */
-    public function endAnalyzer(Analyzer $analyzer): void {}
+    public function endAnalyzer(Analyzer $analyzer): void
+    {
+    }
 }
 
 // @codeCoverageIgnoreEnd

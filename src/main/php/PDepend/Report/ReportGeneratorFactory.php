@@ -63,6 +63,12 @@ use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 class ReportGeneratorFactory
 {
     /**
+     * Set of created logger instances.
+     *
+     * @var ReportGenerator[]
+     */
+    protected $instances = [];
+    /**
      * @var TaggedContainerInterface
      */
     private $container;
@@ -82,9 +88,9 @@ class ReportGeneratorFactory
      * @param string $identifier The generator identifier.
      * @param string $fileName   The log output file name.
      *
-     * @throws RuntimeException
-     *
      * @return ReportGenerator
+     *
+     * @throws RuntimeException
      */
     public function createGenerator($identifier, $fileName)
     {
@@ -115,11 +121,4 @@ class ReportGeneratorFactory
         }
         return $this->instances[$identifier];
     }
-
-    /**
-     * Set of created logger instances.
-     *
-     * @var ReportGenerator[]
-     */
-    protected $instances = [];
 }
