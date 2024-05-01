@@ -92,7 +92,7 @@ abstract class AbstractTestCase extends TestCase
 
         $run = __DIR__ . '/_run';
         if (file_exists($run) === false) {
-            mkdir($run, 0755);
+            mkdir($run, 0o755);
         }
 
         $this->clearRunResources($run);
