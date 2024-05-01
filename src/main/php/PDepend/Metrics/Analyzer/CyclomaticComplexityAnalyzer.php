@@ -63,6 +63,7 @@ use PDepend\Source\AST\ASTLogicalAndExpression;
 use PDepend\Source\AST\ASTLogicalOrExpression;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTWhileStatement;
 
@@ -414,5 +415,25 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
+    }
+
+    public function dispatch(ASTNode $node): void
+    {
+        match ($node::class) {
+            ASTBooleanAndExpression::class => $this->visitBooleanAndExpression($node),
+            ASTBooleanOrExpression::class => $this->visitBooleanOrExpression($node),
+            ASTCatchStatement::class => $this->visitCatchStatement($node),
+            ASTConditionalExpression::class => $this->visitConditionalExpression($node),
+            ASTDoWhileStatement::class => $this->visitDoWhileStatement($node),
+            ASTElseIfStatement::class => $this->visitElseIfStatement($node),
+            ASTForeachStatement::class => $this->visitForeachStatement($node),
+            ASTForStatement::class => $this->visitForStatement($node),
+            ASTIfStatement::class => $this->visitIfStatement($node),
+            ASTLogicalAndExpression::class => $this->visitLogicalAndExpression($node),
+            ASTLogicalOrExpression::class => $this->visitLogicalOrExpression($node),
+            ASTSwitchLabel::class => $this->visitSwitchLabel($node),
+            ASTWhileStatement::class => $this->visitWhileStatement($node),
+            default => parent::dispatch($node),
+        };
     }
 }

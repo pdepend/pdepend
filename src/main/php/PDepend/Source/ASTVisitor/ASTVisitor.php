@@ -120,6 +120,9 @@ interface ASTVisitor
      */
     public function visitProperty(ASTProperty $property): void;
 
+    /**
+     * Visit child nodes of the given node.
+     */
     public function visit(ASTNode $node): void;
 
     public function dispatch(ASTNode $node): void;
