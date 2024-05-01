@@ -12,6 +12,7 @@ return $config
         'global_namespace_import' => true,
         'no_empty_phpdoc' => true,
         'no_leading_import_slash' => true,
+        'no_superfluous_phpdoc_tags' => true,
         'no_unused_imports' => true,
         'ordered_imports' => true,
         'phpdoc_align' => true,
