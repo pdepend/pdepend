@@ -226,11 +226,11 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         $coverage   = $report->getCoverage($callable);
 
         if ($coverage == 0) {
-            return pow($complexity, 2) + $complexity;
+            return $complexity ** 2 + $complexity;
         } elseif ($coverage > 99.5) {
             return $complexity;
         }
-        return pow($complexity, 2) * pow(1 - $coverage / 100, 3) + $complexity;
+        return $complexity ** 2 * (1 - $coverage / 100) ** 3 + $complexity;
     }
 
     /**

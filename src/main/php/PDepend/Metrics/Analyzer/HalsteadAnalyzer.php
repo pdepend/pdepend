@@ -389,7 +389,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
         $measures[self::M_HALSTEAD_EFFORT] =
             $measures[self::M_HALSTEAD_VOLUME] * $measures[self::M_HALSTEAD_DIFFICULTY];
         $measures[self::M_HALSTEAD_TIME] = $measures[self::M_HALSTEAD_EFFORT] / 18;
-        $measures[self::M_HALSTEAD_BUGS] = pow($measures[self::M_HALSTEAD_EFFORT], (2 / 3)) / 3000;
+        $measures[self::M_HALSTEAD_BUGS] = $measures[self::M_HALSTEAD_EFFORT] ** (2 / 3) / 3000;
         $measures[self::M_HALSTEAD_CONTENT] =
             $measures[self::M_HALSTEAD_VOLUME] / ($measures[self::M_HALSTEAD_DIFFICULTY] ?: 1);
 
