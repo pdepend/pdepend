@@ -33,13 +33,35 @@
         "psr-4": {"PDepend\\": "src/main/php/PDepend"}
     },
     "scripts": {
+        "analyse": [
+            "@phpstan"
+        ],
+        "analyze": "@analyse",
+        "check": [
+            "@cs-fix",
+            "@test-coverage",
+            "@analyse"
+        ],
         "test": "paratest --no-coverage",
+        "test-coverage": "paratest",
         "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "phpstan": "vendor/bin/phpstan",
         "build-website": [
             "php src/site/release-news-generator.php",
             "easy-doc build src/site/config.php --verbose"
         ]
+    },
+    "scripts-descriptions": {
+        "analyse": "Run the analyse steps (PHPStan)",
+        "analyze": "See analyse",
+        "build-website": "Build the website",
+        "check": "Runs @cs-fix, @test-coverage and @analyse.",
+        "cs-check": "Check the codestyle with phpcs.",
+        "cs-fix": "Check the codestyle with phpcbf and if possible fix the found issues.",
+        "phpstan": "Analyse the code with PHPStan.",
+        "test": "Run the tests without coverage.",
+        "test-coverage": "Run the tests with coverage."
     },
     "extra": {
         "branch-alias": {
