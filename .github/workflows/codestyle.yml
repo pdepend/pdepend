@@ -2,16 +2,14 @@ name: Codestyle
 
 on:
   push:
-    branches:
-      - "*"
+    branches: [ '*', '2.x', '3.x' ]
     paths:
       - '**.php'
       - 'composer.json'
       - '.php-cs-fixer.php'
       - '.github/workflows/codestyle.yml'
   pull_request:
-    branches:
-      - "*"
+    branches: [ '*' ]
     paths:
       - '**.php'
       - 'composer.json'
