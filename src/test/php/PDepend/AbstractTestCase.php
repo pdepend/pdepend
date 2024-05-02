@@ -730,7 +730,7 @@ abstract class AbstractTestCase extends TestCase
     protected function getCallingTestMethod()
     {
         foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
+            if (str_starts_with($frame['function'], 'test')) {
                 return "{$frame['class']}::{$frame['function']}";
             }
         }

@@ -302,7 +302,7 @@ class Command
         }
 
         // Last argument must be a list of source directories
-        if (strpos(end($argv), '--') !== 0) {
+        if (!str_starts_with(end($argv), '--')) {
             $this->source = explode(',', array_pop($argv));
         }
 
@@ -311,14 +311,14 @@ class Command
             $arg = (string) $argv[$i];
             if ($arg === '-d' && isset($argv[$i + 1])) {
                 $arg = (string) $argv[++$i];
-                if (strpos($arg, '=') === false) {
+                if (!str_contains($arg, '=')) {
                     ini_set($arg, 'on');
                 } else {
                     list($key, $value) = explode('=', $arg);
 
                     ini_set($key, $value);
                 }
-            } elseif (strpos($arg, '=') === false) {
+            } elseif (!str_contains($arg, '=')) {
                 $this->options[$arg] = true;
             } else {
                 list($key, $value) = explode('=', $arg);
@@ -559,7 +559,7 @@ class Command
     private function printOption($option, $message, $length)
     {
         // Ignore the phpunit xml option
-        if (0 === strpos($option, '--phpunit-xml=')) {
+        if (str_starts_with($option, '--phpunit-xml=')) {
             return;
         }
 
