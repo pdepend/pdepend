@@ -78,7 +78,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
             array('false', '$falsy'),
         ) as $index => $expected) {
             list($expectedType, $expectedVariable) = $expected;
-            $expectedTypeClass = isset($expected[2]) ? $expected[2] : 'PDepend\\Source\\AST\\ASTScalarType';
+            $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
             list($type, $variable) = $declarations[$index];
 
             $this->assertInstanceOf(
