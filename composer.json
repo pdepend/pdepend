@@ -1,24 +1,24 @@
 {
     "name": "pdepend/pdepend",
     "description": "Official version of pdepend to be handled with Composer",
+    "license": "BSD-3-Clause",
+    "type": "library",
     "keywords": [
         "dev",
         "pdepend",
         "PHP Depend",
         "PHP_Depend"
     ],
-    "license": "BSD-3-Clause",
-    "type": "library",
     "require": {
         "php": ">=8.1",
-        "symfony/config": "^5.4|^6.0|^7.0",
-        "symfony/dependency-injection": "^5.4|^6.0|^7.0",
-        "symfony/filesystem": "^5.4|^6.0|^7.0",
+        "symfony/config": "^5.4 || ^6.0 || ^7.0",
+        "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
+        "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
         "symfony/polyfill-mbstring": "^1.19"
     },
     "require-dev": {
         "brianium/paratest": "^7.3",
-        "easy-doc/easy-doc": "0.0.0|^1.2.3",
+        "easy-doc/easy-doc": "0.0.0 || ^1.2.3",
         "friendsofphp/php-cs-fixer": "^3.54",
         "gregwar/rst": "^1.0",
         "phpstan/phpstan": "~1.10.67",
@@ -28,29 +28,42 @@
     "replace": {
         "symfony/polyfill-php80": "*"
     },
-    "bin": ["src/bin/pdepend"],
     "autoload": {
-        "psr-4": {"PDepend\\": "src/main/php/PDepend"}
+        "psr-4": {
+            "PDepend\\": "src/main/php/PDepend"
+        }
+    },
+    "bin": [
+        "src/bin/pdepend"
+    ],
+    "config": {
+        "process-timeout": 900,
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
     },
     "scripts": {
         "analyse": [
             "@phpstan"
         ],
         "analyze": "@analyse",
+        "build-website": [
+            "php src/site/release-news-generator.php",
+            "easy-doc build src/site/config.php --verbose"
+        ],
         "check": [
             "@cs-fix",
             "@test-coverage",
             "@analyse"
         ],
-        "test": "paratest --no-coverage",
-        "test-coverage": "paratest",
         "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
         "phpstan": "vendor/bin/phpstan",
-        "build-website": [
-            "php src/site/release-news-generator.php",
-            "easy-doc build src/site/config.php --verbose"
-        ]
+        "test": "paratest --no-coverage",
+        "test-coverage": "paratest"
     },
     "scripts-descriptions": {
         "analyse": "Run the analyse steps (PHPStan)",
@@ -62,14 +75,5 @@
         "phpstan": "Analyse the code with PHPStan.",
         "test": "Run the tests without coverage.",
         "test-coverage": "Run the tests with coverage."
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.x-dev"
-        }
-    },
-    "config": {
-        "process-timeout": 900,
-        "sort-packages": true
     }
 }
