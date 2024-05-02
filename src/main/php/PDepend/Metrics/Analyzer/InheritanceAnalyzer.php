@@ -72,13 +72,14 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_AVERAGE_NUMBER_DERIVED_CLASSES = 'andc',
-          M_AVERAGE_HIERARCHY_HEIGHT       = 'ahh',
-          M_DEPTH_OF_INHERITANCE_TREE      = 'dit',
-          M_NUMBER_OF_ADDED_METHODS        = 'noam',
-          M_NUMBER_OF_OVERWRITTEN_METHODS  = 'noom',
-          M_NUMBER_OF_DERIVED_CLASSES      = 'nocc',
-          M_MAXIMUM_INHERITANCE_DEPTH      = 'maxDIT';
+    private const
+        M_AVERAGE_NUMBER_DERIVED_CLASSES = 'andc',
+        M_AVERAGE_HIERARCHY_HEIGHT       = 'ahh',
+        M_DEPTH_OF_INHERITANCE_TREE      = 'dit',
+        M_NUMBER_OF_ADDED_METHODS        = 'noam',
+        M_NUMBER_OF_OVERWRITTEN_METHODS  = 'noom',
+        M_NUMBER_OF_DERIVED_CLASSES      = 'nocc',
+        M_MAXIMUM_INHERITANCE_DEPTH      = 'maxDIT';
 
     /**
      * Contains the max inheritance depth for all root classes within the

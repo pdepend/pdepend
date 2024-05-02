@@ -59,7 +59,7 @@ use PDepend\Util\Configuration;
  */
 class CacheFactory
 {
-    const DEFAULT_TTL = 2592000; //30 days
+    private const DEFAULT_TTL = 2592000; //30 days
 
     /**
      * The system configuration.

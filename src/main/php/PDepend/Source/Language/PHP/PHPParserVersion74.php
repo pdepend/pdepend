@@ -64,7 +64,7 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
      * @see https://php.net/manual/en/language.types.integer.php
      * @see https://github.com/php/doc-en/blob/085c38d45e466691062b4444c71f4dbe4198f884/language/types/integer.xml#L79-L91
      */
-    const REGEXP_INTEGER = '/^(
+    protected const REGEXP_INTEGER = '/^(
                        0
                        |
                        [1-9][0-9]*(?:_[0-9]+)*

@@ -61,14 +61,15 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_NUMBER_OF_CLASSES          = 'tc',
-          M_NUMBER_OF_CONCRETE_CLASSES = 'cc',
-          M_NUMBER_OF_ABSTRACT_CLASSES = 'ac',
-          M_AFFERENT_COUPLING          = 'ca',
-          M_EFFERENT_COUPLING          = 'ce',
-          M_ABSTRACTION                = 'a',
-          M_INSTABILITY                = 'i',
-          M_DISTANCE                   = 'd';
+    private const
+        M_NUMBER_OF_CLASSES          = 'tc',
+        M_NUMBER_OF_CONCRETE_CLASSES = 'cc',
+        M_NUMBER_OF_ABSTRACT_CLASSES = 'ac',
+        M_AFFERENT_COUPLING          = 'ca',
+        M_EFFERENT_COUPLING          = 'ce',
+        M_ABSTRACTION                = 'a',
+        M_INSTABILITY                = 'i',
+        M_DISTANCE                   = 'd';
     /**
      * Hash with all calculated node metrics.
      *

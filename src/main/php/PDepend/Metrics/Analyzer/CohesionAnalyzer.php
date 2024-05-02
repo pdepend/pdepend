@@ -63,11 +63,6 @@ use PDepend\Source\AST\ASTVariable;
 class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
     /**
-     * Metrics provided by the analyzer implementation.
-     */
-    const M_LCOM4  = 'lcom4';
-
-    /**
      * Collected cohesion metrics for classes.
      *
      * @var array<string, array<string, int>>

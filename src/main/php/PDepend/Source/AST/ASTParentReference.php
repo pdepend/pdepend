@@ -58,7 +58,7 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     /**
      * The source image of this node.
      */
-    const IMAGE = 'parent';
+    public const IMAGE = 'parent';
 
     /**
      * The wrapped reference node.

@@ -85,11 +85,12 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_CALLS  = 'calls',
-          M_FANOUT = 'fanout',
-          M_CA     = 'ca',
-          M_CBO    = 'cbo',
-          M_CE     = 'ce';
+    private const
+        M_CALLS  = 'calls',
+        M_FANOUT = 'fanout',
+        M_CA     = 'ca',
+        M_CBO    = 'cbo',
+        M_CE     = 'ce';
 
     /**
      * Has this analyzer already processed the source under test?

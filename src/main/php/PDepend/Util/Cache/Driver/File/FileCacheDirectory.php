@@ -61,7 +61,7 @@ class FileCacheDirectory
     /**
      * The current cache version/hash number.
      */
-    const VERSION = CacheDriver::VERSION;
+    private const VERSION = CacheDriver::VERSION;
 
     /**
      * The cache root directory.

@@ -55,12 +55,12 @@ interface Tokenizer
     /**
      * Marks the end of the token stream.
      */
-    const T_EOF = -1;
+    public const T_EOF = -1;
 
     /**
      * Marks the beginning of the token stream.
      */
-    const T_BOF = -2;
+    public const T_BOF = -2;
 
     /**
      * Returns the name of the source file.

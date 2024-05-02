@@ -57,7 +57,7 @@ class ASTShiftRightExpression extends ASTExpression
     /**
      * The default image for this node.
      */
-    const IMAGE = '>>';
+    public const IMAGE = '>>';
 
     /**
      * Returns the source image of this ast node.

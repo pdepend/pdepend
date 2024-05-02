@@ -65,11 +65,12 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_NUMBER_OF_PACKAGES   = 'nop',
-          M_NUMBER_OF_CLASSES    = 'noc',
-          M_NUMBER_OF_INTERFACES = 'noi',
-          M_NUMBER_OF_METHODS    = 'nom',
-          M_NUMBER_OF_FUNCTIONS  = 'nof';
+    private const
+        M_NUMBER_OF_PACKAGES   = 'nop',
+        M_NUMBER_OF_CLASSES    = 'noc',
+        M_NUMBER_OF_INTERFACES = 'noi',
+        M_NUMBER_OF_METHODS    = 'nom',
+        M_NUMBER_OF_FUNCTIONS  = 'nof';
 
     /**
      * Number Of Packages.

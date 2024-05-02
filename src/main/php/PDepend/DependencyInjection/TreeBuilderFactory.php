@@ -54,7 +54,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class TreeBuilderFactory
 {
-    const DEFAULT_TTL = 2592000; //30 days
+    public const DEFAULT_TTL = 2592000; //30 days
 
     /**
      * @var array<Extension>

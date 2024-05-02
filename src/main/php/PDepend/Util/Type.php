@@ -55,74 +55,78 @@ final class Type
     /**
      * Constants for valid php data types.
      */
-    const PHP_TYPE_ARRAY   = 'array',
-          PHP_TYPE_BOOLEAN = 'boolean',
-          PHP_TYPE_FLOAT   = 'float',
-          PHP_TYPE_INTEGER = 'integer',
-          PHP_TYPE_STRING  = 'string';
+    public const
+        PHP_TYPE_BOOLEAN = 'boolean',
+        PHP_TYPE_FLOAT   = 'float',
+        PHP_TYPE_INTEGER = 'integer',
+        PHP_TYPE_STRING  = 'string';
     /**
      * Constants with valid php data type identifiers.
      */
-    const IMAGE_ARRAY    = 'array',
-          IMAGE_BOOL     = 'bool',
-          IMAGE_BOOLEAN  = 'boolean',
-          IMAGE_DOUBLE   = 'double',
-          IMAGE_FLOAT    = 'float',
-          IMAGE_INT      = 'int',
-          IMAGE_INTEGER  = 'integer',
-          IMAGE_MIXED    = 'mixed',
-          IMAGE_REAL     = 'real',
-          IMAGE_RESOURCE = 'resource',
-          IMAGE_OBJECT   = 'object',
-          IMAGE_STRING   = 'string',
-          IMAGE_STDCLASS = 'stdclass',
-          IMAGE_VOID     = 'void';
+    private const
+        IMAGE_ARRAY    = 'array',
+        IMAGE_BOOL     = 'bool',
+        IMAGE_BOOLEAN  = 'boolean',
+        IMAGE_DOUBLE   = 'double',
+        IMAGE_FLOAT    = 'float',
+        IMAGE_INT      = 'int',
+        IMAGE_INTEGER  = 'integer',
+        IMAGE_MIXED    = 'mixed',
+        IMAGE_REAL     = 'real',
+        IMAGE_RESOURCE = 'resource',
+        IMAGE_OBJECT   = 'object',
+        IMAGE_STRING   = 'string',
+        IMAGE_STDCLASS = 'stdclass',
+        IMAGE_VOID     = 'void';
 
     /**
      * Constants with the metaphone representation of multiple php data types.
      */
-    const IMAGE_METAPHONE_ARRAY        = 'AR',
-          IMAGE_METAPHONE_BOOL         = 'BL',
-          IMAGE_METAPHONE_BOOLEAN      = 'BLN',
-          IMAGE_METAPHONE_DOUBLE       = 'TBL',
-          IMAGE_METAPHONE_FLOAT        = 'FLT',
-          IMAGE_METAPHONE_INT          = 'INT',
-          IMAGE_METAPHONE_INTEGER      = 'INTJR',
-          IMAGE_METAPHONE_MIXED        = 'MKST',
-          IMAGE_METAPHONE_REAL         = 'RL',
-          IMAGE_METAPHONE_RESOURCE     = 'RSRS',
-          IMAGE_METAPHONE_OBJECT       = 'OBJKT',
-          IMAGE_METAPHONE_STRING       = 'STRNK',
-          IMAGE_METAPHONE_STDCLASS     = 'STTKLS',
-          IMAGE_METAPHONE_UNKNOWN      = 'UNKNN',
-          IMAGE_METAPHONE_UNKNOWN_TYPE = 'UNKNNTP';
+    private const
+        IMAGE_METAPHONE_ARRAY        = 'AR',
+        IMAGE_METAPHONE_BOOL         = 'BL',
+        IMAGE_METAPHONE_BOOLEAN      = 'BLN',
+        IMAGE_METAPHONE_DOUBLE       = 'TBL',
+        IMAGE_METAPHONE_FLOAT        = 'FLT',
+        IMAGE_METAPHONE_INT          = 'INT',
+        IMAGE_METAPHONE_INTEGER      = 'INTJR',
+        IMAGE_METAPHONE_MIXED        = 'MKST',
+        IMAGE_METAPHONE_REAL         = 'RL',
+        IMAGE_METAPHONE_RESOURCE     = 'RSRS',
+        IMAGE_METAPHONE_OBJECT       = 'OBJKT',
+        IMAGE_METAPHONE_STRING       = 'STRNK',
+        IMAGE_METAPHONE_STDCLASS     = 'STTKLS',
+        IMAGE_METAPHONE_UNKNOWN      = 'UNKNN',
+        IMAGE_METAPHONE_UNKNOWN_TYPE = 'UNKNNTP';
 
     /**
      * Constants with the soundex representation of multiple php data types.
      */
-    const IMAGE_SOUNDEX_ARRAY        = 'A600',
-          IMAGE_SOUNDEX_BOOL         = 'B450',
-          IMAGE_SOUNDEX_BOOLEAN      = 'B400',
-          IMAGE_SOUNDEX_DOUBLE       = 'D140',
-          IMAGE_SOUNDEX_FLOAT        = 'F430',
-          IMAGE_SOUNDEX_INT          = 'I530',
-          IMAGE_SOUNDEX_INTEGER      = 'I532',
-          IMAGE_SOUNDEX_MIXED        = 'M230',
-          IMAGE_SOUNDEX_REAL         = 'R400',
-          IMAGE_SOUNDEX_RESOURCE     = 'R262',
-          IMAGE_SOUNDEX_OBJECT       = 'O122',
-          IMAGE_SOUNDEX_STRING       = 'S365',
-          IMAGE_SOUNDEX_STDCLASS     = 'S324',
-          IMAGE_SOUNDEX_UNKNOWN      = 'U525';
+    private const
+        IMAGE_SOUNDEX_ARRAY        = 'A600',
+        IMAGE_SOUNDEX_BOOL         = 'B450',
+        IMAGE_SOUNDEX_BOOLEAN      = 'B400',
+        IMAGE_SOUNDEX_DOUBLE       = 'D140',
+        IMAGE_SOUNDEX_FLOAT        = 'F430',
+        IMAGE_SOUNDEX_INT          = 'I530',
+        IMAGE_SOUNDEX_INTEGER      = 'I532',
+        IMAGE_SOUNDEX_MIXED        = 'M230',
+        IMAGE_SOUNDEX_REAL         = 'R400',
+        IMAGE_SOUNDEX_RESOURCE     = 'R262',
+        IMAGE_SOUNDEX_OBJECT       = 'O122',
+        IMAGE_SOUNDEX_STRING       = 'S365',
+        IMAGE_SOUNDEX_STDCLASS     = 'S324',
+        IMAGE_SOUNDEX_UNKNOWN      = 'U525';
 
     /**
      * Constants for other types/keywords frequently used.
      */
-    const IMAGE_OTHER_NULL         = 'null',
-          IMAGE_OTHER_FALSE        = 'false',
-          IMAGE_OTHER_TRUE         = 'true',
-          IMAGE_OTHER_UNKNOWN      = 'unknown',
-          IMAGE_OTHER_UNKNOWN_TYPE = 'unknown_type';
+    private const
+        IMAGE_OTHER_NULL         = 'null',
+        IMAGE_OTHER_FALSE        = 'false',
+        IMAGE_OTHER_TRUE         = 'true',
+        IMAGE_OTHER_UNKNOWN      = 'unknown',
+        IMAGE_OTHER_UNKNOWN_TYPE = 'unknown_type';
 
     /**
      * This property contains a mapping between a unified lower case type name

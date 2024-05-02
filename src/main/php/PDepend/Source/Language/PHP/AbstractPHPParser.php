@@ -200,7 +200,7 @@ abstract class AbstractPHPParser
      * Regular expression for inline type definitions in regular comments. This
      * kind of type is supported by IDEs like Netbeans or eclipse.
      */
-    const REGEXP_INLINE_TYPE = '(^\s*/\*\s*
+    private const REGEXP_INLINE_TYPE = '(^\s*/\*\s*
                                  @var\s+
                                    \$[a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff]*\s+
                                    (.*?)
@@ -210,7 +210,7 @@ abstract class AbstractPHPParser
      * Regular expression for types defined in <b>throws</b> annotations of
      * method or function doc comments.
      */
-    const REGEXP_THROWS_TYPE = '(\*\s*
+    private const REGEXP_THROWS_TYPE = '(\*\s*
                              @throws\s+
                                ([a-zA-Z_\x7f-\xff\\\\][a-zA-Z0-9_\x7f-\xff\\\\]*)
                             )ix';
@@ -219,7 +219,7 @@ abstract class AbstractPHPParser
      * Regular expression for types defined in annotations like <b>return</b> or
      * <b>var</b> in doc comments of functions and methods.
      */
-    const REGEXP_RETURN_TYPE = '(\*\s*
+    private const REGEXP_RETURN_TYPE = '(\*\s*
                      @return\s+
                       (array\(\s*
                         (\w+\s*=>\s*)?
@@ -235,7 +235,7 @@ abstract class AbstractPHPParser
      * Regular expression for types defined in annotations like <b>return</b> or
      * <b>var</b> in doc comments of functions and methods.
      */
-    const REGEXP_VAR_TYPE = '(\*\s*
+    private const REGEXP_VAR_TYPE = '(\*\s*
                       @var\s+
                        (array\(\s*
                          (\w+\s*=>\s*)?
@@ -255,7 +255,7 @@ abstract class AbstractPHPParser
      *
      * @see https://github.com/php/doc-en/blob/528e97348f45b473ca8ecea9997be1e268703562/language/types/integer.xml#L74-L86
      */
-    const REGEXP_INTEGER = '/^(
+    protected const REGEXP_INTEGER = '/^(
                        0
                        |
                        [1-9][0-9]*
@@ -270,7 +270,7 @@ abstract class AbstractPHPParser
     /**
      * Tell if readonly is allowed as class modifier in the current PHP level.
      */
-    const READONLY_CLASS_ALLOWED = false;
+    protected const READONLY_CLASS_ALLOWED = false;
 
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has

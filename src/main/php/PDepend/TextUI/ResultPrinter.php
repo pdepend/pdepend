@@ -60,7 +60,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * The step size.
      */
-    const STEP_SIZE = 20;
+    private const STEP_SIZE = 20;
 
     /**
      * Number of processed items.

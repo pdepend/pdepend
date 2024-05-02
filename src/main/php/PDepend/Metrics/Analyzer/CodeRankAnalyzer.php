@@ -60,23 +60,24 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_CODE_RANK         = 'cr',
-          M_REVERSE_CODE_RANK = 'rcr';
+    private const
+        M_CODE_RANK         = 'cr',
+        M_REVERSE_CODE_RANK = 'rcr';
 
     /**
      * The used damping factor.
      */
-    const DAMPING_FACTOR = 0.85;
+    private const DAMPING_FACTOR = 0.85;
 
     /**
      * Number of loops for the code range calculation.
      */
-    const ALGORITHM_LOOPS = 25;
+    private const ALGORITHM_LOOPS = 25;
 
     /**
      * Option key for the code rank mode.
      */
-    const STRATEGY_OPTION = 'coderank-mode';
+    private const STRATEGY_OPTION = 'coderank-mode';
 
     /**
      * All found nodes.

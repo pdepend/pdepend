@@ -62,8 +62,9 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_AFFERENT_COUPLING          = 'ca',
-          M_EFFERENT_COUPLING          = 'ce';
+    private const
+        M_AFFERENT_COUPLING          = 'ca',
+        M_EFFERENT_COUPLING          = 'ce';
 
     /**
      * Hash with all calculated node metrics.

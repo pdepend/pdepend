@@ -74,16 +74,16 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Metrics provided by the analyzer implementation.
      */
-    const M_IMPLEMENTED_INTERFACES       = 'impl',
-          M_CLASS_INTERFACE_SIZE         = 'cis',
-          M_CLASS_SIZE                   = 'csz',
-          M_NUMBER_OF_PUBLIC_METHODS     = 'npm',
-          M_PROPERTIES                   = 'vars',
-          M_PROPERTIES_INHERIT           = 'varsi',
-          M_PROPERTIES_NON_PRIVATE       = 'varsnp',
-          M_WEIGHTED_METHODS             = 'wmc',
-          M_WEIGHTED_METHODS_INHERIT     = 'wmci',
-          M_WEIGHTED_METHODS_NON_PRIVATE = 'wmcnp';
+    public const M_IMPLEMENTED_INTERFACES       = 'impl',
+        M_CLASS_INTERFACE_SIZE         = 'cis',
+        M_CLASS_SIZE                   = 'csz',
+        M_NUMBER_OF_PUBLIC_METHODS     = 'npm',
+        M_PROPERTIES                   = 'vars',
+        M_PROPERTIES_INHERIT           = 'varsi',
+        M_PROPERTIES_NON_PRIVATE       = 'varsnp',
+        M_WEIGHTED_METHODS             = 'wmc',
+        M_WEIGHTED_METHODS_INHERIT     = 'wmci',
+        M_WEIGHTED_METHODS_NON_PRIVATE = 'wmcnp';
 
     /**
      * Hash with all calculated node metrics.
