@@ -843,7 +843,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                     break;
                 case Tokens::T_ELLIPSIS:
                     $this->checkEllipsisInExpressionSupport();
-                // no break
+                    // no break
                 case Tokens::T_STRING_VARNAME: // TODO: Implement this
                 case Tokens::T_PLUS: // TODO: Make this a arithmetic expression
                 case Tokens::T_MINUS:
@@ -903,7 +903,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                 case Tokens::T_METHOD_C:
                     $expressions[] = $this->parseConstant();
                     break;
-                // TODO: Handle comments here
                 case Tokens::T_COMMENT:
                 case Tokens::T_DOC_COMMENT:
                     $this->consumeToken($tokenType);

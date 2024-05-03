@@ -3237,7 +3237,6 @@ abstract class AbstractPHPParser
                         array_pop($expressions),
                     );
                     break;
-                // TODO: Handle comments here
                 case Tokens::T_COMMENT:
                 case Tokens::T_DOC_COMMENT:
                     $this->consumeToken($tokenType);
