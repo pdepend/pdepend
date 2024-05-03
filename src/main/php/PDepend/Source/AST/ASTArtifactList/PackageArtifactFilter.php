@@ -73,7 +73,7 @@ class PackageArtifactFilter implements ArtifactFilter
         foreach ($namespaces as $namespace) {
             $patterns[] = str_replace('\*', '\S*', preg_quote($namespace));
         }
-        $this->pattern = '#^(' . join('|', $patterns) . ')$#D';
+        $this->pattern = '#^(' . implode('|', $patterns) . ')$#D';
     }
 
     /**

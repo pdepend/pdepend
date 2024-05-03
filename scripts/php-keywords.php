@@ -123,7 +123,7 @@ function dump($type, array $valid)
     ',
         $type,
         ucfirst($type),
-        join(
+        implode(
             "\n",
             array_map(
                 static fn ($token) => sprintf('            case Tokens::%s:', $token),
