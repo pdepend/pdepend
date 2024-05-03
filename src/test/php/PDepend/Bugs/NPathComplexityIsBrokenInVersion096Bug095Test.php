@@ -74,6 +74,6 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTe
         $analyzer->setCache(new MemoryCacheDriver());
         $analyzer->analyze($namespaces);
 
-        $this->assertEquals(array('npath' => '6'), $analyzer->getNodeMetrics($function));
+        $this->assertEquals(['npath' => '6'], $analyzer->getNodeMetrics($function));
     }
 }

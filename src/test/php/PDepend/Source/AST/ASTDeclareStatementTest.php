@@ -87,12 +87,12 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
     {
         $stmt = $this->createNodeInstance();
         $this->assertEquals(
-            array(
+            [
                 'values',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $stmt->__sleep()
         );
     }

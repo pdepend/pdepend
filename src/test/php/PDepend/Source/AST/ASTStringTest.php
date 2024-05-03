@@ -106,11 +106,11 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringWithEmbeddedComplexBacktickExpression()
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $actual = array();
+        $actual = [];
         foreach ($string->getChildren() as $child) {
             $actual[] = $child->getImage();
         }
-        $expected = array("Issue `", '$ticketNo', '`');
+        $expected = ["Issue `", '$ticketNo', '`'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -123,11 +123,11 @@ class ASTStringTest extends ASTNodeTestCase
     public function testBacktickExpressionWithEmbeddedComplexDoubleQuoteString()
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $actual = array();
+        $actual = [];
         foreach ($string->getChildren() as $child) {
             $actual[] = $child->getImage();
         }
-        $expected = array('Issue "', '$ticketNo', '"');
+        $expected = ['Issue "', '$ticketNo', '"'];
 
         $this->assertEquals($expected, $actual);
     }

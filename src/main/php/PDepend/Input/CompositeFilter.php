@@ -56,7 +56,7 @@ class CompositeFilter implements Filter
      *
      * @var Filter[]
      */
-    protected $filters = array();
+    protected $filters = [];
 
     /**
      * Adds a file filter to this composite.

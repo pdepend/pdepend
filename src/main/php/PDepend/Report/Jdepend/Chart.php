@@ -106,7 +106,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      */
     public function getAcceptedAnalyzers()
     {
-        return array('pdepend.analyzer.dependency');
+        return ['pdepend.analyzer.dependency'];
     }
 
     /**
@@ -225,7 +225,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      */
     private function getItems()
     {
-        $items = array();
+        $items = [];
         foreach ($this->code as $namespace) {
             if (!$namespace->isUserDefined()) {
                 continue;
@@ -237,13 +237,13 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 continue;
             }
 
-            $items[] = array(
+            $items[] = [
                 'size'         =>  $metrics['cc'] + $metrics['ac'],
                 'abstraction'  =>  $metrics['a'],
                 'instability'  =>  $metrics['i'],
                 'distance'     =>  $metrics['d'],
                 'name'         =>  Utf8Util::ensureEncoding($namespace->getName()),
-            );
+            ];
         }
 
         // Sort items by size

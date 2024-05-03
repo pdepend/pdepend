@@ -250,8 +250,8 @@ class ASTForStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase(__METHOD__);
 
-        $actual   = array($class->getStartLine(), $class->getEndLine());
-        $expected = array(5, 14);
+        $actual   = [$class->getStartLine(), $class->getEndLine()];
+        $expected = [5, 14];
 
         $this->assertEquals($expected, $actual);
     }
@@ -265,8 +265,8 @@ class ASTForStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase(__METHOD__);
 
-        $actual   = array($class->getStartLine(), $class->getEndLine());
-        $expected = array(5, 14);
+        $actual   = [$class->getStartLine(), $class->getEndLine()];
+        $expected = [5, 14];
 
         $this->assertEquals($expected, $actual);
     }
@@ -345,8 +345,8 @@ class ASTForStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase(__METHOD__);
 
-        $actual   = array($class->getStartLine(), $class->getEndLine());
-        $expected = array(5, 14);
+        $actual   = [$class->getStartLine(), $class->getEndLine()];
+        $expected = [5, 14];
 
         $this->assertEquals($expected, $actual);
     }

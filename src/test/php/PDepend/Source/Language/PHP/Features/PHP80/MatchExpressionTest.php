@@ -74,7 +74,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
      */
     private function checkMatchExpression($namespacePrefix = null)
     {
-        $matchImage = implode('\\', array_filter(array($namespacePrefix, 'match')));
+        $matchImage = implode('\\', array_filter([$namespacePrefix, 'match']));
 
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -141,11 +141,11 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
             static fn ($node) => $node->getImage(),
             $new->getChildren(),
         ));
-        $this->assertSame(array(
-            array('PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['),
-            array('PDepend\\Source\\AST\\ASTVariable', '$in'),
-            array('PDepend\\Source\\AST\\ASTLiteral', ']'),
-        ), array_map(
+        $this->assertSame([
+            ['PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['],
+            ['PDepend\\Source\\AST\\ASTVariable', '$in'],
+            ['PDepend\\Source\\AST\\ASTLiteral', ']'],
+        ], array_map(
             static fn ($node) => [$node::class, $node->getImage()],
             $new->getChild(1)->getChild(0)->getChildren(),
         ));
@@ -217,15 +217,15 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         $new = $pair[1]->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
         $this->assertSame('new', $new->getImage());
-        $this->assertSame(array('\InvalidArgumentException', ''), array_map(
+        $this->assertSame(['\InvalidArgumentException', ''], array_map(
             static fn ($node) => $node->getImage(),
             $new->getChildren(),
         ));
-        $this->assertSame(array(
-            array('PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['),
-            array('PDepend\\Source\\AST\\ASTVariable', '$in'),
-            array('PDepend\\Source\\AST\\ASTLiteral', ']'),
-        ), array_map(
+        $this->assertSame([
+            ['PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['],
+            ['PDepend\\Source\\AST\\ASTVariable', '$in'],
+            ['PDepend\\Source\\AST\\ASTLiteral', ']'],
+        ], array_map(
             static fn ($node) => [$node::class, $node->getImage()],
             $new->getChild(1)->getChild(0)->getChildren(),
         ));

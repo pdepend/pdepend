@@ -65,12 +65,12 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -84,12 +84,12 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstPreIncrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -103,12 +103,12 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstPreIncrementExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -122,11 +122,11 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments'
-            )
+            ]
         );
     }
 
@@ -140,12 +140,12 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 

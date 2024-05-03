@@ -75,7 +75,7 @@ class AnalyzerFactory
      */
     public function createRequiredForGenerators(array $generators)
     {
-        $analyzers = array();
+        $analyzers = [];
 
         foreach ($generators as $logger) {
             foreach ($logger->getAcceptedAnalyzers() as $type) {

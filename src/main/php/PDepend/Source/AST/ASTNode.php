@@ -135,7 +135,7 @@ interface ASTNode
      *
      * @return T[]
      */
-    public function findChildrenOfType($targetType, array &$results = array());
+    public function findChildrenOfType($targetType, array &$results = []);
 
     /**
      * Returns the parent node of this node or <b>null</b> when this node is

@@ -917,11 +917,11 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
 
-        $validModifiers = array(
+        $validModifiers = [
             Tokens::T_ABSTRACT,
             Tokens::T_FINAL,
             Tokens::T_READONLY,
-        );
+        ];
 
         $finalAllowed = true;
         $abstractAllowed = true;
@@ -1632,12 +1632,12 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_DOUBLE_COLON);
             $this->consumeComments();
 
-            return array($this->parseMethodName(), $traitReference);
+            return [$this->parseMethodName(), $traitReference];
         }
 
         $this->tokenStack->pop();
 
-        return array($qualifiedName);
+        return [$qualifiedName];
     }
 
     /**
@@ -1977,7 +1977,7 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_DOUBLE_ARROW);
             $this->consumeComments();
 
-            return in_array($this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN))
+            return in_array($this->tokenizer->peek(), [Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN])
                 ? $this->parseListExpression()
                 : $this->parseVariableOrConstantOrPrimaryPrefix();
         }
@@ -2415,7 +2415,7 @@ abstract class AbstractPHPParser
      */
     private function stripTrailingComments(array $tokens)
     {
-        $comments = array(Tokens::T_COMMENT, Tokens::T_DOC_COMMENT);
+        $comments = [Tokens::T_COMMENT, Tokens::T_DOC_COMMENT];
 
         while (count($tokens) > 1 && in_array(end($tokens)->type, $comments)) {
             array_pop($tokens);
@@ -2966,14 +2966,14 @@ abstract class AbstractPHPParser
     {
         return in_array(
             $tokenType,
-            array(
+            [
                 Tokens::T_ENDDECLARE,
                 Tokens::T_ENDFOR,
                 Tokens::T_ENDFOREACH,
                 Tokens::T_ENDIF,
                 Tokens::T_ENDSWITCH,
                 Tokens::T_ENDWHILE,
-            ),
+            ],
         );
     }
 
@@ -3084,7 +3084,7 @@ abstract class AbstractPHPParser
      */
     protected function parseOptionalExpression()
     {
-        $expressions = array();
+        $expressions = [];
 
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
             $expr = null;
@@ -3600,7 +3600,7 @@ abstract class AbstractPHPParser
      *
      * @since 0.9.12
      */
-    private function parseStatementTermination(array $allowedTerminationTokens = array())
+    private function parseStatementTermination(array $allowedTerminationTokens = [])
     {
         $this->consumeComments();
         $this->echoing = false;
@@ -3633,7 +3633,7 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
 
-        if (false === in_array($this->tokenizer->peek(), array(Tokens::T_CATCH, Tokens::T_FINALLY))) {
+        if (false === in_array($this->tokenizer->peek(), [Tokens::T_CATCH, Tokens::T_FINALLY])) {
             throw $this->getUnexpectedNextTokenException();
         }
 
@@ -3659,7 +3659,7 @@ abstract class AbstractPHPParser
      *
      * @since 0.9.12
      */
-    protected function parseThrowStatement(array $allowedTerminationTokens = array())
+    protected function parseThrowStatement(array $allowedTerminationTokens = [])
     {
         $this->tokenStack->push();
         $token = $this->consumeToken(Tokens::T_THROW);
@@ -4040,16 +4040,16 @@ abstract class AbstractPHPParser
     private function parseForeachChildren()
     {
         if ($this->tokenizer->peek() === Tokens::T_BITWISE_AND) {
-            return array($this->parseVariableOrMemberByReference());
+            return [$this->parseVariableOrMemberByReference()];
         }
 
         if ($this->isListUnpacking()) {
-            return array($this->parseListExpression());
+            return [$this->parseListExpression()];
         }
 
-        $children = array(
+        $children = [
             $this->parseVariableOrConstantOrPrimaryPrefix(),
-        );
+        ];
 
         if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
             $this->consumeToken(Tokens::T_DOUBLE_ARROW);
@@ -5818,7 +5818,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if ($this->tokenizer->peek() === Tokens::T_THROW) {
-            return $this->parseThrowStatement(array(Tokens::T_COMMA, Tokens::T_CURLY_BRACE_CLOSE));
+            return $this->parseThrowStatement([Tokens::T_COMMA, Tokens::T_CURLY_BRACE_CLOSE]);
         }
 
         return $this->parseExpression();
@@ -6930,7 +6930,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
 
-        $qualifiedName = array();
+        $qualifiedName = [];
 
         if ($tokenType === Tokens::T_NAMESPACE) {
             // Consume namespace keyword
@@ -6938,7 +6938,7 @@ abstract class AbstractPHPParser
             $this->consumeComments();
 
             // Add current namespace as first token
-            $qualifiedName = array((string) $this->namespaceName);
+            $qualifiedName = [(string) $this->namespaceName];
 
             // Set prefixed flag to true
             $this->namespacePrefixReplaced = true;
@@ -7488,7 +7488,7 @@ abstract class AbstractPHPParser
             $defaultValue = $this->doParseArray(true);
 
             $value = new ASTValue();
-            $value->setValue(array());
+            $value->setValue([]);
 
             return $value;
         }
@@ -7764,14 +7764,14 @@ abstract class AbstractPHPParser
             return false;
         }
 
-        $notExpectedTags = array(
+        $notExpectedTags = [
             Tokens::T_CLASS,
             Tokens::T_FINAL,
             Tokens::T_TRAIT,
             Tokens::T_ABSTRACT,
             Tokens::T_FUNCTION,
             Tokens::T_INTERFACE,
-        );
+        ];
 
         return !in_array($this->tokenizer->peek(), $notExpectedTags, true);
     }
@@ -7786,7 +7786,7 @@ abstract class AbstractPHPParser
      */
     private function parseThrowsAnnotations($comment)
     {
-        $throws = array();
+        $throws = [];
 
         if (preg_match_all(self::REGEXP_THROWS_TYPE, $comment, $matches) > 0) {
             foreach ($matches[1] as $match) {
@@ -7843,7 +7843,7 @@ abstract class AbstractPHPParser
             );
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -7960,7 +7960,7 @@ abstract class AbstractPHPParser
 
         // Get all @throws Types
         $comment = $callable->getComment();
-        $throws = $comment === null ? array() : $this->parseThrowsAnnotations($comment);
+        $throws = $comment === null ? [] : $this->parseThrowsAnnotations($comment);
 
         foreach ($throws as $qualifiedName) {
             $callable->addExceptionClassReference(
@@ -8123,7 +8123,7 @@ abstract class AbstractPHPParser
             $type = $this->parseTypeHint();
 
             if (!($type instanceof ASTScalarType) ||
-                !in_array($type->getImage(), array('int', 'string'), true)
+                !in_array($type->getImage(), ['int', 'string'], true)
             ) {
                 throw new TokenException(
                     "Enum backing type must be 'int' or 'string'",

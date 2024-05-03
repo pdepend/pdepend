@@ -69,7 +69,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
         $this->expectException(\RuntimeException::class);
 
         $namespace = new ASTNamespace('package1');
-        $namespaces = new ASTArtifactList(array($namespace));
+        $namespaces = new ASTArtifactList([$namespace]);
 
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->analyze($namespaces);
@@ -98,7 +98,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     {
         $analyzer = new ClassLevelAnalyzer();
         $this->assertEquals(
-            array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'),
+            ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'],
             $analyzer->getRequiredAnalyzers()
         );
     }
@@ -111,7 +111,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics()
     {
         $this->assertEquals(
-            array('impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'),
+            ['impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'],
             array_keys($this->calculateClassMetrics())
         );
     }
@@ -525,7 +525,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics)
     {
         $this->assertEquals(
-            array('impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'),
+            ['impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'],
             array_keys($metrics)
         );
     }

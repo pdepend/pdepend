@@ -64,7 +64,7 @@ class IdBuilder
     /**
      * @var array<string, array<string, int>>
      */
-    private $offsetInFile = array();
+    private $offsetInFile = [];
 
     /**
      * Generates an identifier for the given file instance.

@@ -96,36 +96,36 @@ class PHPParserVersion74Test extends AbstractTestCase
         $declarations = array_map(function (ASTFieldDeclaration $child) {
             $childChildren = $child->getChildren();
 
-            return array(
+            return [
                 $child->hasType() ? $child->getType() : null,
                 $childChildren[1],
-            );
+            ];
         }, $children);
 
-        foreach (array(
-            array('int', '$id'),
-            array('float', '$money'),
-            array('bool', '$active'),
-            array('string', '$name'),
-            array('array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'),
-            array('self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'),
-            array('callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'),
-            array('\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'),
-            array('object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('?int', '$idN'),
-            array('?float', '$moneyN'),
-            array('?bool', '$activeN'),
-            array('?string', '$nameN'),
-            array('?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'),
-            array('?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'),
-            array('?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'),
-            array('?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'),
-            array('?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-        ) as $index => $expected) {
+        foreach ([
+            ['int', '$id'],
+            ['float', '$money'],
+            ['bool', '$active'],
+            ['string', '$name'],
+            ['array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'],
+            ['self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'],
+            ['callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+            ['\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+            ['object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?int', '$idN'],
+            ['?float', '$moneyN'],
+            ['?bool', '$activeN'],
+            ['?string', '$nameN'],
+            ['?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'],
+            ['?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'],
+            ['?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+            ['?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+            ['?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+        ] as $index => $expected) {
             list($expectedType, $expectedVariable) = $expected;
             $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
             list($type, $variable) = $declarations[$index];
@@ -198,16 +198,16 @@ class PHPParserVersion74Test extends AbstractTestCase
         /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $expression->getChildren()));
-        $this->assertSame(array(
+        ], array_map('get_class', $expression->getChildren()));
+        $this->assertSame([
             '$number',
             '*',
             '2',
-        ), array_map(
+        ], array_map(
             static fn (ASTNode $node) => $node->getImage(),
             $expression->getChildren(),
         ));
@@ -245,16 +245,16 @@ class PHPParserVersion74Test extends AbstractTestCase
         /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $expression->getChildren()));
-        $this->assertSame(array(
+        ], array_map('get_class', $expression->getChildren()));
+        $this->assertSame([
             '$number',
             '*',
             '2',
-        ), array_map(
+        ], array_map(
             static fn (ASTNode $node) => $node->getImage(),
             $expression->getChildren(),
         ));
@@ -282,31 +282,31 @@ class PHPParserVersion74Test extends AbstractTestCase
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArray'
         );
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
-        ), array_map('get_class', $expression->getChildren()));
+        ], array_map('get_class', $expression->getChildren()));
         /** @var ASTNode[] $elements */
         $elements = array_map(
             static fn ($node) => $node->getChild(0),
             $expression->getChildren(),
         );
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTExpression',
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTLiteral',
-        ), array_map('get_class', $elements));
+        ], array_map('get_class', $elements));
         /** @var ASTExpression $expression */
         $expression = $elements[2];
-        $this->assertSame(array(
+        $this->assertSame([
             '...',
             '$numbers',
-        ), array_map(
+        ], array_map(
             static fn (ASTNode $node) => $node->getImage(),
             $expression->getChildren(),
         ));
@@ -318,7 +318,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTExpression'
         );
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTLiteral',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
@@ -326,7 +326,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             'PDepend\\Source\\AST\\ASTLiteral',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $expression->getChildren()));
+        ], array_map('get_class', $expression->getChildren()));
 
         $this->assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
         $this->assertSame('299_792_458', $expression->getChild(2)->getImage());
@@ -425,7 +425,7 @@ class PHPParserVersion74Test extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
-            array($tokenizer, $builder, $cache)
+            [$tokenizer, $builder, $cache]
         );
     }
 }

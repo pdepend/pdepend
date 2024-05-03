@@ -132,7 +132,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
             $this->cyclomaticAnalyzer->analyze($namespaces);
 
             // Init node metrics
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             // Visit all nodes
             foreach ($namespaces as $namespace) {
@@ -151,7 +151,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     public function getRequiredAnalyzers()
     {
-        return array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
+        return ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
     }
 
     /**
@@ -179,7 +179,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        $metrics = array();
+        $metrics = [];
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             $metrics = $this->nodeMetrics[$artifact->getId()];
         }
@@ -221,7 +221,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
         $wmci = $this->calculateWmciForTrait($trait);
 
-        $this->nodeMetrics[$trait->getId()] = array(
+        $this->nodeMetrics[$trait->getId()] = [
             self::M_IMPLEMENTED_INTERFACES       => 0,
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
@@ -232,7 +232,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
             self::M_WEIGHTED_METHODS             => 0,
             self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
             self::M_WEIGHTED_METHODS_NON_PRIVATE => 0,
-        );
+        ];
 
         foreach ($trait->getProperties() as $property) {
             $property->accept($this);
@@ -326,7 +326,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     private function calculateVarsi(AbstractASTClassOrInterface $class)
     {
         // List of properties, this method only counts not overwritten properties
-        $properties = array();
+        $properties = [];
         // Collect all properties of the context class
         foreach ($class->getProperties() as $prop) {
             $properties[$prop->getName()] = true;
@@ -388,7 +388,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     private function calculateWmci(AbstractASTType $type)
     {
-        $ccn = array();
+        $ccn = [];
 
         foreach ($type->getMethods() as $method) {
             $ccn[$method->getName()] = $this->cyclomaticAnalyzer->getCcn2($method);
@@ -408,7 +408,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         $varsi = $this->calculateVarsi($class);
         $wmci  = $this->calculateWmciForClass($class);
 
-        $this->nodeMetrics[$class->getId()] = array(
+        $this->nodeMetrics[$class->getId()] = [
             self::M_IMPLEMENTED_INTERFACES       => $impl,
             self::M_CLASS_INTERFACE_SIZE         => 0,
             self::M_CLASS_SIZE                   => 0,
@@ -419,7 +419,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
             self::M_WEIGHTED_METHODS             => 0,
             self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
             self::M_WEIGHTED_METHODS_NON_PRIVATE => 0,
-        );
+        ];
 
         if ($class instanceof ASTClass) {
             foreach ($class->getProperties() as $property) {

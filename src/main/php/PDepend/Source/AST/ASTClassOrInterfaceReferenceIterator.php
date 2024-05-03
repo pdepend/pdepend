@@ -75,7 +75,7 @@ class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
      */
     protected function createClassesAndInterfaces(array $references)
     {
-        $classesAndInterfaces = array();
+        $classesAndInterfaces = [];
 
         foreach ($references as $reference) {
             $classOrInterface = $reference->getType();

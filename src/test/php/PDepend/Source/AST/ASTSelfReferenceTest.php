@@ -66,7 +66,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     {
         $target  = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
-            array(__CLASS__)
+            [__CLASS__]
         );
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
@@ -84,7 +84,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     {
         $target = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
-            array(__CLASS__)
+            [__CLASS__]
         );
 
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
@@ -132,13 +132,13 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     {
         $reference = $this->createNodeInstance();
         $this->assertEquals(
-            array(
+            [
                 'qualifiedName',
                 'context',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $reference->__sleep()
         );
     }
@@ -233,7 +233,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
         return new \PDepend\Source\AST\ASTSelfReference(
             $context,
-            $this->getAbstractClassMock('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', array(__CLASS__))
+            $this->getAbstractClassMock('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', [__CLASS__])
         );
     }
 

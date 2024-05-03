@@ -478,7 +478,7 @@ class ASTPropertyTest extends AbstractTestCase
             ->method('visitProperty');
 
         $property = $this->getMockBuilder('PDepend\\Source\\AST\\ASTProperty')
-            ->onlyMethods(array('__construct'))
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTProperty')
             ->getMock();

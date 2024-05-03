@@ -104,7 +104,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
         $class->setCache(new MemoryCacheDriver());
 
         $this->assertEquals(
-            array(
+            [
                 'metadata',
                 'constants',
                 'interfaceReferences',
@@ -120,7 +120,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
                 'startLine',
                 'userDefined',
                 'id'
-            ),
+            ],
             $class->__sleep()
         );
     }

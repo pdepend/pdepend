@@ -101,13 +101,13 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     public function testCompoundVariableGraphWithMemberPrimaryPrefix()
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTMethodPostfix',
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTArguments'
-        );
+        ];
 
         $this->assertGraphEquals($variable, $expected);
     }

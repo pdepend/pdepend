@@ -68,7 +68,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
         $analyzer = new CouplingAnalyzer();
         $this->assertEquals(
-            array(),
+            [],
             $analyzer->getNodeMetrics($astArtifact)
         );
     }
@@ -90,7 +90,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $metrics = array_keys($analyzer->getNodeMetrics($classes[0]));
         sort($metrics);
 
-        $this->assertEquals(array('ca', 'cbo', 'ce'), $metrics);
+        $this->assertEquals(['ca', 'cbo', 'ce'], $metrics);
     }
 
     /**
@@ -518,7 +518,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys()
     {
-        $expected = array('calls', 'fanout');
+        $expected = ['calls', 'fanout'];
         $actual   = array_keys($this->calculateProjectMetrics());
 
         $this->assertEquals($expected, $actual);
@@ -532,7 +532,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerCalculatesCorrectFunctionCoupling()
     {
-        $expected = array('calls' => 10, 'fanout' => 7);
+        $expected = ['calls' => 10, 'fanout' => 7];
         $actual   = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
@@ -546,7 +546,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerCalculatesCorrectMethodCoupling()
     {
-        $expected = array('calls' => 10, 'fanout' => 9);
+        $expected = ['calls' => 10, 'fanout' => 9];
         $actual   = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
@@ -560,7 +560,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling()
     {
-        $expected = array('calls' => 0, 'fanout' => 3);
+        $expected = ['calls' => 0, 'fanout' => 3];
         $actual   = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
@@ -574,7 +574,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerCalculatesCorrectClassCoupling()
     {
-        $expected = array('calls' => 10, 'fanout' => 12);
+        $expected = ['calls' => 10, 'fanout' => 12];
         $actual   = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
@@ -588,7 +588,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerCalculatesCorrectCoupling()
     {
-        $expected = array('calls' => 30, 'fanout' => 31);
+        $expected = ['calls' => 30, 'fanout' => 31];
         $actual   = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
@@ -619,7 +619,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics)
     {
-        $this->assertEquals(array('ca', 'cbo', 'ce'), array_keys($metrics));
+        $this->assertEquals(['ca', 'cbo', 'ce'], array_keys($metrics));
     }
 
     /**
@@ -692,7 +692,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetProjectMetricsForTraitReturnsExpectedMetricSet(array $metrics)
     {
-        $this->assertEquals(array('calls', 'fanout'), array_keys($metrics));
+        $this->assertEquals(['calls', 'fanout'], array_keys($metrics));
     }
 
     /**
@@ -755,7 +755,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $calls,
         $fanout
     ) {
-        $expected = array('calls' => $calls, 'fanout' => $fanout);
+        $expected = ['calls' => $calls, 'fanout' => $fanout];
         $actual   = $this->calculateProjectMetrics($testCase);
 
         $this->assertEquals($expected, $actual);
@@ -788,26 +788,26 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public static function dataProviderAnalyzerCalculatesExpectedCallCount()
     {
-        return array(
-            array(__METHOD__ . '#01', 0, 0),
-            array(__METHOD__ . '#02', 0, 0),
-            array(__METHOD__ . '#03', 0, 0),
-            array(__METHOD__ . '#04', 1, 0),
-            array(__METHOD__ . '#05', 1, 0),
-            array(__METHOD__ . '#06', 2, 0),
-            array(__METHOD__ . '#07', 1, 0),
-            array(__METHOD__ . '#08', 1, 0),
-            array(__METHOD__ . '#09', 1, 0),
-            array(__METHOD__ . '#10', 2, 0),
-            array(__METHOD__ . '#11', 2, 0),
-            array(__METHOD__ . '#12', 1, 1),
-            array(__METHOD__ . '#13', 0, 1),
-            array(__METHOD__ . '#14', 0, 1),
-            array(__METHOD__ . '#15', 1, 1),
-            array(__METHOD__ . '#16', 2, 1),
-            array(__METHOD__ . '#17', 4, 2),
-            array(__METHOD__ . '#18', 1, 0),
-            array(__METHOD__ . '#19', 1, 1),
-        );
+        return [
+            [__METHOD__ . '#01', 0, 0],
+            [__METHOD__ . '#02', 0, 0],
+            [__METHOD__ . '#03', 0, 0],
+            [__METHOD__ . '#04', 1, 0],
+            [__METHOD__ . '#05', 1, 0],
+            [__METHOD__ . '#06', 2, 0],
+            [__METHOD__ . '#07', 1, 0],
+            [__METHOD__ . '#08', 1, 0],
+            [__METHOD__ . '#09', 1, 0],
+            [__METHOD__ . '#10', 2, 0],
+            [__METHOD__ . '#11', 2, 0],
+            [__METHOD__ . '#12', 1, 1],
+            [__METHOD__ . '#13', 0, 1],
+            [__METHOD__ . '#14', 0, 1],
+            [__METHOD__ . '#15', 1, 1],
+            [__METHOD__ . '#16', 2, 1],
+            [__METHOD__ . '#17', 4, 2],
+            [__METHOD__ . '#18', 1, 0],
+            [__METHOD__ . '#19', 1, 1],
+        ];
     }
 }

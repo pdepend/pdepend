@@ -79,9 +79,9 @@ class ASTYieldStatementTest extends ASTNodeTestCase
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $assignment);
         $this->assertSame('$result', $assignment->getChild(0)->getImage());
 
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $stmt->getChildren()));
+        ], array_map('get_class', $stmt->getChildren()));
         $this->assertSame('23', $stmt->getChild(0)->getImage());
     }
 

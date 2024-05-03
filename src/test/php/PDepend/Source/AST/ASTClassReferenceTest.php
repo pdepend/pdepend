@@ -98,12 +98,12 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     public function testReturnValueOfMagicSleepContainsContextProperty()
     {
         $this->assertEquals(
-            array(
+            [
                 'context',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $this->createNodeInstance()->__sleep()
         );
     }

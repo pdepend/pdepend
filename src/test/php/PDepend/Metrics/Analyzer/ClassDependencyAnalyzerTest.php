@@ -67,42 +67,42 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @var array<string, array>
      */
-    private $input = array(
-        'AbstractBase' => array(
-            'efferent' => array(),
-            'afferent' => array(
+    private $input = [
+        'AbstractBase' => [
+            'efferent' => [],
+            'afferent' => [
                 'BaseClass'
-            ),
-        ),
-        'SomeInterface' => array(
-            'efferent' => array(),
-            'afferent' => array(
+            ],
+        ],
+        'SomeInterface' => [
+            'efferent' => [],
+            'afferent' => [
                 'Used',
-            ),
-        ),
-        'SomeTrait' => array(
-            'efferent' => array(),
-            'afferent' => array(),
-        ),
-        'Used' => array(
-            'efferent' => array(
+            ],
+        ],
+        'SomeTrait' => [
+            'efferent' => [],
+            'afferent' => [],
+        ],
+        'Used' => [
+            'efferent' => [
                 'SomeInterface',
                 'BaseClass',
-            ),
-            'afferent' => array(
+            ],
+            'afferent' => [
                 'BaseClass',
-            ),
-        ),
-        'BaseClass' => array(
-            'efferent' => array(
+            ],
+        ],
+        'BaseClass' => [
+            'efferent' => [
                 'AbstractBase',
                 'Used',
-            ),
-            'afferent' => array(
+            ],
+            'afferent' => [
                 'Used',
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 
     /**
      * Tests the generated package metrics.
@@ -116,7 +116,7 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
         $namespaces = self::parseCodeResourceForTest();
         $visitor->analyze($namespaces);
 
-        $actual = array();
+        $actual = [];
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getTypes() as $type) {
                 $actual[$type->getName()]['efferent'] = array_map(
