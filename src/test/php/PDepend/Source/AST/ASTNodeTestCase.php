@@ -789,7 +789,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        list($class, $method) = explode('::', $testCase);
+        [$class, $method] = explode('::', $testCase);
 
         return parent::parseSource(
             sprintf(

@@ -87,7 +87,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        list($class, $method) = explode('::', $testCase);
+        [$class, $method] = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
             throw new \ErrorException('Unexpected class name format');
         }

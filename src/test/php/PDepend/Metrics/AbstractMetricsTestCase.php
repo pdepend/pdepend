@@ -62,7 +62,7 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        list($class, $method) = explode('::', $testCase);
+        [$class, $method] = explode('::', $testCase);
 
         $parts = explode('\\', $class);
 

@@ -168,8 +168,8 @@ class PHPParserVersion80Test extends AbstractTestCase
         foreach (array(
             array('null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'),
         ) as $index => $expected) {
-            list($expectedType, $expectedVariable, $expectedTypeClass) = $expected;
-            list($type, $variable) = $declarations[$index];
+            [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
+            [$type, $variable] = $declarations[$index];
 
             $this->assertInstanceOf(
                 $expectedTypeClass,

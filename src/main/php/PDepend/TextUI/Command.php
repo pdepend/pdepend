@@ -314,14 +314,14 @@ class Command
                 if (!str_contains($arg, '=')) {
                     ini_set($arg, 'on');
                 } else {
-                    list($key, $value) = explode('=', $arg);
+                    [$key, $value] = explode('=', $arg);
 
                     ini_set($key, $value);
                 }
             } elseif (!str_contains($arg, '=')) {
                 $this->options[$arg] = true;
             } else {
-                list($key, $value) = explode('=', $arg);
+                [$key, $value] = explode('=', $arg);
 
                 $this->options[$key] = $value;
             }

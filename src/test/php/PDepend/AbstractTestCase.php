@@ -696,7 +696,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createCodeResourceUriForTest()
     {
-        list($class, $method) = explode('::', $this->getCallingTestMethod());
+        [$class, $method] = explode('::', $this->getCallingTestMethod());
 
         if (1 === count($parts = explode('\\', $class))) {
             $parts = explode('\\', $class);
@@ -801,7 +801,7 @@ abstract class AbstractTestCase extends TestCase
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        list($class, $method) = explode('::', $testCase);
+        [$class, $method] = explode('::', $testCase);
 
         $fileName = substr(strtolower($class), 8, strrpos($class, '\\') - 8);
         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $fileName) . DIRECTORY_SEPARATOR . $method;
