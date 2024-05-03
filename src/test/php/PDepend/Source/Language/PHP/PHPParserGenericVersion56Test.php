@@ -64,7 +64,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testShiftLeftInConstantInitializer()
+    public function testShiftLeftInConstantInitializer(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -77,7 +77,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testShiftRightInConstantInitializer()
+    public function testShiftRightInConstantInitializer(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -90,7 +90,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testMultipleShiftLeftInConstantInitializer()
+    public function testMultipleShiftLeftInConstantInitializer(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -103,7 +103,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testMultipleShiftRightInConstantInitializer()
+    public function testMultipleShiftRightInConstantInitializer(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -117,7 +117,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      * @return void
      * @link https://github.com/pdepend/pdepend/issues/209
      */
-    public function testConstantSupportForArrayWithValues()
+    public function testConstantSupportForArrayWithValues(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -131,7 +131,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      * @return void
      * @link https://github.com/pdepend/pdepend/issues/209
      */
-    public function testConstantSupportForArrayWithKeyValuePairs()
+    public function testConstantSupportForArrayWithKeyValuePairs(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -145,7 +145,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      * @return void
      * @link https://github.com/pdepend/pdepend/issues/192
      */
-    public function testConstantSupportForArrayWithSelfReferenceInClass()
+    public function testConstantSupportForArrayWithSelfReferenceInClass(): void
     {
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
@@ -159,7 +159,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      * @return void
      * @link https://github.com/pdepend/pdepend/issues/192
      */
-    public function testConstantSupportForArrayWithSelfReferenceInInterface()
+    public function testConstantSupportForArrayWithSelfReferenceInInterface(): void
     {
         $class = $this->getFirstInterfaceForTestCase();
         $const = $class->getChild(0);
@@ -172,7 +172,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testComplexExpressionInParameterInitializer()
+    public function testComplexExpressionInParameterInitializer(): void
     {
         $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
@@ -185,7 +185,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testComplexExpressionInConstantDeclarator()
+    public function testComplexExpressionInConstantDeclarator(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
@@ -198,7 +198,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testComplexExpressionInFieldDeclaration()
+    public function testComplexExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
@@ -211,7 +211,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testPowExpressionInMethodBody()
+    public function testPowExpressionInMethodBody(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
@@ -224,7 +224,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testPowExpressionInFieldDeclaration()
+    public function testPowExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
@@ -235,7 +235,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testEllipsisOperatorInFunctionCall()
+    public function testEllipsisOperatorInFunctionCall(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }

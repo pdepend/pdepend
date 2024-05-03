@@ -59,7 +59,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCloneExpressionHasExpectedStartLine()
+    public function testCloneExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -70,7 +70,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCloneExpressionHasExpectedStartColumn()
+    public function testCloneExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
         $this->assertEquals(12, $expr->getStartColumn());
@@ -81,7 +81,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCloneExpressionHasExpectedEndLine()
+    public function testCloneExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
         $this->assertEquals(6, $expr->getEndLine());
@@ -92,7 +92,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCloneExpressionHasExpectedEndColumn()
+    public function testCloneExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
         $this->assertEquals(21, $expr->getEndColumn());

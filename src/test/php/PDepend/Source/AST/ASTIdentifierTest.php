@@ -59,7 +59,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIdentifierHasExpectedStartLine()
+    public function testIdentifierHasExpectedStartLine(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
         $this->assertEquals(4, $param->getStartLine());
@@ -70,7 +70,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIdentifierHasExpectedStartColumn()
+    public function testIdentifierHasExpectedStartColumn(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
         $this->assertEquals(22, $param->getStartColumn());
@@ -81,7 +81,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIdentifierHasExpectedEndLine()
+    public function testIdentifierHasExpectedEndLine(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
         $this->assertEquals(4, $param->getEndLine());
@@ -92,7 +92,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIdentifierHasExpectedEndColumn()
+    public function testIdentifierHasExpectedEndColumn(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
         $this->assertEquals(29, $param->getEndColumn());

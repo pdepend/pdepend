@@ -58,7 +58,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testInterfaceDeclarationWithoutBody()
+    public function testInterfaceDeclarationWithoutBody(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -76,7 +76,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testInterfaceDeclarationWithExtendWithoutBody()
+    public function testInterfaceDeclarationWithExtendWithoutBody(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -94,7 +94,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testInterfaceDeclarationWithInvalidInterfaceList()
+    public function testInterfaceDeclarationWithInvalidInterfaceList(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -112,7 +112,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testClassDeclarationWithoutBody()
+    public function testClassDeclarationWithoutBody(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -130,7 +130,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testClassDeclarationWithExtendsWithoutClassName()
+    public function testClassDeclarationWithExtendsWithoutClassName(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -148,7 +148,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testClassDeclarationWithExtendsWithoutInterfaceName()
+    public function testClassDeclarationWithExtendsWithoutInterfaceName(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -166,7 +166,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testClassDeclarationWithParentInterfaceWithoutBody()
+    public function testClassDeclarationWithParentInterfaceWithoutBody(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -184,7 +184,7 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testClassDeclarationWithIncompleteParentInterfaceWithoutBody()
+    public function testClassDeclarationWithIncompleteParentInterfaceWithoutBody(): void
     {
         $this->expectException(
             'RuntimeException'

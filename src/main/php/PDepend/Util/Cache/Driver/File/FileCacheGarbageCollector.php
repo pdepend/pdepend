@@ -136,10 +136,8 @@ class FileCacheGarbageCollector
 
     /**
      * Removes the given cache file.
-     *
-     * @return void
      */
-    private function garbageCollectFile(SplFileInfo $file)
+    private function garbageCollectFile(SplFileInfo $file): void
     {
         Log::debug("Removing file '{$file->getPathname()}' from cache.");
 

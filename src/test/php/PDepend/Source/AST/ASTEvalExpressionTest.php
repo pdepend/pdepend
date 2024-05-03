@@ -59,7 +59,7 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testEvalExpressionHasExpectedStartLine()
+    public function testEvalExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstEvalExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -70,7 +70,7 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testEvalExpressionHasExpectedStartColumn()
+    public function testEvalExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstEvalExpressionInFunction(__METHOD__);
         $this->assertEquals(10, $expr->getStartColumn());
@@ -81,7 +81,7 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testEvalExpressionHasExpectedEndLine()
+    public function testEvalExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstEvalExpressionInFunction(__METHOD__);
         $this->assertEquals(7, $expr->getEndLine());
@@ -92,7 +92,7 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testEvalExpressionHasExpectedEndColumn()
+    public function testEvalExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstEvalExpressionInFunction(__METHOD__);
         $this->assertEquals(17, $expr->getEndColumn());

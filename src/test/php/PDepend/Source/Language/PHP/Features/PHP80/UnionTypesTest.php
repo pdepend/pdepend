@@ -58,7 +58,7 @@ class UnionTypesTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testUnionTypes()
+    public function testUnionTypes(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -82,7 +82,7 @@ class UnionTypesTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testUnionTypesAsReturn()
+    public function testUnionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -98,7 +98,7 @@ class UnionTypesTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testUnionTypesAsReturnWithArray()
+    public function testUnionTypesAsReturnWithArray(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -113,7 +113,7 @@ class UnionTypesTest extends PHPParserVersion80TestCase
 
     /**
      */
-    public function testUnionTypesStandaloneNull()
+    public function testUnionTypesStandaloneNull(): void
     {
         $this->expectException(\PDepend\Source\Parser\ParserException::class);
         $this->expectExceptionMessage('null can not be used as a standalone type');

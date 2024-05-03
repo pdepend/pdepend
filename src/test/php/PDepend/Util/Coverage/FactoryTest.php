@@ -60,7 +60,7 @@ class FactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateReturnsCloverReportInstanceForCloverInputFile()
+    public function testCreateReturnsCloverReportInstanceForCloverInputFile(): void
     {
         $factory = new Factory();
         $report  = $factory->create(__DIR__ . '/_files/clover.xml');
@@ -73,7 +73,7 @@ class FactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateMethodThrowsExceptionWhenFileDoesNotExist()
+    public function testCreateMethodThrowsExceptionWhenFileDoesNotExist(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -86,7 +86,7 @@ class FactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateMethodThrowsExceptionWhenFileIsNotValidXml()
+    public function testCreateMethodThrowsExceptionWhenFileIsNotValidXml(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -99,7 +99,7 @@ class FactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateMethodThrowsExceptionForUnsupportedReportFormat()
+    public function testCreateMethodThrowsExceptionForUnsupportedReportFormat(): void
     {
         $this->expectException(\RuntimeException::class);
 

@@ -61,7 +61,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsOnceReturnsFalseByDefault()
+    public function testIsOnceReturnsFalseByDefault(): void
     {
         $expr = new \PDepend\Source\AST\ASTIncludeExpression();
         $this->assertFalse($expr->isOnce());
@@ -72,7 +72,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsOnceReturnsTrueForIncludeOnceExpression()
+    public function testIsOnceReturnsTrueForIncludeOnceExpression(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertTrue($expression->isOnce());
@@ -83,7 +83,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $expr = new \PDepend\Source\AST\ASTIncludeExpression();
         $this->assertEquals(
@@ -102,7 +102,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionHasExpectedStartLine()
+    public function testIncludeExpressionHasExpectedStartLine(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expression->getStartLine());
@@ -113,7 +113,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionHasExpectedStartColumn()
+    public function testIncludeExpressionHasExpectedStartColumn(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expression->getStartColumn());
@@ -124,7 +124,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionHasExpectedEndLine()
+    public function testIncludeExpressionHasExpectedEndLine(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expression->getEndLine());
@@ -135,7 +135,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionHasExpectedEndColumn()
+    public function testIncludeExpressionHasExpectedEndColumn(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(35, $expression->getEndColumn());
@@ -146,7 +146,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionWithParenthesisHasExpectedStartLine()
+    public function testIncludeExpressionWithParenthesisHasExpectedStartLine(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expression->getStartLine());
@@ -157,7 +157,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionWithParenthesisHasExpectedStartColumn()
+    public function testIncludeExpressionWithParenthesisHasExpectedStartColumn(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expression->getStartColumn());
@@ -168,7 +168,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionWithParenthesisHasExpectedEndLine()
+    public function testIncludeExpressionWithParenthesisHasExpectedEndLine(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(6, $expression->getEndLine());
@@ -179,7 +179,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncludeExpressionWithParenthesisHasExpectedEndColumn()
+    public function testIncludeExpressionWithParenthesisHasExpectedEndColumn(): void
     {
         $expression = $this->getFirstIncludeExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expression->getEndColumn());

@@ -59,10 +59,8 @@ class ImageConvert
      *
      * @param string $input  The input file.
      * @param string $output The output file.
-     *
-     * @return void
      */
-    public static function convert($input, $output)
+    public static function convert($input, $output): void
     {
         $inputType  = strtolower(pathinfo($input, PATHINFO_EXTENSION));
         $outputType = strtolower(pathinfo($output, PATHINFO_EXTENSION));
@@ -137,10 +135,8 @@ class ImageConvert
      * file.
      *
      * @param string $input The input svg file.
-     *
-     * @return void
      */
-    protected static function prepareSvg($input)
+    protected static function prepareSvg($input): void
     {
         // Check for a configuration instance
         if (($config = ConfigurationInstance::get()) === null) {

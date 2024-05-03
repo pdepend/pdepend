@@ -71,10 +71,8 @@ class ConfigurationInstance
      * Sets the configuration instance.
      *
      * @param ?Configuration $configuration The config instance.
-     *
-     * @return void
      */
-    public static function set(?Configuration $configuration = null)
+    public static function set(?Configuration $configuration = null): void
     {
         self::$configuration = $configuration;
     }

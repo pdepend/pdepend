@@ -60,7 +60,7 @@ class ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test extends Abstr
      *
      * @return void
      */
-    public function testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue()
+    public function testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue(): void
     {
         $this->parseCodeResourceForTest();
     }

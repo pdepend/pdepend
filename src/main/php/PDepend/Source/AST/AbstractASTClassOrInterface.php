@@ -158,11 +158,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @param ASTClassReference $classReference Reference to the declared parent class.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setParentClassReference(ASTClassReference $classReference)
+    public function setParentClassReference(ASTClassReference $classReference): void
     {
         $this->nodes[]              = $classReference;
         $this->parentClassReference = $classReference;
@@ -195,11 +193,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Adds a interface reference node.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function addInterfaceReference(ASTClassOrInterfaceReference $interfaceReference)
+    public function addInterfaceReference(ASTClassOrInterfaceReference $interfaceReference): void
     {
         $this->nodes[] = $interfaceReference;
         $this->interfaceReferences[] = $interfaceReference;
@@ -360,11 +356,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * This method initializes the constants defined in this class or interface.
      *
-     * @return void
-     *
      * @since  0.9.6
      */
-    private function initConstants()
+    private function initConstants(): void
     {
         $this->constants = [];
         $declarators = $this->getConstantDeclarators();
@@ -380,11 +374,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * This method initializes the constants defined in this class or interface.
      *
-     * @return void
-     *
      * @since  0.9.6
      */
-    private function initConstantDeclarators()
+    private function initConstantDeclarators(): void
     {
         $this->constantDeclarators = [];
         if (($parentClass = $this->getParentClass()) !== null) {

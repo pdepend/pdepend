@@ -65,7 +65,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsPackage()
+    public function testFilterAcceptsPackage(): void
     {
         $filter = new PackageArtifactFilter([__FUNCTION__, __METHOD__]);
         $this->assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
@@ -76,7 +76,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterNotAcceptsPackage()
+    public function testFilterNotAcceptsPackage(): void
     {
         $filter = new PackageArtifactFilter([__CLASS__, __FUNCTION__]);
         $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
@@ -87,7 +87,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsAndNotAcceptsExpectedPackage()
+    public function testFilterAcceptsAndNotAcceptsExpectedPackage(): void
     {
         $filter = new PackageArtifactFilter([__CLASS__]);
         $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
@@ -99,7 +99,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsClass()
+    public function testFilterAcceptsClass(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $class   = $namespace->addType(new ASTClass('Clazz'));
@@ -113,7 +113,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterNotAcceptsClass()
+    public function testFilterNotAcceptsClass(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
         $class   = $namespace->addType(new ASTClass('Clazz'));
@@ -127,7 +127,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsInterface()
+    public function testFilterAcceptsInterface(): void
     {
         $namespace   = new ASTNamespace(__FUNCTION__);
         $interface = $namespace->addType(new ASTInterface('Iface'));
@@ -141,7 +141,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterNotAcceptsInterface()
+    public function testFilterNotAcceptsInterface(): void
     {
         $namespace   = new ASTNamespace(__FUNCTION__);
         $interface = $namespace->addType(new ASTInterface('Iface'));
@@ -155,7 +155,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsFunction()
+    public function testFilterAcceptsFunction(): void
     {
         $namespace  = new ASTNamespace(__FUNCTION__);
         $function = $namespace->addFunction(new ASTFunction('Func'));
@@ -169,7 +169,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterNotAcceptsFunction()
+    public function testFilterNotAcceptsFunction(): void
     {
         $namespace  = new ASTNamespace(__FUNCTION__);
         $function = $namespace->addFunction(new ASTFunction('Func'));
@@ -183,7 +183,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsPackageWithWildcard()
+    public function testFilterAcceptsPackageWithWildcard(): void
     {
         $pdepend = new ASTNamespace('PDepend_Code');
 
@@ -196,7 +196,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterNotAcceptsPackageWithWildcard()
+    public function testFilterNotAcceptsPackageWithWildcard(): void
     {
         $ezcGraph = new ASTNamespace('ezcGraph');
 
@@ -210,7 +210,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFilterAcceptsAndNotAcceptsPackageWithWildcard()
+    public function testFilterAcceptsAndNotAcceptsPackageWithWildcard(): void
     {
         $zendFW  = new ASTNamespace('Zend_Controller');
         $pdepend = new ASTNamespace('PDepend_Code');

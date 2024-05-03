@@ -58,7 +58,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesSimpleUseDeclaration()
+    public function testParserHandlesSimpleUseDeclaration(): void
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
@@ -72,7 +72,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesMultipleUseDeclarations()
+    public function testParserHandlesMultipleUseDeclarations(): void
     {
         $class = $this->parseSource('issues/002-002-use-declaration.php')
             ->current()
@@ -93,7 +93,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesUseDeclarationCaseInsensitive()
+    public function testParserHandlesUseDeclarationCaseInsensitive(): void
     {
         $namespaces = $this->parseSource('issues/002-003-use-declaration.php');
 
@@ -111,7 +111,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash()
+    public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -129,7 +129,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax()
+    public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $this->assertEquals('foo', $namespaces->current()->getName());
@@ -140,7 +140,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserDoesNotAddEmptyNamespaceToResultSet()
+    public function testParserDoesNotAddEmptyNamespaceToResultSet(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $this->assertCount(0, $namespaces);
@@ -152,7 +152,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax()
+    public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $this->assertEquals(__FUNCTION__, $namespaces->current()->getName());
@@ -164,7 +164,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesNamespaceDeclarationWithoutIdentifierAndCurlyBraceSyntax()
+    public function testParserHandlesNamespaceDeclarationWithoutIdentifierAndCurlyBraceSyntax(): void
     {
         $namespaces = $this->parseSource('issues/002-007-namespace-declaration.php');
 
@@ -177,7 +177,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax()
+    public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -195,7 +195,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier()
+    public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -213,7 +213,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testNamespaceHasHigherPriorityThanPackageAnnotationSemicolonSyntax()
+    public function testNamespaceHasHigherPriorityThanPackageAnnotationSemicolonSyntax(): void
     {
         $namespaces = $this->parseSource('issues/002-010-namespace-has-higher-priority.php');
 
@@ -230,7 +230,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testNamespaceHasHigherPriorityThanPackageAnnotationCurlyBraceSyntax()
+    public function testNamespaceHasHigherPriorityThanPackageAnnotationCurlyBraceSyntax(): void
     {
         $namespaces = $this->parseSource('issues/002-011-namespace-has-higher-priority.php');
 
@@ -246,7 +246,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesFileWithMultipleNamespacesCorrectSemicolonSyntax()
+    public function testParserHandlesFileWithMultipleNamespacesCorrectSemicolonSyntax(): void
     {
         $namespaces = $this->parseSource('issues/002-012-multiple-namespaces.php');
 
@@ -277,7 +277,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserHandlesFileWithMultipleNamespacesCorrectCurlyBraceSyntax()
+    public function testParserHandlesFileWithMultipleNamespacesCorrectCurlyBraceSyntax(): void
     {
         $namespaces = $this->parseSource('issues/002-013-multiple-namespaces.php');
 
@@ -308,7 +308,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserAddsFunctionToDeclaredNamespaceSemicolonSyntax()
+    public function testParserAddsFunctionToDeclaredNamespaceSemicolonSyntax(): void
     {
         $namespaces = $this->parseSource('issues/002-014-namespace-function.php');
         $function = $namespaces->current()
@@ -328,7 +328,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInTypeSignature
      */
-    public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName)
+    public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -350,7 +350,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInFunction
      */
-    public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName)
+    public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName): void
     {
         $namespaces = $this->parseSource($fileName);
         $function = $namespaces->current()
@@ -377,7 +377,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInTypeSignature
      */
-    public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName)
+    public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -399,7 +399,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInFunction
      */
-    public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName)
+    public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -421,7 +421,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName)
+    public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -443,7 +443,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName)
+    public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -465,7 +465,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName)
+    public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -487,7 +487,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName)
+    public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()

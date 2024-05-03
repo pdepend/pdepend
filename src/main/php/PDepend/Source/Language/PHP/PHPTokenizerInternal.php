@@ -651,10 +651,8 @@ class PHPTokenizerInternal implements FullTokenizer
      * Sets a new php source file.
      *
      * @param string $sourceFile A php source file.
-     *
-     * @return void
      */
-    public function setSourceFile($sourceFile)
+    public function setSourceFile($sourceFile): void
     {
         $this->tokens = null;
         $this->sourceFile = new ASTCompilationUnit($sourceFile);
@@ -934,10 +932,8 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Tokenizes the content of the source file with {@link token_get_all()} and
      * filters this token stream.
-     *
-     * @return void
      */
-    private function tokenize()
+    private function tokenize(): void
     {
         if ($this->tokens !== null) {
             return;

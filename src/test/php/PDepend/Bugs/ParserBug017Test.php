@@ -66,7 +66,7 @@ class ParserBug017Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testDetectsTypeWithinCatchBlock()
+    public function testDetectsTypeWithinCatchBlock(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();

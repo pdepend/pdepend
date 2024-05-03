@@ -147,10 +147,8 @@ interface ASTNode
 
     /**
      * Sets the parent node of this node.
-     *
-     * @return void
      */
-    public function setParent(ASTNode $node);
+    public function setParent(ASTNode $node): void;
 
     /**
      * Traverses up the node tree and finds all parent nodes that are instances
@@ -174,10 +172,8 @@ interface ASTNode
      * Sets the raw doc comment for this node.
      *
      * @param string $comment The doc comment block for this node.
-     *
-     * @return void
      */
-    public function setComment($comment);
+    public function setComment($comment): void;
 
     /**
      * For better performance we have moved the single setter methods for the
@@ -188,9 +184,7 @@ interface ASTNode
      * @param int $startColumn
      * @param int $endColumn
      *
-     * @return void
-     *
      * @since 0.9.10
      */
-    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn);
+    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void;
 }

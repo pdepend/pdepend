@@ -64,7 +64,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testSerialization()
+    public function testSerialization(): void
     {
         $enum = $this->createItem();
         $serializedClass = serialize($enum);
@@ -78,7 +78,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         $this->assertSame('string', $deserializedEnum->getType()->getImage());
     }
 
-    public function testVisit()
+    public function testVisit(): void
     {
         $enum = $this->createItem();
         $strategy = new PropertyStrategy();
@@ -109,7 +109,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
 
     /**
      */
-    public function testSetTokensWithEmptyArray()
+    public function testSetTokensWithEmptyArray(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('An AST node should contain at least one token');

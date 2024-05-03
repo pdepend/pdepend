@@ -63,7 +63,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
     /**
      * @return void
      */
-    public function testInterface()
+    public function testInterface(): void
     {
         /** @var ASTInterface $interface */
         $interface = $this->getFirstInterfaceForTestCase();
@@ -93,7 +93,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
     /**
      * @return void
      */
-    public function testEnum()
+    public function testEnum(): void
     {
         /** @var ASTEnum $enum */
         $enum = $this->parseCodeResourceForTest()
@@ -120,7 +120,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
     /**
      * @return void
      */
-    public function testTrait()
+    public function testTrait(): void
     {
         /** @var ASTTrait $trait */
         $trait = $this->parseCodeResourceForTest()
@@ -152,7 +152,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
     /**
      * @return void
      */
-    public function testClass()
+    public function testClass(): void
     {
         $classes = $this->parseCodeResourceForTest()
             ->current()
@@ -201,7 +201,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
     /**
      * @return void
      */
-    public function testBroken()
+    public function testBroken(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'

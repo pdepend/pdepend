@@ -152,7 +152,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedStartLine($stmt)
+    public function testScopeStatementHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -165,7 +165,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedStartColumn($stmt)
+    public function testScopeStatementHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(34, $stmt->getStartColumn());
     }
@@ -178,7 +178,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedEndLine($stmt)
+    public function testScopeStatementHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(6, $stmt->getEndLine());
     }
@@ -191,7 +191,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedEndColumn($stmt)
+    public function testScopeStatementHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getEndColumn());
     }
@@ -218,7 +218,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedStartLine($stmt)
+    public function testScopeStatementWithAlternativeHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(6, $stmt->getStartLine());
     }
@@ -231,7 +231,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedStartColumn($stmt)
+    public function testScopeStatementWithAlternativeHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(13, $stmt->getStartColumn());
     }
@@ -244,7 +244,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedEndLine($stmt)
+    public function testScopeStatementWithAlternativeHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(17, $stmt->getEndLine());
     }
@@ -257,7 +257,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedEndColumn($stmt)
+    public function testScopeStatementWithAlternativeHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(15, $stmt->getEndColumn());
     }

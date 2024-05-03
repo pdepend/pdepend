@@ -76,7 +76,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedStartLine($declaration)
+    public function testStaticVariableDeclarationHasExpectedStartLine($declaration): void
     {
         $this->assertSame(4, $declaration->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedStartColumn($declaration)
+    public function testStaticVariableDeclarationHasExpectedStartColumn($declaration): void
     {
         $this->assertSame(5, $declaration->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedEndLine($declaration)
+    public function testStaticVariableDeclarationHasExpectedEndLine($declaration): void
     {
         $this->assertSame(5, $declaration->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedEndColumn($declaration)
+    public function testStaticVariableDeclarationHasExpectedEndColumn($declaration): void
     {
         $this->assertSame(23, $declaration->getEndColumn());
     }

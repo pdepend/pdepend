@@ -171,10 +171,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->metrics === null) {
             $this->loadCache();
@@ -192,10 +190,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->fireStartClass($class);
 
@@ -231,10 +227,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
     /**
      * Visits a file node.
-     *
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
         // Skip for dummy files
         if ($compilationUnit->getFileName() === null) {
@@ -274,10 +268,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -309,10 +301,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
 
@@ -345,10 +335,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -389,10 +377,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * given <b>$id</b>.
      *
      * @param string $id The unique identifier of a node.
-     *
-     * @return void
      */
-    private function updateProjectMetrics($id)
+    private function updateProjectMetrics($id): void
     {
         foreach ($this->metrics[$id] as $metric => $value) {
             $this->projectMetrics[$metric] += $value;

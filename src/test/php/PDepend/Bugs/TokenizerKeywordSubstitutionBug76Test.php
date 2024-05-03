@@ -67,7 +67,7 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
      * @return void
      * @dataProvider dataProviderTokenizerKeywordSubstitutionInOperatorChain
      */
-    public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes)
+    public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes): void
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(self::createCodeResourceURI($sourceFile));

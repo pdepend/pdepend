@@ -71,7 +71,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * @return void
      * @since 1.0.1
      */
-    public function testAllocationExpressionForSelfProperty()
+    public function testAllocationExpressionForSelfProperty(): void
     {
         $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
@@ -83,7 +83,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * @return void
      * @since 1.0.1
      */
-    public function testAllocationExpressionForParentProperty()
+    public function testAllocationExpressionForParentProperty(): void
     {
         $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
@@ -95,7 +95,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * @return void
      * @since 1.0.1
      */
-    public function testAllocationExpressionForStaticProperty()
+    public function testAllocationExpressionForStaticProperty(): void
     {
         $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
@@ -107,7 +107,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * @return void
      * @since 1.0.1
      */
-    public function testAllocationExpressionForThisProperty()
+    public function testAllocationExpressionForThisProperty(): void
     {
         $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $allocation->getChild(0));
@@ -119,7 +119,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * @return void
      * @since 1.0.1
      */
-    public function testAllocationExpressionForObjectProperty()
+    public function testAllocationExpressionForObjectProperty(): void
     {
         $allocation = $this->getFirstAllocationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $allocation->getChild(0));
@@ -130,7 +130,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForSimpleIdentifier()
+    public function testAllocationExpressionGraphForSimpleIdentifier(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -145,7 +145,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForSelfKeyword()
+    public function testAllocationExpressionGraphForSelfKeyword(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
         $allocation = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -161,7 +161,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForParentKeyword()
+    public function testAllocationExpressionGraphForParentKeyword(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
         $allocation = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -176,7 +176,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForLocalNamespaceIdentifier()
+    public function testAllocationExpressionGraphForLocalNamespaceIdentifier(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -191,7 +191,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForAbsoluteNamespaceIdentifier()
+    public function testAllocationExpressionGraphForAbsoluteNamespaceIdentifier(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -206,7 +206,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForAbsoluteNamespacedNamespaceIdentifier()
+    public function testAllocationExpressionGraphForAbsoluteNamespacedNamespaceIdentifier(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -221,7 +221,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForVariableIdentifier()
+    public function testAllocationExpressionGraphForVariableIdentifier(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -236,7 +236,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForVariableVariableIdentifier()
+    public function testAllocationExpressionGraphForVariableVariableIdentifier(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -255,7 +255,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAllocationExpressionGraphForStaticReference()
+    public function testAllocationExpressionGraphForStaticReference(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
         $allocation = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTAllocationExpression');
@@ -271,7 +271,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testInvalidAllocationExpressionResultsInExpectedException()
+    public function testInvalidAllocationExpressionResultsInExpectedException(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'

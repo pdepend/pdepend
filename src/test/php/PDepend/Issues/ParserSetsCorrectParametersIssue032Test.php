@@ -58,7 +58,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedNumberOfFunctionParameters()
+    public function testParserSetsExpectedNumberOfFunctionParameters(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
         $this->assertCount(3, $parameters);
@@ -69,7 +69,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedPositionOfFunctionParameters()
+    public function testParserSetsExpectedPositionOfFunctionParameters(): void
     {
         $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
@@ -83,7 +83,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsFunctionParametersInExpectedOrder()
+    public function testParserSetsFunctionParametersInExpectedOrder(): void
     {
         $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
@@ -97,7 +97,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedTypeHintsForFunctionParameters()
+    public function testParserSetsExpectedTypeHintsForFunctionParameters(): void
     {
         $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
@@ -111,7 +111,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedNumberOfMethodParameters()
+    public function testParserSetsExpectedNumberOfMethodParameters(): void
     {
         $parameters = $this->getParametersOfFirstMethod();
         $this->assertCount(3, $parameters);
@@ -122,7 +122,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedPositionOfMethodParameters()
+    public function testParserSetsExpectedPositionOfMethodParameters(): void
     {
         $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
@@ -136,7 +136,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsMethodParametersInExpectedOrder()
+    public function testParserSetsMethodParametersInExpectedOrder(): void
     {
         $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
@@ -150,7 +150,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedTypeHintsForMethodParameters()
+    public function testParserSetsExpectedTypeHintsForMethodParameters(): void
     {
         $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {

@@ -59,7 +59,7 @@ class PHPParserGenericVersion71Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testConstVisibility()
+    public function testConstVisibility(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -67,7 +67,7 @@ class PHPParserGenericVersion71Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testNullableTypeHintParameter()
+    public function testNullableTypeHintParameter(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -75,7 +75,7 @@ class PHPParserGenericVersion71Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testNullableTypeHintReturn()
+    public function testNullableTypeHintReturn(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }

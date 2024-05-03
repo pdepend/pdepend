@@ -62,7 +62,7 @@ class ASTValueTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsValueAvailableReturnsFalseByDefault()
+    public function testIsValueAvailableReturnsFalseByDefault(): void
     {
         $value = new ASTValue();
         $this->assertFalse($value->isValueAvailable());
@@ -73,7 +73,7 @@ class ASTValueTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsValueAvailableReturnsTrueWhenValueWasSet()
+    public function testIsValueAvailableReturnsTrueWhenValueWasSet(): void
     {
         $value = new ASTValue();
         $value->setValue(42);
@@ -86,7 +86,7 @@ class ASTValueTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIsValueAvailableReturnsTrueForNullValue()
+    public function testIsValueAvailableReturnsTrueForNullValue(): void
     {
         $value = new ASTValue();
         $value->setValue(null);
@@ -99,7 +99,7 @@ class ASTValueTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetValueReturnsNullByDefault()
+    public function testGetValueReturnsNullByDefault(): void
     {
         $value = new ASTValue();
         $this->assertNull($value->getValue());
@@ -110,7 +110,7 @@ class ASTValueTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetValueReturnsPreviouslySetValue()
+    public function testGetValueReturnsPreviouslySetValue(): void
     {
         $value = new ASTValue();
         $value->setValue(42);
@@ -123,7 +123,7 @@ class ASTValueTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSetValueMutatesInternalStateOnlyOnce()
+    public function testSetValueMutatesInternalStateOnlyOnce(): void
     {
         $value = new ASTValue();
         $value->setValue(42);

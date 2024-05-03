@@ -64,44 +64,34 @@ interface BuilderContext
     /**
      * This method can be used to register an existing function in the current
      * application context.
-     *
-     * @return void
      */
-    public function registerFunction(ASTFunction $function);
+    public function registerFunction(ASTFunction $function): void;
 
     /**
      * This method can be used to register an existing trait in the current
      * class context.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function registerTrait(ASTTrait $trait);
+    public function registerTrait(ASTTrait $trait): void;
 
     /**
      * This method can be used to register an existing class in the current
      * class context.
-     *
-     * @return void
      */
-    public function registerClass(ASTClass $class);
+    public function registerClass(ASTClass $class): void;
 
     /**
      * This method can be used to register an existing enum in the current
      * context.
-     *
-     * @return void
      */
-    public function registerEnum(ASTEnum $class);
+    public function registerEnum(ASTEnum $class): void;
 
     /**
      * This method can be used to register an existing interface in the current
      * class context.
-     *
-     * @return void
      */
-    public function registerInterface(ASTInterface $interface);
+    public function registerInterface(ASTInterface $interface): void;
 
     /**
      * Returns the trait instance for the given qualified name.

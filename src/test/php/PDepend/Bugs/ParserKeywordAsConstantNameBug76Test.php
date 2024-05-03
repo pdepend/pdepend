@@ -64,7 +64,7 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
      * @return void
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
-    public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName)
+    public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName): void
     {
         $namespaces = $this->parseSource($sourceFile);
 

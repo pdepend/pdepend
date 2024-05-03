@@ -59,7 +59,7 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
      *
      * @return void
      */
-    public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody()
+    public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody(): void
     {
         $pdepend = $this->createEngineFixture();
         $pdepend->addFile($this->createCodeResourceUriForTest());

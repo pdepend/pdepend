@@ -60,7 +60,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsUseAsClassName()
+    public function testParserAcceptsUseAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -70,7 +70,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsNullAsClassName()
+    public function testParserAcceptsNullAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -80,7 +80,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsTrueAsClassName()
+    public function testParserAcceptsTrueAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -90,7 +90,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsCloneAsClassName()
+    public function testParserAcceptsCloneAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -100,7 +100,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsFalseAsClassName()
+    public function testParserAcceptsFalseAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -110,7 +110,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsStringAsClassName()
+    public function testParserAcceptsStringAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -120,7 +120,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsObjectAsClassName()
+    public function testParserAcceptsObjectAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -130,7 +130,7 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsNamespaceAsClassName()
+    public function testParserAcceptsNamespaceAsClassName(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }

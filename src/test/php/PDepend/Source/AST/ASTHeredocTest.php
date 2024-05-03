@@ -60,7 +60,7 @@ class ASTHeredocTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testHeredocAsArrayInitializeValue()
+    public function testHeredocAsArrayInitializeValue(): void
     {
         $this->assertInstanceOf(
             'PDepend\\Source\\AST\\ASTLiteral',
@@ -73,7 +73,7 @@ class ASTHeredocTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHeredocHasExpectedStartLine()
+    public function testHeredocHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(4, $stmt->getStartLine());
@@ -84,7 +84,7 @@ class ASTHeredocTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHeredocHasExpectedStartColumn()
+    public function testHeredocHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(10, $stmt->getStartColumn());
@@ -95,7 +95,7 @@ class ASTHeredocTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHeredocHasExpectedEndLine()
+    public function testHeredocHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(8, $stmt->getEndLine());
@@ -106,7 +106,7 @@ class ASTHeredocTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHeredocHasExpectedEndColumn()
+    public function testHeredocHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
         $this->assertEquals(3, $stmt->getEndColumn());

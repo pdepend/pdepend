@@ -418,10 +418,8 @@ abstract class AbstractPHPParser
     /**
      * Sets the ignore annotations flag. This means that the parser will ignore
      * doc comment annotations.
-     *
-     * @return void
      */
-    public function setIgnoreAnnotations()
+    public function setIgnoreAnnotations(): void
     {
         $this->ignoreAnnotations = true;
     }
@@ -431,11 +429,9 @@ abstract class AbstractPHPParser
      *
      * @param int $maxNestingLevel The maximum allowed nesting level.
      *
-     * @return void
-     *
      * @since 0.9.12
      */
-    public function setMaxNestingLevel($maxNestingLevel)
+    public function setMaxNestingLevel($maxNestingLevel): void
     {
         $this->maxNestingLevel = $maxNestingLevel;
     }
@@ -455,10 +451,8 @@ abstract class AbstractPHPParser
     /**
      * Parses the contents of the tokenizer and generates a node tree based on
      * the found tokens.
-     *
-     * @return void
      */
-    public function parse()
+    public function parse(): void
     {
         $this->compilationUnit = $this->tokenizer->getSourceFile();
         $this->compilationUnit
@@ -536,11 +530,9 @@ abstract class AbstractPHPParser
     /**
      * Initializes the parser environment.
      *
-     * @return void
-     *
      * @since 0.9.12
      */
-    protected function setUpEnvironment()
+    protected function setUpEnvironment(): void
     {
         ini_set('xdebug.max_nesting_level', (string) $this->getMaxNestingLevel());
 
@@ -554,11 +546,9 @@ abstract class AbstractPHPParser
      *
      * @throws NoActiveScopeException
      *
-     * @return void
-     *
      * @since 0.9.12
      */
-    protected function tearDownEnvironment()
+    protected function tearDownEnvironment(): void
     {
         ini_restore('xdebug.max_nesting_level');
 
@@ -570,10 +560,8 @@ abstract class AbstractPHPParser
      *
      * @param int  $modifiers Optional default modifiers.
      * @param bool $echoing   True if current statement is echoing (such as after <?=).
-     *
-     * @return void
      */
-    protected function reset($modifiers = 0, $echoing = false)
+    protected function reset($modifiers = 0, $echoing = false): void
     {
         $this->packageName = Builder::DEFAULT_NAMESPACE;
         $this->docComment  = null;
@@ -909,10 +897,8 @@ abstract class AbstractPHPParser
     /**
      * This method parses an optional class modifier. Valid class modifiers are
      * <b>final</b> or <b>abstract</b>.
-     *
-     * @return void
      */
-    private function parseClassModifiers()
+    private function parseClassModifiers(): void
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -987,10 +973,8 @@ abstract class AbstractPHPParser
      * This method parses a list of interface names as used in the <b>extends</b>
      * part of a interface declaration or in the <b>implements</b> part of a
      * class declaration.
-     *
-     * @return void
      */
-    protected function parseInterfaceList(AbstractASTClassOrInterface $abstractType)
+    protected function parseInterfaceList(AbstractASTClassOrInterface $abstractType): void
     {
         while (true) {
             $this->tokenStack->push();
@@ -1462,10 +1446,8 @@ abstract class AbstractPHPParser
 
     /**
      * Parses a function or a method and adds it to the parent context node.
-     *
-     * @return void
      */
-    private function parseCallableDeclaration(AbstractASTCallable $callable)
+    private function parseCallableDeclaration(AbstractASTCallable $callable): void
     {
         $callable->addChild($this->parseFormalParameters($callable));
         $this->parseCallableDeclarationAddition($callable);
@@ -1867,10 +1849,8 @@ abstract class AbstractPHPParser
      *
      * @param int   $tokenType
      * @param Token $unexpectedToken
-     *
-     * @return void
      */
-    private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null)
+    private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null): void
     {
         if (!$this->isListUnpacking($tokenType)) {
             throw $this->getUnexpectedTokenException($unexpectedToken ?: $this->tokenizer->prevToken());
@@ -2938,11 +2918,9 @@ abstract class AbstractPHPParser
      * Parses the termination of a scope statement that uses PHP's laternative
      * syntax format.
      *
-     * @return void
-     *
      * @since 0.10.0
      */
-    private function parseOptionalAlternativeScopeTermination()
+    private function parseOptionalAlternativeScopeTermination(): void
     {
         $tokenType = $this->tokenizer->peek();
         if ($this->isAlternativeScopeTermination($tokenType)) {
@@ -2982,11 +2960,9 @@ abstract class AbstractPHPParser
      *
      * @param int $tokenType The token type identifier.
      *
-     * @return void
-     *
      * @since 0.10.0
      */
-    private function parseAlternativeScopeTermination($tokenType)
+    private function parseAlternativeScopeTermination($tokenType): void
     {
         $this->consumeToken($tokenType);
         $this->consumeComments();
@@ -3596,11 +3572,9 @@ abstract class AbstractPHPParser
      *
      * @param int[] $allowedTerminationTokens list of extra token types that can terminate the statement
      *
-     * @return void
-     *
      * @since 0.9.12
      */
-    private function parseStatementTermination(array $allowedTerminationTokens = [])
+    private function parseStatementTermination(array $allowedTerminationTokens = []): void
     {
         $this->consumeComments();
         $this->echoing = false;
@@ -3796,10 +3770,8 @@ abstract class AbstractPHPParser
      * This method parses assigned variable in catch statement.
      *
      * @param ASTCatchStatement $stmt The owning catch statement.
-     *
-     * @return void
      */
-    protected function parseCatchVariable(ASTCatchStatement $stmt)
+    protected function parseCatchVariable(ASTCatchStatement $stmt): void
     {
         $stmt->addChild($this->parseVariable());
 
@@ -3810,10 +3782,8 @@ abstract class AbstractPHPParser
      * This method parses class references in catch statement.
      *
      * @param ASTCatchStatement $stmt The owning catch statement.
-     *
-     * @return void
      */
-    protected function parseCatchExceptionClass(ASTCatchStatement $stmt)
+    protected function parseCatchExceptionClass(ASTCatchStatement $stmt): void
     {
         $stmt->addChild(
             $this->builder->buildAstClassOrInterfaceReference(
@@ -5763,10 +5733,8 @@ abstract class AbstractPHPParser
      * @param Token|null $consecutiveComma
      *
      * @throws UnexpectedTokenException
-     *
-     * @return void
      */
-    protected function ensureArrayIsValid($useSquaredBrackets, $openingToken, $consecutiveComma)
+    protected function ensureArrayIsValid($useSquaredBrackets, $openingToken, $consecutiveComma): void
     {
         // If this array is followed by =, it's in fact a destructuring list
         if ($this->tokenizer->peekNext() === Tokens::T_EQUAL) {
@@ -7003,11 +6971,9 @@ abstract class AbstractPHPParser
      *
      * @throws NoActiveScopeException
      *
-     * @return void
-     *
      * @since 0.9.5
      */
-    private function parseNamespaceDeclaration()
+    private function parseNamespaceDeclaration(): void
     {
         // Consume namespace keyword and strip optional comments
         $this->consumeToken(Tokens::T_NAMESPACE);
@@ -7063,11 +7029,9 @@ abstract class AbstractPHPParser
      *     \foobar\Bar;
      * </code>
      *
-     * @return void
-     *
      * @since 0.9.5
      */
-    protected function parseUseDeclarations()
+    protected function parseUseDeclarations(): void
     {
         // Consume use keyword
         $this->consumeToken(Tokens::T_USE);
@@ -7090,11 +7054,9 @@ abstract class AbstractPHPParser
      *
      * @throws NoActiveScopeException
      *
-     * @return void
-     *
      * @since 0.9.5
      */
-    protected function parseUseDeclaration()
+    protected function parseUseDeclaration(): void
     {
         $fragments = $this->parseQualifiedNameRaw();
         $this->consumeComments();
@@ -7119,10 +7081,8 @@ abstract class AbstractPHPParser
 
     /**
      * @param array<string> $fragments
-     *
-     * @return void
      */
-    protected function parseUseDeclarationForVersion(array $fragments)
+    protected function parseUseDeclarationForVersion(array $fragments): void
     {
         $image = $this->parseNamespaceImage($fragments);
         if ($image === false) {
@@ -7948,10 +7908,8 @@ abstract class AbstractPHPParser
     /**
      * Extracts documented <b>throws</b> and <b>return</b> types and sets them
      * to the given <b>$callable</b> instance.
-     *
-     * @return void
      */
-    private function prepareCallable(AbstractASTCallable $callable)
+    private function prepareCallable(AbstractASTCallable $callable): void
     {
         // Skip, if ignore annotations is set
         if ($this->ignoreAnnotations === true) {
@@ -8011,10 +7969,8 @@ abstract class AbstractPHPParser
 
     /**
      * This method will consume all comment tokens from the token stream.
-     *
-     * @return void
      */
-    protected function consumeComments()
+    protected function consumeComments(): void
     {
         $type = $this->tokenizer->peek();
         while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT) {
@@ -8062,10 +8018,7 @@ abstract class AbstractPHPParser
         return new TokenStreamEndException($this->tokenizer);
     }
 
-    /**
-     * @return void
-     */
-    protected function checkEllipsisInExpressionSupport()
+    protected function checkEllipsisInExpressionSupport(): void
     {
         throw $this->getUnexpectedNextTokenException();
     }

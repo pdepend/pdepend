@@ -75,11 +75,9 @@ class ASTInterface extends AbstractASTClassOrInterface
      *
      * @throws BadMethodCallException
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setParentClassReference(ASTClassReference $classReference)
+    public function setParentClassReference(ASTClassReference $classReference): void
     {
         throw new BadMethodCallException(
             'Unsupported method ' . __METHOD__ . '() called.',
@@ -123,11 +121,9 @@ class ASTInterface extends AbstractASTClassOrInterface
      * of the wakeup method will register this object in the the global class
      * context.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         parent::__wakeup();
 

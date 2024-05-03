@@ -59,7 +59,7 @@ class TraitsNotHandledCorrrectBug00000100Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testHandlingOfSelfReferenceInTrait()
+    public function testHandlingOfSelfReferenceInTrait(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }

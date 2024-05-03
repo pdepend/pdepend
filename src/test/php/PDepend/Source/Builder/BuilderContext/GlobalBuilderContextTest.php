@@ -66,7 +66,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testRegisterTraitCallsRestoreClassOnBuilder()
+    public function testRegisterTraitCallsRestoreClassOnBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -83,7 +83,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRegisterClassCallsRestoreClassOnBuilder()
+    public function testRegisterClassCallsRestoreClassOnBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -100,7 +100,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder()
+    public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -117,7 +117,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRegisterFunctionCallsRestoreFunctionOnBuilder()
+    public function testRegisterFunctionCallsRestoreFunctionOnBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -135,7 +135,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetTraitDelegatesCallToWrappedBuilder()
+    public function testGetTraitDelegatesCallToWrappedBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -152,7 +152,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetClassDelegatesCallToWrappedBuilder()
+    public function testGetClassDelegatesCallToWrappedBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();
@@ -169,7 +169,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder()
+    public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder(): void
     {
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
             ->getMock();

@@ -62,7 +62,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testReadonlyClass()
+    public function testReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -84,7 +84,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testAbstractClass()
+    public function testAbstractClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -106,7 +106,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testFinalClass()
+    public function testFinalClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -128,7 +128,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testAbstractReadonlyClass()
+    public function testAbstractReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -155,7 +155,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testReadonlyAbstractClass()
+    public function testReadonlyAbstractClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -182,7 +182,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testFinalReadonlyClass()
+    public function testFinalReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -209,7 +209,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testReadonlyFinalClass()
+    public function testReadonlyFinalClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
@@ -236,7 +236,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testAbstractFinalReadonlyClass()
+    public function testAbstractFinalReadonlyClass(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 

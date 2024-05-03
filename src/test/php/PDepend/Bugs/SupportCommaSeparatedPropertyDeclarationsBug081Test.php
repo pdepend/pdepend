@@ -60,7 +60,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
      *
      * @return void
      */
-    public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration()
+    public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration(): void
     {
         $properties = $this->parseCodeResourceForTest()
             ->current()
@@ -76,7 +76,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
      *
      * @return void
      */
-    public function testParserSetsSameVisibilityForAllPropertyDeclarations()
+    public function testParserSetsSameVisibilityForAllPropertyDeclarations(): void
     {
         $properties = $this->parseCodeResourceForTest()
             ->current()
@@ -108,7 +108,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
      *
      * @return void
      */
-    public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations()
+    public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations(): void
     {
         $properties = $this->parseCodeResourceForTest()
             ->current()

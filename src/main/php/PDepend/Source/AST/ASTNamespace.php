@@ -252,10 +252,8 @@ class ASTNamespace extends AbstractASTArtifact
      * Removes the given type instance from this namespace.
      *
      * @param AbstractASTClassOrInterface $type
-     *
-     * @return void
      */
-    public function removeType(AbstractASTType $type)
+    public function removeType(AbstractASTType $type): void
     {
         if (($index = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list
@@ -296,10 +294,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Removes the given function from this namespace.
-     *
-     * @return void
      */
-    public function removeFunction(ASTFunction $function)
+    public function removeFunction(ASTFunction $function): void
     {
         if (($index = array_search($function, $this->functions, true)) !== false) {
             // Remove function from internal list
@@ -319,10 +315,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * @param bool $packageAnnotation
-     *
-     * @return void
      */
-    public function setPackageAnnotation($packageAnnotation)
+    public function setPackageAnnotation($packageAnnotation): void
     {
         $this->packageAnnotation = $packageAnnotation;
     }

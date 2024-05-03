@@ -61,7 +61,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependFiltersSingleFileWithPattern()
+    public function testPDependFiltersSingleFileWithPattern(): void
     {
         $this->changeWorkingDirectory();
 
@@ -83,7 +83,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependFiltersByRelativePath()
+    public function testPDependFiltersByRelativePath(): void
     {
         $this->changeWorkingDirectory();
 
@@ -104,7 +104,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependFiltersByAbsolutePath()
+    public function testPDependFiltersByAbsolutePath(): void
     {
         $this->changeWorkingDirectory();
 
@@ -137,7 +137,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependNotFiltersByOverlappingPathMatch()
+    public function testPDependNotFiltersByOverlappingPathMatch(): void
     {
         $this->changeWorkingDirectory();
 

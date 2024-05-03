@@ -62,7 +62,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassIgnoresClassesThatAreNotUserDefined()
+    public function testVisitClassIgnoresClassesThatAreNotUserDefined(): void
     {
         $notUserDefined = $this->createClassFixture();
 
@@ -81,7 +81,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassCountsClassesThatAreNotUserDefined()
+    public function testVisitClassCountsClassesThatAreNotUserDefined(): void
     {
         $userDefined = $this->createClassFixture();
         $userDefined->setUserDefined();
@@ -101,7 +101,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassIgnoresInterfacesThatAreNotUserDefined()
+    public function testVisitClassIgnoresInterfacesThatAreNotUserDefined(): void
     {
         $notUserDefined = $this->createInterfaceFixture();
 
@@ -120,7 +120,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassCountsInterfacesThatAreNotUserDefined()
+    public function testVisitClassCountsInterfacesThatAreNotUserDefined(): void
     {
         $userDefined = $this->createInterfaceFixture();
         $userDefined->setUserDefined();
@@ -140,7 +140,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfPackages()
+    public function testCalculatesExpectedNumberOfPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -155,7 +155,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfClassesInProject()
+    public function testCalculatesExpectedNumberOfClassesInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -170,7 +170,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfClassesInPackages()
+    public function testCalculatesExpectedNumberOfClassesInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -196,7 +196,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfInterfacesInProject()
+    public function testCalculatesExpectedNumberOfInterfacesInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -211,7 +211,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfInterfacesInPackages()
+    public function testCalculatesExpectedNumberOfInterfacesInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -237,7 +237,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfMethodsInProject()
+    public function testCalculatesExpectedNumberOfMethodsInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -252,7 +252,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfMethodsInPackages()
+    public function testCalculatesExpectedNumberOfMethodsInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -278,7 +278,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfFunctionsInProject()
+    public function testCalculatesExpectedNumberOfFunctionsInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -293,7 +293,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfFunctionsInPackages()
+    public function testCalculatesExpectedNumberOfFunctionsInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();

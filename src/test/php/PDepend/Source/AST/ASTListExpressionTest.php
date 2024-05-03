@@ -76,7 +76,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedStartLine($expr)
+    public function testListExpressionHasExpectedStartLine($expr): void
     {
         $this->assertEquals(4, $expr->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedStartColumn($expr)
+    public function testListExpressionHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(5, $expr->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedEndLine($expr)
+    public function testListExpressionHasExpectedEndLine($expr): void
     {
         $this->assertEquals(4, $expr->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedEndColumn($expr)
+    public function testListExpressionHasExpectedEndColumn($expr): void
     {
         $this->assertEquals(16, $expr->getEndColumn());
     }
@@ -143,7 +143,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedStartLine($expr)
+    public function testListExpressionWithNestedListHasExpectedStartLine($expr): void
     {
         $this->assertEquals(4, $expr->getStartLine());
     }
@@ -157,7 +157,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedStartColumn($expr)
+    public function testListExpressionWithNestedListHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(5, $expr->getStartColumn());
     }
@@ -171,7 +171,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedEndLine($expr)
+    public function testListExpressionWithNestedListHasExpectedEndLine($expr): void
     {
         $this->assertEquals(4, $expr->getEndLine());
     }
@@ -185,7 +185,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedEndColumn($expr)
+    public function testListExpressionWithNestedListHasExpectedEndColumn($expr): void
     {
         $this->assertEquals(42, $expr->getEndColumn());
     }
@@ -195,7 +195,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionSupportsManyVariables()
+    public function testListExpressionSupportsManyVariables(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
@@ -207,7 +207,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionSupportsSingleVariable()
+    public function testListExpressionSupportsSingleVariable(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
@@ -219,7 +219,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionSupportsExtraCommas()
+    public function testListExpressionSupportsExtraCommas(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
@@ -231,7 +231,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithComments()
+    public function testListExpressionWithComments(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
@@ -243,7 +243,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithoutChildExpression()
+    public function testListExpressionWithoutChildExpression(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
@@ -255,7 +255,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithVariableVariable()
+    public function testListExpressionWithVariableVariable(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
@@ -268,7 +268,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithSquaredBrackets()
+    public function testListExpressionWithSquaredBrackets(): void
     {
         $parameters = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -283,7 +283,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithSquaredBracketsAndEmptySlot()
+    public function testListExpressionWithSquaredBracketsAndEmptySlot(): void
     {
         $parameters = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -298,7 +298,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithArrayAndEmptySlot()
+    public function testListExpressionWithArrayAndEmptySlot(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -315,7 +315,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSymmetricArrayDestructuringEmptySlot()
+    public function testSymmetricArrayDestructuringEmptySlot(): void
     {
         /** @var ASTArray $expr */
         $array = $this->getFirstNodeOfTypeInFunction(
@@ -331,7 +331,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFunctionVoidReturnType()
+    public function testFunctionVoidReturnType(): void
     {
         /** @var ASTScalarType $type */
         $type = $this->getFirstNodeOfTypeInFunction(
@@ -347,7 +347,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithCompoundVariable()
+    public function testListExpressionWithCompoundVariable(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
@@ -360,7 +360,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithArrayElement()
+    public function testListExpressionWithArrayElement(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);
@@ -373,7 +373,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testListExpressionWithObjectProperty()
+    public function testListExpressionWithObjectProperty(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
         $var  = $expr->getChild(0);

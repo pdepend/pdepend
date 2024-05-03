@@ -64,7 +64,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
      *
      * @return void
      */
-    public function testUseConst()
+    public function testUseConst(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
@@ -88,7 +88,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
      *
      * @return void
      */
-    public function testUseFunction()
+    public function testUseFunction(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 

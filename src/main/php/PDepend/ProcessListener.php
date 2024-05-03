@@ -60,61 +60,45 @@ interface ProcessListener extends ASTVisitListener, AnalyzerListener
      * Is called when PDepend starts the file parsing process.
      *
      * @param Builder<mixed> $builder The used node builder instance.
-     *
-     * @return void
      */
-    public function startParseProcess(Builder $builder);
+    public function startParseProcess(Builder $builder): void;
 
     /**
      * Is called when PDepend has finished the file parsing process.
      *
      * @param Builder<mixed> $builder The used node builder instance.
-     *
-     * @return void
      */
-    public function endParseProcess(Builder $builder);
+    public function endParseProcess(Builder $builder): void;
 
     /**
      * Is called when PDepend starts parsing of a new file.
-     *
-     * @return void
      */
-    public function startFileParsing(Tokenizer $tokenizer);
+    public function startFileParsing(Tokenizer $tokenizer): void;
 
     /**
      * Is called when PDepend has finished a file.
-     *
-     * @return void
      */
-    public function endFileParsing(Tokenizer $tokenizer);
+    public function endFileParsing(Tokenizer $tokenizer): void;
 
     /**
      * Is called when PDepend starts the analyzing process.
-     *
-     * @return void
      */
-    public function startAnalyzeProcess();
+    public function startAnalyzeProcess(): void;
 
     /**
      * Is called when PDepend has finished the analyzing process.
-     *
-     * @return void
      */
-    public function endAnalyzeProcess();
+    public function endAnalyzeProcess(): void;
 
     /**
      * Is called when PDepend starts the logging process.
-     *
-     * @return void
      */
-    public function startLogProcess();
+    public function startLogProcess(): void;
 
     /**
      * Is called when PDepend has finished the logging process.
-     *
-     * @return void
      */
-    public function endLogProcess();
+    public function endLogProcess(): void;
 }
 
 // @codeCoverageIgnoreEnd

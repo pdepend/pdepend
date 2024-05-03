@@ -59,7 +59,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDoWhileStatementHasExpectedNumberOfChildNodes()
+    public function testDoWhileStatementHasExpectedNumberOfChildNodes(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertCount(2, $stmt->getChildren());
@@ -70,7 +70,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement()
+    public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(0));
@@ -81,7 +81,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSecondChildOfDoWhileStatementIsInstanceOfExpression()
+    public function testSecondChildOfDoWhileStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(1));
@@ -92,7 +92,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDoWhileStatementHasExpectedStartLine()
+    public function testDoWhileStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
@@ -103,7 +103,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDoWhileStatementHasExpectedStartColumn()
+    public function testDoWhileStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
@@ -114,7 +114,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDoWhileStatementHasExpectedEndLine()
+    public function testDoWhileStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertEquals(7, $stmt->getEndLine());
@@ -125,7 +125,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDoWhileStatementHasExpectedEndColumn()
+    public function testDoWhileStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertEquals(31, $stmt->getEndColumn());
@@ -136,7 +136,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDoWhileStatementWithoutScopeStatementChild()
+    public function testDoWhileStatementWithoutScopeStatementChild(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIfStatement', $stmt->getChild(0));

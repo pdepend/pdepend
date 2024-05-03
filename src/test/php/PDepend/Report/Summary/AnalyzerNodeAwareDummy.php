@@ -77,7 +77,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener)
+    public function addAnalyzeListener(AnalyzerListener $listener): void
     {
     }
 
@@ -87,7 +87,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(AnalyzerListener $listener)
+    public function removeAnalyzeListener(AnalyzerListener $listener): void
     {
     }
 
@@ -96,7 +96,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      *
      * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
     }
 
@@ -132,7 +132,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      * @param array<string, mixed> $options
      * @since 2.0.1
      */
-    public function setOptions(array $options = [])
+    public function setOptions(array $options = []): void
     {
     }
 }

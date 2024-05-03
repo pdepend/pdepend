@@ -70,7 +70,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testSimplePrintExpression
      */
-    public function testSimplePrintExpressionHasExpectedStartLine(ASTPrintExpression $expr)
+    public function testSimplePrintExpressionHasExpectedStartLine(ASTPrintExpression $expr): void
     {
         $this->assertSame(4, $expr->getStartLine());
     }
@@ -80,7 +80,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testSimplePrintExpression
      */
-    public function testSimplePrintExpressionHasExpectedEndLine(ASTPrintExpression $expr)
+    public function testSimplePrintExpressionHasExpectedEndLine(ASTPrintExpression $expr): void
     {
         $this->assertSame(4, $expr->getEndLine());
     }
@@ -90,7 +90,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testSimplePrintExpression
      */
-    public function testSimplePrintExpressionHasExpectedStartColumn(ASTPrintExpression $expr)
+    public function testSimplePrintExpressionHasExpectedStartColumn(ASTPrintExpression $expr): void
     {
         $this->assertSame(5, $expr->getStartColumn());
     }
@@ -100,7 +100,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testSimplePrintExpression
      */
-    public function testSimplePrintExpressionHasExpectedEndColumn(ASTPrintExpression $expr)
+    public function testSimplePrintExpressionHasExpectedEndColumn(ASTPrintExpression $expr): void
     {
         $this->assertSame(9, $expr->getEndColumn());
     }

@@ -105,10 +105,8 @@ class ASTTrait extends ASTClass
      * a serialized instance of this class was unserialized. This implementation
      * of the wakeup method will register this object in the the global class
      * context.
-     *
-     * @return void
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         parent::__wakeup();
 

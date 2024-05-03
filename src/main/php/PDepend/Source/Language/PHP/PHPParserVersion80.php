@@ -419,10 +419,8 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * This method parses assigned variable in catch statement.
      *
      * @param ASTCatchStatement $stmt The owning catch statement.
-     *
-     * @return void
      */
-    protected function parseCatchVariable(ASTCatchStatement $stmt)
+    protected function parseCatchVariable(ASTCatchStatement $stmt): void
     {
         if ($this->tokenizer->peek() === Tokens::T_VARIABLE) {
             parent::parseCatchVariable($stmt);

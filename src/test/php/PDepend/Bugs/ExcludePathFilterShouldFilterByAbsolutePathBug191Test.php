@@ -60,7 +60,7 @@ class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractRegr
      *
      * @return void
      */
-    public function testAbsoluteUnixPathAsFilterPattern()
+    public function testAbsoluteUnixPathAsFilterPattern(): void
     {
         $filter = new ExcludePathFilter(['/foo/bar']);
         $this->assertFalse($filter->accept('/baz', '/foo/bar/baz'));
@@ -71,7 +71,7 @@ class ExcludePathFilterShouldFilterByAbsolutePathBug191Test extends AbstractRegr
      *
      * @return void
      */
-    public function testAbsoluteWindowsPathAsFilterPattern()
+    public function testAbsoluteWindowsPathAsFilterPattern(): void
     {
         $filter = new ExcludePathFilter(['c:\workspace\bar']);
         $this->assertFalse($filter->accept('\baz', 'c:\workspace\bar\baz'));

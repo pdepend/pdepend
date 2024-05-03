@@ -74,10 +74,8 @@ abstract class Extension
      *
      * @param array<mixed>     $config    Extension configuration hash (from behat.yml)
      * @param ContainerBuilder $container ContainerBuilder instance
-     *
-     * @return void
      */
-    public function load(array $config, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container): void
     {
         $path = rtrim($this->getServiceDefinitionsPath(), DIRECTORY_SEPARATOR);
         $name = $this->getServiceDefinitionsName();
@@ -96,10 +94,8 @@ abstract class Extension
 
     /**
      * Setups configuration for current extension.
-     *
-     * @return void
      */
-    public function getConfig(ArrayNodeDefinition $builder)
+    public function getConfig(ArrayNodeDefinition $builder): void
     {
         $builder
             ->useAttributeAsKey('name')

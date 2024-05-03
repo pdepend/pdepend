@@ -59,7 +59,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalXorExpressionHasExpectedStartLine()
+    public function testLogicalXorExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -70,7 +70,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalXorExpressionHasExpectedStartColumn()
+    public function testLogicalXorExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
         $this->assertEquals(18, $expr->getStartColumn());
@@ -81,7 +81,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalXorExpressionHasExpectedEndLine()
+    public function testLogicalXorExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getEndLine());
@@ -92,7 +92,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLogicalXorExpressionHasExpectedEndColumn()
+    public function testLogicalXorExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
         $this->assertEquals(20, $expr->getEndColumn());

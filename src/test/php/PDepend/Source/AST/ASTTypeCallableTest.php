@@ -61,7 +61,7 @@ class ASTTypeCallableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCallableTypeIsHandledCaseInsensitive()
+    public function testCallableTypeIsHandledCaseInsensitive(): void
     {
         $this->assertNotNull($this->getFirstCallableTypeInFunction());
     }
@@ -88,7 +88,7 @@ class ASTTypeCallableTest extends ASTNodeTestCase
      * @return void
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedStartLine($type)
+    public function testCallableTypeHasExpectedStartLine($type): void
     {
         $this->assertEquals(2, $type->getStartLine());
     }
@@ -101,7 +101,7 @@ class ASTTypeCallableTest extends ASTNodeTestCase
      * @return void
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedEndLine($type)
+    public function testCallableTypeHasExpectedEndLine($type): void
     {
         $this->assertEquals(2, $type->getEndLine());
     }
@@ -114,7 +114,7 @@ class ASTTypeCallableTest extends ASTNodeTestCase
      * @return void
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedStartColumn($type)
+    public function testCallableTypeHasExpectedStartColumn($type): void
     {
         $this->assertEquals(27, $type->getStartColumn());
     }
@@ -127,7 +127,7 @@ class ASTTypeCallableTest extends ASTNodeTestCase
      * @return void
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedEndColumn($type)
+    public function testCallableTypeHasExpectedEndColumn($type): void
     {
         $this->assertEquals(34, $type->getEndColumn());
     }

@@ -65,7 +65,7 @@ class PdependExtension extends SymfonyExtension
      *
      * {@inheritDoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $extensionManager = new ExtensionManager();
 

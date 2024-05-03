@@ -176,11 +176,9 @@ class ASTCompilationUnit extends AbstractASTArtifact
      *
      * @param string $id Identifier for this file.
      *
-     * @return void
-     *
      * @since  0.9.12
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -225,10 +223,8 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * Sets the tokens for this file.
      *
      * @param array<Token> $tokens The generated tokens.
-     *
-     * @return void
      */
-    public function setTokens(array $tokens)
+    public function setTokens(array $tokens): void
     {
         $this->cache
             ->type('tokens')
@@ -238,11 +234,9 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Adds a source item that was parsed from this source file.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function addChild(AbstractASTArtifact $artifact)
+    public function addChild(AbstractASTArtifact $artifact): void
     {
         $this->childNodes[$artifact->getId()] = $artifact;
     }
@@ -323,12 +317,10 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * of the wakeup method restores the references between all parsed entities
      * in this source file and this file instance.
      *
-     * @return void
-     *
      * @since  0.10.0
      * @see    ASTCompilationUnit::$childNodes
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->cached = true;
 
@@ -349,10 +341,8 @@ class ASTCompilationUnit extends AbstractASTArtifact
 
     /**
      * Reads the source file if required.
-     *
-     * @return void
      */
-    protected function readSource()
+    protected function readSource(): void
     {
         if (
             $this->source === null &&

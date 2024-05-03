@@ -59,7 +59,7 @@ class ParserBug059Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserSetsSourceFileForInterfaceMethod()
+    public function testParserSetsSourceFileForInterfaceMethod(): void
     {
         $compilationUnit = $this->parseCodeResourceForTest()
             ->current()
@@ -80,7 +80,7 @@ class ParserBug059Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserSetsSourceFileForClassMethod()
+    public function testParserSetsSourceFileForClassMethod(): void
     {
         $compilationUnit = $this->parseCodeResourceForTest()
             ->current()
@@ -101,7 +101,7 @@ class ParserBug059Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserSetsSourceFileForClassProperty()
+    public function testParserSetsSourceFileForClassProperty(): void
     {
         $compilationUnit = $this->parseCodeResourceForTest()
             ->current()

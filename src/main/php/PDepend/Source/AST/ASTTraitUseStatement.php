@@ -118,10 +118,8 @@ class ASTTraitUseStatement extends ASTStatement
      * {@link ASTTraitReference}
      *
      * @param ASTTraitReference $reference Context trait reference.
-     *
-     * @return void
      */
-    private function collectMethods(ASTTraitReference $reference)
+    private function collectMethods(ASTTraitReference $reference): void
     {
         foreach ($reference->getType()->getAllMethods() as $method) {
             foreach ($this->getAliasesFor($method) as $alias) {

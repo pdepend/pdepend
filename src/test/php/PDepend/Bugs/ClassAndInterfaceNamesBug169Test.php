@@ -57,7 +57,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsNullAsClassName()
+    public function testParserAcceptsNullAsClassName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -67,7 +67,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsNullAsInterfaceName()
+    public function testParserAcceptsNullAsInterfaceName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -77,7 +77,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsTrueAsClassName()
+    public function testParserAcceptsTrueAsClassName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -87,7 +87,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsTrueAsInterfaceName()
+    public function testParserAcceptsTrueAsInterfaceName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -97,7 +97,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsFalseAsClassName()
+    public function testParserAcceptsFalseAsClassName(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -107,7 +107,7 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserAcceptsFalseAsInterfaceName()
+    public function testParserAcceptsFalseAsInterfaceName(): void
     {
         $this->parseCodeResourceForTest();
     }

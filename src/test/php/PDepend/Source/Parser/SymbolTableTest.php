@@ -56,7 +56,7 @@ class SymbolTableTest extends AbstractTestCase
     /**
      * Tests that no symbol can be added to a symbol table without active scope.
      */
-    public function testCannotAddSymbolToASymbolTableWithoutActiveScope()
+    public function testCannotAddSymbolToASymbolTableWithoutActiveScope(): void
     {
         $this->expectException(
             '\PDepend\Source\Parser\NoActiveScopeException'
@@ -73,7 +73,7 @@ class SymbolTableTest extends AbstractTestCase
     /**
      * Tests that cannot perform lookup on a symbol table without active scope.
      */
-    public function testCannotPerformLookupOnASymbolTableWithoutActiveScope()
+    public function testCannotPerformLookupOnASymbolTableWithoutActiveScope(): void
     {
         $this->expectException(
             '\PDepend\Source\Parser\NoActiveScopeException'
@@ -90,7 +90,7 @@ class SymbolTableTest extends AbstractTestCase
     /**
      * Tests that cannot reset a scope, if there is no active scope.
      */
-    public function testCannotResetWithoutActiveScope()
+    public function testCannotResetWithoutActiveScope(): void
     {
         $this->expectException(
             '\PDepend\Source\Parser\NoActiveScopeException'
@@ -107,7 +107,7 @@ class SymbolTableTest extends AbstractTestCase
     /**
      * Tests that cannot destroy a scope, if there is no active scope.
      */
-    public function testCannotDestroyWithoutActiveScope()
+    public function testCannotDestroyWithoutActiveScope(): void
     {
         $this->expectException(
             '\PDepend\Source\Parser\NoActiveScopeException'
@@ -125,7 +125,7 @@ class SymbolTableTest extends AbstractTestCase
      * Tests that a symbol can be added to a symbol table,
      * and it the key is case-insensitive.
      */
-    public function testCanAdd()
+    public function testCanAdd(): void
     {
         $symbolTable = new SymbolTable();
 
@@ -141,7 +141,7 @@ class SymbolTableTest extends AbstractTestCase
     /**
      * Tests that there may be multiple nested scopes.
      */
-    public function testCanCreateAndAddToSeveralScopes()
+    public function testCanCreateAndAddToSeveralScopes(): void
     {
         $symbolTable = new SymbolTable();
 
@@ -170,7 +170,7 @@ class SymbolTableTest extends AbstractTestCase
     /**
      * Tests that current active scope can be reset.
      */
-    public function testCanResetActiveScope()
+    public function testCanResetActiveScope(): void
     {
         $symbolTable = new SymbolTable();
 

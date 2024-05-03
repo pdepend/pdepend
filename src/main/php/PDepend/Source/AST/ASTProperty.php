@@ -289,11 +289,9 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * Sets the declaring class object.
      *
-     * @return void
-     *
      * @since  0.9.6
      */
-    public function setDeclaringClass(ASTClass $declaringClass)
+    public function setDeclaringClass(ASTClass $declaringClass): void
     {
         $this->declaringClass = $declaringClass;
     }

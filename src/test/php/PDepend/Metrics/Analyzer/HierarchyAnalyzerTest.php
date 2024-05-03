@@ -61,7 +61,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfLeafClasses()
+    public function testCalculatesExpectedNumberOfLeafClasses(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -75,7 +75,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfAbstractClasses()
+    public function testCalculatesExpectedNumberOfAbstractClasses(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -89,7 +89,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfConcreteClasses()
+    public function testCalculatesExpectedNumberOfConcreteClasses(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -103,7 +103,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfRootClasses()
+    public function testCalculatesExpectedNumberOfRootClasses(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -117,7 +117,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses()
+    public function testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -131,7 +131,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIgnoresClassesThatAreNotUserDefined()
+    public function testAnalyzerIgnoresClassesThatAreNotUserDefined(): void
     {
         $class = new ASTClass(null);
 
@@ -148,7 +148,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testGetNodeMetricsForUnknownId()
+    public function testGetNodeMetricsForUnknownId(): void
     {
         $class    = new ASTClass('PDepend');
         $analyzer = $this->createAnalyzer();

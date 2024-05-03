@@ -60,7 +60,7 @@ class CompositeFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCompositeInvokesFirstAcceptInFilterChain()
+    public function testCompositeInvokesFirstAcceptInFilterChain(): void
     {
         $filter0 = new DummyFilter(true);
 
@@ -77,7 +77,7 @@ class CompositeFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue()
+    public function testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue(): void
     {
         $filter0 = new DummyFilter(true);
         $filter1 = new DummyFilter(true);
@@ -96,7 +96,7 @@ class CompositeFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue()
+    public function testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue(): void
     {
         $filter0 = new DummyFilter(false);
         $filter1 = new DummyFilter(true);

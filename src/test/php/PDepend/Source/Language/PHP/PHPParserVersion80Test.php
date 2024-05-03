@@ -62,7 +62,7 @@ class PHPParserVersion80Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testCatchWithoutVariable()
+    public function testCatchWithoutVariable(): void
     {
         $catchStatement = $this->getFirstMethodForTestCase()->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTCatchStatement'
@@ -76,7 +76,7 @@ class PHPParserVersion80Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintStatic()
+    public function testFunctionReturnTypeHintStatic(): void
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
@@ -89,7 +89,7 @@ class PHPParserVersion80Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintNullableStatic()
+    public function testFunctionReturnTypeHintNullableStatic(): void
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
@@ -102,7 +102,7 @@ class PHPParserVersion80Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintStaticWithComments()
+    public function testFunctionReturnTypeHintStaticWithComments(): void
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
@@ -115,7 +115,7 @@ class PHPParserVersion80Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionParameterTypeHintByReferenceVariableArguments()
+    public function testFunctionParameterTypeHintByReferenceVariableArguments(): void
     {
         $parameters = $this->getFirstFunctionForTestCase()->getParameters();
         $parameter = $parameters[0];
@@ -130,7 +130,7 @@ class PHPParserVersion80Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testTrailingCommaInClosureUseList()
+    public function testTrailingCommaInClosureUseList(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -140,14 +140,14 @@ class PHPParserVersion80Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testTrailingCommaInParameterList()
+    public function testTrailingCommaInParameterList(): void
     {
         $method = $this->getFirstMethodForTestCase();
 
         $this->assertCount(2, $method->getParameters());
     }
 
-    public function testNullableTypedProperties()
+    public function testNullableTypedProperties(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();

@@ -52,7 +52,7 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFunctionReturnType()
+    public function testFunctionReturnType(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -63,7 +63,7 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testMethodReturnType()
+    public function testMethodReturnType(): void
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
@@ -74,7 +74,7 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testClosureReturnType()
+    public function testClosureReturnType(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 

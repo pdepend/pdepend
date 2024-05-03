@@ -59,7 +59,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithStringIdentifier()
+    public function testInstanceOfExpressionGraphWithStringIdentifier(): void
     {
         $this->assertInstanceOfGraphStatic(
             $this->parseCodeResourceForTest()
@@ -75,7 +75,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier()
+    public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier(): void
     {
         $this->assertInstanceOfGraphStatic(
             $this->parseCodeResourceForTest()
@@ -91,7 +91,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier()
+    public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier(): void
     {
         $this->assertInstanceOfGraphStatic(
             $this->parseCodeResourceForTest()
@@ -107,7 +107,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier()
+    public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier(): void
     {
         $this->assertInstanceOfGraphStatic(
             $this->parseCodeResourceForTest()
@@ -123,7 +123,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithStdClass()
+    public function testInstanceOfExpressionGraphWithStdClass(): void
     {
         $this->assertInstanceOfGraphStatic(
             $this->parseCodeResourceForTest()
@@ -139,7 +139,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithPHPIncompleteClass()
+    public function testInstanceOfExpressionGraphWithPHPIncompleteClass(): void
     {
         $this->assertInstanceOfGraphStatic(
             $this->parseCodeResourceForTest()
@@ -155,7 +155,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testInstanceOfExpressionGraphWithStaticProperty()
+    public function testInstanceOfExpressionGraphWithStaticProperty(): void
     {
         $this->assertInstanceOfGraphProperty(
             $this->parseCodeResourceForTest()
@@ -174,7 +174,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    protected function assertInstanceOfGraphStatic($parent, $image)
+    protected function assertInstanceOfGraphStatic($parent, $image): void
     {
         $this->assertInstanceOfGraph(
             $parent,
@@ -191,7 +191,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    protected function assertInstanceOfGraphProperty($parent, $image)
+    protected function assertInstanceOfGraphProperty($parent, $image): void
     {
         $this->assertInstanceOfGraph(
             $parent,
@@ -209,7 +209,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    protected function assertInstanceOfGraph($parent, $image, $type)
+    protected function assertInstanceOfGraph($parent, $image, $type): void
     {
         $instanceOf = $parent->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTInstanceOfExpression'

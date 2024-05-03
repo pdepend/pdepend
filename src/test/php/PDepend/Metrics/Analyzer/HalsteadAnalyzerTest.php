@@ -80,7 +80,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testGetNodeMetricsReturnsNothingForUnknownNode()
+    public function testGetNodeMetricsReturnsNothingForUnknownNode(): void
     {
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
@@ -94,7 +94,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateFunctionBaseMeasures()
+    public function testCalculateFunctionBaseMeasures(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -123,7 +123,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateFunctionMeasures()
+    public function testCalculateFunctionMeasures(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -173,7 +173,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateMethodBaseMeasures()
+    public function testCalculateMethodBaseMeasures(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -205,7 +205,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateMethodMeasures()
+    public function testCalculateMethodMeasures(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -257,7 +257,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
+    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
@@ -281,7 +281,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
+    public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();

@@ -61,7 +61,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testShiftLeftExpressionReturnsExpectedImage()
+    public function testShiftLeftExpressionReturnsExpectedImage(): void
     {
         $expr = new \PDepend\Source\AST\ASTShiftLeftExpression();
         $this->assertEquals('<<', $expr->getImage());
@@ -88,7 +88,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedStartLine($expr)
+    public function testShiftLeftExpressionHasExpectedStartLine($expr): void
     {
         $this->assertEquals(6, $expr->getStartLine());
     }
@@ -101,7 +101,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedStartColumn($expr)
+    public function testShiftLeftExpressionHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(13, $expr->getStartColumn());
     }
@@ -114,7 +114,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedEndLine($expr)
+    public function testShiftLeftExpressionHasExpectedEndLine($expr): void
     {
         $this->assertEquals(6, $expr->getEndLine());
     }
@@ -127,7 +127,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      * @return void
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedEndColumn($expr)
+    public function testShiftLeftExpressionHasExpectedEndColumn($expr): void
     {
         $this->assertEquals(14, $expr->getEndColumn());
     }

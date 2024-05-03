@@ -61,7 +61,7 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testNewKeyword()
+    public function testNewKeyword(): void
     {
         $namespaces = $this->parseSource('issues/601-new-with-expression.php');
 

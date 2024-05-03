@@ -65,7 +65,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTParameter
      */
-    public function testParameterContainsStartLineOfFirstToken()
+    public function testParameterContainsStartLineOfFirstToken(): void
     {
         $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -82,7 +82,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTParameter
      */
-    public function testParameterContainsEndLineOfLastToken()
+    public function testParameterContainsEndLineOfLastToken(): void
     {
         $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -99,7 +99,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testParserStoresExpectedFunctionTokens()
+    public function testParserStoresExpectedFunctionTokens(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -127,7 +127,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testParserStoresExpectedFunctionTokensWithParameters()
+    public function testParserStoresExpectedFunctionTokensWithParameters(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -164,7 +164,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testFunctionContainsStartLineOfFirstToken()
+    public function testFunctionContainsStartLineOfFirstToken(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -183,7 +183,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testFunctionContainsEndLineOfLastToken()
+    public function testFunctionContainsEndLineOfLastToken(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -202,7 +202,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testParserStoresExpectedMethodTokens()
+    public function testParserStoresExpectedMethodTokens(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -233,7 +233,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testParserStoresExpectedMethodTokensWithStaticModifier()
+    public function testParserStoresExpectedMethodTokensWithStaticModifier(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -265,7 +265,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers()
+    public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -298,7 +298,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testMethodContainsStartLineOfFirstToken()
+    public function testMethodContainsStartLineOfFirstToken(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -319,7 +319,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testMethodContainsEndLineOfLastToken()
+    public function testMethodContainsEndLineOfLastToken(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -340,7 +340,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTClass
      */
-    public function testParserStoresExpectedClassTokens()
+    public function testParserStoresExpectedClassTokens(): void
     {
         $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -370,7 +370,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTClass
      */
-    public function testParserStoresExpectedClassTokensWithFinalModifier()
+    public function testParserStoresExpectedClassTokensWithFinalModifier(): void
     {
         $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -401,7 +401,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTClass
      */
-    public function testParserStoresExpectedClassTokensWithAbstractModifier()
+    public function testParserStoresExpectedClassTokensWithAbstractModifier(): void
     {
         $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -432,7 +432,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTInterface
      */
-    public function testParserStoresExpectedInterfaceTokens()
+    public function testParserStoresExpectedInterfaceTokens(): void
     {
         $interface = $this->parseTestCaseSource(__METHOD__)
             ->current()

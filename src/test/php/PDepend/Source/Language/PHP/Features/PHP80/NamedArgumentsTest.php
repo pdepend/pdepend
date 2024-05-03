@@ -58,7 +58,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testNamedArguments()
+    public function testNamedArguments(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -80,7 +80,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $this->assertSame("thousands_separator: ' '", $argument->getImage());
     }
 
-    public function testNamedArgumentsWithArrays()
+    public function testNamedArgumentsWithArrays(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -101,7 +101,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
     }
 
-    public function testNamedArgumentsWithDefaultName()
+    public function testNamedArgumentsWithDefaultName(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -116,7 +116,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $this->assertSame("default: 'bar'", $children[0]->getImage());
     }
 
-    public function testNamedArgumentsInInstances()
+    public function testNamedArgumentsInInstances(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -137,7 +137,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
     }
 
-    public function testNamedArgumentsFindVariable()
+    public function testNamedArgumentsFindVariable(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -165,7 +165,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         );
     }
 
-    public function testNamedArgumentsFindDirectVariable()
+    public function testNamedArgumentsFindDirectVariable(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();

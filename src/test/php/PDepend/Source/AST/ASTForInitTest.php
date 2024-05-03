@@ -59,7 +59,7 @@ class ASTForInitTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForInitHasExpectedStartLine()
+    public function testForInitHasExpectedStartLine(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
         $this->assertEquals(4, $init->getStartLine());
@@ -70,7 +70,7 @@ class ASTForInitTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForInitHasExpectedStartColumn()
+    public function testForInitHasExpectedStartColumn(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
         $this->assertEquals(10, $init->getStartColumn());
@@ -81,7 +81,7 @@ class ASTForInitTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForInitHasExpectedEndLine()
+    public function testForInitHasExpectedEndLine(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
         $this->assertEquals(4, $init->getEndLine());
@@ -92,7 +92,7 @@ class ASTForInitTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testForInitHasExpectedEndColumn()
+    public function testForInitHasExpectedEndColumn(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
         $this->assertEquals(24, $init->getEndColumn());

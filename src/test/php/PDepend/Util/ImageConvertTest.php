@@ -60,7 +60,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConvertMakesCopyForSameMimeType()
+    public function testConvertMakesCopyForSameMimeType(): void
     {
         $input  = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend.out') . '.svg';
@@ -74,7 +74,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConvertWithImageMagickExtension()
+    public function testConvertWithImageMagickExtension(): void
     {
         $this->requireImagick();
 
@@ -90,7 +90,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConvertAppendDefaultFileExtensionAsFallback()
+    public function testConvertAppendDefaultFileExtensionAsFallback(): void
     {
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');
@@ -108,7 +108,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions()
+    public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions(): void
     {
         $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
         $this->assertEquals(25, substr_count($svg, 'font-family:Arial'));
@@ -120,7 +120,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConvertRecognizesFontFamilyInConfiguration()
+    public function testConvertRecognizesFontFamilyInConfiguration(): void
     {
         $settings                           = new \stdClass();
         $settings->imageConvert             = new \stdClass();
@@ -143,7 +143,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions()
+    public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions(): void
     {
         $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
         $this->assertEquals(25, substr_count($svg, 'font-size:11px'));
@@ -155,7 +155,7 @@ class ImageConvertTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConvertRecognizesFontSizeInConfiguration()
+    public function testConvertRecognizesFontSizeInConfiguration(): void
     {
         $settings                         = new \stdClass();
         $settings->imageConvert           = new \stdClass();

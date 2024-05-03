@@ -65,7 +65,7 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateGeneratorWithValidIdentifier()
+    public function testCreateGeneratorWithValidIdentifier(): void
     {
         $factory = $this->createReportGeneratorFactory();
         $generator = $factory->createGenerator('summary-xml', 'pdepend.xml');
@@ -79,7 +79,7 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateGeneratorSingletonBehaviour()
+    public function testCreateGeneratorSingletonBehaviour(): void
     {
         $factory = $this->createReportGeneratorFactory();
         $generator1 = $factory->createGenerator('summary-xml', 'pdepend1.xml');
@@ -95,7 +95,7 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateGeneratorWithInvalidIdentifierFail()
+    public function testCreateGeneratorWithInvalidIdentifierFail(): void
     {
         $this->expectException(
             '\RuntimeException'

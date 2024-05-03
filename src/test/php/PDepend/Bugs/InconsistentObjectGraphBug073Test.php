@@ -64,7 +64,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage()
+    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -88,7 +88,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage()
+    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -109,7 +109,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage()
+    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -135,7 +135,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage()
+    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -156,7 +156,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage()
+    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -181,7 +181,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage()
+    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -210,7 +210,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace()
+    public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -239,7 +239,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace()
+    public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -259,7 +259,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithPackage()
+    public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithPackage(): void
     {
         $this->createSummaryXmlForCallingTest();
     }
@@ -269,7 +269,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithoutPackage()
+    public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithoutPackage(): void
     {
         $this->createSummaryXmlForCallingTest();
     }
@@ -279,7 +279,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithPackage()
+    public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithPackage(): void
     {
         $this->createSummaryXmlForCallingTest();
     }
@@ -289,7 +289,7 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithoutPackage()
+    public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithoutPackage(): void
     {
         $this->createSummaryXmlForCallingTest();
     }

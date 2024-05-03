@@ -63,7 +63,7 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTe
      *
      * @return void
      */
-    public function testAnalyzerReturnsExpectedNPathValue()
+    public function testAnalyzerReturnsExpectedNPathValue(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $function = $namespaces->current()

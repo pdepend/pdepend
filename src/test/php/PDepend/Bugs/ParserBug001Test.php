@@ -59,7 +59,7 @@ class ParserBug001Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserStaticCall()
+    public function testParserStaticCall(): void
     {
         $method = $this->parseCodeResourceForTest()
             ->current()

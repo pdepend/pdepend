@@ -61,7 +61,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreCorrectlyLookedUp()
+    public function testNamespacesAreCorrectlyLookedUp(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
@@ -88,7 +88,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces()
+    public function testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
@@ -115,7 +115,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces()
+    public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();
@@ -150,7 +150,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces()
+    public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();

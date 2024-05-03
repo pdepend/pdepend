@@ -56,7 +56,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testMatchExpression()
+    public function testMatchExpression(): void
     {
         $this->checkMatchExpression();
     }
@@ -64,7 +64,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testMatchExpressionWithNamespace()
+    public function testMatchExpressionWithNamespace(): void
     {
         $this->checkMatchExpression('Baz');
     }
@@ -72,7 +72,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    private function checkMatchExpression($namespacePrefix = null)
+    private function checkMatchExpression($namespacePrefix = null): void
     {
         $matchImage = implode('\\', array_filter([$namespacePrefix, 'match']));
 
@@ -154,7 +154,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testMatchExpressionWithMultipleKeyExpressions()
+    public function testMatchExpressionWithMultipleKeyExpressions(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -234,7 +234,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testMatchExpressionWithTooManyArguments()
+    public function testMatchExpressionWithTooManyArguments(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ,, line: 5, col: 25');

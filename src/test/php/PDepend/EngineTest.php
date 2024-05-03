@@ -61,7 +61,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddInvalidDirectoryFail()
+    public function testAddInvalidDirectoryFail(): void
     {
         $dir = __DIR__ . '/foobar';
         $msg = "Invalid directory '{$dir}' added.";
@@ -78,7 +78,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddDirectory()
+    public function testAddDirectory(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -89,7 +89,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAnalyzeMethodReturnsAnIterator()
+    public function testAnalyzeMethodReturnsAnIterator(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -104,7 +104,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAnalyze()
+    public function testAnalyze(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -131,7 +131,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAnalyzeThrowsAnExceptionForNoSourceDirectory()
+    public function testAnalyzeThrowsAnExceptionForNoSourceDirectory(): void
     {
         $engine = $this->createEngineFixture();
         $this->expectException('RuntimeException');
@@ -144,7 +144,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists()
+    public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -159,7 +159,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAnalyzeSetsWithoutAnnotations()
+    public function testAnalyzeSetsWithoutAnnotations(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -183,7 +183,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCountClasses()
+    public function testCountClasses(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -199,7 +199,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCountClassesWithoutAnalyzeFail()
+    public function testCountClassesWithoutAnalyzeFail(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -219,7 +219,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCountNamespaces()
+    public function testCountNamespaces(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -234,7 +234,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCountNamespacesWithoutAnalyzeFail()
+    public function testCountNamespacesWithoutAnalyzeFail(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -254,7 +254,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNamespace()
+    public function testGetNamespace(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -279,7 +279,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNamespaceWithoutAnalyzeFail()
+    public function testGetNamespaceWithoutAnalyzeFail(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -299,7 +299,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNamespacesWithUnknownPackageFail()
+    public function testGetNamespacesWithUnknownPackageFail(): void
     {
         $this->expectException(
             'OutOfBoundsException'
@@ -321,7 +321,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNamespaces()
+    public function testGetNamespaces(): void
     {
         $engine = $this->createEngineFixture();
         $engine->addDirectory($this->createCodeResourceUriForTest());
@@ -340,7 +340,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNamespacesWithoutAnalyzeFail()
+    public function testGetNamespacesWithoutAnalyzeFail(): void
     {
         $this->expectException(
             'RuntimeException'
@@ -376,7 +376,7 @@ class EngineTest extends AbstractTestCase
      * @return void
      * @depends testSupportForSingleFileIssue90
      */
-    public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace)
+    public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace): void
     {
         $this->assertCount(1, $namespace->getClasses());
     }
@@ -386,7 +386,7 @@ class EngineTest extends AbstractTestCase
      * @return void
      * @depends testSupportForSingleFileIssue90
      */
-    public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace)
+    public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace): void
     {
         $this->assertCount(1, $namespace->getInterfaces());
     }
@@ -397,7 +397,7 @@ class EngineTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists()
+    public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $filePath = $this->createRunResourceURI('pdepend_');

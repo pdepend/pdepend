@@ -59,7 +59,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGotoStatementHasExpectedStartLine()
+    public function testGotoStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
         $this->assertSame(8, $stmt->getStartLine());
@@ -70,7 +70,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGotoStatementHasExpectedStartColumn()
+    public function testGotoStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
         $this->assertSame(9, $stmt->getStartColumn());
@@ -81,7 +81,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGotoStatementHasExpectedEndLine()
+    public function testGotoStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
         $this->assertSame(8, $stmt->getEndLine());
@@ -92,7 +92,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGotoStatementHasExpectedEndColumn()
+    public function testGotoStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
         $this->assertSame(23, $stmt->getEndColumn());

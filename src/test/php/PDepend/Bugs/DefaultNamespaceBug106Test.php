@@ -58,7 +58,7 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
+    public function testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile(): void
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
         $this->assertCount(0, $sxml->xpath('//class[@name="RuntimeException"]'));
@@ -69,7 +69,7 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile()
+    public function testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile(): void
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
         $this->assertCount(0, $sxml->xpath('//class[@name="RuntimeException"]'));

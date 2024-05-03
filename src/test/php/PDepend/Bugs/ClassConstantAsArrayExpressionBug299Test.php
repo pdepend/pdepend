@@ -60,7 +60,7 @@ class ClassConstantAsArrayExpressionBug299Test extends AbstractRegressionTestCas
      *
      * @return void
      */
-    public function testConstantArrayConcatenation()
+    public function testConstantArrayConcatenation(): void
     {
         $this->parseCodeResourceForTest();
     }

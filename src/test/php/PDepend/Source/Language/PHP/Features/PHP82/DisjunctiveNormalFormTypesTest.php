@@ -52,7 +52,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testReturnParenthesesFirst()
+    public function testReturnParenthesesFirst(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
@@ -71,7 +71,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testReturnParenthesesLast()
+    public function testReturnParenthesesLast(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
@@ -93,7 +93,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testReturnNestedParentheses()
+    public function testReturnNestedParentheses(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
@@ -105,7 +105,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testParameterParenthesesFirst()
+    public function testParameterParenthesesFirst(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $parameters = $method->getParameters();
@@ -130,7 +130,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testParameterParenthesesLast()
+    public function testParameterParenthesesLast(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $parameters = $method->getParameters();
@@ -155,7 +155,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testParameterNestedParentheses()
+    public function testParameterNestedParentheses(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $parameters = $method->getParameters();

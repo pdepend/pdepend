@@ -58,7 +58,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testIntersectionTypes()
+    public function testIntersectionTypes(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -80,7 +80,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testIntersectionTypesWithByReference()
+    public function testIntersectionTypesWithByReference(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -97,7 +97,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testIntersectionTypesAsReturn()
+    public function testIntersectionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -112,7 +112,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
 
     /**
      */
-    public function testIntersectionTypesCantBeMixedWithUnionTypes()
+    public function testIntersectionTypesCantBeMixedWithUnionTypes(): void
     {
         $this->expectException(\PDepend\Source\Parser\ParserException::class);
         $this->expectExceptionMessage('Unexpected token');
@@ -122,7 +122,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
 
     /**
      */
-    public function testIntersectionTypesCantBeScalar()
+    public function testIntersectionTypesCantBeScalar(): void
     {
         $this->expectException(\PDepend\Source\Parser\ParserException::class);
         $this->expectExceptionMessage('int can not be used in an intersection type');

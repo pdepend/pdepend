@@ -67,7 +67,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
      * @return void
      * @dataProvider getLoggerClassNames
      */
-    public function testLogFileIsCreatedForUnstructuredCode($className, $extension)
+    public function testLogFileIsCreatedForUnstructuredCode($className, $extension): void
     {
         $file = $this->createRunResourceURI() . '.' . $extension;
 

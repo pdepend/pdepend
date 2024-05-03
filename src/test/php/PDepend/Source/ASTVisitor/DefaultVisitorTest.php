@@ -64,7 +64,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testDefaultVisitOrder()
+    public function testDefaultVisitOrder(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -100,7 +100,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorVisitsFunctionParameter()
+    public function testVisitorVisitsFunctionParameter(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -118,7 +118,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorVisitsMethodParameter()
+    public function testVisitorVisitsMethodParameter(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -136,7 +136,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorInvokesStartVisitParameterOnListener()
+    public function testVisitorInvokesStartVisitParameterOnListener(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -158,7 +158,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorInvokesEndVisitParameterOnListener()
+    public function testVisitorInvokesEndVisitParameterOnListener(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -180,7 +180,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorInvokesStartVisitInterfaceOnListener()
+    public function testVisitorInvokesStartVisitInterfaceOnListener(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -202,7 +202,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorInvokesEndVisitInterfaceOnListener()
+    public function testVisitorInvokesEndVisitInterfaceOnListener(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -224,7 +224,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorInvokesStartVisitPropertyOnListener()
+    public function testVisitorInvokesStartVisitPropertyOnListener(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -246,7 +246,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testVisitorInvokesEndVisitPropertyOnListener()
+    public function testVisitorInvokesEndVisitPropertyOnListener(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -269,7 +269,7 @@ class DefaultVisitorTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testVisitorVisitsTrait()
+    public function testVisitorVisitsTrait(): void
     {
         $namespace = new ASTNamespace('MyPackage');
         $namespace->addType(new ASTTrait('MyTraitOne'))
@@ -292,7 +292,7 @@ class DefaultVisitorTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testVisitorInvokesAcceptOnTraitMethods()
+    public function testVisitorInvokesAcceptOnTraitMethods(): void
     {
         $trait = $this->createTraitFixture();
         $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
@@ -312,7 +312,7 @@ class DefaultVisitorTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testVisitorInvokesStartTraitOnListener()
+    public function testVisitorInvokesStartTraitOnListener(): void
     {
         $trait = $this->createTraitFixture();
         $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
@@ -339,7 +339,7 @@ class DefaultVisitorTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testVisitorInvokesEndTraitOnListener()
+    public function testVisitorInvokesEndTraitOnListener(): void
     {
         $trait = $this->createTraitFixture();
         $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
@@ -364,7 +364,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetVisitListenersReturnsIterator()
+    public function testGetVisitListenersReturnsIterator(): void
     {
         $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
         $this->assertInstanceOf('Iterator', $visitor->getVisitListeners());
@@ -375,7 +375,7 @@ class DefaultVisitorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetVisitListenersContainsAddedListener()
+    public function testGetVisitListenersContainsAddedListener(): void
     {
         $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
 

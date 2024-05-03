@@ -52,7 +52,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallable()
+    public function testFirstClassCallable(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
@@ -61,7 +61,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallableWithComments()
+    public function testFirstClassCallableWithComments(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
@@ -70,7 +70,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallableObjectMethod()
+    public function testFirstClassCallableObjectMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
@@ -79,7 +79,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallableDynamicMethod()
+    public function testFirstClassCallableDynamicMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
@@ -88,7 +88,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallableStaticMethod()
+    public function testFirstClassCallableStaticMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
@@ -97,7 +97,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallableDynamicStaticMethod()
+    public function testFirstClassCallableDynamicStaticMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());
@@ -106,7 +106,7 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallableInvocableObject()
+    public function testFirstClassCallableInvocableObject(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertTrue($method->getFirstChildOfType('PDepend\Source\AST\ASTArguments')->isVariadicPlaceholder());

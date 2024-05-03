@@ -72,7 +72,7 @@ class PHPParserVersion74Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testTypedProperties()
+    public function testTypedProperties(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -145,7 +145,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         }
     }
 
-    public function testSingleTypedProperty()
+    public function testSingleTypedProperty(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -158,7 +158,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertFalse($field->isPublic());
     }
 
-    public function testTypedPropertiesSyntaxError()
+    public function testTypedPropertiesSyntaxError(): void
     {
         $this->expectException(
             'PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -170,7 +170,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testArrowFunctions()
+    public function testArrowFunctions(): void
     {
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
@@ -213,7 +213,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         ));
     }
 
-    public function testArrowFunctionsWithReturnType()
+    public function testArrowFunctionsWithReturnType(): void
     {
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
@@ -260,12 +260,12 @@ class PHPParserVersion74Test extends AbstractTestCase
         ));
     }
 
-    public function testTypeCovarianceAndArgumentTypeContravariance()
+    public function testTypeCovarianceAndArgumentTypeContravariance(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    public function testNullCoalescingAssignmentOperator()
+    public function testNullCoalescingAssignmentOperator(): void
     {
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
@@ -276,7 +276,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertSame('??=', $assignment->getImage());
     }
 
-    public function testUnpackingInsideArrays()
+    public function testUnpackingInsideArrays(): void
     {
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -312,7 +312,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         ));
     }
 
-    public function testNumericLiteralSeparator()
+    public function testNumericLiteralSeparator(): void
     {
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
@@ -343,7 +343,7 @@ class PHPParserVersion74Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstantArrayConcatenation()
+    public function testConstantArrayConcatenation(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -378,7 +378,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertSame('A', $nodes[1]->getImage());
     }
 
-    public function testReadOnlyNamedImport()
+    public function testReadOnlyNamedImport(): void
     {
         $this->expectException(\OutOfBoundsException::class);
 
@@ -387,7 +387,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     /**
      */
-    public function testCatchWithoutVariable()
+    public function testCatchWithoutVariable(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 8, col: 27');
@@ -397,7 +397,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     /**
      */
-    public function testTrailingCommaInClosureUseListError()
+    public function testTrailingCommaInClosureUseListError(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 5, col: 32');
@@ -407,7 +407,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     /**
      */
-    public function testTrailingCommaInParameterList()
+    public function testTrailingCommaInParameterList(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 43');

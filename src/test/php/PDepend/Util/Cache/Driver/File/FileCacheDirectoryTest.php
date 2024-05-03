@@ -91,7 +91,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreatesNotExistingCacheDirectory()
+    public function testCreatesNotExistingCacheDirectory(): void
     {
         new FileCacheDirectory($this->cacheDir);
         $this->assertFileExists($this->cacheDir);
@@ -102,7 +102,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAddsCacheVersionFileToNewlyCreatedCache()
+    public function testAddsCacheVersionFileToNewlyCreatedCache(): void
     {
         new FileCacheDirectory($this->cacheDir);
         $this->assertFileExists($this->versionFile);
@@ -113,7 +113,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCacheVersionFileContainsExpectedVersionString()
+    public function testCacheVersionFileContainsExpectedVersionString(): void
     {
         new FileCacheDirectory($this->cacheDir);
         $this->assertEquals(
@@ -127,7 +127,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testOverwritesPreviousCacheVersionFileWithActualVersionString()
+    public function testOverwritesPreviousCacheVersionFileWithActualVersionString(): void
     {
         mkdir($this->cacheDir, 0o755, true);
         file_put_contents($this->versionFile, '1234567890');
@@ -144,7 +144,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testDeletesCacheFileIfVersionFileNotExists()
+    public function testDeletesCacheFileIfVersionFileNotExists(): void
     {
         $cacheFile = "{$this->cacheDir}/test.file";
 
@@ -161,7 +161,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testDeletesCacheDirectoryIfVersionFileNotExists()
+    public function testDeletesCacheDirectoryIfVersionFileNotExists(): void
     {
         $cacheDir = "{$this->cacheDir}/test.dir";
 
@@ -177,7 +177,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists()
+    public function testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists(): void
     {
         $cacheDir  = "{$this->cacheDir}/test/dir";
         $cacheFile = "{$this->cacheDir}/test/test.file";
@@ -195,7 +195,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateCacheDirectoryReturnsExpectedSubDirectory()
+    public function testCreateCacheDirectoryReturnsExpectedSubDirectory(): void
     {
         $dir  = new FileCacheDirectory($this->cacheDir);
         $path = $dir->createCacheDirectory('abcdef0123456789');
@@ -208,7 +208,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory()
+    public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory(): void
     {
         $dir = new FileCacheDirectory($this->cacheDir);
         $this->assertFileExists($dir->createCacheDirectory('abcdef0123456789'));

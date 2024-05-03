@@ -71,7 +71,7 @@ class ASTArrayTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArrayGraphForEmptyArrayDefinition()
+    public function testArrayGraphForEmptyArrayDefinition(): void
     {
         $this->assertGraph(
             $this->getFirstArrayInFunction(),
@@ -94,7 +94,7 @@ class ASTArrayTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArrayGraphForEmptyShortArrayDefinition()
+    public function testArrayGraphForEmptyShortArrayDefinition(): void
     {
         $this->assertGraph(
             $this->getFirstArrayInFunction(),
@@ -107,7 +107,7 @@ class ASTArrayTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArrayHasExpectedStartLine()
+    public function testArrayHasExpectedStartLine(): void
     {
         $array = $this->getFirstArrayInFunction();
         $this->assertEquals(4, $array->getStartLine());
@@ -118,7 +118,7 @@ class ASTArrayTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArrayHasExpectedStartColumn()
+    public function testArrayHasExpectedStartColumn(): void
     {
         $array = $this->getFirstArrayInFunction();
         $this->assertEquals(12, $array->getStartColumn());
@@ -129,7 +129,7 @@ class ASTArrayTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArrayHasExpectedEndLine()
+    public function testArrayHasExpectedEndLine(): void
     {
         $array = $this->getFirstArrayInFunction();
         $this->assertEquals(13, $array->getEndLine());
@@ -140,7 +140,7 @@ class ASTArrayTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArrayHasExpectedEndColumn()
+    public function testArrayHasExpectedEndColumn(): void
     {
         $array = $this->getFirstArrayInFunction();
         $this->assertEquals(5, $array->getEndColumn());

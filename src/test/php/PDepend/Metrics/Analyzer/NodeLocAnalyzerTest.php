@@ -81,7 +81,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectFunctionMetrics()
+    public function testAnalyzerCalculatesCorrectFunctionMetrics(): void
     {
         $namespaces  = $this->parseTestCaseSource(__METHOD__);
         $functions = $namespaces->current()
@@ -137,7 +137,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectFunctionFileMetrics()
+    public function testAnalyzerCalculatesCorrectFunctionFileMetrics(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $file     = $namespaces->current()
@@ -165,7 +165,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesClassMethodsIntoNcloc()
+    public function testAnalyzerCalculatesClassMethodsIntoNcloc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
@@ -184,7 +184,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesClassPropertiesIntoNcloc()
+    public function testAnalyzerCalculatesClassPropertiesIntoNcloc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
@@ -203,7 +203,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerNotCalculatesClassPropertiesIntoEloc()
+    public function testAnalyzerNotCalculatesClassPropertiesIntoEloc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
@@ -222,7 +222,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectClassFileMetrics()
+    public function testAnalyzerCalculatesCorrectClassFileMetrics(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $file     = $namespaces->current()
@@ -249,7 +249,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectClassMetrics()
+    public function testAnalyzerCalculatesCorrectClassMetrics(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
@@ -275,7 +275,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectInterfaceFileLoc()
+    public function testAnalyzerCalculatesCorrectInterfaceFileLoc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $file     = $namespaces->current()
@@ -302,7 +302,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectInterfaceLoc()
+    public function testAnalyzerCalculatesCorrectInterfaceLoc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $interface = $namespaces->current()
@@ -328,7 +328,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectProjectMetrics()
+    public function testAnalyzerCalculatesCorrectProjectMetrics(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
 
@@ -352,7 +352,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesElocOfZeroForAbstractMethod()
+    public function testAnalyzerCalculatesElocOfZeroForAbstractMethod(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $method   = $namespaces->current()
@@ -373,7 +373,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesElocOfZeroForInterfaceMethod()
+    public function testAnalyzerCalculatesElocOfZeroForInterfaceMethod(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $method   = $namespaces->current()
@@ -394,7 +394,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesClassConstantsIntoNcloc()
+    public function testAnalyzerCalculatesClassConstantsIntoNcloc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
@@ -413,7 +413,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerNotCalculatesClassConstantsIntoEloc()
+    public function testAnalyzerNotCalculatesClassConstantsIntoEloc(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $class    = $namespaces->current()
@@ -432,7 +432,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedProjectLLocForFileWithInterfaces()
+    public function testCalculatesExpectedProjectLLocForFileWithInterfaces(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -447,7 +447,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedFileMetricsFromCache()
+    public function testAnalyzerRestoresExpectedFileMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $file     = $namespaces->current()
@@ -474,7 +474,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedClassMetricsFromCache()
+    public function testAnalyzerRestoresExpectedClassMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $class    = $namespaces->current()
@@ -500,7 +500,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedInterfaceMetricsFromCache()
+    public function testAnalyzerRestoresExpectedInterfaceMetricsFromCache(): void
     {
         $namespaces  = $this->parseCodeResourceForTest();
         $interface = $namespaces->current()
@@ -526,7 +526,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
+    public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $method   = $namespaces->current()
@@ -554,7 +554,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
+    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $function = $namespaces->current()
@@ -580,7 +580,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedProjectMetricsFromCache()
+    public function testAnalyzerRestoresExpectedProjectMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -602,7 +602,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForReturnStatement()
+    public function testCalculatesExpectedLLocForReturnStatement(): void
     {
         $this->assertEquals(1, $this->calculateFunctionMetric('lloc'));
     }
@@ -612,7 +612,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForIfAndElseIfStatement()
+    public function testCalculatesExpectedLLocForIfAndElseIfStatement(): void
     {
         $this->assertEquals(5, $this->calculateFunctionMetric('lloc'));
     }
@@ -622,7 +622,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForForStatement()
+    public function testCalculatesExpectedLLocForForStatement(): void
     {
         $this->assertEquals(3, $this->calculateFunctionMetric('lloc'));
     }
@@ -632,7 +632,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForSwitchStatement()
+    public function testCalculatesExpectedLLocForSwitchStatement(): void
     {
         $this->assertEquals(7, $this->calculateFunctionMetric('lloc'));
     }
@@ -642,7 +642,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForTryCatchStatement()
+    public function testCalculatesExpectedLLocForTryCatchStatement(): void
     {
         $this->assertEquals(8, $this->calculateFunctionMetric('lloc'));
     }
@@ -652,7 +652,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForForeachStatement()
+    public function testCalculatesExpectedLLocForForeachStatement(): void
     {
         $this->assertEquals(2, $this->calculateFunctionMetric('lloc'));
     }
@@ -662,7 +662,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForWhileStatement()
+    public function testCalculatesExpectedLLocForWhileStatement(): void
     {
         $this->assertEquals(2, $this->calculateFunctionMetric('lloc'));
     }
@@ -672,7 +672,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedLLocForDoWhileStatement()
+    public function testCalculatesExpectedLLocForDoWhileStatement(): void
     {
         $this->assertEquals(3, $this->calculateFunctionMetric('lloc'));
     }
@@ -682,7 +682,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIgnoresFilesWithoutFileName()
+    public function testAnalyzerIgnoresFilesWithoutFileName(): void
     {
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setId(42);

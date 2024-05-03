@@ -61,7 +61,7 @@ class ParameterStringDefaultValueBug103Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringDefaultValueWithEmbeddedExpression()
+    public function testParserHandlesStringDefaultValueWithEmbeddedExpression(): void
     {
         $parameters = $this->parseCodeResourceForTest()
             ->current()

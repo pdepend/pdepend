@@ -63,7 +63,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testTokenizerReturnsExpectedConstantForTraitKeyword()
+    public function testTokenizerReturnsExpectedConstantForTraitKeyword(): void
     {
         $this->assertEquals(
             [
@@ -93,7 +93,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testTokenizerReturnsExpectedConstantForTraitMagicConstant()
+    public function testTokenizerReturnsExpectedConstantForTraitMagicConstant(): void
     {
         $this->assertEquals(
             [
@@ -122,7 +122,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testInternalWithClasses()
+    public function testInternalWithClasses(): void
     {
         $expected = [
             Tokens::T_OPEN_TAG,
@@ -170,7 +170,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testInternalWithMixedContent()
+    public function testInternalWithMixedContent(): void
     {
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
@@ -218,7 +218,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testInternalReturnsBOFTokenForPrevCall()
+    public function testInternalReturnsBOFTokenForPrevCall(): void
     {
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
@@ -231,7 +231,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testInternalWithProceduralCodeAndFunction()
+    public function testInternalWithProceduralCodeAndFunction(): void
     {
         $expected = [
             Tokens::T_OPEN_TAG,
@@ -277,7 +277,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testInternalStaticCallBug01()
+    public function testInternalStaticCallBug01(): void
     {
         $expected = [
             Tokens::T_OPEN_TAG,
@@ -319,7 +319,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testInternalDollarSyntaxBug09()
+    public function testInternalDollarSyntaxBug09(): void
     {
         $expected = [
             Tokens::T_OPEN_TAG,
@@ -353,7 +353,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTokenizerWithInlineHtmlBug24()
+    public function testTokenizerWithInlineHtmlBug24(): void
     {
         if (! ini_get('short_open_tag')) {
             $this->markTestSkipped('Must enable short_open_tag');
@@ -412,7 +412,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88()
+    public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88(): void
     {
         if (! ini_get('short_open_tag')) {
             $this->markTestSkipped('Must enable short_open_tag');
@@ -456,7 +456,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTokenizingShortTagsWithMultipleVariables()
+    public function testTokenizingShortTagsWithMultipleVariables(): void
     {
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
@@ -493,7 +493,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88()
+    public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88(): void
     {
         $tokenizer  = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
@@ -534,7 +534,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens()
+    public function testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens(): void
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
@@ -563,7 +563,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression()
+    public function testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression(): void
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
@@ -591,7 +591,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString()
+    public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString(): void
     {
         $expected = [
             Tokens::T_OPEN_TAG,

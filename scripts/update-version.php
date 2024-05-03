@@ -97,7 +97,7 @@ class CacheVersionUpdater
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $checksum = '';
 
@@ -178,7 +178,7 @@ class CacheVersionUpdater
      * @param array $args Cli arguments.
      * @return void
      */
-    public static function main(array $args)
+    public static function main(array $args): void
     {
         $updater = new CacheVersionUpdater();
         $updater->run();

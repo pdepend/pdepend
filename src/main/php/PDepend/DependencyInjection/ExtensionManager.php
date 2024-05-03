@@ -63,10 +63,8 @@ class ExtensionManager
      * @param class-string<Extension> $className
      *
      * @throws RuntimeException
-     *
-     * @return void
      */
-    public function activateExtension($className)
+    public function activateExtension($className): void
     {
         if (!class_exists($className)) {
             throw new RuntimeException(

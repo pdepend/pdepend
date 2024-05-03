@@ -65,10 +65,8 @@ class ASTHeredoc extends ASTExpression
      * Sets the delimiter used for this heredoc instance.
      *
      * @param string $delimiter The heredoc delimiter.
-     *
-     * @return void
      */
-    public function setDelimiter($delimiter)
+    public function setDelimiter($delimiter): void
     {
         $this->delimiter = $delimiter;
     }

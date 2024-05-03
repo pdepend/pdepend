@@ -94,10 +94,8 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         $this->fireStartAnalyzer();
 

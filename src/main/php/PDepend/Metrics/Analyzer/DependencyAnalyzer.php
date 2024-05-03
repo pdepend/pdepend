@@ -133,10 +133,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
@@ -229,10 +227,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -246,10 +242,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 
@@ -266,10 +260,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -278,10 +270,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits an interface node.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
@@ -291,10 +281,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Generic visit method for classes and interfaces. Both visit methods
      * delegate calls to this method.
-     *
-     * @return void
      */
-    protected function visitType(AbstractASTClassOrInterface $type)
+    protected function visitType(AbstractASTClassOrInterface $type): void
     {
         $id = $type->getNamespace()->getId();
 
@@ -323,10 +311,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Collects the dependencies between the two given namespaces.
-     *
-     * @return void
      */
-    private function collectDependencies(ASTNamespace $namespaceA, ASTNamespace $namespaceB)
+    private function collectDependencies(ASTNamespace $namespaceA, ASTNamespace $namespaceB): void
     {
         $idA = $namespaceA->getId();
         $idB = $namespaceB->getId();
@@ -346,10 +332,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Initializes the node metric record for the given <b>$namespace</b>.
-     *
-     * @return void
      */
-    protected function initNamespaceMetric(ASTNamespace $namespace)
+    protected function initNamespaceMetric(ASTNamespace $namespace): void
     {
         $id = $namespace->getId();
 
@@ -371,10 +355,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Post processes all analyzed nodes.
-     *
-     * @return void
      */
-    protected function postProcess()
+    protected function postProcess(): void
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
             $this->afferentNodes[$id] = [];
@@ -401,10 +383,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Calculates the abstractness for all analyzed nodes.
-     *
-     * @return void
      */
-    protected function calculateAbstractness()
+    protected function calculateAbstractness(): void
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
             if ($metrics[self::M_NUMBER_OF_CLASSES] !== 0) {
@@ -418,10 +398,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Calculates the instability for all analyzed nodes.
-     *
-     * @return void
      */
-    protected function calculateInstability()
+    protected function calculateInstability(): void
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
             // Count total incoming and outgoing dependencies
@@ -440,10 +418,8 @@ class DependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Calculates the distance to an optimal value.
-     *
-     * @return void
      */
-    protected function calculateDistance()
+    protected function calculateDistance(): void
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
             $this->nodeMetrics[$id][self::M_DISTANCE] = abs(

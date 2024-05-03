@@ -54,7 +54,7 @@ class FirstClassCallableSyntaxTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFirstClassCallable()
+    public function testFirstClassCallable(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();

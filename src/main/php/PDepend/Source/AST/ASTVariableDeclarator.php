@@ -76,10 +76,8 @@ class ASTVariableDeclarator extends ASTExpression
 
     /**
      * Sets the declared default value for this variable node.
-     *
-     * @return void
      */
-    public function setValue(ASTValue $value)
+    public function setValue(ASTValue $value): void
     {
         $this->value = $value;
     }

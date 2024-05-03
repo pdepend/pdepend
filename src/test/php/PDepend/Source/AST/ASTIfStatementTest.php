@@ -59,7 +59,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHasElseMethodReturnsFalseByDefault()
+    public function testHasElseMethodReturnsFalseByDefault(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertFalse($stmt->hasElse());
@@ -70,7 +70,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHasElseMethodReturnsTrueWhenElseIfBranchExists()
+    public function testHasElseMethodReturnsTrueWhenElseIfBranchExists(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertTrue($stmt->hasElse());
@@ -81,7 +81,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists()
+    public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertTrue($stmt->hasElse());
@@ -92,7 +92,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testHasElseMethodReturnsTrueWhenElseBranchExists()
+    public function testHasElseMethodReturnsTrueWhenElseBranchExists(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertTrue($stmt->hasElse());
@@ -103,7 +103,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementGraphWithBooleanExpressions()
+    public function testIfStatementGraphWithBooleanExpressions(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertCount(2, $stmt->getChildren());
@@ -114,7 +114,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFirstChildOfIfStatementIsInstanceOfExpression()
+    public function testFirstChildOfIfStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
@@ -125,7 +125,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSecondChildOfIfStatementIsInstanceOfScopeStatement()
+    public function testSecondChildOfIfStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
@@ -136,7 +136,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody()
+    public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -148,7 +148,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementHasExpectedStartLine()
+    public function testIfStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
@@ -159,7 +159,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementHasExpectedStartColumn()
+    public function testIfStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
@@ -170,7 +170,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementHasExpectedEndLine()
+    public function testIfStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(6, $stmt->getEndLine());
@@ -181,7 +181,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementHasExpectedEndColumn()
+    public function testIfStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
@@ -192,7 +192,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementAlternativeScopeHasExpectedStartLine()
+    public function testIfStatementAlternativeScopeHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
@@ -203,7 +203,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementAlternativeScopeHasExpectedStartColumn()
+    public function testIfStatementAlternativeScopeHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
@@ -214,7 +214,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementAlternativeScopeHasExpectedEndLine()
+    public function testIfStatementAlternativeScopeHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(10, $stmt->getEndLine());
@@ -225,7 +225,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementAlternativeScopeHasExpectedEndColumn()
+    public function testIfStatementAlternativeScopeHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(9, $stmt->getEndColumn());
@@ -236,7 +236,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfElseStatementAlternativeScopeHasExpectedStartLine()
+    public function testIfElseStatementAlternativeScopeHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(4, $stmt->getStartLine());
@@ -247,7 +247,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfElseStatementAlternativeScopeHasExpectedStartColumn()
+    public function testIfElseStatementAlternativeScopeHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getStartColumn());
@@ -258,7 +258,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfElseStatementAlternativeScopeHasExpectedEndLine()
+    public function testIfElseStatementAlternativeScopeHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(8, $stmt->getEndLine());
@@ -269,7 +269,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfElseStatementAlternativeScopeHasExpectedEndColumn()
+    public function testIfElseStatementAlternativeScopeHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(10, $stmt->getEndColumn());
@@ -280,7 +280,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testElseStatementAlternativeScopeHasExpectedStartLine()
+    public function testElseStatementAlternativeScopeHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__)->getChild(2);
         $this->assertEquals(7, $stmt->getStartLine());
@@ -291,7 +291,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testElseStatementAlternativeScopeHasExpectedStartColumn()
+    public function testElseStatementAlternativeScopeHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__)->getChild(2);
         $this->assertEquals(13, $stmt->getStartColumn());
@@ -302,7 +302,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testElseStatementAlternativeScopeHasExpectedEndLine()
+    public function testElseStatementAlternativeScopeHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__)->getChild(2);
         $this->assertEquals(10, $stmt->getEndLine());
@@ -313,7 +313,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testElseStatementAlternativeScopeHasExpectedEndColumn()
+    public function testElseStatementAlternativeScopeHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__)->getChild(2);
         $this->assertEquals(17, $stmt->getEndColumn());
@@ -324,7 +324,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementTerminatedByPhpCloseTag()
+    public function testIfStatementTerminatedByPhpCloseTag(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertEquals(9, $stmt->getEndColumn());
@@ -335,7 +335,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIfStatementWithElseContainsExpectedNumberOfChildNodes()
+    public function testIfStatementWithElseContainsExpectedNumberOfChildNodes(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertCount(3, $stmt->getChildren());
@@ -346,7 +346,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse()
+    public function testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
@@ -357,7 +357,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf()
+    public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIfStatement', $stmt->getChild(2));

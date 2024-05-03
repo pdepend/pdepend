@@ -109,11 +109,9 @@ class ASTFormalParameter extends AbstractASTNode
 
     /**
      * This method can be used to mark this parameter as passed by reference.
-     *
-     * @return void
     @since 2.0.7
      */
-    public function setVariableArgList()
+    public function setVariableArgList(): void
     {
         $this->setMetadataBoolean(6, true);
     }
@@ -131,10 +129,8 @@ class ASTFormalParameter extends AbstractASTNode
 
     /**
      * This method can be used to mark this parameter as passed by reference.
-     *
-     * @return void
      */
-    public function setPassedByReference()
+    public function setPassedByReference(): void
     {
         $this->setMetadataBoolean(5, true);
     }
@@ -176,11 +172,9 @@ class ASTFormalParameter extends AbstractASTNode
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
      *
-     * @return void
-     *
      * @since  0.9.4
      */
-    public function setModifiers($modifiers)
+    public function setModifiers($modifiers): void
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(

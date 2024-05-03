@@ -59,7 +59,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $label = new \PDepend\Source\AST\ASTSwitchLabel();
         $this->assertEquals(
@@ -79,7 +79,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDefaultFlagIsSetOnDefaultLabel()
+    public function testDefaultFlagIsSetOnDefaultLabel(): void
     {
         $label = $this->getFirstSwitchLabelInFunction();
         $this->assertTrue($label->isDefault());
@@ -91,7 +91,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDefaultFlagIsNotSetOnCaseLabel()
+    public function testDefaultFlagIsNotSetOnCaseLabel(): void
     {
         $label = $this->getFirstSwitchLabelInFunction();
         $this->assertFalse($label->isDefault());
@@ -119,7 +119,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedStartLine($label)
+    public function testSwitchLabelHasExpectedStartLine($label): void
     {
         $this->assertEquals(6, $label->getStartLine());
     }
@@ -132,7 +132,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedStartColumn($label)
+    public function testSwitchLabelHasExpectedStartColumn($label): void
     {
         $this->assertEquals(9, $label->getStartColumn());
     }
@@ -145,7 +145,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedEndLine($label)
+    public function testSwitchLabelHasExpectedEndLine($label): void
     {
         $this->assertEquals(7, $label->getEndLine());
     }
@@ -158,7 +158,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedEndColumn($label)
+    public function testSwitchLabelHasExpectedEndColumn($label): void
     {
         $this->assertEquals(18, $label->getEndColumn());
     }
@@ -168,7 +168,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchLabelCanBeTerminatedWithSemicolon()
+    public function testSwitchLabelCanBeTerminatedWithSemicolon(): void
     {
         $this->getFirstSwitchLabelInFunction();
     }
@@ -178,7 +178,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchLabelWithNestedSwitchStatementHasExpectedChildren()
+    public function testSwitchLabelWithNestedSwitchStatementHasExpectedChildren(): void
     {
         $label = $this->getFirstSwitchLabelInFunction();
 
@@ -218,7 +218,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
-    public function testSwitchLabelWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label)
+    public function testSwitchLabelWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label): void
     {
         $this->assertSame(6, $label->getStartLine());
     }
@@ -231,7 +231,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
-    public function testSwitchLabelWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label)
+    public function testSwitchLabelWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label): void
     {
         $this->assertSame(9, $label->getEndLine());
     }
@@ -244,7 +244,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
-    public function testSwitchLabelWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label)
+    public function testSwitchLabelWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label): void
     {
         $this->assertSame(7, $label->getStartColumn());
     }
@@ -257,7 +257,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
-    public function testSwitchLabelWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label)
+    public function testSwitchLabelWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label): void
     {
         $this->assertSame(5, $label->getEndColumn());
     }
@@ -284,7 +284,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedStartLine($label)
+    public function testSwitchLabelDefaultHasExpectedStartLine($label): void
     {
         $this->assertEquals(6, $label->getStartLine());
     }
@@ -297,7 +297,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedStartColumn($label)
+    public function testSwitchLabelDefaultHasExpectedStartColumn($label): void
     {
         $this->assertEquals(9, $label->getStartColumn());
     }
@@ -310,7 +310,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedEndLine($label)
+    public function testSwitchLabelDefaultHasExpectedEndLine($label): void
     {
         $this->assertEquals(7, $label->getEndLine());
     }
@@ -323,7 +323,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @return void
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedEndColumn($label)
+    public function testSwitchLabelDefaultHasExpectedEndColumn($label): void
     {
         $this->assertEquals(18, $label->getEndColumn());
     }
@@ -333,7 +333,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchDefaultLabelCanBeTerminatedWithSemicolon()
+    public function testSwitchDefaultLabelCanBeTerminatedWithSemicolon(): void
     {
         $this->getFirstSwitchLabelInFunction();
     }
@@ -343,7 +343,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren()
+    public function testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren(): void
     {
         $label = $this->getFirstSwitchLabelInFunction();
 
@@ -382,7 +382,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
-    public function testSwitchLabelDefaultDefaultWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label)
+    public function testSwitchLabelDefaultDefaultWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label): void
     {
         $this->assertSame(6, $label->getStartLine());
     }
@@ -395,7 +395,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelDefaultWithNestedNonePhpCode
      */
-    public function testSwitchLabelDefaultWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label)
+    public function testSwitchLabelDefaultWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label): void
     {
         $this->assertSame(9, $label->getEndLine());
     }
@@ -408,7 +408,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelDefaultWithNestedNonePhpCode
      */
-    public function testSwitchLabelDefaultWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label)
+    public function testSwitchLabelDefaultWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label): void
     {
         $this->assertSame(7, $label->getStartColumn());
     }
@@ -421,7 +421,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * @since 2.1.0
      * @depends testSwitchLabelDefaultWithNestedNonePhpCode
      */
-    public function testSwitchLabelDefaultWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label)
+    public function testSwitchLabelDefaultWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label): void
     {
         $this->assertSame(5, $label->getEndColumn());
     }
@@ -431,7 +431,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserHandlesSwitchLabelWithNestedScopeStatement()
+    public function testParserHandlesSwitchLabelWithNestedScopeStatement(): void
     {
         $this->getFirstSwitchLabelInFunction();
     }
@@ -441,7 +441,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserThrowsExceptionForUnclosedSwitchLabelBody()
+    public function testParserThrowsExceptionForUnclosedSwitchLabelBody(): void
     {
         $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
 

@@ -57,7 +57,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass()
+    public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass(): void
     {
         $this->parseCodeResourceForTest()
             ->current()
@@ -71,7 +71,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2()
+    public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2(): void
     {
         $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
 
@@ -87,7 +87,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces()
+    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces(): void
     {
         $this->parseCodeResourceForTest()
             ->current()
@@ -101,7 +101,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2()
+    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2(): void
     {
         $this->parseCodeResourceForTest()
             ->current()
@@ -115,7 +115,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3()
+    public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3(): void
     {
         $this->parseCodeResourceForTest()
             ->current()
@@ -129,7 +129,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass()
+    public function testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass(): void
     {
         $parameters = $this->parseCodeResourceForTest()
             ->current()
@@ -146,7 +146,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage()
+    public function testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage(): void
     {
         $classes = $this->parseCodeResourceForTest()
             ->current()

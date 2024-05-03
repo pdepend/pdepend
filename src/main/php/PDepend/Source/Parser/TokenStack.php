@@ -80,10 +80,8 @@ class TokenStack
 
     /**
      * This method will push a new token scope onto the stack,
-     *
-     * @return void
      */
-    public function push()
+    public function push(): void
     {
         $this->stack[$this->offset++] = $this->tokens;
         $this->tokens                 = [];

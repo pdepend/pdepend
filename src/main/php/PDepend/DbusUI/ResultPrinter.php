@@ -80,10 +80,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Is called when PDepend starts the file parsing process.
      *
      * @param Builder<mixed> $builder The used node builder instance.
-     *
-     * @return void
      */
-    public function startParseProcess(Builder $builder)
+    public function startParseProcess(Builder $builder): void
     {
         $this->startTime = time();
     }
@@ -92,55 +90,41 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Is called when PDepend has finished the file parsing process.
      *
      * @param Builder<mixed> $builder The used node builder instance.
-     *
-     * @return void
      */
-    public function endParseProcess(Builder $builder) {}
+    public function endParseProcess(Builder $builder): void {}
 
     /**
      * Is called when PDepend starts parsing of a new file.
-     *
-     * @return void
      */
-    public function startFileParsing(Tokenizer $tokenizer) {}
+    public function startFileParsing(Tokenizer $tokenizer): void {}
 
     /**
      * Is called when PDepend has finished a file.
-     *
-     * @return void
      */
-    public function endFileParsing(Tokenizer $tokenizer)
+    public function endFileParsing(Tokenizer $tokenizer): void
     {
         ++$this->parsedFiles;
     }
 
     /**
      * Is called when PDepend starts the analyzing process.
-     *
-     * @return void
      */
-    public function startAnalyzeProcess() {}
+    public function startAnalyzeProcess(): void {}
 
     /**
      * Is called when PDepend has finished the analyzing process.
-     *
-     * @return void
      */
-    public function endAnalyzeProcess() {}
+    public function endAnalyzeProcess(): void {}
 
     /**
      * Is called when PDepend starts the logging process.
-     *
-     * @return void
      */
-    public function startLogProcess() {}
+    public function startLogProcess(): void {}
 
     /**
      * Is called when PDepend has finished the logging process.
-     *
-     * @return void
      */
-    public function endLogProcess()
+    public function endLogProcess(): void
     {
         if (extension_loaded('dbus') === false) {
             return;
@@ -172,19 +156,15 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Is called when PDepend starts a new analyzer.
      *
      * @param Analyzer $analyzer The context analyzer instance.
-     *
-     * @return void
      */
-    public function startAnalyzer(Analyzer $analyzer) {}
+    public function startAnalyzer(Analyzer $analyzer): void {}
 
     /**
      * Is called when PDepend has finished one analyzing process.
      *
      * @param Analyzer $analyzer The context analyzer instance.
-     *
-     * @return void
      */
-    public function endAnalyzer(Analyzer $analyzer) {}
+    public function endAnalyzer(Analyzer $analyzer): void {}
 }
 
 // @codeCoverageIgnoreEnd

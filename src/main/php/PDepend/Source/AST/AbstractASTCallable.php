@@ -144,13 +144,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @param AbstractASTNode $node A parsed child node instance.
      *
-     * @return void
-     *
      * @access private
      *
      * @since  0.9.6
      */
-    public function addChild(ASTNode $node)
+    public function addChild(ASTNode $node): void
     {
         $this->nodes[] = $node;
     }
@@ -236,10 +234,8 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Sets the tokens found in the function body.
      *
      * @param Token[] $tokens The body tokens.
-     *
-     * @return void
      */
-    public function setTokens(array $tokens)
+    public function setTokens(array $tokens): void
     {
         if ($tokens === []) {
             throw new InvalidArgumentException('An AST node should contain at least one token');
@@ -350,11 +346,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @param ASTClassOrInterfaceReference $classReference Holder instance for the declared function return type.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setReturnClassReference(ASTClassOrInterfaceReference $classReference)
+    public function setReturnClassReference(ASTClassOrInterfaceReference $classReference): void
     {
         $this->returnClassReference = $classReference;
     }
@@ -365,13 +359,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @param ASTClassOrInterfaceReference $classReference A reference instance for a thrown exception.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
     public function addExceptionClassReference(
         ASTClassOrInterfaceReference $classReference,
-    ) {
+    ): void {
         $this->exceptionClassReferences[] = $classReference;
     }
 
@@ -419,11 +411,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * reference flag, which means that the context function or method returns
      * a value by reference.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setReturnsReference()
+    public function setReturnsReference(): void
     {
         $this->returnsReference = true;
     }
@@ -476,11 +466,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * This method will initialize the <b>$_parameters</b> property.
      *
-     * @return void
-     *
      * @since  0.9.6
      */
-    private function initParameters()
+    private function initParameters(): void
     {
         $parameters = [];
 

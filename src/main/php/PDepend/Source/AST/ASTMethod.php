@@ -90,11 +90,9 @@ class ASTMethod extends AbstractASTCallable
      *
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
      *
-     * @return void
-     *
      * @since  0.9.4
      */
-    public function setModifiers($modifiers)
+    public function setModifiers($modifiers): void
     {
         $expected = ~State::IS_PUBLIC
                   & ~State::IS_PROTECTED
@@ -189,10 +187,8 @@ class ASTMethod extends AbstractASTCallable
      * Sets the parent type object.
      *
      * @param AbstractASTClassOrInterface|null $parent
-     *
-     * @return void
      */
-    public function setParent(?AbstractASTType $parent = null)
+    public function setParent(?AbstractASTType $parent = null): void
     {
         $this->parent = $parent;
     }

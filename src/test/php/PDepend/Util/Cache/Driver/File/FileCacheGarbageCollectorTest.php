@@ -88,7 +88,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testKeepsRecentFiles()
+    public function testKeepsRecentFiles(): void
     {
         $this->createFile();
         $this->createFile();
@@ -100,7 +100,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testRemovesOutdatedFiles()
+    public function testRemovesOutdatedFiles(): void
     {
         $time = 31 * 86400;
 
@@ -114,7 +114,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testKeepsFilesWithRecentATime()
+    public function testKeepsFilesWithRecentATime(): void
     {
         $time = 31 * 86400;
 
@@ -128,7 +128,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testKeepsFilesWithRecentMTime()
+    public function testKeepsFilesWithRecentMTime(): void
     {
         $time = 31 * 86400;
 

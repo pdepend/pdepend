@@ -74,10 +74,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -100,10 +98,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     /**
      * Extracts the coupling information between the two given types and their
      * parent namespacess.
-     *
-     * @return void
      */
-    private function processType(AbstractASTClassOrInterface $type, AbstractASTClassOrInterface $dependency)
+    private function processType(AbstractASTClassOrInterface $type, AbstractASTClassOrInterface $dependency): void
     {
         if ($type !== $dependency) {
             $this->initNode($type);
@@ -127,10 +123,8 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
-     *
-     * @return void
      */
-    private function initNode(AbstractASTArtifact $node)
+    private function initNode(AbstractASTArtifact $node): void
     {
         if (!isset($this->nodes[$node->getId()])) {
             $this->nodes[$node->getId()] = [

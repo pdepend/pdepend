@@ -62,7 +62,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled()
+    public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled(): void
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
 
@@ -75,7 +75,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled()
+    public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled(): void
     {
         $namespaces = $this->parseCodeResourceForTest(true);
 
@@ -116,7 +116,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
-    public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type)
+    public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
         $this->assertEquals('Java\\Style', $type->getNamespaceName());
     }
@@ -129,7 +129,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * @return void
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
-    public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
+    public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
     {
         $declaration = new ASTFieldDeclaration();
         $declaration->setModifiers($modifiers);
@@ -145,7 +145,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * @return void
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
-    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
+    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void
     {
         $declaration = new ASTFieldDeclaration();
 
@@ -165,7 +165,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPublicReturnsFalseByDefault()
+    public function testIsPublicReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isPublic());
@@ -176,7 +176,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_PUBLIC);
@@ -189,7 +189,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsProtectedReturnsFalseByDefault()
+    public function testIsProtectedReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isProtected());
@@ -200,7 +200,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_PROTECTED);
@@ -213,7 +213,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPrivateReturnsFalseByDefault()
+    public function testIsPrivateReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isPrivate());
@@ -224,7 +224,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_PRIVATE);
@@ -237,7 +237,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsFalseByDefault()
+    public function testIsStaticReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isStatic());
@@ -248,7 +248,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_STATIC);
@@ -261,7 +261,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertEquals(
@@ -279,7 +279,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFieldDeclarationHasExpectedStartLine()
+    public function testFieldDeclarationHasExpectedStartLine(): void
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(4, $declaration->getStartLine());
@@ -290,7 +290,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFieldDeclarationHasExpectedStartColumn()
+    public function testFieldDeclarationHasExpectedStartColumn(): void
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(5, $declaration->getStartColumn());
@@ -301,7 +301,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFieldDeclarationHasExpectedEndLine()
+    public function testFieldDeclarationHasExpectedEndLine(): void
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(5, $declaration->getEndLine());
@@ -312,7 +312,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testFieldDeclarationHasExpectedEndColumn()
+    public function testFieldDeclarationHasExpectedEndColumn(): void
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
         $this->assertEquals(22, $declaration->getEndColumn());

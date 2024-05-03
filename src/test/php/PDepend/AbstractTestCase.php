@@ -130,7 +130,7 @@ abstract class AbstractTestCase extends TestCase
      * @return void
      * @since 0.10.0
      */
-    protected function changeWorkingDirectory($directory = null)
+    protected function changeWorkingDirectory($directory = null): void
     {
         if (null === $directory) {
             $directory = $this->getTestWorkingDirectory();
@@ -161,7 +161,7 @@ abstract class AbstractTestCase extends TestCase
      * @return void
      * @since 0.10.0
      */
-    protected function resetWorkingDirectory()
+    protected function resetWorkingDirectory(): void
     {
         if ($this->workingDirectory) {
             chdir($this->workingDirectory);
@@ -410,7 +410,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return void
      */
-    protected static function assertGraphEquals(ASTNode $node, array $expected)
+    protected static function assertGraphEquals(ASTNode $node, array $expected): void
     {
         self::assertEquals($expected, self::collectChildNodes($node));
     }
@@ -443,7 +443,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return void
      */
-    protected static function assertGraph(ASTNode $node, $graph)
+    protected static function assertGraph(ASTNode $node, $graph): void
     {
         $actual = self::collectGraph($node);
         self::assertEquals($graph, $actual);
@@ -473,7 +473,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $dir
      * @return void
      */
-    private function clearRunResources($dir = null)
+    private function clearRunResources($dir = null): void
     {
         if ($dir === null) {
             $dir = __DIR__ . '/_run';
@@ -742,7 +742,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return void
      */
-    public static function init()
+    public static function init(): void
     {
         // First register autoloader
         spl_autoload_register([__CLASS__, 'autoload']);
@@ -766,7 +766,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $className Name of the missing class.
      * @return void
      */
-    public static function autoload($className)
+    public static function autoload($className): void
     {
         $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
         if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
@@ -891,7 +891,7 @@ abstract class AbstractTestCase extends TestCase
      * @param array<int, string> $requiredFormats
      * @return void
      */
-    protected function requireImagick(array $requiredFormats = ['PNG', 'SVG'])
+    protected function requireImagick(array $requiredFormats = ['PNG', 'SVG']): void
     {
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');

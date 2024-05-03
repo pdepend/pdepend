@@ -60,7 +60,7 @@ class ExtensionFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testExtensionFilterAcceptsOneFileExtension()
+    public function testExtensionFilterAcceptsOneFileExtension(): void
     {
         $actual   = $this->createFilteredFileList(['php4']);
         $expected = ['file4.php4'];
@@ -73,7 +73,7 @@ class ExtensionFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testExtensionFilterAcceptsMultipleFileExtensions()
+    public function testExtensionFilterAcceptsMultipleFileExtensions(): void
     {
         $actual   = $this->createFilteredFileList(['inc', 'php']);
         $expected = ['file1.inc', 'file2.php'];
@@ -84,7 +84,7 @@ class ExtensionFilterTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testExtensionFilterAcceptsPhpProtocol()
+    public function testExtensionFilterAcceptsPhpProtocol(): void
     {
         $filter = new ExtensionFilter(['abc']);
 
