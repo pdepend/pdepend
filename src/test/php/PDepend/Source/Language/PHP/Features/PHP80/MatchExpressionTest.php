@@ -137,16 +137,18 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         $new = $pair[1]->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
         $this->assertSame('new', $new->getImage());
-        $this->assertSame(['\InvalidArgumentException', ''], array_map(function ($node) {
-            return $node->getImage();
-        }, $new->getChildren()));
+        $this->assertSame(['\InvalidArgumentException', ''], array_map(
+            static fn ($node) => $node->getImage(),
+            $new->getChildren(),
+        ));
         $this->assertSame([
             ['PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['],
             ['PDepend\\Source\\AST\\ASTVariable', '$in'],
             ['PDepend\\Source\\AST\\ASTLiteral', ']'],
-        ], array_map(function ($node) {
-            return [get_class($node), $node->getImage()];
-        }, $new->getChild(1)->getChild(0)->getChildren()));
+        ], array_map(
+            static fn ($node) => [$node::class, $node->getImage()],
+            $new->getChild(1)->getChild(0)->getChildren(),
+        ));
     }
 
     /**
@@ -215,16 +217,18 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         $new = $pair[1]->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
         $this->assertSame('new', $new->getImage());
-        $this->assertSame(['\InvalidArgumentException', ''], array_map(function ($node) {
-            return $node->getImage();
-        }, $new->getChildren()));
+        $this->assertSame(['\InvalidArgumentException', ''], array_map(
+            static fn ($node) => $node->getImage(),
+            $new->getChildren(),
+        ));
         $this->assertSame([
             ['PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['],
             ['PDepend\\Source\\AST\\ASTVariable', '$in'],
             ['PDepend\\Source\\AST\\ASTLiteral', ']'],
-        ], array_map(function ($node) {
-            return [get_class($node), $node->getImage()];
-        }, $new->getChild(1)->getChild(0)->getChildren()));
+        ], array_map(
+            static fn ($node) => [$node::class, $node->getImage()],
+            $new->getChild(1)->getChild(0)->getChildren(),
+        ));
     }
 
     /**

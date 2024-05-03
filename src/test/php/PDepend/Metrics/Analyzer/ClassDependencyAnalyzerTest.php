@@ -120,15 +120,11 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getTypes() as $type) {
                 $actual[$type->getName()]['efferent'] = array_map(
-                    function ($type) {
-                        return $type->getName();
-                    },
+                    static fn ($type) => $type->getName(),
                     $visitor->getEfferents($type)
                 );
                 $actual[$type->getName()]['afferent'] = array_map(
-                    function ($type) {
-                        return $type->getName();
-                    },
+                    static fn ($type) => $type->getName(),
                     $visitor->getAfferents($type)
                 );
             }

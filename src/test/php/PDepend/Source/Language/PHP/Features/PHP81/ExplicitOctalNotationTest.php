@@ -57,9 +57,7 @@ class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
         $class = $this->getFirstClassForTestCase();
 
         $values = array_map(
-            function (ASTConstantDeclarator $constantDeclarator) {
-                return $constantDeclarator->getValue()->getValue();
-            },
+            static fn (ASTConstantDeclarator $constantDeclarator) => $constantDeclarator->getValue()->getValue(),
             $class->getConstantDeclarators()
         );
 

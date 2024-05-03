@@ -207,9 +207,10 @@ class PHPParserVersion74Test extends AbstractTestCase
             '$number',
             '*',
             '2',
-        ], array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $expression->getChildren()));
+        ], array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $expression->getChildren(),
+        ));
     }
 
     public function testArrowFunctionsWithReturnType()
@@ -253,9 +254,10 @@ class PHPParserVersion74Test extends AbstractTestCase
             '$number',
             '*',
             '2',
-        ], array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $expression->getChildren()));
+        ], array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $expression->getChildren(),
+        ));
     }
 
     public function testTypeCovarianceAndArgumentTypeContravariance()
@@ -288,9 +290,10 @@ class PHPParserVersion74Test extends AbstractTestCase
             'PDepend\\Source\\AST\\ASTArrayElement',
         ], array_map('get_class', $expression->getChildren()));
         /** @var ASTNode[] $elements */
-        $elements = array_map(function ($node) {
-            return $node->getChild(0);
-        }, $expression->getChildren());
+        $elements = array_map(
+            static fn ($node) => $node->getChild(0),
+            $expression->getChildren(),
+        );
         $this->assertSame([
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTLiteral',
@@ -303,9 +306,10 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertSame([
             '...',
             '$numbers',
-        ], array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $expression->getChildren()));
+        ], array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $expression->getChildren(),
+        ));
     }
 
     public function testNumericLiteralSeparator()
