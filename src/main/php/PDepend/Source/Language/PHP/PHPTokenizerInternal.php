@@ -1026,7 +1026,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
-                    list($type, $image) = $this->generateUnknownToken($token[1]);
+                    [$type, $image] = $this->generateUnknownToken($token[1]);
                     // @codeCoverageIgnoreEnd
                 }
             }

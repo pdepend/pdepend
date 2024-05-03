@@ -209,7 +209,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             return;
         }
 
-        list($cloc) = $this->linesOfCode($class->getTokens(), true);
+        [$cloc] = $this->linesOfCode($class->getTokens(), true);
 
         $loc   = $class->getEndLine() - $class->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -248,7 +248,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             return;
         }
 
-        list($cloc, $eloc, $lloc) = $this->linesOfCode($compilationUnit->getTokens());
+        [$cloc, $eloc, $lloc] = $this->linesOfCode($compilationUnit->getTokens());
 
         $loc   = $compilationUnit->getEndLine();
         $ncloc = $loc - $cloc;
@@ -280,7 +280,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             return;
         }
 
-        list($cloc, $eloc, $lloc) = $this->linesOfCode(
+        [$cloc, $eloc, $lloc] = $this->linesOfCode(
             $function->getTokens(),
             true,
         );
@@ -317,7 +317,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             return;
         }
 
-        list($cloc) = $this->linesOfCode($interface->getTokens(), true);
+        [$cloc] = $this->linesOfCode($interface->getTokens(), true);
 
         $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;
@@ -350,7 +350,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             $eloc = 0;
             $lloc = 0;
         } else {
-            list($cloc, $eloc, $lloc) = $this->linesOfCode(
+            [$cloc, $eloc, $lloc] = $this->linesOfCode(
                 $method->getTokens(),
                 true,
             );

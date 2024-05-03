@@ -126,9 +126,9 @@ class PHPParserVersion74Test extends AbstractTestCase
             ['?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
             ['?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
         ] as $index => $expected) {
-            list($expectedType, $expectedVariable) = $expected;
+            [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
-            list($type, $variable) = $declarations[$index];
+            [$type, $variable] = $declarations[$index];
 
             $this->assertInstanceOf(
                 $expectedTypeClass,

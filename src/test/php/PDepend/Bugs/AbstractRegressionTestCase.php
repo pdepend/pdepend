@@ -102,7 +102,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      */
     protected function getSourceFileForTestCase($testCase)
     {
-        list($class, $method) = explode('::', $testCase);
+        [$class, $method] = explode('::', $testCase);
 
         preg_match('(Bug(\d+)Test$)', $class, $match);
 

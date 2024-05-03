@@ -79,7 +79,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
-        list($class, $method) = explode('::', $testCase);
+        [$class, $method] = explode('::', $testCase);
 
         $fileName = substr($class, strrpos($class, '\\') + 1, -4);
         $fileName = 'code/' . $fileName . '/' . $method;
