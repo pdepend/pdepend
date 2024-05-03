@@ -2,7 +2,7 @@ name: Coverage
 
 on:
   push:
-    branches: [ '*', '2.x', '3.x' ]
+    branches: [ 'master', '2.x', '3.x' ]
   pull_request:
     branches: [ '*' ]
 
@@ -19,7 +19,9 @@ jobs:
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -37,13 +39,14 @@ jobs:
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-coverage-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-coverage-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
         composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
         composer require symfony/config:^5 symfony/dependency-injection:^5 symfony/filesystem:^5 --no-update --no-interaction
+        composer require scrutinizer/ocular --no-update --no-interaction
         composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
 
     - name: Fix PHP compatibility
@@ -61,3 +64,6 @@ jobs:
         files: ./coverage.xml
         disable_search: true
         token: ${{ secrets.CODECOV_TOKEN }}
+
+    - name: Upload Code Coverage To Scrutinizer
+      run: vendor/bin/ocular code-coverage:upload --format=php-clover coverage.xml
