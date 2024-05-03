@@ -129,7 +129,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      */
     public function testOverwritesPreviousCacheVersionFileWithActualVersionString()
     {
-        mkdir($this->cacheDir, 0755, true);
+        mkdir($this->cacheDir, 0o755, true);
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
@@ -148,7 +148,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
     {
         $cacheFile = "{$this->cacheDir}/test.file";
 
-        mkdir($this->cacheDir, 0755, true);
+        mkdir($this->cacheDir, 0o755, true);
         file_put_contents($cacheFile, 'Manuel Pichler');
         file_put_contents($this->versionFile, '1234567890');
 
@@ -165,7 +165,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
     {
         $cacheDir = "{$this->cacheDir}/test.dir";
 
-        mkdir($cacheDir, 0755, true);
+        mkdir($cacheDir, 0o755, true);
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
@@ -182,7 +182,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         $cacheDir  = "{$this->cacheDir}/test/dir";
         $cacheFile = "{$this->cacheDir}/test/test.file";
 
-        mkdir($cacheDir, 0755, true);
+        mkdir($cacheDir, 0o755, true);
         file_put_contents($cacheFile, __FUNCTION__);
         file_put_contents($this->versionFile, '1234567890');
 
