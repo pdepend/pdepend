@@ -98,7 +98,7 @@ class MemoryCacheDriver implements CacheDriver
      */
     public function __construct()
     {
-        $this->staticId = sha1(uniqid((string) rand(0, PHP_INT_MAX)));
+        $this->staticId = bin2hex(random_bytes(20));
     }
 
     /**
