@@ -184,7 +184,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
         $actual = [];
         foreach ($label->getChildren() as $child) {
-            $actual[] = get_class($child);
+            $actual[] = $child::class;
         }
 
         $expected = [
@@ -349,7 +349,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
         $actual = [];
         foreach ($label->getChildren() as $child) {
-            $actual[] = get_class($child);
+            $actual[] = $child::class;
         }
 
         $expected = [

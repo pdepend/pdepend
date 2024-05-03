@@ -84,7 +84,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface->addChild($node1);
         $interface->addChild($node2);
 
-        $child = $interface->getFirstChildOfType(get_class($node2));
+        $child = $interface->getFirstChildOfType($node2::class);
         $this->assertSame($node2, $child);
     }
 
@@ -119,7 +119,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface->addChild($node2);
         $interface->addChild($node3);
 
-        $child = $interface->getFirstChildOfType(get_class($node1));
+        $child = $interface->getFirstChildOfType($node1::class);
         $this->assertSame($node1, $child);
     }
 

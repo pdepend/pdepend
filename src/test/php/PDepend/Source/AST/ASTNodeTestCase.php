@@ -66,7 +66,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->setImage(__FUNCTION__);
 
-        $constant = get_class($node) . '::IMAGE';
+        $constant = $node::class . '::IMAGE';
         $this->assertEquals(defined($constant) ? constant($constant) : __FUNCTION__, $node->getImage());
     }
 
@@ -672,7 +672,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
-        $child = $node->getFirstChildOfType(get_class($node2));
+        $child = $node->getFirstChildOfType($node2::class);
         $this->assertSame($node2, $child);
     }
 
@@ -699,7 +699,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->addChild($node3);
 
-        $child = $node->getFirstChildOfType(get_class($node1));
+        $child = $node->getFirstChildOfType($node1::class);
         $this->assertSame($node1, $child);
     }
 

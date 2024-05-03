@@ -155,7 +155,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
     {
         $actual = [];
         foreach ($this->getFirstTryStatementInFunction(__METHOD__)->getChildren() as $child) {
-            $actual[] = get_class($child);
+            $actual[] = $child::class;
         }
 
         $expected = [

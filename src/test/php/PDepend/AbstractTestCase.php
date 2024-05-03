@@ -395,7 +395,7 @@ abstract class AbstractTestCase extends TestCase
     protected static function collectChildNodes(ASTNode $node, array $actual = [])
     {
         foreach ($node->getChildren() as $child) {
-            $actual[] = get_class($child);
+            $actual[] = $child::class;
             $actual   = self::collectChildNodes($child, $actual);
         }
         return $actual;
@@ -426,7 +426,7 @@ abstract class AbstractTestCase extends TestCase
     {
         $graph = [];
         foreach ($node->getChildren() as $child) {
-            $graph[] = get_class($child) . ' (' . $child->getImage() . ')';
+            $graph[] = $child::class . ' (' . $child->getImage() . ')';
             if (0 < count($child->getChildren())) {
                 $graph[] = self::collectGraph($child);
             }

@@ -391,7 +391,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->addChild($node1);
         $function->addChild($node2);
 
-        $child = $function->getFirstChildOfType(get_class($node2));
+        $child = $function->getFirstChildOfType($node2::class);
         $this->assertSame($node2, $child);
     }
 
@@ -426,7 +426,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->addChild($node2);
         $function->addChild($node3);
 
-        $child = $function->getFirstChildOfType(get_class($node1));
+        $child = $function->getFirstChildOfType($node1::class);
         $this->assertSame($node1, $child);
     }
 
@@ -484,7 +484,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->addChild($node1);
         $function->addChild($node2);
 
-        $children = $function->findChildrenOfType(get_class($node2));
+        $children = $function->findChildrenOfType($node2::class);
         $this->assertSame([$node2], $children);
     }
 
@@ -660,7 +660,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $function = new ASTFunction(__FUNCTION__);
         $function->setCompilationUnit(new ASTCompilationUnit(__FILE__));
-        
+
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
         $function->setContext($context);
