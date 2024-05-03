@@ -7,13 +7,13 @@
     <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
     <meta name="author" content="Manuel Pichler"/>
     <meta name="language" content="en"/>
-    <meta name="date" content="Wed, 24 Apr 2024 10:29:00 +0000"/>
+    <meta name="date" content="Fri, 03 May 2024 14:36:39 +0000"/>
     <meta name="robots" content="all"/>
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
     <meta name="DC.title" content="News"/>
     <meta name="DC.creator" content="Manuel Pichler"/>
-    <meta name="DC.date" content="Wed, 24 Apr 2024 10:29:00 +0000"/>
+    <meta name="DC.date" content="Fri, 03 May 2024 14:36:39 +0000"/>
     <meta name="DC.rights" content="CC by-nc-sa"/>
 
     <link rel="canonical" href="https://pdepend.org/news.html"/>
@@ -133,10 +133,10 @@ element only accepts data of type <em>int</em>. :</p>
 <h3>cache</h3>
 <p>Within the <code>&lt;cache&gt;</code> container element you can configure the cache backend
 that will be used by PHP_Depend. The used cache backend can have a great
-impact on PHP_Depend&#039;s overall performance, memory consumption and diskspace
+impact on PHP_Depend's overall performance, memory consumption and diskspace
 usage. While the file based cache promises a better performance on consecutive
 calls, it can require a large amount of diskspace. In contrast, the memory
-based cache doesn&#039;t allocate any diskspace, but it normally requires muc
+based cache doesn't allocate any diskspace, but it normally requires muc
 more memory and it forces the PHP_Depend to parse the whole source on every
 call. :</p>
 <pre><code class="">&lt;?xml version=&quot;1.0&quot; ?&gt;
@@ -198,7 +198,7 @@ command line option <code>--configuration</code>.</p>
 
 <pre><code class="">~ $ pdepend --configuration=my.config.xml
 </code></pre>
-<p>The second style/concept to specify PHP_Depend&#039;s configuration file was
+<p>The second style/concept to specify PHP_Depend's configuration file was
 adapted from <a href="">PHPUnit</a>, where you can put an xml file named after the
 tool(so <code>phpunit.xml</code> in the case of PHPUnit and <code>pdepend.xml</code> in the
 case of PHP_Depend) into the current working directory. This file will
@@ -223,7 +223,7 @@ overwrites those settings that were defined in this file.</p>
 <a id="history"></a>
 <h2>History</h2>
 <p>The command line option to specify a xml configuration file already exists
-for a long time in PHP_Depend, but the configuration file wasn&#039;t really in
+for a long time in PHP_Depend, but the configuration file wasn't really in
 use until version 0.10.0. Since this release we have started to provide an
 <a href="">XML-Schema</a> for the configuration file and we moved several command line
 options or previously hard-coded-switches into the xml configuration file.</p>

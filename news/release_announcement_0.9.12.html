@@ -7,13 +7,13 @@
     <meta name="keywords" content="PHP Depend, metrics, CodeRank, Cyclomatic Complexity, NPath Complexity, Quality Assurance, Design, Maintenance"/>
     <meta name="author" content="Manuel Pichler"/>
     <meta name="language" content="en"/>
-    <meta name="date" content="Wed, 24 Apr 2024 10:29:01 +0000"/>
+    <meta name="date" content="Fri, 03 May 2024 14:36:39 +0000"/>
     <meta name="robots" content="all"/>
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/>
     <meta name="DC.title" content="News"/>
     <meta name="DC.creator" content="Manuel Pichler"/>
-    <meta name="DC.date" content="Wed, 24 Apr 2024 10:29:01 +0000"/>
+    <meta name="DC.date" content="Fri, 03 May 2024 14:36:39 +0000"/>
     <meta name="DC.rights" content="CC by-nc-sa"/>
 
     <link rel="canonical" href="https://pdepend.org/news.html"/>
@@ -63,7 +63,7 @@
 <p>I am proud to announce the 0.9.12 release of PHP_Depend. PHP_Depend is a<br />low level static code analysis tool. It takes the given source and<br />calculates several software metrics for the code. This data can be used by <br />software-developers, architects and designers to control the quality of a<br />software-product without time consuming code audits.</p>
 <p>This new release of PHP_Depend has done a great step into the direction of a<br />token free PHP_Depend version. This means future versions of PHP_Depend will
 work without the need to traverse linear token streams up and down, to measure
-metrics. Instead PHP_Depend will rely on it&#039;s internal abstract syntax tree,
+metrics. Instead PHP_Depend will rely on it's internal abstract syntax tree,
 that represents the logical structure of the analyzed source code. With this<br />solution it will be possible to implement several new features that will make
 PHP_Depend more useful, for example static callgraph analysis.</p>
 <ul><li>Implemented <a href="">#97</a>: Replace current token approach in CCN- and NPath-Analyzer
@@ -74,7 +74,7 @@ PHP_Depend more useful, for example static callgraph analysis.</p>
   random numbers. Implemented in svn revision <a href="">#1244</a>.</li>
 <li>Fixed <a href="">#128</a>: Variable variables in foreach statement cause an exception.
   Fixed in svn revision <a href="">#1237</a>.</li>
-<li>Fixed <a href="">#133</a>: Fatal error: Maximum function nesting level of &#039;100&#039; reached,
+<li>Fixed <a href="">#133</a>: Fatal error: Maximum function nesting level of '100' reached,
   aborting! in /usr/share/pear/PDepend/Util/Log.php on line 109. Fixed
   in svn revision <a href="">#1257</a>.</li>
 <li>Fixed <a href="">#134</a>: ASTReturnStatement is not derived from ASTStatement. Fixed
