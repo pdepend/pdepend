@@ -140,7 +140,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
-        $this->assertSame(array('test'), array_keys($methods));
+        $this->assertSame(['test'], array_keys($methods));
     }
 
     /**
@@ -160,7 +160,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
-        $this->assertSame(array('testa', 'testb'), array_keys($methods));
+        $this->assertSame(['testa', 'testb'], array_keys($methods));
     }
 
     /**

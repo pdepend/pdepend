@@ -71,11 +71,11 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      */
     public function testParserSetsExpectedPositionOfFunctionParameters()
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->getPosition();
         }
-        $this->assertEquals(array(0, 1, 2), $actual);
+        $this->assertEquals([0, 1, 2], $actual);
     }
 
     /**
@@ -85,11 +85,11 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      */
     public function testParserSetsFunctionParametersInExpectedOrder()
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->getName();
         }
-        $this->assertEquals(array('$foo', '$bar', '$foobar'), $actual);
+        $this->assertEquals(['$foo', '$bar', '$foobar'], $actual);
     }
 
     /**
@@ -99,11 +99,11 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      */
     public function testParserSetsExpectedTypeHintsForFunctionParameters()
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = is_null($parameter->getClass());
         }
-        $this->assertEquals(array(true, false, true), $actual);
+        $this->assertEquals([true, false, true], $actual);
     }
 
     /**
@@ -124,11 +124,11 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      */
     public function testParserSetsExpectedPositionOfMethodParameters()
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = $parameter->getPosition();
         }
-        $this->assertEquals(array(0, 1, 2), $actual);
+        $this->assertEquals([0, 1, 2], $actual);
     }
 
     /**
@@ -138,11 +138,11 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      */
     public function testParserSetsMethodParametersInExpectedOrder()
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = $parameter->getName();
         }
-        $this->assertEquals(array('$foo', '$bar', '$foobar'), $actual);
+        $this->assertEquals(['$foo', '$bar', '$foobar'], $actual);
     }
 
     /**
@@ -152,11 +152,11 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      */
     public function testParserSetsExpectedTypeHintsForMethodParameters()
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = is_null($parameter->getClass());
         }
-        $this->assertEquals(array(true, false, true), $actual);
+        $this->assertEquals([true, false, true], $actual);
     }
 
     /**

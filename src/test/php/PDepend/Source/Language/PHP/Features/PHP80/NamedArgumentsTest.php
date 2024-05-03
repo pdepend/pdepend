@@ -160,7 +160,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $expressionParent = $expression->getParent();
         $this->assertSame($namedArgument, $expressionParent);
         $this->assertSame(
-            array($variables[1]),
+            [$variables[1]],
             $namedArgument->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable')
         );
     }
@@ -186,7 +186,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $variableParent = $variables[1]->getParent();
         $this->assertSame($namedArgument, $variableParent);
         $this->assertSame(
-            array($variables[1]),
+            [$variables[1]],
             $namedArgument->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable')
         );
     }

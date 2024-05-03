@@ -73,7 +73,7 @@ class CacheFactory
      *
      * @var CacheDriver[]
      */
-    protected $caches = array();
+    protected $caches = [];
 
     /**
      * Constructs a new cache factory instance for the given configuration.

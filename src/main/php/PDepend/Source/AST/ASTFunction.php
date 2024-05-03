@@ -151,7 +151,7 @@ class ASTFunction extends AbstractASTCallable
      */
     public function __sleep()
     {
-        return array_merge(array('context', 'namespaceName'), parent::__sleep());
+        return array_merge(['context', 'namespaceName'], parent::__sleep());
     }
 
     /**

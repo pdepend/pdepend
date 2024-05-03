@@ -83,28 +83,28 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         $enum = $this->createItem();
         $strategy = new PropertyStrategy();
         $enum->accept($strategy);
-        $this->assertSame(array(), $strategy->getCollectedNodes());
+        $this->assertSame([], $strategy->getCollectedNodes());
 
         $strategy = new MethodStrategy();
         $enum->accept($strategy);
 
-        $nodes = array();
+        $nodes = [];
 
         foreach ($strategy->getCollectedNodes() as $node) {
             $class = $node['type'];
 
             if (!isset($nodes[$class])) {
-                $nodes[$class] = array();
+                $nodes[$class] = [];
             }
 
             $nodes[$class][] = $node['name'];
         }
 
-        $this->assertSame(array(
-            'PDepend\Source\AST\ASTEnum' => array('test'),
-            'PDepend\Source\AST\ASTClass' => array('test'),
-            'PDepend\Source\AST\ASTNamespace' => array('+global', '+global'),
-        ), $nodes);
+        $this->assertSame([
+            'PDepend\Source\AST\ASTEnum' => ['test'],
+            'PDepend\Source\AST\ASTClass' => ['test'],
+            'PDepend\Source\AST\ASTNamespace' => ['+global', '+global'],
+        ], $nodes);
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         $this->expectExceptionMessage('An AST node should contain at least one token');
 
         $enum = new ASTEnum('FooBar');
-        $enum->setTokens(array());
+        $enum->setTokens([]);
     }
 
     protected function createItem()

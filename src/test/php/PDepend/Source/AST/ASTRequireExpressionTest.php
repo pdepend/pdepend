@@ -87,12 +87,12 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     {
         $expr = new \PDepend\Source\AST\ASTRequireExpression();
         $this->assertEquals(
-            array(
+            [
                 'once',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $expr->__sleep()
         );
     }

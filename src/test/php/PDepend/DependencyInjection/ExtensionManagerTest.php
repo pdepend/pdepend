@@ -63,7 +63,7 @@ class ExtensionManagerTest extends AbstractTestCase
     {
         $extensionManager = new ExtensionManager();
 
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
+        $this->assertSame([], $extensionManager->getActivatedExtensions());
 
         $message = null;
 
@@ -77,7 +77,7 @@ class ExtensionManagerTest extends AbstractTestCase
             'Cannot find extension class "CannotFindIt" for PDepend. Maybe the plugin is not installed?',
             $message
         );
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
+        $this->assertSame([], $extensionManager->getActivatedExtensions());
 
         $message = null;
 
@@ -91,21 +91,21 @@ class ExtensionManagerTest extends AbstractTestCase
             'Class "PDepend\\DependencyInjection\\ExtensionManager" is not a valid Extension',
             $message
         );
-        $this->assertSame(array(), $extensionManager->getActivatedExtensions());
+        $this->assertSame([], $extensionManager->getActivatedExtensions());
 
         $extensionManager->activateExtension('PDepend\\TestExtension');
         $extensions = $extensionManager->getActivatedExtensions();
 
-        $this->assertSame(array('test'), array_keys($extensions));
+        $this->assertSame(['test'], array_keys($extensions));
 
         $extension = $extensions['test'];
 
         $this->assertInstanceOf('PDepend\\TestExtension', $extension);
-        $this->assertSame(array(), $extension->getCompilerPasses());
+        $this->assertSame([], $extension->getCompilerPasses());
 
         $container = new ContainerBuilder();
-        $extension->load(array('foo' => 'bar'), $container);
+        $extension->load(['foo' => 'bar'], $container);
 
-        $this->assertSame(array('foo' => 'bar'), $container->getParameter('test.parameters'));
+        $this->assertSame(['foo' => 'bar'], $container->getParameter('test.parameters'));
     }
 }

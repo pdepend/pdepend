@@ -216,7 +216,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion73',
-            array($tokenizer, $builder, $cache)
+            [$tokenizer, $builder, $cache]
         );
     }
 }

@@ -69,7 +69,7 @@ class AnalyzerIteratorTest extends AbstractTestCase
             ->method('isEnabled')
             ->will($this->returnValue(true));
 
-        $iterator = new AnalyzerIterator(array($analyzer, $analyzer));
+        $iterator = new AnalyzerIterator([$analyzer, $analyzer]);
         $this->assertEquals(2, iterator_count($iterator));
     }
 

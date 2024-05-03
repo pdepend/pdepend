@@ -63,12 +63,12 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     {
         $label = new \PDepend\Source\AST\ASTSwitchLabel();
         $this->assertEquals(
-            array(
+            [
                 'default',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $label->__sleep()
         );
     }
@@ -182,16 +182,16 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     {
         $label = $this->getFirstSwitchLabelInFunction();
 
-        $actual = array();
+        $actual = [];
         foreach ($label->getChildren() as $child) {
             $actual[] = $child::class;
         }
 
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTSwitchStatement',
             'PDepend\\Source\\AST\\ASTBreakStatement'
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -347,15 +347,15 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     {
         $label = $this->getFirstSwitchLabelInFunction();
 
-        $actual = array();
+        $actual = [];
         foreach ($label->getChildren() as $child) {
             $actual[] = $child::class;
         }
 
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTSwitchStatement',
             'PDepend\\Source\\AST\\ASTBreakStatement'
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }

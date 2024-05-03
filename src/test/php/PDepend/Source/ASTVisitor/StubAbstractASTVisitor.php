@@ -63,7 +63,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      *
      * @var array<string, integer>
      */
-    public $visits = array();
+    public $visits = [];
 
     /**
      * Visits a class node.

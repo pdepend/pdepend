@@ -65,13 +65,13 @@ class MethodStrategyTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
         
-        $idMap = array(
+        $idMap = [
             'PDepend::CodeRankA'       =>  null,
             'PDepend::CodeRankB'       =>  null,
             'PDepend_CodeRank_ClassA'  =>  null,
             'PDepend_CodeRank_ClassB'  =>  null,
             'PDepend_CodeRank_ClassC'  =>  null,
-        );
+        ];
         
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getClasses() as $class) {
@@ -83,66 +83,66 @@ class MethodStrategyTest extends AbstractTestCase
             }
         }
 
-        $expected = array(
-            $idMap['PDepend_CodeRank_ClassA']  =>  array(
-                'in'  =>  array(
+        $expected = [
+            $idMap['PDepend_CodeRank_ClassA']  =>  [
+                'in'  =>  [
                     $idMap['PDepend_CodeRank_ClassB'],
                     $idMap['PDepend_CodeRank_ClassC']
-                ),
-                'out'  =>  array(
+                ],
+                'out'  =>  [
                     $idMap['PDepend_CodeRank_ClassC']
-                ),
+                ],
                 'name'  =>  'PDepend_CodeRank_ClassA',
                 'type'  =>  'PDepend\\Source\\AST\\ASTClass'
-            ),
-            $idMap['PDepend_CodeRank_ClassB']  =>  array(
-                'in'  =>  array(
+            ],
+            $idMap['PDepend_CodeRank_ClassB']  =>  [
+                'in'  =>  [
                     $idMap['PDepend_CodeRank_ClassC'],
                     $idMap['PDepend_CodeRank_ClassC']
-                ),
-                'out'  =>  array(
+                ],
+                'out'  =>  [
                     $idMap['PDepend_CodeRank_ClassA']
-                ),
+                ],
                 'name'  =>  'PDepend_CodeRank_ClassB',
                 'type'  =>  'PDepend\\Source\\AST\\ASTClass'
-            ),
-            $idMap['PDepend_CodeRank_ClassC']  =>  array(
-                'in'  =>  array(
+            ],
+            $idMap['PDepend_CodeRank_ClassC']  =>  [
+                'in'  =>  [
                     $idMap['PDepend_CodeRank_ClassA']
-                ),
-                'out'  =>  array(
+                ],
+                'out'  =>  [
                     $idMap['PDepend_CodeRank_ClassA'],
                     $idMap['PDepend_CodeRank_ClassB'],
                     $idMap['PDepend_CodeRank_ClassB']
-                ),
+                ],
                 'name'  =>  'PDepend_CodeRank_ClassC',
                 'type'  =>  'PDepend\\Source\\AST\\ASTClass'
-            ),
-            $idMap['PDepend::CodeRankA']  =>  array(
-                'in'  =>  array(
+            ],
+            $idMap['PDepend::CodeRankA']  =>  [
+                'in'  =>  [
                     $idMap['PDepend::CodeRankB'],
                     $idMap['PDepend::CodeRankB'],
                     $idMap['PDepend::CodeRankB']
-                ),
-                'out'  =>  array(
+                ],
+                'out'  =>  [
                     $idMap['PDepend::CodeRankB'],
-                ),
+                ],
                 'name'  =>  'PDepend::CodeRankA',
                 'type'  =>  'PDepend\\Source\\AST\\ASTNamespace'
-            ),
-            $idMap['PDepend::CodeRankB']  =>  array(
-                'in'  =>  array(
+            ],
+            $idMap['PDepend::CodeRankB']  =>  [
+                'in'  =>  [
                     $idMap['PDepend::CodeRankA'],
-                ),
-                'out'  =>  array(
+                ],
+                'out'  =>  [
                     $idMap['PDepend::CodeRankA'],
                     $idMap['PDepend::CodeRankA'],
                     $idMap['PDepend::CodeRankA']
-                ),
+                ],
                 'name'  =>  'PDepend::CodeRankB',
                 'type'  =>  'PDepend\\Source\\AST\\ASTNamespace'
-            ),
-        );
+            ],
+        ];
     
         $strategy = new MethodStrategy();
         foreach ($namespaces as $namespace) {

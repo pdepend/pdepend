@@ -65,7 +65,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      *
      * @param array<string, mixed> $projectMetrics Dummy project metrics.
      */
-    public function __construct(array $projectMetrics = array())
+    public function __construct(array $projectMetrics = [])
     {
         $this->projectMetrics = $projectMetrics;
     }
@@ -127,7 +127,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      * @param array<string, mixed> $options
      * @since 2.0.1
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = [])
     {
     }
 }

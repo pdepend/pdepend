@@ -151,7 +151,7 @@ class FileCacheDriver implements CacheDriver
     public function store($key, $data, $hash = null)
     {
         $file = $this->getCacheFile($key);
-        $this->write($file, serialize(array('hash' => $hash, 'data' => $data)));
+        $this->write($file, serialize(['hash' => $hash, 'data' => $data]));
     }
 
     /**
@@ -254,7 +254,7 @@ class FileCacheDriver implements CacheDriver
         $glob = glob("{$file}*.*");
         // avoid error if we dont find files
         if ($glob !== false) {
-            foreach (glob("{$file}*.*") ?: array() as $f) {
+            foreach (glob("{$file}*.*") ?: [] as $f) {
                 @unlink($f);
             }
         }

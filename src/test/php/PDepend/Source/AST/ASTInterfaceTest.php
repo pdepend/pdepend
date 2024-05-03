@@ -236,14 +236,14 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsSubtypeOnInheritanceHierarchy()
     {
         $this->doTestIsSubtypeOnInheritanceHierarchy(
-            array(
+            [
                 'A' => true,
                 'B' => false,
                 'C' => false,
                 'D' => false,
                 'E' => false,
                 'F' => true
-            )
+            ]
         );
     }
 
@@ -255,14 +255,14 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsSubtypeOnInheritanceHierarchy1()
     {
         $this->doTestIsSubtypeOnInheritanceHierarchy(
-            array(
+            [
                 'A' => true,
                 'B' => true,
                 'C' => true,
                 'D' => true,
                 'E' => true,
                 'F' => true
-            )
+            ]
         );
     }
 
@@ -274,14 +274,14 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsSubtypeOnInheritanceHierarchy2()
     {
         $this->doTestIsSubtypeOnInheritanceHierarchy(
-            array(
+            [
                 'B' => false,
                 'C' => false,
                 'A' => true,
                 'D' => true,
                 'E' => true,
                 'F' => false
-            )
+            ]
         );
     }
 
@@ -293,14 +293,14 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsSubtypeOnInheritanceHierarchy3()
     {
         $this->doTestIsSubtypeOnInheritanceHierarchy(
-            array(
+            [
                 'B' => false,
                 'C' => false,
                 'D' => false,
                 'A' => true,
                 'E' => false,
                 'F' => false
-            )
+            ]
         );
     }
 
@@ -317,7 +317,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $namespace = $namespaces->current();
         $current  = $namespace->getInterfaces()->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($namespace->getInterfaces() as $interface) {
             $actual[$interface->getName()] = $current->isSubtypeOf($interface);
         }
@@ -529,7 +529,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
      */
     public function testSetTokensDelegatesCallToCacheStore()
     {
-        $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
+        $tokens = [new Token(1, 'a', 23, 42, 13, 17)];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -571,10 +571,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $this->createItem();
         $interface->setCache($cache)
             ->setTokens(
-                array(
+                [
                     new Token(1, 'a', 23, 42, 0, 0),
                     new Token(2, 'b', 17, 32, 0, 0),
-                )
+                ]
             );
 
         $this->assertEquals(23, $interface->getStartLine());
@@ -610,7 +610,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetParentClassesReturnsEmptyArrayByDefault()
     {
         $interface = $this->createItem();
-        $this->assertSame(array(), $interface->getParentClasses());
+        $this->assertSame([], $interface->getParentClasses());
     }
 
     /**
@@ -625,7 +625,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getInterfaces()
             ->current();
 
-        $this->assertSame(array(), $interface->getParentClasses());
+        $this->assertSame([], $interface->getParentClasses());
     }
 
     /**
@@ -636,7 +636,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault()
     {
         $interface = $this->createItem();
-        $this->assertSame(array(), $interface->getInterfaceReferences());
+        $this->assertSame([], $interface->getInterfaceReferences());
     }
 
     /**
@@ -659,7 +659,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault()
     {
         $interface = $this->createItem();
-        $this->assertSame(array(), $interface->getChildren());
+        $this->assertSame([], $interface->getChildren());
     }
 
     /**
@@ -725,10 +725,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $this->createItem();
         $interface->setCache($cache)
             ->setTokens(
-                array(
+                [
                     new Token(1, 'a', 23, 42, 0, 0),
                     new Token(2, 'b', 17, 32, 0, 0),
-                )
+                ]
             );
 
         $this->assertEquals(32, $interface->getEndLine());
@@ -778,7 +778,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedInterfaceConstants()
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $interface->getConstants());
+        $this->assertEquals(['FOO' => 42, 'BAR' => 23], $interface->getConstants());
     }
 
     /**
@@ -850,7 +850,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface->setNamespace(new ASTNamespace(__FUNCTION__));
 
         $this->assertEquals(
-            array(
+            [
                 'constants',
                 'interfaceReferences',
                 'parentClassReference',
@@ -865,7 +865,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'startLine',
                 'userDefined',
                 'id'
-            ),
+            ],
             $interface->__sleep()
         );
     }

@@ -65,7 +65,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     {
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($this->createCodeResourceUriForTest());
-        $pdepend->addFileFilter(new ExtensionFilter(array('php')));
+        $pdepend->addFileFilter(new ExtensionFilter(['php']));
         $pdepend->addReportGenerator(new \PDepend\Report\Dummy\Logger());
         $pdepend->analyze();
 
@@ -87,7 +87,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI('pdepend.log'));
-        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
+        $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
         $this->silentRun($runner);
 
         $this->assertFalse($runner->hasParseErrors());
@@ -104,7 +104,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI('pdepend.log'));
-        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
+        $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
 
         $this->silentRun($runner);
 
@@ -121,10 +121,10 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess()
     {
         $this->prepareArgv(
-            array(
+            [
                 '--dummy-logger=' . $this->createRunResourceURI('pdepend.log'),
                 $this->createCodeResourceUriForTest()
-            )
+            ]
         );
 
         list($exitCode, $output) = $this->runTextUICommand();
@@ -141,11 +141,11 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     public function testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess()
     {
         $this->prepareArgv(
-            array(
+            [
                 '--dummy-logger=' . $this->createRunResourceURI('pdepend.log'),
                 '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
                 $this->createCodeResourceUriForTest()
-            )
+            ]
         );
         list($exitCode, $output) = $this->runTextUICommand();
 
@@ -180,6 +180,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
         $exitCode = $command->run();
         $output   = ob_get_clean();
 
-        return array($exitCode, $output);
+        return [$exitCode, $output];
     }
 }

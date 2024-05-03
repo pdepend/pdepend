@@ -87,12 +87,12 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
     {
         $expr = new \PDepend\Source\AST\ASTIncludeExpression();
         $this->assertEquals(
-            array(
+            [
                 'once',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $expr->__sleep()
         );
     }

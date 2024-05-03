@@ -75,7 +75,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param array<string, mixed> $projectMetrics Dummy project metrics.
      * @param array<string, array> $nodeMetrics    Dummy node metrics.
      */
-    public function __construct(array $projectMetrics = array(), array $nodeMetrics = array())
+    public function __construct(array $projectMetrics = [], array $nodeMetrics = [])
     {
         $this->projectMetrics = $projectMetrics;
         $this->nodeMetrics    = $nodeMetrics;
@@ -149,7 +149,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param array<string, mixed> $options
      * @since 2.0.1
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = [])
     {
     }
 }

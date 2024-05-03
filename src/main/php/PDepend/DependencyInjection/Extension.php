@@ -113,7 +113,7 @@ abstract class Extension
      */
     public function getCompilerPasses()
     {
-        return array();
+        return [];
     }
 
     /**

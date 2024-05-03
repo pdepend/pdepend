@@ -126,10 +126,10 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $options = $application->getAvailableLoggerOptions();
 
-        $this->assertSame(array(
+        $this->assertSame([
             'message' => 'Dummy logger for tests',
             'value' => 'file',
-        ), $options['--dummy-logger']);
+        ], $options['--dummy-logger']);
     }
 
     public function testGetAvailableAnalyzerOptions()
@@ -137,9 +137,9 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $options = $application->getAvailableAnalyzerOptions();
 
-        $this->assertSame(array(
+        $this->assertSame([
             'message' => "Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover option.",
             'value' => 'file',
-        ), $options['--' . CrapIndexAnalyzer::REPORT_OPTION]);
+        ], $options['--' . CrapIndexAnalyzer::REPORT_OPTION]);
     }
 }

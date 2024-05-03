@@ -90,7 +90,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $method = new ASTMethod('method');
         $this->assertEquals(
-            array(
+            [
                 'modifiers',
                 'cache',
                 'id',
@@ -102,7 +102,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
                 'returnsReference',
                 'returnClassReference',
                 'exceptionClassReferences'
-            ),
+            ],
             $method->__sleep()
         );
     }
@@ -259,7 +259,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetStaticVariablesReturnsEmptyArrayByDefault()
     {
         $method = new ASTMethod('method');
-        $this->assertEquals(array(), $method->getStaticVariables());
+        $this->assertEquals([], $method->getStaticVariables());
     }
 
     /**
@@ -272,7 +272,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->getFirstMethodInClass();
 
         $this->assertEquals(
-            array('a' => 42, 'b' => 23),
+            ['a' => 42, 'b' => 23],
             $method->getStaticVariables()
         );
     }
@@ -287,7 +287,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->getFirstMethodInClass();
 
         $this->assertEquals(
-            array('a' => 42, 'b' => 23, 'c' => 17),
+            ['a' => 42, 'b' => 23, 'c' => 17],
             $method->getStaticVariables()
         );
     }
@@ -669,21 +669,21 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects($this->once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node2->expects($this->once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);
         $method->addChild($node2);
 
         $children = $method->findChildrenOfType($node2::class);
-        $this->assertSame(array($node2), $children);
+        $this->assertSame([$node2], $children);
     }
 
     /**
@@ -803,6 +803,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $this->expectExceptionMessage('An AST node should contain at least one token');
 
         $method = new ASTMethod('FooBar');
-        $method->setTokens(array());
+        $method->setTokens([]);
     }
 }

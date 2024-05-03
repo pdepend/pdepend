@@ -84,14 +84,14 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    private $nodes = array();
+    private $nodes = [];
 
     /**
      * List of node collect strategies.
      *
      * @var CodeRankStrategyI[]
      */
-    private $strategies = array();
+    private $strategies = [];
 
     /**
      * Hash with all calculated node metrics.
@@ -155,7 +155,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
             }
 
             // Init node metrics
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             // Calculate code rank metrics
             $this->buildCodeRankMetrics();
@@ -176,7 +176,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -187,10 +187,10 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     protected function buildCodeRankMetrics()
     {
         foreach (array_keys($this->nodes) as $id) {
-            $this->nodeMetrics[$id] = array(
+            $this->nodeMetrics[$id] = [
                 self::M_CODE_RANK          =>  0,
                 self::M_REVERSE_CODE_RANK  =>  0,
-            );
+            ];
         }
         foreach ($this->computeCodeRank('out', 'in') as $id => $rank) {
             $this->nodeMetrics[$id][self::M_CODE_RANK] = $rank;
@@ -212,7 +212,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     {
         $dampingFactory = self::DAMPING_FACTOR;
 
-        $ranks = array();
+        $ranks = [];
 
         foreach (array_keys($this->nodes) as $name) {
             $ranks[$name] = 1;

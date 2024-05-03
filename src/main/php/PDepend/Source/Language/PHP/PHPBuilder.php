@@ -223,28 +223,28 @@ class PHPBuilder implements Builder
      *
      * @var array<string, array<string, array<string, ASTTrait>>>
      */
-    private $traits = array();
+    private $traits = [];
 
     /**
      * All generated {@link ASTClass} objects
      *
      * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
-    private $classes = array();
+    private $classes = [];
 
     /**
      * All generated {@link ASTInterface} instances.
      *
      * @var array<string, array<string, array<string, ASTInterface>>>
      */
-    private $interfaces = array();
+    private $interfaces = [];
 
     /**
      * All generated {@link ASTNamespace} objects
      *
      * @var ASTNamespace[]
      */
-    private $namespaces = array();
+    private $namespaces = [];
 
     /**
      * Internal status flag used to check that a build request is internal.
@@ -265,21 +265,21 @@ class PHPBuilder implements Builder
      *
      * @var array<string, array<string, array<string, ASTTrait>>>
      */
-    private $frozenTraits = array();
+    private $frozenTraits = [];
 
     /**
      * Cache of all classes created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
-    private $frozenClasses = array();
+    private $frozenClasses = [];
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTInterface>>>
      */
-    private $frozenInterfaces = array();
+    private $frozenInterfaces = [];
 
     /**
      * Constructs a new builder instance.
@@ -2473,9 +2473,9 @@ class PHPBuilder implements Builder
         $this->frozenClasses    = $this->copyTypesWithPackage($this->classes);
         $this->frozenInterfaces = $this->copyTypesWithPackage($this->interfaces);
 
-        $this->traits     = array();
-        $this->classes    = array();
-        $this->interfaces = array();
+        $this->traits     = [];
+        $this->classes    = [];
+        $this->interfaces = [];
     }
 
     /**
@@ -2491,7 +2491,7 @@ class PHPBuilder implements Builder
      */
     private function copyTypesWithPackage(array $originalTypes)
     {
-        $copiedTypes = array();
+        $copiedTypes = [];
         foreach ($originalTypes as $typeName => $namespaces) {
             foreach ($namespaces as $namespaceName => $types) {
                 foreach ($types as $index => $type) {
@@ -2634,7 +2634,7 @@ class PHPBuilder implements Builder
     {
         $traitName = strtolower($traitName);
         if (!isset($this->traits[$traitName][$namespaceName])) {
-            $this->traits[$traitName][$namespaceName] = array();
+            $this->traits[$traitName][$namespaceName] = [];
         }
         $this->traits[$traitName][$namespaceName][$trait->getId()] = $trait;
 
@@ -2656,7 +2656,7 @@ class PHPBuilder implements Builder
     {
         $className = strtolower($className);
         if (!isset($this->classes[$className][$namespaceName])) {
-            $this->classes[$className][$namespaceName] = array();
+            $this->classes[$className][$namespaceName] = [];
         }
         $this->classes[$className][$namespaceName][$class->getId()] = $class;
 
@@ -2678,7 +2678,7 @@ class PHPBuilder implements Builder
     {
         $enumName = strtolower($enumName);
         if (!isset($this->classes[$enumName][$namespaceName])) {
-            $this->classes[$enumName][$namespaceName] = array();
+            $this->classes[$enumName][$namespaceName] = [];
         }
         $this->classes[$enumName][$namespaceName][$enum->getId()] = $enum;
 
@@ -2700,7 +2700,7 @@ class PHPBuilder implements Builder
     {
         $interfaceName = strtolower($interfaceName);
         if (!isset($this->interfaces[$interfaceName][$namespaceName])) {
-            $this->interfaces[$interfaceName][$namespaceName] = array();
+            $this->interfaces[$interfaceName][$namespaceName] = [];
         }
         $this->interfaces[$interfaceName][$namespaceName][$interface->getId()]
             = $interface;

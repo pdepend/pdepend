@@ -139,7 +139,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(array(), $metrics);
+        $this->assertEquals([], $metrics);
     }
 
     /**
@@ -153,7 +153,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $class    = new ASTClass('PDepend');
         $analyzer = $this->createAnalyzer();
 
-        $this->assertSame(array(), $analyzer->getNodeMetrics($class));
+        $this->assertSame([], $analyzer->getNodeMetrics($class));
     }
 
     /**

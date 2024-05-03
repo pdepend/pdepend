@@ -88,7 +88,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->metrics = array();
+            $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -112,7 +112,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             return $this->metrics[$artifact->getId()];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -129,7 +129,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             return $this->calculateHalsteadMeasures($basis);
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -181,8 +181,8 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      */
     public function calculateHalsteadBasis(AbstractASTCallable $callable)
     {
-        $operators = array();
-        $operands = array();
+        $operators = [];
+        $operands = [];
 
         $skipUntil = null;
 
@@ -359,12 +359,12 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             }
         }
 
-        $this->metrics[$callable->getId()] = array(
+        $this->metrics[$callable->getId()] = [
             'n1' => count(array_unique($operators)),
             'n2' => count(array_unique($operands)),
             'N1' => count($operators),
             'N2' => count($operands),
-        );
+        ];
     }
 
     /**
@@ -379,7 +379,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      */
     public function calculateHalsteadMeasures(array $basis)
     {
-        $measures = array();
+        $measures = [];
         $measures[self::M_HALSTEAD_LENGTH] = $basis['N1'] + $basis['N2'];
         $measures[self::M_HALSTEAD_VOCABULARY] = $basis['n1'] + $basis['n2'];
         $measures[self::M_HALSTEAD_VOLUME] =

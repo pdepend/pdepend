@@ -69,11 +69,11 @@ class PackageArtifactFilter implements ArtifactFilter
      */
     public function __construct(array $namespaces)
     {
-        $patterns = array();
+        $patterns = [];
         foreach ($namespaces as $namespace) {
             $patterns[] = str_replace('\*', '\S*', preg_quote($namespace));
         }
-        $this->pattern = '#^(' . join('|', $patterns) . ')$#D';
+        $this->pattern = '#^(' . implode('|', $patterns) . ')$#D';
     }
 
     /**

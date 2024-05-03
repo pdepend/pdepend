@@ -59,7 +59,7 @@ interface Analyzer
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(array $options = array());
+    public function __construct(array $options = []);
 
     /**
      * Adds a listener to this analyzer.
@@ -99,5 +99,5 @@ interface Analyzer
      *
      * @since 2.0.1
      */
-    public function setOptions(array $options = array());
+    public function setOptions(array $options = []);
 }

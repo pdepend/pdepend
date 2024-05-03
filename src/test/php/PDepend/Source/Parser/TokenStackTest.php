@@ -80,11 +80,11 @@ class TokenStackTest extends AbstractParserTestCase
         $stack = new TokenStack();
         $stack->push();
 
-        $expected = array(
+        $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken()),
             $stack->add($this->createToken())
-        );
+        ];
 
         $this->assertSame($expected, $stack->pop());
     }
@@ -102,10 +102,10 @@ class TokenStackTest extends AbstractParserTestCase
         $stack->add($this->createToken());
         $stack->push();
 
-        $expected = array(
+        $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken())
-        );
+        ];
 
         $this->assertSame($expected, $stack->pop());
     }
@@ -120,10 +120,10 @@ class TokenStackTest extends AbstractParserTestCase
         $stack = new TokenStack();
         $stack->push();
 
-        $expected = array(
+        $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken())
-        );
+        ];
 
         $stack->push();
         $expected[] = $stack->add($this->createToken());

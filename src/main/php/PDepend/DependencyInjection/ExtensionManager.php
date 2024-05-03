@@ -55,7 +55,7 @@ class ExtensionManager
     /**
      * @var array<Extension>
      */
-    private $extensions = array();
+    private $extensions = [];
 
     /**
      * Activate an extension based on a class name.

@@ -85,7 +85,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
             ->getMock();
-        $this->assertEquals(array(), $analyzer->getNodeMetrics($astArtifact));
+        $this->assertEquals([], $analyzer->getNodeMetrics($astArtifact));
     }
 
     /**
@@ -101,11 +101,11 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual   = array();
-        $expected = array(
-            'pdepend1' => array('n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4),
-            'pdepend2' => array('n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2),
-        );
+        $actual   = [];
+        $expected = [
+            'pdepend1' => ['n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4],
+            'pdepend2' => ['n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2],
+        ];
 
         foreach ($namespaces[0]->getFunctions() as $function) {
             $actual[$function->getName()] = $analyzer->getNodeBasisMetrics($function);
@@ -130,9 +130,9 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual   = array();
-        $expected = array(
-            'pdepend1' => array(
+        $actual   = [];
+        $expected = [
+            'pdepend1' => [
                 'hnt' => 10,
                 'hnd' => 8,
                 'hv' => 30.0,
@@ -143,8 +143,8 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
                 'hb' => 0.009410360288810284,
                 'hi' => 6.0,
 
-            ),
-            'pdepend2' => array(
+            ],
+            'pdepend2' => [
                 'hnt' => 6,
                 'hnd' => 6,
                 'hv' => 15.509775004327,
@@ -154,8 +154,8 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
                 'ht' => 3.4466166676282,
                 'hb' => 0.0052238304343202,
                 'hi' => 3.8774437510817,
-            ),
-        );
+            ],
+        ];
 
         foreach ($namespaces[0]->getFunctions() as $function) {
             $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
@@ -183,11 +183,11 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $actual   = array();
-        $expected = array(
-            'pdepend1' => array('n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4),
-            'pdepend2' => array('n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2),
-        );
+        $actual   = [];
+        $expected = [
+            'pdepend1' => ['n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4],
+            'pdepend2' => ['n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2],
+        ];
 
         foreach ($methods as $method) {
             $actual[$method->getName()] = $analyzer->getNodeBasisMetrics($method);
@@ -215,9 +215,9 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $actual   = array();
-        $expected = array(
-            'pdepend1' => array(
+        $actual   = [];
+        $expected = [
+            'pdepend1' => [
                 'hnt' => 10,
                 'hnd' => 8,
                 'hv' => 30.0,
@@ -227,8 +227,8 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
                 'ht' => 8.333333333333334,
                 'hb' => 0.009410360288810284,
                 'hi' => 6.0,
-            ),
-            'pdepend2' => array(
+            ],
+            'pdepend2' => [
                 'hnt' => 6,
                 'hnd' => 6,
                 'hv' => 15.509775004327,
@@ -238,8 +238,8 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
                 'ht' => 3.4466166676282,
                 'hb' => 0.0052238304343202,
                 'hi' => 3.8774437510817,
-            ),
-        );
+            ],
+        ];
 
         foreach ($methods as $method) {
             $actual[$method->getName()] = $analyzer->getNodeMetrics($method);

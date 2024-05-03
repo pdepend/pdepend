@@ -92,7 +92,7 @@ abstract class AbstractTestCase extends TestCase
 
         $run = __DIR__ . '/_run';
         if (file_exists($run) === false) {
-            mkdir($run, 0755);
+            mkdir($run, 0o755);
         }
 
         $this->clearRunResources($run);
@@ -392,7 +392,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return array<string>
      */
-    protected static function collectChildNodes(ASTNode $node, array $actual = array())
+    protected static function collectChildNodes(ASTNode $node, array $actual = [])
     {
         foreach ($node->getChildren() as $child) {
             $actual[] = $child::class;
@@ -424,7 +424,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected static function collectGraph(ASTNode $node)
     {
-        $graph = array();
+        $graph = [];
         foreach ($node->getChildren() as $child) {
             $graph[] = $child::class . ' (' . $child->getImage() . ')';
             if (0 < count($child->getChildren())) {
@@ -460,7 +460,7 @@ abstract class AbstractTestCase extends TestCase
     protected function getMockWithoutConstructor($className)
     {
         $mock = $this->getMockBuilder($className)
-            ->onlyMethods(array('__construct'))
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -714,7 +714,7 @@ abstract class AbstractTestCase extends TestCase
             array_unshift($parts, strtolower(array_shift($parts)));
         }
 
-        $fileName = substr(join(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
+        $fileName = substr(implode(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
         try {
             return self::createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {
@@ -745,7 +745,7 @@ abstract class AbstractTestCase extends TestCase
     public static function init()
     {
         // First register autoloader
-        spl_autoload_register(array(__CLASS__, 'autoload'));
+        spl_autoload_register([__CLASS__, 'autoload']);
 
         // Is it not installed?
         if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
@@ -834,13 +834,13 @@ abstract class AbstractTestCase extends TestCase
                 new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator($fileOrDirectory)
                 ),
-                new ExcludePathFilter(array('.svn'))
+                new ExcludePathFilter(['.svn'])
             );
         } else {
-            $it = new \ArrayIterator(array($fileOrDirectory));
+            $it = new \ArrayIterator([$fileOrDirectory]);
         }
 
-        $files = array();
+        $files = [];
         foreach ($it as $file) {
             if (is_object($file)) {
                 $files[] = realpath($file->getPathname());
@@ -882,7 +882,7 @@ abstract class AbstractTestCase extends TestCase
         );
     }
 
-    protected function getAbstractClassMock($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = array(), $cloneArguments = false)
+    protected function getAbstractClassMock($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false)
     {
         return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
@@ -891,7 +891,7 @@ abstract class AbstractTestCase extends TestCase
      * @param array<int, string> $requiredFormats
      * @return void
      */
-    protected function requireImagick(array $requiredFormats = array('PNG', 'SVG'))
+    protected function requireImagick(array $requiredFormats = ['PNG', 'SVG'])
     {
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');
