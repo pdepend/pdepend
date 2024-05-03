@@ -1,5 +1,10 @@
-before_commands:
-    - composer install
+build:
+    environment:
+        php:
+            version: 8.1
+    tests:
+        override:
+            - true
 
 checks:
     php:
@@ -7,16 +12,10 @@ checks:
         duplication: true
 
 filter:
-    excluded_paths:
-        - 'vendor/*'
-        - 'app/*'
-        - 'web/*'
-        - 'src/main/resources/*'
-        - 'src/test/resources/*'
-    paths:
-        - src/main/php
+    paths: [ "src/main/php/*" ]
+
 tools:
-    external_code_coverage: false
+    external_code_coverage: true
     php_mess_detector:
         filter:
             excluded_paths: ['vendor/*', 'app/*', 'web/*', 'src/main/resources/*', 'src/test/resources/*']
