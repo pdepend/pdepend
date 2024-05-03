@@ -148,7 +148,7 @@ class ASTFunction extends AbstractASTCallable
      * Returns the name of the parent namespace/package or <b>NULL</b> when this
      * function does not belong to a namespace.
      *
-     * @return string
+     * @return ?string
      * @since  0.10.0
      */
     public function getNamespaceName()

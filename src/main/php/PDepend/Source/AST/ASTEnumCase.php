@@ -60,7 +60,7 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
     /**
      * Returns the enum definition of this case or <b>null</b>.
      *
-     * @return ASTEnum
+     * @return ?ASTEnum
      */
     public function getEnum()
     {

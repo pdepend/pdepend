@@ -193,7 +193,7 @@ class ASTParameter extends AbstractASTArtifact
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return AbstractASTCallable
+     * @return ?AbstractASTCallable
      * @since  0.9.5
      */
     public function getDeclaringFunction()
