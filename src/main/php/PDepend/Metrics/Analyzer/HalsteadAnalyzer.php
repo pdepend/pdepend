@@ -199,31 +199,31 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_ANGLE_BRACKET_CLOSE:
                     break;
 
-                // A label is considered an operator if it is used as the target
-                // of a GOTO statement.
                 case Tokens::T_GOTO:
+                    // A label is considered an operator if it is used as the target
+                    // of a GOTO statement.
                     $operators[] = $token->image;
                     // Ignore next token as operand but count as operator instead.
                     $skipUntil = $tokens[$i + 1]->type;
                     $operators[] = $tokens[$i + 1]->image;
                     break;
 
-                /*
-                 * The following control structures case ...: for (...) if (...)
-                 * switch (...) while(...) and try-catch (...) are treated in a
-                 * special way. The colon and the parentheses are considered to
-                 * be a part of the constructs. The case and the colon or the
-                 * “for (...)”, “if (...)”, “switch (...)”, “while(...)”,
-                 * “try-catch( )” are counted together as one operator.
-                 */
-                // case Tokens::T_SWITCH: // not followed by ()
-                // case Tokens::T_TRY: // not followed by ()
-                // case Tokens::T_DO: // always comes with while, which accounts for () already
                 case Tokens::T_IF:
                 case Tokens::T_FOR:
                 case Tokens::T_FOREACH:
                 case Tokens::T_WHILE:
                 case Tokens::T_CATCH:
+                    // case Tokens::T_SWITCH: // not followed by ()
+                    // case Tokens::T_TRY: // not followed by ()
+                    // case Tokens::T_DO: // always comes with while, which accounts for () already
+                    /*
+                     * Control structures case ...: for (...) if (...)
+                     * switch (...) while(...) and try-catch (...) are treated in a
+                     * special way. The colon and the parentheses are considered to
+                     * be a part of the constructs. The case and the colon or the
+                     * “for (...)”, “if (...)”, “switch (...)”, “while(...)”,
+                     * “try-catch( )” are counted together as one operator.
+                     */
                     $operators[] = $token->image;
                     /*
                      * These are always followed by parenthesis, which would add
@@ -233,44 +233,43 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     $skipUntil = Tokens::T_PARENTHESIS_OPEN;
                     break;
 
-                /*
-                 * The ternary operator ‘?’ followed by ‘:’ is considered a
-                 * single operator as it is equivalent to “if-else” construct.
-                 */
                 case Tokens::T_COLON:
                     /*
+                     * The ternary operator ‘?’ followed by ‘:’ is considered a
+                     * single operator as it is equivalent to “if-else” construct.+
+                     *
                      * Colon is used after keyword, where it counts as part of
                      * that operator, or in ternary operator, where it also
                      * counts as 1.
                      */
                     break;
 
-                // The comments are considered neither an operator nor an operand.
                 case Tokens::T_DOC_COMMENT:
                 case Tokens::T_COMMENT:
+                    // The comments are considered neither an operator nor an operand.
                     break;
 
-                /*
-                 * `new` is considered same as the function call, mainly because
-                 * it's equivalent to the function call.
-                 */
                 case Tokens::T_NEW:
+                    /*
+                     * `new` is considered same as the function call, mainly because
+                     * it's equivalent to the function call.
+                     */
                     break;
 
-                /*
-                 * Like T_IF & co, array(..) needs 3 tokens ("array", "(" and
-                 * ")") for what's essentially just 1 operator.
-                 */
                 case Tokens::T_ARRAY:
+                    /*
+                     * Like T_IF & co, array(..) needs 3 tokens ("array", "(" and
+                     * ")") for what's essentially just 1 operator.
+                     */
                     break;
 
-                /*
-                 * Class::method or $object->method both only count as 1
-                 * identifier, even though they consist of 3 tokens.
-                 */
                 case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
                 case Tokens::T_OBJECT_OPERATOR:
                 case Tokens::T_DOUBLE_COLON:
+                    /*
+                     * Class::method or $object->method both only count as 1
+                     * identifier, even though they consist of 3 tokens.
+                     */
                     // Glue ->/:: and before & after parts together.
                     $image = array_pop($operands) . $token->image . $tokens[$i + 1]->image;
                     $operands[] = $image;
@@ -279,25 +278,25 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     $skipUntil = $tokens[$i + 1]->type;
                     break;
 
-                // Ignore HEREDOC delimiters.
                 case Tokens::T_START_HEREDOC:
                 case Tokens::T_END_HEREDOC:
+                    // Ignore HEREDOC delimiters.
                     break;
 
-                // Ignore PHP open & close tags and non-PHP content.
                 case Tokens::T_OPEN_TAG:
                 case Tokens::T_CLOSE_TAG:
                 case Tokens::T_NO_PHP:
+                    // Ignore PHP open & close tags and non-PHP content.
                     break;
 
-                /*
-                 * The function name is considered a single operator when it
-                 * appears as calling a function, but when it appears in
-                 * declarations or in function definitions it is not counted as
-                 * operator.
-                 * Default parameter assignments are not counted.
-                 */
                 case Tokens::T_FUNCTION:
+                    /*
+                     * The function name is considered a single operator when it
+                     * appears as calling a function, but when it appears in
+                     * declarations or in function definitions it is not counted as
+                     * operator.
+                     * Default parameter assignments are not counted.
+                     */
                     // Because `)` could appear in default argument assignment
                     // (`$var = array()`), we need to skip until `{`, but that
                     // one should be included in operators.
@@ -305,13 +304,13 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     $operators[] = '{';
                     break;
 
-                /*
-                 * When variables or constants appear in declaration they are
-                 * not considered as operands, they are considered operands only
-                 * when they appear with operators in expressions.
-                 */
                 case Tokens::T_VAR:
                 case Tokens::T_CONST:
+                    /*
+                     * When variables or constants appear in declaration they are
+                     * not considered as operands, they are considered operands only
+                     * when they appear with operators in expressions.
+                     */
                     $skipUntil = Tokens::T_SEMICOLON;
                     break;
                 case Tokens::T_STRING:
@@ -324,7 +323,6 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     }
                     break;
 
-                // Operands
                 case Tokens::T_CONSTANT_ENCAPSED_STRING:
                 case Tokens::T_VARIABLE:
                 case Tokens::T_LNUMBER:
@@ -342,8 +340,8 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     $operands[] = $token->image;
                     break;
 
-                // Everything else is an operator.
                 default:
+                    // Everything else is an operator.
                     $operators[] = $token->image;
                     break;
             }
