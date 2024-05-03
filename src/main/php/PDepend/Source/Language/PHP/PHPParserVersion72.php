@@ -74,24 +74,6 @@ use PDepend\Source\Tokenizer\Tokens;
 abstract class PHPParserVersion72 extends AbstractPHPParser
 {
     /**
-     * use Foo\Bar\{TestA, TestB,} trailing comma is supported since PHP 7.2
-     */
-    protected function allowUseGroupDeclarationTrailingComma(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Return true if current PHP level supports keys in lists.
-     *
-     * @return bool
-     */
-    protected function supportsKeysInList()
-    {
-        return true;
-    }
-
-    /**
      * This methods return true if the token matches a list opening in the current PHP version level.
      *
      * @param int $tokenType
@@ -225,16 +207,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         } while ($repeat === true);
     }
 
-    /**
-     * Return true if [, $foo] or [$foo, , $bar] is allowed.
-     *
-     * @return bool
-     */
-    protected function canHaveCommaBetweenArrayElements()
-    {
-        return true;
-    }
-
     private function consumeQuestionMark(): void
     {
         if ($this->tokenizer->peek() === Tokens::T_QUESTION_MARK) {
@@ -264,18 +236,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
         }
 
         return $modifiers;
-    }
-
-    /**
-     * Return true if the current node can be used as a list key.
-     *
-     * @param ASTExpression|null $node
-     * @return bool
-     */
-    protected function canBeListKey($node)
-    {
-        // Starting with PHP 7.1, any expression can be used as list key
-        return true;
     }
 
     /**
@@ -698,9 +658,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
                     $this->consumeToken($nextToken);
             }
 
-            if ($this->allowUseGroupDeclarationTrailingComma() &&
-                Tokens::T_CURLY_BRACE_CLOSE === $this->tokenizer->peek()
-            ) {
+            if (Tokens::T_CURLY_BRACE_CLOSE === $this->tokenizer->peek()) {
                 break;
             }
 

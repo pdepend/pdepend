@@ -1799,16 +1799,6 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * Return true if current PHP level supports keys in lists.
-     *
-     * @return bool
-     */
-    protected function supportsKeysInList()
-    {
-        return false;
-    }
-
-    /**
      * This method parses a single list-statement node.
      *
      * @return ASTListExpression
@@ -1867,19 +1857,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * Return true if the current node can be used as a list key.
-     *
-     * @param ASTNode|null $node
-     * @return bool
-     */
-    protected function canBeListKey($node)
-    {
-        return !$this->isReadWriteVariable($node);
-    }
-
-    /**
      * Parse individual slot of a list() expression.
-     *
      * @return ASTNode
      */
     private function parseListSlotExpression()
@@ -1887,11 +1865,7 @@ abstract class AbstractPHPParser
         $startToken = $this->tokenizer->currentToken();
         $node = $this->parseOptionalExpression();
 
-        if ($node && $this->canBeListKey($node) && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
-            if (!$this->supportsKeysInList()) {
-                throw $this->getUnexpectedTokenException($startToken);
-            }
-
+        if ($node && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
             $this->consumeComments();
             $this->consumeToken(Tokens::T_DOUBLE_ARROW);
             $this->consumeComments();
@@ -5424,16 +5398,6 @@ abstract class AbstractPHPParser
     abstract protected function parseArray(ASTArray $array, $static = false);
 
     /**
-     * Return true if [, $foo] or [$foo, , $bar] is allowed.
-     *
-     * @return bool
-     */
-    protected function canHaveCommaBetweenArrayElements()
-    {
-        return false;
-    }
-
-    /**
      * Parses all elements in an array.
      *
      * @param int $endDelimiter
@@ -5449,7 +5413,7 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         while ($endDelimiter !== $this->tokenizer->peek()) {
-            while ($this->canHaveCommaBetweenArrayElements() && Tokens::T_COMMA === $this->tokenizer->peek()) {
+            while (Tokens::T_COMMA === $this->tokenizer->peek()) {
                 $this->consumeToken(Tokens::T_COMMA);
                 $this->consumeComments();
             }
