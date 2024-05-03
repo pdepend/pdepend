@@ -110,7 +110,7 @@ class FileCacheDirectory
     {
         $path = $this->getCacheDir() . '/' . substr($key, 0, 2);
         if (false === file_exists($path)) {
-            @mkdir($path, 0775, true);
+            @mkdir($path, 0o775, true);
         }
         return $path;
     }
@@ -125,7 +125,7 @@ class FileCacheDirectory
     protected function ensureExists($cacheDir)
     {
         if (false === file_exists($cacheDir)) {
-            @mkdir($cacheDir, 0775, true);
+            @mkdir($cacheDir, 0o775, true);
         }
         return $cacheDir;
     }

@@ -162,13 +162,13 @@ class ASTCompilationUnitTest extends AbstractTestCase
             ->will($this->returnValue($cache));
         $cache->expects($this->once())
             ->method('store')
-            ->with($this->equalTo(__FUNCTION__), $this->equalTo(array(1, 2, 3)));
+            ->with($this->equalTo(__FUNCTION__), $this->equalTo([1, 2, 3]));
 
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setCache($cache);
         $compilationUnit->setId(__FUNCTION__);
 
-        $compilationUnit->setTokens(array(1, 2, 3));
+        $compilationUnit->setTokens([1, 2, 3]);
     }
 
     /**
@@ -219,7 +219,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     {
         $file = new ASTCompilationUnit(__FILE__);
         $this->assertEquals(
-            array(
+            [
                 'cache',
                 'childNodes',
                 'comment',
@@ -227,7 +227,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
                 'fileName',
                 'startLine',
                 'id'
-            ),
+            ],
             $file->__sleep()
         );
     }
@@ -240,8 +240,8 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes(): void
     {
         $node = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
-            ->onlyMethods(array('setCompilationUnit'))
-            ->setConstructorArgs(array(__CLASS__))
+            ->onlyMethods(['setCompilationUnit'])
+            ->setConstructorArgs([__CLASS__])
             ->getMock();
         $node->expects($this->once())
             ->method('setCompilationUnit')

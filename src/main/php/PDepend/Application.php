@@ -158,10 +158,10 @@ class Application
      */
     private function createContainer()
     {
-        $extensions = array(new PdependExtension());
+        $extensions = [new PdependExtension()];
 
-        $container = new ContainerBuilder(new ParameterBag(array()));
-        $container->prependExtensionConfig('pdepend', array());
+        $container = new ContainerBuilder(new ParameterBag([]));
+        $container->prependExtensionConfig('pdepend', []);
         $container->addCompilerPass(new DependencyInjection\Compiler\ProcessListenerPass());
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../resources'));
@@ -210,15 +210,15 @@ class Application
 
         $loggerServices = $container->findTaggedServiceIds($serviceTag);
 
-        $options = array();
+        $options = [];
 
         foreach ($loggerServices as $loggerServiceTags) {
             foreach ($loggerServiceTags as $loggerServiceTag) {
                 if (isset($loggerServiceTag['option'], $loggerServiceTag['message']) && is_string($loggerServiceTag['option']) && is_string($loggerServiceTag['message'])) {
-                    $options[$loggerServiceTag['option']] = array(
+                    $options[$loggerServiceTag['option']] = [
                         'message' => $loggerServiceTag['message'],
                         'value' => isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file',
-                    );
+                    ];
                 }
             }
         }

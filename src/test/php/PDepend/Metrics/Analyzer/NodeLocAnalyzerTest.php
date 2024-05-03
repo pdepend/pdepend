@@ -90,38 +90,38 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $expected = array(
-            'func_with_comment'  =>  array(
+        $expected = [
+            'func_with_comment'  =>  [
                 'loc'    =>  6,
                 'cloc'   =>  3,
                 'eloc'   =>  2,
                 'lloc'   =>  0,
                 'ncloc'  =>  3
-            ),
-            'func_without_comment'  =>  array(
+            ],
+            'func_without_comment'  =>  [
                 'loc'    =>  7,
                 'cloc'   =>  4,
                 'eloc'   =>  2,
                 'lloc'   =>  0,
                 'ncloc'  =>  3,
-            ),
-            'func_without_doc_comment'  =>  array(
+            ],
+            'func_without_doc_comment'  =>  [
                 'loc'    =>  3,
                 'cloc'   =>  0,
                 'eloc'   =>  2,
                 'lloc'   =>  0,
                 'ncloc'  =>  3,
-            ),
-            'another_func_with_comment'  =>  array(
+            ],
+            'another_func_with_comment'  =>  [
                 'loc'    =>  4,
                 'cloc'   =>  1,
                 'eloc'   =>  2,
                 'lloc'   =>  0,
                 'ncloc'  =>  3,
-            ),
-        );
+            ],
+        ];
 
-        $actual = array();
+        $actual = [];
         foreach ($functions as $function) {
             $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
         }
@@ -149,13 +149,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($file);
-        $expected = array(
+        $expected = [
             'loc'    =>  31,
             'cloc'   =>  15,
             'eloc'   =>  13,
             'lloc'   =>  4,
             'ncloc'  =>  16
-        );
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -234,13 +234,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($file);
-        $expected = array(
+        $expected = [
             'loc'    =>  21,
             'cloc'   =>  10,
             'eloc'   =>  8,
             'lloc'   =>  4,
             'ncloc'  =>  11
-        );
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -260,13 +260,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($class);
-        $expected = array(
+        $expected = [
             'loc'    =>  22,
             'cloc'   =>  7,
             'eloc'   =>  3,
             'lloc'   =>  1,
             'ncloc'  =>  15
-        );
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -287,13 +287,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($file);
-        $expected = array(
+        $expected = [
             'loc'    =>  21,
             'cloc'   =>  10,
             'eloc'   =>  8,
             'lloc'   =>  4,
             'ncloc'  =>  11
-        );
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -313,13 +313,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getNodeMetrics($interface);
-        $expected = array(
+        $expected = [
             'loc'    =>  17,
             'cloc'   =>  7,
             'eloc'   =>  0,
             'lloc'   =>  0,
             'ncloc'  =>  10
-        );
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -336,13 +336,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $actual   = $analyzer->getProjectMetrics();
-        $expected = array(
+        $expected = [
             'loc'    =>  261,
             'cloc'   =>  144,
             'eloc'   =>  89,
             'lloc'   =>  40,
             'ncloc'  =>  117
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -691,7 +691,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->visitCompilationUnit($compilationUnit);
 
         $metrics = $analyzer->getNodeMetrics($compilationUnit);
-        $this->assertEquals(array(), $metrics);
+        $this->assertEquals([], $metrics);
     }
 
     /**

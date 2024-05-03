@@ -63,7 +63,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var AbstractASTClassOrInterface[]
      */
-    protected $types = array();
+    protected $types = [];
 
     /**
      * List of all standalone {@link ASTFunction} objects
@@ -71,7 +71,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var ASTFunction[]
      */
-    protected $functions = array();
+    protected $functions = [];
 
     /**
      * Does this namespace contain user defined functions, classes or interfaces?
@@ -202,9 +202,9 @@ class ASTNamespace extends AbstractASTArtifact
      */
     private function getTypesOfType($className)
     {
-        $types = array();
+        $types = [];
         foreach ($this->types as $type) {
-            if ($type instanceof $className && get_class($type) === $className) {
+            if ($type instanceof $className && $type::class === $className) {
                 $types[] = $type;
             }
         }

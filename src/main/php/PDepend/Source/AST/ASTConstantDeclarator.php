@@ -137,6 +137,6 @@ class ASTConstantDeclarator extends AbstractASTNode
      */
     public function __sleep()
     {
-        return array_merge(array('value'), parent::__sleep());
+        return array_merge(['value'], parent::__sleep());
     }
 }

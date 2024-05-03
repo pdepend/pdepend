@@ -114,16 +114,16 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
      */
     public static function dataProviderParserSetsExpectedPrimitivePropertyType()
     {
-        return array(
-            array('int',     'integer'),
-            array('INTEger', 'integer'),
-            array('float',   'float'),
-            array('real',    'float'),
-            array('double',  'float'),
-            array('bool',    'boolean'),
-            array('boolean', 'boolean'),
-            array('false',   'boolean'),
-            array('true',    'boolean'),
-        );
+        return [
+            ['int',     'integer'],
+            ['INTEger', 'integer'],
+            ['float',   'float'],
+            ['real',    'float'],
+            ['double',  'float'],
+            ['bool',    'boolean'],
+            ['boolean', 'boolean'],
+            ['false',   'boolean'],
+            ['true',    'boolean'],
+        ];
     }
 }

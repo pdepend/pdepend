@@ -69,12 +69,12 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
         );
 
         $this->assertEquals(
-            array(
+            [
                 'context',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $reference->__sleep()
         );
     }

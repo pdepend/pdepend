@@ -64,7 +64,7 @@ class IdBuilder
     /**
      * @var array<string, array<string, int>>
      */
-    private $offsetInFile = array();
+    private $offsetInFile = [];
 
     /**
      * Generates an identifier for the given file instance.
@@ -95,7 +95,7 @@ class IdBuilder
     {
         return $this->forOffsetItem(
             $type,
-            ltrim(strrchr(strtolower(get_class($type)), '_') ?: '', '_'),
+            ltrim(strrchr(strtolower($type::class), '_') ?: '', '_'),
         );
     }
 

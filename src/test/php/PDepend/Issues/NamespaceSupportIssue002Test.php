@@ -507,14 +507,14 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserResolvesQualifiedTypeNameInFunction()
     {
-        return array(
-            array('issues/002-015-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-019-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-023-resolve-qualified-type-names.php', 'foo\baz'),
-            array('issues/002-027-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-047-resolve-qualified-type-names.php', 'foo\foo'),
-            array('issues/002-051-resolve-qualified-type-names.php', 'baz\baz'),
-        );
+        return [
+            ['issues/002-015-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-019-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-023-resolve-qualified-type-names.php', 'foo\baz'],
+            ['issues/002-027-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-047-resolve-qualified-type-names.php', 'foo\foo'],
+            ['issues/002-051-resolve-qualified-type-names.php', 'baz\baz'],
+        ];
     }
 
     /**
@@ -525,13 +525,13 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserResolvesQualifiedTypeNameInTypeSignature()
     {
-        return array(
-            array('issues/002-031-resolve-qualified-type-names.php', 'baz'),
-            array('issues/002-035-resolve-qualified-type-names.php', 'baz'),
-            array('issues/002-039-resolve-qualified-type-names.php', 'baz'),
-            array('issues/002-043-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-046-resolve-qualified-type-names.php', 'foo\foo'),
-        );
+        return [
+            ['issues/002-031-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-035-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-039-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-043-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-046-resolve-qualified-type-names.php', 'foo\foo'],
+        ];
     }
 
     /**
@@ -542,14 +542,14 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserKeepsQualifiedTypeNameInFunction()
     {
-        return array(
-            array('issues/002-016-resolve-qualified-type-names.php', ''),
-            array('issues/002-020-resolve-qualified-type-names.php', ''),
-            array('issues/002-024-resolve-qualified-type-names.php', 'baz'),
-            array('issues/002-028-resolve-qualified-type-names.php', 'bar'),
-            array('issues/002-048-resolve-qualified-type-names.php', 'foo'),
-            array('issues/002-052-resolve-qualified-type-names.php', 'bar'),
-        );
+        return [
+            ['issues/002-016-resolve-qualified-type-names.php', ''],
+            ['issues/002-020-resolve-qualified-type-names.php', ''],
+            ['issues/002-024-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-028-resolve-qualified-type-names.php', 'bar'],
+            ['issues/002-048-resolve-qualified-type-names.php', 'foo'],
+            ['issues/002-052-resolve-qualified-type-names.php', 'bar'],
+        ];
     }
 
     /**
@@ -560,11 +560,11 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserKeepsQualifiedTypeNameInTypeSignature()
     {
-        return array(
-            array('issues/002-032-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-036-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-040-resolve-qualified-type-names.php', 'foo\bar'),
-        );
+        return [
+            ['issues/002-032-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-036-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-040-resolve-qualified-type-names.php', 'foo\bar'],
+        ];
     }
 
     /**
@@ -575,13 +575,13 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax()
     {
-        return array(
-            array('issues/002-017-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-021-resolve-qualified-type-names.php', 'foo\bar'),
-            array('issues/002-025-resolve-qualified-type-names.php', 'foo\bar\baz'),
-            array('issues/002-029-resolve-qualified-type-names.php', 'foo\bar\baz'),
-            array('issues/002-049-resolve-qualified-type-names.php', 'bar\bar'),
-        );
+        return [
+            ['issues/002-017-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-021-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-025-resolve-qualified-type-names.php', 'foo\bar\baz'],
+            ['issues/002-029-resolve-qualified-type-names.php', 'foo\bar\baz'],
+            ['issues/002-049-resolve-qualified-type-names.php', 'bar\bar'],
+        ];
     }
 
     /**
@@ -592,12 +592,12 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax()
     {
-        return array(
-            array('issues/002-033-resolve-qualified-type-names.php', 'baz\foo'),
-            array('issues/002-037-resolve-qualified-type-names.php', 'baz\foo'),
-            array('issues/002-041-resolve-qualified-type-names.php', 'baz\foo'),
-            array('issues/002-044-resolve-qualified-type-names.php', 'foo\foo'),
-        );
+        return [
+            ['issues/002-033-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-037-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-041-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-044-resolve-qualified-type-names.php', 'foo\foo'],
+        ];
     }
 
     /**
@@ -608,13 +608,13 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax()
     {
-        return array(
-            array('issues/002-018-resolve-qualified-type-names.php', ''),
-            array('issues/002-022-resolve-qualified-type-names.php', ''),
-            array('issues/002-026-resolve-qualified-type-names.php', 'baz'),
-            array('issues/002-030-resolve-qualified-type-names.php', 'baz'),
-            array('issues/002-050-resolve-qualified-type-names.php', 'baz\baz'),
-        );
+        return [
+            ['issues/002-018-resolve-qualified-type-names.php', ''],
+            ['issues/002-022-resolve-qualified-type-names.php', ''],
+            ['issues/002-026-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-030-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-050-resolve-qualified-type-names.php', 'baz\baz'],
+        ];
     }
 
     /**
@@ -625,11 +625,11 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      */
     public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax()
     {
-        return array(
-            array('issues/002-034-resolve-qualified-type-names.php', 'baz\foo'),
-            array('issues/002-038-resolve-qualified-type-names.php', 'baz\foo'),
-            array('issues/002-042-resolve-qualified-type-names.php', 'baz\foo'),
-            array('issues/002-045-resolve-qualified-type-names.php', 'foo\foo'),
-        );
+        return [
+            ['issues/002-034-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-038-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-042-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-045-resolve-qualified-type-names.php', 'foo\foo'],
+        ];
     }
 }

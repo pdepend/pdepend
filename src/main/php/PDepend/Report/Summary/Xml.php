@@ -90,7 +90,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var ASTCompilationUnit[]
      */
-    protected $fileSet = array();
+    protected $fileSet = [];
 
     /**
      * List of all analyzers that implement the node aware interface
@@ -98,7 +98,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var AnalyzerNodeAware[]
      */
-    private $nodeAwareAnalyzers = array();
+    private $nodeAwareAnalyzers = [];
 
     /**
      * List of all analyzers that implement the node aware interface
@@ -106,14 +106,14 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var AnalyzerProjectAware[]
      */
-    private $projectAwareAnalyzers = array();
+    private $projectAwareAnalyzers = [];
 
     /**
      * The internal used xml stack.
      *
      * @var DOMElement[]
      */
-    private $xmlStack = array();
+    private $xmlStack = [];
 
     /**
      * Sets the output log file.
@@ -133,7 +133,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function getAcceptedAnalyzers()
     {
-        return array(
+        return [
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.node_loc',
             'pdepend.analyzer.npath_complexity',
@@ -147,7 +147,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             'pdepend.analyzer.cohesion',
             'pdepend.analyzer.halstead',
             'pdepend.analyzer.maintainability',
-        );
+        ];
     }
 
     /**
@@ -241,7 +241,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     private function getProjectMetrics()
     {
-        $projectMetrics = array();
+        $projectMetrics = [];
         foreach ($this->projectAwareAnalyzers as $analyzer) {
             $projectMetrics = array_merge(
                 $projectMetrics,
@@ -404,7 +404,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected function writeNodeMetrics(DOMElement $xml, AbstractASTArtifact $node): void
     {
-        $metrics = array();
+        $metrics = [];
         foreach ($this->nodeAwareAnalyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
         }

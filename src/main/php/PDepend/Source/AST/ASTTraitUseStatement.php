@@ -67,7 +67,7 @@ class ASTTraitUseStatement extends ASTStatement
     public function getAllMethods()
     {
         if ($this->allMethods === null) {
-            $this->allMethods = array();
+            $this->allMethods = [];
 
             foreach ($this->nodes as $node) {
                 if ($node instanceof ASTTraitReference) {
@@ -139,7 +139,7 @@ class ASTTraitUseStatement extends ASTStatement
     {
         $name = strtolower($method->getName());
 
-        $newNames = array();
+        $newNames = [];
         foreach ($this->getAliases() as $alias) {
             $name2 = strtolower($alias->getImage());
             if ($name2 !== $name) {
@@ -187,7 +187,7 @@ class ASTTraitUseStatement extends ASTStatement
         if (count($newNames) > 0) {
             return $newNames;
         }
-        return array($method);
+        return [$method];
     }
 
     /**

@@ -88,7 +88,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      *
      * @var array<int>
      */
-    private $rootClasses = array();
+    private $rootClasses = [];
 
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
@@ -144,7 +144,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -161,11 +161,11 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      */
     public function getProjectMetrics()
     {
-        return array(
+        return [
             self::M_AVERAGE_NUMBER_DERIVED_CLASSES  =>  $this->andc,
             self::M_AVERAGE_HIERARCHY_HEIGHT        =>  $this->ahh,
             self::M_MAXIMUM_INHERITANCE_DEPTH       =>  $this->maxDIT,
-        );
+        ];
     }
 
     /**
@@ -174,7 +174,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             $this->fireStartAnalyzer();
             $this->doAnalyze($namespaces);
@@ -282,7 +282,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             return;
         }
 
-        $parentMethodNames = array();
+        $parentMethodNames = [];
         foreach ($parentClass->getAllMethods() as $method) {
             $parentMethodNames[$method->getName()] = $method->isAbstract();
         }
@@ -324,12 +324,12 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
 
         ++$this->numberOfClasses;
 
-        $this->nodeMetrics[$id] = array(
+        $this->nodeMetrics[$id] = [
             self::M_DEPTH_OF_INHERITANCE_TREE     => 0,
             self::M_NUMBER_OF_ADDED_METHODS       => 0,
             self::M_NUMBER_OF_DERIVED_CLASSES     => 0,
             self::M_NUMBER_OF_OVERWRITTEN_METHODS => 0,
-        );
+        ];
 
         foreach ($class->getParentClasses() as $parent) {
             $this->initNodeMetricsForClass($parent);

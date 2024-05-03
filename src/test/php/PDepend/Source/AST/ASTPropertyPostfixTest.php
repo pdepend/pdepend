@@ -114,13 +114,13 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixGraphForArrayElementInvocation(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTArrayIndexExpression',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTLiteral'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -137,13 +137,13 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixGraphForPropertyArrayElementInvocation(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTArrayIndexExpression',
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -156,11 +156,11 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForSimpleIdentifierAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTIdentifier'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -173,11 +173,11 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForVariableAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -190,12 +190,12 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForVariableVariableAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTVariableVariable',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -208,7 +208,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForCompoundVariableAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTCompoundVariable',
@@ -216,7 +216,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
             'PDepend\\Source\\AST\\ASTConstant',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -229,12 +229,12 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForCompoundExpressionAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTCompoundExpression',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -247,11 +247,11 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForStaticVariableAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -264,11 +264,11 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForStaticAccessOnVariable(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -281,11 +281,11 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForSelfVariableAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTSelfReference',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -298,11 +298,11 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixStructureForParentVariableAccess(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTParentReference',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTVariable'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -319,13 +319,13 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixGraphForObjectPropertyArrayIndexExpression(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTArrayIndexExpression',
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTLiteral'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }
@@ -342,13 +342,13 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixGraphForStaticPropertyArrayIndexExpression(): void
     {
         $prefix   = $this->getFirstMemberPrimaryPrefixInClass(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTSelfReference',
             'PDepend\\Source\\AST\\ASTPropertyPostfix',
             'PDepend\\Source\\AST\\ASTArrayIndexExpression',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTLiteral'
-        );
+        ];
 
         $this->assertGraphEquals($prefix, $expected);
     }

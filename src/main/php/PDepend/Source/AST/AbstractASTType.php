@@ -102,7 +102,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @var ASTNode[]
      */
-    protected $nodes = array();
+    protected $nodes = [];
 
     /**
      * Name of the parent namespace for this class or interface instance. Or
@@ -126,7 +126,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @since 1.0.2
      */
-    protected $methods = array();
+    protected $methods = [];
 
 
     /**
@@ -245,7 +245,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @todo   Refactor $_methods property to getAllMethods() when it exists.
      */
-    public function findChildrenOfType($targetType, array &$results = array())
+    public function findChildrenOfType($targetType, array &$results = [])
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
@@ -333,7 +333,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     protected function getTraitMethods()
     {
-        $methods = array();
+        $methods = [];
 
         /** @var ASTTraitUseStatement[] */
         $uses = $this->findChildrenOfType(
@@ -341,7 +341,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         );
 
         foreach ($uses as $use) {
-            $priorMethods = array();
+            $priorMethods = [];
             $precedences = $use->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
 
             foreach ($precedences as $precedence) {
@@ -396,7 +396,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function setTokens(array $tokens, ?Token $startToken = null): void
     {
-        if ($tokens === array()) {
+        if ($tokens === []) {
             throw new InvalidArgumentException('An AST node should contain at least one token');
         }
 
@@ -508,7 +508,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             $this->methods = null;
         }
 
-        return array(
+        return [
             'cache',
             'context',
             'comment',
@@ -520,7 +520,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             'startLine',
             'userDefined',
             'id',
-        );
+        ];
     }
 
     /**

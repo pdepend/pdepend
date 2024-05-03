@@ -75,7 +75,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * @param array<string, mixed> $projectMetrics Dummy project metrics.
      * @param array<string, array> $nodeMetrics    Dummy node metrics.
      */
-    public function __construct(array $projectMetrics = array(), array $nodeMetrics = array())
+    public function __construct(array $projectMetrics = [], array $nodeMetrics = [])
     {
         $this->projectMetrics = $projectMetrics;
         $this->nodeMetrics    = $nodeMetrics;

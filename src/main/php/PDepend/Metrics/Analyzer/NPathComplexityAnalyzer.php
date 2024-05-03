@@ -89,7 +89,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             $this->loadCache();
             $this->fireStartAnalyzer();
 
-            $this->metrics = array();
+            $this->metrics = [];
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
             }
@@ -114,9 +114,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        $metric = array();
+        $metric = [];
         if (isset($this->metrics[$artifact->getId()])) {
-            $metric = array(self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getId()]);
+            $metric = [self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getId()]];
         }
         return $metric;
     }

@@ -70,7 +70,7 @@ class MemoryCacheDriver implements CacheDriver
      *
      * @var array<string, array<int, mixed>>
      */
-    protected $cache = array();
+    protected $cache = [];
 
     /**
      * Current cache entry type.
@@ -91,7 +91,7 @@ class MemoryCacheDriver implements CacheDriver
      *
      * @var array<string, array<string, array<int, mixed>>>
      */
-    protected static $staticCache = array();
+    protected static $staticCache = [];
 
     /**
      * Instantiates a new in memory cache instance.
@@ -132,7 +132,7 @@ class MemoryCacheDriver implements CacheDriver
      */
     public function store($key, $data, $hash = null): void
     {
-        $this->cache[$this->getCacheKey($key)] = array($hash, $data);
+        $this->cache[$this->getCacheKey($key)] = [$hash, $data];
     }
 
     /**
@@ -199,7 +199,7 @@ class MemoryCacheDriver implements CacheDriver
     {
         self::$staticCache[$this->staticId] = $this->cache;
 
-        return array('staticId');
+        return ['staticId'];
     }
 
     /**

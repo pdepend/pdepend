@@ -121,5 +121,5 @@ class ReportGeneratorFactory
      *
      * @var ReportGenerator[]
      */
-    protected $instances = array();
+    protected $instances = [];
 }

@@ -109,7 +109,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      *
      * @since 0.10.0
      */
-    protected $childNodes = array();
+    protected $childNodes = [];
 
     /**
      * Was this file instance restored from the cache?
@@ -300,7 +300,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function __sleep()
     {
-        return array(
+        return [
             'cache',
             'childNodes',
             'comment',
@@ -308,7 +308,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
             'fileName',
             'startLine',
             'id',
-        );
+        ];
     }
 
     /**
@@ -354,7 +354,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
                 throw new RuntimeException('File not found ' . $this->fileName);
             }
 
-            $this->source = str_replace(array("\r\n", "\r"), "\n", $source);
+            $this->source = str_replace(["\r\n", "\r"], "\n", $source);
 
             $this->startLine = 1;
             $this->endLine   = substr_count($this->source, "\n") + 1;

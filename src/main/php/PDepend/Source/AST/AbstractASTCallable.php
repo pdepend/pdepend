@@ -82,7 +82,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @since 0.9.5
      */
-    protected $exceptionClassReferences = array();
+    protected $exceptionClassReferences = [];
 
     /**
      * Does this callable return a value by reference?
@@ -98,7 +98,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @since 0.9.6
      */
-    protected $nodes = array();
+    protected $nodes = [];
 
     /**
      * The start line number of the method or function declaration.
@@ -207,7 +207,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @since  0.9.6
      */
-    public function findChildrenOfType($targetType, array &$results = array())
+    public function findChildrenOfType($targetType, array &$results = [])
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
@@ -237,7 +237,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      */
     public function setTokens(array $tokens): void
     {
-        if ($tokens === array()) {
+        if ($tokens === []) {
             throw new InvalidArgumentException('An AST node should contain at least one token');
         }
 
@@ -427,7 +427,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      */
     public function getStaticVariables()
     {
-        $staticVariables = array();
+        $staticVariables = [];
 
         $declarations = $this->findChildrenOfType(
             'PDepend\\Source\\AST\\ASTStaticVariableDeclaration',
@@ -470,7 +470,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      */
     private function initParameters(): void
     {
-        $parameters = array();
+        $parameters = [];
 
         $formalParameters = $this->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTFormalParameters',
@@ -510,7 +510,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      */
     public function __sleep()
     {
-        return array(
+        return [
             'cache',
             'id',
             'name',
@@ -521,6 +521,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'returnsReference',
             'returnClassReference',
             'exceptionClassReferences',
-        );
+        ];
     }
 }

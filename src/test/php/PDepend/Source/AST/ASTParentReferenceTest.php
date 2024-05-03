@@ -85,13 +85,13 @@ class ASTParentReferenceTest extends ASTNodeTestCase
     {
         $reference = $this->createNodeInstance();
         $this->assertEquals(
-            array(
+            [
                 'reference',
                 'context',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $reference->__sleep()
         );
     }

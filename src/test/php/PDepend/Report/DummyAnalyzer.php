@@ -61,14 +61,14 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      *
      * @var array
      */
-    public $projectMetrics = array();
+    public $projectMetrics = [];
 
     /**
      * Test node metrics.
      *
      * @var array
      */
-    public $nodeMetrics = array();
+    public $nodeMetrics = [];
 
     /**
      * Constructs a new analyzer instance.
@@ -76,7 +76,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
     }
 
@@ -101,7 +101,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
         if (isset($this->nodeMetrics[$artifact->getName()])) {
             return $this->nodeMetrics[$artifact->getName()];
         }
-        return array();
+        return [];
     }
 
     /**

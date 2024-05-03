@@ -94,7 +94,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->metrics = array();
+            $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -146,7 +146,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (isset($this->metrics[$artifact->getId()])) {
             return $this->metrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -156,10 +156,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function getProjectMetrics()
     {
-        return array(
+        return [
             self::M_CYCLOMATIC_COMPLEXITY_1  =>  $this->ccn,
             self::M_CYCLOMATIC_COMPLEXITY_2  =>  $this->ccn2,
-        );
+        ];
     }
 
     /**
@@ -207,10 +207,10 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function calculateComplexity(AbstractASTCallable $callable): void
     {
-        $data = array(
+        $data = [
             self::M_CYCLOMATIC_COMPLEXITY_1 => 1,
             self::M_CYCLOMATIC_COMPLEXITY_2 => 1,
-        );
+        ];
 
         foreach ($callable->getChildren() as $child) {
             $data = $child->accept($this, $data);

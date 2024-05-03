@@ -62,8 +62,8 @@ class ExtensionFilterTest extends AbstractTestCase
      */
     public function testExtensionFilterAcceptsOneFileExtension(): void
     {
-        $actual   = $this->createFilteredFileList(array('php4'));
-        $expected = array('file4.php4');
+        $actual   = $this->createFilteredFileList(['php4']);
+        $expected = ['file4.php4'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -75,8 +75,8 @@ class ExtensionFilterTest extends AbstractTestCase
      */
     public function testExtensionFilterAcceptsMultipleFileExtensions(): void
     {
-        $actual   = $this->createFilteredFileList(array('inc', 'php'));
-        $expected = array('file1.inc', 'file2.php');
+        $actual   = $this->createFilteredFileList(['inc', 'php']);
+        $expected = ['file1.inc', 'file2.php'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -86,7 +86,7 @@ class ExtensionFilterTest extends AbstractTestCase
      */
     public function testExtensionFilterAcceptsPhpProtocol(): void
     {
-        $filter = new ExtensionFilter(array('abc'));
+        $filter = new ExtensionFilter(['abc']);
 
         $this->assertTrue($filter->accept('', 'php://def'));
     }
@@ -109,7 +109,7 @@ class ExtensionFilterTest extends AbstractTestCase
             )
         );
 
-        $actual = array();
+        $actual = [];
         foreach ($files as $file) {
             if ($filter->accept($file, $file)
                 && $file->isFile()

@@ -103,7 +103,7 @@ class ChartTest extends AbstractTestCase
     public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Chart();
-        $this->assertEquals(array('pdepend.analyzer.dependency'), $logger->getAcceptedAnalyzers());
+        $this->assertEquals(['pdepend.analyzer.dependency'], $logger->getAcceptedAnalyzers());
     }
 
     /**
@@ -234,27 +234,27 @@ class ChartTest extends AbstractTestCase
             ->will(
                 $this->returnCallback(
                     function (AbstractASTArtifact $node) use ($nodes) {
-                        $data = array(
-                            $nodes[0]->getId()  =>  array(
+                        $data = [
+                            $nodes[0]->getId()  =>  [
                                 'a'   =>  0,
                                 'i'   =>  0,
                                 'd'   =>  0,
                                 'cc'  =>  250,
                                 'ac'  =>  250
-                            ),
-                            $nodes[1]->getId()  =>  array(
+                            ],
+                            $nodes[1]->getId()  =>  [
                                 'a'   =>  0,
                                 'i'   =>  0,
                                 'd'   =>  0,
                                 'cc'  =>  50,
                                 'ac'  =>  50
-                            ),
-                        );
+                            ],
+                        ];
 
                         if (isset($data[$node->getId()])) {
                             return $data[$node->getId()];
                         }
-                        return array();
+                        return [];
                     }
                 )
             );
@@ -328,7 +328,7 @@ class ChartTest extends AbstractTestCase
      */
     private function createPackages()
     {
-        $packages = array();
+        $packages = [];
         foreach (func_get_args() as $i => $userDefined) {
             $packages[] = $this->createPackage(
                 $userDefined,
@@ -346,8 +346,8 @@ class ChartTest extends AbstractTestCase
     private function createPackage($userDefined, $packageName)
     {
         $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
-            ->onlyMethods(array('isUserDefined'))
-            ->setConstructorArgs(array($packageName))
+            ->onlyMethods(['isUserDefined'])
+            ->setConstructorArgs([$packageName])
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')
             ->getMock();
         $packageA->expects($this->atLeastOnce())

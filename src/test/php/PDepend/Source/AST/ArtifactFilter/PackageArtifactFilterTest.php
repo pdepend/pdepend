@@ -67,7 +67,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterAcceptsPackage(): void
     {
-        $filter = new PackageArtifactFilter(array(__FUNCTION__, __METHOD__));
+        $filter = new PackageArtifactFilter([__FUNCTION__, __METHOD__]);
         $this->assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
@@ -78,7 +78,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterNotAcceptsPackage(): void
     {
-        $filter = new PackageArtifactFilter(array(__CLASS__, __FUNCTION__));
+        $filter = new PackageArtifactFilter([__CLASS__, __FUNCTION__]);
         $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
@@ -89,7 +89,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterAcceptsAndNotAcceptsExpectedPackage(): void
     {
-        $filter = new PackageArtifactFilter(array(__CLASS__));
+        $filter = new PackageArtifactFilter([__CLASS__]);
         $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
         $this->assertTrue($filter->accept(new ASTNamespace(__FUNCTION__)));
     }
@@ -104,7 +104,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $namespace = new ASTNamespace(__FUNCTION__);
         $class   = $namespace->addType(new ASTClass('Clazz'));
 
-        $filter = new PackageArtifactFilter(array(__CLASS__));
+        $filter = new PackageArtifactFilter([__CLASS__]);
         $this->assertTrue($filter->accept($class));
     }
 
@@ -118,7 +118,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $namespace = new ASTNamespace(__FUNCTION__);
         $class   = $namespace->addType(new ASTClass('Clazz'));
 
-        $filter = new PackageArtifactFilter(array(__FUNCTION__));
+        $filter = new PackageArtifactFilter([__FUNCTION__]);
         $this->assertFalse($filter->accept($class));
     }
 
@@ -132,7 +132,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $namespace   = new ASTNamespace(__FUNCTION__);
         $interface = $namespace->addType(new ASTInterface('Iface'));
 
-        $filter = new PackageArtifactFilter(array(__CLASS__));
+        $filter = new PackageArtifactFilter([__CLASS__]);
         $this->assertTrue($filter->accept($interface));
     }
 
@@ -146,7 +146,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $namespace   = new ASTNamespace(__FUNCTION__);
         $interface = $namespace->addType(new ASTInterface('Iface'));
 
-        $filter = new PackageArtifactFilter(array(__FUNCTION__));
+        $filter = new PackageArtifactFilter([__FUNCTION__]);
         $this->assertFalse($filter->accept($interface));
     }
 
@@ -160,7 +160,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $namespace  = new ASTNamespace(__FUNCTION__);
         $function = $namespace->addFunction(new ASTFunction('Func'));
 
-        $filter = new PackageArtifactFilter(array(__CLASS__));
+        $filter = new PackageArtifactFilter([__CLASS__]);
         $this->assertTrue($filter->accept($function));
     }
 
@@ -174,7 +174,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $namespace  = new ASTNamespace(__FUNCTION__);
         $function = $namespace->addFunction(new ASTFunction('Func'));
 
-        $filter = new PackageArtifactFilter(array(__FUNCTION__));
+        $filter = new PackageArtifactFilter([__FUNCTION__]);
         $this->assertFalse($filter->accept($function));
     }
 
@@ -187,7 +187,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
     {
         $pdepend = new ASTNamespace('PDepend_Code');
 
-        $filter = new PackageArtifactFilter(array('ezc*', 'Zend_*'));
+        $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);
         $this->assertTrue($filter->accept($pdepend));
     }
 
@@ -200,7 +200,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
     {
         $ezcGraph = new ASTNamespace('ezcGraph');
 
-        $filter = new PackageArtifactFilter(array('ezc*', 'Zend_*'));
+        $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);
         $this->assertFalse($filter->accept($ezcGraph));
     }
 
@@ -215,7 +215,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $zendFW  = new ASTNamespace('Zend_Controller');
         $pdepend = new ASTNamespace('PDepend_Code');
 
-        $filter = new PackageArtifactFilter(array('ezc*', 'Zend_*'));
+        $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);
         $this->assertFalse($filter->accept($zendFW));
         $this->assertTrue($filter->accept($pdepend));
     }

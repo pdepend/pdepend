@@ -63,14 +63,14 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstAssignmentExpressionInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments'
-            )
+            ]
         );
     }
 
@@ -83,13 +83,13 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstAssignmentExpressionInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier'
-            )
+            ]
         );
     }
 
@@ -102,7 +102,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstAssignmentExpressionInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
@@ -110,7 +110,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTArguments',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier'
-            )
+            ]
         );
     }
 
@@ -123,10 +123,10 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstAssignmentExpressionInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTLiteral'
-            )
+            ]
         );
     }
 
@@ -139,10 +139,10 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     {
         $this->assertGraphEquals(
             $this->getFirstAssignmentExpressionInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTLiteral'
-            )
+            ]
         );
     }
 

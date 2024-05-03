@@ -62,7 +62,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @var ASTNode[]
      */
-    protected $nodes = array();
+    protected $nodes = [];
 
     /**
      * The parent node of this node or <b>null</b> when this node is the root
@@ -100,7 +100,7 @@ abstract class AbstractASTNode implements ASTNode
     public function accept(ASTVisitor $visitor, $data = null)
     {
         $methodName = 'visit' . substr(get_class($this), 22);
-        $callable = array($visitor, $methodName);
+        $callable = [$visitor, $methodName];
         assert(is_callable($callable));
 
         return call_user_func($callable, $this, $data);
@@ -298,7 +298,7 @@ abstract class AbstractASTNode implements ASTNode
         $metadata         = explode(':', $this->metadata, $this->getMetadataSize());
         $metadata[$index] = $value;
 
-        $this->metadata = join(':', $metadata);
+        $this->metadata = implode(':', $metadata);
     }
 
     /**
@@ -384,7 +384,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @return T[]
      */
-    public function findChildrenOfType($targetType, array &$results = array())
+    public function findChildrenOfType($targetType, array &$results = [])
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
@@ -434,7 +434,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     public function getParentsOfType($parentType)
     {
-        $parents = array();
+        $parents = [];
 
         $parentNode = $this->parent;
         while (is_object($parentNode)) {
@@ -486,11 +486,11 @@ abstract class AbstractASTNode implements ASTNode
      */
     public function __sleep()
     {
-        return array(
+        return [
             'comment',
             'metadata',
             'nodes',
-        );
+        ];
     }
 
     /**

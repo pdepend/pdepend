@@ -123,7 +123,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      *
      * @since 0.10.2
      */
-    private $dependencyMap = array();
+    private $dependencyMap = [];
 
     /**
      * This array holds a mapping between node identifiers and an array with
@@ -133,7 +133,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      *
      * @since 0.10.2
      */
-    private $nodeMetrics = array();
+    private $nodeMetrics = [];
 
     /**
      * Provides the project summary as an <b>array</b>.
@@ -149,10 +149,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     public function getProjectMetrics()
     {
-        return array(
+        return [
             self::M_CALLS   =>  $this->calls,
             self::M_FANOUT  =>  $this->fanout,
-        );
+        ];
     }
 
     /**
@@ -175,7 +175,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -220,8 +220,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     {
         $this->calls         = 0;
         $this->fanout        = 0;
-        $this->nodeMetrics   = array();
-        $this->dependencyMap = array();
+        $this->nodeMetrics   = [];
+        $this->dependencyMap = [];
     }
 
     /**
@@ -236,16 +236,16 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
             $afferentCoupling = count($metrics['ca']);
             $efferentCoupling = count($metrics['ce']);
 
-            $this->nodeMetrics[$id] = array(
+            $this->nodeMetrics[$id] = [
                 self::M_CA   =>  $afferentCoupling,
                 self::M_CBO  =>  $efferentCoupling,
                 self::M_CE   =>  $efferentCoupling,
-            );
+            ];
 
             $this->fanout += $efferentCoupling;
         }
 
-        $this->dependencyMap = array();
+        $this->dependencyMap = [];
     }
 
     /**
@@ -255,7 +255,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     {
         $this->fireStartFunction($function);
 
-        $fanouts = array();
+        $fanouts = [];
         if (($type = $function->getReturnClass()) !== null) {
             $fanouts[] = $type;
             ++$this->fanout;
@@ -396,10 +396,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
             return;
         }
 
-        $this->dependencyMap[$type->getId()] = array(
-            'ce' => array(),
-            'ca' => array(),
-        );
+        $this->dependencyMap[$type->getId()] = [
+            'ce' => [],
+            'ca' => [],
+        ];
     }
 
     /**
@@ -409,7 +409,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     {
         $invocations = $callable->findChildrenOfType('PDepend\\Source\\AST\\ASTInvocation');
 
-        $invoked = array();
+        $invoked = [];
 
         foreach ($invocations as $invocation) {
             $parents = $invocation->getParentsOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');

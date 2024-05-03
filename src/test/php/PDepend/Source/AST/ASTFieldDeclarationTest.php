@@ -265,11 +265,11 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     {
         $declaration = $this->createNodeInstance();
         $this->assertEquals(
-            array(
+            [
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $declaration->__sleep()
         );
     }
@@ -338,23 +338,23 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      */
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
     {
-        return array(
-            array(State::IS_PRIVATE),
-            array(State::IS_PROTECTED),
-            array(State::IS_PUBLIC),
-            array(
+        return [
+            [State::IS_PRIVATE],
+            [State::IS_PROTECTED],
+            [State::IS_PUBLIC],
+            [
                 State::IS_PRIVATE |
                 State::IS_STATIC
-            ),
-            array(
+            ],
+            [
                 State::IS_PROTECTED |
                 State::IS_STATIC
-            ),
-            array(
+            ],
+            [
                 State::IS_PUBLIC |
                 State::IS_STATIC
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -364,26 +364,26 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      */
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
     {
-        return array(
-            array(State::IS_ABSTRACT),
-            array(State::IS_FINAL),
-            array(
+        return [
+            [State::IS_ABSTRACT],
+            [State::IS_FINAL],
+            [
                 State::IS_PRIVATE |
                 State::IS_ABSTRACT
-            ),
-            array(
+            ],
+            [
                 State::IS_PROTECTED |
                 State::IS_ABSTRACT
-            ),
-            array(
+            ],
+            [
                 State::IS_PUBLIC |
                 State::IS_FINAL
-            ),
-            array(
+            ],
+            [
                 State::IS_PUBLIC |
                 State::IS_STATIC |
                 State::IS_FINAL
-            ),
-        );
+            ],
+        ];
     }
 }

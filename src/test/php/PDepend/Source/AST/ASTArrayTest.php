@@ -75,7 +75,7 @@ class ASTArrayTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayInFunction(),
-            array()
+            []
         );
     }
 
@@ -98,7 +98,7 @@ class ASTArrayTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayInFunction(),
-            array()
+            []
         );
     }
 

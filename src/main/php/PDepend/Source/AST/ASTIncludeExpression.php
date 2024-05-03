@@ -90,6 +90,6 @@ class ASTIncludeExpression extends ASTExpression
      */
     public function __sleep()
     {
-        return array_merge(array('once'), parent::__sleep());
+        return array_merge(['once'], parent::__sleep());
     }
 }

@@ -69,7 +69,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar', 'baz'),
+            ['foo', 'bar', 'baz'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -83,7 +83,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar', 'baz'),
+            ['foo', 'bar', 'baz'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -110,7 +110,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -124,7 +124,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -278,7 +278,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
     {
         $trait = new ASTTrait(__CLASS__);
-        $this->assertSame(array(), $trait->getChildren());
+        $this->assertSame([], $trait->getChildren());
     }
 
     /**

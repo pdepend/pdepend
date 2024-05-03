@@ -67,7 +67,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectANDCValue(): void
     {
         $filter = CollectionArtifactFilter::getInstance();
-        $filter->setFilter(new PackageArtifactFilter(array('library')));
+        $filter->setFilter(new PackageArtifactFilter(['library']));
 
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -86,7 +86,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectAHHValue(): void
     {
         $filter = CollectionArtifactFilter::getInstance();
-        $filter->setFilter(new PackageArtifactFilter(array('library')));
+        $filter->setFilter(new PackageArtifactFilter(['library']));
 
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -210,7 +210,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual = array();
+        $actual = [];
         foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
 
@@ -218,13 +218,13 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         }
         ksort($actual);
 
-        $expected = array(
+        $expected = [
             'A' => 0,
             'B' => 1,
             'C' => 1,
             'D' => 2,
             'E' => 3,
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -316,7 +316,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(array(), $metrics);
+        $this->assertEquals([], $metrics);
     }
 
     /**

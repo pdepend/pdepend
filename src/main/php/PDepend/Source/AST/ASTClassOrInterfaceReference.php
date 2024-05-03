@@ -108,6 +108,6 @@ class ASTClassOrInterfaceReference extends ASTType
      */
     public function __sleep()
     {
-        return array_merge(array('context'), parent::__sleep());
+        return array_merge(['context'], parent::__sleep());
     }
 }

@@ -284,12 +284,12 @@ class ASTCastExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstCastExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTCastExpression',
                 'PDepend\\Source\\AST\\ASTCastExpression',
                 'PDepend\\Source\\AST\\ASTCastExpression',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 

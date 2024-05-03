@@ -62,14 +62,14 @@ class TokenStack
      *
      * @var Token[]
      */
-    private $tokens = array();
+    private $tokens = [];
 
     /**
      * Stack with token scopes.
      *
      * @var Token[][]
      */
-    private $stack = array();
+    private $stack = [];
 
     /**
      * The current stack offset.
@@ -84,7 +84,7 @@ class TokenStack
     public function push(): void
     {
         $this->stack[$this->offset++] = $this->tokens;
-        $this->tokens                 = array();
+        $this->tokens                 = [];
     }
 
     /**
@@ -97,7 +97,7 @@ class TokenStack
     public function pop()
     {
         $tokens       = $this->tokens;
-        $this->tokens = isset($this->stack[--$this->offset]) ? $this->stack[$this->offset] : array();
+        $this->tokens = isset($this->stack[--$this->offset]) ? $this->stack[$this->offset] : [];
 
         unset($this->stack[$this->offset]);
 

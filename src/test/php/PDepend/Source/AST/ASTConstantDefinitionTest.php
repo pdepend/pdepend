@@ -377,11 +377,11 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      */
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
     {
-        return array(
-            array(State::IS_PRIVATE),
-            array(State::IS_PROTECTED),
-            array(State::IS_PUBLIC),
-        );
+        return [
+            [State::IS_PRIVATE],
+            [State::IS_PROTECTED],
+            [State::IS_PUBLIC],
+        ];
     }
 
     /**
@@ -391,29 +391,29 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      */
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
     {
-        return array(
-            array(State::IS_ABSTRACT),
-            array(State::IS_STATIC),
-            array(
+        return [
+            [State::IS_ABSTRACT],
+            [State::IS_STATIC],
+            [
                 State::IS_PRIVATE |
                 State::IS_ABSTRACT
-            ),
-            array(
+            ],
+            [
                 State::IS_PROTECTED |
                 State::IS_ABSTRACT
-            ),
-            array(
+            ],
+            [
                 State::IS_PUBLIC |
                 State::IS_STATIC
-            ),
-            array(
+            ],
+            [
                 State::IS_PROTECTED |
                 State::IS_STATIC
-            ),
-            array(
+            ],
+            [
                 State::IS_PRIVATE |
                 State::IS_STATIC
-            ),
-        );
+            ],
+        ];
     }
 }

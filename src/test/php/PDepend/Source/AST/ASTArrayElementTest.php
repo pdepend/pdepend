@@ -77,9 +77,9 @@ class ASTArrayElementTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
-            )
+            ]
         );
     }
 
@@ -104,9 +104,9 @@ class ASTArrayElementTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
-            )
+            ]
         );
     }
 
@@ -132,10 +132,10 @@ class ASTArrayElementTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
-            )
+            ]
         );
     }
 
@@ -161,10 +161,10 @@ class ASTArrayElementTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
-            )
+            ]
         );
     }
 
@@ -209,24 +209,24 @@ class ASTArrayElementTest extends ASTNodeTestCase
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTLiteral'                              . ' ("bar")',
-                'PDepend\\Source\\AST\\ASTArray'                                . ' ()', array(
-                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', array(
-                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', array(
-                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)')),
-                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', array(
+                'PDepend\\Source\\AST\\ASTArray'                                . ' ()', [
+                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', [
+                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', [
+                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)']],
+                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', [
                         'PDepend\\Source\\AST\\ASTLiteral'                      . ' (23)',
-                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', array(
-                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)')),
-                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', array(
-                        'PDepend\\Source\\AST\\ASTArray'                        . ' ()', array(
-                            'PDepend\\Source\\AST\\ASTArrayElement'             . ' ()', array(
+                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', [
+                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)']],
+                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', [
+                        'PDepend\\Source\\AST\\ASTArray'                        . ' ()', [
+                            'PDepend\\Source\\AST\\ASTArrayElement'             . ' ()', [
                                 'PDepend\\Source\\AST\\ASTLiteral'              . ' ("foo")',
-                                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', array(
-                                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (Object)'))))
-            )
-            )
+                                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
+                                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (Object)']]]]
+            ]
+            ]
         );
     }
 

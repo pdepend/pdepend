@@ -58,7 +58,7 @@ class CloverReport implements Report
      *
      * @var array<string, array<int, bool>>
      */
-    private $fileLineCoverage = array();
+    private $fileLineCoverage = [];
 
     /**
      * Constructs a new clover report instance.
@@ -92,7 +92,7 @@ class CloverReport implements Report
     private function readFileCoverage(SimpleXMLElement $sxml): void
     {
         foreach ($sxml->file as $file) {
-            $lines = array();
+            $lines = [];
             foreach ($file->line as $line) {
                 $lines[(int) $line['num']] = (0 < (int) $line['count']);
             }
@@ -145,6 +145,6 @@ class CloverReport implements Report
         if (isset($this->fileLineCoverage[$fileName])) {
             return $this->fileLineCoverage[$fileName];
         }
-        return array();
+        return [];
     }
 }

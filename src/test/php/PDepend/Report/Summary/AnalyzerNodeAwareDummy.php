@@ -66,7 +66,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      *
      * @param array<string, array> $nodeMetrics Dummy node metrics.
      */
-    public function __construct(array $nodeMetrics = array())
+    public function __construct(array $nodeMetrics = [])
     {
         $this->nodeMetrics = $nodeMetrics;
     }
@@ -123,7 +123,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**

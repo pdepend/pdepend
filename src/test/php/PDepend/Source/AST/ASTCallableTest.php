@@ -64,7 +64,7 @@ class ASTCallableTest extends AbstractTestCase
     public function testGetParametersReturnsEmptyArrayByDefault(): void
     {
         $callable = $this->getFirstCallableForTest();
-        $this->assertEquals(array(), $callable->getParameters());
+        $this->assertEquals([], $callable->getParameters());
     }
 
     /**
@@ -185,7 +185,7 @@ class ASTCallableTest extends AbstractTestCase
      */
     public function testSetTokensDelegatesCallToCacheStore(): void
     {
-        $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
+        $tokens = [new Token(1, 'a', 23, 42, 13, 17)];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -218,10 +218,10 @@ class ASTCallableTest extends AbstractTestCase
      */
     public function testGetStartLineReturnsStartLineOfFirstToken(): void
     {
-        $tokens = array(
+        $tokens = [
             new Token(1, 'a', 13, 17, 0, 0),
             new Token(2, 'b', 23, 42, 0, 0)
-        );
+        ];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -253,10 +253,10 @@ class ASTCallableTest extends AbstractTestCase
      */
     public function testGetEndLineReturnsEndLineOfLastToken(): void
     {
-        $tokens = array(
+        $tokens = [
             new Token(1, 'a', 13, 17, 0, 0),
             new Token(2, 'b', 23, 42, 0, 0)
-        );
+        ];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -302,7 +302,7 @@ class ASTCallableTest extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\AST\\AbstractASTCallable',
-            array(__CLASS__)
+            [__CLASS__]
         );
     }
 }

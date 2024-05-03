@@ -153,18 +153,18 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testTryStatementContainsMultipleChildInstancesOfCatchStatement(): void
     {
-        $actual = array();
+        $actual = [];
         foreach ($this->getFirstTryStatementInFunction(__METHOD__)->getChildren() as $child) {
-            $actual[] = get_class($child);
+            $actual[] = $child::class;
         }
 
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTScopeStatement',
             'PDepend\\Source\\AST\\ASTCatchStatement',
             'PDepend\\Source\\AST\\ASTCatchStatement',
             'PDepend\\Source\\AST\\ASTCatchStatement',
             'PDepend\\Source\\AST\\ASTCatchStatement',
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }

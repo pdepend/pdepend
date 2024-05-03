@@ -86,21 +86,21 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var ASTCompilationUnit[]
      */
-    protected $fileSet = array();
+    protected $fileSet = [];
 
     /**
      * List of all generated project metrics.
      *
      * @var array<string, mixed>
      */
-    protected $projectMetrics = array();
+    protected $projectMetrics = [];
 
     /**
      * List of all collected node metrics.
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    protected $nodeMetrics = array();
+    protected $nodeMetrics = [];
 
     /**
      * The dependency result set.
@@ -155,7 +155,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function getAcceptedAnalyzers()
     {
-        return array('pdepend.analyzer.dependency');
+        return ['pdepend.analyzer.dependency'];
     }
 
     /**

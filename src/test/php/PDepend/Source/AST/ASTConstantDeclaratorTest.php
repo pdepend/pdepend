@@ -63,12 +63,12 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     {
         $node = new \PDepend\Source\AST\ASTConstantDeclarator();
         $this->assertEquals(
-            array(
+            [
                 'value',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $node->__sleep()
         );
     }

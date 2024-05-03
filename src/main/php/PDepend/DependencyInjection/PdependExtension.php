@@ -97,7 +97,7 @@ class PdependExtension extends SymfonyExtension
         foreach ($extensionManager->getActivatedExtensions() as $extension) {
             $extensionConfig = $config['extensions'][$extension->getName()];
 
-            $tempContainer = new ContainerBuilder(new ParameterBag(array()));
+            $tempContainer = new ContainerBuilder(new ParameterBag([]));
             $tempContainer->addObjectResource($extension);
 
             // load extension into temporary container
@@ -110,7 +110,7 @@ class PdependExtension extends SymfonyExtension
         $settings = $this->createSettings($config);
 
         $configurationDefinition = $container->findDefinition('pdepend.configuration');
-        $configurationDefinition->setArguments(array($settings));
+        $configurationDefinition->setArguments([$settings]);
     }
 
     /**

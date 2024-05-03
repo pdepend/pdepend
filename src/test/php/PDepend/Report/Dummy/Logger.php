@@ -66,10 +66,10 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @var array<string, mixed>
      */
-    private $input = array(
+    private $input = [
         'code'       =>  null,
-        'analyzers'  =>  array()
-    );
+        'analyzers'  =>  []
+    ];
 
     /**
      * Constructs a new logger for the given output file.
@@ -98,7 +98,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function getAcceptedAnalyzers()
     {
-        return array(
+        return [
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.node_loc',
             'pdepend.analyzer.npath_complexity',
@@ -110,7 +110,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.class_level',
             'pdepend.analyzer.cohesion',
-        );
+        ];
     }
 
     /**

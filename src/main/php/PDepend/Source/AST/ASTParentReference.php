@@ -112,6 +112,6 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      */
     public function __sleep()
     {
-        return array_merge(array('reference'), parent::__sleep());
+        return array_merge(['reference'], parent::__sleep());
     }
 }

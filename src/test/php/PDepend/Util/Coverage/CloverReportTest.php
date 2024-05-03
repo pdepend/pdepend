@@ -205,14 +205,14 @@ class CloverReportTest extends AbstractTestCase
     private function createMethodMock($name, $startLine = 1, $endLine = 4)
     {
         $file = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTCompilationUnit')
-            ->setConstructorArgs(array(null))
+            ->setConstructorArgs([null])
             ->getMock();
         $file->expects($this->any())
             ->method('getFileName')
             ->will($this->returnValue('/' . $name . '.php'));
 
         $method = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTMethod')
-            ->setConstructorArgs(array($name))
+            ->setConstructorArgs([$name])
             ->getMock();
         $method->expects($this->once())
             ->method('getCompilationUnit')

@@ -60,7 +60,7 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    private $nodes = array();
+    private $nodes = [];
 
     /**
      * Returns the collected nodes.
@@ -127,12 +127,12 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     private function initNode(AbstractASTArtifact $node): void
     {
         if (!isset($this->nodes[$node->getId()])) {
-            $this->nodes[$node->getId()] = array(
-                'in'   =>  array(),
-                'out'  =>  array(),
+            $this->nodes[$node->getId()] = [
+                'in'   =>  [],
+                'out'  =>  [],
                 'name'  =>  $node->getName(),
-                'type'  =>  get_class($node),
-            );
+                'type'  =>  $node::class,
+            ];
         }
     }
 }

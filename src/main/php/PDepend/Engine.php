@@ -107,14 +107,14 @@ class Engine
      *
      * @var array<string>
      */
-    private $directories = array();
+    private $directories = [];
 
     /**
      * List of source code file names.
      *
      * @var array<string>
      */
-    private $files = array();
+    private $files = [];
 
     /**
      * The used code node builder.
@@ -135,7 +135,7 @@ class Engine
      *
      * @var ReportGenerator[]
      */
-    private $generators = array();
+    private $generators = [];
 
     /**
      * A composite filter for input files.
@@ -163,14 +163,14 @@ class Engine
      *
      * @var ProcessListener[]
      */
-    private $listeners = array();
+    private $listeners = [];
 
     /**
      * List of analyzer options.
      *
      * @var array<string, mixed>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * List of all {@link ParserException} that were caught during
@@ -178,7 +178,7 @@ class Engine
      *
      * @var ParserException[]
      */
-    private $parseExceptions = array();
+    private $parseExceptions = [];
 
     /**
      * The configured cache factory.
@@ -536,7 +536,7 @@ class Engine
     private function performParseProcess(): void
     {
         // Reset list of thrown exceptions
-        $this->parseExceptions = array();
+        $this->parseExceptions = [];
 
         $tokenizer = new PHPTokenizerInternal();
 
@@ -624,7 +624,7 @@ class Engine
         foreach ($this->files as $file) {
             $fileIterator->append(
                 $this->isPhpStream($file)
-                    ? new ArrayIterator(array(new SplFileObject($file)))
+                    ? new ArrayIterator([new SplFileObject($file)])
                     : new Iterator(new GlobIterator($file), $this->fileFilter),
             );
         }
@@ -647,7 +647,7 @@ class Engine
         // TODO: It's important to validate this behavior, imho there is something
         //       wrong in the iterator code used above.
         // Strange: why is the iterator not unique and why does this loop fix it?
-        $files = array();
+        $files = [];
         foreach ($fileIterator as $file) {
             if (is_string($file)) {
                 $files[$file] = $file;

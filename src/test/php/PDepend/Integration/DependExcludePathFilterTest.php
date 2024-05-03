@@ -71,7 +71,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addFile($this->createCodeResourceUriForTest().'/Integration/FilteredClass.php');
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(0, $pdepend->analyze());
@@ -93,7 +93,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(0, $pdepend->analyze());
@@ -118,7 +118,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(
@@ -147,7 +147,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(1, $pdepend->analyze());

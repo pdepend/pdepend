@@ -73,7 +73,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(['bar', 'baz', 'foo'], $actual);
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(['bar', 'baz', 'foo'], $actual);
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(['bar', 'baz', 'foo'], $actual);
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(['bar', 'baz', 'foo'], $actual);
     }
 
     /**
@@ -129,7 +129,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
-        $this->assertEquals(array('bar', 'baz', 'foo'), $actual);
+        $this->assertEquals(['bar', 'baz', 'foo'], $actual);
     }
 
     /**
@@ -193,7 +193,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $this->assertEquals(
-            array('foo', 'bar', 'baz'),
+            ['foo', 'bar', 'baz'],
             array_keys($class->getAllMethods())
         );
     }
@@ -222,7 +222,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $this->assertEquals(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             array_keys($class->getAllMethods())
         );
     }
@@ -237,7 +237,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $this->assertEquals(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             array_keys($class->getAllMethods())
         );
     }
@@ -382,7 +382,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
     {
         $class = new ASTClass(__CLASS__);
-        $this->assertSame(array(), $class->getChildren());
+        $this->assertSame([], $class->getChildren());
     }
 
     /**
@@ -405,7 +405,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsAnEmptyArrayByDefault(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(array(), $class->getConstants());
+        $this->assertEquals([], $class->getConstants());
     }
 
     /**
@@ -416,7 +416,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedConstant(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(array('FOO' => 42), $class->getConstants());
+        $this->assertEquals(['FOO' => 42], $class->getConstants());
     }
 
     /**
@@ -427,7 +427,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedConstants(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(['FOO' => 42, 'BAR' => 23], $class->getConstants());
     }
 
     /**
@@ -438,7 +438,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedParentConstants(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(['FOO' => 42, 'BAR' => 23], $class->getConstants());
     }
 
     /**
@@ -449,7 +449,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedMergedParentAndChildConstants(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(['FOO' => 42, 'BAR' => 23], $class->getConstants());
     }
 
     /**
@@ -461,7 +461,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedInterfaceConstants(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(array('FOO' => 42, 'BAR' => 23), $class->getConstants());
+        $this->assertEquals(['FOO' => 42, 'BAR' => 23], $class->getConstants());
     }
 
     /**
@@ -615,7 +615,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class->addChild($node1);
         $class->addChild($node2);
 
-        $child = $class->getFirstChildOfType(get_class($node2));
+        $child = $class->getFirstChildOfType($node2::class);
         $this->assertSame($node2, $child);
     }
 
@@ -650,7 +650,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class->addChild($node2);
         $class->addChild($node3);
 
-        $child = $class->getFirstChildOfType(get_class($node1));
+        $child = $class->getFirstChildOfType($node1::class);
         $this->assertSame($node1, $child);
     }
 
@@ -1041,13 +1041,13 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $class = $this->getFirstClassForTestCase();
 
-        $actual = array();
+        $actual = [];
         foreach ($class->getInterfaces() as $interface) {
             $actual[] = $interface->getName();
         }
         sort($actual);
 
-        $this->assertEquals(array('A', 'C', 'E', 'F'), $actual);
+        $this->assertEquals(['A', 'C', 'E', 'F'], $actual);
     }
 
     /**
@@ -1065,13 +1065,13 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $classes->next();
         $class = $classes->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($class->getInterfaces() as $interface) {
             $actual[$interface->getName()] = $interface->getName();
         }
         sort($actual);
 
-        $this->assertEquals(array('A', 'B', 'C', 'D', 'E', 'F'), $actual);
+        $this->assertEquals(['A', 'B', 'C', 'D', 'E', 'F'], $actual);
     }
 
     /**
@@ -1084,13 +1084,13 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $class = $this->getFirstClassForTestCase();
 
-        $actual = array();
+        $actual = [];
         foreach ($class->getInterfaces() as $interface) {
             $actual[] = $interface->getName();
         }
         sort($actual);
 
-        $this->assertEquals(array('A', 'B'), $actual);
+        $this->assertEquals(['A', 'B'], $actual);
     }
 
     /**
@@ -1106,20 +1106,20 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $class = $types->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($types as $type) {
             $actual[$type->getName()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
-        $expected = array(
+        $expected = [
             'A' => true,
             'B' => false,
             'C' => false,
             'D' => true,
             'E' => true,
             'F' => false
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -1137,20 +1137,20 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $class = $types->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($types as $type) {
             $actual[$type->getName()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
-        $expected = array(
+        $expected = [
             'A' => true,
             'B' => true,
             'C' => false,
             'D' => true,
             'E' => true,
             'F' => false
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -1168,20 +1168,20 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $class = $types->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($types as $type) {
             $actual[$type->getName()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
-        $expected = array(
+        $expected = [
             'A' => true,
             'B' => true,
             'C' => true,
             'D' => true,
             'E' => true,
             'F' => true
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -1276,7 +1276,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testSetTokensDelegatesCallToCacheStore(): void
     {
-        $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
+        $tokens = [new Token(1, 'a', 23, 42, 13, 17)];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -1318,10 +1318,10 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class = new ASTClass(__CLASS__);
         $class->setCache($cache)
             ->setTokens(
-                array(
+                [
                     new Token(1, 'a', 23, 42, 0, 0),
                     new Token(2, 'b', 17, 32, 0, 0),
-                )
+                ]
             );
 
         $this->assertEquals(23, $class->getStartLine());
@@ -1353,10 +1353,10 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class = new ASTClass(__CLASS__);
         $class->setCache($cache)
             ->setTokens(
-                array(
+                [
                     new Token(1, 'a', 23, 42, 0, 0),
                     new Token(2, 'b', 17, 32, 0, 0),
-                )
+                ]
             );
 
         $this->assertEquals(32, $class->getEndLine());
@@ -1414,7 +1414,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetParentClassesReturnsEmptyArrayByDefault(): void
     {
         $class = new ASTClass(__CLASS__);
-        $this->assertSame(array(), $class->getParentClasses());
+        $this->assertSame([], $class->getParentClasses());
     }
 
     /**
@@ -1435,11 +1435,11 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         }
 
         $this->assertEquals(
-            array(
+            [
                 'testGetParentClassesReturnsExpectedListClasses_parentA',
                 'testGetParentClassesReturnsExpectedListClasses_parentB',
                 'testGetParentClassesReturnsExpectedListClasses_parentC'
-            ),
+            ],
             $classes
         );
     }
@@ -1453,7 +1453,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetParentReturnsNullWhenParentIsFiltered(): void
     {
         CollectionArtifactFilter::getInstance()->setFilter(
-            new PackageArtifactFilter(array('org.pdepend.filter'))
+            new PackageArtifactFilter(['org.pdepend.filter'])
         );
 
         $class = $this->getFirstClassForTestCase();
@@ -1485,7 +1485,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault(): void
     {
         $class = new ASTClass(__CLASS__);
-        $this->assertSame(array(), $class->getInterfaceReferences());
+        $this->assertSame([], $class->getInterfaceReferences());
     }
 
     /**
@@ -1593,7 +1593,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class->setNamespace(new ASTNamespace(__FUNCTION__));
 
         $this->assertEquals(
-            array(
+            [
                 'constants',
                 'interfaceReferences',
                 'parentClassReference',
@@ -1608,7 +1608,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
                 'startLine',
                 'userDefined',
                 'id'
-            ),
+            ],
             $class->__sleep()
         );
     }

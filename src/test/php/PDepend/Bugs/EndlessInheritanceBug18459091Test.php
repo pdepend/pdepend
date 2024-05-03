@@ -215,12 +215,12 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
     {
         set_time_limit(5);
 
-        $_SERVER['argv'] = array(
+        $_SERVER['argv'] = [
             __FILE__,
             '--summary-xml=' . $this->createRunResourceURI('jdepend.xml'),
             '--jdepend-xml=' . $this->createRunResourceURI('summary.xml'),
             $this->createCodeResourceUriForTest()
-        );
+        ];
 
         ob_start();
 

@@ -63,7 +63,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      *
      * @var array<string, integer>
      */
-    public $visits = array();
+    public $visits = [];
 
     /**
      * Visits a class node.
@@ -86,7 +86,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
-        $this->visits[] = get_class($compilationUnit);
+        $this->visits[] = $compilationUnit::class;
 
         parent::visitCompilationUnit($compilationUnit);
     }

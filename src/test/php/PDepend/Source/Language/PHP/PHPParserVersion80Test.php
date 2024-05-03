@@ -159,15 +159,15 @@ class PHPParserVersion80Test extends AbstractTestCase
         $declarations = array_map(function (ASTFieldDeclaration $child) {
             $childChildren = $child->getChildren();
 
-            return array(
+            return [
                 $child->hasType() ? $child->getType() : null,
                 $childChildren[1],
-            );
+            ];
         }, $children);
 
-        foreach (array(
-            array('null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'),
-        ) as $index => $expected) {
+        foreach ([
+            ['null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'],
+        ] as $index => $expected) {
             list($expectedType, $expectedVariable, $expectedTypeClass) = $expected;
             list($type, $variable) = $declarations[$index];
 
@@ -196,7 +196,7 @@ class PHPParserVersion80Test extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion80',
-            array($tokenizer, $builder, $cache)
+            [$tokenizer, $builder, $cache]
         );
     }
 }

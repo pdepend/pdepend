@@ -140,7 +140,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testRestoreFunctionUsesGetNamespaceNameMethod(): void
     {
         $function = $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
-            ->setConstructorArgs(array(__FUNCTION__))
+            ->setConstructorArgs([__FUNCTION__])
             ->getMock();
         $function->expects($this->once())
             ->method('getNamespaceName');
@@ -443,13 +443,13 @@ class PHPBuilderTest extends AbstractTestCase
     {
         $builder = $this->createBuilder();
 
-        $expected = array(
+        $expected = [
             'package1'  =>  $builder->buildNamespace('package1'),
             'package2'  =>  $builder->buildNamespace('package2'),
             'package3'  =>  $builder->buildNamespace('package3')
-        );
+        ];
 
-        $actual = array();
+        $actual = [];
         foreach ($builder as $name => $namespace) {
             $actual[$name] = $namespace;
         }
@@ -467,13 +467,13 @@ class PHPBuilderTest extends AbstractTestCase
     {
         $builder = $this->createBuilder();
 
-        $expected = array(
+        $expected = [
             'package1'  =>  $builder->buildNamespace('package1'),
             'package2'  =>  $builder->buildNamespace('package2'),
             'package3'  =>  $builder->buildNamespace('package3')
-        );
+        ];
 
-        $actual = array();
+        $actual = [];
         foreach ($builder->getNamespaces() as $name => $namespace) {
             $actual[$name] = $namespace;
         }
