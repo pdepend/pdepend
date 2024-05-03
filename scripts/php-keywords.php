@@ -126,9 +126,7 @@ function dump($type, array $valid)
         join(
             "\n",
             array_map(
-                function ($token) {
-                    return sprintf('            case Tokens::%s:', $token);
-                },
+                static fn ($token) => sprintf('            case Tokens::%s:', $token),
                 $valid[$type]
             )
         )

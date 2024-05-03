@@ -108,9 +108,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'HasColor' => 'HasColor',
             ),
             array_map(
-                function (ASTInterface $interface) {
-                    return $interface->getName();
-                },
+                static fn (ASTInterface $interface) => $interface->getName(),
                 iterator_to_array($enum->getInterfaces())
             )
         );
@@ -122,9 +120,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'getcolor' => 'getColor',
             ),
             array_map(
-                function (ASTMethod $interface) {
-                    return $interface->getName();
-                },
+                static fn (ASTMethod $interface) => $interface->getName(),
                 $enum->getAllMethods()
             )
         );
@@ -138,9 +134,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'SPADES' => "'spades'",
             ),
             array_map(
-                function (ASTEnumCase $case) {
-                    return $case->getValue()->getImage();
-                },
+                static fn (ASTEnumCase $case) => $case->getValue()->getImage(),
                 iterator_to_array($cases)
             )
         );

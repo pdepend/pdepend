@@ -379,9 +379,10 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $this->assertSame('\\PDepend\\Code', $parameters[0]->getDefaultValue()->getImage());
         /** @var ASTNode $node */
         $node = $parameters[0]->getDefaultValue()->getChild(0);
-        $image = implode($node->getImage(), array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $node->getChildren()));
+        $image = implode(
+            $node->getImage(),
+            array_map(static fn (ASTNode $node) => $node->getImage(), $node->getChildren()),
+        );
         $this->assertSame('\\PDepend\\Code::CONSTANT', $image);
     }
 

@@ -7838,9 +7838,7 @@ abstract class AbstractPHPParser
             $useSymbolTable = $this->useSymbolTable;
 
             return array_map(
-                function ($image) use ($useSymbolTable) {
-                    return $useSymbolTable->lookup($image) ?: $image;
-                },
+                static fn ($image) => $useSymbolTable->lookup($image) ?: $image,
                 array_map('trim', explode('|', end($match) ?: '')),
             );
         }
