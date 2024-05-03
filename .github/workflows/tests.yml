@@ -6,9 +6,9 @@ name: Tests
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ '*', '2.x', '3.x' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ '*' ]
 
 jobs:
   tests:
@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
         setup: [ 'lowest', 'stable' ]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
@@ -42,20 +42,22 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
 
       - name: Cache test packages
         id: composer-test-cache
         uses: actions/cache@v3
         with:
           path: src/test/vendor
-          key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.json') }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
+
+      - name: Upgrade PHPUnit
+        if: matrix.php >= 7.2
+        run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
 
       - name: Install test dependencies
         if: steps.composer-test-cache.outputs.cache-hit != 'true'
